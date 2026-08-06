@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "profiles": [
+    {
+      "schema_profile": "SCHEMA_PROFILE_001",
+      "recording_count": 440,
+      "subject_count": 110,
+      "example_recording_ids": [
+        "dataset-10_5281_zenodo_18599983-p001-lying-post_exercise",
+        "dataset-10_5281_zenodo_18599983-p001-lying-rest",
+        "dataset-10_5281_zenodo_18599983-p001-sitting-post_exercise",
+        "dataset-10_5281_zenodo_18599983-p001-sitting-rest",
+        "dataset-10_5281_zenodo_18599983-p002-lying-post_exercise"
+      ],
+      "required_member_roles": [
+        "RADAR_DATA",
+        "RADAR_TIMESTAMP",
+        "CHIRP_CONFIG",
+        "REFERENCE_SIGNAL"
+      ],
+      "optional_member_roles": [
+        "ANNOTATION"
+      ],
+      "radar_container_format": "ZLIB_BINARY_TENSOR",
+      "radar_serialization": "ZLIB_RAW_COMPRESSION",
+      "timestamp_format": "ISO8601_UTC_CSV",
+      "configuration_format": "JSON_TEXT",
+      "reference_format": "CSV_TEXT",
+      "annotation_format": "ISO8601_RANGE_CSV",
+      "unsafe_deserialization_required": false,
+      "safe_a1_reader_possible": true,
+      "a1_reader_requirements": [
+        "Decompress zlib stream for radar_rFFTs.zlib",
+        "Parse float/complex 3D array [frames, antennas, range_bins] safely without pickle",
+        "Parse ISO-8601 timestamps from radar_timestamps.csv",
+        "Read FMCW chirp parameters from radar_chirpConfig.json"
+      ],
+      "known_exceptions": [
+        "Recordings P075/Sitting/Rest and P007/Sitting/Post-exercise contain 400 frames (40s) instead of standard 500 or 600 frames."
+      ],
+      "evidence": [
+        "All 440 recordings contain identical radar_chirpConfig.json parameter keys and values.",
+        "All 440 recordings contain zlib-compressed radar_rFFTs.zlib with 78da header bytes.",
+        "All 440 recordings contain ISO-8601 timestamp CSVs."
+      ]
+    }
+  ]
+}

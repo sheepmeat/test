@@ -1,0 +1,17 @@
+[2026-08-06T08:19:17.345428+00:00] Starting Phase A0 Audit script at /Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/대학/2026/embed2/datasets/mmwave/manifests/a0_raw_inventory
+[2026-08-06T08:19:17.345742+00:00] Repository Root: /Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/대학/2026/embed2
+[2026-08-06T08:19:17.345752+00:00] Archive Target: /Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/대학/2026/embed2/datasets/raw_archives/external_datasets/db_records.zip
+[2026-08-06T08:19:17.345997+00:00] Measuring streaming SHA-256 and MD5 for archive (246597320 bytes)...
+[2026-08-06T08:19:17.853335+00:00] SHA-256: f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0
+[2026-08-06T08:19:17.853419+00:00] MD5:    370de95033f1a98b78e57dbbea92a8bc
+[2026-08-06T08:19:17.853439+00:00] Querying official Zenodo API for DOI 10.5281/zenodo.18599983...
+[2026-08-06T08:19:19.085613+00:00] Zenodo Remote Verification Status: REMOTE_VERIFIED
+[2026-08-06T08:19:19.085698+00:00] Auditing ZIP container integrity & verifying CRCs...
+[2026-08-06T08:19:19.832062+00:00] ZIP Integrity Status: PASS
+[2026-08-06T08:19:19.905521+00:00] Total archive members inventoried: 6382
+[2026-08-06T08:19:19.905565+00:00] Total unique subjects found: 110
+[2026-08-06T08:19:19.905574+00:00] Total logical recordings reconstructed: 440
+[2026-08-06T08:19:19.989370+00:00] Calculating output manifest file SHA-256 checksums...
+[2026-08-06T08:19:20.000898+00:00] Phase A0 Audit execution completed successfully.
+[2026-08-06T08:19:20.000912+00:00] A0 Gate Status: PASS_WITH_WARNINGS
+[2026-08-06T08:19:20.000918+00:00] A1 Entry Status: READY
