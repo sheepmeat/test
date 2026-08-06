@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "project": "SafeNest",
+  "datasets": {
+    "co2": {
+      "name": "CO2 Occupancy Detection Dataset",
+      "version": "1.0.0",
+      "file_path": "datasets/co2/processed/co2_occupancy_v1.npz",
+      "format": "NPZ",
+      "license": "CC BY 4.0",
+      "source_url": "https://archive.ics.uci.edu/dataset/357/occupancy%2Bdetection",
+      "doi": "10.24432/C5X01N",
+      "splits": {
+        "train": 8138,
+        "validation": 2660,
+        "test": 9747
+      },
+      "features": ["CO2_slope", "Humidity", "CO2"],
+      "preprocessing": "StandardScaler trained strictly on train split"
+    },
+    "mmwave": {
+      "name": "mmWave 60GHz Respiration Dataset",
+      "version": "1.0.0",
+      "file_path": "datasets/mmwave/processed/mmwave_respiration_v1.npz",
+      "format": "NPZ",
+      "license": "CC BY 4.0",
+      "source_url": "https://zenodo.org/records/18599983",
+      "doi": "10.5281/zenodo.18599983",
+      "sample_rate_hz": 10,
+      "window_samples": 300,
+      "window_seconds": 30,
+      "classes": {
+        "0": "NORMAL (1401)",
+        "1": "RAPID_OR_ABNORMAL (1717)",
+        "2": "APNEA (315)"
+      },
+      "splits": {
+        "train_windows": 2491,
+        "val_windows": 474,
+        "test_windows": 468,
+        "train_subjects": 80,
+        "val_subjects": 15,
+        "test_subjects": 15
+      },
+      "preprocessing": "Complex FFT -> Phase Unwrap -> 0.1-0.5Hz BPF -> 10Hz Resampling -> Z-score (Train stats only)"
+    }
+  }
+}
