@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-07T08:43:19.017678+00:00",
+  "generated_at_utc": "2026-08-07T08:47:28.697790+00:00",
   "anomalies": [
     {
       "anomaly_id": "A0-ANOM-0001",
@@ -57,7 +57,7 @@
       "affected_files": [
         "datasets/raw_archives/external_datasets/db_records.zip"
       ],
-      "observed_evidence": "Local archive byte size (246597320) and MD5 (370de95033f1a98b78e57dbbea92a8bc) differ from official Zenodo record archive size (245,284,102 bytes) and MD5 (408c5b347c751c553abe6d0f640a6f98) due to local zip repackaging. Member-level content comparison was not performed in A0.",
+      "observed_evidence": "The observed hash (370de95033f1a98b78e57dbbea92a8bc), size (246597320), and archive structure differences are consistent with local repackaging, but member-level identity with the official Zenodo archive has not been verified.",
       "impact": "Container hash mismatch; content_match_confirmed set to false.",
       "recommended_next_action": "Record LIKELY_REPACKAGED_NOT_FULLY_VERIFIED status.",
       "blocks_a1": false,

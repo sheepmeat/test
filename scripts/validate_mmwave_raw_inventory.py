@@ -5,7 +5,7 @@ Machine-Readable Inventory Validator for Phase A0 mmWave Raw Dataset Inventory.
 Verifies internal consistency across all Phase A0 manifest files:
 - Valid JSON/JSONL syntax
 - Uniqueness of deterministic identifiers (source_file_id, recording_id, subject_id, anomaly_id)
-- Detail vs Summary count matching (zip members, recordings, anomalies, linkages, profiles, role counts)
+- Detail vs Summary count matching (zip members, recordings, anomalies, linkages, profiles, role counts, identifier collisions)
 - Referenced archive member path existence
 - Dynamic A0 gate status and A1 entry status consistency
 """
@@ -44,9 +44,9 @@ def validate_inventory_objects(summary, source_id, claims, integrity, members, r
     """
     errors = []
 
-    # 1. Verify Identifier Uniqueness
+    # 1. Verify Identifier Uniqueness & Count Collisions
     member_paths = set()
-    source_file_ids = set()
+    source_file_ids_list = []
     role_counts = {
         "RADAR_DATA": 0,
         "RADAR_TIMESTAMP": 0,
@@ -64,16 +64,14 @@ def validate_inventory_objects(summary, source_id, claims, integrity, members, r
             member_paths.add(path)
         sf_id = m.get("source_file_id")
         if sf_id:
-            if sf_id in source_file_ids:
-                errors.append(f"Duplicate source_file_id '{sf_id}' at index {idx} in members")
-            source_file_ids.add(sf_id)
+            source_file_ids_list.append(sf_id)
 
         role = m.get("role_hint")
         if role in role_counts:
             role_counts[role] += 1
 
-    recording_ids = set()
-    subject_ids = set()
+    recording_ids_list = []
+    subject_ids_list = []
     linkage_counts = {
         "COMPLETE": 0,
         "COMPLETE_WITH_OPTIONAL_FILES_ABSENT": 0,
@@ -86,12 +84,10 @@ def validate_inventory_objects(summary, source_id, claims, integrity, members, r
     for idx, r in enumerate(recordings, 1):
         rec_id = r.get("recording_id")
         if rec_id:
-            if rec_id in recording_ids:
-                errors.append(f"Duplicate recording_id '{rec_id}' at index {idx} in recordings")
-            recording_ids.add(rec_id)
+            recording_ids_list.append(rec_id)
         subj_id = r.get("subject_id")
         if subj_id:
-            subject_ids.add(subj_id)
+            subject_ids_list.append(subj_id)
 
         status = r.get("linkage_status")
         if status in linkage_counts:
@@ -106,6 +102,16 @@ def validate_inventory_objects(summary, source_id, claims, integrity, members, r
         for ref_path in all_ref_files:
             if ref_path not in member_paths:
                 errors.append(f"Recording '{rec_id}' references missing archive member path: '{ref_path}'")
+
+    sf_collisions = len(source_file_ids_list) - len(set(source_file_ids_list))
+    rec_collisions = len(recording_ids_list) - len(set(recording_ids_list))
+    subj_collisions = len(subject_ids_list) - len(set(subject_ids_list))
+    calculated_id_collisions = sf_collisions + rec_collisions
+
+    if sf_collisions > 0:
+        errors.append(f"Detected {sf_collisions} source_file_id collisions in archive_members.jsonl")
+    if rec_collisions > 0:
+        errors.append(f"Detected {rec_collisions} recording_id collisions in recording_index.jsonl")
 
     anomaly_ids = set()
     severity_counts = {"BLOCKER": 0, "ERROR": 0, "WARNING": 0, "INFO": 0}
@@ -126,6 +132,9 @@ def validate_inventory_objects(summary, source_id, claims, integrity, members, r
 
         if len(recordings) != summary.get("recording_count"):
             errors.append(f"Recording count mismatch: recordings list ({len(recordings)}) vs summary ({summary.get('recording_count')})")
+
+        if summary.get("identifier_collision_count") != calculated_id_collisions:
+            errors.append(f"Identifier collision count mismatch: summary ({summary.get('identifier_collision_count')}) vs calculated generated ID collisions ({calculated_id_collisions})")
 
         # Linkage counts comparison
         if summary.get("complete_linkage_count") != linkage_counts["COMPLETE"]:

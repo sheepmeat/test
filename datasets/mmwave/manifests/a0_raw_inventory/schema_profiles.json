@@ -3,7 +3,7 @@
   "profiles": [
     {
       "schema_profile": "SCHEMA_PROFILE_001",
-      "schema_signature_hash": "a25aa45e080cec3e",
+      "schema_signature_hash": "5aa1154747af06f6",
       "recording_count": 220,
       "subject_count": 110,
       "example_recording_ids": [
@@ -14,11 +14,11 @@
         "dataset-10_5281_zenodo_18599983-p100-sitting-post_exercise"
       ],
       "required_member_roles": [
-        "RADAR_DATA",
-        "RADAR_TIMESTAMP",
         "CHIRP_CONFIG",
         "MOVESENSE_ACC",
-        "MOVESENSE_ECG"
+        "MOVESENSE_ECG",
+        "RADAR_DATA",
+        "RADAR_TIMESTAMP"
       ],
       "optional_member_roles": [],
       "radar_container_format": "ZLIB_BINARY_TENSOR",
@@ -70,14 +70,14 @@
         "Recordings ['db_records/P075/Sitting/Rest/radar_timestamps.csv', 'db_records/P007/Sitting/Post-exercise/radar_timestamps.csv'] contain 400 frames (40s) instead of standard 500 or 600 frames."
       ],
       "evidence": [
-        "Measured 220 recordings with multi-factor schema signature hash a25aa45e080cec3e.",
-        "Parsed ISO-8601 timestamp CSV deltas and measured median period = 0.1s (10.0 Hz).",
-        "Inspected zlib stream header bytes 78da across radar_rFFTs.zlib files."
+        "Measured 220 recordings with observation-derived schema signature hash 5aa1154747af06f6.",
+        "Inspected first two bytes of radar_rFFTs.zlib streams; measured header signature = 78da.",
+        "Parsed ISO-8601 timestamp CSV deltas and measured median period = 0.1s (10.0 Hz)."
       ]
     },
     {
       "schema_profile": "SCHEMA_PROFILE_002",
-      "schema_signature_hash": "df58f75e80ab8ed8",
+      "schema_signature_hash": "2e892fce2d6776cd",
       "recording_count": 220,
       "subject_count": 110,
       "example_recording_ids": [
@@ -88,11 +88,11 @@
         "dataset-10_5281_zenodo_18599983-p100-sitting-rest"
       ],
       "required_member_roles": [
-        "RADAR_DATA",
-        "RADAR_TIMESTAMP",
         "CHIRP_CONFIG",
         "MOVESENSE_ACC",
-        "MOVESENSE_ECG"
+        "MOVESENSE_ECG",
+        "RADAR_DATA",
+        "RADAR_TIMESTAMP"
       ],
       "optional_member_roles": [
         "NON_BREATHING_ANNOTATION"
@@ -146,9 +146,9 @@
         "Recordings ['db_records/P075/Sitting/Rest/radar_timestamps.csv', 'db_records/P007/Sitting/Post-exercise/radar_timestamps.csv'] contain 400 frames (40s) instead of standard 500 or 600 frames."
       ],
       "evidence": [
-        "Measured 220 recordings with multi-factor schema signature hash df58f75e80ab8ed8.",
-        "Parsed ISO-8601 timestamp CSV deltas and measured median period = 0.1s (10.0 Hz).",
-        "Inspected zlib stream header bytes 78da across radar_rFFTs.zlib files."
+        "Measured 220 recordings with observation-derived schema signature hash 2e892fce2d6776cd.",
+        "Inspected first two bytes of radar_rFFTs.zlib streams; measured header signature = 78da.",
+        "Parsed ISO-8601 timestamp CSV deltas and measured median period = 0.1s (10.0 Hz)."
       ]
     }
   ]
