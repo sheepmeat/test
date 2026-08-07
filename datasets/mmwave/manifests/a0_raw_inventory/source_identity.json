@@ -15,7 +15,7 @@
   },
   "official_source": {
     "source": "ZENODO_OFFICIAL",
-    "retrieved_at_utc": "2026-08-06T08:19:19.085530+00:00",
+    "retrieved_at_utc": "2026-08-07T08:39:40.604461+00:00",
     "requested_doi": "10.5281/zenodo.18599983",
     "resolved_record_id": "18599983",
     "verification_status": "REMOTE_VERIFIED",
@@ -67,12 +67,16 @@
     "documented_md5": "370de95033f1a98b78e57dbbea92a8bc"
   },
   "official_to_local_relationship": {
-    "relationship_status": "LOCALLY_REPACKAGED_ARCHIVE_CONFIRMED",
+    "official_container_sha256": "408c5b347c751c553abe6d0f640a6f98",
+    "local_container_sha256": "f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0",
     "container_hash_match": false,
-    "content_match_confirmed": true,
+    "official_internal_content_compared": false,
+    "local_structure_consistent_with_documentation": true,
+    "content_match_confirmed": false,
+    "relationship_status": "LIKELY_REPACKAGED_NOT_FULLY_VERIFIED",
     "repackaging_evidence": [
       "Local archive size (246597320 bytes) exceeds official Zenodo zip size (245,284,102 bytes).",
-      "Local archive contains 3,191 macOS resource fork entries (__MACOSX/._*) created during local extraction/re-compression.",
+      "Local archive contains 3191 macOS resource fork entries (__MACOSX/._*) created during local extraction/re-compression.",
       "All 110 participants and 440 recordings are fully present with 0 CRC read errors."
     ]
   },
@@ -84,6 +88,7 @@
   },
   "limitations": [
     "ParticipantsInfo.xlsx, ExampleCode.ipynb, and helper_fns.py exist on Zenodo but are not present in local workspace.",
+    "Official Zenodo zip member-level contents were not compared against local zip members.",
     "Full rFFT array decoding and signal alignment are deferred to Phase A1."
   ]
 }
