@@ -164,7 +164,7 @@ def validate_manifests(
 
     # 13. Dropped-tail counts match recording lengths
     for r in rec_results:
-        expected_dropped = r["source_sample_count"] - (r["window_count"] * expected_samples)
+        expected_dropped = r["canonical_sample_count"] - (r["window_count"] * expected_samples)
         if r["dropped_tail_samples"] != expected_dropped:
             errors.append(
                 f"Recording {r['recording_id']} dropped tail count mismatch: "

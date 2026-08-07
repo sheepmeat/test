@@ -316,6 +316,53 @@ class TestMmwaveTimeline(unittest.TestCase):
         self.assertEqual(json.dumps(wins1, sort_keys=True), json.dumps(wins2, sort_keys=True))
         self.assertEqual(json.dumps(exc1, sort_keys=True), json.dumps(exc2, sort_keys=True))
 
+    # 20. Resampling provenance source vs canonical index mapping
+    def test_resampling_source_vs_canonical_index_mapping(self) -> None:
+        # Native 8 Hz recording for 40 seconds -> dt = 0.125s, 321 samples
+        ts_iso = make_iso_timestamps("2025-02-20T12:00:00.000", 321, 0.125)
+        phase = np.sin(np.linspace(0, 10, 321))
+
+        rec_res, windows, exceptions = process_recording_timeline(
+            phase=phase,
+            timestamps_raw=ts_iso,
+            recording_id="rec-resampled-8hz",
+            subject_id="subj-resample",
+            extraction_profile_id="EXT_001",
+            profile=self.profile,
+        )
+
+        self.assertTrue(rec_res["resampling_performed"])
+        self.assertEqual(rec_res["source_sample_count"], 321)
+        self.assertEqual(rec_res["canonical_sample_count"], 401)  # 40s @ 10Hz = 401 samples (0..400)
+        self.assertEqual(len(windows), 1)  # 1 full 300-sample window (30s)
+
+        w = windows[0]
+        # Canonical indices: [0, 300)
+        self.assertEqual(w["canonical_start_index"], 0)
+        self.assertEqual(w["canonical_end_index_exclusive"], 300)
+
+        # Source native indices: 30s @ 8Hz = 240 samples -> [0, 240)
+        self.assertEqual(w["source_start_index"], 0)
+        self.assertEqual(w["source_end_index_exclusive"], 240)
+        self.assertNotEqual(w["canonical_end_index_exclusive"], w["source_end_index_exclusive"])
+
+        # Validate with manifest validator
+        val_success, val_errors = validate_manifests(
+            a2_pilot={"recordings": [{"recording_id": "rec-resampled-8hz"}]},
+            profile=self.profile.to_dict(),
+            rec_results=[rec_res],
+            windows=windows,
+            exceptions=exceptions,
+            summary={
+                "pilot_recording_count": 1,
+                "total_window_count": 1,
+                "total_dropped_tail_samples": rec_res["dropped_tail_samples"],
+                "a3_gate_status": "PASS_WITH_WARNINGS",
+                "a4_entry_status": "READY_WITH_CONDITIONS",
+            },
+        )
+        self.assertTrue(val_success, f"Validation failed: {val_errors}")
+
 
 if __name__ == "__main__":
     unittest.main()

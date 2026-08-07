@@ -340,6 +340,7 @@ def resample_timeline(
             "canonical_sample_count": len(grid_sec),
             "interpolated_sample_count": interpolated_count,
             "interpolated_mask": interpolated_mask.tolist(),
+            "native_timestamps_sec": timestamps_sec.tolist(),
         },
     )
 
@@ -372,6 +373,7 @@ def generate_30s_windows(
 
     resampled_performed = resampling_meta.get("resampling_performed", False)
     interpolated_mask = resampling_meta.get("interpolated_mask", None)
+    native_timestamps_sec = resampling_meta.get("native_timestamps_sec", None)
 
     for w_idx in range(num_windows):
         start_idx = w_idx * stride
@@ -387,6 +389,15 @@ def generate_30s_windows(
         start_sec = float(timestamps_sec[start_idx])
         end_exclusive_sec = start_sec + profile.window_duration_seconds
         w_end_exclusive_ts = format_canonical_iso(first_dt, end_exclusive_sec)
+
+        # Source native index mapping
+        if resampled_performed and native_timestamps_sec is not None:
+            native_sec = np.array(native_timestamps_sec, dtype=np.float64)
+            src_start = int(np.searchsorted(native_sec, start_sec - 1e-9, side="left"))
+            src_end_excl = int(np.searchsorted(native_sec, end_exclusive_sec - 1e-9, side="left"))
+        else:
+            src_start = start_idx
+            src_end_excl = end_idx_exclusive
 
         # Count interpolated samples in window
         if resampled_performed and interpolated_mask is not None:
@@ -427,8 +438,8 @@ def generate_30s_windows(
             "timeline_profile": profile.profile_id,
             "phase_profile": extraction_profile_id,
             "window_index": w_idx,
-            "source_start_index": start_idx,
-            "source_end_index_exclusive": end_idx_exclusive,
+            "source_start_index": src_start,
+            "source_end_index_exclusive": src_end_excl,
             "canonical_start_index": start_idx,
             "canonical_end_index_exclusive": end_idx_exclusive,
             "start_timestamp": w_start_ts,
