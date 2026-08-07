@@ -9,12 +9,13 @@ import json
 import os
 import re
 import sys
-from collections import Counter, defaultdict
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
 sys.path.insert(0, os.path.dirname(__file__))
 from mmwave_rfft_reader import RFFTReaderError, SafeRFFTReader  # noqa: E402
+import validate_mmwave_rfft_pilot as pilot_validator  # noqa: E402
 
 
 EXPECTED_ARCHIVE_SHA256 = "f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0"
@@ -82,10 +83,25 @@ def _anomaly_recording_paths(anomalies: dict[str, Any]) -> set[str]:
     return paths
 
 
+def scan_timestamp_counts(
+    archive_path: Path,
+    records: list[dict[str, Any]],
+    *,
+    max_timestamp_bytes: int = 1024 * 1024,
+) -> dict[str, int]:
+    """Use the validator's shared bounded ZIP timestamp scanner."""
+    return pilot_validator.scan_timestamp_counts(
+        archive_path,
+        records,
+        max_timestamp_bytes=max_timestamp_bytes,
+    )
+
+
 def deterministic_pilot_selection(
     records: list[dict[str, Any]],
     anomalies: dict[str, Any] | None = None,
     recommended_paths: set[str] | None = None,
+    timestamp_counts: dict[str, int] | None = None,
     target_count: int = DEFAULT_TARGET_COUNT,
 ) -> list[dict[str, Any]]:
     """Select anchors, A0 exceptions/count strata, then a midpoint fill."""
@@ -119,27 +135,28 @@ def deterministic_pilot_selection(
         if relative in (recommended_paths or set()):
             add(record, "A0_REPORT_RECOMMENDED_PILOT")
 
+    timestamp_counts = timestamp_counts or {}
     covered_timestamp_counts = {
-        record.get("timestamp_stats", {}).get("line_count")
+        timestamp_counts[record["recording_id"]]
         for record, _reason in selected.values()
+        if record["recording_id"] in timestamp_counts
     }
-    available_timestamp_counts = sorted(
-        {
-            record.get("timestamp_stats", {}).get("line_count")
-            for record in records
-            if isinstance(record.get("timestamp_stats", {}).get("line_count"), int)
-        }
-    )
+    available_timestamp_counts = sorted(set(timestamp_counts.values()))
     for count in available_timestamp_counts:
         if count in covered_timestamp_counts:
             continue
         representative = next(
             record
             for record in records
-            if record.get("timestamp_stats", {}).get("line_count") == count
+            if timestamp_counts.get(record["recording_id"]) == count
         )
-        add(representative, "A0_TIMESTAMP_COUNT_STRATUM_REPRESENTATIVE")
+        add(representative, "ZIP_TIMESTAMP_COUNT_STRATUM_REPRESENTATIVE")
         covered_timestamp_counts.add(count)
+
+    if len(selected) > target_count:
+        raise ValueError(
+            f"mandatory pilot coverage requires {len(selected)} recordings, exceeding target {target_count}"
+        )
 
     midpoint = (len(subjects) - 1) / 2
     midpoint_subjects = sorted(
@@ -172,6 +189,7 @@ def deterministic_pilot_selection(
                 "activity_or_test": record["activity_or_test"]["value"],
                 "a0_schema_profile": record["schema_profile"],
                 "annotation_present": bool(record.get("annotation_files")),
+                "timestamp_count_prescan": timestamp_counts.get(record["recording_id"]),
                 "selection_reason": reason,
             }
         )
@@ -421,6 +439,7 @@ def decode_pilot_record(
 def build_exceptions(
     results: list[dict[str, Any]],
     a0_profiles: dict[str, Any],
+    timestamp_counts: dict[str, int] | None = None,
 ) -> list[dict[str, Any]]:
     exceptions: list[dict[str, Any]] = []
 
@@ -525,6 +544,20 @@ def build_exceptions(
             "The machine-readable A0 baseline does not assert 600 for this recording and remains unchanged; the human-report recommendation is corrected only through this A1 exception.",
         )
 
+    if timestamp_counts is not None and 600 not in set(timestamp_counts.values()):
+        affected = [
+            result["recording_id"]
+            for result in results
+            if result["recording_id"].endswith("-p002-lying-post_exercise")
+        ]
+        add(
+            "WARNING",
+            "A0_CONTRADICTION",
+            affected,
+            "A bounded scan of every A0-linked radar_timestamps.csv member found no 600-row recording despite the committed A0 human-report claim.",
+            "A0 outputs remain unchanged; the absence of the claimed duration stratum must be resolved before relying on it downstream.",
+        )
+
     successful = [
         result["recording_id"]
         for result in results
@@ -568,6 +601,9 @@ def build_summary(
     exceptions: list[dict[str, Any]],
     archive_before: str,
     archive_after: str,
+    timestamp_counts: dict[str, int],
+    validation_success: bool,
+    validation_errors: list[str],
 ) -> dict[str, Any]:
     successes = [
         result
@@ -579,22 +615,14 @@ def build_summary(
     warnings = [result for result in successes if result.get("warnings")]
     exact = [result for result in successes if result["alignment_status"] == "EXACT_ALIGNMENT"]
     mismatches = [result for result in successes if result["alignment_status"] != "EXACT_ALIGNMENT"]
-    axes_verified = bool(successes) and all(
-        result[axis] is not None
-        for result in successes
-        for axis in ("frame_axis", "antenna_axis", "range_bin_axis")
-    )
     blocker_count = sum(item["severity"] == "BLOCKER" for item in exceptions)
     error_count = sum(item["severity"] == "ERROR" for item in exceptions)
     warning_count = sum(item["severity"] == "WARNING" for item in exceptions)
-    if blocker_count:
-        gate, a2 = "BLOCKED", "BLOCKED"
-    elif failures or error_count or not axes_verified:
-        gate, a2 = "FAIL", "NOT_READY"
-    elif warning_count:
-        gate, a2 = "PASS_WITH_WARNINGS", "READY_WITH_CONDITIONS"
-    else:
-        gate, a2 = "PASS", "READY"
+    gate, a2 = pilot_validator.derive_validated_gate(
+        results=results,
+        exceptions=exceptions,
+        validation_success=validation_success,
+    )
 
     return {
         "schema_version": "1.0",
@@ -604,7 +632,10 @@ def build_summary(
         "decode_warning_count": len(warnings),
         "decode_failure_count": len(failures),
         "decoder_profile_count": len(profiles),
-        "unique_shapes": sorted({tuple(result["shape"]) for result in successes}),
+        "unique_shapes": [
+            list(shape)
+            for shape in sorted({tuple(result["shape"]) for result in successes})
+        ],
         "unique_dtypes": sorted({result["dtype"] for result in successes}),
         "unique_radar_header_signatures": sorted(
             {result["radar_header_signature"] for result in successes}
@@ -632,6 +663,11 @@ def build_summary(
         "archive_sha256_after_a1": archive_after,
         "archive_unchanged_after_a1": archive_before == archive_after,
         "expected_archive_sha256_match": archive_before == EXPECTED_ARCHIVE_SHA256,
+        "timestamp_prescan_recording_count": len(timestamp_counts),
+        "available_timestamp_count_strata": sorted(set(timestamp_counts.values())),
+        "validation_success": validation_success,
+        "validation_error_count": len(validation_errors),
+        "validation_errors": validation_errors,
         "blocker_count": blocker_count,
         "error_count": error_count,
         "warning_count": warning_count,
@@ -693,11 +729,17 @@ def write_report(
     stored_spacing = (
         first["schema_observations"]["range_bins_spacing_m_median"] if first else None
     )
+    prescan_strata = ", ".join(
+        f"{item['timestamp_count']} rows: {item['recording_count']} recordings"
+        for item in selection["timestamp_prescan"]["strata"]
+    )
     text = f"""# Phase A1 Safe rFFT Reader Pilot
 
 ## 1. Executive Summary
 
 Phase A1 gate: **`{summary['a1_gate_status']}`**. A2 entry: **`{summary['a2_entry_status']}`**. The deterministic {summary['pilot_recording_count']}-recording, {summary['pilot_subject_count']}-subject pilot safely decoded {summary['decode_success_count']} recordings and failed {summary['decode_failure_count']}. The decoded payload is a zlib-compressed protocol-5 pickle containing `[rFFTs, rBins]`; no arbitrary object execution occurred. A strict `pickletools` opcode/global allowlist decoded only primitive NumPy buffer structures.
+
+The shared in-memory A1 validator completed before gate derivation: **`{summary['validation_success']}`** ({summary['validation_error_count']} errors).
 
 This proves structural radar decoding only. It does not prove respiration extraction.
 
@@ -710,7 +752,7 @@ This proves structural radar decoding only. It does not prove respiration extrac
 
 ## 3. Pilot Selection
 
-The selection is derived deterministically from the A0 recording index: complete low/high subject anchors, A0-recorded timestamp-length exceptions, committed A0 report pilot candidates, one representative for every machine-readable A0 timestamp-count stratum when present, then a midpoint-subject fill to 12.
+The selection is derived deterministically from the A0 recording index plus a bounded read-only scan of all 440 linked `radar_timestamps.csv` ZIP members. No rFFT member is opened during this scan. Measured strata: {prescan_strata}. Complete low/high subject anchors, A0 exceptions/candidates, and one representative for every measured timestamp-count stratum are selected before deterministic fill.
 
 | Recording | Posture | Condition | A0 profile | Annotation | Selection reason |
 |---|---|---|---|---:|---|
@@ -760,6 +802,7 @@ The selection is derived deterministically from the A0 recording index: complete
 ## 8. Timestamp and Frame Alignment
 
 - Exact alignments: `{summary['exact_frame_timestamp_alignment_count']}`; mismatches: `{summary['alignment_mismatch_count']}`.
+- Decoded frame-count strata: {_format_values(summary['available_timestamp_count_strata'])}; each measured timestamp stratum has at least one safely decoded tensor in the pilot.
 - Timestamp median Δt value(s): {_format_values(timestamp_medians)} seconds; empirical frame rate value(s): {_format_values(frame_rates)} Hz.
 - Duplicate/backward/large-gap totals: `{sum(result['duplicate_timestamp_count'] for result in successful)}` / `{sum(result['backward_timestamp_count'] for result in successful)}` / `{sum(result['large_gap_count'] for result in successful)}`.
 - The two 400-frame A0 exceptions decode as 400-frame tensors with exactly 400 timestamps. No truncation occurs.
@@ -786,7 +829,7 @@ A0 labeled the inner representation as raw zlib-compressed numeric data and stat
 
 ## 12. A1 Gate Decision
 
-**`{summary['a1_gate_status']}`**. The format, tensor contract, axes, frame counts, timing, and chirp linkage are measured; all pilot records decode and align. Warnings remain because the source serialization is object-execution-capable and because configured/stored range spacing differs.
+**`{summary['a1_gate_status']}`**. This state is derived only after the shared in-memory validator returns `validation_success={summary['validation_success']}`. The format, tensor contract, axes, frame counts, timing, and chirp linkage are measured; all pilot records decode and align. Warnings remain because the source serialization is object-execution-capable and because configured/stored range spacing differs.
 
 ## 13. A2 Entry Decision
 
@@ -854,19 +897,49 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
             re.findall(r"`(P\d{3}/(?:Sitting|Lying)/(?:Rest|Post-exercise))`", report_text)
         )
 
+    timestamp_counts = scan_timestamp_counts(archive_path, records)
+    record_by_id = {record["recording_id"]: record for record in records}
+    timestamp_strata = []
+    for count in sorted(set(timestamp_counts.values())):
+        representative_id = next(
+            record_id
+            for record_id in sorted(timestamp_counts)
+            if timestamp_counts[record_id] == count
+        )
+        timestamp_strata.append(
+            {
+                "timestamp_count": count,
+                "recording_count": sum(
+                    observed == count for observed in timestamp_counts.values()
+                ),
+                "representative_recording_id": representative_id,
+                "representative_timestamp_member": record_by_id[representative_id][
+                    "timestamp_files"
+                ][0],
+            }
+        )
+
     selections = deterministic_pilot_selection(
         records,
         anomalies,
         recommended_paths=recommended_paths,
+        timestamp_counts=timestamp_counts,
         target_count=args.pilot_count,
     )
     selection_doc = {
         "schema_version": "1.0",
         "selection_method": (
             "A0_INDEX_LOW_HIGH_FULL_FACTORIAL_ANCHORS_THEN_A0_SCHEMA_EXCEPTIONS_"
-            "AND_A0_REPORT_CANDIDATES_AND_TIMESTAMP_COUNT_STRATA_THEN_MIDPOINT_FILL"
+            "AND_A0_REPORT_CANDIDATES_AND_BOUNDED_ZIP_TIMESTAMP_COUNT_STRATA_"
+            "THEN_MIDPOINT_FILL"
         ),
         "target_count": args.pilot_count,
+        "timestamp_prescan": {
+            "method": "BOUNDED_ZIP_TIMESTAMP_MEMBER_UTF8_NONEMPTY_LINE_COUNT",
+            "rfft_members_opened": 0,
+            "scanned_recording_count": len(timestamp_counts),
+            "strata": timestamp_strata,
+        },
         "recordings": selections,
     }
     index_by_id = {record["recording_id"]: record for record in records}
@@ -881,8 +954,13 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         for selection in selections
     ]
     profiles = assign_decoder_profiles(results)
-    exceptions = build_exceptions(results, a0_profiles)
+    exceptions = build_exceptions(results, a0_profiles, timestamp_counts)
     archive_after = streaming_sha256(archive_path)
+    if archive_after != archive_before:
+        raise RuntimeError("archive SHA-256 changed during A1")
+
+    profiles_doc = {"schema_version": "1.0", "profiles": profiles}
+    exceptions_doc = {"schema_version": "1.0", "exceptions": exceptions}
     summary = build_summary(
         selections,
         results,
@@ -890,20 +968,52 @@ def run(args: argparse.Namespace) -> dict[str, Any]:
         exceptions,
         archive_before,
         archive_after,
+        timestamp_counts,
+        True,
+        [],
     )
-    if archive_after != archive_before:
-        raise RuntimeError("archive SHA-256 changed during A1")
+    validation_errors = pilot_validator.validate_documents(
+        a0_records=records,
+        selection_doc=selection_doc,
+        results=results,
+        profiles_doc=profiles_doc,
+        exceptions_doc=exceptions_doc,
+        summary=summary,
+        live_archive_sha256=archive_after,
+        observed_timestamp_counts=timestamp_counts,
+        enforce_gate_fields=False,
+    )
+    summary = build_summary(
+        selections,
+        results,
+        profiles,
+        exceptions,
+        archive_before,
+        archive_after,
+        timestamp_counts,
+        not validation_errors,
+        validation_errors,
+    )
+    final_validation_errors = pilot_validator.validate_documents(
+        a0_records=records,
+        selection_doc=selection_doc,
+        results=results,
+        profiles_doc=profiles_doc,
+        exceptions_doc=exceptions_doc,
+        summary=summary,
+        live_archive_sha256=archive_after,
+        observed_timestamp_counts=timestamp_counts,
+    )
+    if final_validation_errors != validation_errors:
+        raise RuntimeError(
+            "validator/gate coupling produced inconsistent validation evidence: "
+            + "; ".join(final_validation_errors)
+        )
 
     write_json(output_dir / "pilot_selection.json", selection_doc)
     write_jsonl(output_dir / "pilot_decode_results.jsonl", results)
-    write_json(
-        output_dir / "decoder_profiles.json",
-        {"schema_version": "1.0", "profiles": profiles},
-    )
-    write_json(
-        output_dir / "exceptions.json",
-        {"schema_version": "1.0", "exceptions": exceptions},
-    )
+    write_json(output_dir / "decoder_profiles.json", profiles_doc)
+    write_json(output_dir / "exceptions.json", exceptions_doc)
     write_json(output_dir / "a1_summary.json", summary)
     write_report(report_path, summary, selection_doc, results, profiles, exceptions)
     return summary
@@ -934,3 +1044,5 @@ def parse_args() -> argparse.Namespace:
 if __name__ == "__main__":
     result = run(parse_args())
     print(json.dumps(result, indent=2, sort_keys=True))
+    if not result["validation_success"]:
+        raise SystemExit(1)

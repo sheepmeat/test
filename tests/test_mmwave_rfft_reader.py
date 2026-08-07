@@ -31,7 +31,9 @@ from mmwave_rfft_reader import (  # noqa: E402
 from run_mmwave_rfft_pilot import (  # noqa: E402
     assign_decoder_profiles,
     deterministic_pilot_selection,
+    scan_timestamp_counts,
 )
+from validate_mmwave_rfft_pilot import derive_validated_gate  # noqa: E402
 
 
 def controlled_pickle(frames: int = 3, antennas: int = 8, bins: int = 4) -> bytes:
@@ -56,6 +58,7 @@ def fake_record(subject: int, posture: str, activity: str) -> dict:
         "activity_or_test": {"value": activity},
         "schema_profile": profile,
         "annotation_files": annotation,
+        "timestamp_files": [base + "/radar_timestamps.csv"],
     }
 
 
@@ -217,17 +220,36 @@ class TestSafeRFFTReader(unittest.TestCase):
             ]
         }
         recommended = {"P050/Lying/Post-exercise"}
+        timestamp_counts = {item["recording_id"]: 500 for item in records}
+        anomaly_record = next(
+            item
+            for item in records
+            if item["source_recording_path"]
+            == "db_records/P050/Sitting/Post-exercise"
+        )
+        six_hundred_record = next(
+            item
+            for item in records
+            if item["source_recording_path"] == "db_records/P050/Sitting/Rest"
+        )
+        timestamp_counts[anomaly_record["recording_id"]] = 400
+        timestamp_counts[six_hundred_record["recording_id"]] = 600
         first = deterministic_pilot_selection(
-            records, anomalies, recommended_paths=recommended, target_count=10
+            records,
+            anomalies,
+            recommended_paths=recommended,
+            timestamp_counts=timestamp_counts,
+            target_count=11,
         )
         second = deterministic_pilot_selection(
             list(reversed(records)),
             anomalies,
             recommended_paths=recommended,
-            target_count=10,
+            timestamp_counts=timestamp_counts,
+            target_count=11,
         )
         self.assertEqual(first, second)
-        self.assertEqual(len(first), 10)
+        self.assertEqual(len(first), 11)
         self.assertEqual(
             {item["a0_schema_profile"] for item in first},
             {"SCHEMA_PROFILE_001", "SCHEMA_PROFILE_002"},
@@ -235,6 +257,17 @@ class TestSafeRFFTReader(unittest.TestCase):
         self.assertTrue(
             any(
                 item["selection_reason"] == "A0_RECORDED_TIMESTAMP_LENGTH_EXCEPTION"
+                for item in first
+            )
+        )
+        self.assertEqual(
+            {item["timestamp_count_prescan"] for item in first},
+            {400, 500, 600},
+        )
+        self.assertTrue(
+            any(
+                item["selection_reason"]
+                == "ZIP_TIMESTAMP_COUNT_STRATUM_REPRESENTATIVE"
                 for item in first
             )
         )
@@ -288,6 +321,57 @@ class TestSafeRFFTReader(unittest.TestCase):
             ["SCHEMA_PROFILE_001", "SCHEMA_PROFILE_002"],
         )
         self.assertEqual(results[0]["decoder_profile_id"], results[1]["decoder_profile_id"])
+
+    def test_18_bounded_timestamp_count_prescan(self):
+        records = [
+            fake_record(1, "Lying", "Rest"),
+            fake_record(2, "Sitting", "Rest"),
+            fake_record(3, "Lying", "Post-exercise"),
+        ]
+        expected = [400, 500, 600]
+        with tempfile.TemporaryDirectory() as tmp:
+            archive = os.path.join(tmp, "timestamps.zip")
+            with zipfile.ZipFile(archive, "w") as fixture:
+                for record, count in zip(records, expected):
+                    rows = "\n".join(
+                        f"2026-01-01T00:00:{index // 10:02d}.{index % 10}00000000"
+                        for index in range(count)
+                    )
+                    fixture.writestr(record["timestamp_files"][0], rows)
+                fixture.writestr(
+                    "db_records/P001/Lying/Rest/radar_rFFTs.zlib",
+                    b"must-not-be-opened",
+                )
+            measured = scan_timestamp_counts(os.path.abspath(archive), records)
+        self.assertEqual(
+            [measured[record["recording_id"]] for record in records], expected
+        )
+
+    def test_19_validation_failure_forces_gate_failure(self):
+        successful_result = {
+            "payload_decode_status": "SUCCESS_WITH_WARNING",
+            "errors": [],
+            "frame_axis": 0,
+            "antenna_axis": 1,
+            "range_bin_axis": 2,
+        }
+        warning = {"severity": "WARNING"}
+        self.assertEqual(
+            derive_validated_gate(
+                results=[successful_result],
+                exceptions=[warning],
+                validation_success=True,
+            ),
+            ("PASS_WITH_WARNINGS", "READY_WITH_CONDITIONS"),
+        )
+        self.assertEqual(
+            derive_validated_gate(
+                results=[successful_result],
+                exceptions=[warning],
+                validation_success=False,
+            ),
+            ("FAIL", "NOT_READY"),
+        )
 
 
 if __name__ == "__main__":

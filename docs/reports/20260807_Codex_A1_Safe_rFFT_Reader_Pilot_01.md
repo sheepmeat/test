@@ -4,6 +4,8 @@
 
 Phase A1 gate: **`PASS_WITH_WARNINGS`**. A2 entry: **`READY_WITH_CONDITIONS`**. The deterministic 12-recording, 6-subject pilot safely decoded 12 recordings and failed 0. The decoded payload is a zlib-compressed protocol-5 pickle containing `[rFFTs, rBins]`; no arbitrary object execution occurred. A strict `pickletools` opcode/global allowlist decoded only primitive NumPy buffer structures.
 
+The shared in-memory A1 validator completed before gate derivation: **`True`** (0 errors).
+
 This proves structural radar decoding only. It does not prove respiration extraction.
 
 ## 2. A0 Input Baseline
@@ -15,7 +17,7 @@ This proves structural radar decoding only. It does not prove respiration extrac
 
 ## 3. Pilot Selection
 
-The selection is derived deterministically from the A0 recording index: complete low/high subject anchors, A0-recorded timestamp-length exceptions, committed A0 report pilot candidates, one representative for every machine-readable A0 timestamp-count stratum when present, then a midpoint-subject fill to 12.
+The selection is derived deterministically from the A0 recording index plus a bounded read-only scan of all 440 linked `radar_timestamps.csv` ZIP members. No rFFT member is opened during this scan. Measured strata: 400 rows: 2 recordings, 500 rows: 348 recordings, 600 rows: 90 recordings. Complete low/high subject anchors, A0 exceptions/candidates, and one representative for every measured timestamp-count stratum are selected before deterministic fill.
 
 | Recording | Posture | Condition | A0 profile | Annotation | Selection reason |
 |---|---|---|---|---:|---|
@@ -24,8 +26,8 @@ The selection is derived deterministically from the A0 recording index: complete
 | `dataset-10_5281_zenodo_18599983-p001-sitting-post_exercise` | `Sitting` | `Post-exercise` | `SCHEMA_PROFILE_002` | `False` | `LOW_ID_SUBJECT_FULL_FACTORIAL_ANCHOR` |
 | `dataset-10_5281_zenodo_18599983-p001-sitting-rest` | `Sitting` | `Rest` | `SCHEMA_PROFILE_001` | `True` | `LOW_ID_SUBJECT_FULL_FACTORIAL_ANCHOR` |
 | `dataset-10_5281_zenodo_18599983-p002-lying-post_exercise` | `Lying` | `Post-exercise` | `SCHEMA_PROFILE_002` | `False` | `A0_REPORT_RECOMMENDED_PILOT` |
+| `dataset-10_5281_zenodo_18599983-p004-lying-post_exercise` | `Lying` | `Post-exercise` | `SCHEMA_PROFILE_002` | `False` | `ZIP_TIMESTAMP_COUNT_STRATUM_REPRESENTATIVE` |
 | `dataset-10_5281_zenodo_18599983-p007-sitting-post_exercise` | `Sitting` | `Post-exercise` | `SCHEMA_PROFILE_002` | `False` | `A0_RECORDED_TIMESTAMP_LENGTH_EXCEPTION` |
-| `dataset-10_5281_zenodo_18599983-p055-lying-post_exercise` | `Lying` | `Post-exercise` | `SCHEMA_PROFILE_002` | `False` | `MIDPOINT_SUBJECT_DETERMINISTIC_BALANCE_FILL` |
 | `dataset-10_5281_zenodo_18599983-p075-sitting-rest` | `Sitting` | `Rest` | `SCHEMA_PROFILE_001` | `True` | `A0_RECORDED_TIMESTAMP_LENGTH_EXCEPTION` |
 | `dataset-10_5281_zenodo_18599983-p110-lying-post_exercise` | `Lying` | `Post-exercise` | `SCHEMA_PROFILE_002` | `False` | `HIGH_ID_SUBJECT_FULL_FACTORIAL_ANCHOR` |
 | `dataset-10_5281_zenodo_18599983-p110-lying-rest` | `Lying` | `Rest` | `SCHEMA_PROFILE_001` | `True` | `HIGH_ID_SUBJECT_FULL_FACTORIAL_ANCHOR` |
@@ -52,7 +54,7 @@ The selection is derived deterministically from the A0 recording index: complete
 
 ## 6. Decoded Tensor Structure
 
-- Shape(s): `(400, 8, 64)`, `(500, 8, 64)`.
+- Shape(s): `[400, 8, 64]`, `[500, 8, 64]`, `[600, 8, 64]`.
 - Dtype(s): `complex128`; little-endian complex values with interleaved float64 real/imag storage.
 - Frame axis: `0` (official example code and exact timestamp dimension consistency).
 - Virtual-antenna axis: `1` (official notebook documentation plus 2 TX × 4 RX config).
@@ -76,6 +78,7 @@ The selection is derived deterministically from the A0 recording index: complete
 ## 8. Timestamp and Frame Alignment
 
 - Exact alignments: `12`; mismatches: `0`.
+- Decoded frame-count strata: `400`, `500`, `600`; each measured timestamp stratum has at least one safely decoded tensor in the pilot.
 - Timestamp median Δt value(s): `0.1` seconds; empirical frame rate value(s): `10.0` Hz.
 - Duplicate/backward/large-gap totals: `0` / `0` / `0`.
 - The two 400-frame A0 exceptions decode as 400-frame tensors with exactly 400 timestamps. No truncation occurs.
@@ -107,7 +110,7 @@ A0 labeled the inner representation as raw zlib-compressed numeric data and stat
 
 ## 12. A1 Gate Decision
 
-**`PASS_WITH_WARNINGS`**. The format, tensor contract, axes, frame counts, timing, and chirp linkage are measured; all pilot records decode and align. Warnings remain because the source serialization is object-execution-capable and because configured/stored range spacing differs.
+**`PASS_WITH_WARNINGS`**. This state is derived only after the shared in-memory validator returns `validation_success=True`. The format, tensor contract, axes, frame counts, timing, and chirp linkage are measured; all pilot records decode and align. Warnings remain because the source serialization is object-execution-capable and because configured/stored range spacing differs.
 
 ## 13. A2 Entry Decision
 

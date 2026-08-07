@@ -17,7 +17,8 @@
       "is_complex": true,
       "observed_frame_counts": [
         400,
-        500
+        500,
+        600
       ],
       "payload_format": "PYTHON_PICKLE_PROTOCOL_5_NUMPY_ARRAY_PAIR",
       "radar_header_signatures": [

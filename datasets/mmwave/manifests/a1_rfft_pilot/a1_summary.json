@@ -7,6 +7,11 @@
   "archive_sha256_after_a1": "f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0",
   "archive_sha256_before_a1": "f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0",
   "archive_unchanged_after_a1": true,
+  "available_timestamp_count_strata": [
+    400,
+    500,
+    600
+  ],
   "blocker_count": 0,
   "complex_representation_verified": true,
   "decode_failure_count": 0,
@@ -40,6 +45,7 @@
     "Configured R_BIN differs from stored rBins spacing; stored coordinates are authoritative for decoded payload structure."
   ],
   "schema_version": "1.0",
+  "timestamp_prescan_recording_count": 440,
   "unique_a0_compatible_chirp_config_hashes": [
     "bd48b829076ed279"
   ],
@@ -62,9 +68,17 @@
       500,
       8,
       64
+    ],
+    [
+      600,
+      8,
+      64
     ]
   ],
   "unsafe_deserialization_required": false,
   "unsafe_serialization_detected": true,
+  "validation_error_count": 0,
+  "validation_errors": [],
+  "validation_success": true,
   "warning_count": 4
 }
