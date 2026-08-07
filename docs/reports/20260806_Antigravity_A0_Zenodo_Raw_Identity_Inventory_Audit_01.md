@@ -4,7 +4,7 @@
 **Auditor**: Autonomous AI Data Lineage & Radar Integrity Engineer (Antigravity Agent)
 **Target Repository Root**: `<REPO_ROOT>`
 **Git Branch**: `feature/phase-a0-raw-inventory`
-**Git Commit**: `2956ba1b7bbe34d8e7448e4a899613249771d90f`
+**Git Commit**: `9f65d3165088c5a89c213956d32f9aac78f132e2`
 **Target Raw Archive**: `datasets/raw_archives/external_datasets/db_records.zip`
 **Phase A0 Gate Status**: **`PASS_WITH_WARNINGS`**
 **Phase A1 Entry Status**: **`READY_WITH_CONDITIONS`**
@@ -77,7 +77,7 @@ The following operations were **EXPLICITLY NOT PERFORMED** during Phase A0:
 
 - **Repository Root**: `<REPO_ROOT>`
 - **Git Branch**: `feature/phase-a0-raw-inventory`
-- **Git Commit**: `2956ba1b7bbe34d8e7448e4a899613249771d90f`
+- **Git Commit**: `9f65d3165088c5a89c213956d32f9aac78f132e2`
 - **Git Remote Origin**: `https://github.com/sheepmeat/test.git`
 
 ---
@@ -136,7 +136,7 @@ The following operations were **EXPLICITLY NOT PERFORMED** during Phase A0:
 
 ### Profile: `SCHEMA_PROFILE_001`
 - **Recordings using Profile**: 220
-- **Measured Signature Hash**: `5aa1154747af06f6`
+- **Measured Signature Hash**: `2e892fce2d6776cd`
 - **Observed Radar Header Signature**: `78da`
 - **Measured Timestamp & Interval Properties**:
   - Parsed Timestamp Format: `ISO8601_UTC_CSV`
@@ -158,7 +158,7 @@ The following operations were **EXPLICITLY NOT PERFORMED** during Phase A0:
 
 ### Profile: `SCHEMA_PROFILE_002`
 - **Recordings using Profile**: 220
-- **Measured Signature Hash**: `2e892fce2d6776cd`
+- **Measured Signature Hash**: `5aa1154747af06f6`
 - **Observed Radar Header Signature**: `78da`
 - **Measured Timestamp & Interval Properties**:
   - Parsed Timestamp Format: `ISO8601_UTC_CSV`

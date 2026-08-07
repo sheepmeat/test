@@ -7,6 +7,7 @@ Verifies internal consistency across all Phase A0 manifest files:
 - Uniqueness of deterministic identifiers (source_file_id, recording_id, subject_id, anomaly_id)
 - Detail vs Summary count matching (zip members, recordings, anomalies, linkages, profiles, role counts, identifier collisions)
 - Referenced archive member path existence
+- Recording schema profile assignment consistency with schema_profiles.json
 - Dynamic A0 gate status and A1 entry status consistency
 """
 
@@ -43,6 +44,10 @@ def validate_inventory_objects(summary, source_id, claims, integrity, members, r
     Returns (success: bool, errors: list[str]).
     """
     errors = []
+
+    # Parse profiles map
+    prof_list = profiles.get("profiles", []) if isinstance(profiles, dict) else profiles
+    profiles_map = {p["schema_profile"]: p for p in prof_list}
 
     # 1. Verify Identifier Uniqueness & Count Collisions
     member_paths = set()
@@ -102,6 +107,22 @@ def validate_inventory_objects(summary, source_id, claims, integrity, members, r
         for ref_path in all_ref_files:
             if ref_path not in member_paths:
                 errors.append(f"Recording '{rec_id}' references missing archive member path: '{ref_path}'")
+
+        # CROSS-VERIFY RECORDING SCHEMA PROFILE ASSIGNMENT AGAINST DEFINITION
+        assigned_prof_id = r.get("schema_profile")
+        if not assigned_prof_id or assigned_prof_id not in profiles_map:
+            errors.append(f"Recording '{rec_id}' references invalid/missing schema profile ID '{assigned_prof_id}'")
+        else:
+            prof_def = profiles_map[assigned_prof_id]
+            has_ann = bool(r.get("annotation_files"))
+            expected_ann_fmt = "ISO8601_RANGE_CSV" if has_ann else "NONE"
+
+            if prof_def.get("annotation_format") != expected_ann_fmt:
+                errors.append(
+                    f"Schema profile assignment mismatch in recording '{rec_id}': "
+                    f"assigned profile '{assigned_prof_id}' has annotation_format '{prof_def.get('annotation_format')}', "
+                    f"but recording has_annotation={has_ann} (expected '{expected_ann_fmt}')"
+                )
 
     sf_collisions = len(source_file_ids_list) - len(set(source_file_ids_list))
     rec_collisions = len(recording_ids_list) - len(set(recording_ids_list))
@@ -185,7 +206,6 @@ def validate_inventory_objects(summary, source_id, claims, integrity, members, r
             errors.append(f"Annotation file count mismatch: summary ({summary.get('annotation_file_count')}) vs inventory ({role_counts['NON_BREATHING_ANNOTATION']})")
 
         # Schema profile count
-        prof_list = profiles.get("profiles", []) if isinstance(profiles, dict) else profiles
         if summary.get("schema_profile_count") != len(prof_list):
             errors.append(f"Schema profile count mismatch: summary ({summary.get('schema_profile_count')}) vs profiles ({len(prof_list)})")
 

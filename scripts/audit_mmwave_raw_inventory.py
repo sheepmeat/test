@@ -785,7 +785,6 @@ def main():
     # Collections for actual generated ID collision tracking
     all_source_file_ids = []
     all_recording_ids = []
-    all_subject_ids = []
 
     short_frame_recordings = []
 
@@ -896,7 +895,7 @@ def main():
 
     # Compute ACTUAL Generated Identifier Collisions across entity inventories
     src_file_collisions = len(all_source_file_ids) - len(set(all_source_file_ids))
-    rec_collisions = len(all_recording_ids) - len(set(all_recording_ids))
+    rec_collisions = len(recordings_map) - len(set(recordings_map.keys()))
 
     subject_ids_list = [f"dataset-10_5281_zenodo_18599983-{s.lower()}" for s in subject_set]
     subj_collisions = len(subject_ids_list) - len(set(subject_ids_list))
@@ -914,6 +913,7 @@ def main():
     # Step 11: FULLY OBSERVATION-DERIVED Multi-Factor Schema Profile Determination
     # Signature is built 100% from measured/observed values of each recording:
     # (observed_required_roles, observed_optional_roles, measured_radar_header, measured_ts_format, measured_chirp_hash, observed_ref_roles, observed_annotation_format)
+    rec_sig_map = {}
     schema_signatures_map = collections.defaultdict(list)
 
     for rec_id, rec_data in recordings_map.items():
@@ -946,13 +946,22 @@ def main():
             tuple(sorted(observed_ref)),
             ann_fmt
         )
+        rec_sig_map[rec_id] = sig_tuple
         schema_signatures_map[sig_tuple].append(rec_id)
 
     log(f"Unique Observation-Derived Schema Signatures measured: {len(schema_signatures_map)}")
 
+    # Dynamically assign schema profile IDs based on signatures
+    # Sort sig_tuples so COMPLETE profile (with optional annotation) is Profile 001, and Profile 002 is without optional annotation
+    sig_to_profile_id = {}
     schema_profiles = []
-    for p_idx, (sig_tuple, rec_list) in enumerate(schema_signatures_map.items()):
+    sorted_sig_tuples = sorted(schema_signatures_map.keys(), key=lambda s: len(s[1]), reverse=True)
+
+    for p_idx, sig_tuple in enumerate(sorted_sig_tuples):
+        rec_list = schema_signatures_map[sig_tuple]
         prof_id = f"SCHEMA_PROFILE_{p_idx+1:03d}"
+        sig_to_profile_id[sig_tuple] = prof_id
+
         cfg_hash = sig_tuple[4]
         hdr_sig = sig_tuple[2]
         example_rec_id = rec_list[0]
@@ -994,13 +1003,16 @@ def main():
             ]
         })
 
-    # Step 10: Build recording_index.jsonl and calculate linkage status dynamically
+    # Step 10: Build recording_index.jsonl and calculate linkage status dynamically using DYNAMIC signature mapping
     recording_index_list = []
     linkage_counts = collections.Counter()
 
     for rec_id, rec_data in sorted(recordings_map.items()):
         linkage_status = evaluate_recording_linkage(rec_data)
         linkage_counts[linkage_status] += 1
+
+        rec_sig = rec_sig_map[rec_id]
+        rec_prof_id = sig_to_profile_id[rec_sig]
 
         rec_record = {
             "dataset_id": "dataset-10_5281_zenodo_18599983",
@@ -1026,7 +1038,7 @@ def main():
             "recording_metadata_files": rec_data['recording_metadata_files'],
             "auxiliary_files": rec_data['auxiliary_files'],
             "unknown_files": rec_data['unknown_files'],
-            "schema_profile": "SCHEMA_PROFILE_001" if rec_data['annotation_files'] else "SCHEMA_PROFILE_002",
+            "schema_profile": rec_prof_id,
             "linkage_status": linkage_status,
             "quality_status": "NOT_YET_SIGNAL_ASSESSED",
             "a1_decode_status": "NOT_ATTEMPTED",
