@@ -15,7 +15,7 @@
   },
   "official_source": {
     "source": "ZENODO_OFFICIAL",
-    "retrieved_at_utc": "2026-08-07T08:39:40.604461+00:00",
+    "retrieved_at_utc": "2026-08-07T08:43:17.440205+00:00",
     "requested_doi": "10.5281/zenodo.18599983",
     "resolved_record_id": "18599983",
     "verification_status": "REMOTE_VERIFIED",
@@ -67,15 +67,19 @@
     "documented_md5": "370de95033f1a98b78e57dbbea92a8bc"
   },
   "official_to_local_relationship": {
-    "official_container_sha256": "408c5b347c751c553abe6d0f640a6f98",
+    "official_container_md5": "408c5b347c751c553abe6d0f640a6f98",
+    "local_container_md5": "370de95033f1a98b78e57dbbea92a8bc",
+    "official_container_sha256": null,
     "local_container_sha256": "f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0",
-    "container_hash_match": false,
+    "sha256_match": null,
+    "md5_match": false,
     "official_internal_content_compared": false,
     "local_structure_consistent_with_documentation": true,
     "content_match_confirmed": false,
     "relationship_status": "LIKELY_REPACKAGED_NOT_FULLY_VERIFIED",
     "repackaging_evidence": [
       "Local archive size (246597320 bytes) exceeds official Zenodo zip size (245,284,102 bytes).",
+      "Local archive MD5 (370de95033f1a98b78e57dbbea92a8bc) differs from official Zenodo MD5 (408c5b347c751c553abe6d0f640a6f98).",
       "Local archive contains 3191 macOS resource fork entries (__MACOSX/._*) created during local extraction/re-compression.",
       "All 110 participants and 440 recordings are fully present with 0 CRC read errors."
     ]

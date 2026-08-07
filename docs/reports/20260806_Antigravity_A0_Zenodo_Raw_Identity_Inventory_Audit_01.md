@@ -4,7 +4,7 @@
 **Auditor**: Autonomous AI Data Lineage & Radar Integrity Engineer (Antigravity Agent)
 **Target Repository Root**: `<REPO_ROOT>`
 **Git Branch**: `feature/phase-a0-raw-inventory`
-**Git Commit**: `312741ad7004596f7b06d59af0cd833dc7c0a07d`
+**Git Commit**: `65b15d74bba6d321ad1bf9a3d318079a39a9fb60`
 **Target Raw Archive**: `datasets/raw_archives/external_datasets/db_records.zip`
 **Phase A0 Gate Status**: **`PASS_WITH_WARNINGS`**
 **Phase A1 Entry Status**: **`READY_WITH_CONDITIONS`**
@@ -76,7 +76,7 @@ The following operations were **EXPLICITLY NOT PERFORMED** during Phase A0:
 
 - **Repository Root**: `<REPO_ROOT>`
 - **Git Branch**: `feature/phase-a0-raw-inventory`
-- **Git Commit**: `312741ad7004596f7b06d59af0cd833dc7c0a07d`
+- **Git Commit**: `65b15d74bba6d321ad1bf9a3d318079a39a9fb60`
 - **Git Remote Origin**: `https://github.com/sheepmeat/test.git`
 
 ---
@@ -104,11 +104,14 @@ The following operations were **EXPLICITLY NOT PERFORMED** during Phase A0:
 ## 7. Official-to-Local Relationship
 
 - **Relationship Status**: **`LIKELY_REPACKAGED_NOT_FULLY_VERIFIED`**
-- **Container Hash Match**: `False`
+- **Official Container MD5**: `408c5b347c751c553abe6d0f640a6f98`
+- **Local Container MD5**: `370de95033f1a98b78e57dbbea92a8bc`
+- **MD5 Match**: `False`
+- **Local Container SHA-256**: `f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0`
 - **Internal Content Match Confirmed**: `False`
 
 ### Limitations & Evidence
-1. Local ZIP container hash differs from remote Zenodo `db_records.zip` hash due to local repackaging containing `__MACOSX/` resource forks.
+1. Local ZIP container MD5 (`370de950...`) differs from remote Zenodo MD5 (`408c5b34...`) due to local repackaging containing `__MACOSX/` resource forks.
 2. `content_match_confirmed` is explicitly set to `False` because official Zenodo member-level files were not fetched or byte-compared locally in A0.
 
 ---
@@ -195,7 +198,7 @@ The following operations were **EXPLICITLY NOT PERFORMED** during Phase A0:
 | `A0-ANOM-0001` | `INFO` | `REPOSITORY_STATE` | Pre-existing modified and untracked files exist in the repository worktree prior to Phase A0 execution. | Requires careful tracking to ensure Phase A0 changes are isolated. |
 | `A0-ANOM-0002` | `INFO` | `VERSION_CONTEXT` | Repository contains legacy SafeNest V4 and SafeNest V5 directories alongside top-level datasets/. | Historical manifest files exist in V4/V5 subdirectories. |
 | `A0-ANOM-0003` | `WARNING` | `REMOTE_VERIFICATION` | Zenodo record 18599983 includes 3 companion files (ParticipantsInfo.xlsx, ExampleCode.ipynb, helper_fns.py) that are not present in the local workspace clone. | Demographic participant metadata (age, sex, height, weight) is currently missing locally. |
-| `A0-ANOM-0004` | `INFO` | `CHECKSUM` | Local archive byte size (246597320) and MD5 (370de95033f1a98b78e57dbbea92a8bc) differ from official Zenodo record archive size (245,284,102 bytes) due to local zip repackaging. Member-level content comparison was not performed in A0. | Container hash mismatch; content_match_confirmed set to false. |
+| `A0-ANOM-0004` | `INFO` | `CHECKSUM` | Local archive byte size (246597320) and MD5 (370de95033f1a98b78e57dbbea92a8bc) differ from official Zenodo record archive size (245,284,102 bytes) and MD5 (408c5b347c751c553abe6d0f640a6f98) due to local zip repackaging. Member-level content comparison was not performed in A0. | Container hash mismatch; content_match_confirmed set to false. |
 | `A0-ANOM-0005` | `INFO` | `ZIP_PATH` | Archive contains 3191 __MACOSX/ resource fork metadata files created during macOS re-archiving. | Filter out __MACOSX entries during dataset reading. |
 | `A0-ANOM-0006` | `INFO` | `SCHEMA` | Recordings ['db_records/P075/Sitting/Rest/radar_timestamps.csv', 'db_records/P007/Sitting/Post-exercise/radar_timestamps.csv'] have 400 timestamp lines (40s duration) rather than 500 (50s) or 600 (60s). | Phase A1 window generator must handle 40s recordings. |
 

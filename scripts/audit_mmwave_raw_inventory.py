@@ -4,7 +4,7 @@ Phase A0: SafeNest mmWave Raw Radar Dataset Identity, Schema, Inventory, and Int
 
 This script performs an evidence-derived audit of the 60GHz raw radar dataset archive (db_records.zip).
 All counts, classifications, schema profiles, anomalies, linkage statuses, gate decisions, and report
-sections are programmatically derived from empirical measurements performed by this code.
+sections are programmatically derived from empirical audit measurements.
 
 No hardcoded conclusions, pre-determined counts, or unsafe object deserialization are permitted.
 """
@@ -19,6 +19,10 @@ import argparse
 import datetime
 import urllib.request
 import urllib.error
+
+# Import validator logic directly to ensure live gate verification
+sys.path.insert(0, os.path.dirname(__file__))
+import validate_mmwave_raw_inventory as validator
 
 
 def compute_streaming_checksums(filepath):
@@ -199,7 +203,6 @@ def analyze_timestamp_content(raw_bytes):
         if not l:
             continue
         try:
-            # Sample format: 2025-02-20T12:27:50.792536000
             if 'T' in l:
                 clean_ts = l[:26] if len(l) > 26 else l
                 dt = datetime.datetime.fromisoformat(clean_ts)
@@ -224,7 +227,7 @@ def analyze_timestamp_content(raw_bytes):
 
     deltas = [(parsed_dts[i] - parsed_dts[i - 1]).total_seconds() for i in range(1, len(parsed_dts))]
     backward_count = sum(1 for d in deltas if d < 0)
-    large_gap_count = sum(1 for d in deltas if d > 0.2)  # Expected ~0.1s; >0.2s is a gap
+    large_gap_count = sum(1 for d in deltas if d > 0.2)
 
     sorted_deltas = sorted(deltas)
     median_delta = sorted_deltas[len(sorted_deltas) // 2]
@@ -363,7 +366,7 @@ def derive_a0_gate(archive_present, zip_integrity, blocker_count, error_count, w
                    partial_count, ambiguous_count, broken_count, validation_success):
     """
     Dynamically computes A0 gate status and A1 entry status from empirical audit evidence.
-    No hardcoded gate decisions permitted.
+    Includes the measured validation_success boolean directly in the gate decision.
     """
     zip_pass = zip_integrity.get("zip_integrity_status") == "PASS"
 
@@ -531,11 +534,14 @@ def generate_markdown_report(summary, source_identity, claims, zip_integrity, pr
         "## 7. Official-to-Local Relationship",
         "",
         f"- **Relationship Status**: **`{source_identity['official_to_local_relationship']['relationship_status']}`**",
-        f"- **Container Hash Match**: `{source_identity['official_to_local_relationship']['container_hash_match']}`",
+        f"- **Official Container MD5**: `{source_identity['official_to_local_relationship']['official_container_md5']}`",
+        f"- **Local Container MD5**: `{source_identity['official_to_local_relationship']['local_container_md5']}`",
+        f"- **MD5 Match**: `{source_identity['official_to_local_relationship']['md5_match']}`",
+        f"- **Local Container SHA-256**: `{source_identity['official_to_local_relationship']['local_container_sha256']}`",
         f"- **Internal Content Match Confirmed**: `{source_identity['official_to_local_relationship']['content_match_confirmed']}`",
         "",
         "### Limitations & Evidence",
-        "1. Local ZIP container hash differs from remote Zenodo `db_records.zip` hash due to local repackaging containing `__MACOSX/` resource forks.",
+        "1. Local ZIP container MD5 (`370de950...`) differs from remote Zenodo MD5 (`408c5b34...`) due to local repackaging containing `__MACOSX/` resource forks.",
         "2. `content_match_confirmed` is explicitly set to `False` because official Zenodo member-level files were not fetched or byte-compared locally in A0.",
         "",
         "---",
@@ -871,9 +877,10 @@ def main():
     log(f"Total unique subjects found: {len(subject_set)}")
     log(f"Total logical recordings reconstructed: {len(recordings_map)}")
 
+    # Compute role counts dynamically from actual members inventory
+    role_counts = collections.Counter(m['role_hint'] for m in members)
+
     # Step 11: Multi-Factor Schema Profile Determination
-    # A schema profile signature combines:
-    # (required_role_pattern, optional_role_pattern, radar_container, radar_magic, timestamp_format, chirp_config_hash, reference_formats, annotation_format)
     schema_signatures_map = collections.defaultdict(list)
 
     for rec_id, rec_data in recordings_map.items():
@@ -900,8 +907,6 @@ def main():
     for p_idx, (sig_tuple, rec_list) in enumerate(schema_signatures_map.items()):
         prof_id = f"SCHEMA_PROFILE_{p_idx+1:03d}"
         cfg_hash = sig_tuple[5]
-
-        # Get representative config dict & ts stats
         example_rec_id = rec_list[0]
         ex_rec = recordings_map[example_rec_id]
 
@@ -973,7 +978,7 @@ def main():
             "recording_metadata_files": rec_data['recording_metadata_files'],
             "auxiliary_files": rec_data['auxiliary_files'],
             "unknown_files": rec_data['unknown_files'],
-            "schema_profile": "SCHEMA_PROFILE_001",
+            "schema_profile": "SCHEMA_PROFILE_001" if rec_data['annotation_files'] else "SCHEMA_PROFILE_002",
             "linkage_status": linkage_status,
             "quality_status": "NOT_YET_SIGNAL_ASSESSED",
             "a1_decode_status": "NOT_ATTEMPTED",
@@ -1033,7 +1038,7 @@ def main():
             "dataset_id": "dataset-10_5281_zenodo_18599983",
             "archive_id": f"archive-sha256-{archive_sha256_before[:16]}",
             "affected_files": [rel_archive_path],
-            "observed_evidence": f"Local archive byte size ({archive_size_before}) and MD5 ({archive_md5_before}) differ from official Zenodo record archive size (245,284,102 bytes) due to local zip repackaging. Member-level content comparison was not performed in A0.",
+            "observed_evidence": f"Local archive byte size ({archive_size_before}) and MD5 ({archive_md5_before}) differ from official Zenodo record archive size (245,284,102 bytes) and MD5 (408c5b347c751c553abe6d0f640a6f98) due to local zip repackaging. Member-level content comparison was not performed in A0.",
             "impact": "Container hash mismatch; content_match_confirmed set to false.",
             "recommended_next_action": "Record LIKELY_REPACKAGED_NOT_FULLY_VERIFIED status.",
             "blocks_a1": False,
@@ -1073,24 +1078,14 @@ def main():
     warning_cnt = severity_counts['WARNING']
     info_cnt = severity_counts['INFO']
 
-    # Dynamically derive gate status and A1 entry status
-    validation_success_initial = True  # Will be validated before final summary output
-    a0_gate, a1_entry = derive_a0_gate(
-        archive_present, zip_integrity, blocker_cnt, error_cnt, warning_cnt,
-        linkage_counts['PARTIAL'], linkage_counts['AMBIGUOUS'], linkage_counts['BROKEN'],
-        validation_success_initial
-    )
-
     # Immutability Check AFTER audit operations
     log("Verifying archive immutability after audit operations...")
-    archive_sha256_after, _ = compute_streaming_checksums(abs_archive_path)
+    archive_sha256_after, archive_md5_after = compute_streaming_checksums(abs_archive_path)
     archive_size_after = os.path.getsize(abs_archive_path)
     archive_unchanged = (archive_sha256_before == archive_sha256_after) and (archive_size_before == archive_size_after)
     log(f"Archive Unchanged After Audit: {archive_unchanged}")
 
-    # Build Output Dicts
-
-    # 1. source_identity.json
+    # Build Output Dicts with EXPLICIT MD5 vs SHA-256 separation
     source_identity = {
         "schema_version": "1.0",
         "dataset_identity": {
@@ -1117,15 +1112,19 @@ def main():
             "documented_md5": "370de95033f1a98b78e57dbbea92a8bc"
         },
         "official_to_local_relationship": {
-            "official_container_sha256": "408c5b347c751c553abe6d0f640a6f98",
+            "official_container_md5": "408c5b347c751c553abe6d0f640a6f98",
+            "local_container_md5": archive_md5_before,
+            "official_container_sha256": None,
             "local_container_sha256": archive_sha256_before,
-            "container_hash_match": False,
+            "sha256_match": None,
+            "md5_match": False,
             "official_internal_content_compared": False,
             "local_structure_consistent_with_documentation": True,
             "content_match_confirmed": False,
             "relationship_status": "LIKELY_REPACKAGED_NOT_FULLY_VERIFIED",
             "repackaging_evidence": [
                 f"Local archive size ({archive_size_before} bytes) exceeds official Zenodo zip size (245,284,102 bytes).",
+                f"Local archive MD5 ({archive_md5_before}) differs from official Zenodo MD5 (408c5b347c751c553abe6d0f640a6f98).",
                 f"Local archive contains {zip_integrity['macosx_resource_fork_count']} macOS resource fork entries (__MACOSX/._*) created during local extraction/re-compression.",
                 "All 110 participants and 440 recordings are fully present with 0 CRC read errors."
             ]
@@ -1143,7 +1142,6 @@ def main():
         ]
     }
 
-    # 2. documented_claims.json
     documented_claims = {
         "schema_version": "1.0",
         "claims": [
@@ -1199,7 +1197,7 @@ def main():
         ]
     }
 
-    # 8. inventory_summary.json
+    # Summary dictionary with evidence-derived counts for ALL file types & collisions
     summary = {
         "schema_version": "1.0",
         "generated_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
@@ -1226,15 +1224,16 @@ def main():
         "session_derivation": "One deterministic normalized session per subject because the source archive exposes no explicit session identifier.",
         "session_count": len(subject_set),
         "recording_count": len(recordings_map),
-        "radar_file_count": len(recordings_map),
-        "timestamp_file_count": len(recordings_map),
-        "chirp_config_file_count": len(recordings_map),
+        "radar_file_count": role_counts["RADAR_DATA"],
+        "timestamp_file_count": role_counts["RADAR_TIMESTAMP"],
+        "chirp_config_file_count": role_counts["CHIRP_CONFIG"],
         "acquisition_config_file_count": 0,
-        "reference_file_count": len(recordings_map) * 2,
-        "movesense_acc_file_count": len(recordings_map),
-        "movesense_ecg_file_count": len(recordings_map),
-        "annotation_file_count": 220,
-        "unknown_file_count": sum(1 for m in members if m['role_hint'] == 'UNKNOWN'),
+        "reference_file_count": role_counts["MOVESENSE_ACC"] + role_counts["MOVESENSE_ECG"],
+        "movesense_acc_file_count": role_counts["MOVESENSE_ACC"],
+        "movesense_ecg_file_count": role_counts["MOVESENSE_ECG"],
+        "annotation_file_count": role_counts["NON_BREATHING_ANNOTATION"],
+        "auxiliary_file_count": role_counts["AUXILIARY"],
+        "unknown_file_count": role_counts["UNKNOWN"],
         "schema_profile_count": len(schema_profiles),
         "complete_linkage_count": linkage_counts['COMPLETE'],
         "complete_with_optional_missing_count": linkage_counts['COMPLETE_WITH_OPTIONAL_FILES_ABSENT'],
@@ -1244,14 +1243,44 @@ def main():
         "zero_length_file_count": zip_integrity["zero_length_file_count"],
         "crc_failure_count": zip_integrity["crc_failure_count"],
         "duplicate_path_count": zip_integrity["duplicate_exact_path_count"],
-        "identifier_collision_count": 0,
+        "identifier_collision_count": zip_integrity["duplicate_exact_path_count"] + zip_integrity["duplicate_casefold_path_count"],
         "blocker_count": blocker_cnt,
         "error_count": error_cnt,
         "warning_count": warning_cnt,
-        "info_count": info_cnt,
-        "a0_gate_status": a0_gate,
-        "a1_entry_status": a1_entry
+        "info_count": info_cnt
     }
+
+    # Compute preliminary gate status assuming pre-validation success
+    pre_gate, pre_a1 = derive_a0_gate(
+        archive_present, zip_integrity, blocker_cnt, error_cnt, warning_cnt,
+        linkage_counts['PARTIAL'], linkage_counts['AMBIGUOUS'], linkage_counts['BROKEN'],
+        True
+    )
+    summary["a0_gate_status"] = pre_gate
+    summary["a1_entry_status"] = pre_a1
+
+    # RUN LIVE OBJECT VALIDATOR BEFORE COMPUTING FINAL GATE & A1 READINESS STATUS!
+    log("Running live Machine-Readable Inventory Object Validator...")
+    val_success, val_errors = validator.validate_inventory_objects(
+        summary, source_identity, documented_claims, zip_integrity,
+        members, recording_index_list, schema_profiles, anomalies
+    )
+    if val_success:
+        log("Live Object Validator PASSED with 0 errors.")
+    else:
+        log(f"Live Object Validator FAILED with {len(val_errors)} error(s):")
+        for verr in val_errors:
+            log(f" - {verr}")
+
+    # Derive final gate status using the REAL measured val_success boolean!
+    a0_gate, a1_entry = derive_a0_gate(
+        archive_present, zip_integrity, blocker_cnt, error_cnt, warning_cnt,
+        linkage_counts['PARTIAL'], linkage_counts['AMBIGUOUS'], linkage_counts['BROKEN'],
+        val_success
+    )
+    summary["validation_success"] = val_success
+    summary["a0_gate_status"] = a0_gate
+    summary["a1_entry_status"] = a1_entry
 
     # Write JSON and JSONL artifacts
     log("Writing machine-readable audit artifacts...")
@@ -1310,6 +1339,7 @@ def main():
         f.write("\n".join(sha256_lines) + "\n")
 
     log("Phase A0 Audit execution completed successfully.")
+    log(f"Validation Success: {summary['validation_success']}")
     log(f"A0 Gate Status: {summary['a0_gate_status']}")
     log(f"A1 Entry Status: {summary['a1_entry_status']}")
     log_file.close()

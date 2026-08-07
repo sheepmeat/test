@@ -1,10 +1,10 @@
 {
   "schema_version": "1.0",
-  "generated_at_utc": "2026-08-07T08:39:42.365297+00:00",
+  "generated_at_utc": "2026-08-07T08:43:18.975000+00:00",
   "repository": {
     "root": "<REPO_ROOT>",
     "branch": "feature/phase-a0-raw-inventory",
-    "commit": "312741ad7004596f7b06d59af0cd833dc7c0a07d",
+    "commit": "65b15d74bba6d321ad1bf9a3d318079a39a9fb60",
     "origin": "https://github.com/sheepmeat/test.git"
   },
   "dataset_id": "dataset-10_5281_zenodo_18599983",
@@ -32,6 +32,7 @@
   "movesense_acc_file_count": 440,
   "movesense_ecg_file_count": 440,
   "annotation_file_count": 220,
+  "auxiliary_file_count": 3962,
   "unknown_file_count": 0,
   "schema_profile_count": 2,
   "complete_linkage_count": 220,
@@ -48,5 +49,6 @@
   "warning_count": 1,
   "info_count": 5,
   "a0_gate_status": "PASS_WITH_WARNINGS",
-  "a1_entry_status": "READY_WITH_CONDITIONS"
+  "a1_entry_status": "READY_WITH_CONDITIONS",
+  "validation_success": true
 }
