@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -92,18 +93,31 @@ def validate_manifests(
         if r["backward_timestamp_count"] > 0 and r["quality_status"] == "SUCCESS":
             errors.append(f"Recording {r['recording_id']} has backward timestamps but status is SUCCESS")
 
-    # 6. Target sampling rate matches profile
+    # 6. Target sampling rate validation
     expected_rate = profile.get("target_sampling_rate_hz", 10.0)
+    dt_exp = profile.get("expected_dt_seconds", 0.1)
     for r in rec_results:
-        if r["empirical_sampling_rate_hz"] != expected_rate and r["resampling_performed"] is False:
-            # Empirical sampling rate should be ~10 Hz
-            pass
+        emp_rate = r.get("empirical_sampling_rate_hz", 0.0)
+        if abs(emp_rate - expected_rate) > 0.05 and not r.get("resampling_performed", False):
+            errors.append(
+                f"Recording {r['recording_id']} empirical sampling rate {emp_rate} Hz "
+                f"differs from target {expected_rate} Hz without resampling"
+            )
+        if r.get("resampling_performed", False):
+            expected_grid_count = int(math.floor(r["duration_seconds"] / dt_exp)) + 1
+            if r["canonical_sample_count"] != expected_grid_count:
+                errors.append(
+                    f"Recording {r['recording_id']} resampled canonical sample count {r['canonical_sample_count']} "
+                    f"!= expected grid count {expected_grid_count}"
+                )
 
     # 7. All valid canonical windows have exactly 300 samples
     expected_samples = profile.get("window", {}).get("samples", 300)
     for w in windows:
         if w["sample_count"] != expected_samples:
             errors.append(f"Window {w['window_id']} sample count {w['sample_count']} != {expected_samples}")
+        if "last_sample_timestamp" not in w or "end_timestamp_exclusive" not in w:
+            errors.append(f"Window {w['window_id']} missing required timestamp fields (last_sample_timestamp or end_timestamp_exclusive)")
 
     # 8. Window IDs are unique
     win_ids = [w["window_id"] for w in windows]

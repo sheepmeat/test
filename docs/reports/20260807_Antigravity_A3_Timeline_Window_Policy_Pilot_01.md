@@ -13,6 +13,11 @@
 
 Phase A3 of the SafeNest mmWave real-data reconstruction pipeline converts continuous canonical unwrapped radar phase (established in Phase A2) and its associated raw radar timestamps into a deterministic, reproducible time-domain contract.
 
+Following user feedback on initial commit `859cd52`, Phase A3 incorporates three targeted refinements:
+1. **Unambiguous `[start, end)` Timestamp Semantics**: Separates `start_timestamp` ($t_{start}$), `last_sample_timestamp` ($t_{last\_sample} = t_{start} + 29.9\text{ s}$), and `end_timestamp_exclusive` ($t_{end\_exclusive} = t_{start} + 30.0\text{ s}$).
+2. **Canonical Resampling Grid & Provenance**: Enforces step-wise regular sampling grid $t_k = k \cdot 0.1\text{ s}$ and generates canonical ISO timestamp strings mapped 1-to-1 with resampled phase indices. Activates active validator sampling-rate verification.
+3. **Streamlined Warning Exceptions**: Consolidates duplicate `INCOMPLETE_TAIL` exceptions into exactly 11 `WARNING` severity entries matching the 11 warning-bearing recordings.
+
 A3 establishes:
 1. An empirical sampling assessment confirming native 10.0 Hz frame sampling across all 13 pilot recordings.
 2. A strict timing jitter policy with a 5 ms tolerance (`0.005 s`).
@@ -101,10 +106,11 @@ Numerical gap thresholds defined under `MMWAVE_TIMELINE_PROFILE_001`:
 
 ---
 
-## 9. Resampling Decision
+## 9. Resampling Decision & Canonical Grid Construction
 
-- **Native Grid Preserved**: Raw phase and timestamp alignment preserved without synthetic interpolation.
-- **Resampling Infrastructure**: `scripts/mmwave_timeline.py` includes fully tested, bounded linear resampling routines to handle future recordings containing minor timing jitter or recoverable small gaps.
+- **Grid Formula**: $t_k = k \cdot 0.1\text{ s}$ for $k \in [0, \lfloor \text{duration} / 0.1 \rfloor]$.
+- **Native Grid Preserved**: Raw phase and timestamp alignment preserved without synthetic interpolation when native timing is exact.
+- **Resampling Infrastructure**: `scripts/mmwave_timeline.py` includes step-wise grid construction and canonical ISO timestamp formatting (`format_canonical_iso`) ensuring 1-to-1 alignment between resampled phase indices and timestamp strings.
 
 ---
 
@@ -153,6 +159,10 @@ Profile ID: `MMWAVE_TIMELINE_PROFILE_001`
 - **Window Stride**: $300$ samples
 - **Overlap**: $0$ samples (non-overlapping canonical baseline)
 - **Boundary Convention**: `[start_index, end_index_exclusive)`
+- **Timestamp Semantics**:
+  - `start_timestamp`: ISO string for $t_{start}$ (sample 0)
+  - `last_sample_timestamp`: ISO string for $t_{start} + 29.9\text{ s}$ (sample 299)
+  - `end_timestamp_exclusive`: ISO string for $t_{start} + 30.0\text{ s}$ (exclusive boundary)
 
 ---
 
@@ -170,13 +180,13 @@ Recordings with frame counts not divisible by 300 have their trailing samples dr
 ## 13. Window Provenance
 
 Every window in `window_manifest.jsonl` contains deterministic lineage metadata:
-- `window_id`: `<recording_id>__W<window_index:04d>` (e.g. `dataset-10_5281_zenodo_18599983-p001-lying-post_exercise__W0000`)
+- `window_id`: `<recording_id>__W<window_index:04d>`
 - `recording_id`: Parent recording identifier.
 - `subject_id`: Subject identifier.
 - `timeline_profile`: `MMWAVE_TIMELINE_PROFILE_001`
 - `phase_profile`: `MMWAVE_PHASE_EXTRACTION_PROFILE_001`
 - `canonical_start_index` & `canonical_end_index_exclusive`: `[0, 300)` or `[300, 600)`
-- `start_timestamp` & `end_timestamp`: Exact ISO-8601 timestamp strings.
+- `start_timestamp`, `last_sample_timestamp`, `end_timestamp_exclusive`: Exact ISO-8601 timestamp strings.
 
 ---
 
@@ -202,8 +212,8 @@ The standalone validator `scripts/validate_mmwave_timeline_pilot.py` verified al
 3. Phase/timestamp lengths agree before timeline transformation.
 4. Timestamps are monotonic.
 5. Duplicate/backward counts match measured values.
-6. Target sampling rate matches profile.
-7. All valid canonical windows have exactly 300 samples.
+6. Target sampling rate matches profile and grid counts are verified.
+7. All valid canonical windows have exactly 300 samples and contain required timestamp fields (`start_timestamp`, `last_sample_timestamp`, `end_timestamp_exclusive`).
 8. Window IDs are unique.
 9. Window boundaries are deterministic and non-overlapping.
 10. No window crosses a prohibited large gap.
@@ -226,7 +236,7 @@ The standalone validator `scripts/validate_mmwave_timeline_pilot.py` verified al
 
 - **A4 Entry Status**: `READY_WITH_CONDITIONS`
 - **Conditions**:
-  1. A4 must consume the window boundaries and sample indices from `window_manifest.jsonl`.
+  1. A4 must consume `[start_timestamp, end_timestamp_exclusive)` from `window_manifest.jsonl` when checking annotation overlap.
   2. A4 must preserve label independence when performing label mapping.
   3. Tail samples dropped in A3 must not be padded or artificially synthesized in A4.
 
@@ -262,15 +272,8 @@ A4: NOT PERFORMED
 - `scripts/mmwave_timeline.py`: Canonical timeline reconstruction, resampling policy, gap handling, and 30s window generator module.
 - `scripts/run_mmwave_timeline_pilot.py`: Phase A3 pilot runner script.
 - `scripts/validate_mmwave_timeline_pilot.py`: Phase A3 in-memory and standalone validator script.
-- `tests/test_mmwave_timeline.py`: Comprehensive unit tests for timeline reconstruction, jitter, gaps, resampling, and windowing.
-- `datasets/mmwave/manifests/a3_timeline_pilot/`:
-  - `pilot_selection.json`
-  - `timeline_profile.json`
-  - `recording_timeline_results.jsonl`
-  - `window_manifest.jsonl`
-  - `exceptions.json`
-  - `a3_summary.json`
-  - `checksums.sha256`
+- `tests/test_mmwave_timeline.py`: Unit tests for timeline reconstruction, jitter, gaps, resampling, and windowing.
+- `datasets/mmwave/manifests/a3_timeline_pilot/`: Manifest output directory (`pilot_selection.json`, `timeline_profile.json`, `recording_timeline_results.jsonl`, `window_manifest.jsonl`, `exceptions.json`, `a3_summary.json`, `checksums.sha256`).
 - `docs/reports/20260807_Antigravity_A3_Timeline_Window_Policy_Pilot_01.md`: This report.
 
 ---

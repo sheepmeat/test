@@ -14,6 +14,7 @@ from scripts.mmwave_timeline import (
     TimelineProfile,
     analyze_timeline,
     evaluate_resampling_decision,
+    format_canonical_iso,
     generate_30s_windows,
     parse_timestamps_to_seconds,
     process_recording_timeline,
@@ -139,30 +140,33 @@ class TestMmwaveTimeline(unittest.TestCase):
 
     # 8 & 9. Bounded interpolation behavior without crossing large gap
     def test_bounded_interpolation(self) -> None:
-        # 100 samples with a small 0.3s gap at step 50
         sec_list = [i * 0.1 for i in range(50)] + [(50 + 2) * 0.1 + i * 0.1 for i in range(50)]
         sec = np.array(sec_list, dtype=np.float64)
         phase = np.sin(2 * np.pi * 0.2 * sec)
+        first_dt = dt.datetime(2025, 2, 20, 12, 0, 0)
 
         analysis = analyze_timeline(sec, self.profile)
-        res_phase, res_sec, meta = resample_timeline(phase, sec, self.profile, analysis)
+        res_phase, res_sec, canonical_iso, meta = resample_timeline(phase, sec, first_dt, self.profile, analysis)
 
         self.assertTrue(meta["resampling_performed"])
         self.assertGreater(meta["interpolated_sample_count"], 0)
+        self.assertEqual(len(res_phase), len(canonical_iso))
 
     # 10. Deterministic regular 10 Hz grid
     def test_deterministic_regular_grid(self) -> None:
         sec = np.array([0.0, 0.102, 0.205, 0.301, 0.400], dtype=np.float64)
         phase = np.array([1.0, 2.0, 3.0, 4.0, 5.0], dtype=np.float64)
+        first_dt = dt.datetime(2025, 2, 20, 12, 0, 0)
         analysis = analyze_timeline(sec, self.profile)
-        res_phase1, res_sec1, _ = resample_timeline(phase, sec, self.profile, analysis)
-        res_phase2, res_sec2, _ = resample_timeline(phase, sec, self.profile, analysis)
+        res_phase1, res_sec1, iso1, _ = resample_timeline(phase, sec, first_dt, self.profile, analysis)
+        res_phase2, res_sec2, iso2, _ = resample_timeline(phase, sec, first_dt, self.profile, analysis)
 
         np.testing.assert_array_equal(res_phase1, res_phase2)
         np.testing.assert_array_equal(res_sec1, res_sec2)
+        self.assertEqual(iso1, iso2)
 
-    # 11. Exact 300-sample window
-    def test_exact_300_sample_window(self) -> None:
+    # 11. Exact 300-sample window and timestamp semantics
+    def test_exact_300_sample_window_and_timestamp_semantics(self) -> None:
         ts_iso = make_iso_timestamps("2025-02-20T12:00:00.000", 300, 0.1)
         phase = np.linspace(-1.0, 1.0, 300)
         rec_res, windows, exceptions = process_recording_timeline(
@@ -175,7 +179,11 @@ class TestMmwaveTimeline(unittest.TestCase):
         )
 
         self.assertEqual(len(windows), 1)
-        self.assertEqual(windows[0]["sample_count"], 300)
+        w = windows[0]
+        self.assertEqual(w["sample_count"], 300)
+        self.assertEqual(w["start_timestamp"], "2025-02-20T12:00:00+00:00")
+        self.assertEqual(w["last_sample_timestamp"], "2025-02-20T12:00:29.900000+00:00")
+        self.assertEqual(w["end_timestamp_exclusive"], "2025-02-20T12:00:30+00:00")
         self.assertEqual(rec_res["dropped_tail_samples"], 0)
 
     # 12. 400-sample recording -> 1 window + 100 tail samples
@@ -195,6 +203,8 @@ class TestMmwaveTimeline(unittest.TestCase):
         self.assertEqual(windows[0]["sample_count"], 300)
         self.assertEqual(rec_res["dropped_tail_samples"], 100)
         self.assertIn("INCOMPLETE_TAIL_DROPPED", rec_res["quality_flags"])
+        self.assertEqual(len(exceptions), 1)
+        self.assertEqual(exceptions[0]["severity"], "WARNING")
 
     # 13. 500-sample recording -> 1 window + 200 tail samples
     def test_500_sample_recording(self) -> None:
@@ -233,6 +243,12 @@ class TestMmwaveTimeline(unittest.TestCase):
         self.assertEqual(windows[0]["canonical_end_index_exclusive"], 300)
         self.assertEqual(windows[1]["canonical_start_index"], 300)
         self.assertEqual(windows[1]["canonical_end_index_exclusive"], 600)
+        self.assertEqual(windows[0]["start_timestamp"], "2025-02-20T12:00:00+00:00")
+        self.assertEqual(windows[0]["last_sample_timestamp"], "2025-02-20T12:00:29.900000+00:00")
+        self.assertEqual(windows[0]["end_timestamp_exclusive"], "2025-02-20T12:00:30+00:00")
+        self.assertEqual(windows[1]["start_timestamp"], "2025-02-20T12:00:30+00:00")
+        self.assertEqual(windows[1]["last_sample_timestamp"], "2025-02-20T12:00:59.900000+00:00")
+        self.assertEqual(windows[1]["end_timestamp_exclusive"], "2025-02-20T12:01:00+00:00")
         self.assertEqual(rec_res["dropped_tail_samples"], 0)
 
     # 15. Incomplete tail accounting

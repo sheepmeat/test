@@ -81,6 +81,15 @@ class TimelineProfile:
         }
 
 
+def format_canonical_iso(first_dt: dt.datetime, relative_seconds: float) -> str:
+    """Format a relative offset from first_dt as an exact ISO-8601 string."""
+    target_dt = first_dt + dt.timedelta(seconds=relative_seconds)
+    iso_str = target_dt.isoformat()
+    if not iso_str.endswith("Z") and "+" not in iso_str[-6:] and "-" not in iso_str[-6:]:
+        iso_str += "Z"
+    return iso_str
+
+
 def parse_timestamps_to_seconds(
     timestamps_raw: bytes | str | Sequence[str],
 ) -> tuple[np.ndarray, list[str], dict[str, Any]]:
@@ -140,6 +149,7 @@ def parse_timestamps_to_seconds(
         "timestamp_count": len(lines),
         "first_timestamp": lines[0],
         "last_timestamp": lines[-1],
+        "first_datetime": first_dt,
         "timestamp_format": "ISO8601_HEADERLESS_UTF8",
         "duration_seconds": float(seconds[-1] - seconds[0]),
     }
@@ -279,16 +289,19 @@ def evaluate_resampling_decision(
 def resample_timeline(
     phase: np.ndarray,
     timestamps_sec: np.ndarray,
+    first_dt: dt.datetime,
     profile: TimelineProfile,
     analysis: dict[str, Any],
-) -> tuple[np.ndarray, np.ndarray, dict[str, Any]]:
+) -> tuple[np.ndarray, np.ndarray, list[str], dict[str, Any]]:
     """Resample canonical unwrapped phase onto a regular 10 Hz grid if required."""
     decision = evaluate_resampling_decision(analysis, profile)
 
     if not decision["resampling_required"] or not decision["resampling_permissible"]:
+        native_iso = [format_canonical_iso(first_dt, s) for s in timestamps_sec]
         return (
             phase,
             timestamps_sec,
+            native_iso,
             {
                 **decision,
                 "resampling_performed": False,
@@ -298,12 +311,14 @@ def resample_timeline(
             },
         )
 
-    # Build exact regular 10 Hz target grid
+    # Build exact regular 10 Hz target grid: integer steps * dt_target
+    dt_target = 1.0 / profile.target_sampling_rate_hz  # 0.1
     duration = float(timestamps_sec[-1] - timestamps_sec[0])
-    target_count = int(round(duration * profile.target_sampling_rate_hz)) + 1
-    grid_sec = np.linspace(0.0, duration, target_count, endpoint=True)
+    num_steps = int(math.floor(duration / dt_target))
+    grid_sec = np.arange(0, num_steps + 1, dtype=np.float64) * dt_target
 
     resampled_phase = np.interp(grid_sec, timestamps_sec, phase)
+    canonical_iso = [format_canonical_iso(first_dt, s) for s in grid_sec]
 
     # Identify interpolated vs native samples
     interpolated_mask = np.zeros(grid_sec.shape, dtype=bool)
@@ -317,6 +332,7 @@ def resample_timeline(
     return (
         resampled_phase,
         grid_sec,
+        canonical_iso,
         {
             **decision,
             "resampling_performed": True,
@@ -331,14 +347,15 @@ def resample_timeline(
 def generate_30s_windows(
     phase: np.ndarray,
     timestamps_sec: np.ndarray,
-    timestamps_iso: list[str],
+    canonical_timestamps_iso: list[str],
+    first_dt: dt.datetime,
     recording_id: str,
     subject_id: str,
     profile: TimelineProfile,
     extraction_profile_id: str,
     analysis: dict[str, Any],
     resampling_meta: dict[str, Any],
-) -> tuple[list[dict[str, Any]], int, list[dict[str, Any]]]:
+) -> tuple[list[dict[str, Any]], int]:
     """Generate 30-second deterministic windows (300 samples @ 10 Hz)."""
     n_samples = len(phase)
     win_len = profile.window_samples  # 300
@@ -346,23 +363,12 @@ def generate_30s_windows(
 
     if n_samples < win_len:
         dropped_tail = n_samples
-        window_entries: list[dict[str, Any]] = []
-        exceptions = [
-            {
-                "recording_id": recording_id,
-                "category": "INCOMPLETE_TAIL",
-                "severity": "WARNING",
-                "message": f"Recording sample count {n_samples} is smaller than window length {win_len}; 0 windows cut",
-            }
-        ]
-        return window_entries, dropped_tail, exceptions
+        return [], dropped_tail
 
     num_windows = n_samples // stride
-    # If non-overlapping stride == win_len, exact windows count is n_samples // 300
     dropped_tail = n_samples - (num_windows * win_len)
 
     windows: list[dict[str, Any]] = []
-    exceptions: list[dict[str, Any]] = []
 
     resampled_performed = resampling_meta.get("resampling_performed", False)
     interpolated_mask = resampling_meta.get("interpolated_mask", None)
@@ -370,15 +376,17 @@ def generate_30s_windows(
     for w_idx in range(num_windows):
         start_idx = w_idx * stride
         end_idx_exclusive = start_idx + win_len
+        last_sample_idx = end_idx_exclusive - 1
 
         window_id = f"{recording_id}__W{w_idx:04d}"
 
-        w_start_ts = timestamps_iso[start_idx] if start_idx < len(timestamps_iso) else ""
-        # Exclusive end timestamp ISO
-        if end_idx_exclusive - 1 < len(timestamps_iso):
-            w_end_ts = timestamps_iso[end_idx_exclusive - 1]
-        else:
-            w_end_ts = ""
+        w_start_ts = canonical_timestamps_iso[start_idx]
+        w_last_sample_ts = canonical_timestamps_iso[last_sample_idx]
+
+        # Calculate exact exclusive end timestamp: t_start + 30.0 s
+        start_sec = float(timestamps_sec[start_idx])
+        end_exclusive_sec = start_sec + profile.window_duration_seconds
+        w_end_exclusive_ts = format_canonical_iso(first_dt, end_exclusive_sec)
 
         # Count interpolated samples in window
         if resampled_performed and interpolated_mask is not None:
@@ -387,7 +395,6 @@ def generate_30s_windows(
             w_interp_count = 0
 
         # Check for large gaps crossing window
-        # Find if any large gap index falls within window range
         large_gap_indices = analysis.get("large_gap_indices", [])
         w_large_gaps = [
             idx for idx in large_gap_indices if start_idx <= idx < end_idx_exclusive
@@ -425,7 +432,8 @@ def generate_30s_windows(
             "canonical_start_index": start_idx,
             "canonical_end_index_exclusive": end_idx_exclusive,
             "start_timestamp": w_start_ts,
-            "end_timestamp": w_end_ts,
+            "last_sample_timestamp": w_last_sample_ts,
+            "end_timestamp_exclusive": w_end_exclusive_ts,
             "sample_count": win_len,
             "duration_seconds": float(profile.window_duration_seconds),
             "interpolated_sample_count": w_interp_count,
@@ -435,17 +443,7 @@ def generate_30s_windows(
         }
         windows.append(window_entry)
 
-    if dropped_tail > 0:
-        exceptions.append(
-            {
-                "recording_id": recording_id,
-                "category": "INCOMPLETE_TAIL",
-                "severity": "INFO",
-                "message": f"Dropped incomplete tail of {dropped_tail} samples after {num_windows} full 30s windows",
-            }
-        )
-
-    return windows, dropped_tail, exceptions
+    return windows, dropped_tail
 
 
 def process_recording_timeline(
@@ -458,6 +456,7 @@ def process_recording_timeline(
 ) -> tuple[dict[str, Any], list[dict[str, Any]], list[dict[str, Any]]]:
     """Process a single recording phase series into validated timeline results and windows."""
     timestamps_sec, timestamps_iso, ts_meta = parse_timestamps_to_seconds(timestamps_raw)
+    first_dt = ts_meta["first_datetime"]
 
     if len(phase) != len(timestamps_sec):
         raise TimelineError(
@@ -465,14 +464,15 @@ def process_recording_timeline(
         )
 
     analysis = analyze_timeline(timestamps_sec, profile)
-    resample_phase, resample_sec, resample_meta = resample_timeline(
-        phase, timestamps_sec, profile, analysis
+    resample_phase, resample_sec, canonical_iso, resample_meta = resample_timeline(
+        phase, timestamps_sec, first_dt, profile, analysis
     )
 
-    windows, dropped_tail_samples, window_exceptions = generate_30s_windows(
+    windows, dropped_tail_samples = generate_30s_windows(
         phase=resample_phase,
         timestamps_sec=resample_sec,
-        timestamps_iso=timestamps_iso,
+        canonical_timestamps_iso=canonical_iso,
+        first_dt=first_dt,
         recording_id=recording_id,
         subject_id=subject_id,
         profile=profile,
@@ -484,7 +484,7 @@ def process_recording_timeline(
     quality_flags: list[str] = []
     warnings: list[str] = []
     errors: list[str] = []
-    exceptions: list[dict[str, Any]] = list(window_exceptions)
+    exceptions: list[dict[str, Any]] = []
 
     if analysis["max_abs_jitter_seconds"] <= profile.jitter_tolerance_seconds and analysis["non_monotonic_count"] == 0:
         quality_flags.append("TIMELINE_EXACT_NATIVE_10HZ")
@@ -585,6 +585,7 @@ __all__ = [
     "TimelineProfile",
     "analyze_timeline",
     "evaluate_resampling_decision",
+    "format_canonical_iso",
     "generate_30s_windows",
     "parse_timestamps_to_seconds",
     "process_recording_timeline",
