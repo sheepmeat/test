@@ -2,7 +2,8 @@
 """SafeNest Phase A6 — Full mmWave Real-Data Conversion Runner.
 
 Executes full A0 inventory conversion, signal quality audit, cross-split leakage audit,
-lineage spot checks, canonical NPZ artifact generation, and manifest writing.
+canonical numeric dataset (.npy) artifact generation, invokes the standalone validator to control the gate,
+and writes checksummed manifests.
 """
 
 from __future__ import annotations
@@ -11,7 +12,6 @@ from collections import Counter, defaultdict
 import datetime as dt
 import hashlib
 import json
-
 import os
 from pathlib import Path
 import sys
@@ -32,6 +32,7 @@ from mmwave_full_converter import (
     load_authoritative_a5_splits,
     process_single_recording,
 )
+from validate_mmwave_full_conversion import validate_full_conversion_artifacts
 
 
 def measure_archive_sha256(archive_path: Path) -> str:
@@ -47,7 +48,7 @@ def run_full_conversion(
     root_dir: Path = ROOT_DIR,
     profile: FullConversionProfile = FullConversionProfile(),
 ) -> dict[str, Any]:
-    """Execute complete Phase A6 full conversion and integrity audit."""
+    """Execute complete Phase A6 full conversion, audit, and validator gate evaluation."""
     archive_path = root_dir / "datasets/raw_archives/external_datasets/db_records.zip"
     if not archive_path.is_file():
         raise FileNotFoundError(f"Raw archive zip not found: {archive_path}")
@@ -59,7 +60,6 @@ def run_full_conversion(
     a0_inventory = load_authoritative_a0_inventory(root_dir)
     subject_split_map, recording_split_map = load_authoritative_a5_splits(root_dir)
 
-    # Measure A0 inventory metrics dynamically (never hardcode 110/440/4)
     measured_a0_subjects = sorted(list(set(r["subject_id"] for r in a0_inventory)))
     measured_a0_recordings = sorted(list(set(r["recording_id"] for r in a0_inventory)))
     rec_counts_per_subject = Counter(r["subject_id"] for r in a0_inventory)
@@ -69,11 +69,10 @@ def run_full_conversion(
         "measured_recording_count": len(measured_a0_recordings),
         "min_recordings_per_subject": min(rec_counts_per_subject.values()) if rec_counts_per_subject else 0,
         "max_recordings_per_subject": max(rec_counts_per_subject.values()) if rec_counts_per_subject else 0,
-        "recording_count_distribution": dict(Counter(rec_counts_per_subject.values())),
+        "recording_count_distribution": {str(k): v for k, v in Counter(rec_counts_per_subject.values()).items()},
         "evidence_source": "datasets/mmwave/manifests/a0_raw_inventory/recording_index.jsonl",
     }
 
-    # Verify every A0 subject exists in A5 split map
     missing_a5_subjects = [s for s in measured_a0_subjects if s not in subject_split_map]
     if missing_a5_subjects:
         raise ValueError(f"Authoritative A0 subjects missing from A5 split map: {missing_a5_subjects}")
@@ -83,18 +82,32 @@ def run_full_conversion(
     all_windows = []
     all_provenance = []
     all_exceptions = []
-    canonical_phase_slices = []
+    all_phase_slices = []
 
     recording_statuses = Counter()
     a1_decode_shapes = Counter()
+    a1_frame_counts = Counter()
     a2_selected_bins = Counter()
     a2_selected_channels = Counter()
+    dropped_tail_samples_dist = Counter()
+
+    annotation_bearing_recordings = 0
+    annotation_absent_recordings = 0
+    total_non_breathing_events = 0
 
     with zipfile.ZipFile(archive_path, "r") as zf:
         for rec in a0_inventory:
             rec_id = rec["recording_id"]
             subj_id = rec["subject_id"]
             subj_split = subject_split_map[subj_id]
+
+            # Count annotation evidence from A0 inventory
+            ann_files = rec.get("annotation_files", [])
+            if ann_files:
+                annotation_bearing_recordings += 1
+                total_non_breathing_events += len(ann_files)
+            else:
+                annotation_absent_recordings += 1
 
             rec_res = process_single_recording(
                 rec_record=rec,
@@ -103,41 +116,55 @@ def run_full_conversion(
                 profile=profile,
             )
 
+            # Collect phase slices for canonical npy array
+            slices = rec_res.pop("phase_slices", [])
+            all_phase_slices.extend(slices)
+
             all_recording_results.append(rec_res)
             recording_statuses[rec_res["status"]] += 1
 
             if rec_res.get("tensor_shape"):
-                a1_decode_shapes[tuple(rec_res["tensor_shape"])] += 1
+                a1_decode_shapes[str(tuple(rec_res["tensor_shape"]))] += 1
+                a1_frame_counts[str(rec_res["frame_count"])] += 1
             if rec_res.get("selected_range_bin_index") is not None:
-                a2_selected_bins[rec_res["selected_range_bin_index"]] += 1
+                a2_selected_bins[str(rec_res["selected_range_bin_index"])] += 1
             if rec_res.get("selected_virtual_channel") is not None:
-                a2_selected_channels[rec_res["selected_virtual_channel"]] += 1
+                a2_selected_channels[str(rec_res["selected_virtual_channel"])] += 1
+
+            if rec_res.get("timeline_summary"):
+                dtail = rec_res["timeline_summary"].get("dropped_tail_samples", 0)
+                dropped_tail_samples_dist[str(dtail)] += 1
 
             if rec_res.get("exceptions"):
                 all_exceptions.extend(rec_res["exceptions"])
 
-            # Collect windows and provenance
             for win in rec_res.get("windows", []):
                 all_windows.append(win)
 
             for prov in rec_res.get("provenance", []):
                 all_provenance.append(prov)
 
-    # 4. Assign stable canonical_sample_index across all canonical windows
+    # 4. Assign stable canonical_sample_index across all windows, provenance, and .npy rows
     for idx, (win, prov) in enumerate(zip(all_windows, all_provenance)):
         win["canonical_sample_index"] = idx
         prov["canonical_sample_index"] = idx
-        prov["future_npz_sample_index"] = idx
+        prov["future_npz_sample_index"] = None  # Explicitly None/null until Phase B training NPZ creation
 
-    # 5. Quality Audit
-    nan_count = 0
-    inf_count = 0
-    exact_constant_count = 0
-    near_constant_count = 0
+    # 5. Build and save canonical numeric dataset (.npy array)
+    canonical_matrix = np.vstack(all_phase_slices).astype(np.float64)  # Shape: (530, 300)
+    processed_dir = root_dir / "datasets/mmwave/processed"
+    processed_dir.mkdir(parents=True, exist_ok=True)
+    canonical_npy_path = processed_dir / "mmwave_canonical_real_v1.npy"
+    np.save(canonical_npy_path, canonical_matrix)
+
+    # 6. Real Quality Audit from phase slice measurements
+    nan_count = sum(1 for w in all_windows if w["signal_quality_metrics"]["has_nan"])
+    inf_count = sum(1 for w in all_windows if w["signal_quality_metrics"]["has_inf"])
+    exact_constant_count = sum(1 for w in all_windows if w["signal_quality_metrics"]["is_exact_constant"])
+    near_constant_count = sum(1 for w in all_windows if w["signal_quality_metrics"]["is_near_constant"])
     quality_flag_summary = Counter()
 
     for win in all_windows:
-        # Re-extract or check signal statistics
         for qf in win.get("quality_flags", []):
             quality_flag_summary[qf] += 1
 
@@ -148,9 +175,15 @@ def run_full_conversion(
         "near_constant_window_count": near_constant_count,
         "quality_flag_distribution": dict(quality_flag_summary),
         "total_windows_audited": len(all_windows),
+        "frame_count_distribution": dict(a1_frame_counts),
+        "tensor_shape_distribution": dict(a1_decode_shapes),
+        "dropped_tail_sample_distribution": dict(dropped_tail_samples_dist),
+        "selected_virtual_channel_distribution": dict(a2_selected_channels),
+        "selected_range_bin_distribution": dict(a2_selected_bins),
+        "mean_window_phase_std_dev": round(float(np.mean([w["signal_quality_metrics"]["std_dev"] for w in all_windows])), 6),
     }
 
-    # 6. Duplicate & Cross-Split Leakage Audit
+    # 7. Duplicate & Cross-Split Leakage Audit
     hash_groups = defaultdict(list)
     for win in all_windows:
         h = win["canonical_signal_hash"]
@@ -183,7 +216,6 @@ def run_full_conversion(
                 }
             )
 
-    # Subject, Recording, and Window-ID Cross-Split Overlap Audits
     split_subjects = defaultdict(set)
     split_recordings = defaultdict(set)
     split_window_ids = defaultdict(set)
@@ -222,10 +254,11 @@ def run_full_conversion(
         "cross_split_subject_overlap": cross_split_subject_overlap,
         "cross_split_recording_overlap": cross_split_recording_overlap,
         "cross_split_window_id_overlap": cross_split_window_id_overlap,
+        "near_duplicate_diagnostic": "NOT_PERFORMED",
         "duplicate_groups_detail": duplicate_groups_detail,
     }
 
-    # 7. Deterministic Lineage Spot Checks
+    # 8. Deterministic Lineage Spot Checks
     spot_check_results = []
     if all_windows:
         N_win = len(all_windows)
@@ -233,14 +266,17 @@ def run_full_conversion(
         for idx in target_indices:
             win = all_windows[idx]
             prov = all_provenance[idx]
+            npy_row_slice = canonical_matrix[idx]
 
-            # Re-verify lineage trace
+            # Verify 1:1 match with .npy row
+            npy_hash = compute_canonical_signal_hash(npy_row_slice)
+
             lineage_ok = (
                 win["canonical_sample_index"] == idx
                 and win["window_id"] == prov["window_id"]
                 and win["split"] == prov["split"]
                 and win["safenest_label"] == prov["safenest_label"]
-                and prov["archive_identifier"] != ""
+                and win["canonical_signal_hash"] == npy_hash
             )
 
             spot_check_results.append(
@@ -253,12 +289,13 @@ def run_full_conversion(
                     "safenest_label": win["safenest_label"],
                     "mapping_rule_id": win["mapping_rule_id"],
                     "canonical_signal_hash": win["canonical_signal_hash"],
+                    "npy_row_signal_hash": npy_hash,
                     "source_radar_member": prov["source_radar_member"],
                     "lineage_verified": lineage_ok,
                 }
             )
 
-    # 8. Compute Full Label and Split Distributions
+    # 9. Compute Full Label and Split Distributions
     label_counts = Counter(w["safenest_label"] or "AMBIGUOUS" for w in all_windows)
     split_counts = Counter(w["split"] for w in all_windows)
     split_label_counts = defaultdict(Counter)
@@ -270,6 +307,11 @@ def run_full_conversion(
         "class_counts_window": dict(label_counts),
         "split_label_breakdown": {sp: dict(cnts) for sp, cnts in split_label_counts.items()},
         "total_windows": len(all_windows),
+        "annotation_coverage_accounting": {
+            "annotation_bearing_recordings": annotation_bearing_recordings,
+            "annotation_absent_recordings": annotation_absent_recordings,
+            "total_non_breathing_events": total_non_breathing_events,
+        },
     }
 
     split_distribution = {
@@ -293,7 +335,7 @@ def run_full_conversion(
         },
     }
 
-    # 9. Write Output Manifests to datasets/mmwave/manifests/a6_full_conversion/
+    # 10. Write Output Manifests to datasets/mmwave/manifests/a6_full_conversion/
     manifest_dir = root_dir / "datasets/mmwave/manifests/a6_full_conversion"
     manifest_dir.mkdir(parents=True, exist_ok=True)
 
@@ -301,8 +343,7 @@ def run_full_conversion(
 
     with open(manifest_dir / "full_recording_results.jsonl", "w", encoding="utf-8") as f:
         for r in all_recording_results:
-            # Omit large complex arrays from text manifest
-            r_clean = {k: v for k, v in r.items() if k not in {"windows", "provenance"}}
+            r_clean = {k: v for k, v in r.items() if k not in {"windows", "provenance", "phase_slices"}}
             f.write(json.dumps(r_clean, sort_keys=True) + "\n")
 
     with open(manifest_dir / "full_window_manifest.jsonl", "w", encoding="utf-8") as f:
@@ -320,29 +361,48 @@ def run_full_conversion(
     (manifest_dir / "spot_check_results.json").write_text(json.dumps(spot_check_results, indent=2), encoding="utf-8")
     (manifest_dir / "exceptions.json").write_text(json.dumps(all_exceptions, indent=2), encoding="utf-8")
 
-    # 10. Post-execution raw archive SHA-256 measurement
+    # 11. Compute checksums.sha256 for output directory and canonical .npy dataset
+    manifest_files = [
+        "processing_profile.json",
+        "full_recording_results.jsonl",
+        "full_window_manifest.jsonl",
+        "full_provenance_manifest.jsonl",
+        "full_label_distribution.json",
+        "full_split_distribution.json",
+        "full_quality_audit.json",
+        "full_duplicate_audit.json",
+        "spot_check_results.json",
+        "exceptions.json",
+    ]
+
+    checksum_lines = []
+    for fname in sorted(manifest_files):
+        fpath = manifest_dir / fname
+        if fpath.is_file():
+            h = hashlib.sha256(fpath.read_bytes()).hexdigest()
+            checksum_lines.append(f"{h}  {fname}")
+
+    if canonical_npy_path.is_file():
+        npy_h = hashlib.sha256(canonical_npy_path.read_bytes()).hexdigest()
+        checksum_lines.append(f"{npy_h}  ../../processed/mmwave_canonical_real_v1.npy")
+
+    (manifest_dir / "checksums.sha256").write_text("\n".join(checksum_lines) + "\n", encoding="utf-8")
+
+    # 12. Invoke Standalone Validator to CONTROL THE GATE
+    val_res = validate_full_conversion_artifacts(root_dir=root_dir, manifest_dir=manifest_dir)
+
+    # 13. Post-execution raw archive SHA-256 measurement
     post_archive_sha256 = measure_archive_sha256(archive_path)
     archive_unchanged = (pre_archive_sha256 == post_archive_sha256)
 
-    # 11. Derive Gate & Write Summary
-    validation_passed = (
-        archive_unchanged
-        and cross_split_exact_signal_overlap == 0
-        and cross_split_subject_overlap == 0
-        and cross_split_recording_overlap == 0
-        and cross_split_window_id_overlap == 0
-        and split_distribution["eligibility_counts"]["locked_test_training_eligible"] == 0
-        and split_distribution["eligibility_counts"]["ambiguous_pure_class_eligible"] == 0
-    )
-
-    a6_gate = "PASS_WITH_WARNINGS" if validation_passed else "FAIL"
-    phase_b_entry = "READY_WITH_CONDITIONS" if validation_passed else "NOT_READY"
-
+    # 14. Write Final Summary using Validator Verdict
     summary_data = {
         "profile_id": PROFILE_ID,
         "a0_measured_metrics": a0_measured_metrics,
         "processed_recording_count": len(all_recording_results),
         "processed_window_count": len(all_windows),
+        "canonical_npy_artifact": "datasets/mmwave/processed/mmwave_canonical_real_v1.npy",
+        "canonical_npy_shape": list(canonical_matrix.shape),
         "pre_a6_archive_sha256": pre_archive_sha256,
         "post_a6_archive_sha256": post_archive_sha256,
         "archive_unchanged": archive_unchanged,
@@ -356,35 +416,17 @@ def run_full_conversion(
             "cross_split_recording_overlap": cross_split_recording_overlap,
             "cross_split_window_id_overlap": cross_split_window_id_overlap,
         },
-        "validation_passed": validation_passed,
-        "a6_gate_status": a6_gate,
-        "phase_b_entry_status": phase_b_entry,
+        "validator_verdict": val_res,
+        "validation_passed": val_res["validation_success"],
+        "a6_gate_status": val_res["a6_gate_status"],
+        "phase_b_entry_status": val_res["phase_b_entry_status"],
     }
 
     (manifest_dir / "a6_summary.json").write_text(json.dumps(summary_data, indent=2), encoding="utf-8")
 
-    # 12. Compute checksums.sha256 for output directory
-    manifest_files = [
-        "processing_profile.json",
-        "full_recording_results.jsonl",
-        "full_window_manifest.jsonl",
-        "full_provenance_manifest.jsonl",
-        "full_label_distribution.json",
-        "full_split_distribution.json",
-        "full_quality_audit.json",
-        "full_duplicate_audit.json",
-        "spot_check_results.json",
-        "exceptions.json",
-        "a6_summary.json",
-    ]
-
-    checksum_lines = []
-    for fname in sorted(manifest_files):
-        fpath = manifest_dir / fname
-        if fpath.is_file():
-            h = hashlib.sha256(fpath.read_bytes()).hexdigest()
-            checksum_lines.append(f"{h}  {fname}")
-
+    # Re-update checksums.sha256 to include a6_summary.json
+    checksum_lines.append(f"{hashlib.sha256((manifest_dir / 'a6_summary.json').read_bytes()).hexdigest()}  a6_summary.json")
+    checksum_lines.sort(key=lambda line: line.split(maxsplit=1)[1])
     (manifest_dir / "checksums.sha256").write_text("\n".join(checksum_lines) + "\n", encoding="utf-8")
 
     return summary_data

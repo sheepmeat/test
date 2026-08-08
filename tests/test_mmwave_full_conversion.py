@@ -64,7 +64,6 @@ class TestMmwaveFullConversion(unittest.TestCase):
             manifest_dir = tmppath / "datasets/mmwave/manifests/a6_full_conversion"
             manifest_dir.mkdir(parents=True, exist_ok=True)
 
-            # Create invalid window with LOCKED_TEST and training_eligible=True
             invalid_window = {
                 "window_id": "WIN_0001",
                 "subject_id": "P001",
@@ -77,7 +76,7 @@ class TestMmwaveFullConversion(unittest.TestCase):
             (manifest_dir / "full_window_manifest.jsonl").write_text(json.dumps(invalid_window) + "\n")
             (manifest_dir / "full_recording_results.jsonl").write_text("{}\n")
             (manifest_dir / "full_provenance_manifest.jsonl").write_text("{}\n")
-            (manifest_dir / "a6_summary.json").write_text(json.dumps({"validation_passed": True}))
+            (manifest_dir / "full_quality_audit.json").write_text(json.dumps({"nan_sample_count": 0, "inf_sample_count": 0, "mean_window_phase_std_dev": 0.5}))
             (manifest_dir / "checksums.sha256").write_text("")
 
             with self.assertRaises(A6ValidationError):
@@ -90,7 +89,6 @@ class TestMmwaveFullConversion(unittest.TestCase):
             manifest_dir = tmppath / "datasets/mmwave/manifests/a6_full_conversion"
             manifest_dir.mkdir(parents=True, exist_ok=True)
 
-            # Create invalid window with AMBIGUOUS and training_eligible=True
             invalid_window = {
                 "window_id": "WIN_0002",
                 "subject_id": "P001",
@@ -103,7 +101,7 @@ class TestMmwaveFullConversion(unittest.TestCase):
             (manifest_dir / "full_window_manifest.jsonl").write_text(json.dumps(invalid_window) + "\n")
             (manifest_dir / "full_recording_results.jsonl").write_text("{}\n")
             (manifest_dir / "full_provenance_manifest.jsonl").write_text("{}\n")
-            (manifest_dir / "a6_summary.json").write_text(json.dumps({"validation_passed": True}))
+            (manifest_dir / "full_quality_audit.json").write_text(json.dumps({"nan_sample_count": 0, "inf_sample_count": 0, "mean_window_phase_std_dev": 0.5}))
             (manifest_dir / "checksums.sha256").write_text("")
 
             with self.assertRaises(A6ValidationError):
@@ -129,7 +127,35 @@ class TestMmwaveFullConversion(unittest.TestCase):
             (manifest_dir / "full_window_manifest.jsonl").write_text("{}\n")
             (manifest_dir / "full_recording_results.jsonl").write_text("{}\n")
             (manifest_dir / "full_provenance_manifest.jsonl").write_text(json.dumps(invalid_prov) + "\n")
-            (manifest_dir / "a6_summary.json").write_text(json.dumps({"validation_passed": True}))
+            (manifest_dir / "full_quality_audit.json").write_text(json.dumps({"nan_sample_count": 0, "inf_sample_count": 0, "mean_window_phase_std_dev": 0.5}))
+            (manifest_dir / "checksums.sha256").write_text("")
+
+            with self.assertRaises(A6ValidationError):
+                validate_full_conversion_artifacts(root_dir=tmppath, manifest_dir=manifest_dir)
+
+    # 8. Rejection of trailing Z timestamp in newly generated window manifest
+    def test_08_trailing_z_timestamp_rejection(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmppath = Path(tmpdir)
+            manifest_dir = tmppath / "datasets/mmwave/manifests/a6_full_conversion"
+            manifest_dir.mkdir(parents=True, exist_ok=True)
+
+            invalid_window = {
+                "window_id": "WIN_0001",
+                "subject_id": "P001",
+                "split": "TRAIN",
+                "assignment_status": "ASSIGNED",
+                "start_timestamp": "2025-02-20T12:34:30.238545Z",  # INVALID trailing Z!
+                "last_sample_timestamp": "2025-02-20T12:35:00.138545",
+                "end_timestamp_exclusive": "2025-02-20T12:35:00.238545",
+                "training_eligible": True,
+                "validation_eligible": False,
+                "locked_test_evaluation_eligible": False,
+            }
+            (manifest_dir / "full_window_manifest.jsonl").write_text(json.dumps(invalid_window) + "\n")
+            (manifest_dir / "full_recording_results.jsonl").write_text("{}\n")
+            (manifest_dir / "full_provenance_manifest.jsonl").write_text("{}\n")
+            (manifest_dir / "full_quality_audit.json").write_text(json.dumps({"nan_sample_count": 0, "inf_sample_count": 0, "mean_window_phase_std_dev": 0.5}))
             (manifest_dir / "checksums.sha256").write_text("")
 
             with self.assertRaises(A6ValidationError):

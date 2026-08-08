@@ -7,5 +7,6 @@
   "cross_split_subject_overlap": 0,
   "cross_split_recording_overlap": 0,
   "cross_split_window_id_overlap": 0,
+  "near_duplicate_diagnostic": "NOT_PERFORMED",
   "duplicate_groups_detail": []
 }

@@ -124,7 +124,6 @@ def load_authoritative_a5_splits(root_dir: Path) -> tuple[dict[str, str], dict[s
                 rec_split = rec["split"]
                 rec_subj = rec["subject_id"]
 
-                # Cross-check consistency between subject and recording split artifacts
                 expected_split = subject_split_map.get(rec_subj)
                 if expected_split is None:
                     raise FullConversionError(f"A5 recording split contains unknown subject: {rec_subj}")
@@ -147,6 +146,7 @@ def process_single_recording(
     rec_id = rec_record["recording_id"]
     subj_id = rec_record["subject_id"]
     source_path = rec_record["source_recording_path"]
+
     cond_obj = rec_record.get("activity_or_test") or rec_record.get("source_test_condition") or rec_record.get("source_explicit_condition")
     if isinstance(cond_obj, dict):
         condition = cond_obj.get("value", "UNKNOWN")
@@ -179,6 +179,7 @@ def process_single_recording(
             "error": f"Required member missing for {rec_id}",
             "windows": [],
             "provenance": [],
+            "phase_slices": [],
         }
 
     # 2. A1 Safe Decode
@@ -198,6 +199,7 @@ def process_single_recording(
             "error": str(exc),
             "windows": [],
             "provenance": [],
+            "phase_slices": [],
         }
 
     rffts = a1_res["tensor"]
@@ -216,6 +218,7 @@ def process_single_recording(
             "error": str(exc),
             "windows": [],
             "provenance": [],
+            "phase_slices": [],
         }
 
     canonical_phase = a2_res["unwrapped_phase"]
@@ -232,6 +235,7 @@ def process_single_recording(
             "error": f"Failed reading radar timestamps: {exc}",
             "windows": [],
             "provenance": [],
+            "phase_slices": [],
         }
 
     tl_profile = TimelineProfile()
@@ -265,13 +269,13 @@ def process_single_recording(
     lbl_profile = LabelMappingProfile()
     final_windows = []
     provenance_records = []
+    phase_slices = []
 
     for win in a3_windows:
         win_idx = win["window_index"]
         win_start_sec = win_idx * 30.0
         win_end_sec = win_start_sec + 30.0
 
-        # Extracts Movesense reference respiration rate if ACC data available
         movesense_rr_info = None
         if acc_bytes is not None and rec_tl_summary.get("first_timestamp"):
             radar_t0 = rec_tl_summary["first_timestamp"]
@@ -292,6 +296,11 @@ def process_single_recording(
             movesense_rr_info=movesense_rr_info,
         )
 
+        # Strip trailing 'Z' from newly formatted window timestamps for consistency with naive clock
+        mapped_win["start_timestamp"] = mapped_win["start_timestamp"].rstrip("Z")
+        mapped_win["last_sample_timestamp"] = mapped_win["last_sample_timestamp"].rstrip("Z")
+        mapped_win["end_timestamp_exclusive"] = mapped_win["end_timestamp_exclusive"].rstrip("Z")
+
         # Enforce exact A5 split inheritance
         mapped_win["split"] = subject_split
         mapped_win["split_profile_id"] = profile.a5_split_profile
@@ -303,12 +312,10 @@ def process_single_recording(
         validation_eligible = (subject_split == "VALIDATION") and (assign_status == "ASSIGNED")
         locked_test_evaluation_eligible = (subject_split == "LOCKED_TEST") and (assign_status == "ASSIGNED")
 
-        # Hard safety constraints:
-        # LOCKED_TEST training_eligible MUST be False
+        # Hard safety constraints
         if subject_split == "LOCKED_TEST":
             training_eligible = False
 
-        # AMBIGUOUS pure-class eligibility MUST be False
         if assign_status == "AMBIGUOUS":
             training_eligible = False
             validation_eligible = False
@@ -321,19 +328,30 @@ def process_single_recording(
         # Calculate canonical phase slice for this window (300 samples)
         c_start = win["canonical_start_index"]
         c_end = win["canonical_end_index_exclusive"]
-        win_phase_slice = canonical_phase[c_start:c_end]
+        win_phase_slice = np.ascontiguousarray(canonical_phase[c_start:c_end], dtype=np.float64)
         phase_hash = compute_canonical_signal_hash(win_phase_slice)
         mapped_win["canonical_signal_hash"] = phase_hash
 
-        # Extract naive acquisition-clock ISO timestamps for A6 provenance
-        start_ts = win["start_timestamp"]
-        last_ts = win["last_sample_timestamp"]
-        end_excl_ts = win["end_timestamp_exclusive"]
+        # Real signal quality audit measurements
+        has_nan = bool(np.isnan(win_phase_slice).any())
+        has_inf = bool(np.isinf(win_phase_slice).any())
+        is_exact_constant = bool(np.all(win_phase_slice == win_phase_slice[0]))
+        std_val = float(np.std(win_phase_slice))
+        is_near_constant = bool(std_val < 1e-6)
 
-        # Ensure newly formatted timestamps do not have timezone suffixes appended
-        start_ts_naive = start_ts.rstrip("Z")
-        last_ts_naive = last_ts.rstrip("Z")
-        end_excl_ts_naive = end_excl_ts.rstrip("Z")
+        mapped_win["signal_quality_metrics"] = {
+            "has_nan": has_nan,
+            "has_inf": has_inf,
+            "is_exact_constant": is_exact_constant,
+            "is_near_constant": is_near_constant,
+            "std_dev": round(std_val, 6),
+            "mean_val": round(float(np.mean(win_phase_slice)), 6),
+        }
+
+        # Extract naive acquisition-clock ISO timestamps for A6 provenance
+        start_ts_naive = mapped_win["start_timestamp"]
+        last_ts_naive = mapped_win["last_sample_timestamp"]
+        end_excl_ts_naive = mapped_win["end_timestamp_exclusive"]
 
         prov_row = {
             "window_id": win["window_id"],
@@ -373,10 +391,12 @@ def process_single_recording(
             "training_eligible": training_eligible,
             "validation_eligible": validation_eligible,
             "locked_test_evaluation_eligible": locked_test_evaluation_eligible,
+            "future_npz_sample_index": None,  # Set to None/null until Phase B training NPZ creation
         }
 
         final_windows.append(mapped_win)
         provenance_records.append(prov_row)
+        phase_slices.append(win_phase_slice)
 
     status = "SUCCESS_WITH_WARNINGS" if exceptions else "SUCCESS"
 
@@ -396,6 +416,7 @@ def process_single_recording(
         "window_count": len(final_windows),
         "windows": final_windows,
         "provenance": provenance_records,
+        "phase_slices": phase_slices,
         "exceptions": exceptions,
     }
 
