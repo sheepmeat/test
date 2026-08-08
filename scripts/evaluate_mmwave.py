@@ -21,13 +21,21 @@ from typing import Dict, Any, Tuple
 
 import numpy as np
 
-# Ensure SafeNest_V6/ondevice_ai root is in python path
+# Ensure canonical repository root is in python path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from preprocessing.mmwave import MMWavePreprocessor
+
+
+def artifact_path(path: Path) -> str:
+    """Serialize an input path without persisting a machine-specific absolute path."""
+    try:
+        return path.resolve().relative_to(project_root.resolve()).as_posix()
+    except ValueError:
+        return f"EXTERNAL_INPUT/{path.name}"
 
 
 def calculate_sha256(file_path: Path) -> str:
@@ -96,7 +104,7 @@ def evaluate_tflite_model(
     metrics = compute_metrics(y_test, y_preds, class_map)
 
     total_samples = len(X_test)
-    metrics["model_path"] = str(model_path)
+    metrics["model_path"] = artifact_path(model_path)
     metrics["model_sha256"] = sha256_val
     metrics["model_type"] = "INT8 TFLite" if in_dtype == np.int8 else "Float TFLite"
     metrics["input_saturation_count"] = input_sat_count
@@ -136,7 +144,7 @@ def evaluate_keras_model(
     y_preds = np.argmax(preds, axis=1).astype(np.int64)
 
     metrics = compute_metrics(y_test, y_preds, class_map)
-    metrics["model_path"] = str(model_path)
+    metrics["model_path"] = artifact_path(model_path)
     metrics["model_sha256"] = sha256_val
     metrics["model_type"] = "Float Keras"
     metrics["input_saturation_count"] = 0
@@ -252,7 +260,7 @@ def main():
         print(f"❌ Error: Unsupported model format {model_path.suffix}")
         sys.exit(1)
 
-    results["dataset_path"] = str(dataset_path)
+    results["dataset_path"] = artifact_path(dataset_path)
     results["dataset_split"] = args.split
     results["synthetic_data"] = True
 

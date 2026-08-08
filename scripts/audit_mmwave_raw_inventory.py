@@ -1071,12 +1071,12 @@ def main():
             "category": "VERSION_CONTEXT",
             "dataset_id": "dataset-10_5281_zenodo_18599983",
             "archive_id": f"archive-sha256-{archive_sha256_before[:16]}",
-            "affected_files": ["SafeNest_V4_OnDevice_AI/", "SafeNest_V5_OnDevice_AI/"],
-            "observed_evidence": "Repository contains legacy SafeNest V4 and SafeNest V5 directories alongside top-level datasets/.",
-            "impact": "Historical manifest files exist in V4/V5 subdirectories.",
-            "recommended_next_action": "Maintain V5 as read-only reference and use top-level datasets/ for raw archive manifests.",
+            "affected_files": ["archive/version_snapshots/"],
+            "observed_evidence": "Historical version trees are isolated under archive/version_snapshots; the repository root is the sole active workspace.",
+            "impact": "Historical manifests remain available without participating in active runtime resolution.",
+            "recommended_next_action": "Keep archived snapshots read-only and continue using top-level datasets/ for raw archive manifests.",
             "blocks_a1": False,
-            "status": "OPEN"
+            "status": "RESOLVED"
         },
         {
             "anomaly_id": "A0-ANOM-0003",

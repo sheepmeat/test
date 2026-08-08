@@ -105,7 +105,6 @@ def run_full_conversion(
             ann_files = rec.get("annotation_files", [])
             if ann_files:
                 annotation_bearing_recordings += 1
-                total_non_breathing_events += len(ann_files)
             else:
                 annotation_absent_recordings += 1
 
@@ -122,6 +121,7 @@ def run_full_conversion(
 
             all_recording_results.append(rec_res)
             recording_statuses[rec_res["status"]] += 1
+            total_non_breathing_events += int(rec_res.get("annotation_event_count", 0))
 
             if rec_res.get("tensor_shape"):
                 a1_decode_shapes[str(tuple(rec_res["tensor_shape"]))] += 1

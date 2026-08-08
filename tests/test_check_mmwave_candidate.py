@@ -14,11 +14,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-# Add SafeNest_V6/ondevice_ai to sys.path
+# Add canonical repository root to sys.path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from scripts.validate_metadata import build_mmwave_candidate_metadata
 from scripts.check_mmwave_candidate import (

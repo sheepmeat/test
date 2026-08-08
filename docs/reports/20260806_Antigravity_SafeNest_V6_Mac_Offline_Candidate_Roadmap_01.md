@@ -2,8 +2,8 @@
 
 - **작성일**: 2026-08-06
 - **작성자**: SafeNest 온디바이스 AI 및 TinyML 담당 에이전트
-- **작업 공간**: `embed2/SafeNest_V6/ondevice_ai/`
-- **기준 경로**: `embed2/SafeNest_V5_OnDevice_AI/` (읽기 전용 기준판 보존, SHA-256 검증 완료)
+- **현재 정규화된 작업 공간**: canonical repository root containing `AGENTS.md`
+- **V5 보존 기준판**: `archive/version_snapshots/SafeNest_v5.0_20260808/` (읽기 전용, SHA-256 검증 완료)
 - **참조 감사 문서**: `docs/reports/ONDEVICE_AI_AUDIT_20260806.md`, `docs/20260806_Antigravity_SafeNest_Audit_Report_02.md`
 - **최종 후보 명칭**: **V6 Mac Offline Candidate**
 
@@ -23,11 +23,11 @@
 ## 2. 평가 피드백 검토 및 핵심 개선 사항 반영 요약
 
 ### 2.1 V5 무변경 해시 검증 (`CONFIRMED_UNMODIFIED`)
-- 단순 `git status` 확인에 그치지 않고 [`scripts/verify_v5_unmodified.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/verify_v5_unmodified.py)를 구현하여 `SafeNest_V5_OnDevice_AI/` 내 122개 전체 파일의 SHA-256 해시를 스캔 및 추적.
-- 검증 결과: **수정, 추가, 삭제 0건 (`CONFIRMED_UNMODIFIED`)**. ([`benchmarks/v5_file_sha256_audit.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/benchmarks/v5_file_sha256_audit.json))
+- 단순 `git status` 확인에 그치지 않고 [`scripts/verify_v5_unmodified.py`](../../scripts/verify_v5_unmodified.py)를 구현하여 `SafeNest_V5_OnDevice_AI/` 내 122개 전체 파일의 SHA-256 해시를 스캔 및 추적.
+- 검증 결과: **수정, 추가, 삭제 0건 (`CONFIRMED_UNMODIFIED`)**. ([`benchmarks/v5_file_sha256_audit.json`](../../benchmarks/v5_file_sha256_audit.json))
 
 ### 2.2 전체 학습/양자화 중간 보존 자산 완전화
-- [`scripts/train_mmwave.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/train_mmwave.py) 개정을 통해 INT8 TFLite 모델뿐만 아니라 Keras float 체크포인트, Float TFLite, 학습 설정/히스토리, calibration 인덱스를 명시적 자산으로 보존.
+- [`scripts/train_mmwave.py`](../../scripts/train_mmwave.py) 개정을 통해 INT8 TFLite 모델뿐만 아니라 Keras float 체크포인트, Float TFLite, 학습 설정/히스토리, calibration 인덱스를 명시적 자산으로 보존.
   - `models/mmwave/mmwave_resp_float_v0.2.0_candidate.keras`
   - `models/mmwave/mmwave_resp_float_v0.2.0_candidate.tflite`
   - `models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite`
@@ -36,20 +36,20 @@
   - `models/mmwave/representative_dataset_indices.json`
 
 ### 2.3 Group Split 용어 정밀화 (`CONFIRMED_SYNTHETIC_ONLY` vs `NOT_VERIFIABLE`)
-- 원본 NPZ 데이터셋(`mmwave_respiration_v1.npz`) 내 피험자/세션 sample-level provenance가 없음을 인정하고, [`datasets/mmwave/splits/mmwave_group_split_v1.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/datasets/mmwave/splits/mmwave_group_split_v1.json)의 상태를 구분 표기함.
+- 원본 NPZ 데이터셋(`mmwave_respiration_v1.npz`) 내 피험자/세션 sample-level provenance가 없음을 인정하고, [`datasets/mmwave/splits/mmwave_group_split_v1.json`](../../datasets/mmwave/splits/mmwave_group_split_v1.json)의 상태를 구분 표기함.
   - **합성 Group Isolation**: `CONFIRMED_SYNTHETIC_ONLY`
   - **실제 Subject-wise Split**: `NOT_VERIFIABLE`
 
 ### 2.4 전처리 단계 7단계 순서 고정 및 계약 상태 변경 (`EXPERIMENTAL_PREPROCESSING_V1`)
-- [`config/mmwave_input_contract.yaml`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/config/mmwave_input_contract.yaml)에 0.1–0.5 Hz 필터 계약 상태를 `EXPERIMENTAL_PREPROCESSING_V1`로 지정.
-- [`preprocessing/mmwave.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/preprocessing/mmwave.py) 내부에서 strict 7-stage 순서 (Window check → Finite/NaN replacement → Linear detrend → Butterworth BPF 0.1-0.5Hz → Train-only Z-score → Clip `[-5.0, 5.0]` → Shape `[1, 300, 1]`) 강제 및 `scipy` 부재 시 예외 없는 fallback 구현.
+- [`config/mmwave_input_contract.yaml`](../../config/mmwave_input_contract.yaml)에 0.1–0.5 Hz 필터 계약 상태를 `EXPERIMENTAL_PREPROCESSING_V1`로 지정.
+- [`preprocessing/mmwave.py`](../../preprocessing/mmwave.py) 내부에서 strict 7-stage 순서 (Window check → Finite/NaN replacement → Linear detrend → Butterworth BPF 0.1-0.5Hz → Train-only Z-score → Clip `[-5.0, 5.0]` → Shape `[1, 300, 1]`) 강제 및 `scipy` 부재 시 예외 없는 fallback 구현.
 
 ### 2.5 성능 품질 중심 Acceptance Checker 간소화
-- [`scripts/check_mmwave_candidate.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/check_mmwave_candidate.py)를 성능 품질 검증(정확도, F1 drop ≤ 0.05, multi-class 예측, 0-recall 탐지, 텐서 포화 검사, SHA256/Scaler 일치) 중심으로 간소화하여 신속한 개발 갱신을 지원.
+- [`scripts/check_mmwave_candidate.py`](../../scripts/check_mmwave_candidate.py)를 성능 품질 검증(정확도, F1 drop ≤ 0.05, multi-class 예측, 0-recall 탐지, 텐서 포화 검사, SHA256/Scaler 일치) 중심으로 간소화하여 신속한 개발 갱신을 지원.
 - 검증 결과: **Candidate Acceptance Check PASSED!** (Exit Code 0).
 
 ### 2.6 Continuous Timeline 미지원 지표 표기 보완
-- 연속 시간축 데이터가 없는 30초 독립 window NPZ 특성을 반영하여 [`scripts/evaluate_mmwave.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/evaluate_mmwave.py)의 `false_alarm_per_hour` 필드를 `null`로 지정하고, `status: NOT_COMPUTABLE`, `reason: CONTINUOUS_SESSION_TIMELINE_MISSING`으로 표기함.
+- 연속 시간축 데이터가 없는 30초 독립 window NPZ 특성을 반영하여 [`scripts/evaluate_mmwave.py`](../../scripts/evaluate_mmwave.py)의 `false_alarm_per_hour` 필드를 `null`로 지정하고, `status: NOT_COMPUTABLE`, `reason: CONTINUOUS_SESSION_TIMELINE_MISSING`으로 표기함.
 - Miss rate metric 명칭을 임상 miss rate가 아닌 `apnea_window_miss_rate`로 변경함.
 
 ---
@@ -58,7 +58,7 @@
 
 | 평가 항목 | 정밀 상태 표기 (Refined Status) | 비고 / 근거 |
 | :--- | :--- | :--- |
-| **V5 무변경 보존** | `CONFIRMED_UNMODIFIED` | [`scripts/verify_v5_unmodified.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/verify_v5_unmodified.py)로 122개 파일 SHA-256 일치 확인 |
+| **V5 무변경 보존** | `CONFIRMED_UNMODIFIED` | [`scripts/verify_v5_unmodified.py`](../../scripts/verify_v5_unmodified.py)로 122개 파일 SHA-256 일치 확인 |
 | **기존 class collapse 재현** | `CONFIRMED` | Accuracy `0.3996`, APNEA recall `0.0`, Class collapse `True` 오프라인 재현 |
 | **합성 group isolation** | `CONFIRMED_SYNTHETIC_ONLY` | 합성 group ID 기준 train/val/test 누수 0건 |
 | **실제 subject-wise split** | `NOT_VERIFIABLE` | 원본 NPZ 내 sample-level subject/session metadata 부재 |

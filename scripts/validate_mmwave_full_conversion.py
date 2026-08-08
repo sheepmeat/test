@@ -12,6 +12,7 @@ from collections import Counter, defaultdict
 import hashlib
 import json
 from pathlib import Path
+import re
 import sys
 from typing import Any
 
@@ -23,6 +24,175 @@ sys.path.insert(0, str(ROOT_DIR / "scripts"))
 
 class A6ValidationError(Exception):
     """Raised when Phase A6 full conversion validation fails."""
+
+
+CORE_CHECKSUM_TARGETS = {
+    "processing_profile.json",
+    "full_recording_results.jsonl",
+    "full_window_manifest.jsonl",
+    "full_provenance_manifest.jsonl",
+    "full_label_distribution.json",
+    "full_split_distribution.json",
+    "full_quality_audit.json",
+    "full_duplicate_audit.json",
+    "spot_check_results.json",
+    "exceptions.json",
+    "../../processed/mmwave_canonical_real_v1.npy",
+}
+
+WINDOW_PROVENANCE_FIELDS = (
+    "window_id",
+    "recording_id",
+    "subject_id",
+    "split",
+    "safenest_label",
+    "safenest_label_id",
+    "mapping_type",
+    "mapping_rule_id",
+    "assignment_status",
+    "canonical_signal_hash",
+    "training_eligible",
+    "validation_eligible",
+    "locked_test_evaluation_eligible",
+)
+
+
+def _validate_checksums(root_dir: Path, manifest_dir: Path) -> int:
+    """Validate checksum syntax, coverage, uniqueness, containment, and content."""
+    checksums_file = manifest_dir / "checksums.sha256"
+    if not checksums_file.is_file():
+        raise A6ValidationError(f"Checksums manifest missing: {checksums_file}")
+
+    root_resolved = root_dir.resolve()
+    listed_names: set[str] = set()
+    for line_number, line in enumerate(checksums_file.read_text(encoding="utf-8").splitlines(), 1):
+        if not line.strip():
+            continue
+        parts = line.strip().split(maxsplit=1)
+        if len(parts) != 2 or re.fullmatch(r"[0-9a-f]{64}", parts[0]) is None:
+            raise A6ValidationError(f"Malformed checksum entry at line {line_number}: {line!r}")
+
+        exp_hash, rel_name = parts
+        if rel_name in listed_names:
+            raise A6ValidationError(f"Duplicate checksum target: {rel_name}")
+        listed_names.add(rel_name)
+
+        target_f = (manifest_dir / rel_name).resolve()
+        if target_f != root_resolved and root_resolved not in target_f.parents:
+            raise A6ValidationError(f"Checksum target escapes canonical project root: {rel_name}")
+        if not target_f.is_file():
+            raise A6ValidationError(f"Manifest file listed in checksums missing: {rel_name}")
+        actual_hash = hashlib.sha256(target_f.read_bytes()).hexdigest()
+        if actual_hash != exp_hash:
+            raise A6ValidationError(
+                f"Checksum mismatch for file {rel_name}: expected {exp_hash}, got {actual_hash}"
+            )
+
+    missing_targets = CORE_CHECKSUM_TARGETS - listed_names
+    if missing_targets:
+        raise A6ValidationError(f"Required checksum targets missing: {sorted(missing_targets)}")
+    return len(listed_names)
+
+
+def _validate_alignment(
+    windows: list[dict[str, Any]],
+    provenance: list[dict[str, Any]],
+    canonical_matrix: np.ndarray,
+) -> None:
+    """Validate semantic and byte-level 1:1 alignment across all A6 sample artifacts."""
+    if len(windows) != len(provenance) or len(windows) != canonical_matrix.shape[0]:
+        raise A6ValidationError(
+            f"1:1 alignment mismatch! Windows: {len(windows)}, Provenance: {len(provenance)}, "
+            f"NPY rows: {canonical_matrix.shape[0]}"
+        )
+
+    window_ids: set[str] = set()
+    for idx, (window, prov, npy_row) in enumerate(zip(windows, provenance, canonical_matrix)):
+        if window.get("canonical_sample_index") != idx or prov.get("canonical_sample_index") != idx:
+            raise A6ValidationError(f"Canonical sample index non-contiguous at row {idx}!")
+
+        window_id = window.get("window_id")
+        if not window_id or window_id in window_ids:
+            raise A6ValidationError(f"Missing or duplicate window_id at row {idx}: {window_id!r}")
+        window_ids.add(window_id)
+
+        for field in WINDOW_PROVENANCE_FIELDS:
+            if field not in window or field not in prov:
+                raise A6ValidationError(f"Required alignment field '{field}' missing at row {idx}")
+            if window[field] != prov[field]:
+                raise A6ValidationError(
+                    f"Window/provenance mismatch at row {idx} for '{field}': "
+                    f"window={window[field]!r}, provenance={prov[field]!r}"
+                )
+
+        row_bytes = np.ascontiguousarray(npy_row, dtype=np.float64).tobytes()
+        row_hash = hashlib.sha256(row_bytes).hexdigest()
+        if window["canonical_signal_hash"] != row_hash:
+            raise A6ValidationError(
+                f"Canonical signal hash mismatch at index {idx} between window manifest and .npy row!"
+            )
+        if prov["canonical_signal_hash"] != row_hash:
+            raise A6ValidationError(
+                f"Canonical signal hash mismatch at index {idx} between provenance and .npy row!"
+            )
+
+
+def _validate_recording_accounting(
+    a0_recordings: list[dict[str, Any]],
+    rec_results: list[dict[str, Any]],
+    windows: list[dict[str, Any]],
+    provenance: list[dict[str, Any]],
+) -> None:
+    """Require every authoritative recording to complete and own its declared samples."""
+    a0_by_id = {record["recording_id"]: record for record in a0_recordings}
+    if len(a0_by_id) != len(a0_recordings):
+        raise A6ValidationError("Duplicate recording IDs in authoritative A0 inventory")
+
+    result_by_id = {record.get("recording_id"): record for record in rec_results}
+    if None in result_by_id or len(result_by_id) != len(rec_results):
+        raise A6ValidationError("Missing or duplicate recording entries in full_recording_results.jsonl")
+
+    missing_recs = set(a0_by_id) - set(result_by_id)
+    unknown_recs = set(result_by_id) - set(a0_by_id)
+    if missing_recs:
+        raise A6ValidationError(f"A0 recordings missing from A6 full conversion results: {missing_recs}")
+    if unknown_recs:
+        raise A6ValidationError(f"Unknown recordings in A6 conversion results: {unknown_recs}")
+
+    allowed_statuses = {"SUCCESS", "SUCCESS_WITH_WARNINGS"}
+    window_counts = Counter(window.get("recording_id") for window in windows)
+    provenance_counts = Counter(row.get("recording_id") for row in provenance)
+
+    for rec_id, result in result_by_id.items():
+        status = result.get("status")
+        if status not in allowed_statuses:
+            raise A6ValidationError(f"Recording {rec_id} has non-success A6 status: {status}")
+
+        expected_subject = a0_by_id[rec_id]["subject_id"]
+        if result.get("subject_id") != expected_subject:
+            raise A6ValidationError(
+                f"Recording {rec_id} subject mismatch: {result.get('subject_id')} != {expected_subject}"
+            )
+
+        declared_count = result.get("window_count")
+        if not isinstance(declared_count, int) or declared_count <= 0:
+            raise A6ValidationError(f"Recording {rec_id} has invalid window_count: {declared_count}")
+        if window_counts[rec_id] != declared_count or provenance_counts[rec_id] != declared_count:
+            raise A6ValidationError(
+                f"Recording {rec_id} sample accounting mismatch: declared={declared_count}, "
+                f"windows={window_counts[rec_id]}, provenance={provenance_counts[rec_id]}"
+            )
+
+    for artifact_name, rows in (("window", windows), ("provenance", provenance)):
+        for row in rows:
+            rec_id = row.get("recording_id")
+            if rec_id not in a0_by_id:
+                raise A6ValidationError(f"Unknown recording ID in {artifact_name} artifact: {rec_id}")
+            if row.get("subject_id") != a0_by_id[rec_id]["subject_id"]:
+                raise A6ValidationError(
+                    f"{artifact_name.title()} subject mismatch for recording {rec_id}: "
+                    f"{row.get('subject_id')} != {a0_by_id[rec_id]['subject_id']}"
+                )
 
 
 def validate_full_conversion_artifacts(
@@ -53,24 +223,8 @@ def validate_full_conversion_artifacts(
             f"Raw archive SHA-256 changed! Expected {expected_archive_sha256}, got {current_archive_sha256}"
         )
 
-    # 2. Check checksums.sha256 in A6 manifest directory
-    checksums_file = manifest_dir / "checksums.sha256"
-    if not checksums_file.is_file():
-        raise A6ValidationError(f"Checksums manifest missing: {checksums_file}")
-
-    for line in checksums_file.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
-            continue
-        parts = line.strip().split(maxsplit=1)
-        if len(parts) != 2:
-            continue
-        exp_hash, rel_name = parts[0], parts[1]
-        target_f = (manifest_dir / rel_name).resolve()
-        if not target_f.is_file():
-            raise A6ValidationError(f"Manifest file listed in checksums missing: {rel_name}")
-        actual_hash = hashlib.sha256(target_f.read_bytes()).hexdigest()
-        if actual_hash != exp_hash:
-            raise A6ValidationError(f"Checksum mismatch for file {rel_name}: expected {exp_hash}, got {actual_hash}")
+    # 2. Check checksums.sha256 syntax, coverage, containment, and content
+    checksum_entry_count = _validate_checksums(root_dir, manifest_dir)
 
     # 3. Validate Canonical Numeric Dataset (.npy array)
     canonical_npy_path = root_dir / "datasets/mmwave/processed/mmwave_canonical_real_v1.npy"
@@ -93,8 +247,6 @@ def validate_full_conversion_artifacts(
         for line in f:
             if line.strip():
                 a0_recordings.append(json.loads(line))
-
-    a0_rec_ids = set(r["recording_id"] for r in a0_recordings)
 
     a5_split_json = root_dir / "datasets/mmwave/splits/mmwave_real_subject_split_v1.json"
     if not a5_split_json.is_file():
@@ -124,39 +276,16 @@ def validate_full_conversion_artifacts(
 
     quality_audit = json.loads((manifest_dir / "full_quality_audit.json").read_text(encoding="utf-8"))
 
-    # 6. Verify 1:1 Index Alignment between .npy rows, windows, and provenance
-    if len(windows) != len(provenance) or len(windows) != canonical_matrix.shape[0]:
-        raise A6ValidationError(
-            f"1:1 alignment mismatch! Windows: {len(windows)}, Provenance: {len(provenance)}, NPY rows: {canonical_matrix.shape[0]}"
-        )
-
-    for idx, (w, p, npy_row) in enumerate(zip(windows, provenance, canonical_matrix)):
-        if w.get("canonical_sample_index") != idx or p.get("canonical_sample_index") != idx:
-            raise A6ValidationError(f"Canonical sample index non-contiguous at row {idx}!")
-
-        # Verify exact SHA-256 hash match between window manifest and .npy row
-        row_bytes = np.ascontiguousarray(npy_row, dtype=np.float64).tobytes()
-        row_hash = hashlib.sha256(row_bytes).hexdigest()
-        if w["canonical_signal_hash"] != row_hash:
-            raise A6ValidationError(f"Canonical signal hash mismatch at index {idx} between window manifest and .npy row!")
+    # 6. Verify semantic and byte-level 1:1 alignment
+    _validate_alignment(windows, provenance, canonical_matrix)
 
     # 7. Verify Future NPZ Sample Index is None/null
     for p in provenance:
         if p.get("future_npz_sample_index") is not None:
             raise A6ValidationError(f"future_npz_sample_index must be None/null until Phase B training NPZ creation, got {p.get('future_npz_sample_index')}")
 
-    # 8. Verify A0 Recording Accounting
-    a6_rec_ids = set(r["recording_id"] for r in rec_results)
-    if len(a6_rec_ids) != len(rec_results):
-        raise A6ValidationError(f"Duplicate recording entries in full_recording_results.jsonl! Total: {len(rec_results)}, Unique: {len(a6_rec_ids)}")
-
-    missing_recs = a0_rec_ids - a6_rec_ids
-    if missing_recs:
-        raise A6ValidationError(f"A0 recordings missing from A6 full conversion results: {missing_recs}")
-
-    unknown_recs = a6_rec_ids - a0_rec_ids
-    if unknown_recs:
-        raise A6ValidationError(f"Unknown recordings in A6 conversion results: {unknown_recs}")
+    # 8. Verify every A0 recording completed and owns its declared samples
+    _validate_recording_accounting(a0_recordings, rec_results, windows, provenance)
 
     # 9. Verify Immutable Split Inheritance
     valid_splits = {"TRAIN", "VALIDATION", "LOCKED_TEST"}
@@ -288,6 +417,7 @@ def validate_full_conversion_artifacts(
         "total_windows_validated": len(windows),
         "total_provenance_validated": len(provenance),
         "canonical_npy_rows_validated": canonical_matrix.shape[0],
+        "checksum_entries_validated": checksum_entry_count,
         "raw_archive_sha256": current_archive_sha256,
         "leakage_recalculated": {
             "cross_split_subject_overlap": subj_leakage,

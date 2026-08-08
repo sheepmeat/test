@@ -30,7 +30,7 @@ A3 establishes:
 
 ## 2. Git Baseline
 
-- **Repository Root**: `/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/대학/2026/embed2`
+- **Repository Root**: canonical repository root containing `AGENTS.md`
 - **Branch**: `feature/phase-a3-timeline-window-policy`
 - **Base Commit**: `b935b0d` (merged Phase A2)
 - **Raw Archive SHA-256 (Pre/Post)**: `f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0` (Unchanged)

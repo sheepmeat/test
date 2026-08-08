@@ -168,6 +168,7 @@ Across 440 recordings:
 - **Annotation-Bearing Recordings**: `220` (Rest condition recordings with `non_breathing_ts.csv`).
 - **Annotation-Absent Recordings**: `220` (Post-exercise condition recordings).
 - **Total Non-Breathing Events**: `220` voluntary breath-hold events.
+- Event count is derived from successfully parsed annotation records, not inferred from annotation file count; all 220 annotation files produced one valid event and no parse failure.
 - **Overlap Mathematics**: Computed exact 1D interval intersections $[t_{start}, t_{end\_exclusive}) \cap [t_{begin}, t_{end})$.
 
 ---
@@ -277,6 +278,7 @@ Every window inherits its subject's split:
 - **One-to-One Correspondence**: `True`
 - **Missing Required Fields**: `0`
 - **Absolute Local Paths**: `0`
+- The standalone validator compares every row's window/recording/subject identity, split, SafeNest label, mapping, assignment status, eligibility flags, and canonical signal SHA-256 across the window manifest, provenance manifest, and `.npy` matrix.
 
 ---
 
@@ -303,7 +305,7 @@ Ran full conversion twice in isolated paths:
 
 ## 29. Checksums
 
-All output manifests and the canonical `.npy` file checksummed in `datasets/mmwave/manifests/a6_full_conversion/checksums.sha256`.
+All output manifests and the canonical `.npy` file are checksummed in `datasets/mmwave/manifests/a6_full_conversion/checksums.sha256`. The validator rejects malformed or duplicate entries, missing required targets, paths escaping the canonical root, missing files, and digest mismatches.
 
 ---
 
@@ -311,7 +313,7 @@ All output manifests and the canonical `.npy` file checksummed in `datasets/mmwa
 
 - **Blockers**: 0
 - **Errors**: 0
-- **Warnings**: `350` recordings logged `INCOMPLETE_TAIL_DROPPED` (tail $[30, 50)$ s dropped).
+- **Warnings**: `350` recordings logged `INCOMPLETE_TAIL_DROPPED`: 348 recordings dropped 200 samples (20 s), and 2 recordings dropped 100 samples (10 s).
 
 ---
 

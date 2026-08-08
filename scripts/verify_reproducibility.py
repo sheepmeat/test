@@ -24,11 +24,11 @@ from pathlib import Path
 from typing import Dict, Any, Tuple, List, Optional
 import numpy as np
 
-# Ensure SafeNest_V6/ondevice_ai root is in python path
+# Ensure canonical repository root is in python path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from scripts.evaluate_mmwave import calculate_sha256
 
@@ -113,7 +113,7 @@ def run_training_subprocess(
 
     proc = subprocess.run(
         cmd,
-        cwd=str(v6_root),
+        cwd=str(project_root),
         env=env,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -130,10 +130,10 @@ def verify_reproducibility(
     split_rel_path: str = "datasets/mmwave/splits/mmwave_group_split_v1.json",
     report_output_rel_path: str = "benchmarks/mmwave_reproducibility_report.json",
 ) -> Dict[str, Any]:
-    dataset_path = (v6_root / dataset_rel_path).resolve()
-    split_path = (v6_root / split_rel_path).resolve()
-    report_path = (v6_root / report_output_rel_path).resolve()
-    train_script = (v6_root / "scripts/train_mmwave.py").resolve()
+    dataset_path = (project_root / dataset_rel_path).resolve()
+    split_path = (project_root / split_rel_path).resolve()
+    report_path = (project_root / report_output_rel_path).resolve()
+    train_script = (project_root / "scripts/train_mmwave.py").resolve()
 
     if not dataset_path.exists():
         raise FileNotFoundError(f"Dataset non-existent: {dataset_path}")
@@ -338,7 +338,7 @@ def main():
     r2 = report["run_2"]
 
     print(f"\n📋 Reproducibility Check Complete. Overall Status: [{status}]")
-    print(f"  - Report written to: {v6_root / args.report}")
+    print(f"  - Report written to: {project_root / args.report}")
     print(f"  - Run 1 Canonical Weight SHA256: {r1['canonical_weight_sha256']}")
     print(f"  - Run 2 Canonical Weight SHA256: {r2['canonical_weight_sha256']}")
     print(f"  - Run 1 INT8 TFLite SHA256:      {r1['int8_tflite_sha256']}")

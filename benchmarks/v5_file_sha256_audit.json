@@ -1,7 +1,7 @@
 {
   "status": "CONFIRMED_UNMODIFIED",
   "total_files": 122,
-  "v5_path": "/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/\u1103\u1162\u1112\u1161\u11a8/2026/embed2/SafeNest_V5_OnDevice_AI",
+  "v5_path": "archive/version_snapshots/SafeNest_v5.0_20260808",
   "hashes": {
     "README.md": "507b40666568c26ce207c383bb18dcb165084fa34c40f30e3ff89b0b9747d455",
     "requirements-mac.txt": "242b61a1326d215afdf0ab930032e0439c67dd5959df56ed4eeef30d4cced9c1",

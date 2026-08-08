@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""SafeNest V5 official production node with external-provider injection."""
+"""SafeNest active integrated node with external-provider injection."""
 
 from __future__ import annotations
 
@@ -38,6 +38,7 @@ from integrated_node.runtime_config import (
 )
 import json
 from inference.inference_result import InferenceResult, SafeNestRiskOutput
+from risk.risk_engine import SafeNestRiskEngine
 
 
 def assert_model_deployable(
@@ -49,7 +50,10 @@ def assert_model_deployable(
     if model_name not in models:
         return
     model = models[model_name]
-    if mode in {"real", "production"} and not model.get("deployment_allowed", False):
+    # `real` is the hardware-integration/fail-closed diagnostic mode. It must be
+    # able to report missing or broken providers even while a model is blocked.
+    # Only `production` asserts the release gate before startup.
+    if mode == "production" and not model.get("deployment_allowed", False):
         reason = model.get("block_reason", "UNSPECIFIED")
         raise RuntimeError(
             f"MODEL_RELEASE_BLOCKED: model={model_name}, reason={reason}"

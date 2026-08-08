@@ -46,7 +46,7 @@
     "APNEA": 0
   },
   "class_collapse": true,
-  "model_path": "/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/\u1103\u1162\u1112\u1161\u11a8/2026/embed2/SafeNest_V6/ondevice_ai/models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+  "model_path": "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
   "model_sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
   "model_type": "INT8 TFLite",
   "input_saturation_count": 0,
@@ -72,7 +72,7 @@
     "scale": 0.00390625,
     "zero_point": -128
   },
-  "dataset_path": "/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/\u1103\u1162\u1112\u1161\u11a8/2026/embed2/SafeNest_V6/ondevice_ai/datasets/mmwave/processed/mmwave_respiration_v1.npz",
+  "dataset_path": "datasets/mmwave/processed/mmwave_respiration_v1.npz",
   "dataset_split": "test",
   "synthetic_data": true
 }

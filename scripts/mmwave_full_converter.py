@@ -247,6 +247,32 @@ def process_single_recording(
         extraction_profile_id=profile.a2_extraction_profile,
         profile=tl_profile,
     )
+    exceptions = list(exceptions)
+
+    def failed_label_evidence_result(status: str, message: str) -> dict[str, Any]:
+        """Return an auditable failed result without emitting potentially mislabelled windows."""
+        return {
+            "recording_id": rec_id,
+            "subject_id": subj_id,
+            "split": subject_split,
+            "status": status,
+            "error": message,
+            "frame_count": int(rffts.shape[0]),
+            "tensor_shape": list(rffts.shape),
+            "range_bin_count": int(rffts.shape[2]),
+            "virtual_channel_count": int(rffts.shape[1]),
+            "selected_range_bin_index": a2_res["selection"]["selected_range_bin_index"],
+            "selected_stored_rbin_coordinate": a2_res["selection"]["selected_range_m"],
+            "selected_virtual_channel": a2_res["selection"]["selected_virtual_channels"][0],
+            "timeline_summary": rec_tl_summary,
+            "window_count": 0,
+            "annotation_file_count": 1,
+            "annotation_event_count": 0,
+            "windows": [],
+            "provenance": [],
+            "phase_slices": [],
+            "exceptions": exceptions,
+        }
 
     # Read optional annotation and Movesense ACC members
     events = []
@@ -255,15 +281,46 @@ def process_single_recording(
             ann_bytes = zip_archive.read(ann_member)
             radar_t0 = rec_tl_summary["first_timestamp"]
             events = parse_annotation_file(ann_bytes, radar_t0)
-        except Exception:
-            events = []
+        except Exception as exc:
+            message = f"Failed to read or parse annotation evidence: {exc}"
+            exceptions.append(
+                {
+                    "category": "ANNOTATION_PARSE_FAILED",
+                    "message": message,
+                    "recording_id": rec_id,
+                    "severity": "ERROR",
+                    "source_member": ann_member,
+                }
+            )
+            return failed_label_evidence_result("FAILED_ANNOTATION_PARSE", message)
+        if not events:
+            message = "Annotation member was present but produced no valid non-breathing event"
+            exceptions.append(
+                {
+                    "category": "ANNOTATION_EVENT_MISSING",
+                    "message": message,
+                    "recording_id": rec_id,
+                    "severity": "ERROR",
+                    "source_member": ann_member,
+                }
+            )
+            return failed_label_evidence_result("FAILED_ANNOTATION_PARSE", message)
 
     acc_bytes = None
     if acc_member in zip_members:
         try:
             acc_bytes = zip_archive.read(acc_member)
-        except Exception:
+        except Exception as exc:
             acc_bytes = None
+            exceptions.append(
+                {
+                    "category": "REFERENCE_ACC_READ_FAILED",
+                    "message": f"Failed to read optional Movesense ACC reference: {exc}",
+                    "recording_id": rec_id,
+                    "severity": "WARNING",
+                    "source_member": acc_member,
+                }
+            )
 
     # 5. A4 Derived Label Mapping & A5 Split Inheritance
     lbl_profile = LabelMappingProfile()
@@ -279,13 +336,25 @@ def process_single_recording(
         movesense_rr_info = None
         if acc_bytes is not None and rec_tl_summary.get("first_timestamp"):
             radar_t0 = rec_tl_summary["first_timestamp"]
-            movesense_rr_info = extract_movesense_respiration_rate(
-                acc_bytes,
-                radar_t0,
-                win_start_sec,
-                win_end_sec,
-                search_band_hz=lbl_profile.movesense_rr_search_band_hz,
-            )
+            try:
+                movesense_rr_info = extract_movesense_respiration_rate(
+                    acc_bytes,
+                    radar_t0,
+                    win_start_sec,
+                    win_end_sec,
+                    search_band_hz=lbl_profile.movesense_rr_search_band_hz,
+                )
+            except Exception as exc:
+                exceptions.append(
+                    {
+                        "category": "REFERENCE_RESPIRATION_EXTRACTION_FAILED",
+                        "message": f"Failed to extract optional Movesense respiration reference: {exc}",
+                        "recording_id": rec_id,
+                        "window_id": win["window_id"],
+                        "severity": "WARNING",
+                        "source_member": acc_member,
+                    }
+                )
 
         mapped_win = map_window_label(
             window_record=win,
@@ -414,6 +483,8 @@ def process_single_recording(
         "selected_virtual_channel": a2_res["selection"]["selected_virtual_channels"][0],
         "timeline_summary": rec_tl_summary,
         "window_count": len(final_windows),
+        "annotation_file_count": int(ann_member in zip_members),
+        "annotation_event_count": len(events),
         "windows": final_windows,
         "provenance": provenance_records,
         "phase_slices": phase_slices,

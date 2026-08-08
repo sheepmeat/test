@@ -15,11 +15,11 @@ import tempfile
 import unittest
 from pathlib import Path
 
-# Ensure SafeNest_V6/ondevice_ai root is in python path
+# Ensure canonical repository root is in python path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from scripts.validate_metadata import (
     build_mmwave_candidate_metadata,
@@ -200,13 +200,13 @@ class TestValidateMetadata(unittest.TestCase):
 
     def test_10_validate_actual_generated_metadata_artifact(self):
         """10. Validate actual generated candidate metadata file in V6 models/mmwave"""
-        actual_meta_path = v6_root / "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json"
+        actual_meta_path = project_root / "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json"
         self.assertTrue(actual_meta_path.exists(), f"File missing: {actual_meta_path}")
 
         with open(actual_meta_path, "r", encoding="utf-8") as f:
             metadata = json.load(f)
 
-        self.assertTrue(validate_mmwave_candidate_metadata(metadata, model_root=v6_root))
+        self.assertTrue(validate_mmwave_candidate_metadata(metadata, model_root=project_root))
         self.assertEqual(metadata["schema_version"], "1.0")
         self.assertEqual(metadata["project"], "SafeNest_V6")
         self.assertIn("float_keras", metadata["stage_evaluations"])

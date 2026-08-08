@@ -14,10 +14,10 @@ import unittest
 import numpy as np
 from pathlib import Path
 
-# Ensure SafeNest_V6/ondevice_ai root is in sys.path
-v6_root = Path(__file__).resolve().parent.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+# Ensure the canonical repository root is in sys.path
+project_root = Path(__file__).resolve().parent.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from preprocessing.mmwave import MMWavePreprocessor
 from scripts.evaluate_mmwave import compute_metrics, calculate_sha256
@@ -28,7 +28,7 @@ from inference.mmwave_interpreter import MMWaveInterpreter
 class TestMMWaveV6Pipeline(unittest.TestCase):
 
     def test_input_contract_file(self):
-        contract_path = v6_root / "config/mmwave_input_contract.yaml"
+        contract_path = project_root / "config/mmwave_input_contract.yaml"
         self.assertTrue(contract_path.exists(), "Input contract YAML file must exist")
         content = contract_path.read_text(encoding="utf-8")
         self.assertIn("signal_name: \"resp_phase\"", content)
@@ -74,7 +74,7 @@ class TestMMWaveV6Pipeline(unittest.TestCase):
         self.assertEqual(batch_proc.shape, (100, 300, 1))
 
     def test_group_split_metadata(self):
-        split_path = v6_root / "datasets/mmwave/splits/mmwave_group_split_v1.json"
+        split_path = project_root / "datasets/mmwave/splits/mmwave_group_split_v1.json"
         self.assertTrue(split_path.exists(), "Group split JSON must exist")
         with open(split_path, "r", encoding="utf-8") as f:
             split_data = json.load(f)
@@ -105,8 +105,8 @@ class TestMMWaveV6Pipeline(unittest.TestCase):
         self.assertEqual(metrics_div["apnea_window_miss_rate"], 0.0)
 
     def test_candidate_acceptance_gates(self):
-        candidate_tflite = v6_root / "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite"
-        candidate_meta = v6_root / "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json"
+        candidate_tflite = project_root / "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite"
+        candidate_meta = project_root / "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json"
         
         self.assertTrue(candidate_tflite.exists())
         self.assertTrue(candidate_meta.exists())
@@ -121,7 +121,7 @@ class TestMMWaveV6Pipeline(unittest.TestCase):
         self.assertIn("Release Gate Blocked: Model validated solely on synthetic NPZ data.", rel_failures)
 
     def test_mmwave_interpreter_wrapper_integration(self):
-        interpreter = MMWaveInterpreter(project_root=v6_root)
+        interpreter = MMWaveInterpreter(project_root=project_root)
         dummy_signal = np.sin(np.linspace(0, 10, 300, dtype=np.float32))
         
         prediction = interpreter.predict(dummy_signal)

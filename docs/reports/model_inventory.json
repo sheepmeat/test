@@ -2,7 +2,7 @@
   "models": {
     "co2": {
       "class_count": 2,
-      "config_path": "SafeNest_V5_OnDevice_AI/config/models.yaml",
+      "config_path": "embed2/config/models.yaml",
       "errors": [],
       "input_tensor": {
         "dtype": "int8",
@@ -18,7 +18,7 @@
         ],
         "zero_point": 57
       },
-      "manifest_path": "SafeNest_V5_OnDevice_AI/models/model_manifest.json",
+      "manifest_path": "embed2/models/model_manifest.json",
       "model_id": "co2_occupancy_int8",
       "ordered_class_labels": [
         "VACANT",
@@ -38,9 +38,9 @@
         ],
         "zero_point": -128
       },
-      "repository_relative_model_path": "SafeNest_V5_OnDevice_AI/models/co2/co2_occupancy_int8_v0.1.0.tflite",
-      "runtime_resolved_path": "SafeNest_V5_OnDevice_AI/models/co2/co2_occupancy_int8_v0.1.0.tflite",
-      "scaler_or_metadata_path": "SafeNest_V5_OnDevice_AI/models/co2/co2_scaling_metadata_v0.1.0.json",
+      "repository_relative_model_path": "embed2/models/co2/co2_occupancy_int8_v0.1.0.tflite",
+      "runtime_resolved_path": "embed2/models/co2/co2_occupancy_int8_v0.1.0.tflite",
+      "scaler_or_metadata_path": "embed2/models/co2/co2_scaling_metadata_v0.1.0.json",
       "sensor_id": "co2",
       "sha256": "3a8c86c4c132df0f1edaac668d9a136c3f6234789df48f02bdda8e92f29d0462",
       "size_bytes": 4464,
@@ -48,7 +48,7 @@
     },
     "mmwave": {
       "class_count": 3,
-      "config_path": "SafeNest_V5_OnDevice_AI/config/models.yaml",
+      "config_path": "embed2/config/models.yaml",
       "errors": [],
       "input_tensor": {
         "dtype": "int8",
@@ -66,7 +66,7 @@
         ],
         "zero_point": -13
       },
-      "manifest_path": "SafeNest_V5_OnDevice_AI/models/model_manifest.json",
+      "manifest_path": "embed2/models/model_manifest.json",
       "model_id": "mmwave_resp_int8",
       "ordered_class_labels": [
         "NORMAL",
@@ -87,9 +87,9 @@
         ],
         "zero_point": -128
       },
-      "repository_relative_model_path": "SafeNest_V5_OnDevice_AI/models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
-      "runtime_resolved_path": "SafeNest_V5_OnDevice_AI/models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
-      "scaler_or_metadata_path": "SafeNest_V5_OnDevice_AI/models/mmwave/sensor_stats_metadata_v0.1.0.json",
+      "repository_relative_model_path": "embed2/models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+      "runtime_resolved_path": "embed2/models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+      "scaler_or_metadata_path": "embed2/models/mmwave/sensor_stats_metadata_v0.1.0.json",
       "sensor_id": "mmwave",
       "sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
       "size_bytes": 466616,
@@ -97,7 +97,7 @@
     },
     "thermal": {
       "class_count": 3,
-      "config_path": "SafeNest_V5_OnDevice_AI/config/models.yaml",
+      "config_path": "embed2/config/models.yaml",
       "errors": [],
       "input_tensor": {
         "dtype": "int8",
@@ -117,7 +117,7 @@
         ],
         "zero_point": -128
       },
-      "manifest_path": "SafeNest_V5_OnDevice_AI/models/model_manifest.json",
+      "manifest_path": "embed2/models/model_manifest.json",
       "model_id": "thermal_fall_int8",
       "ordered_class_labels": [
         "NOT_HUMAN",
@@ -138,8 +138,8 @@
         ],
         "zero_point": -128
       },
-      "repository_relative_model_path": "SafeNest_V5_OnDevice_AI/models/thermal/thermal_fall_int8_v0.1.0.tflite",
-      "runtime_resolved_path": "SafeNest_V5_OnDevice_AI/models/thermal/thermal_fall_int8_v0.1.0.tflite",
+      "repository_relative_model_path": "embed2/models/thermal/thermal_fall_int8_v0.1.0.tflite",
+      "runtime_resolved_path": "embed2/models/thermal/thermal_fall_int8_v0.1.0.tflite",
       "scaler_or_metadata_path": null,
       "sensor_id": "thermal",
       "sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",

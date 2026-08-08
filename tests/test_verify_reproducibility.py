@@ -13,11 +13,11 @@ import unittest
 import numpy as np
 from pathlib import Path
 
-# Add SafeNest_V6/ondevice_ai to sys.path
+# Add canonical repository root to sys.path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from scripts.verify_reproducibility import get_environment_fingerprint
 
@@ -57,7 +57,7 @@ class TestVerifyReproducibility(unittest.TestCase):
 
     def test_03_report_file_structure(self):
         """Verify benchmarks/mmwave_reproducibility_report.json exists and adheres to schema."""
-        report_path = v6_root / "benchmarks/mmwave_reproducibility_report.json"
+        report_path = project_root / "benchmarks/mmwave_reproducibility_report.json"
         self.assertTrue(report_path.exists(), f"Report file non-existent at {report_path}")
 
         with open(report_path, "r", encoding="utf-8") as f:

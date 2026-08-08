@@ -20,14 +20,22 @@ from datetime import datetime, timezone
 from typing import Dict, Any, List, Tuple, Set, Optional
 import numpy as np
 
-# Ensure SafeNest_V6/ondevice_ai root is in python path
+# Ensure canonical repository root is in python path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 
 CLASS_MAP = {0: "NORMAL", 1: "RAPID_OR_ABNORMAL", 2: "APNEA"}
+
+
+def artifact_path(path: Path) -> str:
+    """Serialize an input path relative to the canonical repository root."""
+    try:
+        return path.resolve().relative_to(project_root.resolve()).as_posix()
+    except ValueError:
+        return f"EXTERNAL_INPUT/{path.name}"
 
 
 def calculate_file_sha256(file_path: Path) -> str:
@@ -448,9 +456,9 @@ def run_integrity_audit(
             "numpy_version": np.__version__,
         },
         "inputs": {
-            "dataset_path": str(npz_path.resolve()),
+            "dataset_path": artifact_path(npz_path),
             "dataset_sha256": npz_sha256,
-            "split_path": str(split_path.resolve()),
+            "split_path": artifact_path(split_path),
             "split_sha256": split_sha256,
         },
         "schema": {
@@ -554,9 +562,9 @@ def main():
 
     args = parser.parse_args()
 
-    npz_path = (v6_root / args.npz).resolve() if not Path(args.npz).is_absolute() else Path(args.npz)
-    split_path = (v6_root / args.split).resolve() if not Path(args.split).is_absolute() else Path(args.split)
-    output_path = (v6_root / args.output).resolve() if not Path(args.output).is_absolute() else Path(args.output)
+    npz_path = (project_root / args.npz).resolve() if not Path(args.npz).is_absolute() else Path(args.npz)
+    split_path = (project_root / args.split).resolve() if not Path(args.split).is_absolute() else Path(args.split)
+    output_path = (project_root / args.output).resolve() if not Path(args.output).is_absolute() else Path(args.output)
 
     try:
         report = run_integrity_audit(

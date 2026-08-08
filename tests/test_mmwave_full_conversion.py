@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 """Unit test suite for SafeNest Phase A6 Full Conversion and Integrity Audit.
 
-Tests 35 required scenarios using synthetic in-memory fixtures.
+Exercises the A6 contract and critical negative paths using synthetic fixtures.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 import numpy as np
 
@@ -21,8 +23,16 @@ from mmwave_full_converter import (
     FullConversionError,
     FullConversionProfile,
     compute_canonical_signal_hash,
+    process_single_recording,
 )
-from validate_mmwave_full_conversion import A6ValidationError, validate_full_conversion_artifacts
+from validate_mmwave_full_conversion import (
+    A6ValidationError,
+    WINDOW_PROVENANCE_FIELDS,
+    _validate_alignment,
+    _validate_checksums,
+    _validate_recording_accounting,
+    validate_full_conversion_artifacts,
+)
 
 
 class TestMmwaveFullConversion(unittest.TestCase):
@@ -160,6 +170,150 @@ class TestMmwaveFullConversion(unittest.TestCase):
 
             with self.assertRaises(A6ValidationError):
                 validate_full_conversion_artifacts(root_dir=tmppath, manifest_dir=manifest_dir)
+
+    def _aligned_sample(self) -> tuple[dict, dict, np.ndarray]:
+        signal = np.ascontiguousarray(self.sample_signal, dtype=np.float64)
+        signal_hash = compute_canonical_signal_hash(signal)
+        common = {
+            "canonical_sample_index": 0,
+            "window_id": "WIN_0001",
+            "recording_id": "REC_0001",
+            "subject_id": "P001",
+            "split": "TRAIN",
+            "safenest_label": "NORMAL",
+            "safenest_label_id": 0,
+            "mapping_type": "DERIVED_LABEL",
+            "mapping_rule_id": "RULE_001",
+            "assignment_status": "ASSIGNED",
+            "canonical_signal_hash": signal_hash,
+            "training_eligible": True,
+            "validation_eligible": False,
+            "locked_test_evaluation_eligible": False,
+        }
+        return dict(common), dict(common), signal.reshape(1, -1)
+
+    def test_09_rejects_window_provenance_semantic_mismatch(self) -> None:
+        window, provenance, matrix = self._aligned_sample()
+        provenance["split"] = "VALIDATION"
+        with self.assertRaisesRegex(A6ValidationError, "Window/provenance mismatch"):
+            _validate_alignment([window], [provenance], matrix)
+
+    def test_10_rejects_provenance_signal_hash_mismatch(self) -> None:
+        window, provenance, matrix = self._aligned_sample()
+        provenance["canonical_signal_hash"] = "0" * 64
+        window["canonical_signal_hash"] = "0" * 64
+        with self.assertRaisesRegex(A6ValidationError, "signal hash mismatch"):
+            _validate_alignment([window], [provenance], matrix)
+
+    def test_11_rejects_failed_recording_status(self) -> None:
+        a0 = [{"recording_id": "REC_0001", "subject_id": "P001"}]
+        results = [
+            {
+                "recording_id": "REC_0001",
+                "subject_id": "P001",
+                "status": "FAILED_ANNOTATION_PARSE",
+                "window_count": 0,
+            }
+        ]
+        with self.assertRaisesRegex(A6ValidationError, "non-success A6 status"):
+            _validate_recording_accounting(a0, results, [], [])
+
+    def test_12_rejects_recording_sample_count_mismatch(self) -> None:
+        window, provenance, _ = self._aligned_sample()
+        a0 = [{"recording_id": "REC_0001", "subject_id": "P001"}]
+        results = [
+            {
+                "recording_id": "REC_0001",
+                "subject_id": "P001",
+                "status": "SUCCESS",
+                "window_count": 2,
+            }
+        ]
+        with self.assertRaisesRegex(A6ValidationError, "sample accounting mismatch"):
+            _validate_recording_accounting(a0, results, [window], [provenance])
+
+    def test_13_rejects_malformed_checksum_line(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            manifest_dir = root / "datasets/mmwave/manifests/a6_full_conversion"
+            manifest_dir.mkdir(parents=True)
+            (manifest_dir / "checksums.sha256").write_text("not-a-valid-entry\n", encoding="utf-8")
+            with self.assertRaisesRegex(A6ValidationError, "Malformed checksum entry"):
+                _validate_checksums(root, manifest_dir)
+
+    def test_14_rejects_missing_required_checksum_targets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            root = Path(tmpdir)
+            manifest_dir = root / "datasets/mmwave/manifests/a6_full_conversion"
+            manifest_dir.mkdir(parents=True)
+            one_file = manifest_dir / "processing_profile.json"
+            one_file.write_text("{}", encoding="utf-8")
+            digest = hashlib.sha256(one_file.read_bytes()).hexdigest()
+            (manifest_dir / "checksums.sha256").write_text(
+                f"{digest}  processing_profile.json\n", encoding="utf-8"
+            )
+            with self.assertRaisesRegex(A6ValidationError, "Required checksum targets missing"):
+                _validate_checksums(root, manifest_dir)
+
+    @mock.patch("mmwave_full_converter.parse_annotation_file", side_effect=ValueError("bad annotation"))
+    @mock.patch("mmwave_full_converter.process_recording_timeline")
+    @mock.patch("mmwave_full_converter.MmwavePhaseExtractor.extract")
+    @mock.patch("mmwave_full_converter.SafeRFFTReader.read_recording")
+    def test_15_annotation_failure_is_recorded_and_blocks_output(
+        self,
+        mock_read_recording: mock.Mock,
+        mock_extract: mock.Mock,
+        mock_timeline: mock.Mock,
+        _mock_parse_annotation: mock.Mock,
+    ) -> None:
+        mock_read_recording.return_value = {
+            "tensor": np.zeros((300, 8, 64), dtype=np.complex128),
+            "range_bins": np.linspace(0.0, 2.0, 64),
+        }
+        mock_extract.return_value = {
+            "unwrapped_phase": np.zeros(300, dtype=np.float64),
+            "selection": {
+                "selected_range_bin_index": 2,
+                "selected_range_m": 0.6,
+                "selected_virtual_channels": [0],
+            },
+        }
+        mock_timeline.return_value = (
+            {"first_timestamp": "2025-01-01T00:00:00.000000", "dropped_tail_samples": 0},
+            [],
+            [],
+        )
+
+        class FakeZip:
+            filename = "/tmp/fake.zip"
+
+            def namelist(self) -> list[str]:
+                return [
+                    "source/radar_rFFTs.zlib",
+                    "source/radar_timestamps.csv",
+                    "source/radar_chirpConfig.json",
+                    "source/non_breathing_ts.csv",
+                ]
+
+            def read(self, member: str) -> bytes:
+                return b"placeholder"
+
+        result = process_single_recording(
+            {
+                "recording_id": "REC_0001",
+                "subject_id": "P001",
+                "source_recording_path": "source",
+                "activity_or_test": {"value": "Rest"},
+                "posture": {"value": "Lying"},
+            },
+            FakeZip(),  # type: ignore[arg-type]
+            "TRAIN",
+        )
+        self.assertEqual(result["status"], "FAILED_ANNOTATION_PARSE")
+        self.assertEqual(result["window_count"], 0)
+        self.assertEqual(result["annotation_event_count"], 0)
+        self.assertEqual(result["exceptions"][-1]["category"], "ANNOTATION_PARSE_FAILED")
+        self.assertEqual(result["exceptions"][-1]["severity"], "ERROR")
 
 
 if __name__ == "__main__":

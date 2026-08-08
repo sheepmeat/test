@@ -23,11 +23,11 @@ from typing import Dict, Any, Tuple, Generator
 import numpy as np
 import tensorflow as tf
 
-# Ensure SafeNest_V6/ondevice_ai root is in python path
+# Ensure the canonical repository root is in python path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from preprocessing.mmwave import MMWavePreprocessor
 from scripts.evaluate_mmwave import compute_metrics, evaluate_tflite_model, calculate_sha256
