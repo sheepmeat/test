@@ -1,0 +1,24 @@
+name: Phase A0 Raw Inventory Audit Code Validation CI
+
+on:
+  push:
+    branches: [ main, Ondevice_AI, feature/*, "feature/**" ]
+  pull_request:
+    branches: [ main, Ondevice_AI, feature/*, "feature/**" ]
+
+jobs:
+  validate-a0-audit-code:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Run Phase A0 Code Validation Unit Tests
+        run: |
+          python -m unittest tests/test_mmwave_raw_inventory.py -v
