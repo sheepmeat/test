@@ -1,0 +1,26 @@
+{
+  "candidate_policies": {
+    "legacy_15s_rule": {
+      "assigned_apnea_windows": 0,
+      "captured_events": 0,
+      "lost_events": 6,
+      "rule": "overlap >= 15.0s (50% of 30s window)",
+      "utility": "UNUSABLE (discards 100% of dataset non-breathing events)"
+    },
+    "policy_a_6s_overlap": {
+      "assigned_apnea_windows": 6,
+      "captured_events": 6,
+      "lost_events": 0,
+      "rule": "overlap >= 6.0s (20% of 30s window)",
+      "utility": "SELECTED_CANONICAL_PROFILE"
+    },
+    "policy_b_duration_and_overlap": {
+      "assigned_apnea_windows": 6,
+      "captured_events": 6,
+      "lost_events": 0,
+      "rule": "overlap >= 6.0s AND total event duration >= 8.0s",
+      "utility": "VALID_EQUIVALENT"
+    }
+  },
+  "selected_policy": "policy_a_6s_overlap"
+}

@@ -1,0 +1,23 @@
+{
+  "a3_window_contract_modified": false,
+  "apnea_policy": {
+    "clinical_apnea_claimed": false,
+    "min_event_duration_seconds": 8.0,
+    "min_overlap_seconds": 6.0,
+    "voluntary_breath_hold_as_apnea_proxy": true
+  },
+  "normal_policy": {
+    "requires_zero_non_breathing_overlap": true,
+    "rest_condition_as_normal_proxy": true
+  },
+  "profile_id": "MMWAVE_LABEL_MAPPING_PROFILE_001",
+  "rapid_or_abnormal_policy": {
+    "post_exercise_auto_rapid": false,
+    "requires_independent_respiration_rate_reference": true
+  },
+  "target_classes": {
+    "APNEA": 2,
+    "NORMAL": 0,
+    "RAPID_OR_ABNORMAL": 1
+  }
+}
