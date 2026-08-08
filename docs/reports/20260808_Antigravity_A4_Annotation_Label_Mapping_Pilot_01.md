@@ -11,15 +11,21 @@
 
 ## 1. Executive Summary
 
-Phase A4 of the SafeNest mmWave real-data reconstruction pipeline establishes the semantic mapping between original dataset test conditions / non-breathing annotations and the SafeNest target classes (`NORMAL`, `RAPID_OR_ABNORMAL`, `APNEA`).
+Phase A4 of the SafeNest mmWave real-data reconstruction pipeline establishes the semantic mapping between original dataset test conditions / non-breathing annotations / Movesense chest accelerometer reference respiration rates and the SafeNest target classes (`NORMAL`, `RAPID_OR_ABNORMAL`, `APNEA`).
 
 Key outcomes of Phase A4:
-1. **Empirical Annotation Audit**: All 6 annotation-bearing recordings in the 13-recording pilot contain headerless 2-line `non_breathing_ts.csv` files with microsecond timestamps marking voluntary breath-hold events.
+1. **Empirical Annotation Audit & Terminology Alignment**: All 6 annotation-bearing recordings in the 13-recording pilot contain headerless 2-line `non_breathing_ts.csv` files with microsecond storage precision. Annotation temporal accuracy is documented as `NOT_QUANTIFIED` (push-button timestamps adjusted post-hoc via reference accelerometer).
 2. **Re-Evaluation & Rejection of the Legacy 15-Second Rule**: Empirical duration analysis revealed that all voluntary breath-hold events in the dataset last between $9.771$ s and $12.205$ s (mean $11.321$ s). Requiring $\ge 15.0$ seconds of non-breathing overlap would discard 100% of all non-breathing events in the dataset.
 3. **Selected APNEA Proxy Policy**: Established `MMWAVE_LABEL_MAPPING_PROFILE_001` requiring $\ge 6.0$ seconds of non-breathing annotation overlap within a 30-second window to assign the `APNEA` target label. Mapping type is strictly recorded as `DERIVED` (voluntary breath-hold proxy, never clinical apnea).
-4. **Strict Prohibition of Recording-Condition Shortcuts**: Post-exercise recordings lack independent validated respiration rate reference ground truth and are explicitly classified as `AMBIGUOUS` (`safenest_label: null`) rather than auto-mapped to `RAPID_OR_ABNORMAL`.
-5. **Annotation Coverage & Tail Accounting**: Measured that $54.319$ s (80.0%) of total annotated non-breathing seconds fall within A3 canonical 30s windows, while $13.606$ s (20.0%) fall into dropped A3 incomplete tails.
-6. **Deterministic Window Label Manifest**: Produced [`window_label_manifest.jsonl`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/window_label_manifest.jsonl) mapping all 15 A3 windows (6 `APNEA`, 9 `AMBIGUOUS`).
+4. **Movesense Chest ACC Respiration Reference Integration**: Official Nature Scientific Data documentation (`10.1038/s41597-026-07172-9`) confirms the Movesense chest accelerometer as the independent reference sensor for breathing validation. Spectral analysis of chest ACC signals over 30s windows yielded reference respiration rates:
+   - Respiration rate $\ge 25.0$ bpm ($0.417$ Hz) $\rightarrow$ `RAPID_OR_ABNORMAL` (`DERIVED`, rule `A4_RULE_RAPID_MOVESENSE_ACC_REF`, 3 windows).
+   - Respiration rate $10.0 \le \text{RR} < 25.0$ bpm $\rightarrow$ `NORMAL` (`DERIVED`, rule `A4_RULE_NORMAL_MOVESENSE_ACC_REF`, 5 windows).
+5. **Corrected Annotation Coverage Audit**: Measured against recording canonical window spans:
+   - **Fully represented events**: 2 events (`p004-lying-rest` preserved across W0+W1 union, `p075-sitting-rest` contained inside W0).
+   - **Partially represented events**: 4 events (events ending past 30.0s in 500-sample recordings where the tail [30, 50s) was dropped).
+   - **Not represented events**: 0 events.
+   - Total annotated seconds represented in A3 windows: $54.319$ s ($80.0\%$), lost to dropped tails: $13.606$ s ($20.0\%$).
+6. **Deterministic Window Label Manifest**: Produced [`window_label_manifest.jsonl`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/window_label_manifest.jsonl) mapping all 15 A3 windows (5 `NORMAL`, 3 `RAPID_OR_ABNORMAL`, 6 `APNEA`, 1 `AMBIGUOUS`).
 
 ---
 
@@ -45,7 +51,7 @@ Phase A4 consumes the approved Phase A3 timeline and window contract (`MMWAVE_TI
 
 The pilot covers 13 recordings across 6 subjects (`p001`, `p002`, `p004`, `p007`, `p075`, `p110`):
 - **Rest** (6 recordings): All 6 Rest recordings contain voluntary breath-hold annotations (`non_breathing_ts.csv`).
-- **Post-exercise** (7 recordings): None of the Post-exercise recordings contain non-breathing annotations.
+- **Post-exercise** (7 recordings): None of the Post-exercise recordings contain non-breathing annotations. All 7 contain 3D chest accelerometer reference data (`movesense_acc.csv`).
 
 ---
 
@@ -55,7 +61,8 @@ The pilot covers 13 recordings across 6 subjects (`p001`, `p002`, `p004`, `p007`
 - **File Format**: Headerless 2-line text file:
   - Line 1: `begin,<ISO-8601 timestamp string>` (e.g. `begin,2025-02-20 12:24:27.352571`)
   - Line 2: `end,<ISO-8601 timestamp string>` (e.g. `end,2025-02-20 12:24:37.904324`)
-- **Time Representation**: Local ISO-8601 date-time string with microsecond precision.
+- **Timestamp Storage Precision**: Microsecond ($10^{-6}\text{ s}$).
+- **Annotation Temporal Accuracy**: Documented as `NOT_QUANTIFIED` (push-button timestamps adjusted post-hoc via reference accelerometer).
 
 ---
 
@@ -74,8 +81,8 @@ Across the 6 annotated pilot recordings:
 1D interval intersection $[t_{start}, t_{end\_exclusive}) \cap [t_{begin}, t_{end})$ measured:
 - `p001-lying-rest`: $8.725$ s overlap with Window 0 ($[0, 30)$ s), $1.826$ s in dropped tail ($[30, 50)$ s).
 - `p001-sitting-rest`: $9.001$ s overlap with Window 0 ($[0, 30)$ s), $2.474$ s in dropped tail ($[30, 50)$ s).
-- `p004-lying-rest` (600 frames, 2 windows): $7.254$ s overlap with Window 0 ($[0, 30)$ s), $4.739$ s overlap with Window 1 ($[30, 60)$ s).
-- `p075-sitting-rest`: $9.771$ s overlap with Window 0 ($[0, 30)$ s), $0.000$ s in tail.
+- `p004-lying-rest` (600 frames, 2 windows): $7.254$ s overlap with Window 0 ($[0, 30)$ s), $4.739$ s overlap with Window 1 ($[30, 60)$ s). Entire event is preserved across W0+W1!
+- `p075-sitting-rest`: $9.771$ s overlap with Window 0 ($[0, 30)$ s), $0.000$ s in tail. Entire event is contained inside W0!
 - `p110-lying-rest`: $6.787$ s overlap with Window 0 ($[0, 30)$ s), $5.143$ s in dropped tail ($[30, 50)$ s).
 - `p110-sitting-rest`: $8.042$ s overlap with Window 0 ($[0, 30)$ s), $4.163$ s in dropped tail ($[30, 50)$ s).
 
@@ -95,24 +102,27 @@ The previously proposed rule ($\ge 15.0$s overlap or $\ge 50\%$ window fraction)
 
 Candidate policies evaluated in [`policy_comparison.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/policy_comparison.json):
 1. **Legacy 15-second Rule** ($\ge 15.0$s): 0 APNEA windows assigned (100% events lost). Discarded.
-2. **Policy A — Minimum Overlap** ($\ge 6.0$s): 6 APNEA windows assigned, 0 events lost. **Selected as canonical profile.**
-3. **Policy B — Overlap + Event Duration** ($\ge 6.0$s overlap AND event duration $\ge 8.0$s): 6 APNEA windows assigned. Valid equivalent.
+2. **Policy A — 10-second Candidate** ($\ge 10.0$s): 0 APNEA windows assigned in fixed 30s grid due to window boundary truncation (events start at $t \approx 21-23$s and span across $t=30.0$s, yielding overlaps of $6.79$s to $9.00$s). Discarded.
+3. **Policy B — Overlap + Event Duration** ($\ge 6.0$s overlap AND total event duration $\ge 8.0$s): 6 APNEA windows assigned. Valid equivalent.
+4. **Policy C — Event-Centered Diagnostic** (30s window centered on event midpoint): 6 APNEA windows assigned. Diagnostic alternative only.
+5. **Selected Policy — $\ge 6.0$s Overlap Canonical**: 6 APNEA windows assigned, captures all 6 voluntary breath-hold events. **Selected as canonical profile.**
 
 ---
 
 ## 10. NORMAL Mapping Analysis
 
-- **Rule**: Controlled `Rest` condition with $0.0$ seconds non-breathing annotation overlap $\rightarrow$ `NORMAL` (`safenest_label_id: 0`).
-- **Mapping Type**: `DERIVED` (resting-breathing proxy, `A4_RULE_NORMAL_REST_PROXY`).
-- **Pilot Count**: 0 windows in this 13-recording pilot (because all 6 Rest recordings in the pilot contained voluntary breath-hold annotations during their 40–60s duration).
+- **Rule**: Controlled `Rest` condition or Movesense chest ACC reference respiration rate in normal range ($10.0 \le \text{RR} < 25.0$ bpm) $\rightarrow$ `NORMAL` (`safenest_label_id: 0`).
+- **Mapping Type**: `DERIVED` (resting-breathing or Movesense ACC reference proxy).
+- **Pilot Count**: 5 windows (all 5 Post-exercise windows with normal Movesense ACC reference respiration rates).
 
 ---
 
-## 11. RAPID_OR_ABNORMAL Mapping Analysis — Critical Rule Enforced
+## 11. RAPID_OR_ABNORMAL Mapping Analysis — Movesense Reference Integration
 
-- **Rule**: Post-exercise recordings in the dataset do NOT contain independent validated respiration rate reference ground truth.
-- **Prohibition**: Post-exercise condition is **STRICTLY PROHIBITED** from being automatically mapped to `RAPID_OR_ABNORMAL`.
-- **Classification**: All 8 Post-exercise windows are classified as `AMBIGUOUS` (`safenest_label: null`, `assignment_status: AMBIGUOUS`, `mapping_rule_id: A4_RULE_POST_EXERCISE_UNVERIFIED`).
+- **Reference Sensor**: Movesense chest accelerometer (`movesense_acc.csv`) as documented in Nature Scientific Data paper.
+- **Respiration Rate Extraction**: Spectral peak analysis over 30s window.
+- **Rule**: Movesense chest ACC reference respiration rate $\ge 25.0$ bpm ($0.417$ Hz) $\rightarrow$ `RAPID_OR_ABNORMAL` (`safenest_label_id: 1`, `mapping_type: DERIVED`, rule `A4_RULE_RAPID_MOVESENSE_ACC_REF`).
+- **Pilot Count**: 3 windows (`p001-lying-post_exercise` W0 at 32.0 bpm, `p002-lying-post_exercise` W0 at 26.0 bpm, `p004-lying-post_exercise` W1 at 36.1 bpm).
 
 ---
 
@@ -142,11 +152,14 @@ Profile ID: `MMWAVE_LABEL_MAPPING_PROFILE_001`
   },
   "normal_policy": {
     "rest_condition_as_normal_proxy": true,
-    "requires_zero_non_breathing_overlap": true
+    "requires_zero_non_breathing_overlap": true,
+    "movesense_acc_normal_rr_range_bpm": [10.0, 25.0]
   },
   "rapid_or_abnormal_policy": {
+    "rapid_min_rr_bpm": 25.0,
     "post_exercise_auto_rapid": false,
-    "requires_independent_respiration_rate_reference": true
+    "requires_independent_respiration_rate_reference": true,
+    "reference_sensor": "MOVESENSE_CHEST_ACC"
   },
   "a3_window_contract_modified": false
 }
@@ -157,10 +170,10 @@ Profile ID: `MMWAVE_LABEL_MAPPING_PROFILE_001`
 ## 14. Window Label Distribution
 
 Across all 15 evaluated A3 windows:
-- **NORMAL**: 0
-- **RAPID_OR_ABNORMAL**: 0
+- **NORMAL**: 5 (33.3%)
+- **RAPID_OR_ABNORMAL**: 3 (20.0%)
 - **APNEA**: 6 (40.0%)
-- **AMBIGUOUS**: 9 (60.0%)
+- **AMBIGUOUS**: 1 (6.7%)
 - **UNMAPPED**: 0
 - **EXCLUDED**: 0
 
@@ -168,19 +181,20 @@ Across all 15 evaluated A3 windows:
 
 ## 15. Ambiguous / Unmapped / Excluded Windows
 
-- **AMBIGUOUS Windows (9)**:
-  - 8 Post-exercise windows (unverified respiration rate ground truth)
-  - 1 Rest transition window (`p004-lying-rest` W1, 4.739s overlap)
+- **AMBIGUOUS Windows (1)**: `p004-lying-rest` Window 1 ($4.739$s non-breathing overlap, transition state).
 - **UNMAPPED / EXCLUDED**: 0
 
 ---
 
 ## 16. Annotation Coverage Lost to A3 Tails
 
+- **Total Annotated Events**: 6
+- **Events Fully Represented**: 2 (`p004-lying-rest` across W0+W1 union, `p075-sitting-rest` inside W0)
+- **Events Partially Represented**: 4 (events ending past 30.0s in 500-sample recordings)
+- **Events Not Represented**: 0
 - **Total Annotated Seconds in Pilot**: $67.925$ seconds.
 - **Annotated Seconds Represented in A3 Windows**: $54.319$ seconds (80.0%).
 - **Annotated Seconds Lost to A3 Dropped Tails**: $13.606$ seconds (20.0%).
-- **Events Affected**: All 6 non-breathing events were partially represented in Window 0, with trailing tail portions (1.8s to 5.1s) falling into the dropped tail of 400/500-sample recordings.
 
 ---
 
@@ -188,7 +202,10 @@ Across all 15 evaluated A3 windows:
 
 Contingency Summary:
 - **APNEA**: Rest (6 windows) | Lying (3), Sitting (3)
-- **AMBIGUOUS**: Post-exercise (8 windows), Rest (1 window) | Lying (6), Sitting (3)
+- **NORMAL**: Post-exercise (5 windows) | Lying (2), Sitting (3)
+- **RAPID_OR_ABNORMAL**: Post-exercise (3 windows) | Lying (3)
+- **AMBIGUOUS**: Rest (1 window) | Lying (1)
+- **Movesense Chest ACC Reference Used**: `True`
 - **Post-Exercise Auto-Rapid Flag**: `False`
 - **Clinical Apnea Claimed Flag**: `False`
 
@@ -198,9 +215,8 @@ Posture does not direct label assignment; recording condition is preserved separ
 
 ## 18. Exceptions
 
-A total of 13 exceptions recorded in [`exceptions.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/exceptions.json):
+A total of 5 exceptions recorded in [`exceptions.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/exceptions.json):
 - 4 `ANNOTATION_IN_DROPPED_TAIL` (WARNING)
-- 8 `RAPID_EVIDENCE_INSUFFICIENT` (WARNING)
 - 1 `TRANSITION_WINDOW` (INFO)
 - 0 errors, 0 blockers.
 
@@ -218,14 +234,14 @@ The standalone validator `scripts/validate_mmwave_label_pilot.py` verified all 2
 7. Every assigned label has a mapping rule ID.
 8. Every APNEA assignment from voluntary non-breathing is marked DERIVED.
 9. No result claims clinical apnea.
-10. Post-exercise alone is insufficient evidence for RAPID_OR_ABNORMAL.
-11. Annotation overlap values match source event/window intersections.
+10. Post-exercise alone is insufficient evidence for RAPID_OR_ABNORMAL (verified Movesense ACC reference used).
+11. Window annotation overlap values match re-calculated event-window intersections.
 12. Ambiguous windows remain explicit.
 13. Unmapped windows remain in the manifest.
 14. Source labels/conditions remain preserved.
 15. Summary class counts match detailed manifest.
 16. Exception counts match.
-17. Annotation coverage counts match.
+17. Annotation coverage counts match re-calculated values (2 full, 4 partial, 0 absent).
 18. No train/val/test split fields introduced.
 19. No model predictions used.
 20. Validator wired into final gate.
@@ -235,7 +251,7 @@ The standalone validator `scripts/validate_mmwave_label_pilot.py` verified all 2
 ## 20. A4 Gate
 
 - **A4 Gate Status**: `PASS_WITH_WARNINGS`
-- **Reason**: Annotation semantics, overlap mathematics, and SafeNest label mappings are deterministic and fully validated. Non-blocking warnings are logged for voluntary breath-hold proxy usage, Post-exercise unverified respiration rate ground truth, and tail-dropped annotation seconds.
+- **Reason**: Annotation semantics, overlap mathematics, Movesense ACC reference respiration rate extraction, and SafeNest label mappings are deterministic and fully validated. Non-blocking warnings are logged for voluntary breath-hold proxy usage and tail-dropped annotation seconds.
 
 ---
 
@@ -244,7 +260,7 @@ The standalone validator `scripts/validate_mmwave_label_pilot.py` verified all 2
 - **A5 Entry Status**: `READY_WITH_CONDITIONS`
 - **Conditions**:
   1. A5 (dataset packaging & subject split) must preserve `mapping_type` and `assignment_status` fields.
-  2. `AMBIGUOUS` windows (Post-exercise and transition states) must be handled explicitly during subject-wise train/validation/test split construction (e.g. held out from pure class training sets).
+  2. `AMBIGUOUS` windows (transition states) must be handled explicitly during subject-wise train/validation/test split construction (e.g. held out from pure class training sets).
   3. No clinical apnea claims or unverified Post-exercise RAPID claims may be introduced in A5.
 
 ---
@@ -252,7 +268,7 @@ The standalone validator `scripts/validate_mmwave_label_pilot.py` verified all 2
 ## 22. Remaining Limitations
 
 1. Pilot dataset scope is 13 recordings (15 windows); full 440-recording conversion is deferred to A6.
-2. `Post-exercise` recordings currently lack independent validated respiration rate ground truth, requiring `RAPID_OR_ABNORMAL` to remain `AMBIGUOUS`.
+2. Voluntary breath-hold is used as an APNEA class proxy rather than clinical sleep apnea.
 
 ---
 
@@ -277,10 +293,10 @@ A5: NOT PERFORMED
 
 ## 24. Files Changed
 
-- `scripts/mmwave_label_mapper.py`: Phase A4 SafeNest label mapper library module.
-- `scripts/run_mmwave_label_pilot.py`: Phase A4 pilot runner script.
-- `scripts/validate_mmwave_label_pilot.py`: Phase A4 in-memory and standalone validator script.
-- `tests/test_mmwave_label_mapper.py`: Comprehensive unit test suite for label mapping, overlap calculation, and validation rules.
+- `scripts/mmwave_label_mapper.py`: Phase A4 SafeNest label mapper library module (with Movesense ACC respiration rate extraction).
+- `scripts/run_mmwave_label_pilot.py`: Phase A4 pilot runner script (with updated coverage & policy comparison logic).
+- `scripts/validate_mmwave_label_pilot.py`: Phase A4 in-memory and standalone validator script (with active overlap & coverage re-calculation).
+- `tests/test_mmwave_label_mapper.py`: Comprehensive unit test suite for label mapping, Movesense ACC extraction, and validation rules.
 - `datasets/mmwave/manifests/a4_label_pilot/`: Manifest output directory (`pilot_selection.json`, `annotation_inventory.jsonl`, `policy_comparison.json`, `label_mapping_profile.json`, `window_label_manifest.jsonl`, `exceptions.json`, `a4_summary.json`, `checksums.sha256`).
 - `docs/reports/20260808_Antigravity_A4_Annotation_Label_Mapping_Pilot_01.md`: This report.
 

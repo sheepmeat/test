@@ -7,12 +7,18 @@
     "voluntary_breath_hold_as_apnea_proxy": true
   },
   "normal_policy": {
+    "movesense_acc_normal_rr_range_bpm": [
+      10.0,
+      25.0
+    ],
     "requires_zero_non_breathing_overlap": true,
     "rest_condition_as_normal_proxy": true
   },
   "profile_id": "MMWAVE_LABEL_MAPPING_PROFILE_001",
   "rapid_or_abnormal_policy": {
     "post_exercise_auto_rapid": false,
+    "rapid_min_rr_bpm": 25.0,
+    "reference_sensor": "MOVESENSE_CHEST_ACC",
     "requires_independent_respiration_rate_reference": true
   },
   "target_classes": {

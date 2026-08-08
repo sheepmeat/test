@@ -257,6 +257,28 @@ class TestMmwaveLabelMapper(unittest.TestCase):
         res2 = map_window_label(self.base_window, events, "Rest", "Sitting", self.profile)
         self.assertEqual(json.dumps(res1, sort_keys=True), json.dumps(res2, sort_keys=True))
 
+    # 21. Movesense chest ACC reference respiration rate >= 25 bpm -> RAPID_OR_ABNORMAL
+    def test_movesense_acc_rapid_respiration(self) -> None:
+        acc_info = {"rr_bpm": 30.0, "peak_freq_hz": 0.50, "reference_sensor": "MOVESENSE_CHEST_ACC"}
+        mapped = map_window_label(
+            self.base_window, [], "Post-exercise", "Lying", movesense_rr_info=acc_info, profile=self.profile
+        )
+        self.assertEqual(mapped["safenest_label"], "RAPID_OR_ABNORMAL")
+        self.assertEqual(mapped["safenest_label_id"], 1)
+        self.assertEqual(mapped["mapping_type"], "DERIVED")
+        self.assertEqual(mapped["mapping_rule_id"], "A4_RULE_RAPID_MOVESENSE_ACC_REF")
+
+    # 22. Movesense chest ACC reference respiration rate < 25 bpm -> NORMAL
+    def test_movesense_acc_normal_respiration(self) -> None:
+        acc_info = {"rr_bpm": 15.0, "peak_freq_hz": 0.25, "reference_sensor": "MOVESENSE_CHEST_ACC"}
+        mapped = map_window_label(
+            self.base_window, [], "Post-exercise", "Sitting", movesense_rr_info=acc_info, profile=self.profile
+        )
+        self.assertEqual(mapped["safenest_label"], "NORMAL")
+        self.assertEqual(mapped["safenest_label_id"], 0)
+        self.assertEqual(mapped["mapping_type"], "DERIVED")
+        self.assertEqual(mapped["mapping_rule_id"], "A4_RULE_NORMAL_MOVESENSE_ACC_REF")
+
 
 if __name__ == "__main__":
     unittest.main()

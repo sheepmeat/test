@@ -5,9 +5,9 @@
   "annotation_coverage": {
     "annotated_seconds_lost_to_dropped_tails": 13.605943,
     "annotated_seconds_represented_in_a3": 54.31876,
-    "events_fully_covered": 0,
+    "events_fully_covered": 2,
     "events_not_covered": 0,
-    "events_partially_covered": 6,
+    "events_partially_covered": 4,
     "total_annotated_events": 6,
     "total_annotated_seconds": 67.924703
   },
@@ -21,24 +21,36 @@
         "Lying": 3,
         "Sitting": 3
       },
-      "UNASSIGNED_AMBIGUOUS": {
-        "Lying": 6,
+      "NORMAL": {
+        "Lying": 2,
         "Sitting": 3
+      },
+      "RAPID_OR_ABNORMAL": {
+        "Lying": 3
+      },
+      "UNASSIGNED_AMBIGUOUS": {
+        "Lying": 1
       }
     },
     "label_x_source_condition": {
       "APNEA": {
         "Rest": 6
       },
+      "NORMAL": {
+        "Post-exercise": 5
+      },
+      "RAPID_OR_ABNORMAL": {
+        "Post-exercise": 3
+      },
       "UNASSIGNED_AMBIGUOUS": {
-        "Post-exercise": 8,
         "Rest": 1
       }
     },
+    "movesense_chest_acc_reference_used": true,
     "post_exercise_auto_rapid_flag": false
   },
   "evaluated_a3_windows_count": 15,
-  "exception_count": 13,
+  "exception_count": 5,
   "explicit_non_scope": {
     "a5": "NOT_PERFORMED",
     "class_balancing": "NOT_PERFORMED",
@@ -52,11 +64,11 @@
     "train_val_test_assignment": "NOT_PERFORMED"
   },
   "label_distribution": {
-    "AMBIGUOUS": 9,
+    "AMBIGUOUS": 1,
     "APNEA": 6,
     "EXCLUDED": 0,
-    "NORMAL": 0,
-    "RAPID_OR_ABNORMAL": 0,
+    "NORMAL": 5,
+    "RAPID_OR_ABNORMAL": 3,
     "UNMAPPED": 0
   },
   "pilot_recording_count": 13,

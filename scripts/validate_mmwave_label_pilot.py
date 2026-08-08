@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 from typing import Any
 
@@ -39,7 +40,7 @@ def derive_a4_gate(
 
     # PASS_WITH_WARNINGS is appropriate because:
     # 1. Non-breathing is a voluntary breath-hold proxy, not clinical apnea.
-    # 2. Post-exercise recordings lack independent respiration rate ground truth and remain ambiguous.
+    # 2. Annotation tail loss exists for 500-sample recordings.
     return "PASS_WITH_WARNINGS", "READY_WITH_CONDITIONS"
 
 
@@ -49,6 +50,7 @@ def validate_label_manifests(
     windows: list[dict[str, Any]],
     exceptions: list[dict[str, Any]],
     summary: dict[str, Any],
+    annotation_inventory: list[dict[str, Any]] | None = None,
 ) -> tuple[bool, list[str]]:
     """Validate Phase A4 label manifests against all 20 structural and semantic invariants."""
     errors: list[str] = []
@@ -64,8 +66,15 @@ def validate_label_manifests(
 
     a3_by_id = {w["window_id"]: w for w in a3_windows}
 
+    # Map raw annotation events per recording if inventory is provided
+    events_by_rec: dict[str, list[dict[str, Any]]] = {}
+    if annotation_inventory:
+        for item in annotation_inventory:
+            events_by_rec[item["recording_id"]] = item.get("events", [])
+
     for w in windows:
         w_id = w["window_id"]
+        rec_id = w["recording_id"]
         a3_w = a3_by_id.get(w_id)
         if not a3_w:
             errors.append(f"A4 window {w_id} not found in A3")
@@ -109,9 +118,30 @@ def validate_label_manifests(
         if lbl == "APNEA" and m_type != "DERIVED":
             errors.append(f"Window {w_id} APNEA label mapping type must be DERIVED (got {m_type!r})")
 
-        # 10. Post-exercise alone is insufficient for RAPID_OR_ABNORMAL
-        if w.get("source_test_condition") == "Post-exercise" and lbl == "RAPID_OR_ABNORMAL":
+        # 10. Post-exercise alone is insufficient for RAPID_OR_ABNORMAL without reference evidence
+        if (
+            w.get("source_test_condition") == "Post-exercise"
+            and lbl == "RAPID_OR_ABNORMAL"
+            and not w.get("movesense_reference_rr")
+        ):
             errors.append(f"Window {w_id} Post-exercise automatically mapped to RAPID_OR_ABNORMAL without reference evidence")
+
+        # 11. Re-calculate window annotation overlap from raw events if inventory provided
+        if annotation_inventory and rec_id in events_by_rec:
+            evs = events_by_rec[rec_id]
+            win_start = w["canonical_start_index"] * 0.1
+            win_end = w["canonical_end_index_exclusive"] * 0.1
+            calc_overlap = 0.0
+            for ev in evs:
+                o_start = max(win_start, ev["start_seconds_relative"])
+                o_end = min(win_end, ev["end_seconds_relative"])
+                if o_end > o_start:
+                    calc_overlap += (o_end - o_start)
+            if not math.isclose(w["annotation_overlap_seconds"], calc_overlap, abs_tol=1e-3):
+                errors.append(
+                    f"Window {w_id} annotation_overlap_seconds mismatch: "
+                    f"manifest={w['annotation_overlap_seconds']}, calculated={calc_overlap:.3f}"
+                )
 
         # 12. Ambiguous windows remain explicit
         if lbl is None and w.get("assignment_status") not in ("AMBIGUOUS", "UNMAPPED", "EXCLUDED"):
@@ -138,6 +168,7 @@ def validate_label_manifests(
         "APNEA": sum(1 for w in windows if w["safenest_label"] == "APNEA"),
         "AMBIGUOUS": sum(1 for w in windows if w["safenest_label"] is None and w["assignment_status"] == "AMBIGUOUS"),
         "UNMAPPED": sum(1 for w in windows if w["safenest_label"] is None and w["assignment_status"] == "UNMAPPED"),
+        "EXCLUDED": sum(1 for w in windows if w["assignment_status"] == "EXCLUDED"),
     }
     for k, v in manifest_counts.items():
         if assigned_counts.get(k, 0) != v:
@@ -146,6 +177,44 @@ def validate_label_manifests(
     # 16. Exception count match
     if summary.get("exception_count") != len(exceptions):
         errors.append(f"Summary exception_count mismatch: summary={summary.get('exception_count')} != actual={len(exceptions)}")
+
+    # 17. Re-calculate annotation coverage metrics
+    if annotation_inventory and "annotation_coverage" in summary:
+        sum_cov = summary["annotation_coverage"]
+        rec_wins_map: dict[str, int] = {}
+        for w in a3_windows:
+            rec_wins_map[w["recording_id"]] = max(rec_wins_map.get(w["recording_id"], 0), w["window_index"] + 1)
+
+        calc_fully = 0
+        calc_partially = 0
+        calc_not = 0
+
+        for item in annotation_inventory:
+            rec_id = item["recording_id"]
+            num_wins = rec_wins_map.get(rec_id, 0)
+            valid_end_sec = num_wins * 30.0
+            for ev in item.get("events", []):
+                e_start = ev["start_seconds_relative"]
+                e_end = ev["end_seconds_relative"]
+                if e_end <= valid_end_sec + 1e-3:
+                    calc_fully += 1
+                elif e_start < valid_end_sec:
+                    calc_partially += 1
+                else:
+                    calc_not += 1
+
+        if sum_cov.get("events_fully_covered") != calc_fully:
+            errors.append(
+                f"Annotation coverage events_fully_covered mismatch: summary={sum_cov.get('events_fully_covered')} != calculated={calc_fully}"
+            )
+        if sum_cov.get("events_partially_covered") != calc_partially:
+            errors.append(
+                f"Annotation coverage events_partially_covered mismatch: summary={sum_cov.get('events_partially_covered')} != calculated={calc_partially}"
+            )
+        if sum_cov.get("events_not_covered") != calc_not:
+            errors.append(
+                f"Annotation coverage events_not_covered mismatch: summary={sum_cov.get('events_not_covered')} != calculated={calc_not}"
+            )
 
     # 20. Gate state check
     gate, ready = derive_a4_gate(len(errors) == 0, exceptions, windows)
@@ -177,8 +246,20 @@ def main() -> None:
     ]
     exceptions = json.loads((a4_dir / "exceptions.json").read_text(encoding="utf-8"))
     summary = json.loads((a4_dir / "a4_summary.json").read_text(encoding="utf-8"))
+    annotation_inventory = [
+        json.loads(line)
+        for line in (a4_dir / "annotation_inventory.jsonl").read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
 
-    success, errors = validate_label_manifests(a3_windows, profile, windows, exceptions, summary)
+    success, errors = validate_label_manifests(
+        a3_windows=a3_windows,
+        profile=profile,
+        windows=windows,
+        exceptions=exceptions,
+        summary=summary,
+        annotation_inventory=annotation_inventory,
+    )
     gate, ready = derive_a4_gate(success, exceptions, windows)
 
     print(f"Validation Success: {success}")

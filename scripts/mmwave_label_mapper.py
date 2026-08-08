@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """SafeNest Phase A4 — Annotation Alignment & Deterministic Label Mapper.
 
-Phase A4 semantically connects original dataset test conditions and voluntary
-non-breathing annotations to SafeNest target classes (NORMAL, RAPID_OR_ABNORMAL, APNEA).
+Phase A4 semantically connects original dataset test conditions, voluntary
+non-breathing annotations, and Movesense chest accelerometer reference respiration rates
+to SafeNest target classes (NORMAL, RAPID_OR_ABNORMAL, APNEA).
 """
 
 from __future__ import annotations
@@ -33,6 +34,7 @@ class LabelMappingProfile:
     )
     apnea_min_overlap_seconds: float = 6.0
     apnea_min_event_duration_seconds: float = 8.0
+    rapid_min_rr_bpm: float = 25.0
     post_exercise_auto_rapid: bool = False
     clinical_apnea_claimed: bool = False
     a3_window_contract_modified: bool = False
@@ -50,10 +52,13 @@ class LabelMappingProfile:
             "normal_policy": {
                 "rest_condition_as_normal_proxy": True,
                 "requires_zero_non_breathing_overlap": True,
+                "movesense_acc_normal_rr_range_bpm": [10.0, 25.0],
             },
             "rapid_or_abnormal_policy": {
+                "rapid_min_rr_bpm": self.rapid_min_rr_bpm,
                 "post_exercise_auto_rapid": self.post_exercise_auto_rapid,
                 "requires_independent_respiration_rate_reference": True,
+                "reference_sensor": "MOVESENSE_CHEST_ACC",
             },
             "a3_window_contract_modified": self.a3_window_contract_modified,
         }
@@ -119,6 +124,83 @@ def parse_annotation_file(
     return events
 
 
+def extract_movesense_respiration_rate(
+    acc_raw: bytes | str,
+    radar_t0_iso: str,
+    window_start_sec: float,
+    window_end_sec: float,
+) -> dict[str, Any] | None:
+    """Extract respiration rate (in bpm and Hz) from Movesense chest ACC data for a 30s window."""
+    text = acc_raw.decode("utf-8") if isinstance(acc_raw, bytes) else str(acc_raw)
+    lines = [l.strip() for l in text.splitlines() if l.strip()]
+    if len(lines) < 10:
+        return None
+
+    radar_t0 = _parse_iso_string(radar_t0_iso)
+    timestamps: list[dt.datetime] = []
+    mags: list[float] = []
+
+    for l in lines[1:]:
+        parts = l.split(",")
+        if len(parts) < 4:
+            continue
+        try:
+            t = _parse_iso_string(parts[0])
+            x, y, z = float(parts[1]), float(parts[2]), float(parts[3])
+            mag = math.sqrt(x * x + y * y + z * z)
+            timestamps.append(t)
+            mags.append(mag)
+        except Exception:
+            continue
+
+    if not timestamps:
+        return None
+
+    t_sec = np.array([(t - radar_t0).total_seconds() for t in timestamps], dtype=np.float64)
+    mags_arr = np.array(mags, dtype=np.float64)
+
+    mask = (t_sec >= window_start_sec) & (t_sec < window_end_sec)
+    if np.sum(mask) < 50:
+        return None
+
+    sub_t = t_sec[mask]
+    sub_m = mags_arr[mask]
+
+    dt_grid = 0.04  # 25 Hz
+    grid_t = np.arange(sub_t[0], sub_t[-1], dt_grid)
+    if len(grid_t) < 50:
+        return None
+
+    grid_m = np.interp(grid_t, sub_t, sub_m)
+
+    # Detrend
+    p = np.polyfit(grid_t - grid_t[0], grid_m, 1)
+    grid_m_detrend = grid_m - np.polyval(p, grid_t - grid_t[0])
+
+    # Hanning window
+    h_win = np.hanning(len(grid_m_detrend))
+    grid_m_win = grid_m_detrend * h_win
+
+    # Spectral analysis (0.1 Hz to 0.7 Hz)
+    freqs = np.fft.rfftfreq(len(grid_m_win), d=dt_grid)
+    fft_mag = np.abs(np.fft.rfft(grid_m_win))
+
+    valid_f_mask = (freqs >= 0.1) & (freqs <= 0.7)
+    if not np.any(valid_f_mask):
+        return None
+
+    peak_idx = np.argmax(fft_mag[valid_f_mask])
+    peak_freq_hz = float(freqs[valid_f_mask][peak_idx])
+    rr_bpm = peak_freq_hz * 60.0
+
+    return {
+        "peak_freq_hz": round(peak_freq_hz, 4),
+        "rr_bpm": round(rr_bpm, 2),
+        "sample_count": int(np.sum(mask)),
+        "reference_sensor": "MOVESENSE_CHEST_ACC",
+    }
+
+
 def compute_window_annotation_overlap(
     window_start_sec: float,
     window_end_exclusive_sec: float,
@@ -166,6 +248,7 @@ def map_window_label(
     source_condition: str,
     posture: str,
     profile: LabelMappingProfile = LabelMappingProfile(),
+    movesense_rr_info: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Deterministically assign SafeNest target label and mapping provenance for a window."""
     win_start_sec = float(window_record.get("window_index", 0) * 30.0)
@@ -203,15 +286,36 @@ def map_window_label(
         ambiguity_reasons.append(
             f"Non-breathing overlap {overlap_sec:.3f}s is non-zero but below APNEA threshold {profile.apnea_min_overlap_seconds}s (transition state)"
         )
-    # 3. NORMAL Proxy: Rest condition with 0.0s non-breathing overlap
+    # 3. Movesense ACC Respiration Rate Reference (for non-apnea windows)
+    elif movesense_rr_info is not None:
+        rr_bpm = movesense_rr_info["rr_bpm"]
+        if rr_bpm >= profile.rapid_min_rr_bpm:
+            safenest_label = "RAPID_OR_ABNORMAL"
+            safenest_label_id = profile.target_classes["RAPID_OR_ABNORMAL"]
+            mapping_type = "DERIVED"
+            mapping_rule_id = "A4_RULE_RAPID_MOVESENSE_ACC_REF"
+            assignment_status = "ASSIGNED"
+            mapping_evidence.append(
+                f"Movesense chest ACC reference respiration rate {rr_bpm:.1f} bpm >= threshold {profile.rapid_min_rr_bpm} bpm"
+            )
+        else:
+            safenest_label = "NORMAL"
+            safenest_label_id = profile.target_classes["NORMAL"]
+            mapping_type = "DERIVED"
+            mapping_rule_id = "A4_RULE_NORMAL_MOVESENSE_ACC_REF"
+            assignment_status = "ASSIGNED"
+            mapping_evidence.append(
+                f"Movesense chest ACC reference respiration rate {rr_bpm:.1f} bpm is in normal range (< {profile.rapid_min_rr_bpm} bpm)"
+            )
+    # 4. Rest Condition Proxy Fallback (when Movesense ACC unavailable)
     elif source_condition == "Rest" and overlap_sec == 0.0:
         safenest_label = "NORMAL"
         safenest_label_id = profile.target_classes["NORMAL"]
         mapping_type = "DERIVED"
         mapping_rule_id = "A4_RULE_NORMAL_REST_PROXY"
         assignment_status = "ASSIGNED"
-        mapping_evidence.append("Controlled Rest condition with 0.0s non-breathing annotation overlap")
-    # 4. Post-exercise Unverified (Prohibits auto-mapping Post-exercise to RAPID without reference)
+        mapping_evidence.append("Controlled Rest condition with 0.0s non-breathing annotation overlap (ACC reference fallback)")
+    # 5. Post-exercise Unverified (when Movesense ACC unavailable)
     elif source_condition == "Post-exercise":
         safenest_label = None
         safenest_label_id = None
@@ -231,6 +335,7 @@ def map_window_label(
             "annotation_events_overlapping": overlap_info["overlapping_events"],
             "annotation_overlap_seconds": overlap_info["annotation_overlap_seconds"],
             "annotation_overlap_fraction": overlap_info["annotation_overlap_fraction"],
+            "movesense_reference_rr": movesense_rr_info,
             "safenest_label": safenest_label,
             "safenest_label_id": safenest_label_id,
             "mapping_type": mapping_type,
@@ -248,6 +353,7 @@ __all__ = [
     "LabelMappingError",
     "LabelMappingProfile",
     "compute_window_annotation_overlap",
+    "extract_movesense_respiration_rate",
     "map_window_label",
     "parse_annotation_file",
 ]
