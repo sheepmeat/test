@@ -27,11 +27,20 @@
     "VALIDATION": 1
   },
   "profile_id": "MMWAVE_SUBJECT_SPLIT_PROFILE_001",
+  "recording_count": 440,
+  "recording_count_per_subject": {
+    "distribution": {
+      "4": 110
+    },
+    "maximum": 4,
+    "minimum": 4
+  },
   "recording_counts": {
     "LOCKED_TEST": 64,
     "TRAIN": 308,
     "VALIDATION": 68
   },
+  "subject_count": 110,
   "subject_counts": {
     "LOCKED_TEST": 16,
     "TRAIN": 77,
@@ -42,6 +51,7 @@
     "TRAIN_VALIDATION": 0,
     "VALIDATION_LOCKED_TEST": 0
   },
+  "unique_recording_id_count": 440,
   "validation_errors": [],
   "validation_success": true
 }

@@ -11,7 +11,7 @@ from scripts.mmwave_subject_split import (
     SPLIT_PROFILE_ID, SPLITS, SPLIT_SEED, SubjectSplitError,
     assign_subject_splits, attach_pilot_window_provenance,
     build_recording_split_manifest, build_subject_catalog,
-    calculate_split_counts, cross_split_duplicate_hashes,
+    calculate_split_counts, cross_split_duplicate_hashes, measure_inventory,
 )
 from scripts.validate_mmwave_subject_split import contains_local_path, derive_gate
 
@@ -122,6 +122,18 @@ class TestMmwaveSubjectSplit(unittest.TestCase):
         self.assertFalse(row["training_eligible"])
         self.assertFalse(row["validation_eligible"])
         self.assertFalse(row["locked_test_evaluation_eligible"])
+        self.assertEqual(row["timestamp_reference"], "COMMON_ACQUISITION_COMPUTER_CLOCK")
+        self.assertEqual(row["source_timezone"], "UNVERIFIED")
+        self.assertFalse(row["utc_conversion_claimed"])
+
+    def test_inventory_counts_and_range_are_evidence_derived(self) -> None:
+        irregular = [recording(1, suffix="a"), recording(1, suffix="b"), recording(2, suffix="a")]
+        self.assertEqual(measure_inventory(irregular), {
+            "subject_count": 2,
+            "recording_count": 3,
+            "unique_recording_id_count": 3,
+            "recording_count_per_subject": {"minimum": 1, "maximum": 2, "distribution": {"1": 1, "2": 1}},
+        })
 
     def test_locked_test_clean_window_never_training_eligible(self) -> None:
         locked = next(row for row in self.subjects if row["split"] == "LOCKED_TEST")

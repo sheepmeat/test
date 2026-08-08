@@ -21,8 +21,8 @@ A0 supplied the complete subject/recording roster; A2 supplied selected phase co
 ## 4. Full Subject Inventory
 
 - Subjects: 110
-- Recordings: 440 unique IDs
-- Recordings per subject: 4 (measured minimum and maximum)
+- Recordings: 440 (440 unique IDs)
+- Recordings per subject: minimum 4, maximum 4 (derived from A0)
 
 ## 5. Available Stratification Metadata
 
@@ -65,11 +65,11 @@ All 15 A4 pilot windows inherit their subject split without label recalculation.
 
 ## 14. Provenance Schema
 
-`provenance_schema.json` defines archive→member→subject→recording→A1→A2→A3→A4→A5→future NPZ index linkage. Current records are `synthetic=false`.
+`provenance_schema.json` defines archive→member→subject→recording→A1→A2→A3→A4→A5→future NPZ index linkage. Current records are `synthetic=false`. Timestamp reference is `COMMON_ACQUISITION_COMPUTER_CLOCK`, source timezone is `UNVERIFIED`, and UTC conversion is not claimed. A preserved legacy trailing `Z` is not treated as UTC evidence.
 
 ## 15. Split Balance Audit
 
-Every subject has identical two-posture/two-condition coverage and two annotation-bearing recordings. Pilot label statistics are explicitly marked `A4_PILOT_ONLY`, not full-dataset class balance.
+The measured A0 roster has identical two-posture/two-condition coverage and two annotation-bearing recordings per subject. Pilot label statistics are explicitly marked `A4_PILOT_ONLY`, not full-dataset class balance.
 
 ## 16. Subject Leakage Audit
 

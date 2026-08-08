@@ -86,6 +86,29 @@ def build_subject_catalog(recordings: Iterable[dict[str, Any]]) -> list[dict[str
     return catalog
 
 
+def measure_inventory(recordings: Iterable[dict[str, Any]]) -> dict[str, Any]:
+    """Derive roster cardinalities from evidence instead of dataset constants."""
+    rows = list(recordings)
+    subject_ids = [row.get("subject_id") for row in rows]
+    recording_ids = [row.get("recording_id") for row in rows]
+    if not rows or None in subject_ids or None in recording_ids:
+        raise SubjectSplitError("Inventory measurements require identified recordings")
+    if len(recording_ids) != len(set(recording_ids)):
+        raise SubjectSplitError("Inventory measurements require unique recording IDs")
+    per_subject = Counter(subject_ids)
+    distribution = Counter(per_subject.values())
+    return {
+        "subject_count": len(per_subject),
+        "recording_count": len(rows),
+        "unique_recording_id_count": len(set(recording_ids)),
+        "recording_count_per_subject": {
+            "minimum": min(per_subject.values()),
+            "maximum": max(per_subject.values()),
+            "distribution": {str(count): subjects for count, subjects in sorted(distribution.items())},
+        },
+    }
+
+
 def assign_subject_splits(
     subject_catalog: Iterable[dict[str, Any]], seed: int = SPLIT_SEED,
     target_ratios: dict[str, float] | None = None,
@@ -188,6 +211,9 @@ def attach_pilot_window_provenance(
             "supervised_training_eligible": clean and split == "TRAIN",
             "data_origin_type": "REAL_HUMAN_SUBJECT_RECORDING", "synthetic": False,
             "pilot_signal_sha256": (signal_hashes or {}).get(source["window_id"]),
+            "timestamp_reference": "COMMON_ACQUISITION_COMPUTER_CLOCK",
+            "source_timezone": "UNVERIFIED",
+            "utc_conversion_claimed": False,
         })
         output.append(row)
     return output

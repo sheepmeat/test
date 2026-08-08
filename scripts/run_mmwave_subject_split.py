@@ -20,7 +20,7 @@ from mmwave_subject_split import (
     SPLIT_PROFILE_ID, SPLITS, SPLIT_SEED, TARGET_RATIOS, assign_subject_splits,
     attach_pilot_window_provenance, build_recording_split_manifest,
     build_subject_catalog, calculate_split_counts, cross_split_duplicate_hashes,
-    summarize_counts,
+    measure_inventory, summarize_counts,
 )
 from validate_mmwave_subject_split import validate_a5
 
@@ -99,8 +99,13 @@ def provenance_schema() -> dict[str, Any]:
         "decoder_profile": "A1 decoder profile", "phase_profile": "A2 extraction profile",
         "selected_range_bin_index": "A2 array index", "selected_range_m": "stored rBins coordinate",
         "selected_virtual_channels": "A2 virtual channel selection", "timeline_profile": "A3 profile",
-        "window_id": "stable window identifier", "start_timestamp": "inclusive UTC start",
-        "last_sample_timestamp": "last included sample", "end_timestamp_exclusive": "exclusive UTC end",
+        "window_id": "stable window identifier",
+        "timestamp_reference": "COMMON_ACQUISITION_COMPUTER_CLOCK",
+        "source_timezone": "UNVERIFIED",
+        "utc_conversion_claimed": "false; no UTC conversion or UTC timezone is asserted",
+        "start_timestamp": "canonical acquisition-clock inclusive timestamp",
+        "last_sample_timestamp": "canonical acquisition-clock last included sample",
+        "end_timestamp_exclusive": "canonical acquisition-clock exclusive boundary",
         "source_start_index": "source start index", "source_end_index_exclusive": "source exclusive end",
         "canonical_start_index": "canonical start index", "canonical_end_index_exclusive": "canonical exclusive end",
         "original_annotation_type": "source annotation semantics", "safenest_label": "A4 derived class",
@@ -115,12 +120,20 @@ def provenance_schema() -> dict[str, Any]:
         "required_future_sample_fields": list(fields), "field_semantics": fields,
         "current_unavailable_until_a6": ["future_npz_sample_index"],
         "identity_path_policy": "REPOSITORY_OR_ARCHIVE_RELATIVE_ONLY_NO_LOCAL_ABSOLUTE_PATH",
+        "timestamp_contract": {
+            "timestamp_reference": "COMMON_ACQUISITION_COMPUTER_CLOCK",
+            "source_timezone": "UNVERIFIED",
+            "utc_conversion_claimed": False,
+            "legacy_a3_text_note": "A trailing Z in preserved A3 text is not evidence that the source clock was UTC.",
+            "a6_serialization_policy": "DO_NOT_APPEND_OR_INTERPRET_UTC_OFFSET_UNLESS_SOURCE_TIMEZONE_IS_VERIFIED",
+        },
         "lineage_order": list(fields),
     }
 
 
 def balance_report(subjects: list[dict[str, Any]], recordings: list[dict[str, Any]], windows: list[dict[str, Any]]) -> dict[str, Any]:
     measured = summarize_counts(subjects, recordings, windows)
+    inventory = measure_inventory(recordings)
     posture = {split: Counter() for split in SPLITS}
     conditions = {split: Counter() for split in SPLITS}
     annotations = Counter()
@@ -137,7 +150,7 @@ def balance_report(subjects: list[dict[str, Any]], recordings: list[dict[str, An
             "posture_by_split": {s: dict(posture[s]) for s in SPLITS},
             "source_condition_by_split": {s: dict(conditions[s]) for s in SPLITS},
             "annotation_present_recordings_by_split": dict(annotations),
-            "recordings_per_subject": {"minimum": 4, "maximum": 4, "distribution": {"4": total}},
+            "recordings_per_subject": inventory["recording_count_per_subject"],
         },
         "a4_pilot_only": {
             "scope": "A4_PILOT_ONLY_NOT_FULL_CLASS_BALANCE", "window_counts": measured["pilot_window_counts"],
@@ -168,7 +181,7 @@ def render_report(summary: dict[str, Any], balance: dict[str, Any], subjects: li
 
 - A5 gate: **{summary['a5_gate_status']}**
 - A6 entry: **{summary['a6_entry_status']}**
-- 110 subjects and 440 recordings received one deterministic subject-level split.
+- {summary['subject_count']} subjects and {summary['recording_count']} recordings received one deterministic subject-level split.
 - Subject, recording, pilot-window, and pilot exact-signal cross-split overlap: **0**.
 
 ## 2. Git Baseline
@@ -184,9 +197,9 @@ A0 supplied the complete subject/recording roster; A2 supplied selected phase co
 
 ## 4. Full Subject Inventory
 
-- Subjects: 110
-- Recordings: 440 unique IDs
-- Recordings per subject: 4 (measured minimum and maximum)
+- Subjects: {summary['subject_count']}
+- Recordings: {summary['recording_count']} ({summary['unique_recording_id_count']} unique IDs)
+- Recordings per subject: minimum {summary['recording_count_per_subject']['minimum']}, maximum {summary['recording_count_per_subject']['maximum']} (derived from A0)
 
 ## 5. Available Stratification Metadata
 
@@ -214,7 +227,7 @@ Profile `{SPLIT_PROFILE_ID}` uses seed `{SPLIT_SEED}` and orders subjects by `SH
 
 ## 11. Recording Inheritance
 
-All 440 A0 recordings inherit `subject_split_map[subject_id]`; cross-split recording overlap is 0.
+All {summary['recording_count']} A0 recordings inherit `subject_split_map[subject_id]`; cross-split recording overlap is 0.
 
 ## 12. A4 Pilot Window Inheritance
 
@@ -229,19 +242,19 @@ All 15 A4 pilot windows inherit their subject split without label recalculation.
 
 ## 14. Provenance Schema
 
-`provenance_schema.json` defines archive→member→subject→recording→A1→A2→A3→A4→A5→future NPZ index linkage. Current records are `synthetic=false`.
+`provenance_schema.json` defines archive→member→subject→recording→A1→A2→A3→A4→A5→future NPZ index linkage. Current records are `synthetic=false`. Timestamp reference is `COMMON_ACQUISITION_COMPUTER_CLOCK`, source timezone is `UNVERIFIED`, and UTC conversion is not claimed. A preserved legacy trailing `Z` is not treated as UTC evidence.
 
 ## 15. Split Balance Audit
 
-Every subject has identical two-posture/two-condition coverage and two annotation-bearing recordings. Pilot label statistics are explicitly marked `A4_PILOT_ONLY`, not full-dataset class balance.
+The measured A0 roster has identical two-posture/two-condition coverage and two annotation-bearing recordings per subject. Pilot label statistics are explicitly marked `A4_PILOT_ONLY`, not full-dataset class balance.
 
 ## 16. Subject Leakage Audit
 
-TRAIN∩VALIDATION=0, TRAIN∩LOCKED_TEST=0, VALIDATION∩LOCKED_TEST=0; union coverage=110/110.
+TRAIN∩VALIDATION=0, TRAIN∩LOCKED_TEST=0, VALIDATION∩LOCKED_TEST=0; union coverage={summary['subject_count']}/{summary['subject_count']}.
 
 ## 17. Recording Leakage Audit
 
-All 440 recording IDs appear once and inherit their subject split; overlap=0.
+All {summary['recording_count']} recording IDs appear once and inherit their subject split; overlap=0.
 
 ## 18. Pilot Window / Duplicate Hash Audit
 
@@ -315,6 +328,7 @@ def main() -> int:
     duplicates = cross_split_duplicate_hashes(windows)
     schema, balance = provenance_schema(), balance_report(subjects, recordings, windows)
     counts = summarize_counts(subjects, recordings, windows)
+    inventory_measurements = measure_inventory(inventory)
 
     profile = {
         "profile_id": SPLIT_PROFILE_ID, "split_unit": "SUBJECT", "target_ratios": TARGET_RATIOS,
@@ -341,9 +355,11 @@ def main() -> int:
         "subject_split_map": {row["subject_id"]: row["split"] for row in subjects},
         "subject_ids": {split: [row["subject_id"] for row in subjects if row["split"] == split] for split in SPLITS},
         "locked_test_policy": "NO_MODEL_SELECTION_ACCESS", "synthetic": False,
+        "provenance_schema_path": "datasets/mmwave/manifests/a5_subject_split/provenance_schema.json",
+        "timestamp_contract": schema["timestamp_contract"],
     }
     summary = {
-        "phase": "A5", "profile_id": SPLIT_PROFILE_ID, **counts,
+        "phase": "A5", "profile_id": SPLIT_PROFILE_ID, **inventory_measurements, **counts,
         "subject_overlap_counts": {"TRAIN_VALIDATION": 0, "TRAIN_LOCKED_TEST": 0, "VALIDATION_LOCKED_TEST": 0},
         "cross_split_recording_overlap_count": 0, "cross_split_window_id_overlap_count": 0,
         "pilot_cross_split_duplicate_signal_hash_count": len(duplicates),

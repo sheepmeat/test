@@ -13,12 +13,12 @@ from typing import Any
 try:  # Script execution and package-style unit-test imports are both supported.
     from mmwave_subject_split import (
         REQUIRED_A4_FIELDS, SPLIT_PROFILE_ID, SPLITS, SPLIT_SEED,
-        calculate_split_counts, cross_split_duplicate_hashes,
+        calculate_split_counts, cross_split_duplicate_hashes, measure_inventory,
     )
 except ModuleNotFoundError:  # pragma: no cover - exercised by package import mode
     from scripts.mmwave_subject_split import (
         REQUIRED_A4_FIELDS, SPLIT_PROFILE_ID, SPLITS, SPLIT_SEED,
-        calculate_split_counts, cross_split_duplicate_hashes,
+        calculate_split_counts, cross_split_duplicate_hashes, measure_inventory,
     )
 
 
@@ -88,8 +88,7 @@ def validate_a5(
     recording_ids = [row.get("recording_id") for row in recordings]
     window_ids = [row.get("window_id") for row in windows]
 
-    if len(inventory_subjects) != 110 or len(inventory_recordings) != 440:
-        errors.append("Measured A0 inventory must contain 110 subjects and 440 recordings")
+    inventory_evidence = measure_inventory(inventory)
     if len(subject_ids) != len(set(subject_ids)) or set(subject_ids) != inventory_subjects:
         errors.append("Subject manifest must uniquely and exactly cover A0 subjects")
     if len(recording_ids) != len(set(recording_ids)) or set(recording_ids) != inventory_recordings:
@@ -144,6 +143,10 @@ def validate_a5(
             errors.append(f"Ambiguous pure-class eligibility: {row['window_id']}")
         if not row.get("pilot_signal_sha256"):
             errors.append(f"Missing pilot signal hash: {row['window_id']}")
+        if row.get("timestamp_reference") != "COMMON_ACQUISITION_COMPUTER_CLOCK":
+            errors.append(f"Timestamp reference mismatch: {row['window_id']}")
+        if row.get("source_timezone") != "UNVERIFIED" or row.get("utc_conversion_claimed") is not False:
+            errors.append(f"Unverified source timestamp was represented as UTC: {row['window_id']}")
     if cross_split_duplicate_hashes(windows):
         errors.append("Cross-split exact pilot signal duplicate")
 
@@ -152,13 +155,18 @@ def validate_a5(
         "phase_profile", "selected_range_bin_index", "selected_virtual_channels", "timeline_profile",
         "window_id", "original_annotation_type", "safenest_label", "mapping_type", "assignment_status",
         "split", "split_profile_id", "synthetic", "quality_flags", "future_npz_sample_index",
+        "timestamp_reference", "source_timezone", "utc_conversion_claimed",
     }
     if not required_schema.issubset(set(schema.get("required_future_sample_fields", []))):
         errors.append("Provenance schema is incomplete")
     if split_contract.get("profile_id") != SPLIT_PROFILE_ID or split_contract.get("subject_split_map") != subject_split:
         errors.append("A6 subject split lookup contract mismatch")
+    if split_contract.get("timestamp_contract") != schema.get("timestamp_contract"):
+        errors.append("A6 timestamp contract does not match the provenance schema")
     if balance.get("a4_pilot_only", {}).get("scope") != "A4_PILOT_ONLY_NOT_FULL_CLASS_BALANCE":
         errors.append("Pilot class statistics scope is not explicit")
+    if balance.get("full_dataset_source_metadata", {}).get("recordings_per_subject") != inventory_evidence["recording_count_per_subject"]:
+        errors.append("Recordings-per-subject balance was not derived from A0 evidence")
     if exceptions.get("blockers") or exceptions.get("errors"):
         errors.append("A5 exception registry contains blocking/error entries")
     if any(contains_local_path(value) for value in (profile, subjects, recordings, windows, schema, balance, exceptions, split_contract)):

@@ -1,6 +1,7 @@
 {
   "locked_test_policy": "NO_MODEL_SELECTION_ACCESS",
   "profile_id": "MMWAVE_SUBJECT_SPLIT_PROFILE_001",
+  "provenance_schema_path": "datasets/mmwave/manifests/a5_subject_split/provenance_schema.json",
   "schema_version": "1.0",
   "split_unit": "SUBJECT",
   "subject_ids": {
@@ -233,5 +234,12 @@
     "dataset-10_5281_zenodo_18599983-p109": "TRAIN",
     "dataset-10_5281_zenodo_18599983-p110": "TRAIN"
   },
-  "synthetic": false
+  "synthetic": false,
+  "timestamp_contract": {
+    "a6_serialization_policy": "DO_NOT_APPEND_OR_INTERPRET_UTC_OFFSET_UNLESS_SOURCE_TIMEZONE_IS_VERIFIED",
+    "legacy_a3_text_note": "A trailing Z in preserved A3 text is not evidence that the source clock was UTC.",
+    "source_timezone": "UNVERIFIED",
+    "timestamp_reference": "COMMON_ACQUISITION_COMPUTER_CLOCK",
+    "utc_conversion_claimed": false
+  }
 }

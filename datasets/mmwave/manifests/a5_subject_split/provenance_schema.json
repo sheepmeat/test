@@ -10,9 +10,9 @@
     "canonical_start_index": "canonical start index",
     "dataset_id": "stable source dataset identifier",
     "decoder_profile": "A1 decoder profile",
-    "end_timestamp_exclusive": "exclusive UTC end",
+    "end_timestamp_exclusive": "canonical acquisition-clock exclusive boundary",
     "future_npz_sample_index": "required A6 linkage; null until materialization",
-    "last_sample_timestamp": "last included sample",
+    "last_sample_timestamp": "canonical acquisition-clock last included sample",
     "mapping_rule_id": "A4 rule",
     "mapping_type": "A4 mapping type",
     "original_annotation_type": "source annotation semantics",
@@ -31,12 +31,15 @@
     "source_start_index": "source start index",
     "source_test_condition": "verified source condition",
     "source_timestamp_member": "archive-relative member",
+    "source_timezone": "UNVERIFIED",
     "split": "A5 subject split",
     "split_profile_id": "immutable A5 profile",
-    "start_timestamp": "inclusive UTC start",
+    "start_timestamp": "canonical acquisition-clock inclusive timestamp",
     "subject_id": "stable participant identifier",
     "synthetic": "false for current Zenodo records",
     "timeline_profile": "A3 profile",
+    "timestamp_reference": "COMMON_ACQUISITION_COMPUTER_CLOCK",
+    "utc_conversion_claimed": "false; no UTC conversion or UTC timezone is asserted",
     "window_id": "stable window identifier"
   },
   "identity_path_policy": "REPOSITORY_OR_ARCHIVE_RELATIVE_ONLY_NO_LOCAL_ABSOLUTE_PATH",
@@ -58,6 +61,9 @@
     "selected_virtual_channels",
     "timeline_profile",
     "window_id",
+    "timestamp_reference",
+    "source_timezone",
+    "utc_conversion_claimed",
     "start_timestamp",
     "last_sample_timestamp",
     "end_timestamp_exclusive",
@@ -95,6 +101,9 @@
     "selected_virtual_channels",
     "timeline_profile",
     "window_id",
+    "timestamp_reference",
+    "source_timezone",
+    "utc_conversion_claimed",
     "start_timestamp",
     "last_sample_timestamp",
     "end_timestamp_exclusive",
@@ -115,5 +124,12 @@
     "future_npz_sample_index"
   ],
   "schema_id": "MMWAVE_SAMPLE_PROVENANCE_SCHEMA_001",
-  "schema_version": "1.0"
+  "schema_version": "1.0",
+  "timestamp_contract": {
+    "a6_serialization_policy": "DO_NOT_APPEND_OR_INTERPRET_UTC_OFFSET_UNLESS_SOURCE_TIMEZONE_IS_VERIFIED",
+    "legacy_a3_text_note": "A trailing Z in preserved A3 text is not evidence that the source clock was UTC.",
+    "source_timezone": "UNVERIFIED",
+    "timestamp_reference": "COMMON_ACQUISITION_COMPUTER_CLOCK",
+    "utc_conversion_claimed": false
+  }
 }
