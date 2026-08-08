@@ -1,0 +1,10 @@
+{
+  "nan_sample_count": 0,
+  "inf_sample_count": 0,
+  "exact_constant_window_count": 0,
+  "near_constant_window_count": 0,
+  "quality_flag_distribution": {
+    "TIMELINE_EXACT_NATIVE_10HZ": 530
+  },
+  "total_windows_audited": 530
+}
