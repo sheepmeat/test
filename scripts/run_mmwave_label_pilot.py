@@ -247,7 +247,7 @@ def main() -> None:
         movesense_rr_info: dict[str, Any] | None = None
         if acc_bytes is not None:
             movesense_rr_info = extract_movesense_respiration_rate(
-                acc_bytes, radar_t0, win_start_sec, win_end_sec
+                acc_bytes, radar_t0, win_start_sec, win_end_sec, search_band_hz=profile.movesense_rr_search_band_hz
             )
 
         lbl_win = map_window_label(
@@ -319,9 +319,9 @@ def main() -> None:
             "policy_a_10s_candidate": {
                 "rule": "overlap >= 10.0s in fixed 30s window",
                 "assigned_apnea_windows": policy_a_assigned,
-                "captured_events": 1 if policy_a_assigned > 0 else 0,
-                "lost_events": total_annotated_events - (1 if policy_a_assigned > 0 else 0),
-                "utility": "DISCARDED (discards 5 of 6 dataset events due to window boundary truncation)",
+                "captured_events": policy_a_assigned,
+                "lost_events": total_annotated_events - policy_a_assigned,
+                "utility": "DISCARDED (discards all 6 of 6 dataset events due to window boundary truncation)",
             },
             "policy_b_duration_and_overlap": {
                 "rule": "overlap >= 6.0s AND total event duration >= 8.0s",

@@ -16,6 +16,11 @@
   },
   "profile_id": "MMWAVE_LABEL_MAPPING_PROFILE_001",
   "rapid_or_abnormal_policy": {
+    "bradypnea_max_rr_bpm": 10.0,
+    "movesense_rr_search_band_hz": [
+      0.1,
+      0.7
+    ],
     "post_exercise_auto_rapid": false,
     "rapid_min_rr_bpm": 25.0,
     "reference_sensor": "MOVESENSE_CHEST_ACC",

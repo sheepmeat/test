@@ -35,6 +35,8 @@ class LabelMappingProfile:
     apnea_min_overlap_seconds: float = 6.0
     apnea_min_event_duration_seconds: float = 8.0
     rapid_min_rr_bpm: float = 25.0
+    normal_min_rr_bpm: float = 10.0
+    movesense_rr_search_band_hz: tuple[float, float] = (0.1, 0.7)
     post_exercise_auto_rapid: bool = False
     clinical_apnea_claimed: bool = False
     a3_window_contract_modified: bool = False
@@ -52,13 +54,15 @@ class LabelMappingProfile:
             "normal_policy": {
                 "rest_condition_as_normal_proxy": True,
                 "requires_zero_non_breathing_overlap": True,
-                "movesense_acc_normal_rr_range_bpm": [10.0, 25.0],
+                "movesense_acc_normal_rr_range_bpm": [self.normal_min_rr_bpm, self.rapid_min_rr_bpm],
             },
             "rapid_or_abnormal_policy": {
                 "rapid_min_rr_bpm": self.rapid_min_rr_bpm,
+                "bradypnea_max_rr_bpm": self.normal_min_rr_bpm,
                 "post_exercise_auto_rapid": self.post_exercise_auto_rapid,
                 "requires_independent_respiration_rate_reference": True,
                 "reference_sensor": "MOVESENSE_CHEST_ACC",
+                "movesense_rr_search_band_hz": list(self.movesense_rr_search_band_hz),
             },
             "a3_window_contract_modified": self.a3_window_contract_modified,
         }
@@ -129,6 +133,7 @@ def extract_movesense_respiration_rate(
     radar_t0_iso: str,
     window_start_sec: float,
     window_end_sec: float,
+    search_band_hz: tuple[float, float] = (0.1, 0.7),
 ) -> dict[str, Any] | None:
     """Extract respiration rate (in bpm and Hz) from Movesense chest ACC data for a 30s window."""
     text = acc_raw.decode("utf-8") if isinstance(acc_raw, bytes) else str(acc_raw)
@@ -181,11 +186,12 @@ def extract_movesense_respiration_rate(
     h_win = np.hanning(len(grid_m_detrend))
     grid_m_win = grid_m_detrend * h_win
 
-    # Spectral analysis (0.1 Hz to 0.7 Hz)
+    # Spectral analysis over search band (f_low to f_high)
+    f_low, f_high = search_band_hz
     freqs = np.fft.rfftfreq(len(grid_m_win), d=dt_grid)
     fft_mag = np.abs(np.fft.rfft(grid_m_win))
 
-    valid_f_mask = (freqs >= 0.1) & (freqs <= 0.7)
+    valid_f_mask = (freqs >= f_low) & (freqs <= f_high)
     if not np.any(valid_f_mask):
         return None
 
@@ -198,6 +204,7 @@ def extract_movesense_respiration_rate(
         "rr_bpm": round(rr_bpm, 2),
         "sample_count": int(np.sum(mask)),
         "reference_sensor": "MOVESENSE_CHEST_ACC",
+        "search_band_hz": list(search_band_hz),
     }
 
 
@@ -298,14 +305,24 @@ def map_window_label(
             mapping_evidence.append(
                 f"Movesense chest ACC reference respiration rate {rr_bpm:.1f} bpm >= threshold {profile.rapid_min_rr_bpm} bpm"
             )
-        else:
+        elif rr_bpm >= profile.normal_min_rr_bpm:
             safenest_label = "NORMAL"
             safenest_label_id = profile.target_classes["NORMAL"]
             mapping_type = "DERIVED"
             mapping_rule_id = "A4_RULE_NORMAL_MOVESENSE_ACC_REF"
             assignment_status = "ASSIGNED"
             mapping_evidence.append(
-                f"Movesense chest ACC reference respiration rate {rr_bpm:.1f} bpm is in normal range (< {profile.rapid_min_rr_bpm} bpm)"
+                f"Movesense chest ACC reference respiration rate {rr_bpm:.1f} bpm is in normal range ({profile.normal_min_rr_bpm} <= RR < {profile.rapid_min_rr_bpm} bpm)"
+            )
+        else:
+            # Abnormally slow respiration rate (< 10.0 bpm bradypnea)
+            safenest_label = "RAPID_OR_ABNORMAL"
+            safenest_label_id = profile.target_classes["RAPID_OR_ABNORMAL"]
+            mapping_type = "DERIVED"
+            mapping_rule_id = "A4_RULE_ABNORMAL_BRADYPNEA_MOVESENSE_ACC_REF"
+            assignment_status = "ASSIGNED"
+            mapping_evidence.append(
+                f"Movesense chest ACC reference respiration rate {rr_bpm:.1f} bpm is abnormally slow bradypnea (< {profile.normal_min_rr_bpm} bpm)"
             )
     # 4. Rest Condition Proxy Fallback (when Movesense ACC unavailable)
     elif source_condition == "Rest" and overlap_sec == 0.0:

@@ -17,8 +17,8 @@ Key outcomes of Phase A4:
 1. **Empirical Annotation Audit & Terminology Alignment**: All 6 annotation-bearing recordings in the 13-recording pilot contain headerless 2-line `non_breathing_ts.csv` files with microsecond storage precision. Annotation temporal accuracy is documented as `NOT_QUANTIFIED` (push-button timestamps adjusted post-hoc via reference accelerometer).
 2. **Re-Evaluation & Rejection of the Legacy 15-Second Rule**: Empirical duration analysis revealed that all voluntary breath-hold events in the dataset last between $9.771$ s and $12.205$ s (mean $11.321$ s). Requiring $\ge 15.0$ seconds of non-breathing overlap would discard 100% of all non-breathing events in the dataset.
 3. **Selected APNEA Proxy Policy**: Established `MMWAVE_LABEL_MAPPING_PROFILE_001` requiring $\ge 6.0$ seconds of non-breathing annotation overlap within a 30-second window to assign the `APNEA` target label. Mapping type is strictly recorded as `DERIVED` (voluntary breath-hold proxy, never clinical apnea).
-4. **Movesense Chest ACC Respiration Reference Integration**: Official Nature Scientific Data documentation (`10.1038/s41597-026-07172-9`) confirms the Movesense chest accelerometer as the independent reference sensor for breathing validation. Spectral analysis of chest ACC signals over 30s windows yielded reference respiration rates:
-   - Respiration rate $\ge 25.0$ bpm ($0.417$ Hz) $\rightarrow$ `RAPID_OR_ABNORMAL` (`DERIVED`, rule `A4_RULE_RAPID_MOVESENSE_ACC_REF`, 3 windows).
+4. **Movesense Chest ACC Respiration Reference Integration**: Official Nature Scientific Data documentation (`10.1038/s41597-026-07172-9`) confirms the Movesense chest accelerometer as the independent reference sensor for breathing validation. Spectral analysis over 30s windows using profile-configurable search band `movesense_rr_search_band_hz: [0.1, 0.7]` yielded reference respiration rates:
+   - Respiration rate $\ge 25.0$ bpm ($0.417$ Hz) or $< 10.0$ bpm bradypnea $\rightarrow$ `RAPID_OR_ABNORMAL` (`DERIVED`, rules `A4_RULE_RAPID_MOVESENSE_ACC_REF` / `A4_RULE_ABNORMAL_BRADYPNEA_MOVESENSE_ACC_REF`, 3 windows).
    - Respiration rate $10.0 \le \text{RR} < 25.0$ bpm $\rightarrow$ `NORMAL` (`DERIVED`, rule `A4_RULE_NORMAL_MOVESENSE_ACC_REF`, 5 windows).
 5. **Corrected Annotation Coverage Audit**: Measured against recording canonical window spans:
    - **Fully represented events**: 2 events (`p004-lying-rest` preserved across W0+W1 union, `p075-sitting-rest` contained inside W0).
@@ -102,7 +102,7 @@ The previously proposed rule ($\ge 15.0$s overlap or $\ge 50\%$ window fraction)
 
 Candidate policies evaluated in [`policy_comparison.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/policy_comparison.json):
 1. **Legacy 15-second Rule** ($\ge 15.0$s): 0 APNEA windows assigned (100% events lost). Discarded.
-2. **Policy A — 10-second Candidate** ($\ge 10.0$s): 0 APNEA windows assigned in fixed 30s grid due to window boundary truncation (events start at $t \approx 21-23$s and span across $t=30.0$s, yielding overlaps of $6.79$s to $9.00$s). Discarded.
+2. **Policy A — 10-second Candidate** ($\ge 10.0$s): 0 APNEA windows assigned in fixed 30s grid due to window boundary truncation (events start at $t \approx 21-23$s and span across $t=30.0$s, yielding overlaps of $6.79$s to $9.00$s). A 10.0s threshold would discard all 6 of 6 dataset events under the current fixed A3 window grid. Discarded.
 3. **Policy B — Overlap + Event Duration** ($\ge 6.0$s overlap AND total event duration $\ge 8.0$s): 6 APNEA windows assigned. Valid equivalent.
 4. **Policy C — Event-Centered Diagnostic** (30s window centered on event midpoint): 6 APNEA windows assigned. Diagnostic alternative only.
 5. **Selected Policy — $\ge 6.0$s Overlap Canonical**: 6 APNEA windows assigned, captures all 6 voluntary breath-hold events. **Selected as canonical profile.**
@@ -112,7 +112,7 @@ Candidate policies evaluated in [`policy_comparison.json`](file:///Users/junwoo/
 ## 10. NORMAL Mapping Analysis
 
 - **Rule**: Controlled `Rest` condition or Movesense chest ACC reference respiration rate in normal range ($10.0 \le \text{RR} < 25.0$ bpm) $\rightarrow$ `NORMAL` (`safenest_label_id: 0`).
-- **Mapping Type**: `DERIVED` (resting-breathing or Movesense ACC reference proxy).
+- **Mapping Type**: `DERIVED` (resting-breathing or Movesense ACC reference proxy, rule `A4_RULE_NORMAL_MOVESENSE_ACC_REF`).
 - **Pilot Count**: 5 windows (all 5 Post-exercise windows with normal Movesense ACC reference respiration rates).
 
 ---
@@ -120,8 +120,8 @@ Candidate policies evaluated in [`policy_comparison.json`](file:///Users/junwoo/
 ## 11. RAPID_OR_ABNORMAL Mapping Analysis — Movesense Reference Integration
 
 - **Reference Sensor**: Movesense chest accelerometer (`movesense_acc.csv`) as documented in Nature Scientific Data paper.
-- **Respiration Rate Extraction**: Spectral peak analysis over 30s window.
-- **Rule**: Movesense chest ACC reference respiration rate $\ge 25.0$ bpm ($0.417$ Hz) $\rightarrow$ `RAPID_OR_ABNORMAL` (`safenest_label_id: 1`, `mapping_type: DERIVED`, rule `A4_RULE_RAPID_MOVESENSE_ACC_REF`).
+- **Respiration Rate Extraction**: Spectral peak analysis over 30s window using `movesense_rr_search_band_hz: [0.1, 0.7]`.
+- **Rule**: Movesense chest ACC reference respiration rate $\ge 25.0$ bpm ($0.417$ Hz) or $< 10.0$ bpm bradypnea $\rightarrow$ `RAPID_OR_ABNORMAL` (`safenest_label_id: 1`, `mapping_type: DERIVED`, rules `A4_RULE_RAPID_MOVESENSE_ACC_REF` / `A4_RULE_ABNORMAL_BRADYPNEA_MOVESENSE_ACC_REF`).
 - **Pilot Count**: 3 windows (`p001-lying-post_exercise` W0 at 32.0 bpm, `p002-lying-post_exercise` W0 at 26.0 bpm, `p004-lying-post_exercise` W1 at 36.1 bpm).
 
 ---
@@ -157,9 +157,11 @@ Profile ID: `MMWAVE_LABEL_MAPPING_PROFILE_001`
   },
   "rapid_or_abnormal_policy": {
     "rapid_min_rr_bpm": 25.0,
+    "bradypnea_max_rr_bpm": 10.0,
     "post_exercise_auto_rapid": false,
     "requires_independent_respiration_rate_reference": true,
-    "reference_sensor": "MOVESENSE_CHEST_ACC"
+    "reference_sensor": "MOVESENSE_CHEST_ACC",
+    "movesense_rr_search_band_hz": [0.1, 0.7]
   },
   "a3_window_contract_modified": false
 }
@@ -293,10 +295,10 @@ A5: NOT PERFORMED
 
 ## 24. Files Changed
 
-- `scripts/mmwave_label_mapper.py`: Phase A4 SafeNest label mapper library module (with Movesense ACC respiration rate extraction).
-- `scripts/run_mmwave_label_pilot.py`: Phase A4 pilot runner script (with updated coverage & policy comparison logic).
+- `scripts/mmwave_label_mapper.py`: Phase A4 SafeNest label mapper library module (with Movesense ACC respiration rate extraction and bradypnea rule).
+- `scripts/run_mmwave_label_pilot.py`: Phase A4 pilot runner script (with updated coverage & policy comparison text).
 - `scripts/validate_mmwave_label_pilot.py`: Phase A4 in-memory and standalone validator script (with active overlap & coverage re-calculation).
-- `tests/test_mmwave_label_mapper.py`: Comprehensive unit test suite for label mapping, Movesense ACC extraction, and validation rules.
+- `tests/test_mmwave_label_mapper.py`: Comprehensive unit test suite (23 unit tests covering label mapping, Movesense ACC extraction, bradypnea rule, and validation rules).
 - `datasets/mmwave/manifests/a4_label_pilot/`: Manifest output directory (`pilot_selection.json`, `annotation_inventory.jsonl`, `policy_comparison.json`, `label_mapping_profile.json`, `window_label_manifest.jsonl`, `exceptions.json`, `a4_summary.json`, `checksums.sha256`).
 - `docs/reports/20260808_Antigravity_A4_Annotation_Label_Mapping_Pilot_01.md`: This report.
 

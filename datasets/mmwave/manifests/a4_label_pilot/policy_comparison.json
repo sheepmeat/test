@@ -12,7 +12,7 @@
       "captured_events": 0,
       "lost_events": 6,
       "rule": "overlap >= 10.0s in fixed 30s window",
-      "utility": "DISCARDED (discards 5 of 6 dataset events due to window boundary truncation)"
+      "utility": "DISCARDED (discards all 6 of 6 dataset events due to window boundary truncation)"
     },
     "policy_b_duration_and_overlap": {
       "assigned_apnea_windows": 6,

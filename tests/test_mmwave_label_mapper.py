@@ -261,23 +261,34 @@ class TestMmwaveLabelMapper(unittest.TestCase):
     def test_movesense_acc_rapid_respiration(self) -> None:
         acc_info = {"rr_bpm": 30.0, "peak_freq_hz": 0.50, "reference_sensor": "MOVESENSE_CHEST_ACC"}
         mapped = map_window_label(
-            self.base_window, [], "Post-exercise", "Lying", movesense_rr_info=acc_info, profile=self.profile
+            self.base_window, [], "Post-exercise", "Lying", profile=self.profile, movesense_rr_info=acc_info
         )
         self.assertEqual(mapped["safenest_label"], "RAPID_OR_ABNORMAL")
         self.assertEqual(mapped["safenest_label_id"], 1)
         self.assertEqual(mapped["mapping_type"], "DERIVED")
         self.assertEqual(mapped["mapping_rule_id"], "A4_RULE_RAPID_MOVESENSE_ACC_REF")
 
-    # 22. Movesense chest ACC reference respiration rate < 25 bpm -> NORMAL
+    # 22. Movesense chest ACC reference respiration rate 10 <= RR < 25 bpm -> NORMAL
     def test_movesense_acc_normal_respiration(self) -> None:
         acc_info = {"rr_bpm": 15.0, "peak_freq_hz": 0.25, "reference_sensor": "MOVESENSE_CHEST_ACC"}
         mapped = map_window_label(
-            self.base_window, [], "Post-exercise", "Sitting", movesense_rr_info=acc_info, profile=self.profile
+            self.base_window, [], "Post-exercise", "Sitting", profile=self.profile, movesense_rr_info=acc_info
         )
         self.assertEqual(mapped["safenest_label"], "NORMAL")
         self.assertEqual(mapped["safenest_label_id"], 0)
         self.assertEqual(mapped["mapping_type"], "DERIVED")
         self.assertEqual(mapped["mapping_rule_id"], "A4_RULE_NORMAL_MOVESENSE_ACC_REF")
+
+    # 23. Movesense chest ACC reference respiration rate < 10 bpm (bradypnea) -> RAPID_OR_ABNORMAL
+    def test_movesense_acc_bradypnea_respiration(self) -> None:
+        acc_info = {"rr_bpm": 8.0, "peak_freq_hz": 0.133, "reference_sensor": "MOVESENSE_CHEST_ACC"}
+        mapped = map_window_label(
+            self.base_window, [], "Post-exercise", "Sitting", profile=self.profile, movesense_rr_info=acc_info
+        )
+        self.assertEqual(mapped["safenest_label"], "RAPID_OR_ABNORMAL")
+        self.assertEqual(mapped["safenest_label_id"], 1)
+        self.assertEqual(mapped["mapping_type"], "DERIVED")
+        self.assertEqual(mapped["mapping_rule_id"], "A4_RULE_ABNORMAL_BRADYPNEA_MOVESENSE_ACC_REF")
 
 
 if __name__ == "__main__":
