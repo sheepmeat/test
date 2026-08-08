@@ -25,13 +25,13 @@ Key outcomes of Phase A4:
    - **Partially represented events**: 4 events (events ending past 30.0s in 500-sample recordings where the tail [30, 50s) was dropped).
    - **Not represented events**: 0 events.
    - Total annotated seconds represented in A3 windows: $54.319$ s ($80.0\%$), lost to dropped tails: $13.606$ s ($20.0\%$).
-6. **Deterministic Window Label Manifest**: Produced [`window_label_manifest.jsonl`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/window_label_manifest.jsonl) mapping all 15 A3 windows (5 `NORMAL`, 3 `RAPID_OR_ABNORMAL`, 6 `APNEA`, 1 `AMBIGUOUS`).
+6. **Deterministic Window Label Manifest**: Produced [`window_label_manifest.jsonl`](../../datasets/mmwave/manifests/a4_label_pilot/window_label_manifest.jsonl) mapping all 15 A3 windows (5 `NORMAL`, 3 `RAPID_OR_ABNORMAL`, 6 `APNEA`, 1 `AMBIGUOUS`).
 
 ---
 
 ## 2. Git Baseline
 
-- **Repository Root**: `/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/대학/2026/embed2`
+- **Repository Root**: canonical repository root containing `AGENTS.md`
 - **Branch**: `feature/phase-a4-annotation-label-mapping`
 - **Base Commit**: `05c3211` (merged Phase A3)
 - **Raw Archive SHA-256 (Pre/Post)**: `f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0` (Unchanged)
@@ -100,7 +100,7 @@ The previously proposed rule ($\ge 15.0$s overlap or $\ge 50\%$ window fraction)
 
 ## 9. APNEA Proxy Policy Comparison
 
-Candidate policies evaluated in [`policy_comparison.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/policy_comparison.json):
+Candidate policies evaluated in [`policy_comparison.json`](../../datasets/mmwave/manifests/a4_label_pilot/policy_comparison.json):
 1. **Legacy 15-second Rule** ($\ge 15.0$s): 0 APNEA windows assigned (100% events lost). Discarded.
 2. **Policy A — 10-second Candidate** ($\ge 10.0$s): 0 APNEA windows assigned in fixed 30s grid due to window boundary truncation (events start at $t \approx 21-23$s and span across $t=30.0$s, yielding overlaps of $6.79$s to $9.00$s). A 10.0s threshold would discard all 6 of 6 dataset events under the current fixed A3 window grid. Discarded.
 3. **Policy B — Overlap + Event Duration** ($\ge 6.0$s overlap AND total event duration $\ge 8.0$s): 6 APNEA windows assigned. Valid equivalent.
@@ -217,7 +217,7 @@ Posture does not direct label assignment; recording condition is preserved separ
 
 ## 18. Exceptions
 
-A total of 5 exceptions recorded in [`exceptions.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/manifests/a4_label_pilot/exceptions.json):
+A total of 5 exceptions recorded in [`exceptions.json`](../../datasets/mmwave/manifests/a4_label_pilot/exceptions.json):
 - 4 `ANNOTATION_IN_DROPPED_TAIL` (WARNING)
 - 1 `TRANSITION_WINDOW` (INFO)
 - 0 errors, 0 blockers.

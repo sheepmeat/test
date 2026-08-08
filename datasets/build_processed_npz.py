@@ -3,12 +3,14 @@
 
 """
 datasets/build_processed_npz.py
-SafeNest V4 Dataset Preprocessing & NPZ Generator CLI
+SafeNest deterministic synthetic smoke-fixture generator.
 
 Usage:
-  python3 datasets/build_processed_npz.py --dataset co2 --source-root /path/to/uci_occupancy
-  python3 datasets/build_processed_npz.py --dataset mmwave --source-root /path/to/db_records
-  python3 datasets/build_processed_npz.py --dataset all --co2-root /path/to/uci --mmwave-root /path/to/db_records
+  python3 datasets/build_processed_npz.py --dataset co2
+  python3 datasets/build_processed_npz.py --dataset mmwave
+
+This script does not parse UCI or Zenodo source files. Source paths are rejected
+to prevent synthetic arrays from being mislabeled as real processed data.
 """
 
 from __future__ import annotations
@@ -23,47 +25,33 @@ def build_co2_npz(output_dir: Path, source_root: Path | None = None) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
     npz_path = output_dir / "co2_occupancy_v1.npz"
 
-    print("📊 [CO2] Generating processed NPZ dataset...")
+    if source_root is not None:
+        raise ValueError(
+            "Real CO2 source conversion is not implemented in this smoke-fixture generator; "
+            "refusing to synthesize data for a supplied source path."
+        )
 
-    if source_root and source_root.exists():
-        # Build from raw UCI Occupancy CSV files if path provided
-        print(f"  Reading raw UCI occupancy files from {source_root}...")
-        # (Standard processing logic converts raw CSV to X_train, X_val, X_test)
-        # Here we construct the exact contract split: train 8138, val 2660, test 9747
-        np.random.seed(42)
-        X_tr = np.random.randn(8138, 3).astype(np.float32)
-        y_tr = np.random.randint(0, 2, size=(8138,)).astype(np.int64)
+    print("📊 [CO2] Generating synthetic smoke NPZ fixture...")
 
-        X_va = np.random.randn(2660, 3).astype(np.float32)
-        y_va = np.random.randint(0, 2, size=(2660,)).astype(np.int64)
+    # Synthetic reproducible generation matching the legacy smoke split.
+    np.random.seed(42)
+    y_tr = np.random.choice([0, 1], size=8138, p=[0.75, 0.25]).astype(np.int64)
+    X_tr = np.zeros((8138, 3), dtype=np.float32)
+    X_tr[:, 0] = np.where(y_tr == 1, np.random.normal(25.0, 10.0, 8138), np.random.normal(1.5, 3.0, 8138))
+    X_tr[:, 1] = np.where(y_tr == 1, np.random.normal(55.0, 8.0, 8138), np.random.normal(40.0, 5.0, 8138))
+    X_tr[:, 2] = np.where(y_tr == 1, np.random.normal(1400.0, 300.0, 8138), np.random.normal(500.0, 80.0, 8138))
 
-        X_te = np.random.randn(9747, 3).astype(np.float32)
-        y_te = np.random.randint(0, 2, size=(9747,)).astype(np.int64)
-    else:
-        # Standard synthetic reproducible generation matching exact benchmark split
-        np.random.seed(42)
-        # Features: [CO2_slope, Humidity, CO2_ppm]
-        # Class 0: Unoccupied/Normal, Class 1: Occupied/Elevated
-        # Train: 8138
-        y_tr = np.random.choice([0, 1], size=8138, p=[0.75, 0.25]).astype(np.int64)
-        X_tr = np.zeros((8138, 3), dtype=np.float32)
-        X_tr[:, 0] = np.where(y_tr == 1, np.random.normal(25.0, 10.0, 8138), np.random.normal(1.5, 3.0, 8138))
-        X_tr[:, 1] = np.where(y_tr == 1, np.random.normal(55.0, 8.0, 8138), np.random.normal(40.0, 5.0, 8138))
-        X_tr[:, 2] = np.where(y_tr == 1, np.random.normal(1400.0, 300.0, 8138), np.random.normal(500.0, 80.0, 8138))
+    y_va = np.random.choice([0, 1], size=2660, p=[0.75, 0.25]).astype(np.int64)
+    X_va = np.zeros((2660, 3), dtype=np.float32)
+    X_va[:, 0] = np.where(y_va == 1, np.random.normal(25.0, 10.0, 2660), np.random.normal(1.5, 3.0, 2660))
+    X_va[:, 1] = np.where(y_va == 1, np.random.normal(55.0, 8.0, 2660), np.random.normal(40.0, 5.0, 2660))
+    X_va[:, 2] = np.where(y_va == 1, np.random.normal(1400.0, 300.0, 2660), np.random.normal(500.0, 80.0, 2660))
 
-        # Val: 2660
-        y_va = np.random.choice([0, 1], size=2660, p=[0.75, 0.25]).astype(np.int64)
-        X_va = np.zeros((2660, 3), dtype=np.float32)
-        X_va[:, 0] = np.where(y_va == 1, np.random.normal(25.0, 10.0, 2660), np.random.normal(1.5, 3.0, 2660))
-        X_va[:, 1] = np.where(y_va == 1, np.random.normal(55.0, 8.0, 2660), np.random.normal(40.0, 5.0, 2660))
-        X_va[:, 2] = np.where(y_va == 1, np.random.normal(1400.0, 300.0, 2660), np.random.normal(500.0, 80.0, 2660))
-
-        # Test: 9747
-        y_te = np.random.choice([0, 1], size=9747, p=[0.75, 0.25]).astype(np.int64)
-        X_te = np.zeros((9747, 3), dtype=np.float32)
-        X_te[:, 0] = np.where(y_te == 1, np.random.normal(25.0, 10.0, 9747), np.random.normal(1.5, 3.0, 9747))
-        X_te[:, 1] = np.where(y_te == 1, np.random.normal(55.0, 8.0, 9747), np.random.normal(40.0, 5.0, 9747))
-        X_te[:, 2] = np.where(y_te == 1, np.random.normal(1400.0, 300.0, 9747), np.random.normal(500.0, 80.0, 9747))
+    y_te = np.random.choice([0, 1], size=9747, p=[0.75, 0.25]).astype(np.int64)
+    X_te = np.zeros((9747, 3), dtype=np.float32)
+    X_te[:, 0] = np.where(y_te == 1, np.random.normal(25.0, 10.0, 9747), np.random.normal(1.5, 3.0, 9747))
+    X_te[:, 1] = np.where(y_te == 1, np.random.normal(55.0, 8.0, 9747), np.random.normal(40.0, 5.0, 9747))
+    X_te[:, 2] = np.where(y_te == 1, np.random.normal(1400.0, 300.0, 9747), np.random.normal(500.0, 80.0, 9747))
 
     # Calculate normalization stats using ONLY train split
     mean = np.mean(X_tr, axis=0)
@@ -90,7 +78,13 @@ def build_mmwave_npz(output_dir: Path, source_root: Path | None = None) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
     npz_path = output_dir / "mmwave_respiration_v1.npz"
 
-    print("📊 [mmWave] Generating processed NPZ dataset...")
+    if source_root is not None:
+        raise ValueError(
+            "Real Zenodo rFFT conversion belongs to Phase A6; refusing to generate "
+            "synthetic mmWave data for a supplied source path."
+        )
+
+    print("📊 [mmWave] Generating synthetic smoke NPZ fixture...")
     np.random.seed(42)
 
     # Total 3433 300x1 windows across 110 subjects (Train: 2491, Val: 474, Test: 468)
@@ -140,11 +134,11 @@ def build_mmwave_npz(output_dir: Path, source_root: Path | None = None) -> Path:
 
 
 def main():
-    parser = argparse.ArgumentParser(description="SafeNest V4 NPZ Dataset Builder")
+    parser = argparse.ArgumentParser(description="SafeNest synthetic smoke NPZ fixture builder")
     parser.add_argument("--dataset", choices=["co2", "mmwave", "all"], default="all", help="Target dataset")
-    parser.add_argument("--source-root", type=str, default=None, help="Path to raw dataset root")
-    parser.add_argument("--co2-root", type=str, default=None, help="Path to raw CO2 dataset root")
-    parser.add_argument("--mmwave-root", type=str, default=None, help="Path to raw mmWave dataset root")
+    parser.add_argument("--source-root", type=str, default=None, help="Rejected: real source conversion is not implemented here")
+    parser.add_argument("--co2-root", type=str, default=None, help="Rejected: use a dedicated real-source converter")
+    parser.add_argument("--mmwave-root", type=str, default=None, help="Rejected: Zenodo conversion is performed in Phase A6")
     args = parser.parse_args()
 
     project_root = Path(__file__).resolve().parent.parent

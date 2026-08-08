@@ -15,11 +15,11 @@ import unittest
 from pathlib import Path
 import numpy as np
 
-# Ensure SafeNest_V6/ondevice_ai root is in python path
+# Ensure canonical repository root is in python path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from scripts.audit_dataset_integrity import (
     canonical_window_hash,

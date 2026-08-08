@@ -1,5 +1,10 @@
-# SafeNest V4 온디바이스 AI 팀원 인수인계 가이드
+# SafeNest 활성 문서 안내
 
-팀원들이 본인이 담당하는 센서 및 파트에 바로 적용할 수 있는 단일 통합 인수인계 설명서(프롬프트 모음)는 아래 문서에서 확인하실 수 있습니다:
+현재 개발·팀 연동은 아래 문서를 기준으로 합니다.
 
-👉 **[통합 팀원 인수인계 가이드 (TEAM_HANDOFF_GUIDE.md)](TEAM_HANDOFF_GUIDE.md)**
+- [작업 공간·경로·A–E 실행 순서](20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md)
+- [활성 팀 통합 프롬프트](TEAM_HANDOFF_GUIDE.md)
+- [A5 subject split·provenance 결과](reports/20260808_Antigravity_A5_Subject_Split_Provenance_01.md)
+- [A6 full conversion·integrity audit 결과](reports/20260808_Antigravity_A6_Full_Conversion_Integrity_Audit_01.md)
+
+`TEAM_HANDOFF_GUIDE_V5.md`와 날짜별 V4 문서는 이전 계약을 설명하는 기준·역사 문서이며, 신규 작업 경로 지시로 사용하지 않습니다.

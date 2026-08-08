@@ -27,11 +27,11 @@ import argparse
 from pathlib import Path
 from typing import Dict, Any, Tuple, List, Optional, Union
 
-# Ensure SafeNest_V6/ondevice_ai root is in python path
+# Ensure canonical repository root is in python path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 try:
     import yaml
@@ -136,7 +136,7 @@ def check_candidate_quality(
         if metadata_path.parent.name == "mmwave" and metadata_path.parent.parent.name == "models":
             root = metadata_path.parent.parent.parent
         else:
-            root = v6_root
+            root = project_root
     else:
         root = model_root
     contract_file = contract_path or (root / "config/mmwave_input_contract.yaml")
@@ -148,8 +148,16 @@ def check_candidate_quality(
         "check_name": "mmwave_candidate_quality_check",
         "scope": "SYNTHETIC_OFFLINE_CANDIDATE_QA",
         "status": "FAILED",
-        "candidate_path": str(candidate_path),
-        "metadata_path": str(metadata_path),
+        "candidate_path": (
+            candidate_path.resolve().relative_to(root.resolve()).as_posix()
+            if candidate_path.resolve().is_relative_to(root.resolve())
+            else f"EXTERNAL_INPUT/{candidate_path.name}"
+        ),
+        "metadata_path": (
+            metadata_path.resolve().relative_to(root.resolve()).as_posix()
+            if metadata_path.resolve().is_relative_to(root.resolve())
+            else f"EXTERNAL_INPUT/{metadata_path.name}"
+        ),
         "threshold_source": threshold_source,
         "thresholds_used": thresholds,
         "checks": {},
@@ -671,6 +679,36 @@ def check_candidate_quality(
     return passed, defects, report
 
 
+def check_pipeline_smoke_gate(
+    candidate_path: Path,
+    metadata_path: Path,
+) -> Tuple[bool, List[str]]:
+    """Run the technical candidate gate without making a deployment claim."""
+    passed, defects, _ = check_candidate_quality(
+        candidate_path=Path(candidate_path),
+        metadata_path=Path(metadata_path),
+    )
+    failures = [f"{item.get('code')}: {item.get('message')}" for item in defects]
+    return passed, failures
+
+
+def check_release_deployment_gate(metadata_path: Path) -> Tuple[bool, List[str]]:
+    """Separate a synthetic pipeline-smoke pass from real deployment readiness."""
+    try:
+        metadata = json.loads(Path(metadata_path).read_text(encoding="utf-8"))
+    except Exception as exc:
+        return False, [f"Release Gate Blocked: metadata unreadable ({type(exc).__name__})."]
+
+    failures: List[str] = []
+    if metadata.get("validation_status") == "SYNTHETIC_SMOKE_ONLY":
+        failures.append("Release Gate Blocked: Model validated solely on synthetic NPZ data.")
+    if metadata.get("real_sensor_performance") != "VERIFIED":
+        failures.append("Release Gate Blocked: Real-sensor performance is not verified.")
+    if metadata.get("hardware_validation") != "VERIFIED":
+        failures.append("Release Gate Blocked: Target hardware validation is incomplete.")
+    return not failures, failures
+
+
 def main():
     parser = argparse.ArgumentParser(description="SafeNest V6 Precise mmWave Candidate Defect Detector")
     parser.add_argument(
@@ -706,7 +744,6 @@ def main():
 
     args = parser.parse_args()
 
-    project_root = v6_root
     candidate_path = (project_root / args.candidate).resolve() if not Path(args.candidate).is_absolute() else Path(args.candidate)
     metadata_path = (project_root / args.metadata).resolve() if not Path(args.metadata).is_absolute() else Path(args.metadata)
     contract_path = (project_root / args.contract).resolve() if not Path(args.contract).is_absolute() else Path(args.contract)

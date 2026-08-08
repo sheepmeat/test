@@ -3,7 +3,7 @@
 **Document Identifier**: `20260806_External_Public_Dataset_Feasibility_Study.md`  
 **Date**: August 6, 2026  
 **Scope**: Strategy & Analysis Only (No Data Downloaded, No Archive Extracted, No Model/Data Mutated)  
-**Target System**: SafeNest V6 On-Device AI Respiration Pipeline (`embed2/SafeNest_V6/ondevice_ai/`)  
+**Target System**: SafeNest active on-device AI respiration pipeline (canonical repository root)
 
 ---
 
@@ -159,7 +159,7 @@ To address Gaps 2, 3, and 4, additional public datasets were researched and eval
 
 ## 9. Signal Processing & Preprocessing Compatibility
 
-The local V6 preprocessor ([`preprocessing/mmwave.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/SafeNest_V6/ondevice_ai/preprocessing/mmwave.py)) establishes the following contract:
+The local V6 preprocessor ([`preprocessing/mmwave.py`](../../preprocessing/mmwave.py)) establishes the following contract:
 - **Sampling Rate**: 10 Hz
 - **Window Length**: 300 samples (30 seconds)
 - **Band-pass Filter**: Butterworth 4th-order, 0.1 – 0.5 Hz (6 – 30 bpm)

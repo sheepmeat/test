@@ -2,8 +2,8 @@
 
 - **작성일**: 2026-08-06
 - **작성 에이전트**: SafeNest 온디바이스 AI 및 TinyML 담당 에이전트
-- **작업 공간**: `embed2/SafeNest_V6/ondevice_ai/`
-- **기준 경로**: `embed2/SafeNest_V5_OnDevice_AI/` (읽기 전용 기준판 보존, SHA-256 검증 완료)
+- **현재 정규화된 작업 공간**: canonical repository root containing `AGENTS.md`
+- **V5 보존 기준판**: `archive/version_snapshots/SafeNest_v5.0_20260808/` (읽기 전용, SHA-256 검증 완료)
 - **참조 문서**: `docs/reports/ONDEVICE_AI_AUDIT_20260806.md`, `docs/20260806_Antigravity_SafeNest_Audit_Report_02.md`, `AGENTS.md`
 
 ---
@@ -13,8 +13,8 @@
 | 영역 | 상태 및 범위 | 상세 설명 |
 | :--- | :--- | :--- |
 | **개발 환경** | `macOS Local` | macOS 오프라인 환경에서 파이프라인 수립, 학습, 양자화, 평가 수행 |
-| **기준판 (V5) 상태** | `CONFIRMED_UNMODIFIED` | [`scripts/verify_v5_unmodified.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/verify_v5_unmodified.py)로 122개 파일 SHA-256 해시 검증 완료 (수정 0건) |
-| **개발판 (V6) 상태** | `embed2/SafeNest_V6/ondevice_ai/` | V6 로컬 전용 공간 생성, 프로젝트 버전 `6.0-development` 지정 |
+| **기준판 (V5) 상태** | `CONFIRMED_UNMODIFIED` | [`scripts/verify_v5_unmodified.py`](../../scripts/verify_v5_unmodified.py)로 122개 파일 SHA-256 해시 검증 완료 (수정 0건) |
+| **개발판 (V6) 상태** | canonical repository root | 프로젝트 버전 `6.0-development`; 버전 wrapper 폴더 제거 |
 | **데이터셋 범위** | `PASSED_ON_SYNTHETIC` | Repository NPZ (`mmwave_respiration_v1.npz`) 합성 시계열 기반 파이프라인 검증 |
 | **실센서 수집 및 드라이버** | `NOT_VERIFIABLE` | 실물 MR60 센서 raw 시계열 및 센서팀 I2C/UART provider 미연결 |
 | **Raspberry Pi 5 검증** | `BLOCKED_HARDWARE` | 실물 Raspberry Pi 5 및 MR60 보드 미연결 |
@@ -39,15 +39,15 @@
 
 | 구분 | 기존 문제 | 변경 내용 | 관련 파일 | 검증 방법 | 결과 | 제한 사항 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **V5 보존 검증** | 파일 수정 여부 추적 불투명 | 전체 122개 파일 SHA-256 해시 산출 및 비교 검증 스크립트 구현 | [`scripts/verify_v5_unmodified.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/verify_v5_unmodified.py) | `python3 scripts/verify_v5_unmodified.py` 실행 | `CONFIRMED_UNMODIFIED` (0 files modified) | N/A |
-| **자산 조사** | 소스 자산 존재 여부 미확인 | machine-readable 자산 Inventory JSON 작성 | [`benchmarks/mmwave_source_asset_inventory.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/benchmarks/mmwave_source_asset_inventory.json) | JSON 구문 및 메타데이터 파싱 | 자산 분류 완료 (Float: `MISSING`, INT8: `CONFIRMED`) | raw 센서 미확보 |
-| **입력 계약** | 센서 입력 규격 미정립 | 10Hz, 30s, `[1, 300, 1]` 입력 계약 및 experimental 전처리 지정 | [`config/mmwave_input_contract.yaml`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/config/mmwave_input_contract.yaml) | YAML 규격 검사 | `EXPERIMENTAL_PREPROCESSING_V1` 계약 확정 | 물리 단위 `UNKNOWN` |
-| **공통 전처리** | 전처리 모듈 분산 및 순서 불분명 | Window check → Finite/NaN → Detrend → BPF (0.1-0.5Hz) → Train Z-score → Clip → Shape 7단계 순서 고정 | [`preprocessing/mmwave.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/preprocessing/mmwave.py) | `test_common_preprocessor_shape_and_nan_handling` | shape `[1, 300, 1]` 및 NaN/Inf 안심 처리 완수 | scipy 부재 시 fallback |
-| **Group Split** | 과대 표기 가능성 | 합성 group isolation과 실제 subject split 구분 명시 | [`datasets/mmwave/splits/mmwave_group_split_v1.json`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/datasets/mmwave/splits/mmwave_group_split_v1.json) | leakage audit 검사 | `CONFIRMED_SYNTHETIC_ONLY` (누수 0건) | real subject `NOT_VERIFIABLE` |
-| **Baseline 재현** | 붕괴 현상 독립 평가기 부재 | TFLite / Keras 평가 및 class collapse / saturation 측정 | [`scripts/evaluate_mmwave.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/evaluate_mmwave.py) | `python3 scripts/evaluate_mmwave.py --is-legacy` | baseline metrics 재현 완료 (Accuracy: 0.3996, F1: 0.1903) | time series 부재로 false alarm `null` |
-| **학습 및 자산 보존** | 중간 체크포인트 손실 | Keras checkpoint, Float TFLite, INT8 TFLite, config, history, calibration indices 전면 보존 | [`scripts/train_mmwave.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/train_mmwave.py) | `python3 scripts/train_mmwave.py` 실행 | float/int8 candidate 및 6종 중간 산출물 보존 완료 | synthetic NPZ 한계 |
-| **품질 검사기** | 성능 검증 도구 부재 | Accuracy, F1 drop, multi-class 수렴, saturation, SHA 일치 품질 검사기 구현 | [`scripts/check_mmwave_candidate.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/scripts/check_mmwave_candidate.py) | `python3 scripts/check_mmwave_candidate.py` | `Candidate Acceptance Check PASSED!` | 개발 갱신 지원 (`deployment_allowed: true`) |
-| **Targeted Test** | 파이프라인 검증 테스트 부재 | 7개 핵심 단위 테스트 수트 작성 | [`tests/test_mmwave_v6_pipeline.py`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/대하학/2026/embed2/SafeNest_V6/ondevice_ai/tests/test_mmwave_v6_pipeline.py) | `python3 tests/test_mmwave_v6_pipeline.py` | **7개 테스트 전원 통과 (0.05초)** | N/A |
+| **V5 보존 검증** | 파일 수정 여부 추적 불투명 | 전체 122개 파일 SHA-256 해시 산출 및 비교 검증 스크립트 구현 | [`scripts/verify_v5_unmodified.py`](../../scripts/verify_v5_unmodified.py) | `python3 scripts/verify_v5_unmodified.py` 실행 | `CONFIRMED_UNMODIFIED` (0 files modified) | N/A |
+| **자산 조사** | 소스 자산 존재 여부 미확인 | machine-readable 자산 Inventory JSON 작성 | [`benchmarks/mmwave_source_asset_inventory.json`](../../benchmarks/mmwave_source_asset_inventory.json) | JSON 구문 및 메타데이터 파싱 | 자산 분류 완료 (Float: `MISSING`, INT8: `CONFIRMED`) | raw 센서 미확보 |
+| **입력 계약** | 센서 입력 규격 미정립 | 10Hz, 30s, `[1, 300, 1]` 입력 계약 및 experimental 전처리 지정 | [`config/mmwave_input_contract.yaml`](../../config/mmwave_input_contract.yaml) | YAML 규격 검사 | `EXPERIMENTAL_PREPROCESSING_V1` 계약 확정 | 물리 단위 `UNKNOWN` |
+| **공통 전처리** | 전처리 모듈 분산 및 순서 불분명 | Window check → Finite/NaN → Detrend → BPF (0.1-0.5Hz) → Train Z-score → Clip → Shape 7단계 순서 고정 | [`preprocessing/mmwave.py`](../../preprocessing/mmwave.py) | `test_common_preprocessor_shape_and_nan_handling` | shape `[1, 300, 1]` 및 NaN/Inf 안심 처리 완수 | scipy 부재 시 fallback |
+| **Group Split** | 과대 표기 가능성 | 합성 group isolation과 실제 subject split 구분 명시 | [`datasets/mmwave/splits/mmwave_group_split_v1.json`](../../datasets/mmwave/splits/mmwave_group_split_v1.json) | leakage audit 검사 | `CONFIRMED_SYNTHETIC_ONLY` (누수 0건) | real subject `NOT_VERIFIABLE` |
+| **Baseline 재현** | 붕괴 현상 독립 평가기 부재 | TFLite / Keras 평가 및 class collapse / saturation 측정 | [`scripts/evaluate_mmwave.py`](../../scripts/evaluate_mmwave.py) | `python3 scripts/evaluate_mmwave.py --is-legacy` | baseline metrics 재현 완료 (Accuracy: 0.3996, F1: 0.1903) | time series 부재로 false alarm `null` |
+| **학습 및 자산 보존** | 중간 체크포인트 손실 | Keras checkpoint, Float TFLite, INT8 TFLite, config, history, calibration indices 전면 보존 | [`scripts/train_mmwave.py`](../../scripts/train_mmwave.py) | `python3 scripts/train_mmwave.py` 실행 | float/int8 candidate 및 6종 중간 산출물 보존 완료 | synthetic NPZ 한계 |
+| **품질 검사기** | 성능 검증 도구 부재 | Accuracy, F1 drop, multi-class 수렴, saturation, SHA 일치 품질 검사기 구현 | [`scripts/check_mmwave_candidate.py`](../../scripts/check_mmwave_candidate.py) | `python3 scripts/check_mmwave_candidate.py` | `Candidate Acceptance Check PASSED!` | 개발 갱신 지원 (`deployment_allowed: true`) |
+| **Targeted Test** | 파이프라인 검증 테스트 부재 | 7개 핵심 단위 테스트 수트 작성 | [`tests/test_mmwave_v6_pipeline.py`](../../tests/test_mmwave_v6_pipeline.py) | `python3 tests/test_mmwave_v6_pipeline.py` | **7개 테스트 전원 통과 (0.05초)** | N/A |
 
 ---
 

@@ -22,11 +22,11 @@ from pathlib import Path
 from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 
-# Ensure SafeNest_V6/ondevice_ai root is in python path
+# Ensure canonical repository root is in python path
 current_dir = Path(__file__).resolve().parent
-v6_root = current_dir.parent
-if str(v6_root) not in sys.path:
-    sys.path.insert(0, str(v6_root))
+project_root = current_dir.parent
+if str(project_root) not in sys.path:
+    sys.path.insert(0, str(project_root))
 
 from scripts.evaluate_mmwave import calculate_sha256
 
@@ -418,8 +418,8 @@ def main():
 
     args = parser.parse_args()
 
-    meta_path = (v6_root / args.metadata).resolve() if not Path(args.metadata).is_absolute() else Path(args.metadata)
-    cfg_path = (v6_root / args.config).resolve() if not Path(args.config).is_absolute() else Path(args.config)
+    meta_path = (project_root / args.metadata).resolve() if not Path(args.metadata).is_absolute() else Path(args.metadata)
+    cfg_path = (project_root / args.config).resolve() if not Path(args.config).is_absolute() else Path(args.config)
 
     if not meta_path.exists():
         print(f"❌ Error: Metadata file missing at {meta_path}", file=sys.stderr)
@@ -434,7 +434,7 @@ def main():
             with open(cfg_path, "r", encoding="utf-8") as f:
                 training_config = json.load(f)
 
-        validate_mmwave_candidate_metadata(metadata, model_root=v6_root, training_config=training_config)
+        validate_mmwave_candidate_metadata(metadata, model_root=project_root, training_config=training_config)
         print("✅ [Priority 3 Verification Success]")
         print("  - Model Name:", metadata["model_name"])
         print("  - Model SHA256:", metadata["sha256"])

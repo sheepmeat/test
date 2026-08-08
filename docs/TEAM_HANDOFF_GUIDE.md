@@ -1,6 +1,15 @@
-# SafeNest V4 온디바이스 AI 팀원 통합 인수인계 가이드 (프롬프트 모음)
+# SafeNest 활성 온디바이스 AI 팀 통합 가이드 (프롬프트 모음)
 
-본 문서는 **SafeNest V4 온디바이스 AI 패키지를 팀원들이 본인 담당 분야(센서 하드웨어, 라즈베리 파이 5, 웹 UI)에 즉시 적용할 수 있도록 하나로 통합한 단일 프롬프트 가이드 문서**입니다.
+본 문서는 팀원이 센서 하드웨어, Raspberry Pi 5, 웹 UI를 현재 최신 작업본에 연결하기 위한 활성 프롬프트 가이드입니다.
+
+## 0. 모든 팀원·에이전트 공통 준수사항
+
+1. 작업 시작 전 최상위 `AGENTS.md`를 읽습니다.
+2. `embed2/` 최상위만 활성 project root로 사용합니다.
+3. `archive/` 안의 code, model, manifest는 수정·import·runtime 선택하지 않습니다.
+4. 새 JSON/YAML/metadata에는 저장소 상대경로만 기록하고 `/Users/...`나 `file://` 경로를 남기지 않습니다.
+5. 실센서 provider는 `connect() -> bool`, `read() -> InferenceResult`, `close() -> None`가 기존 계약과 일치해야 합니다.
+6. `real` mode는 실센서 연동·fail-closed 개발 검사용이며, 실배포 승격은 별도 `production` gate와 MR60/Pi 실측 후에만 합니다.
 
 ---
 
@@ -31,7 +40,7 @@ $$R = 100 \times (0.35 S_1 + 0.35 S_2 + 0.15 S_3 + 0.15 S_4)$$
 ```text
 [역할] SafeNest Thermal-44 열화상 하드웨어 엔지니어
 
-[목표] `SafeNest_V4_OnDevice_AI/sensors/thermal44/thermal44_driver.py` 파일 내에 실기기 I2C/SPI 드라이버를 연결하십시오.
+[목표] `sensors/thermal44/thermal44_driver.py` 파일 내에 실기기 I2C/SPI 드라이버를 연결하십시오.
 
 [연동 수칙]
 1. 라즈베리 파이 5의 I2C 주소 0x33 및 SPI 디바이스 0을 초기화합니다.
@@ -49,12 +58,12 @@ $$R = 100 \times (0.35 S_1 + 0.35 S_2 + 0.15 S_3 + 0.15 S_4)$$
 ```text
 [역할] SafeNest mmWave 레이더 하드웨어 엔지니어
 
-[목표] Seeed Studio MR60BHA2 (60GHz) 센서를 `SafeNest_V4_OnDevice_AI/sensors/mmwave/mmwave_adapter.py`에 연결하십시오.
+[목표] Seeed Studio MR60BHA2 (60GHz) 센서를 `sensors/mmwave/mmwave_adapter.py`에 연결하십시오.
 
 [연동 수칙]
 1. 라즈베리 파이 5의 시리얼 포트 `/dev/ttyAMA0` (115200 baud)를 엽니다.
 2. 10Hz 주기로 30초(300 샘플) 롤링 링버퍼(Ring Buffer)를 유지합니다.
-3. `models/mmwave/sensor_stats_metadata_v0.1.0.json`에 정의된 mean(0.00609)과 std(2.50138)로 Z-score 정규화를 적용합니다.
+3. `models/model_manifest.json`에서 명시적으로 선택된 모델의 `metadata_path`와 `config/mmwave_input_contract.yaml`을 읽어 전처리·scaler·class map을 적용합니다. v0.1.0 mean/std를 코드에 하드코딩하지 않습니다.
 4. TFLite 모델 추론 결과를 위험도 점수 S1으로 매핑합니다:
    - APNEA (무호흡) -> S1 = 1.0
    - RAPID_OR_ABNORMAL (이상 호흡) -> S1 = 0.5
@@ -68,7 +77,7 @@ $$R = 100 \times (0.35 S_1 + 0.35 S_2 + 0.15 S_3 + 0.15 S_4)$$
 ```text
 [역할] SafeNest CO₂ 센서 엔지니어
 
-[목표] SCD40 I2C 센서를 `SafeNest_V4_OnDevice_AI/sensors/co2/co2_adapter.py`에 연결하십시오.
+[목표] SCD40 I2C 센서를 `sensors/co2/co2_adapter.py`에 연결하십시오.
 
 [연동 수칙]
 1. I2C 주소 0x62에서 CO2 (ppm) 및 습도 (%)를 수신하고, 최근 30초 히스토리 윈도우 기반으로 CO2_slope (ppm/min)를 산출합니다.
@@ -83,7 +92,7 @@ $$R = 100 \times (0.35 S_1 + 0.35 S_2 + 0.15 S_3 + 0.15 S_4)$$
 ```text
 [역할] SafeNest PIR 센서 엔지니어
 
-[목표] 라즈베리 파이 5 GPIO 17번 핀을 `SafeNest_V4_OnDevice_AI/sensors/pir/pir_adapter.py`에 연결하십시오.
+[목표] 라즈베리 파이 5 GPIO 17번 핀을 `sensors/pir/pir_adapter.py`에 연결하십시오.
 
 [연동 수칙]
 1. GPIO 17번 핀의 High/Low 움직임 인터럽트를 모니터링합니다.
@@ -105,7 +114,7 @@ $$R = 100 \times (0.35 S_1 + 0.35 S_2 + 0.15 S_3 + 0.15 S_4)$$
    sudo apt-get update && sudo apt-get install -y python3-pip python3-venv i2c-tools
 2. raspi-config에서 I2C, SPI, Serial UART(/dev/ttyAMA0) 인터페이스 활성화.
 3. 가상환경 구축 및 패키지 설치:
-   cd SafeNest_V4_OnDevice_AI
+   cd "<path-to-embed2>"
    python3 -m venv .venv && source .venv/bin/activate
    pip install -r requirements-pi.txt
 4. 테스트 검증:

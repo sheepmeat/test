@@ -193,7 +193,7 @@
         "scale": 0.00390625,
         "zero_point": -128
       },
-      "model_path": "/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/대학/2026/embed2/SafeNest_V6/ondevice_ai/models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
+      "model_path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
       "model_sha256": "85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff",
       "model_type": "INT8 TFLite"
     }

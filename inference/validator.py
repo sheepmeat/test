@@ -3,7 +3,7 @@
 
 """
 inference/validator.py
-SafeNest V5 On-Device AI TFLite Model & Manifest Ground Truth Validator
+SafeNest active-workspace TFLite Model & Manifest Ground Truth Validator
 
 Extracts actual tensor metadata from .tflite model files using TFLite interpreter
 (Ground Truth) and cross-validates with model_manifest.json, config/models.yaml,
@@ -45,16 +45,12 @@ def find_repo_root(start_path: Optional[str | Path] = None) -> Path:
     """
     current = Path(start_path).resolve() if start_path else Path.cwd().resolve()
     for p in [current] + list(current.parents):
-        if (
-            (p / ".git").exists()
-            or (p / "SafeNest_V4_OnDevice_AI").exists()
-            or (p / "SafeNest_V5_OnDevice_AI").exists()
-        ):
+        if (p / "AGENTS.md").is_file() and (p / "models" / "model_manifest.json").is_file():
             return p
-    # Standalone release archives do not contain .git or a repository wrapper.
+    # Standalone package copies may not contain the workspace instruction file.
     file_dir = Path(__file__).resolve().parent
-    if file_dir.name == "inference" and file_dir.parent.name.startswith("SafeNest_V"):
-        return file_dir.parent.parent
+    if file_dir.name == "inference" and (file_dir.parent / "models" / "model_manifest.json").is_file():
+        return file_dir.parent
     return current
 
 
@@ -158,10 +154,6 @@ class GroundTruthValidator:
             active_project_root = explicit_root
         elif (explicit_root / module_project_root.name / "models" / "model_manifest.json").is_file():
             active_project_root = explicit_root / module_project_root.name
-        elif (explicit_root / "SafeNest_V5_OnDevice_AI" / "models" / "model_manifest.json").is_file():
-            active_project_root = explicit_root / "SafeNest_V5_OnDevice_AI"
-        elif (explicit_root / "SafeNest_V4_OnDevice_AI" / "models" / "model_manifest.json").is_file():
-            active_project_root = explicit_root / "SafeNest_V4_OnDevice_AI"
         else:
             active_project_root = module_project_root
 
@@ -592,7 +584,7 @@ class GroundTruthValidator:
         return is_valid, inventory, self.errors
 
 
-def validate_v4_config(
+def validate_active_config(
     repo_root: Optional[Path] = None,
     project_root: Optional[Path] = None,
     generate_inventory: bool = True,
@@ -601,12 +593,12 @@ def validate_v4_config(
     validator = GroundTruthValidator(repo_root=repo_root, project_root=project_root)
     is_valid, _, errors = validator.validate_all(generate_inventory=generate_inventory)
     if not is_valid:
-        print("❌ SafeNest V4 Config & Ground Truth Validation Failed:", file=sys.stderr)
+        print("❌ SafeNest active config & ground truth validation failed:", file=sys.stderr)
         for err in errors:
             print(f"  {err}", file=sys.stderr)
     return is_valid
 
 
 if __name__ == "__main__":
-    success = validate_v4_config()
+    success = validate_active_config()
     sys.exit(0 if success else 1)

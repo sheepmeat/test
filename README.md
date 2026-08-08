@@ -1,21 +1,25 @@
-# SafeNest V5 On-Device AI
+# SafeNest active on-device AI workspace
 
 > ⚠️ **RELEASE WARNING: DEPLOYMENT PROHIBITED / NOT_READY**
 > 
 > - **TFLite 파일 존재·SHA·텐서 규격**: CONFIRMED
 > - **Mock 파이프라인**: CONFIRMED
-> - **mmWave 배포 성능**: BLOCKED (`CLASS_COLLAPSE_ON_REPOSITORY_NPZ`)
+> - **mmWave historical v0.1.0**: BLOCKED (`CLASS_COLLAPSE_ON_REPOSITORY_NPZ`)
+> - **mmWave v0.2.0 candidate**: `SYNTHETIC_SMOKE_ONLY`
+> - **Zenodo real-data reconstruction**: A0–A6 `PASS_WITH_WARNINGS`; Phase B `READY_WITH_CONDITIONS`
 > - **Thermal 실제 낙상 성능**: NOT_VERIFIABLE (합성 NPZ 테스트 fixture만 존재)
 > - **CO₂ 실제 재실 성능**: NOT_VERIFIABLE (합성 NPZ 테스트 fixture만 존재)
 > - **Pi 5 실배포**: NOT_READY / BLOCKED_HARDWARE
 > - **전체 릴리스 상태**: **NOT_READY**
 
-SafeNest V5는 검증된 V4 P0 소프트웨어 스냅샷에서 분기한 온디바이스 AI 배포판이다. 프로젝트 버전은 `5.0`이며 세 TFLite 모델 버전과 파일명은 기존 `v0.1.0`을 유지한다.
+`embed2/` 최상위가 유일한 활성 개발본이다. 과거 V4/V5/구 V6 전체 폴더는 `archive/version_snapshots/`에 읽기 전용으로 보존한다. 현재 모델 계보와 상태는 폴더명이 아니라 `models/model_manifest.json`과 phase 보고서로 관리한다.
 
 현재 상세 검증 상태:
 
 - **P0 소프트웨어 파이프라인 / Mock 테스트**: CONFIRMED (통과)
-- **mmWave Respiration AI 모델**: BLOCKED (저장소 합성 NPZ 평가 시 Class Collapse 발생, APNEA/비정상 Recall 0%)
+- **mmWave historical v0.1.0**: BLOCKED (저장소 합성 NPZ 평가 시 Class Collapse, APNEA/비정상 Recall 0%)
+- **mmWave v0.2.0 candidate**: 학습·재현·양자화 파이프라인을 확인하는 합성 smoke 자산; 실세계 성능 근거로 사용 금지
+- **Zenodo 110명 실데이터**: A0–A6 완료. TRAIN/VALIDATION/LOCKED_TEST = 77/17/16 subject split 고정, 440 recording·530 window 변환 및 무결성 감사 통과
 - **Thermal & CO₂ 오프라인 평가**: synthetic regression fixture 기반 99% 수준 (실센서/실공간 성능 주장 불가)
 - **실센서 드라이버 & Pi 5 실배포**: NOT_READY (하드웨어 통합 전)
 
@@ -33,7 +37,7 @@ integrated_node/run_node.py
 → JSON Lines stdout
 ```
 
-`integrated_node/safenest_risk_engine.py`는 기존 테스트·데모용 legacy compatibility 모듈이다. 신규 센서 연동과 V5 production 융합에 사용하지 않는다.
+`integrated_node/safenest_risk_engine.py`는 기존 테스트·데모용 legacy compatibility 모듈이다. 신규 센서 연동과 production 융합에 사용하지 않는다.
 
 ## 실행
 
@@ -68,7 +72,7 @@ print(node.step().to_json())
 node.shutdown()
 ```
 
-각 provider는 `connect() -> bool`, `read() -> InferenceResult`, `close() -> None`을 구현한다. 상세 계약은 [V5 sensor provider contract](docs/reports/V5_SENSOR_PROVIDER_CONTRACT.md)를 따른다.
+각 provider는 `connect() -> bool`, `read() -> InferenceResult`, `close() -> None`을 구현한다. 현재 상세 계약은 [sensor provider contract](docs/reports/V5_SENSOR_PROVIDER_CONTRACT.md)를 기준으로 사용하되, 팀 실센서 통합 전 활성 버전 메타데이터를 갱신한다.
 
 ## 위험도와 건강 상태
 
@@ -88,26 +92,17 @@ R = 100 * (
 ## 검증과 패키징
 
 ```bash
-python3 scripts/validate_v4_config.py
+python3 scripts/validate_models.py
 python3 -m unittest discover -s tests -p "test_*.py" -v
 python3 -m compileall -q inference risk sensors integrated_node scripts tests
-python3 scripts/build_v5_archive.py
 ```
 
-검증기 파일명은 기존 자동화 호환성을 위해 유지했지만 현재 파일 위치에서 V5 project root를 찾는다. sibling V4, `archive/`, `version_archives/`, `releases/`를 production dependency로 사용하지 않는다.
-
-배포 산출물:
-
-```text
-releases/SafeNest_v5.0_ondevice_ai_package.zip
-releases/SafeNest_v5.0_ondevice_ai_package.zip.sha256
-```
-
-ZIP 최상위 경로는 `SafeNest_V5_OnDevice_AI/`이며 내부 `SHA256SUMS.txt`로 파일별 무결성을 검증한다.
+활성 runtime·validator·test는 현재 최상위의 `models/model_manifest.json`만 선택한다. sibling 버전 폴더나 `archive/`, `releases/`의 code·manifest·model을 자동 선택하지 않는다.
 
 ## 문서
 
-- [팀 인수인계](docs/TEAM_HANDOFF_GUIDE_V5.md)
+- [mmWave A–E 실행 순서](docs/20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md)
+- [팀 인수인계 기준판](docs/TEAM_HANDOFF_GUIDE_V5.md)
 - [Sensor provider 계약](docs/reports/V5_SENSOR_PROVIDER_CONTRACT.md)
 - [Release readiness](docs/reports/V5_RELEASE_READINESS.md)
 - [Sensor data contract](docs/reports/SENSOR_DATA_CONTRACT.md)

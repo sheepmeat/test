@@ -54,6 +54,7 @@
     "total_windows_validated": 530,
     "total_provenance_validated": 530,
     "canonical_npy_rows_validated": 530,
+    "checksum_entries_validated": 11,
     "raw_archive_sha256": "f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0",
     "leakage_recalculated": {
       "cross_split_subject_overlap": 0,

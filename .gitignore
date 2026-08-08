@@ -1,0 +1,36 @@
+.DS_Store
+**/.DS_Store
+.venv/
+**/__pycache__/
+*.py[cod]
+.pytest_cache/
+tmp/
+
+# Local source datasets and generated training inputs. Keep identities and
+# checksums in tracked manifests; do not commit the source payloads.
+/datasets/raw_archives/
+/datasets/thermal/
+
+# Team-owned hardware bundles may contain nested repositories and raw captures.
+/hardware/
+
+# Exported distributions and compatibility model outputs are reproducible or
+# historical artifacts, not active source-tree inputs.
+/releases/
+/tflite/
+/preview.html
+/*.zip
+
+# Preserve the small archive indexes and moved legacy source/tests in Git, while
+# keeping bulky historical releases, datasets, models, and reference documents local.
+/archive/generated_intermediate/
+/archive/legacy/
+/archive/legacy_prototypes/
+/archive/logs/
+/archive/reference_documents/
+/archive/releases/
+/archive/reports/
+/archive/system_metadata/
+/archive/workfiles/
+/archive/project_history/2026-07-25/
+/archive/version_snapshots/*/

@@ -13,9 +13,9 @@
     "numpy_version": "2.0.2"
   },
   "inputs": {
-    "dataset_path": "/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/\u1103\u1162\u1112\u1161\u11a8/2026/embed2/SafeNest_V6/ondevice_ai/datasets/mmwave/processed/mmwave_respiration_v1.npz",
+    "dataset_path": "datasets/mmwave/processed/mmwave_respiration_v1.npz",
     "dataset_sha256": "a08072f3d9b55cd95b530c7b5b90f17ef80f6015ee76119f217b9d834c1107fb",
-    "split_path": "/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/\u1103\u1162\u1112\u1161\u11a8/2026/embed2/SafeNest_V6/ondevice_ai/datasets/mmwave/splits/mmwave_group_split_v1.json",
+    "split_path": "datasets/mmwave/splits/mmwave_group_split_v1.json",
     "split_sha256": "6fb8a2a11f19afb4318cb4e4b20f08040f96bc5cfcede788b4bbb29dc5ee4e9c"
   },
   "schema": {

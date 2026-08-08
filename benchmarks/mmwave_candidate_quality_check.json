@@ -2,8 +2,8 @@
   "check_name": "mmwave_candidate_quality_check",
   "scope": "SYNTHETIC_OFFLINE_CANDIDATE_QA",
   "status": "PASSED",
-  "candidate_path": "/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/\u1103\u1162\u1112\u1161\u11a8/2026/embed2/SafeNest_V6/ondevice_ai/models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
-  "metadata_path": "/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/\u1103\u1162\u1112\u1161\u11a8/2026/embed2/SafeNest_V6/ondevice_ai/models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+  "candidate_path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
+  "metadata_path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
   "threshold_source": "INPUT_CONTRACT",
   "thresholds_used": {
     "schema_version": "1.0",
