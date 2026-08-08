@@ -253,11 +253,32 @@ def validate_full_conversion_artifacts(
     if cross_split_signal_hash_leakage > 0:
         raise A6ValidationError(f"CRITICAL LEAKAGE: cross-split exact signal hash overlap = {cross_split_signal_hash_leakage}")
 
-    # 14. Verify Real Quality Audit Measurements
-    if quality_audit.get("nan_sample_count", -1) != 0 or quality_audit.get("inf_sample_count", -1) != 0:
-        raise A6ValidationError("Quality audit detected NaN or Inf signal samples!")
-    if quality_audit.get("mean_window_phase_std_dev", 0.0) <= 0.0:
-        raise A6ValidationError("Quality audit mean_window_phase_std_dev is not positive!")
+    # 14. INDEPENDENT RE-COMPUTATION of Signal Quality Metrics directly from .npy matrix
+    recalc_nan = int(np.isnan(canonical_matrix).sum())
+    recalc_inf = int(np.isinf(canonical_matrix).sum())
+    recalc_exact_const = int(sum(np.all(row == row[0]) for row in canonical_matrix))
+    recalc_near_const = int(sum(np.std(row) < 1e-6 for row in canonical_matrix))
+    recalc_mean_std = float(np.mean([np.std(row) for row in canonical_matrix]))
+
+    if recalc_nan != 0 or recalc_inf != 0:
+        raise A6ValidationError(f"Quality audit detected nonfinite signal samples: NaN={recalc_nan}, Inf={recalc_inf}")
+
+    if recalc_exact_const != 0 or recalc_near_const != 0:
+        raise A6ValidationError(f"Quality audit detected degenerate constant windows: exact={recalc_exact_const}, near={recalc_near_const}")
+
+    # Compare recalculated metrics against full_quality_audit.json manifest values
+    if quality_audit.get("nan_sample_count") != recalc_nan:
+        raise A6ValidationError(f"Quality audit NaN mismatch: manifest={quality_audit.get('nan_sample_count')}, recalculated={recalc_nan}")
+    if quality_audit.get("inf_sample_count") != recalc_inf:
+        raise A6ValidationError(f"Quality audit Inf mismatch: manifest={quality_audit.get('inf_sample_count')}, recalculated={recalc_inf}")
+    if quality_audit.get("exact_constant_window_count") != recalc_exact_const:
+        raise A6ValidationError(f"Quality audit exact constant mismatch: manifest={quality_audit.get('exact_constant_window_count')}, recalculated={recalc_exact_const}")
+    if quality_audit.get("near_constant_window_count") != recalc_near_const:
+        raise A6ValidationError(f"Quality audit near constant mismatch: manifest={quality_audit.get('near_constant_window_count')}, recalculated={recalc_near_const}")
+
+    manifest_mean_std = float(quality_audit.get("mean_window_phase_std_dev", 0.0))
+    if abs(manifest_mean_std - recalc_mean_std) > 1e-5:
+        raise A6ValidationError(f"Quality audit mean std mismatch: manifest={manifest_mean_std}, recalculated={recalc_mean_std}")
 
     return {
         "validation_success": True,

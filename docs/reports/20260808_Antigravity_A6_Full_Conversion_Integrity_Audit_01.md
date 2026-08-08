@@ -27,7 +27,7 @@ Key achievements of Phase A6:
    - `APNEA`: 213 windows
    - `NORMAL`: 149 windows
    - `AMBIGUOUS`: 49 windows
-5. **Canonical Numeric Dataset (.npy)**: Generated [`datasets/mmwave/processed/mmwave_canonical_real_v1.npy`](file:///Users/junwoo/Library/Mobile%20Documents/com~apple~CloudDocs/%E1%84%83%E1%85%A2%E1%84%92%E1%85%A1%E1%86%A8/2026/embed2/datasets/mmwave/processed/mmwave_canonical_real_v1.npy) containing the full 530 $\times$ 300 float64 matrix with verified 1:1 index alignment to window and provenance manifests.
+5. **Canonical Numeric Dataset (.npy)**: Generated `datasets/mmwave/processed/mmwave_canonical_real_v1.npy` containing the full 530 $\times$ 300 float64 matrix with verified 1:1 index alignment to window and provenance manifests.
 6. **Real Quality Audit**: Performed explicit array calculations on all 530 window phase slices: NaN count = 0, Inf count = 0, exact constant count = 0, near constant count = 0, mean window std dev = 6.535.
 7. **LOCKED_TEST Isolation**: Verified that `training_eligible == False` for all 88 LOCKED_TEST windows and that `AMBIGUOUS` transition windows are excluded from pure-class training/validation eligibility.
 8. **Strict Machine-Readable Path Provenance**: Guaranteed that all persistent JSON/JSONL manifest fields store repository-relative POSIX paths only, rejecting absolute `/Users/...` or `file://...` URIs.
@@ -37,7 +37,7 @@ Key achievements of Phase A6:
 
 ## 2. Git Baseline
 
-- **Repository Root**: `/Users/junwoo/Library/Mobile Documents/com~apple~CloudDocs/대학/2026/embed2`
+- **Repository Root**: `SafeNest POSIX active workspace root`
 - **Branch**: `feature/phase-a6-full-conversion-integrity-audit`
 - **Ancestor Commit**: `575010592073913c97f2f0201ebe1beef5264b55` (`git merge-base --is-ancestor` verified = `0`)
 - **Raw Archive SHA-256 (Pre/Post)**: `f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0` (Unchanged)
