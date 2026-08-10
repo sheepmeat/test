@@ -1,0 +1,20 @@
+{
+  "phase_id": "M-B5",
+  "gate_status": "PASS_WITH_WARNINGS",
+  "m_b6_entry_status": "READY_WITH_CONDITIONS",
+  "selected_calibration_profile": "M-B5_CAL_CLASS_BALANCED_120",
+  "frozen_primary_architecture": "M-B3_CONV1D_GAP_BASELINE",
+  "frozen_weight_seeds": [
+    42,
+    43,
+    44
+  ],
+  "profiles_evaluated": [
+    "M-B5_CAL_TRAIN_ORDER_120",
+    "M-B5_CAL_RANDOM_PROPORTIONAL_120",
+    "M-B5_CAL_CLASS_BALANCED_120",
+    "M-B5_CAL_DISTRIBUTION_AWARE_120"
+  ],
+  "total_strict_int8_conversions": 12,
+  "locked_test_access_attempts": 0
+}

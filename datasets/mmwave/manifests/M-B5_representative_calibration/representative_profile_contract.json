@@ -1,0 +1,11 @@
+{
+  "phase_id": "M-B5",
+  "sample_count_per_profile": 120,
+  "calibration_sampling_seed": 20260810,
+  "profiles": {
+    "M-B5_CAL_TRAIN_ORDER_120": "First 120 eligible pure-class TRAIN rows in canonical order",
+    "M-B5_CAL_RANDOM_PROPORTIONAL_120": "Random proportional sample matching TRAIN class distribution without replacement (RNG seed 20260810)",
+    "M-B5_CAL_CLASS_BALANCED_120": "Equal class balanced sample (40 NORMAL, 40 RAPID_OR_ABNORMAL, 40 APNEA) without replacement (RNG seed 20260810)",
+    "M-B5_CAL_DISTRIBUTION_AWARE_120": "Deterministic farthest-point coverage in TRAIN robust feature space with max-2-per-subject cap"
+  }
+}

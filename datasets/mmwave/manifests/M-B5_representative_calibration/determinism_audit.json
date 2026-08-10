@@ -1,0 +1,7 @@
+{
+  "phase_id": "M-B5",
+  "calibration_sampling_seed": 20260810,
+  "profile_generation_deterministic": true,
+  "functional_reproducibility_verified": true,
+  "notes": "All 4 calibration profiles independently re-generated and confirmed 1:1 identical selected indices."
+}
