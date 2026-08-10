@@ -135,7 +135,13 @@ def _validate_predecessors(repo_root: Path, errors: list[dict[str, str]]) -> dic
         results["T-A1"] = {"evidence_validation": "FAIL"}
         _error(errors, "T_A1_VALIDATOR_ERROR", T_A1_REL, str(exc))
     try:
-        results["T-A2"] = json.loads((repo_root / T_A2_REL / "validation_result.json").read_text(encoding="utf-8"))
+        from scripts.validate_thermal_t_a2 import validate_evidence as a2
+        results["T-A2"] = a2(
+            repo_root=repo_root,
+            evidence_dir=repo_root / T_A2_REL,
+            check_checksums=True,
+            verify_real_payload=False,
+        )
     except Exception as exc:
         results["T-A2"] = {"evidence_validation": "FAIL"}
         _error(errors, "T_A2_VALIDATOR_ERROR", T_A2_REL, str(exc))

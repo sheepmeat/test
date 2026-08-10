@@ -276,6 +276,35 @@ def test_tamper_checksum_is_detected(tmp_path: Path) -> None:
     assert result["evidence_validation"] == "FAIL"
 
 
+def test_tampered_t_a2_evidence_is_revalidated_even_with_stale_pass_result(monkeypatch: pytest.MonkeyPatch) -> None:
+    """A stale T-A2 validation_result.json must not hide current evidence tampering."""
+    import scripts.validate_thermal_t_a2 as t_a2
+
+    geometry_path = ROOT / "datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame/selected_geometry_profile.json"
+    stale_result = json.loads((geometry_path.parent / "validation_result.json").read_text(encoding="utf-8"))
+    assert stale_result["evidence_validation"] == "PASS"
+    original = geometry_path.read_text(encoding="utf-8")
+    try:
+        value = json.loads(original)
+        value["profile"]["profile_id"] = "G1_TAMPERED_PROFILE"
+        geometry_path.write_text(json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        calls: list[dict[str, object]] = []
+        real_validate = t_a2.validate_evidence
+
+        def spy_validate(**kwargs: object) -> dict[str, object]:
+            calls.append(dict(kwargs))
+            return real_validate(**kwargs)
+
+        monkeypatch.setattr(t_a2, "validate_evidence", spy_validate)
+        from scripts.validate_thermal_t_a5 import validate_evidence
+        result = validate_evidence(repo_root=ROOT, evidence_dir=ROOT / "datasets/thermal/manifests/T-A5_grouping_immutable_split", check_checksums=False)
+        assert calls and calls[0]["verify_real_payload"] is False
+        assert result["evidence_validation"] == "FAIL"
+        assert any(error["code"] == "T_A2_VALIDATION_FAILED" for error in result["errors"])
+    finally:
+        geometry_path.write_text(original, encoding="utf-8")
+
+
 def test_no_t_a6_payload_conversion_or_model_metric_is_present() -> None:
     text = (ROOT / "datasets/thermal/split_policy.py").read_text()
     assert "train_test_split" not in text
