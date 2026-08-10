@@ -383,16 +383,37 @@ def validate_m_b2_artifacts(
     winner_preds = val_preds_npz[recomputed_winner]
     calc_subj_diag = compute_subject_level_diagnostics(val_data["windows"], winner_preds)
 
+    # Complete 17-Subject Evidence Verification against subject_level_metrics.json
+    art_per_subj = loaded_subj.get("per_subject", {})
+    calc_per_subj = calc_subj_diag.get("per_subject", {})
+
+    if len(art_per_subj) != 17 or len(calc_per_subj) != 17:
+        raise MB2ValidationError(f"VALIDATION subject count mismatch: art={len(art_per_subj)}, calc={len(calc_per_subj)}, expected 17")
+    if set(art_per_subj.keys()) != set(calc_per_subj.keys()):
+        raise MB2ValidationError(f"Subject ID set mismatch in subject_level_metrics.json: expected {sorted(calc_per_subj.keys())}, got {sorted(art_per_subj.keys())}")
+
+    for sid, calc_s in calc_per_subj.items():
+        art_s = art_per_subj.get(sid, {})
+
+        # Compare per-subject top-level attributes
+        for k in ("window_count", "accuracy", "subject_macro_f1", "apnea_fp", "apnea_fn", "rapid_fp", "rapid_fn", "prediction_distribution"):
+            if art_s.get(k) != calc_s.get(k):
+                raise MB2ValidationError(f"Subject {sid} field '{k}' mismatch: expected {calc_s.get(k)}, got {art_s.get(k)}")
+
+        # Compare per-subject per-class metrics (including support==0 TP/FP/TN/FN preservation)
+        art_cm = art_s.get("class_metrics", {})
+        calc_cm = calc_s.get("class_metrics", {})
+        for cname in LABEL_NAMES:
+            if art_cm.get(cname) != calc_cm.get(cname):
+                raise MB2ValidationError(f"Subject {sid} class '{cname}' metrics mismatch: expected {calc_cm.get(cname)}, got {art_cm.get(cname)}")
+
+    # Compare all 11 aggregate summary statistics across subjects
     calc_summary = calc_subj_diag["summary_across_subjects"]
     manif_summary = loaded_subj.get("summary_across_subjects", {})
 
-    if calc_summary["subject_count"] != 17 or manif_summary.get("subject_count") != 17:
-        raise MB2ValidationError(f"VALIDATION subject count mismatch: calc={calc_summary['subject_count']}, manifest={manif_summary.get('subject_count')}, expected 17")
-
-    if abs(calc_summary["mean_accuracy"] - manif_summary.get("mean_accuracy", 0.0)) > 1e-4:
-        raise MB2ValidationError(f"Subject-level mean accuracy mismatch for {recomputed_winner}: calc={calc_summary['mean_accuracy']}, manifest={manif_summary.get('mean_accuracy')}")
-    if abs(calc_summary["mean_macro_f1"] - manif_summary.get("mean_macro_f1", 0.0)) > 1e-4:
-        raise MB2ValidationError(f"Subject-level mean macro F1 mismatch for {recomputed_winner}: calc={calc_summary['mean_macro_f1']}, manifest={manif_summary.get('mean_macro_f1')}")
+    for sum_k, sum_val in calc_summary.items():
+        if manif_summary.get(sum_k) != sum_val:
+            raise MB2ValidationError(f"Subject summary statistic '{sum_k}' mismatch: expected {sum_val}, got {manif_summary.get(sum_k)}")
 
     # 11. HARDENED CHECKSUM MANIFEST VALIDATION
     checksums_file = manifest_dir / "checksums.sha256"
