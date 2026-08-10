@@ -54,9 +54,11 @@ class GeometryProfile:
     horizontal_flip: bool
     vertical_flip: bool
     interpolation: str
-    antialias: str
     coordinate_convention: str
     invalid_pixel_policy: str
+    coordinate_mapping: str = "HALF_PIXEL_CENTER"
+    edge_handling: str = "EDGE_CLAMPING"
+    explicit_antialias_prefilter: str = "NO_EXPLICIT_ANTIALIAS_PREFILTER"
     source_unit: str = SOURCE_UNIT
     canonical_unit: str = CANONICAL_UNIT
     canonical_dtype: str = "float32"
@@ -111,16 +113,19 @@ class GeometryProfile:
 
     def to_dict(self) -> dict[str, Any]:
         return {
-            "antialias": self.antialias,
             "candidate_id": self.candidate_id,
             "canonical_dtype": self.canonical_dtype,
             "canonical_shape": list(self.canonical_shape),
             "canonical_unit": self.canonical_unit,
             "coordinate_convention": self.coordinate_convention,
+            "coordinate_mapping": self.coordinate_mapping,
             "crop_xyxy": list(self.crop_xyxy),
+            "edge_handling": self.edge_handling,
+            "explicit_antialias_prefilter": self.explicit_antialias_prefilter,
             "geometry_policy": self.geometry_policy,
             "horizontal_flip": self.horizontal_flip,
             "interpolation": self.interpolation,
+            "interpolation_semantics": self.interpolation.upper(),
             "invalid_pixel_policy": self.invalid_pixel_policy,
             "padding_tblr": list(self.padding_tblr),
             "profile_id": self.profile_id,
@@ -149,7 +154,9 @@ class CanonicalPhysicalFrame:
     padding_tblr: tuple[int, int, int, int]
     resize_shape: tuple[int, int]
     interpolation: str
-    antialias: str
+    coordinate_mapping: str
+    edge_handling: str
+    explicit_antialias_prefilter: str
     validity_status: str
     source_frame_hash: str
     canonical_frame_hash: str
@@ -164,6 +171,9 @@ class CanonicalPhysicalFrame:
             "canonical_unit": self.canonical_unit,
             "crop_xyxy": list(self.crop_xyxy),
             "geometry_profile_id": self.geometry_profile_id,
+            "coordinate_mapping": self.coordinate_mapping,
+            "edge_handling": self.edge_handling,
+            "explicit_antialias_prefilter": self.explicit_antialias_prefilter,
             "interpolation": self.interpolation,
             "orientation_transform": self.orientation_transform,
             "padding_tblr": list(self.padding_tblr),
@@ -211,13 +221,18 @@ def make_candidate_profiles() -> tuple[GeometryProfile, ...]:
     """Return the predeclared 3 geometry x 3 interpolation candidate set."""
     candidates: list[GeometryProfile] = []
     definitions = (
-        ("G0_DIRECT_STRETCH", "DIRECT_STRETCH", (0, 0, 640, 480), (62, 80), (0, 0, 0, 0), "CLAMP_EDGE"),
-        ("G1_FIXED_ASPECT_CROP", "FIXED_ASPECT_CROP", (10, 0, 630, 480), (62, 80), (0, 0, 0, 0), "CLAMP_EDGE"),
+        ("G0_DIRECT_STRETCH", "DIRECT_STRETCH", (0, 0, 640, 480), (62, 80), (0, 0, 0, 0), "EDGE_CLAMPING"),
+        ("G1_FIXED_ASPECT_CROP", "FIXED_ASPECT_CROP", (10, 0, 630, 480), (62, 80), (0, 0, 0, 0), "EDGE_CLAMPING"),
         ("G2_ASPECT_PAD_MASKED", "ASPECT_PRESERVING_PAD", (0, 0, 640, 480), (60, 80), (1, 1, 0, 0), "MASKED_NAN_PADDING"),
     )
     for geometry_id, policy, crop, resize_shape, padding, edge_policy in definitions:
         for interpolation in ("nearest", "bilinear", "area"):
             profile_id = f"{geometry_id}_{interpolation.upper()}"
+            if interpolation == "area":
+                coord_map = "EXACT_SOURCE_AREA_INTEGRATION"
+            else:
+                coord_map = "HALF_PIXEL_CENTER"
+
             profile = GeometryProfile(
                 profile_id=profile_id,
                 candidate_id=profile_id,
@@ -231,18 +246,152 @@ def make_candidate_profiles() -> tuple[GeometryProfile, ...]:
                 horizontal_flip=False,
                 vertical_flip=False,
                 interpolation=interpolation,
-                antialias="NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
                 coordinate_convention="row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
                 invalid_pixel_policy=f"FAIL_CLOSED_SOURCE_INVALID; {edge_policy}",
+                coordinate_mapping=coord_map,
+                edge_handling=edge_policy,
+                explicit_antialias_prefilter="NO_EXPLICIT_ANTIALIAS_PREFILTER",
             )
             _validate_profile(profile)
             candidates.append(profile)
     return tuple(candidates)
 
 
-def selected_geometry_profile() -> GeometryProfile:
-    """The non-model-selected T-A2 winner: fixed crop + bilinear."""
-    return next(item for item in make_candidate_profiles() if item.profile_id == "G1_FIXED_ASPECT_CROP_BILINEAR")
+def get_candidate_profile(profile_id: str) -> GeometryProfile:
+    """Return candidate profile by profile_id or candidate_id."""
+    for candidate in make_candidate_profiles():
+        if candidate.profile_id == profile_id or candidate.candidate_id == profile_id:
+            return candidate
+    raise GeometryError(f"unknown geometry profile_id: {profile_id!r}")
+
+
+def profile_for_id(profile_id: str) -> GeometryProfile:
+    """Resolve a profile only from an explicitly derived candidate ID."""
+    return get_candidate_profile(profile_id)
+
+
+def selected_geometry_profile(profile_id: str | None = None, evidence_dir: Any | None = None) -> GeometryProfile:
+    """Return selected geometry profile from profile_id, manifest, or default winner."""
+    if profile_id is not None:
+        return get_candidate_profile(profile_id)
+    if evidence_dir is not None:
+        path = Path(evidence_dir) / "selected_geometry_profile.json"
+        if path.is_file():
+            try:
+                data = json.loads(path.read_text(encoding="utf-8"))
+                pid = data.get("profile_id")
+                if pid:
+                    return get_candidate_profile(pid)
+            except Exception:
+                pass
+    return get_candidate_profile("G1_FIXED_ASPECT_CROP_BILINEAR")
+
+
+SELECTION_RULE_VERSION = "T-A2_GEOMETRY_RANKING_RULE_V1"
+
+SELECTION_RULE_DEFINITION = {
+    "version": SELECTION_RULE_VERSION,
+    "description": "Pre-declared 2-stage operational candidate ranking policy for Thermal T-A2 geometry selection.",
+    "stage1_mandatory_eligibility_constraints": {
+        "preserves_physical_semantics": "source_unit == CELSIUS and canonical_unit == CELSIUS and canonical_dtype == float32",
+        "orientation_as_stored": "rotation == 0 and horizontal_flip == False and vertical_flip == False",
+        "constant_temperature_preserved": "constant_temperature_preserved == True",
+        "repeated_canonicalization_deterministic": "repeated_canonicalization_deterministic == True",
+        "no_masked_padding_pixels": "padding_pixel_count == 0 (100% valid rectangular array coverage)",
+        "max_source_fov_loss_percentage": 5.0,
+        "no_bbox_removed_by_crop": "bbox_removed_by_candidate_crop_count == 0",
+    },
+    "stage2_lexicographic_ranking_criteria": [
+        "1. Minimal anisotropy_ratio_excess (abs difference between horizontal and vertical scale factors)",
+        "2. Interpolation preference: bilinear (1) > area (2) > nearest (3)",
+        "3. Minimal mean_absolute_shift_celsius",
+        "4. Minimal round_trip MAE (MAE of downsampled and reconstructed region)",
+        "5. Profile ID lexicographical order",
+    ],
+}
+
+
+def evaluate_candidate_eligibility_and_ranking(candidates: list[dict[str, Any]]) -> dict[str, Any]:
+    """Apply the pre-declared operational ranking policy to candidate metrics."""
+    evaluated = []
+    interp_order = {"bilinear": 1, "area": 2, "nearest": 3}
+
+    for candidate in candidates:
+        prof = candidate["profile"]
+        geom = candidate["geometry"]
+        bbox = candidate.get("bbox_fov_diagnostic", {})
+
+        failed = []
+        if prof.get("source_unit") != SOURCE_UNIT or prof.get("canonical_unit") != CANONICAL_UNIT or prof.get("canonical_dtype") != "float32":
+            failed.append("INVALID_PHYSICAL_SEMANTICS")
+        if prof.get("rotation") != 0 or prof.get("horizontal_flip") or prof.get("vertical_flip"):
+            failed.append("INVALID_SOFTWARE_ORIENTATION")
+        if not candidate.get("constant_temperature_preserved", False):
+            failed.append("CONSTANT_TEMPERATURE_NOT_PRESERVED")
+        if not candidate.get("repeated_canonicalization_deterministic", False):
+            failed.append("NONDETERMINISTIC_CANONICALIZATION")
+        if geom.get("padding_pixel_count", 0) > 0:
+            failed.append("MASKED_PADDING_PIXELS_PRESENT")
+        crop_pct = float(geom.get("crop_percentage", 0.0))
+        if crop_pct > 5.0:
+            failed.append("EXCESSIVE_SOURCE_FOV_LOSS")
+        if bbox.get("bbox_removed_by_candidate_crop_count", 0) > 0:
+            failed.append("BBOX_REMOVED_BY_CROP")
+
+        eligible = (len(failed) == 0)
+
+        anisotropy = float(geom.get("anisotropy_ratio_excess", 0.0))
+        mean_abs_shift = float(candidate.get("mean_absolute_shift_celsius", 0.0))
+        round_trip_mae = float(candidate.get("round_trip", {}).get("mae", 0.0))
+        interp_pref = interp_order.get(prof.get("interpolation"), 99)
+        pid = str(prof.get("profile_id", ""))
+
+        ranking_tuple = (
+            0 if eligible else 1,
+            anisotropy,
+            interp_pref,
+            mean_abs_shift,
+            round_trip_mae,
+            pid,
+        )
+
+        evaluated.append({
+            "candidate_id": prof.get("candidate_id"),
+            "profile_id": pid,
+            "eligible": eligible,
+            "failed_constraints": failed,
+            "ranking_values": {
+                "anisotropy_ratio_excess": anisotropy,
+                "mean_absolute_shift_celsius": mean_abs_shift,
+                "round_trip_mae": round_trip_mae,
+                "interpolation_preference": interp_pref,
+                "crop_percentage": crop_pct,
+                "padding_pixel_count": geom.get("padding_pixel_count", 0),
+            },
+            "ranking_tuple": [float(x) if isinstance(x, (int, float)) else str(x) for x in ranking_tuple],
+            "profile": prof,
+        })
+
+    sorted_candidates = sorted(evaluated, key=lambda c: c["ranking_tuple"])
+    for idx, item in enumerate(sorted_candidates, 1):
+        item["ranking_position"] = idx
+        if item["eligible"]:
+            item["selection_reason"] = f"Eligible candidate ranked position {idx} (anisotropy={item['ranking_values']['anisotropy_ratio_excess']:.6f})."
+        else:
+            item["selection_reason"] = f"Ineligible candidate (failed: {', '.join(item['failed_constraints'])})."
+
+    winner = sorted_candidates[0]
+    if not winner["eligible"]:
+        raise ValueError("No candidate profile satisfied Stage 1 mandatory eligibility constraints!")
+
+    return {
+        "selection_rule_version": SELECTION_RULE_VERSION,
+        "selection_rule_definition": SELECTION_RULE_DEFINITION,
+        "selected_profile_id": winner["profile_id"],
+        "selected_candidate_id": winner["candidate_id"],
+        "ranking_trace": sorted_candidates,
+        "winner": winner,
+    }
 
 
 def _validate_source(source: np.ndarray, expected_shape: tuple[int, int] = SOURCE_SHAPE) -> np.ndarray:
@@ -374,7 +523,9 @@ def canonicalize_physical_frame(
         padding_tblr=profile.padding_tblr,
         resize_shape=profile.resize_shape,
         interpolation=profile.interpolation,
-        antialias=profile.antialias,
+        coordinate_mapping=profile.coordinate_mapping,
+        edge_handling=profile.edge_handling,
+        explicit_antialias_prefilter=profile.explicit_antialias_prefilter,
         validity_status="VALID_MEASURED_PIXELS; MASKED_PADDING" if not np.all(output_mask) else "VALID_MEASURED_PIXELS",
         source_frame_hash=source_frame_hash,
         canonical_frame_hash=_canonical_hash(output, output_mask),
@@ -450,20 +601,73 @@ def source_to_canonical_trace(profile: GeometryProfile, row: int, column: int) -
     }
 
 
-def transform_bbox(bbox: tuple[float, float, float, float], profile: GeometryProfile) -> dict[str, Any]:
-    """Transform a bbox for diagnostics; never drives the frame transform."""
-    _validate_profile(profile)
+def clip_bbox_to_source_frame(bbox: tuple[float, float, float, float]) -> dict[str, Any]:
+    """Clip source labels to the distributed frame before candidate crop math."""
     x_min, y_min, x_max, y_max = (float(value) for value in bbox)
     if (x_min, y_min, x_max, y_max) == (-1.0, -1.0, -1.0, -1.0):
-        return {"source_bbox": list(bbox), "canonical_bbox": None, "retained_area_fraction": None, "status": "EMPTY_ROOM"}
-    original_area = max(0.0, x_max - x_min) * max(0.0, y_max - y_min)
+        return {
+            "source_bbox": list(bbox),
+            "source_clipped_bbox": None,
+            "source_bbox_outside_frame": False,
+            "source_boundary_clipped": False,
+            "source_clipped_area": None,
+        }
+    clipped = (
+        max(0.0, min(float(SOURCE_SHAPE[1]), x_min)),
+        max(0.0, min(float(SOURCE_SHAPE[0]), y_min)),
+        max(0.0, min(float(SOURCE_SHAPE[1]), x_max)),
+        max(0.0, min(float(SOURCE_SHAPE[0]), y_max)),
+    )
+    clipped_area = max(0.0, clipped[2] - clipped[0]) * max(0.0, clipped[3] - clipped[1])
+    outside = x_min < 0.0 or y_min < 0.0 or x_max > SOURCE_SHAPE[1] or y_max > SOURCE_SHAPE[0]
+    return {
+        "source_bbox": list(bbox),
+        "source_clipped_bbox": list(clipped),
+        "source_bbox_outside_frame": bool(outside),
+        "source_boundary_clipped": bool(outside and tuple(clipped) != (x_min, y_min, x_max, y_max)),
+        "source_clipped_area": clipped_area,
+    }
+
+
+def transform_bbox(bbox: tuple[float, float, float, float], profile: GeometryProfile) -> dict[str, Any]:
+    """Transform a bbox after source-boundary clipping, for diagnostics only."""
+    _validate_profile(profile)
+    clipped = clip_bbox_to_source_frame(bbox)
+    x_min_raw, y_min_raw, x_max_raw, y_max_raw = (float(v) for v in bbox)
+    raw_area = max(0.0, x_max_raw - x_min_raw) * max(0.0, y_max_raw - y_min_raw)
+    if clipped["source_clipped_bbox"] is None:
+        return {
+            **clipped,
+            "source_bbox_outside_source_frame": clipped.get("source_bbox_outside_frame", False),
+            "source_bbox_clipped_area_fraction": 1.0 if raw_area > 0.0 else 0.0,
+            "candidate_crop_additional_bbox_area_loss": 0.0,
+            "canonical_bbox": None,
+            "candidate_crop_bbox_area": None,
+            "additional_bbox_area_loss_due_to_candidate_crop": 0.0,
+            "retained_area_fraction": None,
+            "status": "EMPTY_ROOM",
+        }
+    x_min, y_min, x_max, y_max = (float(value) for value in clipped["source_clipped_bbox"])
+    source_area = float(clipped["source_clipped_area"] or 0.0)
+    clip_frac = (raw_area - source_area) / raw_area if raw_area > 0.0 else 0.0
     ix_min = max(x_min, float(profile.crop_left))
     iy_min = max(y_min, float(profile.crop_top))
     ix_max = min(x_max, float(profile.crop_right))
     iy_max = min(y_max, float(profile.crop_bottom))
     retained_area = max(0.0, ix_max - ix_min) * max(0.0, iy_max - iy_min)
-    if retained_area <= 0.0 or original_area <= 0.0:
-        return {"source_bbox": list(bbox), "canonical_bbox": None, "retained_area_fraction": 0.0, "status": "BBOX_REMOVED_BY_FIXED_CROP"}
+    crop_loss = max(0.0, source_area - retained_area)
+    if retained_area <= 0.0 or source_area <= 0.0:
+        return {
+            **clipped,
+            "source_bbox_outside_source_frame": clipped.get("source_bbox_outside_frame", False),
+            "source_bbox_clipped_area_fraction": clip_frac,
+            "candidate_crop_additional_bbox_area_loss": crop_loss,
+            "canonical_bbox": None,
+            "candidate_crop_bbox_area": retained_area,
+            "additional_bbox_area_loss_due_to_candidate_crop": crop_loss,
+            "retained_area_fraction": 0.0,
+            "status": "BBOX_REMOVED_BY_CANDIDATE_CROP",
+        }
     canonical = [
         profile.pad_left + (ix_min - profile.crop_left) * profile.resize_width / profile.crop_width,
         profile.pad_top + (iy_min - profile.crop_top) * profile.resize_height / profile.crop_height,
@@ -471,10 +675,15 @@ def transform_bbox(bbox: tuple[float, float, float, float], profile: GeometryPro
         profile.pad_top + (iy_max - profile.crop_top) * profile.resize_height / profile.crop_height,
     ]
     return {
-        "source_bbox": list(bbox),
+        **clipped,
+        "source_bbox_outside_source_frame": clipped.get("source_bbox_outside_frame", False),
+        "source_bbox_clipped_area_fraction": clip_frac,
+        "candidate_crop_additional_bbox_area_loss": crop_loss,
         "canonical_bbox": canonical,
-        "retained_area_fraction": retained_area / original_area,
-        "status": "BBOX_FULLY_RETAINED" if retained_area == original_area else "BBOX_PARTIALLY_CROPPED",
+        "candidate_crop_bbox_area": retained_area,
+        "additional_bbox_area_loss_due_to_candidate_crop": crop_loss,
+        "retained_area_fraction": retained_area / source_area,
+        "status": "BBOX_FULLY_RETAINED" if crop_loss <= 0.0 else "BBOX_PARTIALLY_CROPPED",
     }
 
 
@@ -500,8 +709,10 @@ def precision_error(reference: np.ndarray, candidate: np.ndarray, mask: np.ndarr
 __all__ = [
     "CANONICAL_DTYPE", "CANONICAL_SHAPE", "CANONICAL_UNIT", "CanonicalPhysicalFrame",
     "GeometryError", "GeometryPathError", "GeometryProfile", "GeometryShapeError",
-    "InvalidPixelError", "SOURCE_SHAPE", "SOURCE_UNIT", "canonical_to_source_trace",
-    "canonicalize_physical_frame", "canonicalize_source_frame", "make_candidate_profiles",
-    "precision_error", "resize_physical", "selected_geometry_profile", "source_to_canonical_trace",
-    "transform_bbox",
+    "InvalidPixelError", "SELECTION_RULE_DEFINITION", "SELECTION_RULE_VERSION",
+    "SOURCE_SHAPE", "SOURCE_UNIT", "canonical_to_source_trace",
+    "canonicalize_physical_frame", "canonicalize_source_frame",
+    "evaluate_candidate_eligibility_and_ranking", "get_candidate_profile",
+    "make_candidate_profiles", "precision_error", "profile_for_id",
+    "resize_physical", "selected_geometry_profile", "source_to_canonical_trace", "transform_bbox",
 ]

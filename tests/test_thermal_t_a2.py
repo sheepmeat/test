@@ -23,6 +23,7 @@ from datasets.thermal.canonical_geometry import (  # noqa: E402
     _ensure_portable_relative_path,
     canonical_to_source_trace,
     canonicalize_physical_frame,
+    get_candidate_profile,
     make_candidate_profiles,
     precision_error,
     selected_geometry_profile,
@@ -203,3 +204,85 @@ def test_real_sdt_geometry_integration_when_materialized() -> None:
         assert result.physical_frame.dtype == np.float32
         assert np.all(result.validity_mask)
         assert result.source_frame_hash == frame.raw_encoded_frame_sha256
+
+
+def test_independent_winner_recalculation_matches_manifest() -> None:
+    evidence = ROOT / "datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame"
+    if not evidence.exists():
+        pytest.skip("T-A2 evidence is generated after geometry unit tests")
+    comparison = json.loads((evidence / "geometry_comparison.json").read_text(encoding="utf-8"))
+    from datasets.thermal.canonical_geometry import evaluate_candidate_eligibility_and_ranking
+    eval_res = evaluate_candidate_eligibility_and_ranking(comparison["candidate_results"])
+    assert eval_res["selected_profile_id"] == "G1_FIXED_ASPECT_CROP_BILINEAR"
+
+
+def test_validator_rejects_wrong_manifest_winner(tmp_path: Path) -> None:
+    evidence = ROOT / "datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame"
+    if not evidence.exists():
+        pytest.skip("T-A2 evidence is generated after geometry unit tests")
+    copied = tmp_path / "evidence"
+    shutil.copytree(evidence, copied)
+    path = copied / "selected_geometry_profile.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["profile_id"] = "G0_DIRECT_STRETCH_AREA"
+    data["profile"]["profile_id"] = "G0_DIRECT_STRETCH_AREA"
+    path.write_text(json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    from scripts.validate_thermal_t_a2 import validate_evidence
+    result = validate_evidence(repo_root=ROOT, evidence_dir=copied, check_checksums=False, verify_real_payload=False)
+    assert result["evidence_validation"] == "FAIL"
+    codes = {item["code"] for item in result["errors"]}
+    assert "WINNER_MISMATCH" in codes or "SELECTED_PROFILE_MISMATCH" in codes
+
+
+def test_candidate_order_independence_in_ranking() -> None:
+    evidence = ROOT / "datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame"
+    if not evidence.exists():
+        pytest.skip("T-A2 evidence is generated after geometry unit tests")
+    comparison = json.loads((evidence / "geometry_comparison.json").read_text(encoding="utf-8"))
+    results = comparison["candidate_results"]
+    reversed_results = list(reversed(results))
+    from datasets.thermal.canonical_geometry import evaluate_candidate_eligibility_and_ranking
+    res1 = evaluate_candidate_eligibility_and_ranking(results)
+    res2 = evaluate_candidate_eligibility_and_ranking(reversed_results)
+    assert res1["selected_profile_id"] == res2["selected_profile_id"] == "G1_FIXED_ASPECT_CROP_BILINEAR"
+
+
+def test_ineligible_candidate_rejection_by_rule() -> None:
+    evidence = ROOT / "datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame"
+    if not evidence.exists():
+        pytest.skip("T-A2 evidence is generated after geometry unit tests")
+    comparison = json.loads((evidence / "geometry_comparison.json").read_text(encoding="utf-8"))
+    from datasets.thermal.canonical_geometry import evaluate_candidate_eligibility_and_ranking
+    eval_res = evaluate_candidate_eligibility_and_ranking(comparison["candidate_results"])
+    g2_entries = [item for item in eval_res["ranking_trace"] if item["profile_id"].startswith("G2")]
+    for entry in g2_entries:
+        assert entry["eligible"] is False
+        assert "MASKED_PADDING_PIXELS_PRESENT" in entry["failed_constraints"]
+
+
+def test_antialias_field_semantics_and_mapping() -> None:
+    for profile in make_candidate_profiles():
+        if profile.interpolation == "bilinear":
+            assert profile.coordinate_mapping == "HALF_PIXEL_CENTER"
+            assert profile.explicit_antialias_prefilter in (False, "NO_EXPLICIT_ANTIALIAS_PREFILTER")
+        elif profile.interpolation == "area":
+            assert profile.coordinate_mapping == "EXACT_SOURCE_AREA_INTEGRATION"
+            assert profile.explicit_antialias_prefilter in (False, "NO_EXPLICIT_ANTIALIAS_PREFILTER")
+
+
+def test_source_bbox_clipping_vs_candidate_crop_loss_separation() -> None:
+    from datasets.thermal.canonical_geometry import transform_bbox
+    g0 = get_candidate_profile("G0_DIRECT_STRETCH_BILINEAR")
+    g1 = get_candidate_profile("G1_FIXED_ASPECT_CROP_BILINEAR")
+
+    # Bbox extending outside source frame (e.g. [-10, -5, 100, 100])
+    res_g0 = transform_bbox((-10.0, -5.0, 100.0, 100.0), g0)
+    assert res_g0["source_bbox_outside_source_frame"] is True
+    assert res_g0["source_bbox_clipped_area_fraction"] > 0.0
+    assert res_g0["candidate_crop_additional_bbox_area_loss"] == 0.0
+
+    # In-bounds bbox (e.g. [0.0, 0.0, 20.0, 20.0]) cropped by G1 (crop starts at col 10)
+    res_g1 = transform_bbox((0.0, 0.0, 20.0, 20.0), g1)
+    assert res_g1["source_bbox_outside_source_frame"] is False
+    assert res_g1["source_bbox_clipped_area_fraction"] == 0.0
+    assert res_g1["candidate_crop_additional_bbox_area_loss"] == 200.0

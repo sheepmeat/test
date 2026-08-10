@@ -24,11 +24,12 @@ from datasets.thermal.canonical_geometry import (  # noqa: E402
     canonicalize_source_frame,
     make_candidate_profiles,
     precision_error,
+    profile_for_id,
     resize_physical,
-    selected_geometry_profile,
     source_to_canonical_trace,
     transform_bbox,
 )
+from datasets.thermal.geometry_selection import apply_selection_policy, selection_policy  # noqa: E402
 from datasets.thermal.raw_reader import SDTThermalRawReader, encoded_frame_sha256  # noqa: E402
 
 
@@ -42,6 +43,7 @@ JSON_NAMES = [
     "coordinate_trace_contract.json",
     "geometry_candidate_registry.json",
     "geometry_comparison.json",
+    "geometry_selection_policy.json",
     "invalid_pixel_policy.json",
     "pilot_geometry_summary.json",
     "selected_geometry_profile.json",
@@ -49,17 +51,6 @@ JSON_NAMES = [
 ]
 PILOT_PER_CLASS = 12
 PILOT_WITNESS_INDICES = [0, 2000, 4000, 6000]
-RANKING_RULE = [
-    "NO_UNSUPPORTED_SEMANTIC_TRANSFORMATION",
-    "SOURCE_AS_STORED_ORIENTATION_AND_DETERMINISTIC_MAPPING",
-    "VALID_PHYSICAL_VALUE_PRESERVATION",
-    "MINIMAL_ARTIFICIAL_CONTENT",
-    "MINIMAL_UNACCEPTABLE_SOURCE_FOV_LOSS",
-    "MINIMAL_GEOMETRIC_DISTORTION",
-    "STABLE_TEMPERATURE_STATISTICS",
-    "SIMPLE_REPRODUCIBLE_IMPLEMENTATION",
-    "FIXED_62X80_SOFTWARE_GRID_COMPATIBILITY",
-]
 
 
 def canonical_json(value: Any) -> str:
@@ -72,6 +63,10 @@ def _sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _sha256_bytes(payload: bytes) -> str:
+    return hashlib.sha256(payload).hexdigest()
 
 
 def _frame_stats(array: np.ndarray, mask: np.ndarray | None = None) -> dict[str, float]:
@@ -156,14 +151,20 @@ def _bbox_metrics(reader: SDTThermalRawReader, profile: GeometryProfile, indices
         if label.source_pose_label == 3:
             continue
         records.append(transform_bbox(label.source_bbox, profile))
-    retained = [float(item["retained_area_fraction"]) for item in records]
+    retained = [float(item["retained_area_fraction"]) for item in records if item["retained_area_fraction"] is not None]
+    additional_losses = [float(item.get("additional_bbox_area_loss_due_to_candidate_crop", 0.0)) for item in records]
     return {
         "person_bbox_count": len(records),
-        "bbox_intersects_fixed_crop_boundary": int(sum(item["status"] == "BBOX_PARTIALLY_CROPPED" for item in records)),
-        "bbox_partially_removed": int(sum(item["status"] == "BBOX_PARTIALLY_CROPPED" for item in records)),
-        "bbox_removed": int(sum(item["status"] == "BBOX_REMOVED_BY_FIXED_CROP" for item in records)),
-        "mean_retained_bbox_area_fraction": float(np.mean(retained)) if retained else None,
-        "minimum_retained_bbox_area_fraction": float(np.min(retained)) if retained else None,
+        "source_bbox_outside_frame_count": int(sum(bool(item.get("source_bbox_outside_frame")) for item in records)),
+        "source_boundary_clipped_count": int(sum(bool(item.get("source_boundary_clipped")) for item in records)),
+        "additional_bbox_intersected_by_candidate_crop_count": int(sum(loss > 0.0 for loss in additional_losses)),
+        "additional_bbox_area_loss_due_to_candidate_crop": float(sum(additional_losses)),
+        "candidate_crop_additional_bbox_area_loss_total": float(sum(additional_losses)),
+        "bbox_removed_by_candidate_crop_count": int(sum(item["status"] == "BBOX_REMOVED_BY_CANDIDATE_CROP" for item in records)),
+        "mean_bbox_retention_due_to_candidate_transform": float(np.mean(retained)) if retained else None,
+        "minimum_bbox_retention_due_to_candidate_transform": float(np.min(retained)) if retained else None,
+        "coordinate_clipping_order": "SOURCE_BBOX_CLIP_TO_DISTRIBUTED_FRAME_THEN_INTERSECT_CANDIDATE_CROP_THEN_MAP_TO_CANONICAL",
+        "source_boundary_overflow_is_not_candidate_crop_loss": True,
     }
 
 
@@ -183,7 +184,9 @@ def _profile_geometry_metrics(profile: GeometryProfile) -> dict[str, Any]:
         "crop_percentage": (source_area - crop_area) / source_area * 100.0,
         "padding_pixel_count": target_area - profile.resize_height * profile.resize_width,
         "padding_percentage": (target_area - profile.resize_height * profile.resize_width) / target_area * 100.0,
-        "edge_behavior": profile.invalid_pixel_policy.split("; ")[-1],
+        "edge_handling": profile.edge_handling,
+        "coordinate_mapping": profile.coordinate_mapping,
+        "explicit_antialias_prefilter": profile.explicit_antialias_prefilter,
     }
 
 
@@ -195,12 +198,14 @@ def _candidate_metrics(reader: SDTThermalRawReader, indices: list[int], profile:
     round_trips: list[dict[str, float]] = []
     repeated = True
     constant_ok = True
+    finite_valid_output = True
     for index in indices:
         frame = reader.read_frame(index)
         source = frame.celsius()
         canonical = canonicalize_source_frame(frame, profile)
         source_stat = _frame_stats(source)
         output_stat = _frame_stats(canonical.physical_frame, canonical.validity_mask)
+        finite_valid_output &= bool(np.all(np.isfinite(canonical.physical_frame[canonical.validity_mask])))
         source_stats.append(source_stat)
         output_stats.append(output_stat)
         mean_shifts.append(output_stat["mean"] - source_stat["mean"])
@@ -233,6 +238,7 @@ def _candidate_metrics(reader: SDTThermalRawReader, indices: list[int], profile:
             "max_error": float(np.max([item["max_abs_error"] for item in round_trips])),
         },
         "constant_temperature_preserved": constant_ok,
+        "finite_valid_output": finite_valid_output,
         "repeated_canonicalization_deterministic": repeated,
         "bbox_fov_diagnostic": bbox,
         "pilot_frame_count": len(indices),
@@ -359,11 +365,16 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
     by_class = _pilot_indices(reader)
     indices = [index for pose in sorted(by_class) for index in by_class[pose]]
     profiles = make_candidate_profiles()
-    selected = selected_geometry_profile()
-    candidate_results = sorted(
+    policy = selection_policy()
+    raw_candidate_results = sorted(
         (_candidate_metrics(reader, indices, profile) for profile in profiles),
         key=lambda item: item["profile"]["candidate_id"],
     )
+    selection = apply_selection_policy(raw_candidate_results, policy)
+    candidate_results = selection["candidates"]
+    selected = profile_for_id(selection["selected_profile_id"])
+    policy_checksum = _sha256_bytes(canonical_json(policy).encode("utf-8"))
+    candidate_metrics_checksum = _sha256_bytes(canonical_json(candidate_results).encode("utf-8"))
     selected_records = [_pilot_record(reader, index, selected) for index in indices]
     precision = _precision_contract(reader, indices)
 
@@ -388,7 +399,10 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
         "phase": "T-A2",
         "schema_version": "1.0",
         "predeclared_candidate_set": [item["profile"]["candidate_id"] for item in candidate_results],
-        "ranking_rule": RANKING_RULE,
+        "selection_policy_id": policy["policy_id"],
+        "selection_policy_version": policy["policy_version"],
+        "selection_policy_content_sha256": policy_checksum,
+        "candidate_metrics_content_sha256": candidate_metrics_checksum,
         "model_performance_used_for_selection": False,
         "implementation": {
             "library": "numpy custom deterministic T-A2 geometry implementation",
@@ -398,6 +412,11 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
             "area_semantics": "exact separable source-pixel overlap weighting",
             "bilinear_semantics": "four-neighbor linear interpolation with edge clamping",
             "nearest_semantics": "nearest source pixel with half-up index rule and edge clamping",
+            "antialias_semantics": {
+                "bilinear": "NO_EXPLICIT_ANTIALIAS_PREFILTER",
+                "nearest": "NO_EXPLICIT_ANTIALIAS_PREFILTER",
+                "area": "NO_EXPLICIT_ANTIALIAS_PREFILTER; AREA_INTERPOLATION_ITSELF_AVERAGES_SOURCE_PIXEL_OVERLAPS",
+            },
         },
         "source_profile": source_profile,
         "candidates": candidate_results,
@@ -408,22 +427,31 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
         "source_archive_identity": inventory["archive_identity"],
         "pilot_selection": {"per_class": PILOT_PER_CLASS, "indices_by_source_pose": {str(key): value for key, value in sorted(by_class.items())}, "total": len(indices)},
         "candidate_results": candidate_results,
-        "selected_candidate_id": selected.candidate_id,
-        "selection_rule_applied_before_results": True,
-        "selection_basis": "Fixed aspect crop minimizes aspect distortion without synthetic padding; bilinear provides stable spatial downsampling; no model score used.",
+        "selection_policy_id": policy["policy_id"],
+        "selection_policy_version": policy["policy_version"],
+        "selection_policy_content_sha256": policy_checksum,
+        "candidate_metrics_content_sha256": candidate_metrics_checksum,
+        "selected_candidate_id": selection["selected_candidate_id"],
+        "selected_profile_id": selection["selected_profile_id"],
+        "selection_derivation": "apply_selection_policy(candidate_results, geometry_selection_policy.json)",
+        "model_performance_used": False,
     }
     selected_profile = {
         "phase": "T-A2",
         "schema_version": "1.0",
         "selection_status": "GEOMETRY_PROFILE_SELECTED_WITH_LIMITATIONS",
-        "selection_rule": RANKING_RULE,
+        "selection_policy_id": policy["policy_id"],
+        "selection_policy_version": policy["policy_version"],
+        "selection_policy_content_sha256": policy_checksum,
+        "candidate_metrics_content_sha256": candidate_metrics_checksum,
+        "selection_derivation": "winner = independently reproducible policy ranking of the nine candidate metric records",
         "profile": selected.to_dict(),
         "profile_id": selected.profile_id,
         "source_orientation": source_profile["source_orientation"],
         "physical_unit": "CELSIUS",
         "physical_dtype": "float32",
         "model_performance_used": False,
-        "limitations": ["Thermal-44 physical orientation remains unverified; this is a software canonical convention only.", "Fixed 10-pixel side crop trades 3.125% source area for lower aspect distortion."],
+        "limitations": ["Thermal-44 physical orientation remains unverified; this is a software canonical convention only.", "The selected profile is a software canonical frame and does not establish hardware packet ordering.", "Source label bboxes are clipped to the distributed frame before candidate-crop loss is measured."],
     }
     canonical_contract = {
         "phase": "T-A2",
@@ -442,7 +470,7 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
             "shape": list(CANONICAL_SHAPE),
             "dtype": "float32",
             "unit": "CELSIUS",
-            "validity_mask": "boolean; all selected G1 pixels measured source pixels",
+            "validity_mask": "boolean; selected-profile measured pixels are true and any declared padding is false",
             "profile_id": selected.profile_id,
         },
         "boundary_stop": "Canonical physical frame ends here. No per-frame min-max, z-score, scaler, int8 encoding, or model inference is part of T-A2.",
@@ -457,7 +485,7 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
         "forward_equation": "source_y = crop_top + (canonical_row + 0.5) * crop_height / resize_height - 0.5; source_x analogous",
         "inverse_equation": "canonical_row = pad_top + (source_y - crop_top + 0.5) * resize_height / crop_height - 0.5; canonical_col analogous",
         "crop_xyxy_exclusive": list(selected.crop_xyxy),
-        "support_semantics": "bilinear four-neighbor support with edge clamp",
+        "support_semantics": f"{selected.interpolation.upper()} support; coordinate_mapping={selected.coordinate_mapping}; edge_handling={selected.edge_handling}; explicit_antialias_prefilter={selected.explicit_antialias_prefilter}",
         "witnesses": [canonical_to_source_trace(selected, 0, 0), canonical_to_source_trace(selected, 31, 40), canonical_to_source_trace(selected, 61, 79), source_to_canonical_trace(selected, 0, 10), source_to_canonical_trace(selected, 479, 629)],
         "synthetic_fixture_checks": {
             "corner_markers": "PASS_SOURCE_ORDER_PRESERVED",
@@ -494,6 +522,7 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
         "schema_version": "1.0",
         "source_archive_identity": inventory["archive_identity"],
         "selection_rule": "12 evenly spaced sorted source indices per original source pose class; 48 total; labels only provide coverage/diagnostics.",
+        "selection_policy_id": policy["policy_id"],
         "indices_by_source_pose": {str(key): value for key, value in sorted(by_class.items())},
         "source_class_counts": {str(key): len(value) for key, value in sorted(by_class.items())},
         "pilot_frame_count": len(indices),
@@ -509,6 +538,7 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
         "coordinate_trace_contract.json": coordinate_contract,
         "geometry_candidate_registry.json": candidate_registry,
         "geometry_comparison.json": comparison,
+        "geometry_selection_policy.json": policy,
         "invalid_pixel_policy.json": invalid_policy,
         "pilot_geometry_summary.json": pilot_summary,
         "selected_geometry_profile.json": selected_profile,
@@ -518,6 +548,9 @@ def build_artifacts(reader: SDTThermalRawReader) -> tuple[dict[str, Any], dict[i
 def report_text(artifacts: dict[str, Any], validation: dict[str, Any]) -> str:
     selected = artifacts["selected_geometry_profile.json"]["profile"]
     comparison = artifacts["geometry_comparison.json"]
+    policy = artifacts["geometry_selection_policy.json"]
+    selected_result = next(item for item in comparison["candidate_results"] if item["profile"]["profile_id"] == selected["profile_id"])
+    bbox = selected_result["bbox_fov_diagnostic"]
     precision = artifacts["calibration_contract.json"]["canonical_dtype_precision"]
     return f"""# Thermal T-A2 — Geometry, Calibration, and Canonical Frame Contract
 
@@ -531,15 +564,17 @@ T-A3 authorized: `{'YES' if validation['t_a3_authorized'] else 'NO'}`
 
 ## Decision
 
-The selected software canonical profile is `{selected['profile_id']}`: preserve SDT orientation as stored, crop the fixed source rectangle `(left=10, top=0, right=630, bottom=480)`, and apply deterministic custom NumPy bilinear downsampling to `(62,80)`. The canonical physical unit is Celsius and the canonical dtype is float32. No model score, model inference, normalization, or SafeNest label remapping was used.
+The selected software canonical profile is `{selected['profile_id']}`. It was derived from all nine candidate metric records using policy `{policy['policy_id']}` v{policy['policy_version']}; no profile ID is hardcoded as the winner. The canonical physical unit is Celsius and the canonical dtype is float32. No model score, model inference, normalization, or SafeNest label remapping was used.
 
 ## Geometry boundary
 
 The verified SDT distributed frame is `(480,640)` and already contains the authors' bilinear enlargement from the FLIR Lepton 3.5 native `(120,160)` grid. T-A2 does not reverse that operation or claim a restored native frame. Thermal-44 physical orientation and packet ordering remain `UNVERIFIED / DEFERRED_T_C`.
 
-The predeclared candidate set contains 3 fixed geometry policies (direct stretch, fixed aspect crop, masked aspect pad) crossed with nearest, bilinear, and exact area interpolation. The ranking rule was fixed before candidate measurements: preserve semantics and source orientation, preserve physical values, minimize artificial content, minimize unacceptable FOV loss, minimize distortion, then favor stable/simple deterministic implementation and the fixed software grid.
+The predeclared candidate set contains 3 fixed geometry policies (direct stretch, fixed aspect crop, masked aspect pad) crossed with nearest, bilinear, and exact area interpolation. The policy first applies mandatory semantic gates, then the declared FOV/bbox/padding admissibility thresholds, then lexicographically ranks anisotropy, padding, interpolation preference, Celsius-statistic distortion, round-trip diagnostic MAE, and finally candidate ID.
 
-The selected crop retains `{selected['crop_xyxy']}` and `{comparison['candidate_results'][3]['geometry']['source_fov_retained_fraction'] * 100:.3f}%` of source area. Direct stretch retains full FOV but has higher anisotropy; pad retains FOV by introducing masked invalid rows. The fixed crop has no synthetic pixels and reduces aspect anisotropy.
+The selected geometry crop is `{selected['crop_xyxy']}` and retains `{selected_result['geometry']['source_fov_retained_fraction'] * 100:.3f}%` of source area. Candidate evidence records each gate, admissibility result, rejection reason, rank, tie group, and final status. Source-frame bbox overflow is clipped before measuring incremental candidate-crop damage: `{bbox['source_bbox_outside_frame_count']}` source bboxes were outside the distributed frame, `{bbox['additional_bbox_intersected_by_candidate_crop_count']}` received additional crop intersection, and total additional crop loss was `{bbox['additional_bbox_area_loss_due_to_candidate_crop']:.6f}` source-pixel².
+
+The selected interpolation is `{selected['interpolation'].upper()}` with coordinate mapping `{selected['coordinate_mapping']}`, edge handling `{selected['edge_handling']}`, and `{selected['explicit_antialias_prefilter']}`. Coordinate mapping is not described as antialiasing.
 
 ## Physical calibration
 

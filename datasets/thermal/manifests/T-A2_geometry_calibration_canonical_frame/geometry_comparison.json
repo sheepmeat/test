@@ -47,7 +47,7 @@
       "mean_shift_celsius": 9.107411121552407e-11,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "AREA_AVERAGING_INTEGRATION",
         "candidate_id": "G0_DIRECT_STRETCH_AREA",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -56,12 +56,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "EXACT_SOURCE_AREA_INTEGRATION",
         "crop_xyxy": [
           0,
           0,
           640,
           480
         ],
+        "edge_behavior": "CLAMP_EDGE",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "DIRECT_STRETCH",
         "horizontal_flip": false,
         "interpolation": "area",
@@ -165,7 +168,7 @@
       "mean_shift_celsius": -0.0005959071029254156,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "NONE",
         "candidate_id": "G0_DIRECT_STRETCH_BILINEAR",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -174,12 +177,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "HALF_PIXEL_CENTER",
         "crop_xyxy": [
           0,
           0,
           640,
           480
         ],
+        "edge_behavior": "CLAMP_EDGE",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "DIRECT_STRETCH",
         "horizontal_flip": false,
         "interpolation": "bilinear",
@@ -283,7 +289,7 @@
       "mean_shift_celsius": -0.0012075350219840075,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "NONE",
         "candidate_id": "G0_DIRECT_STRETCH_NEAREST",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -292,12 +298,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "HALF_PIXEL_CENTER",
         "crop_xyxy": [
           0,
           0,
           640,
           480
         ],
+        "edge_behavior": "CLAMP_EDGE",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "DIRECT_STRETCH",
         "horizontal_flip": false,
         "interpolation": "nearest",
@@ -401,7 +410,7 @@
       "mean_shift_celsius": 0.01029631768157461,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "AREA_AVERAGING_INTEGRATION",
         "candidate_id": "G1_FIXED_ASPECT_CROP_AREA",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -410,12 +419,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "EXACT_SOURCE_AREA_INTEGRATION",
         "crop_xyxy": [
           10,
           0,
           630,
           480
         ],
+        "edge_behavior": "CLAMP_EDGE",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "FIXED_ASPECT_CROP",
         "horizontal_flip": false,
         "interpolation": "area",
@@ -519,7 +531,7 @@
       "mean_shift_celsius": 0.009664310654069178,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "NONE",
         "candidate_id": "G1_FIXED_ASPECT_CROP_BILINEAR",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -528,12 +540,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "HALF_PIXEL_CENTER",
         "crop_xyxy": [
           10,
           0,
           630,
           480
         ],
+        "edge_behavior": "CLAMP_EDGE",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "FIXED_ASPECT_CROP",
         "horizontal_flip": false,
         "interpolation": "bilinear",
@@ -637,7 +652,7 @@
       "mean_shift_celsius": 0.009571865043717468,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "NONE",
         "candidate_id": "G1_FIXED_ASPECT_CROP_NEAREST",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -646,12 +661,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "HALF_PIXEL_CENTER",
         "crop_xyxy": [
           10,
           0,
           630,
           480
         ],
+        "edge_behavior": "CLAMP_EDGE",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "FIXED_ASPECT_CROP",
         "horizontal_flip": false,
         "interpolation": "nearest",
@@ -755,7 +773,7 @@
       "mean_shift_celsius": -6.470411613908785e-10,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "AREA_AVERAGING_INTEGRATION",
         "candidate_id": "G2_ASPECT_PAD_MASKED_AREA",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -764,12 +782,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "EXACT_SOURCE_AREA_INTEGRATION",
         "crop_xyxy": [
           0,
           0,
           640,
           480
         ],
+        "edge_behavior": "MASKED_NAN_PADDING",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "ASPECT_PRESERVING_PAD",
         "horizontal_flip": false,
         "interpolation": "area",
@@ -873,7 +894,7 @@
       "mean_shift_celsius": 1.5290336808101063e-05,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "NONE",
         "candidate_id": "G2_ASPECT_PAD_MASKED_BILINEAR",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -882,12 +903,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "HALF_PIXEL_CENTER",
         "crop_xyxy": [
           0,
           0,
           640,
           480
         ],
+        "edge_behavior": "MASKED_NAN_PADDING",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "ASPECT_PRESERVING_PAD",
         "horizontal_flip": false,
         "interpolation": "bilinear",
@@ -991,7 +1015,7 @@
       "mean_shift_celsius": 0.00013102579315564059,
       "pilot_frame_count": 48,
       "profile": {
-        "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+        "antialias": "NONE",
         "candidate_id": "G2_ASPECT_PAD_MASKED_NEAREST",
         "canonical_dtype": "float32",
         "canonical_shape": [
@@ -1000,12 +1024,15 @@
         ],
         "canonical_unit": "CELSIUS",
         "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+        "coordinate_mapping": "HALF_PIXEL_CENTER",
         "crop_xyxy": [
           0,
           0,
           640,
           480
         ],
+        "edge_behavior": "MASKED_NAN_PADDING",
+        "explicit_antialias_prefilter": false,
         "geometry_policy": "ASPECT_PRESERVING_PAD",
         "horizontal_flip": false,
         "interpolation": "nearest",

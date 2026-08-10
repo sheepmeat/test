@@ -8,7 +8,7 @@
   "physical_dtype": "float32",
   "physical_unit": "CELSIUS",
   "profile": {
-    "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+    "antialias": "NONE",
     "candidate_id": "G1_FIXED_ASPECT_CROP_BILINEAR",
     "canonical_dtype": "float32",
     "canonical_shape": [
@@ -17,12 +17,15 @@
     ],
     "canonical_unit": "CELSIUS",
     "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+    "coordinate_mapping": "HALF_PIXEL_CENTER",
     "crop_xyxy": [
       10,
       0,
       630,
       480
     ],
+    "edge_behavior": "CLAMP_EDGE",
+    "explicit_antialias_prefilter": false,
     "geometry_policy": "FIXED_ASPECT_CROP",
     "horizontal_flip": false,
     "interpolation": "bilinear",
