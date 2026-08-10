@@ -281,7 +281,8 @@ def create_source_identity_manifest() -> Dict[str, Any]:
         "track": "CO2",
         "dataset_name": "UCI Occupancy Detection Dataset",
         "stable_identifier": "UCI Machine Learning Repository Dataset ID 357",
-        "doi": "10.24432/C5CW2B",
+        "doi": "10.24432/C5X01N",
+        "journal_paper_doi": "10.1016/j.enbuild.2015.11.071",
         "official_source_url": "https://archive.ics.uci.edu/dataset/357/occupancy+detection",
         "publication_title": "Accurate occupancy detection of an office room from light, temperature, humidity and CO2 measurements using statistical learning models",
         "authors": ["Luis M. Candanedo", "V. Feldheim"],
@@ -295,9 +296,9 @@ def create_source_identity_manifest() -> Dict[str, Any]:
             "sampling_interval_seconds": 60,
             "occupancy_annotation_method": "Ground truth labeled from camera pictures taken every min",
             "dataset_files": {
-                "datatraining.txt": "Primary training set collected Feb 4 to Feb 10, 2015",
-                "datatest.txt": "First test set collected Feb 11 to Feb 15, 2015",
-                "datatest2.txt": "Second test set collected Feb 15 to Feb 22, 2015"
+                "datatest.txt": "First test set collected Feb 2 to Feb 4, 2015 (2015-02-02 14:19:00 to 2015-02-04 10:43:00)",
+                "datatraining.txt": "Primary training set collected Feb 4 to Feb 10, 2015 (2015-02-04 17:51:00 to 2015-02-10 09:33:00)",
+                "datatest2.txt": "Second test set collected Feb 11 to Feb 18, 2015 (2015-02-11 14:48:00 to 2015-02-18 09:19:00)"
             }
         },
         "target_semantics": {
@@ -325,7 +326,7 @@ def create_license_manifest() -> Dict[str, Any]:
             "commercial_use": "VERIFIED_PERMITTED_WITH_ATTRIBUTION",
             "citation_requirement": "VERIFIED_REQUIRED"
         },
-        "citation_string": "Candanedo, L. M., & Feldheim, V. (2016). Accurate occupancy detection of an office room from light, temperature, humidity and CO2 measurements using statistical learning models. Energy and Buildings, 112, 28-39. https://doi.org/10.24432/C5CW2B",
+        "citation_string": "Candanedo, L. M., & Feldheim, V. (2016). Accurate occupancy detection of an office room from light, temperature, humidity and CO2 measurements using statistical learning models. Energy and Buildings, 112, 28-39. https://doi.org/10.24432/C5X01N (Paper: https://doi.org/10.1016/j.enbuild.2015.11.071)",
         "license_classification_status": "VERIFIED"
     }
 

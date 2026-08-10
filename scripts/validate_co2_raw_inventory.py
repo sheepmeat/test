@@ -192,8 +192,26 @@ def validate_manifests(repo_root: Path, manifest_dir: Path) -> Tuple[bool, List[
     # 6. Official Identity & License Audit
     if source_id.get("dataset_name") != "UCI Occupancy Detection Dataset":
         errors.append(f"Dataset name mismatch: {source_id.get('dataset_name')}")
-    if source_id.get("doi") != "10.24432/C5CW2B":
-        errors.append(f"DOI mismatch: {source_id.get('doi')}")
+    if source_id.get("doi") != "10.24432/C5X01N":
+        errors.append(f"DOI mismatch: expected 10.24432/C5X01N, got {source_id.get('doi')}")
+    if source_id.get("journal_paper_doi") != "10.1016/j.enbuild.2015.11.071":
+        errors.append(f"Journal paper DOI mismatch: expected 10.1016/j.enbuild.2015.11.071, got {source_id.get('journal_paper_doi')}")
+
+    # Validate exact raw member timestamps to prevent collection date range drift
+    expected_member_timelines = {
+        "datatest.txt": ("2015-02-02 14:19:00", "2015-02-04 10:43:00"),
+        "datatraining.txt": ("2015-02-04 17:51:00", "2015-02-10 09:33:00"),
+        "datatest2.txt": ("2015-02-11 14:48:00", "2015-02-18 09:19:00"),
+    }
+
+    for m in members:
+        name = m.get("member_name")
+        if name in expected_member_timelines:
+            exp_first, exp_last = expected_member_timelines[name]
+            if m.get("first_timestamp_string") != exp_first:
+                errors.append(f"Member {name} first timestamp mismatch: expected {exp_first}, got {m.get('first_timestamp_string')}")
+            if m.get("last_timestamp_string") != exp_last:
+                errors.append(f"Member {name} last timestamp mismatch: expected {exp_last}, got {m.get('last_timestamp_string')}")
 
     target_sem = source_id.get("target_semantics", {})
     if target_sem.get("apnea_proxy_claim") is not False:
@@ -205,6 +223,8 @@ def validate_manifests(repo_root: Path, manifest_dir: Path) -> Tuple[bool, List[
 
     if license_info.get("license_spdx_id") != "CC-BY-4.0":
         errors.append(f"License SPDX ID mismatch: {license_info.get('license_spdx_id')}")
+    if "10.24432/C5X01N" not in license_info.get("citation_string", ""):
+        errors.append(f"Citation string does not contain expected DOI 10.24432/C5X01N: {license_info.get('citation_string')}")
 
     # 7. Lineage Separation Audit
     lineages = lineage.get("lineages", {})
