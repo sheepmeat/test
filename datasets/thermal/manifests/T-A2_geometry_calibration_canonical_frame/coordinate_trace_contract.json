@@ -10,7 +10,7 @@
   "phase": "T-A2",
   "profile_id": "G1_FIXED_ASPECT_CROP_BILINEAR",
   "schema_version": "1.0",
-  "support_semantics": "bilinear four-neighbor support with edge clamp",
+  "support_semantics": "BILINEAR support; coordinate_mapping=HALF_PIXEL_CENTER; edge_handling=EDGE_CLAMPING; explicit_antialias_prefilter=NO_EXPLICIT_ANTIALIAS_PREFILTER",
   "synthetic_fixture_checks": {
     "asymmetric_hot_region": "PASS_FIXED_MAPPING",
     "corner_markers": "PASS_SOURCE_ORDER_PRESERVED",

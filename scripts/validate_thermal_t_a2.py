@@ -51,6 +51,14 @@ REQUIRED_JSON = [
 ]
 PILOT_PER_CLASS = 12
 EXPECTED_PILOT_COUNT = 48
+POLICY_NUMERIC_FIELDS = (
+    "anisotropy_ratio_excess",
+    "padding_percentage",
+    "interpolation_preference_rank",
+    "mean_absolute_shift_celsius",
+    "range_compression_distance_from_one",
+    "round_trip_mae",
+)
 
 
 def canonical_json(value: Any) -> str:
@@ -349,47 +357,80 @@ def validate_evidence(
         result = _result(a0, a1, errors, warnings, False)
         return result
 
+    policy = documents["geometry_selection_policy.json"]
+    required_policy_keys = {"policy_id", "policy_version", "mandatory_rejection_gates", "metric_definitions", "admissibility_thresholds", "ranking_order", "tie_definition", "tie_break_rule", "unsupported_metrics", "model_performance_used"}
+    if not required_policy_keys.issubset(policy):
+        _error(errors, "SELECTION_POLICY_INCOMPLETE", "geometry_selection_policy.json", str(sorted(required_policy_keys - set(policy))))
+    if policy.get("model_performance_used") is not False:
+        _error(errors, "MODEL_METRIC_SELECTION_CONTAMINATION", "geometry_selection_policy.json:model_performance_used", "must be false")
+    if not policy.get("mandatory_rejection_gates") or not policy.get("ranking_order") or not policy.get("tie_break_rule"):
+        _error(errors, "SELECTION_POLICY_INCOMPLETE", "geometry_selection_policy.json", "gates, ranking order, and tie break are mandatory")
+
     registry = documents["geometry_candidate_registry.json"]
+    comparison = documents["geometry_comparison.json"]
     candidates = registry.get("candidates")
+    comparison_candidates = comparison.get("candidate_results")
     if not isinstance(candidates, list) or len(candidates) != 9:
         _error(errors, "CANDIDATE_SET_INVALID", "geometry_candidate_registry.json:candidates", "Expected exactly 9 predeclared candidates.")
         candidates = []
+    if not isinstance(comparison_candidates, list) or len(comparison_candidates) != 9:
+        _error(errors, "COMPARISON_CANDIDATE_SET_INVALID", "geometry_comparison.json:candidate_results", "Expected exactly 9 candidates.")
+        comparison_candidates = []
     candidate_ids = [item.get("profile", {}).get("candidate_id") for item in candidates]
     if candidate_ids != sorted(candidate_ids) or len(set(candidate_ids)) != len(candidate_ids):
         _error(errors, "CANDIDATE_ORDER_INVALID", "geometry_candidate_registry.json:candidates", "Candidates must be unique and sorted.")
-    if registry.get("ranking_rule") != [
-        "NO_UNSUPPORTED_SEMANTIC_TRANSFORMATION",
-        "SOURCE_AS_STORED_ORIENTATION_AND_DETERMINISTIC_MAPPING",
-        "VALID_PHYSICAL_VALUE_PRESERVATION",
-        "MINIMAL_ARTIFICIAL_CONTENT",
-        "MINIMAL_UNACCEPTABLE_SOURCE_FOV_LOSS",
-        "MINIMAL_GEOMETRIC_DISTORTION",
-        "STABLE_TEMPERATURE_STATISTICS",
-        "SIMPLE_REPRODUCIBLE_IMPLEMENTATION",
-        "FIXED_62X80_SOFTWARE_GRID_COMPATIBILITY",
-    ]:
-        _error(errors, "RANKING_RULE_CHANGED", "geometry_candidate_registry.json:ranking_rule", "Predeclared ranking rule differs.")
-    if registry.get("model_performance_used_for_selection") is not False:
+    if registry.get("selection_policy_id") != policy.get("policy_id") or comparison.get("selection_policy_id") != policy.get("policy_id"):
+        _error(errors, "SELECTION_POLICY_REFERENCE_MISMATCH", "geometry_candidate_registry.json", "Registry/comparison policy reference is stale.")
+    if registry.get("model_performance_used_for_selection") is not False or comparison.get("model_performance_used") is not False:
         _error(errors, "MODEL_METRIC_SELECTION_CONTAMINATION", "geometry_candidate_registry.json", "Model performance must not select geometry.")
-    for candidate in candidates:
+    for index, candidate in enumerate(candidates):
         serialized = json.dumps(candidate, ensure_ascii=False).lower()
         if any(term in serialized for term in ("accuracy", "f1", "fall_recall", "confidence", "model_score")):
-            _error(errors, "MODEL_METRIC_IN_CANDIDATE_EVIDENCE", "geometry_candidate_registry.json", "Candidate evidence contains model-selection metrics.")
+            _error(errors, "MODEL_METRIC_IN_CANDIDATE_EVIDENCE", f"geometry_candidate_registry.json:candidates[{index}]", "Candidate evidence contains model-selection metrics.")
         profile = candidate.get("profile", {})
-        if profile.get("source_shape") != list(SOURCE_SHAPE) or profile.get("canonical_shape") != list(CANONICAL_SHAPE):
-            _error(errors, "CANDIDATE_SHAPE_INVALID", "geometry_candidate_registry.json", str(profile))
-        if profile.get("rotation") != 0 or profile.get("horizontal_flip") is not False or profile.get("vertical_flip") is not False:
-            _error(errors, "UNSUPPORTED_ORIENTATION_TRANSFORM", "geometry_candidate_registry.json", str(profile))
+        if profile.get("interpolation") == "bilinear" and profile.get("explicit_antialias_prefilter") != "NO_EXPLICIT_ANTIALIAS_PREFILTER":
+            _error(errors, "BILINEAR_ANTIALIAS_SEMANTICS_INVALID", f"candidate[{index}].profile", str(profile))
+        bbox = candidate.get("bbox_fov_diagnostic", {})
+        for field in ("source_bbox_outside_frame_count", "additional_bbox_intersected_by_candidate_crop_count", "additional_bbox_area_loss_due_to_candidate_crop", "mean_bbox_retention_due_to_candidate_transform", "minimum_bbox_retention_due_to_candidate_transform", "coordinate_clipping_order"):
+            if field not in bbox:
+                _error(errors, "BBOX_DIAGNOSTIC_MISSING", f"candidate[{index}].bbox_fov_diagnostic", field)
+        if not str(bbox.get("coordinate_clipping_order", "")).startswith("SOURCE_BBOX_CLIP_TO_DISTRIBUTED_FRAME"):
+            _error(errors, "BBOX_CLIPPING_ORDER_UNDECLARED", f"candidate[{index}].bbox_fov_diagnostic", str(bbox.get("coordinate_clipping_order")))
+
+    evaluated, winner = _independent_selection(candidates, policy, errors)
+    actual_by_id = {item.get("profile", {}).get("candidate_id"): item for item in candidates}
+    expected_by_id = {item.get("profile", {}).get("candidate_id"): item for item in evaluated}
+    for candidate_id, expected in expected_by_id.items():
+        actual = actual_by_id.get(candidate_id, {})
+        for field in ("mandatory_gates", "admissibility", "rejection_reason", "ranking_metrics", "rank", "tie_group", "final_selection_status", "selection_reason"):
+            if actual.get(field) != expected.get(field):
+                _error(errors, "CANDIDATE_RANKING_INCONSISTENT", f"geometry_candidate_registry.json:{candidate_id}.{field}", f"expected={expected.get(field)!r}; found={actual.get(field)!r}")
+    if comparison_candidates and canonical_json(comparison_candidates) != canonical_json(candidates):
+        _error(errors, "REGISTRY_COMPARISON_MISMATCH", "geometry_comparison.json:candidate_results", "Registry and comparison candidate metrics differ.")
 
     selected = documents["selected_geometry_profile.json"]
     profile = selected.get("profile", {})
-    for key, expected in (
-        ("profile_id", EXPECTED_PROFILE_ID), ("candidate_id", EXPECTED_PROFILE_ID),
-        ("crop_xyxy", EXPECTED_CROP), ("canonical_shape", list(CANONICAL_SHAPE)),
-        ("source_shape", list(SOURCE_SHAPE)), ("interpolation", "bilinear"),
-        ("canonical_dtype", "float32"), ("canonical_unit", "CELSIUS"),
-        ("rotation", 0), ("horizontal_flip", False), ("vertical_flip", False),
-    ):
+    selected_id = winner["profile"]["profile_id"] if winner is not None else None
+    if winner is None:
+        _error(errors, "NO_ADMISSIBLE_CANDIDATE", "geometry_selection_policy.json", "No candidate passed the declared policy.")
+    elif comparison.get("selected_profile_id") != selected_id or comparison.get("selected_candidate_id") != winner["profile"]["candidate_id"]:
+        _error(errors, "WINNER_DERIVATION_MISMATCH", "geometry_comparison.json", "Stored winner differs from independent ranking.")
+    if selected.get("profile_id") != profile.get("profile_id") or (selected_id is not None and profile.get("profile_id") != selected_id):
+        _error(errors, "SELECTED_PROFILE_MISMATCH", "selected_geometry_profile.json:profile.profile_id", f"independent winner={selected_id}; found={profile.get('profile_id')}")
+    if selected_id is not None:
+        try:
+            expected_profile = profile_for_id(selected_id).to_dict()
+            if profile != expected_profile:
+                _error(errors, "SELECTED_PROFILE_MISMATCH", "selected_geometry_profile.json:profile", "Selected profile definition differs from the independently declared candidate profile.")
+        except Exception as exc:
+            _error(errors, "SELECTED_PROFILE_DEFINITION_UNREADABLE", "selected_geometry_profile.json:profile", str(exc))
+    policy_checksum = hashlib.sha256(canonical_json(policy).encode("utf-8")).hexdigest()
+    metrics_checksum = hashlib.sha256(canonical_json(candidates).encode("utf-8")).hexdigest()
+    if selected.get("selection_policy_id") != policy.get("policy_id") or selected.get("selection_policy_content_sha256") != policy_checksum:
+        _error(errors, "SELECTION_POLICY_REFERENCE_MISMATCH", "selected_geometry_profile.json", "Selected policy reference/checksum is stale.")
+    if selected.get("candidate_metrics_content_sha256") != metrics_checksum:
+        _error(errors, "CANDIDATE_METRIC_CHECKSUM_MISMATCH", "selected_geometry_profile.json", "Selected candidate metric checksum is stale.")
+    for key, expected in (("canonical_shape", list(CANONICAL_SHAPE)), ("source_shape", list(SOURCE_SHAPE)), ("canonical_dtype", "float32"), ("canonical_unit", "CELSIUS"), ("rotation", 0), ("horizontal_flip", False), ("vertical_flip", False)):
         if profile.get(key) != expected:
             _error(errors, "SELECTED_PROFILE_MISMATCH", f"selected_geometry_profile.json:profile.{key}", f"expected={expected!r}; found={profile.get(key)!r}")
     if selected.get("selection_status") not in {"GEOMETRY_PROFILE_SELECTED", "GEOMETRY_PROFILE_SELECTED_WITH_LIMITATIONS"}:
@@ -430,7 +471,7 @@ def validate_evidence(
         _error(errors, "INVALID_PIXEL_POLICY_INCOMPLETE", "invalid_pixel_policy.json", str(invalid))
 
     trace = documents["coordinate_trace_contract.json"]
-    if trace.get("profile_id") != EXPECTED_PROFILE_ID or trace.get("synthetic_fixture_checks", {}).get("corner_markers") != "PASS_SOURCE_ORDER_PRESERVED":
+    if trace.get("profile_id") != profile.get("profile_id") or trace.get("synthetic_fixture_checks", {}).get("corner_markers") != "PASS_SOURCE_ORDER_PRESERVED":
         _error(errors, "COORDINATE_TRACE_CONTRACT_INVALID", "coordinate_trace_contract.json", str(trace))
     if not trace.get("forward_equation") or not trace.get("inverse_equation"):
         _error(errors, "COORDINATE_EQUATIONS_MISSING", "coordinate_trace_contract.json", "Forward and inverse equations required.")
@@ -441,16 +482,16 @@ def validate_evidence(
         _error(errors, "PILOT_COUNT_INVALID", "pilot_geometry_summary.json", str(pilot.get("pilot_frame_count")))
     if pilot.get("source_class_counts") != {"0": 12, "1": 12, "2": 12, "3": 12}:
         _error(errors, "PILOT_CLASS_COVERAGE_INVALID", "pilot_geometry_summary.json:source_class_counts", str(pilot.get("source_class_counts")))
-    if pilot.get("selected_profile_id") != EXPECTED_PROFILE_ID:
+    if pilot.get("selected_profile_id") != profile.get("profile_id"):
         _error(errors, "PILOT_PROFILE_MISMATCH", "pilot_geometry_summary.json:selected_profile_id", str(pilot.get("selected_profile_id")))
     record_indices = [item.get("source_frame_index") for item in records]
     if record_indices != sorted(record_indices) or len(set(record_indices)) != len(record_indices):
         _error(errors, "PILOT_ORDER_INVALID", "pilot_geometry_summary.json:records", "Records must be sorted and unique.")
     for index, item in enumerate(records):
-        for field in ("source_encoded_frame_sha256", "source_member_name", "source_frame_index", "geometry_profile_id", "canonical_frame_hash", "canonical_shape", "canonical_dtype", "canonical_unit"):
+        for field in ("source_encoded_frame_sha256", "source_member_name", "source_frame_index", "geometry_profile_id", "canonical_frame_hash", "canonical_shape", "canonical_dtype", "canonical_unit", "source_provenance"):
             if field not in item:
                 _error(errors, "PILOT_PROVENANCE_MISSING", f"pilot_geometry_summary.json:records[{index}]", field)
-        if item.get("geometry_profile_id") != EXPECTED_PROFILE_ID or item.get("canonical_shape") != list(CANONICAL_SHAPE) or item.get("canonical_dtype") != "float32":
+        if item.get("geometry_profile_id") != profile.get("profile_id") or item.get("canonical_shape") != list(CANONICAL_SHAPE) or item.get("canonical_dtype") != "float32":
             _error(errors, "PILOT_CANONICAL_CONTRACT_INVALID", f"pilot_geometry_summary.json:records[{index}]", str(item))
         if item.get("source_pose_name") == "HUMAN_FALL":
             _error(errors, "SAFE_NEST_LABEL_REWRITE", f"pilot_geometry_summary.json:records[{index}]", "Original LYING label must remain unchanged.")
@@ -470,7 +511,8 @@ def validate_evidence(
     elif visual.get("sha256") != _sha256(visual_path):
         _error(errors, "VISUAL_SPOTCHECK_CHECKSUM_MISMATCH", str(visual.get("path")), "Diagnostic image checksum differs.")
 
-    _validate_synthetic_coordinate_contract(errors)
+    if selected_id is not None:
+        _validate_synthetic_coordinate_contract(profile_for_id(selected_id), errors)
 
     if verify_real_payload:
         try:
@@ -478,7 +520,9 @@ def validate_evidence(
             measured = reader.inspect_archive()
             if measured["archive_identity"]["sha256"] != "3a838bd70835e579ecfaa820a6c0b4cbc6ba7b76729417c73845f0c959281449":
                 _error(errors, "REAL_SOURCE_IDENTITY_MISMATCH", "datasets/raw_archives/thermal_split_zips/test.zip", "T-A1 source hash changed.")
-            selected_profile = selected_geometry_profile()
+            if selected_id is None:
+                raise ValueError("Cannot validate real pilot without an independently selected profile")
+            selected_profile = profile_for_id(selected_id)
             for item in records:
                 frame = reader.read_frame(int(item["source_frame_index"]))
                 before = frame.raw_encoded_frame_sha256

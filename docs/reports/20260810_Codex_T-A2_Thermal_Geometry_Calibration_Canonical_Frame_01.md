@@ -10,15 +10,17 @@ T-A3 authorized: `YES`
 
 ## Decision
 
-The selected software canonical profile is `G1_FIXED_ASPECT_CROP_BILINEAR`: preserve SDT orientation as stored, crop the fixed source rectangle `(left=10, top=0, right=630, bottom=480)`, and apply deterministic custom NumPy bilinear downsampling to `(62,80)`. The canonical physical unit is Celsius and the canonical dtype is float32. No model score, model inference, normalization, or SafeNest label remapping was used.
+The selected software canonical profile is `G1_FIXED_ASPECT_CROP_BILINEAR`. It was derived from all nine candidate metric records using policy `THERMAL_T_A2_GEOMETRY_SELECTION_POLICY_002` v2.0; no profile ID is hardcoded as the winner. The canonical physical unit is Celsius and the canonical dtype is float32. No model score, model inference, normalization, or SafeNest label remapping was used.
 
 ## Geometry boundary
 
 The verified SDT distributed frame is `(480,640)` and already contains the authors' bilinear enlargement from the FLIR Lepton 3.5 native `(120,160)` grid. T-A2 does not reverse that operation or claim a restored native frame. Thermal-44 physical orientation and packet ordering remain `UNVERIFIED / DEFERRED_T_C`.
 
-The predeclared candidate set contains 3 fixed geometry policies (direct stretch, fixed aspect crop, masked aspect pad) crossed with nearest, bilinear, and exact area interpolation. The ranking rule was fixed before candidate measurements: preserve semantics and source orientation, preserve physical values, minimize artificial content, minimize unacceptable FOV loss, minimize distortion, then favor stable/simple deterministic implementation and the fixed software grid.
+The predeclared candidate set contains 3 fixed geometry policies (direct stretch, fixed aspect crop, masked aspect pad) crossed with nearest, bilinear, and exact area interpolation. The policy first applies mandatory semantic gates, then the declared FOV/bbox/padding admissibility thresholds, then lexicographically ranks anisotropy, padding, interpolation preference, Celsius-statistic distortion, round-trip diagnostic MAE, and finally candidate ID.
 
-The selected crop retains `[10, 0, 630, 480]` and `96.875%` of source area. Direct stretch retains full FOV but has higher anisotropy; pad retains FOV by introducing masked invalid rows. The fixed crop has no synthetic pixels and reduces aspect anisotropy.
+The selected geometry crop is `[10, 0, 630, 480]` and retains `96.875%` of source area. Candidate evidence records each gate, admissibility result, rejection reason, rank, tie group, and final status. Source-frame bbox overflow is clipped before measuring incremental candidate-crop damage: `5` source bboxes were outside the distributed frame, `2` received additional crop intersection, and total additional crop loss was `406.500000` source-pixel².
+
+The selected interpolation is `BILINEAR` with coordinate mapping `HALF_PIXEL_CENTER`, edge handling `EDGE_CLAMPING`, and `NO_EXPLICIT_ANTIALIAS_PREFILTER`. Coordinate mapping is not described as antialiasing.
 
 ## Physical calibration
 

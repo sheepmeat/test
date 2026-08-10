@@ -22,7 +22,7 @@
       80
     ],
     "unit": "CELSIUS",
-    "validity_mask": "boolean; all selected G1 pixels measured source pixels"
+    "validity_mask": "boolean; selected-profile measured pixels are true and any declared padding is false"
   },
   "phase": "T-A2",
   "provenance_required": [

@@ -153,13 +153,17 @@ def _bbox_metrics(reader: SDTThermalRawReader, profile: GeometryProfile, indices
         records.append(transform_bbox(label.source_bbox, profile))
     retained = [float(item["retained_area_fraction"]) for item in records if item["retained_area_fraction"] is not None]
     additional_losses = [float(item.get("additional_bbox_area_loss_due_to_candidate_crop", 0.0)) for item in records]
+    source_areas = [float(item.get("source_clipped_area", 0.0) or 0.0) for item in records]
+    total_source_area = float(sum(source_areas))
+    total_additional_loss = float(sum(additional_losses))
     return {
         "person_bbox_count": len(records),
         "source_bbox_outside_frame_count": int(sum(bool(item.get("source_bbox_outside_frame")) for item in records)),
         "source_boundary_clipped_count": int(sum(bool(item.get("source_boundary_clipped")) for item in records)),
         "additional_bbox_intersected_by_candidate_crop_count": int(sum(loss > 0.0 for loss in additional_losses)),
-        "additional_bbox_area_loss_due_to_candidate_crop": float(sum(additional_losses)),
-        "candidate_crop_additional_bbox_area_loss_total": float(sum(additional_losses)),
+        "additional_bbox_area_loss_due_to_candidate_crop": total_additional_loss,
+        "candidate_crop_additional_bbox_area_loss_total": total_additional_loss,
+        "additional_bbox_area_loss_due_to_candidate_crop_fraction": total_additional_loss / total_source_area if total_source_area else 0.0,
         "bbox_removed_by_candidate_crop_count": int(sum(item["status"] == "BBOX_REMOVED_BY_CANDIDATE_CROP" for item in records)),
         "mean_bbox_retention_due_to_candidate_transform": float(np.mean(retained)) if retained else None,
         "minimum_bbox_retention_due_to_candidate_transform": float(np.min(retained)) if retained else None,
@@ -601,7 +605,7 @@ def write_artifacts(root: Path = ROOT) -> dict[str, Any]:
     artifacts, by_class, candidate_results = build_artifacts(reader)
     for name, data in sorted(artifacts.items()):
         (evidence_dir / name).write_text(canonical_json(data), encoding="utf-8")
-    visual = _visual_spotcheck(reader, selected_geometry_profile(), evidence_dir / "visual_spotcheck.png")
+    visual = _visual_spotcheck(reader, profile_for_id(artifacts["selected_geometry_profile.json"]["profile_id"]), evidence_dir / "visual_spotcheck.png")
     (evidence_dir / "visual_spotcheck_registry.json").write_text(canonical_json({"phase": "T-A2", "schema_version": "1.0", **visual}), encoding="utf-8")
 
     from scripts.validate_thermal_t_a2 import validate_evidence

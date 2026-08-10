@@ -8153,6 +8153,7 @@
   ],
   "schema_version": "1.0",
   "selected_profile_id": "G1_FIXED_ASPECT_CROP_BILINEAR",
+  "selection_policy_id": "THERMAL_T_A2_GEOMETRY_SELECTION_POLICY_002",
   "selection_rule": "12 evenly spaced sorted source indices per original source pose class; 48 total; labels only provide coverage/diagnostics.",
   "source_archive_identity": {
     "materialization_state": "LOCALLY_MATERIALIZED",
