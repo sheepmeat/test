@@ -4,8 +4,8 @@
       "architecture_id": "M-B3_CONV1D_GAP_BASELINE",
       "format": "float32",
       "filename": "M-B3_CONV1D_GAP_BASELINE_float32.tflite",
-      "file_bytes": 20568,
-      "sha256": "512fc529da42c44a2d58f505488c01514d3a0c2eaf41f913847278c8f78f72f5",
+      "file_bytes": 45460,
+      "sha256": "428335e06ae8bc2eed7dc71b1b7d8839c114819567ab50553a756f7b5fd34096",
       "select_tf_ops_required": false
     },
     {
@@ -20,8 +20,8 @@
       "architecture_id": "M-B3_SEPARABLECONV1D_GAP",
       "format": "float32",
       "filename": "M-B3_SEPARABLECONV1D_GAP_float32.tflite",
-      "file_bytes": 17488,
-      "sha256": "6ba9b6e485d179a98392e187de04e720c003f7ce5a4a55025d74610432474535",
+      "file_bytes": 22816,
+      "sha256": "48df19e615cda431af29d26b84e140c9418e281124bdc48650cfcc5f351d4908",
       "select_tf_ops_required": false
     },
     {
@@ -36,8 +36,8 @@
       "architecture_id": "M-B3_CONV1D_BILSTM",
       "format": "float32",
       "filename": "M-B3_CONV1D_BILSTM_float32.tflite",
-      "file_bytes": 56064,
-      "sha256": "039ba075ded093f4395a607a81b46c9d01ca48a46df9d45d2353da943d6a560a",
+      "file_bytes": 106336,
+      "sha256": "87e2f9a668b2629a1bef2df74302fa4995869bcfb398f2315b30502a49ff0a91",
       "select_tf_ops_required": true
     },
     {
@@ -45,7 +45,7 @@
       "format": "float32_select_tf_ops",
       "filename": "M-B3_CONV1D_BILSTM_select_tf_ops.tflite",
       "file_bytes": 106336,
-      "sha256": "451cec8f5b8c85e91c5627230bf7736fb7a69dbb8cddfe719b4c8033e7ee22d2",
+      "sha256": "46c5c503797025e4ddf67e37ae499924a1a32bf20ff2e149878779163c659b3d",
       "select_tf_ops_required": true
     }
   ]

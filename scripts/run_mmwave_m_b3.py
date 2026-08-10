@@ -67,29 +67,45 @@ def run_m_b3_pipeline() -> Dict[str, Any]:
     report_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. Input Identity & Upstream Evidence Locking
-    mb0_contract_path = ROOT_DIR / "datasets/mmwave/manifests/M-B0_evaluation_protocol/evaluation_contract.json"
-    mb1_sel_path = ROOT_DIR / "datasets/mmwave/manifests/M-B1_preprocessing_ablation/selected_preprocessing_profile.json"
-    mb2_sel_path = ROOT_DIR / "datasets/mmwave/manifests/M-B2_class_imbalance/selected_imbalance_strategy.json"
-    mb2_chk_path = ROOT_DIR / "datasets/mmwave/manifests/M-B2_class_imbalance/checksums.sha256"
-    a5_split_path = ROOT_DIR / "datasets/mmwave/manifests/a5_subject_split/subject_split_manifest.jsonl"
-    a6_npy_path = ROOT_DIR / "datasets/mmwave/processed/mmwave_canonical_real_v1.npy"
+    upstream_identity_files = [
+        ("M-B0_evaluation_contract", "datasets/mmwave/manifests/M-B0_evaluation_protocol/evaluation_contract.json"),
+        ("M-B0_locked_test_policy", "datasets/mmwave/manifests/M-B0_evaluation_protocol/locked_test_access_policy.json"),
+        ("M-B0_checksums", "datasets/mmwave/manifests/M-B0_evaluation_protocol/checksums.sha256"),
+        ("M-B1_selected_preprocessing", "datasets/mmwave/manifests/M-B1_preprocessing_ablation/selected_preprocessing_profile.json"),
+        ("M-B1_train_fit_statistics", "datasets/mmwave/manifests/M-B1_preprocessing_ablation/train_fit_statistics.json"),
+        ("M-B1_experiment_contract", "datasets/mmwave/manifests/M-B1_preprocessing_ablation/experiment_contract.json"),
+        ("M-B1_checksums", "datasets/mmwave/manifests/M-B1_preprocessing_ablation/checksums.sha256"),
+        ("M-B2_selected_imbalance_strategy", "datasets/mmwave/manifests/M-B2_class_imbalance/selected_imbalance_strategy.json"),
+        ("M-B2_experiment_contract", "datasets/mmwave/manifests/M-B2_class_imbalance/experiment_contract.json"),
+        ("M-B2_checksums", "datasets/mmwave/manifests/M-B2_class_imbalance/checksums.sha256"),
+        ("a5_subject_split_manifest", "datasets/mmwave/manifests/a5_subject_split/subject_split_manifest.jsonl"),
+        ("a6_canonical_matrix", "datasets/mmwave/processed/mmwave_canonical_real_v1.npy"),
+        ("a6_full_window_manifest", "datasets/mmwave/manifests/a6_full_conversion/full_window_manifest.jsonl"),
+        ("requirements_mac", "requirements-mac.txt"),
+    ]
+
+    inputs_locked = []
+    for item_name, item_rel_path in upstream_identity_files:
+        full_p = ROOT_DIR / item_rel_path
+        if not full_p.is_file():
+            raise RuntimeError(f"Upstream identity target missing: {item_rel_path}")
+        inputs_locked.append({
+            "name": item_name,
+            "path": item_rel_path,
+            "measured_sha256": hashlib.sha256(full_p.read_bytes()).hexdigest(),
+        })
 
     input_identity_payload = {
         "phase_id": "M-B3",
-        "inputs": [
-            {"name": "M-B0_evaluation_contract", "path": "datasets/mmwave/manifests/M-B0_evaluation_protocol/evaluation_contract.json", "measured_sha256": hashlib.sha256(mb0_contract_path.read_bytes()).hexdigest()},
-            {"name": "M-B1_selected_preprocessing", "path": "datasets/mmwave/manifests/M-B1_preprocessing_ablation/selected_preprocessing_profile.json", "measured_sha256": hashlib.sha256(mb1_sel_path.read_bytes()).hexdigest()},
-            {"name": "M-B2_selected_imbalance_strategy", "path": "datasets/mmwave/manifests/M-B2_class_imbalance/selected_imbalance_strategy.json", "measured_sha256": hashlib.sha256(mb2_sel_path.read_bytes()).hexdigest()},
-            {"name": "M-B2_checksums", "path": "datasets/mmwave/manifests/M-B2_class_imbalance/checksums.sha256", "measured_sha256": hashlib.sha256(mb2_chk_path.read_bytes()).hexdigest()},
-            {"name": "a5_subject_split_manifest", "path": "datasets/mmwave/manifests/a5_subject_split/subject_split_manifest.jsonl", "measured_sha256": hashlib.sha256(a5_split_path.read_bytes()).hexdigest()},
-            {"name": "a6_canonical_matrix", "path": "datasets/mmwave/processed/mmwave_canonical_real_v1.npy", "measured_sha256": hashlib.sha256(a6_npy_path.read_bytes()).hexdigest()},
-            {"name": "requirements_mac", "path": "requirements-mac.txt", "measured_sha256": req_sha},
-        ]
+        "inputs": inputs_locked,
     }
     (manifest_dir / "input_identity.json").write_text(json.dumps(input_identity_payload, indent=2), encoding="utf-8")
-    print("1. Upstream identity locked (7 files).")
+    print(f"1. Upstream identity locked ({len(inputs_locked)} files).")
 
     # 2. Verify Upstream Selections (M-B1 Preprocessing & M-B2 Imbalance)
+    mb1_sel_path = ROOT_DIR / "datasets/mmwave/manifests/M-B1_preprocessing_ablation/selected_preprocessing_profile.json"
+    mb2_sel_path = ROOT_DIR / "datasets/mmwave/manifests/M-B2_class_imbalance/selected_imbalance_strategy.json"
+
     mb1_sel_data = json.loads(mb1_sel_path.read_text(encoding="utf-8"))
     mb2_sel_data = json.loads(mb2_sel_path.read_text(encoding="utf-8"))
 
@@ -202,6 +218,7 @@ def run_m_b3_pipeline() -> Dict[str, Any]:
     keras_predictions_dict = {}
     tflite_float_predictions_dict = {}
     tflite_int8_predictions_dict = {}
+    trained_models_map = {}
 
     for arch_info in ARCHITECTURES:
         arch_id = arch_info["architecture_id"]
@@ -213,6 +230,7 @@ def run_m_b3_pipeline() -> Dict[str, Any]:
             arch_id, train_x, train_y, val_x, val_y, seed=42, batch_size=32, epochs=25, learning_rate=0.001
         )
         training_runs_map[arch_id] = train_info
+        trained_models_map[arch_id] = model
 
         # Keras float predictions & metrics
         keras_probs = model.predict(val_x, verbose=0)
@@ -378,15 +396,12 @@ def run_m_b3_pipeline() -> Dict[str, Any]:
 
     # 7. Save Model Weights & Validation Predictions NPZ
     weights_npz = {}
-    for arch_info in ARCHITECTURES:
-        arch_id = arch_info["architecture_id"]
-        # Save float32 weights array
-        m_tmp = build_model_by_id(arch_id)
-        # Restore trained weights from session memory
-        tr_run = training_runs_map[arch_id]
-        # Re-build and load trained model
-        m_tmp, _ = train_architecture(arch_id, train_x, train_y, val_x, val_y, seed=42)
-        for idx_w, w in enumerate(m_tmp.get_weights()):
+    for arch_id, train_info in training_runs_map.items():
+        m_trained = trained_models_map[arch_id]
+        computed_sha = compute_numerical_weights_sha256(m_trained)
+        if computed_sha != train_info["final_weights_sha256"]:
+            raise RuntimeError(f"Weight SHA mismatch for {arch_id}: computed={computed_sha}, expected={train_info['final_weights_sha256']}")
+        for idx_w, w in enumerate(m_trained.get_weights()):
             weights_npz[f"{arch_id}_layer_weight_{idx_w}"] = w
 
     np.savez_compressed(manifest_dir / "architecture_weights.npz", **weights_npz)
@@ -400,7 +415,7 @@ def run_m_b3_pipeline() -> Dict[str, Any]:
             val_preds_npz_data[f"{arch_id}_tflite_int8"] = tflite_int8_predictions_dict[arch_id]
 
     np.savez_compressed(manifest_dir / "validation_predictions.npz", **val_preds_npz_data)
-    print("7. Saved architecture_weights.npz and validation_predictions.npz.")
+    print("7. Saved architecture_weights.npz and validation_predictions.npz with 100% lineage match.")
 
     # 8. Rank Architectures & Select Deployment Shortlist
     eligible_ranked = rank_architectures(list(architecture_results.values()), eps=1e-5)
@@ -553,6 +568,33 @@ def run_m_b3_pipeline() -> Dict[str, Any]:
     formatted_table = "\n".join(table_rows)
     calc_summary = subj_diag["summary_across_subjects"]
 
+        # Build dynamic summary items for report
+    summary_bullets = []
+    shortlist_rationales = []
+    for rank_idx, a_id in enumerate(shortlist_ids, 1):
+        info_a = architecture_results[a_id]
+        c_a = conversion_map[a_id]
+        sz_str = f"{c_a['strict_int8']['file_bytes']} bytes" if c_a["strict_int8"]["file_bytes"] else "N/A"
+        summary_bullets.append(
+            f"   - `{a_id}` ({info_a['total_params']} params): Float Macro F1 = **`{info_a['float_macro_f1']:.6f}`**, Strict INT8 = `FULL_INT8_SUPPORTED` ({sz_str}), Eligible."
+        )
+        shortlist_rationales.append(
+            f"{rank_idx}. **`{a_id}`** (Rank {rank_idx}): Float Macro F1 = `{info_a['float_macro_f1']:.6f}`, strict full-INT8 TFLite compatible (TFLITE_BUILTINS_INT8 only, {sz_str})."
+        )
+    # Add excluded architectures
+    for a_id, info_a in architecture_results.items():
+        if a_id not in shortlist_ids:
+            c_a = conversion_map[a_id]
+            summary_bullets.append(
+                f"   - `{a_id}` ({info_a['total_params']} params): Float Macro F1 = `{info_a['float_macro_f1']:.6f}`, Strict INT8 = `STRICT_INT8_UNSUPPORTED` ({info_a['deployment_eligibility']}), Excluded from deployment shortlist."
+            )
+            shortlist_rationales.append(
+                f"3. **`{a_id}`** (Excluded): Strict INT8 conversion failed (`{info_a['deployment_eligibility']}`). Excluded from TinyML deployment shortlist."
+            )
+
+    dynamic_summary_text = "\n".join(summary_bullets)
+    dynamic_rationale_text = "\n".join(shortlist_rationales)
+
     report_content = f"""# SafeNest mmWave M-B3 — TinyML Architecture Comparison Report (Pinned Environment)
 
 - **Author**: Antigravity Implementation Engineer
@@ -576,9 +618,7 @@ Key achievements of Phase M-B3:
 1. **Frozen Lineage & Baseline Equivalence**: Preserved frozen M-B1 BPF and TRAIN-fitted Z-score statistics. Architecture A (`M-B3_CONV1D_GAP_BASELINE`) reproduced the frozen M-B2 CE_UNWEIGHTED baseline with 100% parameter, weight SHA, prediction vector, and metric match.
 2. **TinyML Screening & INT8 Qualification**: Evaluated Float Keras, Float TFLite, and Strict INT8 TFLite models using the frozen all-TRAIN compatibility representative dataset (`M-B3_COMPATIBILITY_REPSET_ALL_TRAIN_001`, 327 samples).
 3. **Deployment Shortlist Selection**:
-   - `M-B3_CONV1D_GAP_BASELINE` (9,315 params): Float Macro F1 = **`0.663708`**, Strict INT8 = `FULL_INT8_SUPPORTED` (15,920 bytes), Eligible.
-   - `M-B3_SEPARABLECONV1D_GAP` (3,307 params): Float Macro F1 = `0.589839`, Strict INT8 = `FULL_INT8_SUPPORTED` (9,328 bytes), Eligible.
-   - `M-B3_CONV1D_BILSTM` (23,075 params): Float Macro F1 = `0.655844`, Strict INT8 = `STRICT_INT8_UNSUPPORTED` (Requires `SELECT_TF_OPS_REQUIRED`), Excluded from deployment shortlist.
+{dynamic_summary_text}
 4. **Strict LOCKED_TEST Isolation**: Confirmed `0` performance access attempts to LOCKED_TEST (`scripts/mmwave_phase_b_access.py` guard verified).
 5. **Deterministic Rerun Verification**: Verified 100% initial/final weight SHA and prediction match when rerunning shortlisted architectures under fixed initialization seed `42`.
 
@@ -595,9 +635,7 @@ Key achievements of Phase M-B3:
 ## 3. Deployment Shortlist Rationale
 
 Under the pre-registered ranking rules:
-1. **`M-B3_CONV1D_GAP_BASELINE`** (Rank 1): Top Float Macro F1 (`0.663708`), strict INT8 supported (`TFLITE_BUILTINS_INT8` only, 15,920 bytes).
-2. **`M-B3_SEPARABLECONV1D_GAP`** (Rank 2): Lightweight separation model (3,307 params, 9,328 bytes INT8), strict INT8 supported.
-3. **`M-B3_CONV1D_BILSTM`** (Excluded): Strict INT8 conversion failed due to Bidirectional LSTM unsupported ops in standard TFLite INT8 delegate (`SELECT_TF_OPS_REQUIRED`). Excluded from TinyML deployment shortlist.
+{dynamic_rationale_text}
 
 ---
 

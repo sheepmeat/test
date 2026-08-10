@@ -21,9 +21,9 @@ Key achievements of Phase M-B3:
 1. **Frozen Lineage & Baseline Equivalence**: Preserved frozen M-B1 BPF and TRAIN-fitted Z-score statistics. Architecture A (`M-B3_CONV1D_GAP_BASELINE`) reproduced the frozen M-B2 CE_UNWEIGHTED baseline with 100% parameter, weight SHA, prediction vector, and metric match.
 2. **TinyML Screening & INT8 Qualification**: Evaluated Float Keras, Float TFLite, and Strict INT8 TFLite models using the frozen all-TRAIN compatibility representative dataset (`M-B3_COMPATIBILITY_REPSET_ALL_TRAIN_001`, 327 samples).
 3. **Deployment Shortlist Selection**:
-   - `M-B3_CONV1D_GAP_BASELINE` (9,315 params): Float Macro F1 = **`0.663708`**, Strict INT8 = `FULL_INT8_SUPPORTED` (15,920 bytes), Eligible.
-   - `M-B3_SEPARABLECONV1D_GAP` (3,307 params): Float Macro F1 = `0.589839`, Strict INT8 = `FULL_INT8_SUPPORTED` (9,328 bytes), Eligible.
-   - `M-B3_CONV1D_BILSTM` (23,075 params): Float Macro F1 = `0.655844`, Strict INT8 = `STRICT_INT8_UNSUPPORTED` (Requires `SELECT_TF_OPS_REQUIRED`), Excluded from deployment shortlist.
+   - `M-B3_CONV1D_GAP_BASELINE` (9315 params): Float Macro F1 = **`0.663708`**, Strict INT8 = `FULL_INT8_SUPPORTED` (22080 bytes), Eligible.
+   - `M-B3_SEPARABLECONV1D_GAP` (3258 params): Float Macro F1 = **`0.470833`**, Strict INT8 = `FULL_INT8_SUPPORTED` (19072 bytes), Eligible.
+   - `M-B3_CONV1D_BILSTM` (19747 params): Float Macro F1 = `0.467728`, Strict INT8 = `STRICT_INT8_UNSUPPORTED` (SELECT_TF_OPS_REQUIRED), Excluded from deployment shortlist.
 4. **Strict LOCKED_TEST Isolation**: Confirmed `0` performance access attempts to LOCKED_TEST (`scripts/mmwave_phase_b_access.py` guard verified).
 5. **Deterministic Rerun Verification**: Verified 100% initial/final weight SHA and prediction match when rerunning shortlisted architectures under fixed initialization seed `42`.
 
@@ -42,9 +42,9 @@ Key achievements of Phase M-B3:
 ## 3. Deployment Shortlist Rationale
 
 Under the pre-registered ranking rules:
-1. **`M-B3_CONV1D_GAP_BASELINE`** (Rank 1): Top Float Macro F1 (`0.663708`), strict INT8 supported (`TFLITE_BUILTINS_INT8` only, 15,920 bytes).
-2. **`M-B3_SEPARABLECONV1D_GAP`** (Rank 2): Lightweight separation model (3,307 params, 9,328 bytes INT8), strict INT8 supported.
-3. **`M-B3_CONV1D_BILSTM`** (Excluded): Strict INT8 conversion failed due to Bidirectional LSTM unsupported ops in standard TFLite INT8 delegate (`SELECT_TF_OPS_REQUIRED`). Excluded from TinyML deployment shortlist.
+1. **`M-B3_CONV1D_GAP_BASELINE`** (Rank 1): Float Macro F1 = `0.663708`, strict full-INT8 TFLite compatible (TFLITE_BUILTINS_INT8 only, 22080 bytes).
+2. **`M-B3_SEPARABLECONV1D_GAP`** (Rank 2): Float Macro F1 = `0.470833`, strict full-INT8 TFLite compatible (TFLITE_BUILTINS_INT8 only, 19072 bytes).
+3. **`M-B3_CONV1D_BILSTM`** (Excluded): Strict INT8 conversion failed (`SELECT_TF_OPS_REQUIRED`). Excluded from TinyML deployment shortlist.
 
 ---
 

@@ -201,16 +201,14 @@ def train_architecture(
 
 
 def convert_to_tflite_float(model: tf.keras.Model) -> Tuple[bytes, bool]:
-    """Convert Keras model to Float32 TFLite binary. Returns (tflite_bytes, select_tf_ops_required)."""
+    """Convert Keras model to unoptimized Float32 TFLite binary. Returns (tflite_bytes, select_tf_ops_required)."""
     try:
         converter = tf.lite.TFLiteConverter.from_keras_model(model)
-        converter.optimizations = [tf.lite.Optimize.DEFAULT]
         converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS]
         return converter.convert(), False
     except Exception:
         # Fallback allowing Select TF Ops for architectures like BiLSTM
         converter = tf.lite.TFLiteConverter.from_keras_model(model)
-        converter.optimizations = [tf.lite.Optimize.DEFAULT]
         converter.target_spec.supported_ops = [
             tf.lite.OpsSet.TFLITE_BUILTINS,
             tf.lite.OpsSet.SELECT_TF_OPS,

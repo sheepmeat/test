@@ -141,7 +141,7 @@ class TestMMWaveMB3(unittest.TestCase):
             with self.assertRaises(MB3ValidationError):
                 validate_m_b3_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
 
-    def test_validator_fails_on_malformed_checksum_line(self) -> None:
+    def test_validator_fails_on_corrupted_checksum_line(self) -> None:
         if not self.manifest_dir.is_dir():
             return
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -151,6 +151,52 @@ class TestMMWaveMB3(unittest.TestCase):
             chk_file = tmp_manifest / "checksums.sha256"
             content = chk_file.read_text(encoding="utf-8")
             chk_file.write_text("malformed_line_without_space\n" + content, encoding="utf-8")
+
+            with self.assertRaises(MB3ValidationError):
+                validate_m_b3_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_corrupted_tflite_sha(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            tfl_file = tmp_manifest / "tflite_artifact_manifest.json"
+            data = json.loads(tfl_file.read_text(encoding="utf-8"))
+            data["tflite_artifacts"][0]["sha256"] = "0" * 64
+            tfl_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB3ValidationError):
+                validate_m_b3_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_stale_upstream_identity_sha(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            id_file = tmp_manifest / "input_identity.json"
+            data = json.loads(id_file.read_text(encoding="utf-8"))
+            data["inputs"][0]["measured_sha256"] = "0" * 64
+            id_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB3ValidationError):
+                validate_m_b3_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_corrupted_weight_npz(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            npz_file = tmp_manifest / "architecture_weights.npz"
+            orig_npz = np.load(npz_file)
+            corrupted_dict = {k: orig_npz[k].copy() for k in orig_npz.files}
+            corrupted_dict["M-B3_CONV1D_GAP_BASELINE_layer_weight_0"] += 1.0
+            np.savez_compressed(npz_file, **corrupted_dict)
 
             with self.assertRaises(MB3ValidationError):
                 validate_m_b3_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
