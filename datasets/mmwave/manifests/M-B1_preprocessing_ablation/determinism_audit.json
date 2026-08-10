@@ -1,0 +1,7 @@
+{
+  "phase_id": "M-B1",
+  "selected_profile_id": "M-B1_D1_B0_Z0",
+  "deterministic_seed": 42,
+  "validation_predictions_match": true,
+  "determinism_verified": true
+}

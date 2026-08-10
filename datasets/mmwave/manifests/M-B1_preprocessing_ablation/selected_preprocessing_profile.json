@@ -1,0 +1,16 @@
+{
+  "phase_id": "M-B1",
+  "selected_profile_id": "M-B1_D1_B0_Z0",
+  "selected_profile_name": "DETREND_ONLY",
+  "detrend": true,
+  "bpf": false,
+  "zscore": false,
+  "validation_performance": {
+    "macro_f1": 0.652975,
+    "accuracy": 0.721519,
+    "min_per_class_recall": 0.35,
+    "apnea_proxy_recall": 0.972973,
+    "apnea_proxy_miss_rate": 0.027027
+  },
+  "selection_rationale": "Selected M-B1_D1_B0_Z0 (DETREND_ONLY) with highest VALIDATION Macro F1 = 0.652975 under pre-registered 6-step ranking rule."
+}
