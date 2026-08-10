@@ -1,0 +1,55 @@
+{
+  "conversion_compatibility": {
+    "M-B3_CONV1D_GAP_BASELINE": {
+      "architecture_id": "M-B3_CONV1D_GAP_BASELINE",
+      "float_tflite": {
+        "success": true,
+        "file_bytes": 20568,
+        "sha256": "512fc529da42c44a2d58f505488c01514d3a0c2eaf41f913847278c8f78f72f5"
+      },
+      "strict_int8": {
+        "success": true,
+        "status_code": "FULL_INT8_SUPPORTED",
+        "error_message": null,
+        "file_bytes": 22080,
+        "sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5",
+        "select_tf_ops_required": false
+      },
+      "deployment_eligibility": "DEPLOYMENT_ELIGIBLE_SINGLE_SEED"
+    },
+    "M-B3_SEPARABLECONV1D_GAP": {
+      "architecture_id": "M-B3_SEPARABLECONV1D_GAP",
+      "float_tflite": {
+        "success": true,
+        "file_bytes": 17488,
+        "sha256": "6ba9b6e485d179a98392e187de04e720c003f7ce5a4a55025d74610432474535"
+      },
+      "strict_int8": {
+        "success": true,
+        "status_code": "FULL_INT8_SUPPORTED",
+        "error_message": null,
+        "file_bytes": 19072,
+        "sha256": "dd26a1786f2adcd8107aa8072496803246e8032052218b3815a5f11d4182703b",
+        "select_tf_ops_required": false
+      },
+      "deployment_eligibility": "DEPLOYMENT_ELIGIBLE_SINGLE_SEED"
+    },
+    "M-B3_CONV1D_BILSTM": {
+      "architecture_id": "M-B3_CONV1D_BILSTM",
+      "float_tflite": {
+        "success": true,
+        "file_bytes": 56064,
+        "sha256": "039ba075ded093f4395a607a81b46c9d01ca48a46df9d45d2353da943d6a560a"
+      },
+      "strict_int8": {
+        "success": false,
+        "status_code": "SELECT_TF_OPS_REQUIRED",
+        "error_message": "<unknown>:0: error: loc(callsite(fused[\"TensorListReserve:\", \"M-B3_CONV1D_BILSTM_1/bidirectional_1/backward_lstm_1/TensorArrayV2_1@__inference_function_36980\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper_37071\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): 'tf.TensorListReserve' op requires element_shape to be static during TF Lite transformation pass\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper_37071\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\n<unknown>:0: error: loc(callsite(fused[\"TensorListReserve:\", \"M-B3_CONV1D_BILSTM_1/bidirectional_1/backward_lstm_1/TensorArrayV2_1@__inference_function_36980\"] at callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper_37071\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]))): failed to legalize operation 'tf.TensorListReserve' that was explicitly marked illegal\n<unknown>:0: note: loc(callsite(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall@__inference_signature_wrapper_37071\"] at fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"])): called from\n<unknown>:0: note: loc(fused[\"StatefulPartitionedCall:\", \"StatefulPartitionedCall_1\"]): called from\n<unknown>:0: error: Lowering tensor list ops is failed. Please consider using Select TF ops and disabling `_experimental_lower_tensor_list_ops` flag in the TFLite converter object. For example, converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]\\n converter._experimental_lower_tensor_list_ops = False\n",
+        "file_bytes": null,
+        "sha256": null,
+        "select_tf_ops_required": true
+      },
+      "deployment_eligibility": "SELECT_TF_OPS_REQUIRED"
+    }
+  }
+}
