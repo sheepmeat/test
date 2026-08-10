@@ -74,5 +74,5 @@
       }
     }
   },
-  "selection_rationale": "Preregistered M-B4 multi-seed stability rule: Non-collapsed, highest worst-seed Macro F1, highest mean Macro F1, lower std."
+  "selection_rationale": "Preregistered M-B4 multi-seed stability rule: Non-collapsed, highest worst-seed Macro F1, highest mean Macro F1."
 }

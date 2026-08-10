@@ -4,6 +4,8 @@
   "frozen_preprocessing_profile": "M-B1_D0_B1_Z1",
   "frozen_imbalance_strategy": "M-B2_CE_UNWEIGHTED",
   "eval_population": "VALIDATION_SET_ONLY",
+  "train_samples": 327,
+  "train_subjects": 77,
   "eval_samples": 79,
   "eval_subjects": 17,
   "locked_test_access": "ZERO_PROHIBITED",

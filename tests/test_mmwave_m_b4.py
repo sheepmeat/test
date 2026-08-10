@@ -161,6 +161,81 @@ class TestMMWaveMB4(unittest.TestCase):
             with self.assertRaises(MB4ValidationError):
                 validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
 
+    def test_validator_fails_on_corrupted_per_seed_accuracy(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            ps_file = tmp_manifest / "per_seed_results.json"
+            data = json.loads(ps_file.read_text(encoding="utf-8"))
+            data["per_seed_results"]["M-B3_CONV1D_GAP_BASELINE_seed_42"]["val_accuracy"] = 0.999999
+            ps_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB4ValidationError):
+                validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_corrupted_multi_seed_mean(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            ms_file = tmp_manifest / "multi_seed_results.json"
+            data = json.loads(ms_file.read_text(encoding="utf-8"))
+            data["multi_seed_results"][0]["macro_f1"]["mean"] = 0.999999
+            ms_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB4ValidationError):
+                validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_false_backup_architecture(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            bk_file = tmp_manifest / "backup_architecture.json"
+            data = json.loads(bk_file.read_text(encoding="utf-8"))
+            data["backup_architecture_id"] = "M-B3_SEPARABLECONV1D_GAP"  # False backup because it collapsed!
+            bk_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB4ValidationError):
+                validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_seed43_initial_weight_mismatch(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            tr_file = tmp_manifest / "training_runs.json"
+            data = json.loads(tr_file.read_text(encoding="utf-8"))
+            data["training_runs"]["M-B3_CONV1D_GAP_BASELINE_seed_43"]["initial_weights_sha256"] = "0" * 64
+            tr_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB4ValidationError):
+                validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_scipy_version_mismatch(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            env_file = tmp_manifest / "run_environment.json"
+            data = json.loads(env_file.read_text(encoding="utf-8"))
+            data["scipy_version"] = "0.0.0"
+            env_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB4ValidationError):
+                validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
 
 if __name__ == "__main__":
     unittest.main()
