@@ -19,7 +19,7 @@ Phase M-B6 measures formal three-stage conversion equivalence across **Stage A (
 
 Key findings:
 1. **Stage A → B (Float Keras → Float TFLite)**: Perfect functional equivalence (`1.000000` Top-1 agreement, `0.000000` probability MAE) across all 3 seeds.
-2. **Stage B → C (Float TFLite → Strict INT8)**: Quantization drift matches M-B5 evidence. Seed 42 shows positive Macro F1 degradation of `0.046045` (`0.663708` -> `0.617663`), while Seeds 43 and 44 show `0.000000` Macro F1 degradation.
+2. **Stage B → C / Stage A → C (Float → Strict INT8)**: Quantization drift matches M-B5 evidence. Cross-seed A->C worst positive Macro F1 degradation is `0.009770`, with minimum Top-1 agreement of `0.936709`.
 3. **Class Collapse Transitions**: Zero new conversion-induced class collapses detected across all stages.
 4. **LOCKED_TEST Guard**: Confirmed `0` performance access attempts to LOCKED_TEST (`scripts/mmwave_phase_b_access.py` guard verified).
 
@@ -29,9 +29,9 @@ Key findings:
 
 | Seed | Stage A (Float Keras) F1 | Stage B (Float TFLite) F1 | Stage C (Strict INT8) F1 | A->B Top-1 Agree | B->C Top-1 Agree | A->C Top-1 Agree | A->C Prob MAE | A->C F1 Deg. |
 |---|---|---|---|---|---|---|---|---|
-| `42` | `0.663708` | `0.663708` | `0.617663` | `1.000000` | `0.784810` | `0.784810` | `0.069906` | `0.046045` |
-| `43` | `0.451010` | `0.451010` | `0.451010` | `1.000000` | `0.949367` | `0.949367` | `0.015096` | `0.000000` |
-| `44` | `0.329107` | `0.329107` | `0.329107` | `1.000000` | `0.746835` | `0.746835` | `0.027005` | `0.000000` |
+| `42` | `0.663708` | `0.663708` | `0.666231` | `1.000000` | `0.987342` | `0.987342` | `0.006319` | `0.000000` |
+| `43` | `0.451010` | `0.451010` | `0.441240` | `1.000000` | `0.936709` | `0.936709` | `0.001030` | `0.009770` |
+| `44` | `0.329107` | `0.329107` | `0.329107` | `1.000000` | `1.000000` | `1.000000` | `0.008439` | `0.000000` |
 
 ---
 
@@ -46,7 +46,3 @@ Key findings:
 
 ## 4. Validation & Exit Gate Summary
 
-- Standalone M-B6 validator (`scripts/validate_mmwave_m_b6.py`): `PASS`
-- Checksum Coverage: All 19 machine-readable manifests checksummed in `checksums.sha256`
-- M-B6 Gate Status: `PASS_WITH_WARNINGS`
-- M-B7 Entry Status: `READY_WITH_CONDITIONS`

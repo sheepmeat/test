@@ -64,6 +64,32 @@ REQUIRED_MB6_ARTIFACTS = {
 }
 
 
+def inspect_tflite_structure(tflite_bytes: bytes) -> Dict[str, Any]:
+    """Instantiate TFLite interpreter and inspect dtypes, shapes, and op inventory."""
+    interpreter = tf.lite.Interpreter(model_content=tflite_bytes)
+    interpreter.allocate_tensors()
+
+    in_details = interpreter.get_input_details()[0]
+    out_details = interpreter.get_output_details()[0]
+
+    op_details = interpreter._get_ops_details()
+    op_types = [op["op_name"] for op in op_details]
+    select_tf_ops_count = sum(1 for t in op_types if "Flex" in t or "Select" in t)
+
+    return {
+        "input_dtype": str(in_details["dtype"].__name__),
+        "output_dtype": str(out_details["dtype"].__name__),
+        "input_shape": [int(x) for x in in_details["shape"]],
+        "output_shape": [int(x) for x in out_details["shape"]],
+        "input_scale": float(in_details["quantization"][0]),
+        "input_zero_point": int(in_details["quantization"][1]),
+        "output_scale": float(out_details["quantization"][0]),
+        "output_zero_point": int(out_details["quantization"][1]),
+        "op_types": op_types,
+        "select_tf_ops_count": select_tf_ops_count,
+    }
+
+
 def validate_m_b6_artifacts(
     root_dir: Path = ROOT_DIR,
     manifest_dir: Optional[Path] = None,
@@ -99,7 +125,7 @@ def validate_m_b6_artifacts(
     if env_data.get("requirements_mac_sha256") != req_sha:
         raise MB6ValidationError("requirements-mac.txt SHA-256 mismatch!")
 
-    # 2. Invoke Upstream Standalone Validators (M-B0, M-B1, M-B2, M-B3, M-B4, M-B5, A5, A6)
+    # 2. Invoke Upstream Standalone Validators (M-B0..M-B5, A5, A6)
     if not validate_m_b0_artifacts(root_dir=root_dir).get("validation_success"):
         raise MB6ValidationError("Upstream M-B0 validation failed!")
     if not validate_m_b1_artifacts(root_dir=root_dir).get("validation_success"):
@@ -112,12 +138,33 @@ def validate_m_b6_artifacts(
         raise MB6ValidationError("Upstream M-B4 validation failed!")
     if not validate_m_b5_artifacts(root_dir=root_dir).get("validation_success"):
         raise MB6ValidationError("Upstream M-B5 validation failed!")
-    a5_sum_file = root_dir / "datasets/mmwave/manifests/a5_subject_split/a5_summary.json"
-    if not a5_sum_file.is_file():
-        raise MB6ValidationError("Upstream A5 summary missing!")
-    a5_sum = json.loads(a5_sum_file.read_text(encoding="utf-8"))
-    if a5_sum.get("validation_success") is not True or a5_sum.get("a5_gate_status") != "PASS_WITH_WARNINGS":
-        raise MB6ValidationError("Upstream A5 validation failed!")
+
+    # Section I: Invoke authoritative A5 validator
+    a5_dir = root_dir / "datasets/mmwave/manifests/a5_subject_split"
+    def load_json_helper(p):
+        return json.loads(p.read_text(encoding="utf-8"))
+    def load_jsonl_helper(p):
+        return [json.loads(line) for line in p.read_text(encoding="utf-8").splitlines() if line.strip()]
+
+    split_contract_file = root_dir / "datasets/mmwave/splits/mmwave_real_subject_split_v1.json"
+    a5_errors = validate_a5(
+        load_jsonl_helper(root_dir / "datasets/mmwave/manifests/a0_raw_inventory/recording_index.jsonl"),
+        load_jsonl_helper(root_dir / "datasets/mmwave/manifests/a4_label_pilot/window_label_manifest.jsonl"),
+        load_json_helper(a5_dir / "split_profile.json"),
+        load_jsonl_helper(a5_dir / "subject_split_manifest.jsonl"),
+        load_jsonl_helper(a5_dir / "recording_split_manifest.jsonl"),
+        load_jsonl_helper(a5_dir / "pilot_window_split_manifest.jsonl"),
+        load_json_helper(a5_dir / "provenance_schema.json"),
+        load_json_helper(a5_dir / "split_balance_report.json"),
+        load_json_helper(a5_dir / "exceptions.json"),
+        load_json_helper(split_contract_file),
+        verify_checksum_file=True,
+        output=a5_dir,
+        split_output=split_contract_file,
+    )
+    if a5_errors:
+        raise MB6ValidationError(f"Upstream A5 validation errors detected: {a5_errors}")
+
     if not validate_full_conversion_artifacts(root_dir=root_dir).get("validation_success"):
         raise MB6ValidationError("Upstream A6 validation failed!")
 
@@ -174,10 +221,14 @@ def validate_m_b6_artifacts(
     mb4_weights_file = root_dir / "datasets/mmwave/manifests/M-B4_multiseed_stability/seed_weights.npz"
     mb4_weights = np.load(mb4_weights_file)
 
+    # Section H: Prove M-B5 selected INT8 reuse identity
     mb5_sel_file = root_dir / "datasets/mmwave/manifests/M-B5_representative_calibration/selected_calibration_profile.json"
     mb5_sel_prof = json.loads(mb5_sel_file.read_text(encoding="utf-8")).get("selected_calibration_profile")
     if mb5_sel_prof != "M-B5_CAL_CLASS_BALANCED_120":
         raise MB6ValidationError(f"M-B5 selected calibration profile mismatch: expected M-B5_CAL_CLASS_BALANCED_120, got {mb5_sel_prof}")
+
+    mb5_art_file = root_dir / "datasets/mmwave/manifests/M-B5_representative_calibration/tflite_artifact_manifest.json"
+    mb5_artifacts_data = json.loads(mb5_art_file.read_text(encoding="utf-8")).get("tflite_artifacts", {})
 
     zstats = fit_train_zscore_statistics(train_data["signals"], detrend=False, bpf=True)
     val_x_float32 = transform_signals(val_data["signals"], detrend=False, bpf=True, zscore=True, zscore_stats=zstats).astype(np.float32)
@@ -192,12 +243,25 @@ def validate_m_b6_artifacts(
     float_tflite_preds_npz = np.load(manifest_dir / "float_tflite_predictions.npz")
     int8_tflite_preds_npz = np.load(manifest_dir / "int8_tflite_predictions.npz")
 
+    per_seed_metrics_file = manifest_dir / "per_seed_stage_metrics.json"
+    if not per_seed_metrics_file.is_file():
+        raise MB6ValidationError("per_seed_stage_metrics.json missing!")
+    per_seed_metrics_manifest = json.loads(per_seed_metrics_file.read_text(encoding="utf-8")).get("per_seed_stage_metrics", {})
+
     pairwise_file = manifest_dir / "pairwise_equivalence_metrics.json"
     if not pairwise_file.is_file():
         raise MB6ValidationError("pairwise_equivalence_metrics.json missing!")
     pairwise_data = json.loads(pairwise_file.read_text(encoding="utf-8")).get("pairwise_equivalence", {})
 
+    quant_diag_file = manifest_dir / "quantization_diagnostics.json"
+    if not quant_diag_file.is_file():
+        raise MB6ValidationError("quantization_diagnostics.json missing!")
+    quant_diag_manifest = json.loads(quant_diag_file.read_text(encoding="utf-8")).get("quantization_diagnostics", {})
+
     recomputed_pairwise_dict = {}
+    recomputed_per_seed_metrics = {}
+    recomputed_quant_diag = {}
+    recomputed_collapse_transitions = {}
 
     for seed in SHORTLIST_SEEDS:
         run_key = f"{mb4_pri_arch}_seed_{seed}"
@@ -224,6 +288,11 @@ def validate_m_b6_artifacts(
         if not np.array_equal(preds_a, keras_preds_npz[run_key]):
             raise MB6ValidationError(f"Keras prediction vector mismatch for {run_key}")
 
+        cm_a = compute_one_vs_rest_false_positives(val_y, preds_a)
+        f1_a = float(np.mean([cm_a[c]["f1_score"] for c in LABEL_NAMES]))
+        acc_a = float(np.mean(preds_a == val_y))
+        col_a = (cm_a["APNEA"]["recall"] == 0.0) or (cm_a["RAPID_OR_ABNORMAL"]["recall"] == 0.0) or (len(np.unique(preds_a)) < 3)
+
         # --- Stage B (Float TFLite) Verification ---
         b_key = f"{run_key}_stage_b"
         if b_key not in stage_artifacts_data:
@@ -237,14 +306,25 @@ def validate_m_b6_artifacts(
             raise MB6ValidationError(f"Float TFLite size mismatch for {run_key}")
         if hashlib.sha256(b_file_path.read_bytes()).hexdigest() != b_meta["sha256"]:
             raise MB6ValidationError(f"Float TFLite SHA mismatch for {run_key}")
-        if b_meta["input_dtype"] != "float32" or b_meta["output_dtype"] != "float32":
-            raise MB6ValidationError(f"Float TFLite dtype mismatch for {run_key}: input={b_meta['input_dtype']}, output={b_meta['output_dtype']}")
-        if b_meta["select_tf_ops_count"] > 0:
+
+        # Section G: Inspect actual TFLite structure
+        b_struct = inspect_tflite_structure(b_file_path.read_bytes())
+        if b_struct["input_dtype"] != "float32" or b_struct["output_dtype"] != "float32":
+            raise MB6ValidationError(f"Float TFLite actual dtype mismatch for {run_key}: input={b_struct['input_dtype']}, output={b_struct['output_dtype']}")
+        if b_struct["select_tf_ops_count"] > 0 or b_meta.get("select_tf_ops_count", 0) > 0:
             raise MB6ValidationError(f"Select TF Ops detected in Float TFLite for {run_key}")
+
+        if b_meta["input_dtype"] != b_struct["input_dtype"] or b_meta["output_dtype"] != b_struct["output_dtype"]:
+            raise MB6ValidationError(f"Stage B manifest vs actual dtype mismatch for {run_key}")
 
         preds_b, probs_b = evaluate_tflite_float32_model(b_file_path.read_bytes(), val_x_3d)
         if not np.array_equal(preds_b, float_tflite_preds_npz[run_key]):
             raise MB6ValidationError(f"Float TFLite prediction vector mismatch for {run_key}")
+
+        cm_b = compute_one_vs_rest_false_positives(val_y, preds_b)
+        f1_b = float(np.mean([cm_b[c]["f1_score"] for c in LABEL_NAMES]))
+        acc_b = float(np.mean(preds_b == val_y))
+        col_b = (cm_b["APNEA"]["recall"] == 0.0) or (cm_b["RAPID_OR_ABNORMAL"]["recall"] == 0.0) or (len(np.unique(preds_b)) < 3)
 
         # --- Stage C (Strict INT8 TFLite) Verification ---
         c_key = f"{run_key}_stage_c"
@@ -259,17 +339,101 @@ def validate_m_b6_artifacts(
             raise MB6ValidationError(f"Strict INT8 file size mismatch for {run_key}")
         if hashlib.sha256(c_file_path.read_bytes()).hexdigest() != c_meta["sha256"]:
             raise MB6ValidationError(f"Strict INT8 SHA mismatch for {run_key}")
-        if c_meta["input_dtype"] != "int8" or c_meta["output_dtype"] != "int8":
-            raise MB6ValidationError(f"Strict INT8 dtype mismatch for {run_key}")
-        if c_meta["select_tf_ops_count"] > 0:
-            raise MB6ValidationError(f"Select TF Ops detected in Strict INT8 for {run_key}")
 
-        eval_c = evaluate_tflite_int8_model_full(c_file_path.read_bytes(), val_x_3d, val_y)
+        # Section G: Inspect actual TFLite structure
+        c_struct = inspect_tflite_structure(c_file_path.read_bytes())
+        if c_struct["input_dtype"] != "int8" or c_struct["output_dtype"] != "int8":
+            raise MB6ValidationError(f"Strict INT8 actual dtype mismatch for {run_key}: input={c_struct['input_dtype']}, output={c_struct['output_dtype']}")
+        if c_struct["select_tf_ops_count"] > 0 or c_meta.get("select_tf_ops_count", 0) > 0:
+            raise MB6ValidationError(f"Select TF Ops detected in Strict INT8 structure for {run_key}")
+
+        if c_meta["input_dtype"] != c_struct["input_dtype"] or c_meta["output_dtype"] != c_struct["output_dtype"]:
+            raise MB6ValidationError(f"Stage C manifest vs actual dtype mismatch for {run_key}")
+
+        # Section H: Prove M-B5 selected INT8 reuse identity
+        mb5_key = f"{mb4_pri_arch}_seed_{seed}_{mb5_sel_prof}"
+        if mb5_key not in mb5_artifacts_data:
+            raise MB6ValidationError(f"M-B5 artifact key '{mb5_key}' missing from M-B5 manifest")
+        mb5_art_meta = mb5_artifacts_data[mb5_key]
+
+        if c_meta["sha256"] != mb5_art_meta["sha256"]:
+            raise MB6ValidationError(f"M-B5 selected INT8 SHA mismatch for {run_key}: M-B6={c_meta['sha256']}, M-B5={mb5_art_meta['sha256']}")
+        if c_meta["bytes"] != mb5_art_meta["bytes"]:
+            raise MB6ValidationError(f"M-B5 selected INT8 byte size mismatch for {run_key}")
+        if not c_meta.get("m_b5_selected_int8_reused"):
+            raise MB6ValidationError(f"m_b5_selected_int8_reused flag must be True for {run_key}")
+
+        eval_c = evaluate_tflite_int8_model_full(c_file_path.read_bytes(), val_x_3d, val_y, float_probs=probs_a)
         preds_c = eval_c["predictions"]
         probs_c = eval_c["probabilities"]
 
         if not np.array_equal(preds_c, int8_tflite_preds_npz[run_key]):
             raise MB6ValidationError(f"Strict INT8 prediction vector mismatch for {run_key}")
+
+        cm_c = eval_c["class_metrics"]
+        f1_c = eval_c["macro_f1"]
+        acc_c = eval_c["accuracy"]
+        col_c = (cm_c["APNEA"]["recall"] == 0.0) or (cm_c["RAPID_OR_ABNORMAL"]["recall"] == 0.0) or (len(np.unique(preds_c)) < 3)
+
+        # Section C: Per-seed stage metrics independent validation
+        calc_per_seed = {
+            "seed": seed,
+            "stage_a_float_keras": {"macro_f1": f1_a, "accuracy": acc_a, "collapsed": col_a, "class_metrics": cm_a},
+            "stage_b_float_tflite": {"macro_f1": f1_b, "accuracy": acc_b, "collapsed": col_b, "class_metrics": cm_b},
+            "stage_c_int8_tflite": {"macro_f1": f1_c, "accuracy": acc_c, "collapsed": col_c, "class_metrics": cm_c},
+        }
+        recomputed_per_seed_metrics[run_key] = calc_per_seed
+
+        manifest_ps = per_seed_metrics_manifest.get(run_key, {})
+        for stg_id in ("stage_a_float_keras", "stage_b_float_tflite", "stage_c_int8_tflite"):
+            m_stg = manifest_ps.get(stg_id, {})
+            c_stg = calc_per_seed[stg_id]
+            for fld in ("macro_f1", "accuracy", "collapsed"):
+                if m_stg.get(fld) != c_stg.get(fld):
+                    raise MB6ValidationError(f"per_seed_stage_metrics '{stg_id}.{fld}' mismatch for {run_key}: manifest={m_stg.get(fld)}, calc={c_stg.get(fld)}")
+
+            m_cm_map = m_stg.get("class_metrics", {})
+            c_cm_map = c_stg["class_metrics"]
+            for cname in LABEL_NAMES:
+                m_cm = m_cm_map.get(cname, {})
+                c_cm = c_cm_map.get(cname, {})
+                for fld in ("support", "tp", "fp", "tn", "fn", "precision", "recall", "f1_score", "fpr"):
+                    if m_cm.get(fld) != c_cm.get(fld):
+                        raise MB6ValidationError(f"per_seed_stage_metrics '{stg_id}.class_metrics.{cname}.{fld}' mismatch for {run_key}: manifest={m_cm.get(fld)}, calc={c_cm.get(fld)}")
+
+        # Section E: Class collapse transition audit
+        new_col_ab = (not col_a) and col_b
+        new_col_bc = (not col_b) and col_c
+        new_col_ac = (not col_a) and col_c
+        calc_collapse_entry = {
+            "seed": seed,
+            "stage_a_collapsed": col_a,
+            "stage_b_collapsed": col_b,
+            "stage_c_collapsed": col_c,
+            "new_collapse_a_to_b": new_col_ab,
+            "new_collapse_b_to_c": new_col_bc,
+            "new_collapse_a_to_c": new_col_ac,
+            "transition_label": f"A({col_a}) -> B({col_b}) -> C({col_c})",
+        }
+        recomputed_collapse_transitions[run_key] = calc_collapse_entry
+
+        # Section F: Quantization diagnostics verification
+        calc_qd = {
+            "seed": seed,
+            "input_scale": eval_c["input_scale"],
+            "input_zero_point": eval_c["input_zero_point"],
+            "output_scale": eval_c["output_scale"],
+            "output_zero_point": eval_c["output_zero_point"],
+            "input_saturation_ratio": eval_c["input_saturation_ratio"],
+            "saturated_sample_count": eval_c["saturated_sample_count"],
+            "output_endpoint_ratio": eval_c["output_endpoint_ratio"],
+        }
+        recomputed_quant_diag[run_key] = calc_qd
+
+        manifest_qd = quant_diag_manifest.get(run_key, {})
+        for fld in ("input_scale", "input_zero_point", "output_scale", "output_zero_point", "input_saturation_ratio", "saturated_sample_count", "output_endpoint_ratio"):
+            if manifest_qd.get(fld) != calc_qd.get(fld):
+                raise MB6ValidationError(f"quantization_diagnostics field '{fld}' mismatch for {run_key}: manifest={manifest_qd.get(fld)}, calc={calc_qd.get(fld)}")
 
         # --- Recompute Pairwise Equivalence ---
         pair_a_b = compute_pairwise_equivalence(preds_a, probs_a, preds_b, probs_b, val_y, val_data["windows"], "Stage A (Float Keras)", "Stage B (Float TFLite)")
@@ -291,6 +455,57 @@ def validate_m_b6_artifacts(
             for fld in ("top1_agreement", "mismatch_count", "output_probability_mae", "output_probability_rmse", "positive_macro_f1_degradation", "max_positive_recall_degradation"):
                 if art_sub.get(fld) != calc_sub.get(fld):
                     raise MB6ValidationError(f"Pairwise field '{p_sub}.{fld}' mismatch for {run_key}: manifest={art_sub.get(fld)}, calc={calc_sub.get(fld)}")
+
+    # Section D: Independently validate cross-seed summaries
+    cross_seed_file = manifest_dir / "cross_seed_equivalence_summary.json"
+    if not cross_seed_file.is_file():
+        raise MB6ValidationError("cross_seed_equivalence_summary.json missing!")
+    cross_seed_manifest = json.loads(cross_seed_file.read_text(encoding="utf-8"))
+
+    for pair_k in ("a_to_b", "b_to_c", "a_to_c"):
+        runs = [recomputed_pairwise_dict[f"{mb4_pri_arch}_seed_{s}"][pair_k] for s in SHORTLIST_SEEDS]
+        top1_agrees = [r["top1_agreement"] for r in runs]
+        f1_degs = [r["positive_macro_f1_degradation"] for r in runs]
+        rec_degs = [r["max_positive_recall_degradation"] for r in runs]
+        maes = [r["output_probability_mae"] for r in runs]
+
+        worst_seed_idx = int(np.argmax(f1_degs))
+        worst_seed = SHORTLIST_SEEDS[worst_seed_idx]
+
+        calc_summary = {
+            "min_top1_agreement": round(float(np.min(top1_agrees)), 6),
+            "mean_top1_agreement": round(float(np.mean(top1_agrees)), 6),
+            "max_top1_agreement": round(float(np.max(top1_agrees)), 6),
+            "worst_macro_f1_degradation": round(float(np.max(f1_degs)), 6),
+            "mean_macro_f1_degradation": round(float(np.mean(f1_degs)), 6),
+            "worst_recall_degradation": round(float(np.max(rec_degs)), 6),
+            "mean_recall_degradation": round(float(np.mean(rec_degs)), 6),
+            "maximum_output_probability_mae": round(float(np.max(maes)), 6),
+            "mean_output_probability_mae": round(float(np.mean(maes)), 6),
+            "worst_seed": worst_seed,
+            "per_seed": {str(s): runs[i] for i, s in enumerate(SHORTLIST_SEEDS)},
+        }
+
+        m_summary = cross_seed_manifest.get(f"cross_seed_{pair_k}", {})
+        for fld in ("min_top1_agreement", "mean_top1_agreement", "max_top1_agreement", "worst_macro_f1_degradation", "mean_macro_f1_degradation", "worst_recall_degradation", "mean_recall_degradation", "maximum_output_probability_mae", "mean_output_probability_mae", "worst_seed"):
+            if m_summary.get(fld) != calc_summary.get(fld):
+                raise MB6ValidationError(f"cross_seed_equivalence_summary field 'cross_seed_{pair_k}.{fld}' mismatch: manifest={m_summary.get(fld)}, calc={calc_summary.get(fld)}")
+
+    # Section E: Class collapse transition audit verification
+    collapse_file = manifest_dir / "class_collapse_transition_audit.json"
+    if not collapse_file.is_file():
+        raise MB6ValidationError("class_collapse_transition_audit.json missing!")
+    collapse_data = json.loads(collapse_file.read_text(encoding="utf-8")).get("class_collapse_transitions", {})
+
+    for seed in SHORTLIST_SEEDS:
+        run_key = f"{mb4_pri_arch}_seed_{seed}"
+        m_entry = collapse_data.get(run_key, {})
+        c_entry = recomputed_collapse_transitions[run_key]
+        for fld in ("stage_a_collapsed", "stage_b_collapsed", "stage_c_collapsed", "new_collapse_a_to_b", "new_collapse_b_to_c", "new_collapse_a_to_c"):
+            if m_entry.get(fld) != c_entry.get(fld):
+                raise MB6ValidationError(f"class_collapse_transition_audit field '{fld}' mismatch for {run_key}: manifest={m_entry.get(fld)}, calc={c_entry.get(fld)}")
+        if c_entry.get("new_collapse_a_to_b") or c_entry.get("new_collapse_b_to_c") or c_entry.get("new_collapse_a_to_c"):
+            raise MB6ValidationError(f"M-B6_NEW_CLASS_COLLAPSE detected for {run_key}!")
 
     # 6. Verify Subject-Level Metrics (3 seeds x 17 subjects x 3 stages = 153 entries)
     subj_file = manifest_dir / "subject_level_stage_metrics.json"
@@ -335,18 +550,6 @@ def validate_m_b6_artifacts(
                     for fld in ("support", "tp", "fp", "tn", "fn", "recall", "precision", "f1"):
                         if art_cm.get(fld) != calc_cm.get(fld):
                             raise MB6ValidationError(f"Subject {sid} class_metrics field '{cname}.{fld}' mismatch for {run_key} {stg_k}: manifest={art_cm.get(fld)}, calc={calc_cm.get(fld)}")
-
-    # 7. Verify Cross-Seed Summaries & Class Collapse Transition Audit
-    collapse_file = manifest_dir / "class_collapse_transition_audit.json"
-    if not collapse_file.is_file():
-        raise MB6ValidationError("class_collapse_transition_audit.json missing!")
-    collapse_data = json.loads(collapse_file.read_text(encoding="utf-8")).get("class_collapse_transitions", {})
-
-    for seed in SHORTLIST_SEEDS:
-        run_key = f"{mb4_pri_arch}_seed_{seed}"
-        c_entry = collapse_data.get(run_key, {})
-        if c_entry.get("new_collapse_a_to_b") or c_entry.get("new_collapse_b_to_c") or c_entry.get("new_collapse_a_to_c"):
-            raise MB6ValidationError(f"M-B6_NEW_CLASS_COLLAPSE detected for {run_key}!")
 
     # 8. Verify Zero Performance Access to LOCKED_TEST
     locked_file = manifest_dir / "locked_test_access_audit.json"
@@ -422,6 +625,12 @@ def validate_m_b6_artifacts(
             "stage_a_b_c_execution_verified": True,
             "pairwise_equivalence_verified": True,
             "subject_level_equivalence_verified": True,
+            "per_seed_stage_metrics_verified": True,
+            "cross_seed_summaries_verified": True,
+            "class_collapse_transitions_verified": True,
+            "quantization_diagnostics_verified": True,
+            "actual_tflite_structure_verified": True,
+            "m_b5_selected_int8_reuse_proven": True,
             "zero_new_class_collapses": True,
             "locked_test_access_blocked": True,
             "hardened_checksum_verification": True,
@@ -437,6 +646,7 @@ def main() -> None:
     print(f"M-B7 Entry Status: {res['m_b7_entry_status']}")
     print(f"Primary Float Finalist: {res['independently_measured']['primary_float_finalist']}")
     print(f"Selected Calibration Profile: {res['independently_measured']['selected_calibration_profile']}")
+    print(f"M-B5 INT8 Reuse Identity Proven: {res['independently_measured']['m_b5_selected_int8_reuse_proven']}")
     print(f"LOCKED_TEST Guard Verified: {res['independently_measured']['locked_test_access_blocked']}")
     print(f"Hardened Checksums Verified: {res['independently_measured']['hardened_checksum_verification']}")
 

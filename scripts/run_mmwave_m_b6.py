@@ -255,7 +255,7 @@ def run_m_b6_pipeline(root_dir: Path = ROOT_DIR) -> Dict[str, Any]:
         tf_c_path = exp_models_dir / f"{primary_arch_id}_seed{seed}_{selected_cal_profile}_int8.tflite"
         tf_c_path.write_bytes(tflite_c_bytes)
 
-        eval_c = evaluate_tflite_int8_model_full(tflite_c_bytes, val_x_3d, val_y)
+        eval_c = evaluate_tflite_int8_model_full(tflite_c_bytes, val_x_3d, val_y, float_probs=probs_a)
         preds_c = eval_c["predictions"]
         probs_c = eval_c["probabilities"]
 
@@ -501,6 +501,22 @@ def run_m_b6_pipeline(root_dir: Path = ROOT_DIR) -> Dict[str, Any]:
     print(f"8. Written checksums.sha256 ({len(manifest_files)} manifest files).")
 
     # 9. Human-Readable Report
+    matrix_rows = []
+    for s in SHORTLIST_SEEDS:
+        rk = f"{primary_arch_id}_seed_{s}"
+        sa_f1 = per_seed_stage_metrics_dict[rk]["stage_a_float_keras"]["macro_f1"]
+        sb_f1 = per_seed_stage_metrics_dict[rk]["stage_b_float_tflite"]["macro_f1"]
+        sc_f1 = per_seed_stage_metrics_dict[rk]["stage_c_int8_tflite"]["macro_f1"]
+        p_ab = pairwise_equivalence_dict[rk]["a_to_b"]
+        p_bc = pairwise_equivalence_dict[rk]["b_to_c"]
+        p_ac = pairwise_equivalence_dict[rk]["a_to_c"]
+        matrix_rows.append(
+            f"| `{s}` | `{sa_f1:.6f}` | `{sb_f1:.6f}` | `{sc_f1:.6f}` | `{p_ab['top1_agreement']:.6f}` | `{p_bc['top1_agreement']:.6f}` | `{p_ac['top1_agreement']:.6f}` | `{p_ac['output_probability_mae']:.6f}` | `{p_ac['positive_macro_f1_degradation']:.6f}` |"
+        )
+    matrix_table_str = "\n".join(matrix_rows)
+
+    cs_ac = cross_seed_summary_payload["cross_seed_a_to_c"]
+
     report_content = f"""# SafeNest mmWave M-B6 — Stage-Equivalence Validation Report
 
 - **Author**: Antigravity Implementation Engineer
@@ -522,7 +538,7 @@ Phase M-B6 measures formal three-stage conversion equivalence across **Stage A (
 
 Key findings:
 1. **Stage A → B (Float Keras → Float TFLite)**: Perfect functional equivalence (`1.000000` Top-1 agreement, `0.000000` probability MAE) across all 3 seeds.
-2. **Stage B → C (Float TFLite → Strict INT8)**: Quantization drift matches M-B5 evidence. Seed 42 shows positive Macro F1 degradation of `0.046045` (`0.663708` -> `0.617663`), while Seeds 43 and 44 show `0.000000` Macro F1 degradation.
+2. **Stage B → C / Stage A → C (Float → Strict INT8)**: Quantization drift matches M-B5 evidence. Cross-seed A->C worst positive Macro F1 degradation is `{cs_ac['worst_macro_f1_degradation']:.6f}`, with minimum Top-1 agreement of `{cs_ac['min_top1_agreement']:.6f}`.
 3. **Class Collapse Transitions**: Zero new conversion-induced class collapses detected across all stages.
 4. **LOCKED_TEST Guard**: Confirmed `0` performance access attempts to LOCKED_TEST (`scripts/mmwave_phase_b_access.py` guard verified).
 
@@ -532,9 +548,7 @@ Key findings:
 
 | Seed | Stage A (Float Keras) F1 | Stage B (Float TFLite) F1 | Stage C (Strict INT8) F1 | A->B Top-1 Agree | B->C Top-1 Agree | A->C Top-1 Agree | A->C Prob MAE | A->C F1 Deg. |
 |---|---|---|---|---|---|---|---|---|
-| `42` | `0.663708` | `0.663708` | `0.617663` | `1.000000` | `0.784810` | `0.784810` | `0.069906` | `0.046045` |
-| `43` | `0.451010` | `0.451010` | `0.451010` | `1.000000` | `0.949367` | `0.949367` | `0.015096` | `0.000000` |
-| `44` | `0.329107` | `0.329107` | `0.329107` | `1.000000` | `0.746835` | `0.746835` | `0.027005` | `0.000000` |
+{matrix_table_str}
 
 ---
 
@@ -549,10 +563,6 @@ Key findings:
 
 ## 4. Validation & Exit Gate Summary
 
-- Standalone M-B6 validator (`scripts/validate_mmwave_m_b6.py`): `PASS`
-- Checksum Coverage: All {len(manifest_files)} machine-readable manifests checksummed in `checksums.sha256`
-- M-B6 Gate Status: `PASS_WITH_WARNINGS`
-- M-B7 Entry Status: `READY_WITH_CONDITIONS`
 """
     (report_dir / "20260810_Antigravity_M-B6_Stage_Equivalence_01.md").write_text(report_content, encoding="utf-8")
     print("9. Human-readable report written.")

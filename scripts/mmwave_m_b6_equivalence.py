@@ -6,7 +6,7 @@ import os
 import sys
 import numpy as np
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 import tensorflow as tf
 
@@ -77,88 +77,37 @@ def evaluate_tflite_float32_model(
     return np.array(float_preds, dtype=int), np.array(float_probs, dtype=np.float32)
 
 
+from mmwave_m_b5_calibration import evaluate_tflite_int8_model
+
+
 def evaluate_tflite_int8_model_full(
     tflite_model_bytes: bytes,
     val_x_3d: np.ndarray,
     val_y: np.ndarray,
+    float_probs: Optional[np.ndarray] = None,
 ) -> Dict[str, Any]:
-    """Execute strict INT8 TFLite model on VALIDATION set and return full diagnostic output."""
-    interpreter = tf.lite.Interpreter(model_content=tflite_model_bytes)
-    interpreter.allocate_tensors()
+    """Execute strict INT8 TFLite model on VALIDATION set using authoritative M-B5 evaluation logic."""
+    if float_probs is None:
+        float_probs = np.zeros((len(val_y), 3), dtype=np.float32)
 
-    in_details = interpreter.get_input_details()[0]
-    out_details = interpreter.get_output_details()[0]
+    res = evaluate_tflite_int8_model(tflite_model_bytes, val_x_3d, val_y, float_probs)
 
-    in_idx = in_details["index"]
-    out_idx = out_details["index"]
-
-    in_scale = float(in_details["quantization"][0])
-    in_zp = int(in_details["quantization"][1])
-    out_scale = float(out_details["quantization"][0])
-    out_zp = int(out_details["quantization"][1])
-
-    N = len(val_x_3d)
-    int8_preds = []
-    dequant_probs = []
-
-    total_input_elements = 0
-    saturated_input_elements = 0
-    saturated_sample_count = 0
-
-    endpoint_occupancy_count = 0
-    total_output_elements = 0
-
-    for i in range(N):
-        x_sample = val_x_3d[i : i + 1]
-
-        q_raw = np.round(x_sample / in_scale + in_zp)
-        sat_mask = (q_raw < -128) | (q_raw > 127)
-        sat_cnt = int(np.sum(sat_mask))
-
-        total_input_elements += q_raw.size
-        saturated_input_elements += sat_cnt
-        if sat_cnt > 0:
-            saturated_sample_count += 1
-
-        x_int8 = np.clip(q_raw, -128, 127).astype(np.int8)
-
-        interpreter.set_tensor(in_idx, x_int8)
-        interpreter.invoke()
-        y_int8 = interpreter.get_tensor(out_idx)
-
-        endpoint_mask = (y_int8 == -128) | (y_int8 == 127)
-        endpoint_occupancy_count += int(np.sum(endpoint_mask))
-        total_output_elements += y_int8.size
-
-        y_dequant = (y_int8.astype(np.float32) - out_zp) * out_scale
-        pred_class = int(np.argmax(y_dequant, axis=1)[0])
-
-        int8_preds.append(pred_class)
-        dequant_probs.append(y_dequant[0].tolist())
-
-    int8_preds_arr = np.array(int8_preds, dtype=int)
-    dequant_probs_arr = np.array(dequant_probs, dtype=np.float32)
-
-    cm = compute_one_vs_rest_false_positives(val_y, int8_preds_arr)
-    macro_f1 = float(np.mean([cm[c]["f1_score"] for c in LABEL_NAMES]))
-    accuracy = float(np.mean(int8_preds_arr == val_y))
-
-    input_saturation_ratio = float(saturated_input_elements / total_input_elements) if total_input_elements > 0 else 0.0
-    output_endpoint_ratio = float(endpoint_occupancy_count / total_output_elements) if total_output_elements > 0 else 0.0
+    int8_preds_arr = np.array(res["int8_predictions"], dtype=int)
+    dequant_probs_arr = np.array(res["dequantized_probabilities"], dtype=np.float32)
 
     return {
         "predictions": int8_preds_arr,
         "probabilities": dequant_probs_arr,
-        "macro_f1": round(macro_f1, 6),
-        "accuracy": round(accuracy, 6),
-        "class_metrics": cm,
-        "input_saturation_ratio": round(input_saturation_ratio, 6),
-        "saturated_sample_count": saturated_sample_count,
-        "output_endpoint_ratio": round(output_endpoint_ratio, 6),
-        "input_scale": in_scale,
-        "input_zero_point": in_zp,
-        "output_scale": out_scale,
-        "output_zero_point": out_zp,
+        "macro_f1": res["val_macro_f1"],
+        "accuracy": res["val_accuracy"],
+        "class_metrics": res["class_metrics"],
+        "input_saturation_ratio": res["input_saturation_ratio"],
+        "saturated_sample_count": res["saturated_sample_count"],
+        "output_endpoint_ratio": res["output_endpoint_ratio"],
+        "input_scale": res["input_scale"],
+        "input_zero_point": res["input_zero_point"],
+        "output_scale": res["output_scale"],
+        "output_zero_point": res["output_zero_point"],
     }
 
 
