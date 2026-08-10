@@ -143,21 +143,59 @@ Code / validation:
 
 ---
 
-## 13. Validation Evidence
+## 13. Validation Evidence (final closeout)
 
 | Check | Result |
 |---|---|
+| C-A0 validator | `PASS_WITH_WARNINGS` |
+| C-A1 validator | `PASS_WITH_WARNINGS` |
+| C-A2 validator | `PASS_WITH_WARNINGS` |
+| C-A3 validator | `PASS_WITH_WARNINGS` |
+| C-A4 validator | `PASS_WITH_WARNINGS` |
 | C-A5 standalone validator | `PASS_WITH_WARNINGS` (0 errors, 8 warnings) |
-| Focused tests | 8 passed |
-| Determinism | identical checksums across regenerations |
+| Focused C-A5 tests | 8 passed |
+| All CO₂ tests (`tests/test_co2_*`) | **69 passed**, 0 failed, 0 errors, 0 skipped |
+| Full repository regression (`pytest tests/`) | **487 passed**, 0 failed, 0 errors, **4 skipped** |
+| Import/compile | PASS (`compileall` + `datasets.co2.*` imports) |
+| `git diff --check` / branch diff `--check` | PASS |
+| Artifact SHA-256 vs committed bytes | PASS (all listed `checksums.sha256` entries) |
+| Determinism | identical `checksums.sha256` across regenerations; committed bytes match |
 
 Inherited non-blocking warnings retained (timezone, single-room group independence, model/scaler lineage unverified, slope history lineage, SCD40 cadence gap, deferred shared update, A-series release deferred).
 
 ---
 
-## 14. Parallel Isolation
+## 14. Parallel Isolation (verified remote PR)
 
-C-A5 was implemented on `feature/C-A5-co2-canonical-samples` (isolated worktree) while other tracks (mmWave M-B3, Thermal) occupied the primary working tree. Branch history and PR diff must contain only CO₂ C-A5 paths.
+Execution used isolated worktree `/tmp/safenest-ca5-worktree` on `feature/C-A5-co2-canonical-samples`. Primary workspace remained on unrelated `feature/M-B3-architecture-comparison` and was not staged into C-A5.
+
+### Verified Git evidence
+
+| Gate | Result |
+|---|---|
+| Working-tree isolation (C-A5 worktree) | PASS (clean after commit) |
+| Branch-history isolation | PASS — unique commits vs `origin/main` are C-A5-only |
+| PR-diff isolation | PASS — remote PR #26 file list is CO₂ C-A5 only |
+| Unrelated mmWave commits in C-A5 ancestry | 0 |
+| Unrelated Thermal commits in C-A5 ancestry | 0 |
+
+### Remote PR inspection (not local-only)
+
+| Field | Value |
+|---|---|
+| PR | https://github.com/sheepmeat/test/pull/26 |
+| PR base | `main` |
+| PR head | `feature/C-A5-co2-canonical-samples` |
+| Implementation commit | `a1fe383` — `feat(co2): complete Phase C-A5 canonical sample provenance and split materialization` |
+| Closeout docs commit | recorded in PR history after this report revision |
+| Changed-file count | 16 (implementation paths; report-only closeout may add no new paths) |
+| mmWave files in PR | 0 |
+| Thermal files in PR | 0 |
+| Unauthorized shared files in PR | 0 |
+| Raw payload in PR | 0 |
+| Synthetic NPZ modifications in PR | 0 |
+
+Note: after C-A5 branch creation, `origin/main` advanced with merged Thermal T-A2 (`bde7a0f`). Those Thermal commits are on `main`, not in C-A5 unique ancestry. Local merge-probe of C-A5 onto current `origin/main` completed without conflict.
 
 ---
 
@@ -175,4 +213,16 @@ C-A5 was implemented on `feature/C-A5-co2-canonical-samples` (isolated worktree)
 
 ## 16. C-A6 Authorization Gate (readiness only)
 
-C-A6 may proceed only after this C-A5 contract is merged and isolation gates remain clean. This branch must not begin C-A6 implementation.
+C-A6 may proceed only after this C-A5 contract is **merged** and isolation gates remain clean. This branch must not begin C-A6 implementation.
+
+C-A6 integrity target chain:
+
+```text
+RAW 20,560
+  ↓ 1:1
+CANONICAL 20,560
+  ↓ availability filter only
+MODEL-ELIGIBLE 20,551
+```
+
+A-series release/tag remains `DEFERRED_UNTIL_C-A6`.
