@@ -290,12 +290,14 @@ def build_candidate_evaluation(train_records) -> Dict[str, Any]:
     stdev = math.sqrt(var)
     mean_diff = abs(mean - HISTORICAL_SCALER_MEAN_SLOPE)
     scale_diff = abs(stdev - HISTORICAL_SCALER_SCALE_SLOPE)
-    if mean_diff < 0.01 and scale_diff < 2.0:
+    # Mean proximity alone is not enough to claim scaler consistency; stdev/scale
+    # divergence keeps lineage non-authoritative.
+    if mean_diff < 0.01 and scale_diff < 0.5:
         scaler_cmp = "CONSISTENT_WITH_HISTORICAL_SCALER"
-    elif mean_diff < 0.05:
-        scaler_cmp = "INSUFFICIENT_TO_PROVE_LINEAGE"
+    elif mean_diff < 0.01:
+        scaler_cmp = "PARTIAL_MEAN_ALIGNMENT_ONLY"
     else:
-        scaler_cmp = "INCONSISTENT_WITH_HISTORICAL_SCALER"
+        scaler_cmp = "INSUFFICIENT_TO_PROVE_LINEAGE"
 
     return {
         "manifest_version": "1.0",
@@ -320,10 +322,17 @@ def build_candidate_evaluation(train_records) -> Dict[str, Any]:
                 "concept": "(CO2_now - CO2_history_start) / elapsed_minutes",
                 "history_duration_seconds": HISTORY_DURATION_SECONDS,
                 "status": "SELECTED",
+                "offline_baseline_status": "CANONICAL_OFFLINE_BASELINE_DESIGN",
                 "reason": (
-                    "Matches VERIFIED_CODE in sensors/co2/co2_adapter.py "
-                    "(endpoint difference) and adapter window_seconds=150.0; uses "
-                    "actual source-clock elapsed time; causal and block-isolated."
+                    "Endpoint-difference method is VERIFIED in sensors/co2/co2_adapter.py. "
+                    "The 150s offline history threshold is a CANONICAL_OFFLINE_BASELINE_DESIGN "
+                    "derived from configured/intended window_seconds=150.0, NOT from active "
+                    "runtime eligibility (required_history_sec=5.0) and NOT a verified "
+                    "historical training duration. Active runtime uses deque(maxlen=30) with "
+                    "growing span and ~145s nominal full-buffer endpoint span; window_seconds "
+                    "is configured but not applied to the active slope path. Offline UCI "
+                    "cadence yields typical selected endpoints of ~179-181s. Causal, "
+                    "block-isolated, actual source-clock elapsed time."
                 ),
             },
             {
@@ -339,11 +348,13 @@ def build_candidate_evaluation(train_records) -> Dict[str, Any]:
         ],
         "selected_candidate_id": "B_ENDPOINT_DIFFERENCE_HISTORY_DURATION",
         "evidence_basis": [
-            "sensors/co2/co2_adapter.py calculate_co2_slope",
-            "docs/reports/SENSOR_DATA_CONTRACT.md Slope Calculation row",
+            "sensors/co2/co2_adapter.py calculate_co2_slope (ENDPOINT_DIFFERENCE verified; required_history_sec=5.0 on read())",
+            "sensors/co2/co2_adapter.py window_seconds=150.0 CONFIGURED_BUT_NOT_APPLIED to slope eligibility/endpoint",
+            "docs/reports/SENSOR_DATA_CONTRACT.md Slope Calculation row (method evidence; history duration not runtime-proof)",
             "docs/reports/sensor_model_data_contract.json history_maxlen/sampling",
             "models/co2/co2_scaling_metadata_v0.1.0.json feature name presence only",
             "C-A2 cadence profile (59–61s jitter requires actual elapsed time)",
+            "roadmap C-B1 retains history-length / slope-method ablation; C-C retains SCD40 domain alignment",
         ],
         "train_only_secondary_scaler_diagnostic": {
             "historical_scaler_mean_co2_slope": HISTORICAL_SCALER_MEAN_SLOPE,
@@ -354,9 +365,13 @@ def build_candidate_evaluation(train_records) -> Dict[str, Any]:
             "abs_stdev_scale_difference": scale_diff,
             "comparison_result": scaler_cmp,
             "authoritative_for_formula_lock": False,
+            "authoritative_for_history_lineage": False,
             "note": (
-                "Secondary lineage diagnostic only. Formula was locked from active "
-                "code/temporal evidence, not by optimizing scaler match."
+                "Secondary non-authoritative diagnostic only. Mean proximity without "
+                "matching scale/stdev is PARTIAL_MEAN_ALIGNMENT_ONLY / insufficient to "
+                "prove historical training history lineage. Method lock uses verified "
+                "endpoint-difference evidence; 150s offline threshold is an explicit "
+                "canonical baseline design, not scaler matching."
             ),
         },
     }
@@ -398,20 +413,43 @@ def build_exceptions_registry(scaler_cmp: str) -> Dict[str, Any]:
                 ),
             },
             {
+                "code": "CO2_SLOPE_HISTORY_LINEAGE_UNVERIFIED",
+                "severity": "WARNING",
+                "description": (
+                    "Historical training history duration/formula for CO2_slope remains "
+                    "unverified. C-A3 locks ENDPOINT_DIFFERENCE as method and retains "
+                    "150s as CANONICAL_OFFLINE_BASELINE_DESIGN only, not as "
+                    "VERIFIED_HISTORICAL_TRAINING_CONTRACT or ACTIVE_RUNTIME_EQUIVALENT."
+                ),
+            },
+            {
+                "code": "ADAPTER_WINDOW_SECONDS_NOT_APPLIED_TO_ACTIVE_SLOPE_PATH",
+                "severity": "WARNING",
+                "description": (
+                    "sensors/co2/co2_adapter.py configures window_seconds=150.0 but the "
+                    "active read()/calculate_co2_slope path uses required_history_sec=5.0 "
+                    "and deque(maxlen=30) oldest-to-current endpoints. window_seconds is "
+                    "CONFIGURED_BUT_NOT_APPLIED to slope eligibility or endpoint selection. "
+                    "Nominal full-buffer span at 0.2 Hz is ~145s, not a fixed 150s contract."
+                ),
+            },
+            {
                 "code": "DEVICE_UCI_CADENCE_DOMAIN_GAP",
                 "severity": "WARNING",
                 "description": (
-                    "Active SCD40 adapter uses 0.2 Hz / 30-sample / 150s window while "
-                    "UCI source cadence is ~60s. C-A3 locks the 150s temporal duration "
-                    "and endpoint method; offline sample count therefore differs from "
-                    "device maxlen=30."
+                    "Active SCD40 adapter samples at 0.2 Hz with maxlen=30, while UCI "
+                    "source cadence is ~60s. Offline C-A3 150s threshold therefore yields "
+                    "typical selected endpoints of ~179-181s, distinct from runtime "
+                    "eligibility (~5s) and full-buffer span (~145s). C-B1/C-C remain "
+                    "responsible for history ablation and device-domain alignment."
                 ),
             },
             {
                 "code": f"HISTORICAL_SCALER_COMPARISON_{scaler_cmp}",
                 "severity": "WARNING",
                 "description": (
-                    f"TRAIN reconstructed slope vs historical scaler diagnostic: {scaler_cmp}."
+                    f"TRAIN reconstructed slope vs historical scaler diagnostic: {scaler_cmp} "
+                    "(non-authoritative; does not prove history lineage)."
                 ),
             },
         ],

@@ -287,3 +287,67 @@ def test_path_portability():
         text = path.read_text(encoding="utf-8")
         assert "/Users/" not in text
         assert "file://" not in text
+
+
+def test_runtime_vs_offline_baseline_classification():
+    """C-A3 must distinguish runtime semantics from offline canonical baseline."""
+    repo_root = get_repo_root()
+    profile = json.loads(
+        (repo_root / "datasets/co2/manifests/c_a3_slope_feature/co2_slope_feature_profile.json")
+        .read_text(encoding="utf-8")
+    )
+    assert "device_adapter_alignment" not in profile
+    assert profile["offline_baseline_status"] == "CANONICAL_OFFLINE_BASELINE_DESIGN"
+    assert profile["offline_baseline_equivalence_claims"]["active_runtime_equivalent"] is False
+    assert profile["offline_baseline_equivalence_claims"][
+        "verified_historical_training_contract"
+    ] is False
+    runtime = profile["runtime_evidence"]
+    assert runtime["runtime_slope_method_verified"] == "ENDPOINT_DIFFERENCE"
+    assert runtime["runtime_history_maxlen"] == 30
+    assert runtime["runtime_required_history_sec"] == 5.0
+    assert runtime["configured_window_seconds"] == 150.0
+    assert runtime["configured_window_seconds_applied_to_slope_logic"] is False
+    assert runtime["nominal_full_buffer_endpoint_span_seconds"] == 145.0
+    assert profile["offline_canonical_history_threshold_seconds"] == 150.0
+    assert profile["historical_training_history_contract_status"] == (
+        "CO2_SLOPE_HISTORY_LINEAGE_UNVERIFIED"
+    )
+
+
+def test_active_adapter_read_requests_five_second_history_not_window_seconds():
+    """Prove active adapter read() uses 5.0s eligibility; window_seconds is unused there."""
+    import inspect
+    from sensors.co2.co2_adapter import CO2SensorAdapter
+
+    source = inspect.getsource(CO2SensorAdapter.read)
+    assert "required_history_sec = 5.0" in source
+    assert "required_history_sec=required_history_sec" in source
+    assert "window_seconds" not in source
+    # Constructor still configures window_seconds, but slope path does not apply it.
+    init_source = inspect.getsource(CO2SensorAdapter.__init__)
+    assert "window_seconds: float = 150.0" in init_source
+    calc_source = inspect.getsource(CO2SensorAdapter.calculate_co2_slope)
+    assert "required_history_sec: float = 5.0" in calc_source
+    assert "window_seconds" not in calc_source
+
+
+def test_window_seconds_not_asserted_as_active_runtime_eligibility():
+    repo_root = get_repo_root()
+    c_a3 = repo_root / "datasets/co2/manifests/c_a3_slope_feature"
+    exceptions = json.loads(
+        (c_a3 / "exceptions_and_limitations.json").read_text(encoding="utf-8")
+    )
+    codes = {w["code"] for w in exceptions["warnings"]}
+    assert "ADAPTER_WINDOW_SECONDS_NOT_APPLIED_TO_ACTIVE_SLOPE_PATH" in codes
+    assert "CO2_SLOPE_HISTORY_LINEAGE_UNVERIFIED" in codes
+    candidates = json.loads(
+        (c_a3 / "candidate_method_evaluation.json").read_text(encoding="utf-8")
+    )
+    scaler_cmp = candidates["train_only_secondary_scaler_diagnostic"]["comparison_result"]
+    assert scaler_cmp in {
+        "PARTIAL_MEAN_ALIGNMENT_ONLY",
+        "INSUFFICIENT_TO_PROVE_LINEAGE",
+        "INCONSISTENT_WITH_HISTORICAL_SCALER",
+    }
+    assert scaler_cmp != "CONSISTENT_WITH_HISTORICAL_SCALER"

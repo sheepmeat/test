@@ -16,13 +16,31 @@
   "minimum_elapsed_seconds": 150.0,
   "nominal_source_cadence_seconds": 60.0,
   "nominal_history_sample_span_at_source_cadence": 3,
-  "device_adapter_alignment": {
-    "evidence_path": "sensors/co2/co2_adapter.py",
-    "adapter_window_seconds": 150.0,
-    "adapter_window_samples_at_0_2hz": 30,
-    "adapter_method": "ENDPOINT_DIFFERENCE",
-    "note": "Offline UCI reconstruction locks the temporal duration (150s) and endpoint-difference method from the active adapter. UCI nominal cadence is 60s, so the offline history typically spans three intervals (~179–181s) rather than thirty 5s device samples."
+  "offline_baseline_status": "CANONICAL_OFFLINE_BASELINE_DESIGN",
+  "offline_baseline_equivalence_claims": {
+    "verified_historical_training_contract": false,
+    "active_runtime_equivalent": false
   },
+  "runtime_evidence": {
+    "evidence_path": "sensors/co2/co2_adapter.py",
+    "runtime_slope_method_verified": "ENDPOINT_DIFFERENCE",
+    "runtime_history_maxlen": 30,
+    "runtime_required_history_sec": 5.0,
+    "configured_window_seconds": 150.0,
+    "configured_window_seconds_applied_to_slope_logic": false,
+    "nominal_full_buffer_endpoint_span_seconds": 145.0,
+    "nominal_full_buffer_span_notes": "At sample_rate_hz=0.2, a full maxlen=30 deque spans approximately 29 intervals x 5s = 145s from oldest retained to current, not a guaranteed fixed 150s window. Active read() eligibility uses required_history_sec=5.0; window_seconds is configured but not applied to slope eligibility or endpoint selection."
+  },
+  "offline_canonical_history_threshold_seconds": 150.0,
+  "offline_effective_endpoint_span_due_to_source_cadence": {
+    "typical_seconds_range": [
+      179.0,
+      181.0
+    ],
+    "explanation": "UCI nominal cadence is ~60s. Under the past-sample-only rule that selects the earliest same-block observation with age >= 150s, the selected endpoint is normally three intervals back (~179-181s)."
+  },
+  "historical_training_history_contract_status": "CO2_SLOPE_HISTORY_LINEAGE_UNVERIFIED",
+  "offline_baseline_derivation": "150s is retained as a CANONICAL_OFFLINE_BASELINE_DESIGN derived from the configured/intended adapter window_seconds value. It is NOT verified as the historical training feature duration and is NOT active-runtime equivalent. Endpoint-difference method is the verified runtime method; history-length ablation remains C-B1; SCD40 domain alignment remains C-C.",
   "boundary_policy": "DERIVED_TEMPORAL_FEATURES_MUST_NOT_CROSS_BLOCK_BOUNDARIES",
   "gap_policy": "RESTART_HISTORY_AFTER_FORBIDDEN_GAP",
   "max_internal_gap_seconds": 90.0,

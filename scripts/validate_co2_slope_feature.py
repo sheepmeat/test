@@ -159,6 +159,38 @@ def validate_c_a3_slope_feature(
     if profile.get("warm_up_policy") != "PRESERVE_ROW_WITH_NULL_SLOPE":
         errors.append("Warm-up rows must be preserved with null slope")
 
+    # Runtime vs offline baseline classification (must not claim exact adapter equivalence)
+    if "device_adapter_alignment" in profile:
+        errors.append(
+            "profile must not use device_adapter_alignment implying runtime equivalence"
+        )
+    if profile.get("offline_baseline_status") != "CANONICAL_OFFLINE_BASELINE_DESIGN":
+        errors.append("offline_baseline_status must be CANONICAL_OFFLINE_BASELINE_DESIGN")
+    equiv = profile.get("offline_baseline_equivalence_claims") or {}
+    if equiv.get("verified_historical_training_contract") is not False:
+        errors.append("must not claim VERIFIED_HISTORICAL_TRAINING_CONTRACT")
+    if equiv.get("active_runtime_equivalent") is not False:
+        errors.append("must not claim ACTIVE_RUNTIME_EQUIVALENT")
+    runtime = profile.get("runtime_evidence") or {}
+    if runtime.get("runtime_slope_method_verified") != "ENDPOINT_DIFFERENCE":
+        errors.append("runtime_slope_method_verified must be ENDPOINT_DIFFERENCE")
+    if runtime.get("runtime_history_maxlen") != 30:
+        errors.append("runtime_history_maxlen must be 30")
+    if runtime.get("runtime_required_history_sec") != 5.0:
+        errors.append("runtime_required_history_sec must be 5.0")
+    if runtime.get("configured_window_seconds") != 150.0:
+        errors.append("configured_window_seconds must be 150.0")
+    if runtime.get("configured_window_seconds_applied_to_slope_logic") is not False:
+        errors.append("configured_window_seconds must be marked NOT applied to slope logic")
+    if runtime.get("nominal_full_buffer_endpoint_span_seconds") != 145.0:
+        errors.append("nominal_full_buffer_endpoint_span_seconds must be 145.0")
+    if profile.get("offline_canonical_history_threshold_seconds") != HISTORY_DURATION_SECONDS:
+        errors.append("offline_canonical_history_threshold_seconds must match 150.0")
+    if profile.get("historical_training_history_contract_status") != (
+        "CO2_SLOPE_HISTORY_LINEAGE_UNVERIFIED"
+    ):
+        errors.append("historical_training_history_contract_status must be UNVERIFIED")
+
     # Row integrity
     if eligibility.get("total_source_rows_represented") != 20560:
         errors.append("Source-row count must remain 20560")
@@ -237,6 +269,52 @@ def validate_c_a3_slope_feature(
     # Candidate selection hygiene
     if candidates.get("selected_candidate_id") != "B_ENDPOINT_DIFFERENCE_HISTORY_DURATION":
         errors.append("Unexpected selected slope candidate")
+    selected = next(
+        (
+            c
+            for c in candidates.get("candidates_considered", [])
+            if c.get("candidate_id") == "B_ENDPOINT_DIFFERENCE_HISTORY_DURATION"
+        ),
+        {},
+    )
+    reason = str(selected.get("reason", ""))
+    forbidden_claim = (
+        "adapter window_seconds=150.0; uses actual source-clock elapsed time"
+    )
+    if forbidden_claim in reason:
+        errors.append(
+            "candidate B rationale must not claim active code verifies 150s duration"
+        )
+    if "CANONICAL_OFFLINE_BASELINE_DESIGN" not in reason:
+        errors.append("candidate B must classify 150s as CANONICAL_OFFLINE_BASELINE_DESIGN")
+    if "required_history_sec=5.0" not in reason:
+        errors.append("candidate B must document active runtime required_history_sec=5.0")
+    if selected.get("offline_baseline_status") != "CANONICAL_OFFLINE_BASELINE_DESIGN":
+        errors.append("candidate B offline_baseline_status missing/incorrect")
+    scaler_cmp = (
+        candidates.get("train_only_secondary_scaler_diagnostic", {}).get("comparison_result")
+    )
+    if scaler_cmp == "CONSISTENT_WITH_HISTORICAL_SCALER":
+        errors.append(
+            "scaler diagnostic must not claim CONSISTENT_WITH_HISTORICAL_SCALER "
+            "from mean proximity alone"
+        )
+    if scaler_cmp not in {
+        "PARTIAL_MEAN_ALIGNMENT_ONLY",
+        "INSUFFICIENT_TO_PROVE_LINEAGE",
+        "INCONSISTENT_WITH_HISTORICAL_SCALER",
+    }:
+        errors.append(f"Unexpected scaler comparison status: {scaler_cmp}")
+
+    warning_codes = {w.get("code") for w in exceptions.get("warnings", [])}
+    for required_code in (
+        "CO2_SLOPE_HISTORY_LINEAGE_UNVERIFIED",
+        "ADAPTER_WINDOW_SECONDS_NOT_APPLIED_TO_ACTIVE_SLOPE_PATH",
+        "MODEL_TRAINING_LINEAGE_UNVERIFIED",
+        "SCALER_FIT_LINEAGE_UNVERIFIED",
+    ):
+        if required_code not in warning_codes:
+            errors.append(f"Missing required limitation warning: {required_code}")
     if generation.get("scaler_fitted") is not False:
         errors.append("generation metadata claims scaler was fitted")
     if generation.get("model_trained") is not False:

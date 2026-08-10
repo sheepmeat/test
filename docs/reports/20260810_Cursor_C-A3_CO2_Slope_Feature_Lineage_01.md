@@ -12,7 +12,7 @@
 
 ## 1. Executive Summary
 
-Phase **C-A3** locks a deterministic, causal `CO2_slope` feature contract in `ppm/min` for all **20,560** C-A1 source rows under the C-A2 temporal acquisition blocks. The selected method is **endpoint difference** over a **150-second** source-clock history duration, aligned with the active SCD40 adapter (`sensors/co2/co2_adapter.py`) and documented sensor contract.
+Phase **C-A3** locks a deterministic, causal `CO2_slope` feature contract in `ppm/min` for all **20,560** C-A1 source rows under the C-A2 temporal acquisition blocks. The selected **method** is verified **endpoint difference**. The **150-second** offline history threshold is an explicit `CANONICAL_OFFLINE_BASELINE_DESIGN` derived from configured/intended `window_seconds`, **not** active-runtime equivalent and **not** a verified historical training duration.
 
 Every source row is preserved: **20,551** eligible finite slopes and **9** explicit warm-up rows (`FEATURE_UNAVAILABLE_WARMUP`, `co2_slope=null`). No scaler was fit, no model was trained, and the synthetic NPZ was not used as real-data evidence.
 
@@ -37,8 +37,8 @@ Evidence inspected (priority order):
 
 1. Active `AGENTS.md` and multisensor roadmap C-A3 section.
 2. Validator-approved C-A0/C-A1/C-A2 manifests.
-3. `sensors/co2/co2_adapter.py` — `calculate_co2_slope`: `(current - first_in_window) / elapsed_min`, `window_seconds=150.0`, `window_samples=30`.
-4. `docs/reports/SENSOR_DATA_CONTRACT.md` — documents endpoint difference over 30-sample history as `VERIFIED_CODE`.
+3. `sensors/co2/co2_adapter.py` — verified method `ENDPOINT_DIFFERENCE`; verified buffer `deque(maxlen=30)`; verified active eligibility `required_history_sec=5.0` on `read()`; `window_seconds=150.0` is `CONFIGURED_BUT_NOT_APPLIED` to slope eligibility/endpoint selection; nominal full-buffer span ≈145s at 0.2 Hz.
+4. `docs/reports/SENSOR_DATA_CONTRACT.md` — documents endpoint difference / 30-sample history; does not prove fixed 150s runtime eligibility.
 5. `docs/reports/sensor_model_data_contract.json` — `history_maxlen: 30`, 0.2 Hz sampling.
 6. `models/co2/co2_scaling_metadata_v0.1.0.json` — proves feature name `CO2_slope` and historical mean/scale values, **not** formula proof.
 7. Synthetic `datasets/co2/processed/co2_occupancy_v1.npz` — explicitly **not** used as ground truth.
@@ -50,10 +50,10 @@ Evidence inspected (priority order):
 | Candidate | Concept | Decision |
 |---|---|---|
 | A | Previous-sample rate `(now - previous) / elapsed_min` | Rejected — contradicts multi-sample adapter window |
-| B | Endpoint difference over history duration | **Selected** |
+| B | Endpoint difference over history duration | **Selected** (method verified; 150s offline threshold = `CANONICAL_OFFLINE_BASELINE_DESIGN`) |
 | C | Linear regression slope over window | Rejected — no active code evidence |
 
-Selection used active code/temporal evidence only. Occupancy labels, classifier accuracy, and LOCKED_TEST metrics were not used. TRAIN-only descriptive comparison to historical scaler mean was a **secondary** diagnostic after formula freeze.
+Selection used verified endpoint-difference method evidence plus an explicit offline baseline design for the 150s threshold. Occupancy labels, classifier accuracy, and LOCKED_TEST metrics were not used. Active runtime does **not** enforce 150s (`required_history_sec=5.0`). TRAIN-only scaler comparison is a **secondary non-authoritative** diagnostic (`PARTIAL_MEAN_ALIGNMENT_ONLY`).
 
 ---
 
@@ -76,10 +76,11 @@ Selection used active code/temporal evidence only. Occupancy labels, classifier 
 
 ### Justification
 
-1. Matches active adapter endpoint-difference method.
-2. Locks temporal duration `window_seconds=150.0` as the primary semantic (UCI cadence ~60s ⇒ typical span ~179–181s / 4 samples).
-3. Uses actual source-clock deltas (handles 59–61s jitter correctly).
-4. Causal, deterministic, and block-isolated.
+1. Matches verified active adapter **method** (`ENDPOINT_DIFFERENCE`).
+2. Retains 150s as `CANONICAL_OFFLINE_BASELINE_DESIGN` derived from configured/intended `window_seconds` — **not** `ACTIVE_RUNTIME_EQUIVALENT` and **not** `VERIFIED_HISTORICAL_TRAINING_CONTRACT`.
+3. Documents runtime truth accurately: eligibility `required_history_sec=5.0`; maxlen=30; nominal full-buffer span ≈145s; `window_seconds` not applied on the active slope path.
+4. Uses actual source-clock deltas (handles 59–61s jitter). UCI cadence makes selected offline endpoints typically ~179–181s under the ≥150s past-sample rule.
+5. Causal, deterministic, and block-isolated. History-length ablation remains C-B1; SCD40 domain alignment remains C-C.
 
 ---
 
@@ -147,10 +148,12 @@ LOCKED_TEST: eligibility/count integrity only (value statistics omitted from fea
 | mean(`CO2_slope`) | 0.011184 | 0.011527 |
 | scale / stdev | 4.373409 | 5.661676 |
 
-Diagnostic result: `CONSISTENT_WITH_HISTORICAL_SCALER` (mean alignment). This does **not** prove model training lineage.
+Diagnostic result: `PARTIAL_MEAN_ALIGNMENT_ONLY` (mean proximity only; scale/stdev diverge). This is **non-authoritative** and does **not** prove history or model training lineage.
 
 Retained classifications:
 
+- `CO2_SLOPE_HISTORY_LINEAGE_UNVERIFIED`
+- `ADAPTER_WINDOW_SECONDS_NOT_APPLIED_TO_ACTIVE_SLOPE_PATH`
 - `MODEL_TRAINING_LINEAGE_UNVERIFIED`
 - `SCALER_FIT_LINEAGE_UNVERIFIED`
 
@@ -170,9 +173,9 @@ Evidence generator `scripts/audit_co2_slope_feature.py` was executed twice; `che
 | C-A1 validator | PASS_WITH_WARNINGS |
 | C-A2 validator | PASS_WITH_WARNINGS |
 | C-A3 validator | PASS_WITH_WARNINGS |
-| C-A3 focused tests | 16 passed |
-| CO₂ focused suite (C-A0..C-A3) | 47 passed |
-| Full `tests/` regression | 418 passed, 2 skipped, 0 failed |
+| C-A3 focused tests | 19 passed |
+| CO₂ focused suite (C-A0..C-A3) | 50 passed |
+| Full `tests/` regression | 409 passed, 2 skipped, 0 failed |
 | `git diff --check` | clean |
 | Scaler metadata modified | NO |
 | Synthetic NPZ used as real source | NO |
@@ -185,7 +188,21 @@ C-A3 branch contains only CO₂ C-A3 files relative to `origin/main`. mmWave / T
 
 ---
 
-## 14. Deferred Work / C-A4 Authorization
+## 14. Runtime vs Offline Baseline Classification
+
+| Claim | Status |
+|---|---|
+| Runtime slope method | `ENDPOINT_DIFFERENCE` — VERIFIED |
+| Runtime buffer | `deque(maxlen=30)` — VERIFIED |
+| Runtime minimum eligibility | `required_history_sec=5.0` on `read()` — VERIFIED |
+| `window_seconds=150.0` | `CONFIGURED_BUT_NOT_APPLIED` to active slope path |
+| Nominal full-buffer endpoint span @ 0.2 Hz | ≈145s (29×5s), not a guaranteed fixed 150s |
+| Offline 150s threshold | `CANONICAL_OFFLINE_BASELINE_DESIGN` |
+| Active runtime equivalent? | NO |
+| Verified historical training history? | NO (`CO2_SLOPE_HISTORY_LINEAGE_UNVERIFIED`) |
+
+## 15. Deferred Work / C-A4 Authorization
+
 
 Deferred:
 
@@ -198,7 +215,7 @@ C-A4 authorization: **YES** (slope formula/unit/history/lineage/warm-up/validato
 
 ---
 
-## 15. Generated Artifacts
+## 16. Generated Artifacts
 
 - `datasets/co2/slope_feature.py`
 - `scripts/audit_co2_slope_feature.py`
