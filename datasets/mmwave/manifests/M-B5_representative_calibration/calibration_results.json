@@ -72,7 +72,10 @@
         "top1_agreement": 0.987342,
         "dequantized_output_mae": 0.006451,
         "dequantized_output_max_err": 0.029703,
+        "dequantized_output_min": 0.058594,
+        "dequantized_output_max": 0.84375,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -149,7 +152,10 @@
         "top1_agreement": 0.936709,
         "dequantized_output_mae": 0.001036,
         "dequantized_output_max_err": 0.002901,
+        "dequantized_output_min": 0.269531,
+        "dequantized_output_max": 0.390625,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -226,7 +232,10 @@
         "top1_agreement": 1.0,
         "dequantized_output_mae": 0.008551,
         "dequantized_output_max_err": 0.046653,
+        "dequantized_output_min": 0.101562,
+        "dequantized_output_max": 0.65625,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -303,7 +312,10 @@
         "top1_agreement": 0.987342,
         "dequantized_output_mae": 0.0062,
         "dequantized_output_max_err": 0.028184,
+        "dequantized_output_min": 0.058594,
+        "dequantized_output_max": 0.84375,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -380,7 +392,10 @@
         "top1_agreement": 0.962025,
         "dequantized_output_mae": 0.001026,
         "dequantized_output_max_err": 0.003056,
+        "dequantized_output_min": 0.269531,
+        "dequantized_output_max": 0.390625,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -457,7 +472,10 @@
         "top1_agreement": 0.987342,
         "dequantized_output_mae": 0.008554,
         "dequantized_output_max_err": 0.046653,
+        "dequantized_output_min": 0.101562,
+        "dequantized_output_max": 0.65625,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -534,7 +552,10 @@
         "top1_agreement": 0.987342,
         "dequantized_output_mae": 0.006319,
         "dequantized_output_max_err": 0.028184,
+        "dequantized_output_min": 0.058594,
+        "dequantized_output_max": 0.84375,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -611,7 +632,10 @@
         "top1_agreement": 0.936709,
         "dequantized_output_mae": 0.00103,
         "dequantized_output_max_err": 0.002901,
+        "dequantized_output_min": 0.269531,
+        "dequantized_output_max": 0.390625,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -688,7 +712,10 @@
         "top1_agreement": 1.0,
         "dequantized_output_mae": 0.008439,
         "dequantized_output_max_err": 0.046653,
+        "dequantized_output_min": 0.101562,
+        "dequantized_output_max": 0.660156,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -763,9 +790,12 @@
         },
         "max_positive_recall_degradation": 0.0,
         "top1_agreement": 0.987342,
-        "dequantized_output_mae": 0.006091,
+        "dequantized_output_mae": 0.006324,
         "dequantized_output_max_err": 0.028184,
+        "dequantized_output_min": 0.058594,
+        "dequantized_output_max": 0.84375,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -842,7 +872,10 @@
         "top1_agreement": 0.936709,
         "dequantized_output_mae": 0.001036,
         "dequantized_output_max_err": 0.002901,
+        "dequantized_output_min": 0.269531,
+        "dequantized_output_max": 0.390625,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false
@@ -860,26 +893,26 @@
         "accuracy": 0.518987
       },
       "int8_tflite": {
-        "macro_f1": 0.351165,
-        "accuracy": 0.531646,
+        "macro_f1": 0.329107,
+        "accuracy": 0.518987,
         "min_per_class_recall": 0.05,
         "apnea_recall": 1.0,
         "rapid_recall": 0.05,
         "collapsed": false,
         "prediction_distribution": {
-          "NORMAL": 8,
+          "NORMAL": 7,
           "RAPID_OR_ABNORMAL": 1,
-          "APNEA": 70
+          "APNEA": 71
         },
         "class_metrics": {
           "NORMAL": {
-            "tp": 4,
+            "tp": 3,
             "fp": 4,
             "tn": 53,
-            "fn": 18,
-            "precision": 0.5,
-            "recall": 0.181818,
-            "f1_score": 0.266667,
+            "fn": 19,
+            "precision": 0.428571,
+            "recall": 0.136364,
+            "f1_score": 0.206897,
             "fpr": 0.070175,
             "support": 22
           },
@@ -896,19 +929,19 @@
           },
           "APNEA": {
             "tp": 37,
-            "fp": 33,
-            "tn": 9,
+            "fp": 34,
+            "tn": 8,
             "fn": 0,
-            "precision": 0.528571,
+            "precision": 0.521127,
             "recall": 1.0,
-            "f1_score": 0.691589,
-            "fpr": 0.785714,
+            "f1_score": 0.685185,
+            "fpr": 0.809524,
             "support": 37
           }
         }
       },
       "quantization_diagnostics": {
-        "signed_macro_f1_delta": 0.022058,
+        "signed_macro_f1_delta": 0.0,
         "positive_macro_f1_degradation": 0.0,
         "per_class_positive_recall_degradation": {
           "NORMAL": 0.0,
@@ -916,10 +949,13 @@
           "APNEA": 0.0
         },
         "max_positive_recall_degradation": 0.0,
-        "top1_agreement": 0.987342,
-        "dequantized_output_mae": 0.009259,
+        "top1_agreement": 1.0,
+        "dequantized_output_mae": 0.009179,
         "dequantized_output_max_err": 0.046653,
+        "dequantized_output_min": 0.101562,
+        "dequantized_output_max": 0.65625,
         "input_saturation_ratio": 0.0,
+        "saturated_input_elements": 0,
         "saturated_sample_count": 0,
         "output_endpoint_ratio": 0.0,
         "new_class_collapse": false

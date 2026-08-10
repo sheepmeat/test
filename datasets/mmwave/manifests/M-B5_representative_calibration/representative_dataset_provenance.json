@@ -26,7 +26,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p001-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 1,
@@ -36,7 +36,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p001-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 2,
@@ -46,7 +46,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p001-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 3,
@@ -56,7 +56,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p001-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 4,
@@ -66,7 +66,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p002-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 5,
@@ -76,7 +76,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p002-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 6,
@@ -86,7 +86,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p002-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 7,
@@ -96,7 +96,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p002-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 8,
@@ -106,7 +106,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p003-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 9,
@@ -116,7 +116,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p003-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 10,
@@ -126,7 +126,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p003-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 11,
@@ -136,7 +136,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p003-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 12,
@@ -146,7 +146,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 13,
@@ -156,7 +156,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 14,
@@ -166,7 +166,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 15,
@@ -176,7 +176,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 16,
@@ -186,7 +186,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 17,
@@ -196,7 +196,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 18,
@@ -206,7 +206,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p005-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 19,
@@ -216,7 +216,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p005-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 20,
@@ -226,7 +226,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p005-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 21,
@@ -236,7 +236,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p005-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 22,
@@ -246,7 +246,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 23,
@@ -256,7 +256,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 24,
@@ -266,7 +266,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 25,
@@ -276,7 +276,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 26,
@@ -286,7 +286,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 27,
@@ -296,7 +296,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-rest",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 28,
@@ -306,7 +306,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 29,
@@ -316,7 +316,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 30,
@@ -326,7 +326,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 31,
@@ -336,7 +336,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 32,
@@ -346,7 +346,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 33,
@@ -356,7 +356,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 34,
@@ -366,7 +366,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 35,
@@ -376,7 +376,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 36,
@@ -386,7 +386,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 37,
@@ -396,7 +396,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 38,
@@ -406,7 +406,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 39,
@@ -416,7 +416,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 40,
@@ -426,7 +426,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 41,
@@ -436,7 +436,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 42,
@@ -446,7 +446,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 43,
@@ -456,7 +456,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 44,
@@ -466,7 +466,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p011-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 45,
@@ -476,7 +476,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p011-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 46,
@@ -486,7 +486,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p011-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 47,
@@ -496,7 +496,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p011-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 48,
@@ -506,7 +506,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p014-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 49,
@@ -516,7 +516,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p014-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 50,
@@ -526,7 +526,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p014-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 51,
@@ -536,7 +536,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p014-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 52,
@@ -546,7 +546,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p015-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 53,
@@ -556,7 +556,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p015-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 54,
@@ -566,7 +566,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p015-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 55,
@@ -576,7 +576,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p015-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 56,
@@ -586,7 +586,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p018-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 57,
@@ -596,7 +596,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p018-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 58,
@@ -606,7 +606,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p018-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 59,
@@ -616,7 +616,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p018-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 60,
@@ -626,7 +626,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 61,
@@ -636,7 +636,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 62,
@@ -646,7 +646,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 63,
@@ -656,7 +656,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 64,
@@ -666,7 +666,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p021-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 65,
@@ -676,7 +676,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p021-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 66,
@@ -686,7 +686,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p021-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 67,
@@ -696,7 +696,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p021-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 68,
@@ -706,7 +706,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p022-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 69,
@@ -716,7 +716,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p022-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 70,
@@ -726,7 +726,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p022-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 71,
@@ -736,7 +736,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p022-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 72,
@@ -746,7 +746,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p026-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 73,
@@ -756,7 +756,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p026-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 74,
@@ -766,7 +766,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p026-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 75,
@@ -776,7 +776,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p026-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 76,
@@ -786,7 +786,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p026-sitting-rest",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 77,
@@ -796,7 +796,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 78,
@@ -806,7 +806,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 79,
@@ -816,7 +816,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 80,
@@ -826,7 +826,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 81,
@@ -836,7 +836,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 82,
@@ -846,7 +846,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 83,
@@ -856,7 +856,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 84,
@@ -866,7 +866,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 85,
@@ -876,7 +876,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 86,
@@ -886,7 +886,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 87,
@@ -896,7 +896,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 88,
@@ -906,7 +906,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 89,
@@ -916,7 +916,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 90,
@@ -926,7 +926,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 91,
@@ -936,7 +936,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 92,
@@ -946,7 +946,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 93,
@@ -956,7 +956,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 94,
@@ -966,7 +966,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 95,
@@ -976,7 +976,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 96,
@@ -986,7 +986,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 97,
@@ -996,7 +996,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 98,
@@ -1006,7 +1006,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 99,
@@ -1016,7 +1016,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 100,
@@ -1026,7 +1026,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 101,
@@ -1036,7 +1036,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 102,
@@ -1046,7 +1046,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 103,
@@ -1056,7 +1056,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 104,
@@ -1066,7 +1066,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 105,
@@ -1076,7 +1076,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 106,
@@ -1086,7 +1086,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 107,
@@ -1096,7 +1096,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 108,
@@ -1106,7 +1106,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 109,
@@ -1116,7 +1116,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 110,
@@ -1126,7 +1126,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 111,
@@ -1136,7 +1136,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 112,
@@ -1146,7 +1146,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 113,
@@ -1156,7 +1156,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 114,
@@ -1166,7 +1166,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 115,
@@ -1176,7 +1176,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 116,
@@ -1186,7 +1186,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p040-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 117,
@@ -1196,7 +1196,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p040-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 118,
@@ -1206,7 +1206,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p041-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 119,
@@ -1216,7 +1216,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p041-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         }
       ]
     },
@@ -1245,7 +1245,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p001-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 1,
@@ -1255,7 +1255,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p002-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 2,
@@ -1265,7 +1265,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p002-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 3,
@@ -1275,7 +1275,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p003-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 4,
@@ -1285,7 +1285,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 5,
@@ -1295,7 +1295,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 6,
@@ -1305,7 +1305,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 7,
@@ -1315,7 +1315,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p005-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 8,
@@ -1325,7 +1325,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 9,
@@ -1335,7 +1335,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 10,
@@ -1345,7 +1345,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 11,
@@ -1355,7 +1355,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 12,
@@ -1365,7 +1365,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 13,
@@ -1375,7 +1375,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 14,
@@ -1385,7 +1385,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 15,
@@ -1395,7 +1395,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 16,
@@ -1405,7 +1405,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 17,
@@ -1415,7 +1415,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p014-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 18,
@@ -1425,7 +1425,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p015-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 19,
@@ -1435,7 +1435,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p015-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 20,
@@ -1445,7 +1445,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p018-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 21,
@@ -1455,7 +1455,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 22,
@@ -1465,7 +1465,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 23,
@@ -1475,7 +1475,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 24,
@@ -1485,7 +1485,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p021-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 25,
@@ -1495,7 +1495,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p022-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 26,
@@ -1505,7 +1505,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p022-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 27,
@@ -1515,7 +1515,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 28,
@@ -1525,7 +1525,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 29,
@@ -1535,7 +1535,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 30,
@@ -1545,7 +1545,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 31,
@@ -1555,7 +1555,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 32,
@@ -1565,7 +1565,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 33,
@@ -1575,7 +1575,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 34,
@@ -1585,7 +1585,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 35,
@@ -1595,7 +1595,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 36,
@@ -1605,7 +1605,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 37,
@@ -1615,7 +1615,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 38,
@@ -1625,7 +1625,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 39,
@@ -1635,7 +1635,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 40,
@@ -1645,7 +1645,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 41,
@@ -1655,7 +1655,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 42,
@@ -1665,7 +1665,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 43,
@@ -1675,7 +1675,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 44,
@@ -1685,7 +1685,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p040-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 45,
@@ -1695,7 +1695,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p041-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 46,
@@ -1705,7 +1705,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p041-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 47,
@@ -1715,7 +1715,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p041-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 48,
@@ -1725,7 +1725,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p042-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 49,
@@ -1735,7 +1735,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p042-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 50,
@@ -1745,7 +1745,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p043-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 51,
@@ -1755,7 +1755,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p045-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 52,
@@ -1765,7 +1765,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p045-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 53,
@@ -1775,7 +1775,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p045-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 54,
@@ -1785,7 +1785,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p048-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 55,
@@ -1795,7 +1795,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p048-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 56,
@@ -1805,7 +1805,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p049-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 57,
@@ -1815,7 +1815,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p051-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 58,
@@ -1825,7 +1825,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p051-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 59,
@@ -1835,7 +1835,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p052-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 60,
@@ -1845,7 +1845,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p053-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 61,
@@ -1855,7 +1855,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p054-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 62,
@@ -1865,7 +1865,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p054-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 63,
@@ -1875,7 +1875,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p056-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 64,
@@ -1885,7 +1885,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p057-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 65,
@@ -1895,7 +1895,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p057-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 66,
@@ -1905,7 +1905,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p057-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 67,
@@ -1915,7 +1915,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p062-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 68,
@@ -1925,7 +1925,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p062-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 69,
@@ -1935,7 +1935,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 70,
@@ -1945,7 +1945,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 71,
@@ -1955,7 +1955,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 72,
@@ -1965,7 +1965,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 73,
@@ -1975,7 +1975,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 74,
@@ -1985,7 +1985,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p066-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 75,
@@ -1995,7 +1995,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p066-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 76,
@@ -2005,7 +2005,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p069-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 77,
@@ -2015,7 +2015,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p069-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 78,
@@ -2025,7 +2025,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p069-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 79,
@@ -2035,7 +2035,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p070-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 80,
@@ -2045,7 +2045,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p070-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 81,
@@ -2055,7 +2055,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p071-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 82,
@@ -2065,7 +2065,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p072-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 83,
@@ -2075,7 +2075,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p076-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 84,
@@ -2085,7 +2085,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p076-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 85,
@@ -2095,7 +2095,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p077-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 86,
@@ -2105,7 +2105,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p078-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 87,
@@ -2115,7 +2115,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p078-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 88,
@@ -2125,7 +2125,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p078-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 89,
@@ -2135,7 +2135,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p080-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 90,
@@ -2145,7 +2145,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p081-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 91,
@@ -2155,7 +2155,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p081-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 92,
@@ -2165,7 +2165,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p082-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 93,
@@ -2175,7 +2175,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p082-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 94,
@@ -2185,7 +2185,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p083-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 95,
@@ -2195,7 +2195,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p085-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 96,
@@ -2205,7 +2205,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p085-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 97,
@@ -2215,7 +2215,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p088-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 98,
@@ -2225,7 +2225,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p088-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 99,
@@ -2235,7 +2235,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p088-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 100,
@@ -2245,7 +2245,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p090-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 101,
@@ -2255,7 +2255,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p092-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 102,
@@ -2265,7 +2265,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p093-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 103,
@@ -2275,7 +2275,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p093-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 104,
@@ -2285,7 +2285,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p094-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 105,
@@ -2295,7 +2295,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p094-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 106,
@@ -2305,7 +2305,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p095-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 107,
@@ -2315,7 +2315,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p095-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 108,
@@ -2325,7 +2325,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p096-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 109,
@@ -2335,7 +2335,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p097-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 110,
@@ -2345,7 +2345,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p097-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 111,
@@ -2355,7 +2355,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p098-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 112,
@@ -2365,7 +2365,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p099-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 113,
@@ -2375,7 +2375,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p099-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 114,
@@ -2385,7 +2385,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p100-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 115,
@@ -2395,7 +2395,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p102-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 116,
@@ -2405,7 +2405,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p103-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 117,
@@ -2415,7 +2415,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p105-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 118,
@@ -2425,7 +2425,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p108-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 119,
@@ -2435,7 +2435,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p109-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         }
       ]
     },
@@ -2464,7 +2464,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p001-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 1,
@@ -2474,7 +2474,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p002-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 2,
@@ -2484,7 +2484,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p003-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 3,
@@ -2494,7 +2494,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p003-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 4,
@@ -2504,7 +2504,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 5,
@@ -2514,7 +2514,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 6,
@@ -2524,7 +2524,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 7,
@@ -2534,7 +2534,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 8,
@@ -2544,7 +2544,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p005-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 9,
@@ -2554,7 +2554,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 10,
@@ -2564,7 +2564,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 11,
@@ -2574,7 +2574,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 12,
@@ -2584,7 +2584,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 13,
@@ -2594,7 +2594,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 14,
@@ -2604,7 +2604,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 15,
@@ -2614,7 +2614,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 16,
@@ -2624,7 +2624,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p014-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 17,
@@ -2634,7 +2634,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p015-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 18,
@@ -2644,7 +2644,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p018-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 19,
@@ -2654,7 +2654,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 20,
@@ -2664,7 +2664,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 21,
@@ -2674,7 +2674,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p021-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 22,
@@ -2684,7 +2684,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p022-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 23,
@@ -2694,7 +2694,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p022-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 24,
@@ -2704,7 +2704,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p026-sitting-rest",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 25,
@@ -2714,7 +2714,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 26,
@@ -2724,7 +2724,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 27,
@@ -2734,7 +2734,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 28,
@@ -2744,7 +2744,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 29,
@@ -2754,7 +2754,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 30,
@@ -2764,7 +2764,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 31,
@@ -2774,7 +2774,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 32,
@@ -2784,7 +2784,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 33,
@@ -2794,7 +2794,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 34,
@@ -2804,7 +2804,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 35,
@@ -2814,7 +2814,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 36,
@@ -2824,7 +2824,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 37,
@@ -2834,7 +2834,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 38,
@@ -2844,7 +2844,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 39,
@@ -2854,7 +2854,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 40,
@@ -2864,7 +2864,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 41,
@@ -2874,7 +2874,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 42,
@@ -2884,7 +2884,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 43,
@@ -2894,7 +2894,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 44,
@@ -2904,7 +2904,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 45,
@@ -2914,7 +2914,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p040-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 46,
@@ -2924,7 +2924,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p041-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 47,
@@ -2934,7 +2934,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p041-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 48,
@@ -2944,7 +2944,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p042-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 49,
@@ -2954,7 +2954,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p043-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 50,
@@ -2964,7 +2964,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p045-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 51,
@@ -2974,7 +2974,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p045-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 52,
@@ -2984,7 +2984,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p045-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 53,
@@ -2994,7 +2994,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p048-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 54,
@@ -3004,7 +3004,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p048-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 55,
@@ -3014,7 +3014,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p049-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 56,
@@ -3024,7 +3024,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p051-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 57,
@@ -3034,7 +3034,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p051-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 58,
@@ -3044,7 +3044,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p052-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 59,
@@ -3054,7 +3054,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p053-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 60,
@@ -3064,7 +3064,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p054-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 61,
@@ -3074,7 +3074,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p054-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 62,
@@ -3084,7 +3084,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p056-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 63,
@@ -3094,7 +3094,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p057-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 64,
@@ -3104,7 +3104,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p057-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 65,
@@ -3114,7 +3114,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p057-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 66,
@@ -3124,7 +3124,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p062-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 67,
@@ -3134,7 +3134,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p062-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 68,
@@ -3144,7 +3144,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 69,
@@ -3154,7 +3154,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 70,
@@ -3164,7 +3164,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 71,
@@ -3174,7 +3174,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 72,
@@ -3184,7 +3184,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 73,
@@ -3194,7 +3194,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p065-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 74,
@@ -3204,7 +3204,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p066-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 75,
@@ -3214,7 +3214,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p066-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 76,
@@ -3224,7 +3224,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p069-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 77,
@@ -3234,7 +3234,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p069-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 78,
@@ -3244,7 +3244,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p070-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 79,
@@ -3254,7 +3254,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p070-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 80,
@@ -3264,7 +3264,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p071-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 81,
@@ -3274,7 +3274,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p072-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 82,
@@ -3284,7 +3284,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p076-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 83,
@@ -3294,7 +3294,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p076-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 84,
@@ -3304,7 +3304,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p077-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 85,
@@ -3314,7 +3314,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p078-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 86,
@@ -3324,7 +3324,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p078-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 87,
@@ -3334,7 +3334,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p080-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 88,
@@ -3344,7 +3344,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p081-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 89,
@@ -3354,7 +3354,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p081-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 90,
@@ -3364,7 +3364,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p082-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 91,
@@ -3374,7 +3374,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p082-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 92,
@@ -3384,7 +3384,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p083-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 93,
@@ -3394,7 +3394,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p085-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 94,
@@ -3404,7 +3404,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p088-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 95,
@@ -3414,7 +3414,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p088-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 96,
@@ -3424,7 +3424,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p088-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 97,
@@ -3434,7 +3434,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p092-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 98,
@@ -3444,7 +3444,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p093-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 99,
@@ -3454,7 +3454,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p093-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 100,
@@ -3464,7 +3464,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p094-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 101,
@@ -3474,7 +3474,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p095-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 102,
@@ -3484,7 +3484,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p095-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 103,
@@ -3494,7 +3494,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p096-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 104,
@@ -3504,7 +3504,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p097-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 105,
@@ -3514,7 +3514,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p097-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 106,
@@ -3524,7 +3524,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p098-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 107,
@@ -3534,7 +3534,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p099-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 108,
@@ -3544,7 +3544,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p099-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 109,
@@ -3554,7 +3554,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p099-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 110,
@@ -3564,7 +3564,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p100-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 111,
@@ -3574,7 +3574,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p100-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 112,
@@ -3584,7 +3584,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p102-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 113,
@@ -3594,7 +3594,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p103-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 114,
@@ -3604,7 +3604,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p105-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 115,
@@ -3614,7 +3614,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p105-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 116,
@@ -3624,7 +3624,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p106-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 117,
@@ -3634,7 +3634,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p106-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 118,
@@ -3644,7 +3644,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p108-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 119,
@@ -3654,76 +3654,76 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p109-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         }
       ]
     },
     "M-B5_CAL_DISTRIBUTION_AWARE_120": {
       "profile_id": "M-B5_CAL_DISTRIBUTION_AWARE_120",
       "sample_count": 120,
-      "unique_subjects": 69,
+      "unique_subjects": 71,
       "min_samples_per_subject": 1,
       "max_samples_per_subject": 2,
       "class_distribution_counts": {
-        "NORMAL": 48,
+        "NORMAL": 45,
         "RAPID_OR_ABNORMAL": 40,
-        "APNEA": 32
+        "APNEA": 35
       },
       "class_distribution_fractions": {
-        "NORMAL": 0.4,
+        "NORMAL": 0.375,
         "RAPID_OR_ABNORMAL": 0.333333,
-        "APNEA": 0.266667
+        "APNEA": 0.291667
       },
       "samples": [
         {
           "calibration_slot_index": 0,
-          "canonical_train_index": 0,
-          "window_id": "dataset-10_5281_zenodo_18599983-p001-lying-post_exercise__W0000",
+          "canonical_train_index": 3,
+          "window_id": "dataset-10_5281_zenodo_18599983-p001-sitting-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p001",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p001-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
+          "recording_id": "dataset-10_5281_zenodo_18599983-p001-sitting-rest",
+          "safenest_label": "APNEA",
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 1,
-          "canonical_train_index": 2,
-          "window_id": "dataset-10_5281_zenodo_18599983-p001-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p001",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p001-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 2,
           "canonical_train_index": 4,
           "window_id": "dataset-10_5281_zenodo_18599983-p002-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p002",
           "recording_id": "dataset-10_5281_zenodo_18599983-p002-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 2,
+          "canonical_train_index": 6,
+          "window_id": "dataset-10_5281_zenodo_18599983-p002-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p002",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p002-sitting-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 3,
-          "canonical_train_index": 7,
-          "window_id": "dataset-10_5281_zenodo_18599983-p002-sitting-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p002",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p002-sitting-rest",
-          "safenest_label": "APNEA",
-          "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 4,
           "canonical_train_index": 8,
           "window_id": "dataset-10_5281_zenodo_18599983-p003-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p003",
           "recording_id": "dataset-10_5281_zenodo_18599983-p003-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 4,
+          "canonical_train_index": 10,
+          "window_id": "dataset-10_5281_zenodo_18599983-p003-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p003",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p003-sitting-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 5,
@@ -3733,7 +3733,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 6,
@@ -3743,7 +3743,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p004-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 7,
@@ -3753,7 +3753,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p005-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 8,
@@ -3763,37 +3763,37 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p005-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 9,
-          "canonical_train_index": 22,
-          "window_id": "dataset-10_5281_zenodo_18599983-p006-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p006",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p006-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 10,
           "canonical_train_index": 23,
           "window_id": "dataset-10_5281_zenodo_18599983-p006-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p006",
           "recording_id": "dataset-10_5281_zenodo_18599983-p006-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 10,
+          "canonical_train_index": 24,
+          "window_id": "dataset-10_5281_zenodo_18599983-p006-sitting-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p006",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p006-sitting-rest",
+          "safenest_label": "APNEA",
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 11,
-          "canonical_train_index": 26,
-          "window_id": "dataset-10_5281_zenodo_18599983-p007-lying-post_exercise__W0001",
+          "canonical_train_index": 27,
+          "window_id": "dataset-10_5281_zenodo_18599983-p007-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p007",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-post_exercise",
-          "safenest_label": "NORMAL",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p007-lying-rest",
+          "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 12,
@@ -3803,7 +3803,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p007-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 13,
@@ -3813,7 +3813,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 14,
@@ -3823,297 +3823,297 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p008-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 15,
+          "canonical_train_index": 38,
+          "window_id": "dataset-10_5281_zenodo_18599983-p010-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p010",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p010-lying-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 16,
           "canonical_train_index": 41,
           "window_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p010",
           "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 16,
-          "canonical_train_index": 42,
-          "window_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise__W0001",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p010",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 17,
+          "canonical_train_index": 44,
+          "window_id": "dataset-10_5281_zenodo_18599983-p011-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p011",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p011-lying-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 18,
           "canonical_train_index": 46,
           "window_id": "dataset-10_5281_zenodo_18599983-p011-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p011",
           "recording_id": "dataset-10_5281_zenodo_18599983-p011-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 18,
+          "calibration_slot_index": 19,
           "canonical_train_index": 49,
           "window_id": "dataset-10_5281_zenodo_18599983-p014-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p014",
           "recording_id": "dataset-10_5281_zenodo_18599983-p014-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 19,
+          "calibration_slot_index": 20,
           "canonical_train_index": 52,
           "window_id": "dataset-10_5281_zenodo_18599983-p015-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p015",
           "recording_id": "dataset-10_5281_zenodo_18599983-p015-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 20,
-          "canonical_train_index": 54,
-          "window_id": "dataset-10_5281_zenodo_18599983-p015-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p015",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p015-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 21,
+          "canonical_train_index": 55,
+          "window_id": "dataset-10_5281_zenodo_18599983-p015-sitting-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p015",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p015-sitting-rest",
+          "safenest_label": "APNEA",
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
+        },
+        {
+          "calibration_slot_index": 22,
           "canonical_train_index": 58,
           "window_id": "dataset-10_5281_zenodo_18599983-p018-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p018",
           "recording_id": "dataset-10_5281_zenodo_18599983-p018-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 22,
+          "calibration_slot_index": 23,
           "canonical_train_index": 62,
           "window_id": "dataset-10_5281_zenodo_18599983-p020-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p020",
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 23,
+          "calibration_slot_index": 24,
           "canonical_train_index": 63,
           "window_id": "dataset-10_5281_zenodo_18599983-p020-sitting-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p020",
           "recording_id": "dataset-10_5281_zenodo_18599983-p020-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 24,
-          "canonical_train_index": 69,
-          "window_id": "dataset-10_5281_zenodo_18599983-p022-lying-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p022",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p022-lying-rest",
-          "safenest_label": "APNEA",
-          "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 25,
-          "canonical_train_index": 72,
-          "window_id": "dataset-10_5281_zenodo_18599983-p026-lying-post_exercise__W0000",
+          "canonical_train_index": 64,
+          "window_id": "dataset-10_5281_zenodo_18599983-p021-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p021",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p021-lying-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 26,
+          "canonical_train_index": 66,
+          "window_id": "dataset-10_5281_zenodo_18599983-p021-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p021",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p021-sitting-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 27,
+          "canonical_train_index": 70,
+          "window_id": "dataset-10_5281_zenodo_18599983-p022-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p022",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p022-sitting-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 28,
+          "canonical_train_index": 73,
+          "window_id": "dataset-10_5281_zenodo_18599983-p026-lying-post_exercise__W0001",
           "subject_id": "dataset-10_5281_zenodo_18599983-p026",
           "recording_id": "dataset-10_5281_zenodo_18599983-p026-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 26,
+          "calibration_slot_index": 29,
           "canonical_train_index": 76,
           "window_id": "dataset-10_5281_zenodo_18599983-p026-sitting-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p026",
           "recording_id": "dataset-10_5281_zenodo_18599983-p026-sitting-rest",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 27,
+          "calibration_slot_index": 30,
           "canonical_train_index": 79,
           "window_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p028",
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 28,
+          "calibration_slot_index": 31,
           "canonical_train_index": 80,
           "window_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest__W0001",
           "subject_id": "dataset-10_5281_zenodo_18599983-p028",
           "recording_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 29,
+          "calibration_slot_index": 32,
           "canonical_train_index": 85,
           "window_id": "dataset-10_5281_zenodo_18599983-p030-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p030",
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 30,
+          "calibration_slot_index": 33,
           "canonical_train_index": 86,
           "window_id": "dataset-10_5281_zenodo_18599983-p030-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p030",
           "recording_id": "dataset-10_5281_zenodo_18599983-p030-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 31,
-          "canonical_train_index": 91,
-          "window_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise__W0000",
+          "calibration_slot_index": 34,
+          "canonical_train_index": 90,
+          "window_id": "dataset-10_5281_zenodo_18599983-p032-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p032",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "recording_id": "dataset-10_5281_zenodo_18599983-p032-lying-rest",
+          "safenest_label": "APNEA",
+          "posture": "Lying",
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 32,
+          "calibration_slot_index": 35,
           "canonical_train_index": 92,
           "window_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise__W0001",
           "subject_id": "dataset-10_5281_zenodo_18599983-p032",
           "recording_id": "dataset-10_5281_zenodo_18599983-p032-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 33,
-          "canonical_train_index": 94,
-          "window_id": "dataset-10_5281_zenodo_18599983-p034-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p034",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p034-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 34,
+          "calibration_slot_index": 36,
           "canonical_train_index": 96,
           "window_id": "dataset-10_5281_zenodo_18599983-p034-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p034",
           "recording_id": "dataset-10_5281_zenodo_18599983-p034-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 35,
+          "calibration_slot_index": 37,
           "canonical_train_index": 98,
           "window_id": "dataset-10_5281_zenodo_18599983-p035-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p035",
           "recording_id": "dataset-10_5281_zenodo_18599983-p035-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 36,
-          "canonical_train_index": 102,
-          "window_id": "dataset-10_5281_zenodo_18599983-p035-sitting-post_exercise__W0001",
+          "calibration_slot_index": 38,
+          "canonical_train_index": 99,
+          "window_id": "dataset-10_5281_zenodo_18599983-p035-lying-post_exercise__W0001",
           "subject_id": "dataset-10_5281_zenodo_18599983-p035",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p035-sitting-post_exercise",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p035-lying-post_exercise",
           "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 37,
+          "calibration_slot_index": 39,
           "canonical_train_index": 105,
           "window_id": "dataset-10_5281_zenodo_18599983-p037-lying-post_exercise__W0001",
           "subject_id": "dataset-10_5281_zenodo_18599983-p037",
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 38,
+          "calibration_slot_index": 40,
           "canonical_train_index": 107,
           "window_id": "dataset-10_5281_zenodo_18599983-p037-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p037",
           "recording_id": "dataset-10_5281_zenodo_18599983-p037-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 39,
+          "calibration_slot_index": 41,
           "canonical_train_index": 114,
           "window_id": "dataset-10_5281_zenodo_18599983-p038-sitting-post_exercise__W0001",
           "subject_id": "dataset-10_5281_zenodo_18599983-p038",
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 40,
+          "calibration_slot_index": 42,
           "canonical_train_index": 115,
           "window_id": "dataset-10_5281_zenodo_18599983-p038-sitting-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p038",
           "recording_id": "dataset-10_5281_zenodo_18599983-p038-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 41,
-          "canonical_train_index": 116,
-          "window_id": "dataset-10_5281_zenodo_18599983-p040-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p040",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p040-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 42,
-          "canonical_train_index": 117,
-          "window_id": "dataset-10_5281_zenodo_18599983-p040-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p040",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p040-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 43,
-          "canonical_train_index": 118,
-          "window_id": "dataset-10_5281_zenodo_18599983-p041-lying-post_exercise__W0000",
+          "canonical_train_index": 119,
+          "window_id": "dataset-10_5281_zenodo_18599983-p041-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p041",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p041-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p041-lying-rest",
+          "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 44,
@@ -4123,7 +4123,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p041-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 45,
@@ -4133,7 +4133,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p043-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 46,
@@ -4143,57 +4143,57 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p043-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 47,
+          "canonical_train_index": 130,
+          "window_id": "dataset-10_5281_zenodo_18599983-p045-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p045",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p045-lying-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 48,
+          "canonical_train_index": 134,
+          "window_id": "dataset-10_5281_zenodo_18599983-p048-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p048",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p048-lying-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 49,
           "canonical_train_index": 138,
           "window_id": "dataset-10_5281_zenodo_18599983-p049-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p049",
           "recording_id": "dataset-10_5281_zenodo_18599983-p049-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 48,
-          "canonical_train_index": 140,
-          "window_id": "dataset-10_5281_zenodo_18599983-p049-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p049",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p049-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "calibration_slot_index": 50,
+          "canonical_train_index": 143,
+          "window_id": "dataset-10_5281_zenodo_18599983-p051-lying-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p051",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p051-lying-rest",
+          "safenest_label": "APNEA",
+          "posture": "Lying",
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 49,
+          "calibration_slot_index": 51,
           "canonical_train_index": 144,
           "window_id": "dataset-10_5281_zenodo_18599983-p051-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p051",
           "recording_id": "dataset-10_5281_zenodo_18599983-p051-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 50,
-          "canonical_train_index": 145,
-          "window_id": "dataset-10_5281_zenodo_18599983-p051-sitting-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p051",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p051-sitting-rest",
-          "safenest_label": "APNEA",
-          "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 51,
-          "canonical_train_index": 147,
-          "window_id": "dataset-10_5281_zenodo_18599983-p052-lying-post_exercise__W0001",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p052",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p052-lying-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 52,
@@ -4203,27 +4203,27 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p052-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 53,
+          "canonical_train_index": 152,
+          "window_id": "dataset-10_5281_zenodo_18599983-p052-sitting-rest__W0001",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p052",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p052-sitting-rest",
+          "safenest_label": "NORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
+        },
+        {
+          "calibration_slot_index": 54,
           "canonical_train_index": 154,
           "window_id": "dataset-10_5281_zenodo_18599983-p053-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p053",
           "recording_id": "dataset-10_5281_zenodo_18599983-p053-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 54,
-          "canonical_train_index": 155,
-          "window_id": "dataset-10_5281_zenodo_18599983-p053-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p053",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p053-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 55,
@@ -4233,7 +4233,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p054-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 56,
@@ -4243,17 +4243,17 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p054-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 57,
-          "canonical_train_index": 161,
-          "window_id": "dataset-10_5281_zenodo_18599983-p056-lying-post_exercise__W0000",
+          "canonical_train_index": 163,
+          "window_id": "dataset-10_5281_zenodo_18599983-p056-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p056",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p056-lying-post_exercise",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p056-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 58,
@@ -4263,157 +4263,157 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p056-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 59,
-          "canonical_train_index": 165,
-          "window_id": "dataset-10_5281_zenodo_18599983-p057-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p057",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p057-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 60,
           "canonical_train_index": 167,
           "window_id": "dataset-10_5281_zenodo_18599983-p057-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p057",
           "recording_id": "dataset-10_5281_zenodo_18599983-p057-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 60,
+          "canonical_train_index": 172,
+          "window_id": "dataset-10_5281_zenodo_18599983-p058-sitting-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p058",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p058-sitting-rest",
+          "safenest_label": "APNEA",
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 61,
-          "canonical_train_index": 171,
-          "window_id": "dataset-10_5281_zenodo_18599983-p058-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p058",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p058-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 62,
           "canonical_train_index": 173,
           "window_id": "dataset-10_5281_zenodo_18599983-p061-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p061",
           "recording_id": "dataset-10_5281_zenodo_18599983-p061-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 62,
+          "canonical_train_index": 175,
+          "window_id": "dataset-10_5281_zenodo_18599983-p061-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p061",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p061-sitting-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 63,
-          "canonical_train_index": 174,
-          "window_id": "dataset-10_5281_zenodo_18599983-p061-lying-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p061",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p061-lying-rest",
-          "safenest_label": "APNEA",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 64,
           "canonical_train_index": 178,
           "window_id": "dataset-10_5281_zenodo_18599983-p062-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p062",
           "recording_id": "dataset-10_5281_zenodo_18599983-p062-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 65,
+          "calibration_slot_index": 64,
           "canonical_train_index": 179,
           "window_id": "dataset-10_5281_zenodo_18599983-p062-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p062",
           "recording_id": "dataset-10_5281_zenodo_18599983-p062-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 65,
+          "canonical_train_index": 181,
+          "window_id": "dataset-10_5281_zenodo_18599983-p064-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p064",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p064-lying-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 66,
-          "canonical_train_index": 183,
-          "window_id": "dataset-10_5281_zenodo_18599983-p064-lying-rest__W0001",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p064",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p064-lying-rest",
-          "safenest_label": "APNEA",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 67,
           "canonical_train_index": 184,
           "window_id": "dataset-10_5281_zenodo_18599983-p064-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p064",
           "recording_id": "dataset-10_5281_zenodo_18599983-p064-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 68,
+          "calibration_slot_index": 67,
           "canonical_train_index": 190,
           "window_id": "dataset-10_5281_zenodo_18599983-p065-sitting-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p065",
           "recording_id": "dataset-10_5281_zenodo_18599983-p065-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 69,
-          "canonical_train_index": 191,
-          "window_id": "dataset-10_5281_zenodo_18599983-p066-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p066",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p066-lying-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 70,
+          "calibration_slot_index": 68,
           "canonical_train_index": 192,
           "window_id": "dataset-10_5281_zenodo_18599983-p066-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p066",
           "recording_id": "dataset-10_5281_zenodo_18599983-p066-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
+        },
+        {
+          "calibration_slot_index": 69,
+          "canonical_train_index": 193,
+          "window_id": "dataset-10_5281_zenodo_18599983-p066-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p066",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p066-sitting-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 70,
+          "canonical_train_index": 196,
+          "window_id": "dataset-10_5281_zenodo_18599983-p068-lying-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p068",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p068-lying-rest",
+          "safenest_label": "APNEA",
+          "posture": "Lying",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 71,
-          "canonical_train_index": 195,
-          "window_id": "dataset-10_5281_zenodo_18599983-p068-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p068",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p068-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 72,
-          "canonical_train_index": 197,
-          "window_id": "dataset-10_5281_zenodo_18599983-p068-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p068",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p068-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 73,
           "canonical_train_index": 199,
           "window_id": "dataset-10_5281_zenodo_18599983-p069-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p069",
           "recording_id": "dataset-10_5281_zenodo_18599983-p069-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 72,
+          "canonical_train_index": 200,
+          "window_id": "dataset-10_5281_zenodo_18599983-p069-lying-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p069",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p069-lying-rest",
+          "safenest_label": "APNEA",
+          "posture": "Lying",
+          "source_test_condition": "Rest"
+        },
+        {
+          "calibration_slot_index": 73,
+          "canonical_train_index": 203,
+          "window_id": "dataset-10_5281_zenodo_18599983-p070-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p070",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p070-lying-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 74,
@@ -4423,157 +4423,157 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p070-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 75,
-          "canonical_train_index": 206,
-          "window_id": "dataset-10_5281_zenodo_18599983-p070-sitting-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p070",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p070-sitting-rest",
-          "safenest_label": "APNEA",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "canonical_train_index": 207,
+          "window_id": "dataset-10_5281_zenodo_18599983-p071-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p071",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p071-lying-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 76,
-          "canonical_train_index": 208,
-          "window_id": "dataset-10_5281_zenodo_18599983-p071-sitting-post_exercise__W0000",
+          "canonical_train_index": 209,
+          "window_id": "dataset-10_5281_zenodo_18599983-p071-sitting-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p071",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p071-sitting-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p071-sitting-rest",
+          "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 77,
-          "canonical_train_index": 210,
-          "window_id": "dataset-10_5281_zenodo_18599983-p072-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p072",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p072-lying-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 78,
           "canonical_train_index": 212,
           "window_id": "dataset-10_5281_zenodo_18599983-p072-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p072",
           "recording_id": "dataset-10_5281_zenodo_18599983-p072-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 79,
+          "calibration_slot_index": 78,
           "canonical_train_index": 214,
           "window_id": "dataset-10_5281_zenodo_18599983-p076-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p076",
           "recording_id": "dataset-10_5281_zenodo_18599983-p076-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 79,
+          "canonical_train_index": 218,
+          "window_id": "dataset-10_5281_zenodo_18599983-p077-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p077",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p077-lying-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 80,
-          "canonical_train_index": 217,
-          "window_id": "dataset-10_5281_zenodo_18599983-p076-sitting-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p076",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p076-sitting-rest",
-          "safenest_label": "APNEA",
-          "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 81,
           "canonical_train_index": 221,
           "window_id": "dataset-10_5281_zenodo_18599983-p077-sitting-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p077",
           "recording_id": "dataset-10_5281_zenodo_18599983-p077-sitting-rest",
           "safenest_label": "APNEA",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
+        },
+        {
+          "calibration_slot_index": 81,
+          "canonical_train_index": 224,
+          "window_id": "dataset-10_5281_zenodo_18599983-p078-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p078",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p078-sitting-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 82,
-          "canonical_train_index": 225,
-          "window_id": "dataset-10_5281_zenodo_18599983-p078-sitting-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p078",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p078-sitting-rest",
-          "safenest_label": "APNEA",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "canonical_train_index": 226,
+          "window_id": "dataset-10_5281_zenodo_18599983-p080-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p080",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p080-lying-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 83,
-          "canonical_train_index": 230,
-          "window_id": "dataset-10_5281_zenodo_18599983-p081-lying-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p081",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p081-lying-rest",
+          "canonical_train_index": 228,
+          "window_id": "dataset-10_5281_zenodo_18599983-p080-sitting-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p080",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p080-sitting-rest",
           "safenest_label": "APNEA",
-          "posture": "Lying",
-          "test_condition": "normal"
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 84,
-          "canonical_train_index": 231,
-          "window_id": "dataset-10_5281_zenodo_18599983-p081-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p081",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p081-sitting-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 85,
-          "canonical_train_index": 233,
-          "window_id": "dataset-10_5281_zenodo_18599983-p082-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p082",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p082-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 86,
           "canonical_train_index": 234,
           "window_id": "dataset-10_5281_zenodo_18599983-p082-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p082",
           "recording_id": "dataset-10_5281_zenodo_18599983-p082-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
+        },
+        {
+          "calibration_slot_index": 85,
+          "canonical_train_index": 235,
+          "window_id": "dataset-10_5281_zenodo_18599983-p082-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p082",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p082-sitting-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 86,
+          "canonical_train_index": 238,
+          "window_id": "dataset-10_5281_zenodo_18599983-p083-lying-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p083",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p083-lying-rest",
+          "safenest_label": "APNEA",
+          "posture": "Lying",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 87,
-          "canonical_train_index": 237,
-          "window_id": "dataset-10_5281_zenodo_18599983-p083-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p083",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p083-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 88,
           "canonical_train_index": 239,
           "window_id": "dataset-10_5281_zenodo_18599983-p083-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p083",
           "recording_id": "dataset-10_5281_zenodo_18599983-p083-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 88,
+          "canonical_train_index": 244,
+          "window_id": "dataset-10_5281_zenodo_18599983-p085-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p085",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p085-lying-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 89,
-          "canonical_train_index": 241,
-          "window_id": "dataset-10_5281_zenodo_18599983-p084-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p084",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p084-lying-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
+          "canonical_train_index": 247,
+          "window_id": "dataset-10_5281_zenodo_18599983-p085-sitting-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p085",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p085-sitting-rest",
+          "safenest_label": "APNEA",
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 90,
@@ -4583,7 +4583,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p088-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 91,
@@ -4593,7 +4593,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p088-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 92,
@@ -4603,7 +4603,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p089-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 93,
@@ -4613,17 +4613,17 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p090-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 94,
-          "canonical_train_index": 257,
-          "window_id": "dataset-10_5281_zenodo_18599983-p090-lying-rest__W0000",
+          "canonical_train_index": 259,
+          "window_id": "dataset-10_5281_zenodo_18599983-p090-sitting-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p090",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p090-lying-rest",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p090-sitting-rest",
           "safenest_label": "APNEA",
-          "posture": "Lying",
-          "test_condition": "normal"
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 95,
@@ -4633,7 +4633,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p092-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 96,
@@ -4643,37 +4643,37 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p092-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 97,
-          "canonical_train_index": 267,
-          "window_id": "dataset-10_5281_zenodo_18599983-p093-sitting-rest__W0000",
+          "canonical_train_index": 264,
+          "window_id": "dataset-10_5281_zenodo_18599983-p093-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p093",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p093-sitting-rest",
-          "safenest_label": "APNEA",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "recording_id": "dataset-10_5281_zenodo_18599983-p093-lying-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 98,
+          "canonical_train_index": 266,
+          "window_id": "dataset-10_5281_zenodo_18599983-p093-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p093",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p093-sitting-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Sitting",
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 99,
           "canonical_train_index": 268,
           "window_id": "dataset-10_5281_zenodo_18599983-p094-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p094",
           "recording_id": "dataset-10_5281_zenodo_18599983-p094-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 99,
-          "canonical_train_index": 271,
-          "window_id": "dataset-10_5281_zenodo_18599983-p094-sitting-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p094",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p094-sitting-rest",
-          "safenest_label": "APNEA",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 100,
@@ -4683,117 +4683,117 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p095-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 101,
-          "canonical_train_index": 274,
-          "window_id": "dataset-10_5281_zenodo_18599983-p095-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p095",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p095-sitting-post_exercise",
+          "canonical_train_index": 278,
+          "window_id": "dataset-10_5281_zenodo_18599983-p096-sitting-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p096",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p096-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 102,
-          "canonical_train_index": 276,
-          "window_id": "dataset-10_5281_zenodo_18599983-p096-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p096",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p096-lying-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 103,
           "canonical_train_index": 280,
           "window_id": "dataset-10_5281_zenodo_18599983-p097-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p097",
           "recording_id": "dataset-10_5281_zenodo_18599983-p097-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 103,
+          "canonical_train_index": 283,
+          "window_id": "dataset-10_5281_zenodo_18599983-p097-sitting-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p097",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p097-sitting-rest",
+          "safenest_label": "APNEA",
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 104,
-          "canonical_train_index": 281,
-          "window_id": "dataset-10_5281_zenodo_18599983-p097-lying-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p097",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p097-lying-rest",
-          "safenest_label": "APNEA",
-          "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 105,
           "canonical_train_index": 285,
           "window_id": "dataset-10_5281_zenodo_18599983-p098-lying-rest__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p098",
           "recording_id": "dataset-10_5281_zenodo_18599983-p098-lying-rest",
           "safenest_label": "APNEA",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Rest"
         },
         {
-          "calibration_slot_index": 106,
+          "calibration_slot_index": 105,
           "canonical_train_index": 286,
           "window_id": "dataset-10_5281_zenodo_18599983-p098-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p098",
           "recording_id": "dataset-10_5281_zenodo_18599983-p098-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
+        },
+        {
+          "calibration_slot_index": 106,
+          "canonical_train_index": 288,
+          "window_id": "dataset-10_5281_zenodo_18599983-p099-lying-post_exercise__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p099",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p099-lying-post_exercise",
+          "safenest_label": "NORMAL",
+          "posture": "Lying",
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 107,
+          "canonical_train_index": 289,
+          "window_id": "dataset-10_5281_zenodo_18599983-p099-lying-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p099",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p099-lying-rest",
+          "safenest_label": "APNEA",
+          "posture": "Lying",
+          "source_test_condition": "Rest"
+        },
+        {
+          "calibration_slot_index": 108,
           "canonical_train_index": 294,
           "window_id": "dataset-10_5281_zenodo_18599983-p100-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p100",
           "recording_id": "dataset-10_5281_zenodo_18599983-p100-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 108,
+          "calibration_slot_index": 109,
           "canonical_train_index": 296,
           "window_id": "dataset-10_5281_zenodo_18599983-p102-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p102",
           "recording_id": "dataset-10_5281_zenodo_18599983-p102-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
-          "calibration_slot_index": 109,
+          "calibration_slot_index": 110,
           "canonical_train_index": 298,
           "window_id": "dataset-10_5281_zenodo_18599983-p102-sitting-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p102",
           "recording_id": "dataset-10_5281_zenodo_18599983-p102-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 110,
-          "canonical_train_index": 299,
-          "window_id": "dataset-10_5281_zenodo_18599983-p103-lying-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p103",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p103-lying-post_exercise",
-          "safenest_label": "NORMAL",
-          "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 111,
-          "canonical_train_index": 301,
-          "window_id": "dataset-10_5281_zenodo_18599983-p103-sitting-post_exercise__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p103",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p103-sitting-post_exercise",
-          "safenest_label": "RAPID_OR_ABNORMAL",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "canonical_train_index": 304,
+          "window_id": "dataset-10_5281_zenodo_18599983-p105-lying-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p105",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p105-lying-rest",
+          "safenest_label": "APNEA",
+          "posture": "Lying",
+          "source_test_condition": "Rest"
         },
         {
           "calibration_slot_index": 112,
@@ -4803,7 +4803,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p105-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 113,
@@ -4813,7 +4813,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p106-lying-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 114,
@@ -4823,7 +4823,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p106-sitting-post_exercise",
           "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 115,
@@ -4833,37 +4833,37 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p107-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 116,
+          "canonical_train_index": 314,
+          "window_id": "dataset-10_5281_zenodo_18599983-p107-sitting-rest__W0000",
+          "subject_id": "dataset-10_5281_zenodo_18599983-p107",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p107-sitting-rest",
+          "safenest_label": "APNEA",
+          "posture": "Sitting",
+          "source_test_condition": "Rest"
+        },
+        {
+          "calibration_slot_index": 117,
           "canonical_train_index": 315,
           "window_id": "dataset-10_5281_zenodo_18599983-p108-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p108",
           "recording_id": "dataset-10_5281_zenodo_18599983-p108-lying-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
-        },
-        {
-          "calibration_slot_index": 117,
-          "canonical_train_index": 318,
-          "window_id": "dataset-10_5281_zenodo_18599983-p108-sitting-rest__W0000",
-          "subject_id": "dataset-10_5281_zenodo_18599983-p108",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p108-sitting-rest",
-          "safenest_label": "APNEA",
-          "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 118,
-          "canonical_train_index": 320,
-          "window_id": "dataset-10_5281_zenodo_18599983-p109-lying-rest__W0000",
+          "canonical_train_index": 319,
+          "window_id": "dataset-10_5281_zenodo_18599983-p109-lying-post_exercise__W0000",
           "subject_id": "dataset-10_5281_zenodo_18599983-p109",
-          "recording_id": "dataset-10_5281_zenodo_18599983-p109-lying-rest",
-          "safenest_label": "APNEA",
+          "recording_id": "dataset-10_5281_zenodo_18599983-p109-lying-post_exercise",
+          "safenest_label": "RAPID_OR_ABNORMAL",
           "posture": "Lying",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         },
         {
           "calibration_slot_index": 119,
@@ -4873,7 +4873,7 @@
           "recording_id": "dataset-10_5281_zenodo_18599983-p109-sitting-post_exercise",
           "safenest_label": "NORMAL",
           "posture": "Sitting",
-          "test_condition": "normal"
+          "source_test_condition": "Post-exercise"
         }
       ]
     }

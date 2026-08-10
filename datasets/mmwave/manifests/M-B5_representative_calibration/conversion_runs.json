@@ -1,6 +1,9 @@
 {
   "phase_id": "M-B5",
   "total_conversions": 12,
+  "conversions_rerun_this_execution": 3,
+  "profile_d_conversions_rerun": 3,
+  "profiles_abc_conversions_rerun": 0,
   "conversions": {
     "M-B3_CONV1D_GAP_BASELINE_seed_42_M-B5_CAL_TRAIN_ORDER_120": {
       "bytes": 22080,
@@ -454,7 +457,7 @@
     },
     "M-B3_CONV1D_GAP_BASELINE_seed_42_M-B5_CAL_DISTRIBUTION_AWARE_120": {
       "bytes": 22080,
-      "sha256": "183da59734f7f7a1cecc981aa9294ef0abbe1a6373547b260e8cbfd617f011e8",
+      "sha256": "49c77a268cb186e1f77d8e642de204b8c467ee0c05e2c63a6515f7c1621984be",
       "input_dtype": "int8",
       "output_dtype": "int8",
       "input_shape": [
@@ -554,7 +557,7 @@
     },
     "M-B3_CONV1D_GAP_BASELINE_seed_44_M-B5_CAL_DISTRIBUTION_AWARE_120": {
       "bytes": 22136,
-      "sha256": "9640ddac21f5082c20194b0a3e30fd7db92e509728b7fb76afdca144b705b7dd",
+      "sha256": "5598e5def3f9650d670b97af2752fd673e7ae18061288e68d0bb85bdb171bf1d",
       "input_dtype": "int8",
       "output_dtype": "int8",
       "input_shape": [

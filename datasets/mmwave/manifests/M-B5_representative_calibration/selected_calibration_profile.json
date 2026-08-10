@@ -50,5 +50,15 @@
       "max": 22136
     }
   },
-  "selection_rationale": "Preregistered M-B5 8-criterion ranking rule: Lower worst-seed positive Macro F1 degradation, lower worst-seed max positive recall degradation, higher min Top-1 agreement, lower max dequantized output MAE, lower max input saturation ratio, lower max output endpoint ratio, simpler policy order."
+  "ranking_decision": {
+    "winner_profile_id": "M-B5_CAL_CLASS_BALANCED_120",
+    "runner_up_profile_id": "M-B5_CAL_TRAIN_ORDER_120",
+    "deciding_criterion": "CRITERION_4_MAX_OUTPUT_PROBABILITY_MAE",
+    "direction": "lower",
+    "winner_value": 0.008439,
+    "runner_up_value": 0.008551,
+    "abs_delta": 0.00011199999999999925,
+    "tie_tolerance_eps": 1e-05
+  },
+  "selection_rationale": "Preregistered M-B5 8-criterion ranking rule with eps=1e-5 numerical tie tolerance: Lower worst-seed positive Macro F1 degradation, lower worst-seed max positive recall degradation, higher min Top-1 agreement, lower max dequantized output MAE, lower max input saturation ratio, lower max output endpoint ratio, simpler policy order, lexicographic profile ID."
 }
