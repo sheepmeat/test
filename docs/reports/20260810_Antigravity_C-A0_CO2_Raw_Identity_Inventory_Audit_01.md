@@ -23,7 +23,8 @@ This phase resolves the historical lineage ambiguity between the tracked synthet
 - **Official Dataset Name**: UCI Occupancy Detection Dataset
 - **Official Source URL**: `https://archive.ics.uci.edu/dataset/357/occupancy+detection`
 - **Stable Identifier**: UCI Machine Learning Repository Dataset ID 357
-- **DOI**: `10.24432/C5CW2B`
+- **DOI (UCI Dataset)**: `10.24432/C5X01N`
+- **DOI (Publication)**: `10.1016/j.enbuild.2015.11.071`
 - **Primary Publication**: Candanedo, L. M., & Feldheim, V. (2016). *Accurate occupancy detection of an office room from light, temperature, humidity and CO2 measurements using statistical learning models*. Energy and Buildings, 112, 28-39.
 - **Authors / Institution**: Luis M. Candanedo and V. Feldheim (University of Mons, Department of Thermal Engineering and Combustion, Mons, Belgium).
 

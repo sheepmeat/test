@@ -66,6 +66,15 @@ def test_co2_manifest_file_completeness():
     for fname in required_files:
         assert (manifest_dir / fname).exists(), f"Manifest file missing: {fname}"
 
+    source_id = json.loads((manifest_dir / "source_identity.json").read_text(encoding="utf-8"))
+    assert source_id["doi"] == "10.24432/C5X01N"
+    assert source_id["journal_paper_doi"] == "10.1016/j.enbuild.2015.11.071"
+
+    files = source_id["collection_methodology"]["dataset_files"]
+    assert "2015-02-02 14:19:00 to 2015-02-04 10:43:00" in files["datatest.txt"]
+    assert "2015-02-04 17:51:00 to 2015-02-10 09:33:00" in files["datatraining.txt"]
+    assert "2015-02-11 14:48:00 to 2015-02-18 09:19:00" in files["datatest2.txt"]
+
 
 def test_co2_schema_mismatch_representation():
     repo_root = get_repo_root()
