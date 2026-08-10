@@ -4,10 +4,13 @@
 Provides controlled data access for mmWave Phase-B experiments, enforcing
 TRAIN-only fitting, VALIDATION-only selection, and strict LOCKED_TEST isolation.
 Attempts to access LOCKED_TEST during model selection fail closed with an exception.
+Structural leakage audits on LOCKED_TEST return sanitized identity/signal structures
+without exposing class labels or label derivation metadata.
 """
 
 from __future__ import annotations
 
+import copy
 import json
 from pathlib import Path
 from typing import Any
@@ -15,6 +18,31 @@ from typing import Any
 import numpy as np
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
+
+ALLOWED_STRUCTURAL_FIELDS = {
+    "canonical_sample_index",
+    "canonical_signal_hash",
+    "window_id",
+    "subject_id",
+    "recording_id",
+    "split",
+    "start_timestamp",
+    "last_sample_timestamp",
+    "end_timestamp_exclusive",
+}
+
+FORBIDDEN_LABEL_FIELDS = {
+    "safenest_label",
+    "safenest_label_id",
+    "mapping_evidence",
+    "mapping_rule_id",
+    "original_annotation_type",
+    "movesense_reference_rr",
+    "assignment_status",
+    "training_eligible",
+    "validation_eligible",
+    "locked_test_evaluation_eligible",
+}
 
 
 class LOCKED_TEST_AccessError(Exception):
@@ -86,11 +114,34 @@ class PhaseBAccessGuard:
         return self._get_split_dataset(split_upper, include_ambiguous=include_ambiguous)
 
     def get_structural_audit_dataset(self, split_name: str) -> dict[str, Any]:
-        """Return read-only dataset specifically for structural audits (split isolation, duplicate checks)."""
+        """Return sanitized dataset specifically for structural audits (split isolation, duplicate checks).
+
+        Strips all class labels and label derivation metadata for LOCKED_TEST to prevent label leakage.
+        """
         split_upper = split_name.upper()
         if split_upper not in ("TRAIN", "VALIDATION", "LOCKED_TEST"):
             raise ValueError(f"Invalid split name: {split_name}")
-        return self._get_split_dataset(split_upper, include_ambiguous=True)
+
+        indices = []
+        sanitized_windows = []
+
+        for idx, w in enumerate(self.windows):
+            if w["split"] == split_upper:
+                indices.append(idx)
+                # Create sanitized window record containing ONLY non-label structural fields
+                clean_w = {k: copy.deepcopy(v) for k, v in w.items() if k in ALLOWED_STRUCTURAL_FIELDS}
+                sanitized_windows.append(clean_w)
+
+        signals_copy = np.copy(self.canonical_matrix[indices]) if indices else np.empty((0, 300), dtype=np.float64)
+
+        return {
+            "split": split_upper,
+            "sample_indices": indices,
+            "windows": sanitized_windows,
+            "signals": signals_copy,
+            "total_count": len(sanitized_windows),
+            "sanitized_for_structural_audit": True,
+        }
 
     def get_locked_test_final_evaluation_dataset(self, authorization_token: str | None = None) -> dict[str, Any]:
         """Return LOCKED_TEST dataset for final independent evaluation. Requires explicit authorization token."""
@@ -110,10 +161,10 @@ class PhaseBAccessGuard:
                 if not include_ambiguous and w["assignment_status"] == "AMBIGUOUS":
                     continue
                 indices.append(idx)
-                sub_windows.append(w)
-                sub_provenance.append(p)
+                sub_windows.append(copy.deepcopy(w))
+                sub_provenance.append(copy.deepcopy(p))
 
-        npy_slices = self.canonical_matrix[indices] if indices else np.empty((0, 300), dtype=np.float64)
+        npy_slices = np.copy(self.canonical_matrix[indices]) if indices else np.empty((0, 300), dtype=np.float64)
 
         return {
             "split": split_name,

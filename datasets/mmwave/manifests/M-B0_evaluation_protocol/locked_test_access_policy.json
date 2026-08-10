@@ -17,5 +17,5 @@
     "LOCKED_TEST shall NOT be accessed for multi-seed finalist ranking."
   ],
   "access_guard_module": "scripts/mmwave_phase_b_access.py",
-  "structural_audit_separation": "STRUCTURAL_LEAKAGE_AUDIT mode allows read-only identity/signal access for leakage/duplicate verification without exposing test class performance to model-selection logic."
+  "structural_audit_separation": "STRUCTURAL_LEAKAGE_AUDIT mode returns sanitized structural metadata without exposing safenest_label or annotation-derived class attributes."
 }

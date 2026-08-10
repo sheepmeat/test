@@ -17,13 +17,13 @@ Key achievements of Phase M-B0:
 1. **Input Identity Lock**: Measured and locked SHA-256 digests for all 10 authoritative M-A inputs, verifying byte-level identity against upstream M-A5/M-A6 manifests and raw archive `db_records.zip`.
 2. **Independent Split Isolation Re-verification**: Confirmed 100% subject isolation (110 subjects: 77 TRAIN / 17 VALIDATION / 16 LOCKED_TEST) with `0` subject overlap, `0` recording overlap, `0` window-ID overlap, and `0` exact signal hash overlap across splits.
 3. **Exact Duplicate Audit**: Recalculated signal hashes for all 530 canonical $300$-sample float64 phase windows (`mmwave_canonical_real_v1.npy`), confirming `0` exact duplicates across subjects or splits.
-4. **Near-Duplicate Diagnostic Policy & Audit**:
+4. **Near-Duplicate Diagnostic Policy & Empirical Calibration Audit**:
    - Defined mathematical near-duplicate metric based on standardized waveform Pearson correlation ($r$) and Normalized RMSE ($	ext{NRMSE}$).
-   - Derived frozen near-duplicate threshold ($r \ge 0.995, 	ext{NRMSE} \le 0.05$) from TRAIN-only signal correlation distribution and controlled micro-perturbations without tuning against LOCKED_TEST.
+   - Derived frozen near-duplicate threshold ($r \ge 0.995, 	ext{NRMSE} \le 0.05$) from all 358 TRAIN-only signal correlations and controlled micro-perturbations across representative windows without tuning against LOCKED_TEST.
    - Evaluated all 140,185 window pairs across the 530-window canonical dataset:
      - `CROSS_SPLIT` near-duplicates: `0`
      - `SAME_RECORDING` near-duplicates: `0` (flagged as expected physiological time-series continuity across adjacent 30s segments).
-5. **LOCKED_TEST Code-Level Access Control Guard**: Created `scripts/mmwave_phase_b_access.py` (`PhaseBAccessGuard`), which provides TRAIN and VALIDATION datasets for model selection while refusing LOCKED_TEST access with a `LOCKED_TEST_AccessError` exception.
+5. **LOCKED_TEST Code-Level Access Control Guard**: Created `scripts/mmwave_phase_b_access.py` (`PhaseBAccessGuard`), which provides TRAIN and VALIDATION datasets for model selection while refusing LOCKED_TEST access with a `LOCKED_TEST_AccessError` exception. Structural audit datasets strip all class labels and annotation derivation fields.
 6. **Immutable Evaluation Contract**: Defined `evaluation_contract.json`, enforcing TRAIN-only fitting, VALIDATION-only selection, `AMBIGUOUS` pure-class exclusion, SafeNest APNEA-proxy terminology, Macro F1 / class-collapse rejection rules, and multi-seed finalist aggregation schemas.
 
 ---
@@ -64,9 +64,9 @@ Key achievements of Phase M-B0:
 - Unique signal hashes: `530`
 - Exact duplicates found: `0`
 
-### 4.2 Near-Duplicate Policy & Calibration
+### 4.2 Near-Duplicate Policy & Empirical Calibration
 - **Diagnostic Method**: Standardized Waveform Pearson Correlation ($r$) and NRMSE.
-- **TRAIN-only Calibration**: Distinct physiological breathing windows reach max $r pprox 0.92 - 0.97$. Micro-perturbed signals reach $r > 0.999$.
+- **TRAIN-only Empirical Calibration**: Distinct physiological breathing windows in TRAIN reach max $r pprox 0.9761$. Controlled micro-perturbations reach $r > 0.99999$.
 - **Frozen Threshold Applied**: $r \ge 0.995$ and $	ext{NRMSE} \le 0.05$.
 - **LOCKED_TEST Tuning Prohibition**: Confirmed `False` (threshold derived strictly without accessing LOCKED_TEST).
 
@@ -85,7 +85,7 @@ Data access guard implementation: `scripts/mmwave_phase_b_access.py` (`PhaseBAcc
 - `get_train_data(include_ambiguous=False)`: Returns 327 training-eligible windows.
 - `get_validation_data(include_ambiguous=False)`: Returns 79 validation-eligible windows.
 - `get_model_selection_dataset("LOCKED_TEST")`: **Fails closed** with `LOCKED_TEST_AccessError`.
-- `get_structural_audit_dataset("LOCKED_TEST")`: Allows read-only access for leakage/duplicate audits.
+- `get_structural_audit_dataset("LOCKED_TEST")`: Allows read-only access for leakage/duplicate audits, with all class labels and annotation metadata stripped out.
 - `get_locked_test_final_evaluation_dataset(token)`: Requires explicit authorization token for final evaluation.
 
 ---
@@ -114,7 +114,7 @@ Data access guard implementation: `scripts/mmwave_phase_b_access.py` (`PhaseBAcc
 - Standalone M-B0 validator (`scripts/validate_mmwave_m_b0.py`): `PASS` (`validation_success: True`)
 - M-A5 subject split validator (`scripts/validate_mmwave_subject_split.py`): `PASS`
 - M-A6 full conversion validator (`scripts/validate_mmwave_full_conversion.py`): `PASS`
-- Unit tests (`tests/test_mmwave_m_b0.py`): `PASS` (6/6 passed)
+- Unit tests (`tests/test_mmwave_m_b0.py`): `PASS` (11/11 passed)
 - Raw archive immutability: `f0bcfdac94f88b43bb34d3da8e8f071a787291f86c97798059b8dbf4d4be08b0` (`VERIFIED`)
 - M-B0 Gate Status: `PASS_WITH_WARNINGS`
 - M-B1 Entry Status: `READY_WITH_CONDITIONS`
