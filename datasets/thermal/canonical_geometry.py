@@ -270,21 +270,9 @@ def profile_for_id(profile_id: str) -> GeometryProfile:
     return get_candidate_profile(profile_id)
 
 
-def selected_geometry_profile(profile_id: str | None = None, evidence_dir: Any | None = None) -> GeometryProfile:
-    """Return selected geometry profile from profile_id, manifest, or default winner."""
-    if profile_id is not None:
-        return get_candidate_profile(profile_id)
-    if evidence_dir is not None:
-        path = Path(evidence_dir) / "selected_geometry_profile.json"
-        if path.is_file():
-            try:
-                data = json.loads(path.read_text(encoding="utf-8"))
-                pid = data.get("profile_id")
-                if pid:
-                    return get_candidate_profile(pid)
-            except Exception:
-                pass
-    return get_candidate_profile("G1_FIXED_ASPECT_CROP_BILINEAR")
+def legacy_profile_lookup(profile_id: str) -> GeometryProfile:
+    """Resolve an explicitly supplied profile ID; no default winner exists."""
+    return profile_for_id(profile_id)
 
 
 SELECTION_RULE_VERSION = "T-A2_GEOMETRY_RANKING_RULE_V1"
@@ -713,6 +701,6 @@ __all__ = [
     "SOURCE_SHAPE", "SOURCE_UNIT", "canonical_to_source_trace",
     "canonicalize_physical_frame", "canonicalize_source_frame",
     "evaluate_candidate_eligibility_and_ranking", "get_candidate_profile",
-    "make_candidate_profiles", "precision_error", "profile_for_id",
-    "resize_physical", "selected_geometry_profile", "source_to_canonical_trace", "transform_bbox",
+    "make_candidate_profiles", "precision_error", "profile_for_id", "legacy_profile_lookup",
+    "resize_physical", "source_to_canonical_trace", "transform_bbox",
 ]

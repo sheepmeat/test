@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import shutil
+from copy import deepcopy
 from pathlib import Path
 import sys
 
@@ -26,9 +27,15 @@ from datasets.thermal.canonical_geometry import (  # noqa: E402
     get_candidate_profile,
     make_candidate_profiles,
     precision_error,
-    selected_geometry_profile,
+    profile_for_id,
     source_to_canonical_trace,
 )
+
+
+def selected_geometry_profile():
+    """Resolve the profile named by the generated selection artifact."""
+    path = ROOT / "datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame/selected_geometry_profile.json"
+    return profile_for_id(json.loads(path.read_text(encoding="utf-8"))["profile_id"])
 
 
 def _gradient() -> np.ndarray:
@@ -211,9 +218,10 @@ def test_independent_winner_recalculation_matches_manifest() -> None:
     if not evidence.exists():
         pytest.skip("T-A2 evidence is generated after geometry unit tests")
     comparison = json.loads((evidence / "geometry_comparison.json").read_text(encoding="utf-8"))
-    from datasets.thermal.canonical_geometry import evaluate_candidate_eligibility_and_ranking
-    eval_res = evaluate_candidate_eligibility_and_ranking(comparison["candidate_results"])
-    assert eval_res["selected_profile_id"] == "G1_FIXED_ASPECT_CROP_BILINEAR"
+    from datasets.thermal.geometry_selection import apply_selection_policy, selection_policy
+    selection = apply_selection_policy(comparison["candidate_results"], selection_policy())
+    assert selection["selected_profile_id"] == comparison["selected_profile_id"]
+    assert len(selection["candidates"]) == 9
 
 
 def test_validator_rejects_wrong_manifest_winner(tmp_path: Path) -> None:
@@ -241,10 +249,11 @@ def test_candidate_order_independence_in_ranking() -> None:
     comparison = json.loads((evidence / "geometry_comparison.json").read_text(encoding="utf-8"))
     results = comparison["candidate_results"]
     reversed_results = list(reversed(results))
-    from datasets.thermal.canonical_geometry import evaluate_candidate_eligibility_and_ranking
-    res1 = evaluate_candidate_eligibility_and_ranking(results)
-    res2 = evaluate_candidate_eligibility_and_ranking(reversed_results)
-    assert res1["selected_profile_id"] == res2["selected_profile_id"] == "G1_FIXED_ASPECT_CROP_BILINEAR"
+    from datasets.thermal.geometry_selection import apply_selection_policy, selection_policy
+    res1 = apply_selection_policy(results, selection_policy())
+    res2 = apply_selection_policy(reversed_results, selection_policy())
+    assert res1["selected_profile_id"] == res2["selected_profile_id"]
+    assert [item["profile"]["candidate_id"] for item in res1["candidates"]] == [item["profile"]["candidate_id"] for item in res2["candidates"]]
 
 
 def test_ineligible_candidate_rejection_by_rule() -> None:
@@ -252,22 +261,24 @@ def test_ineligible_candidate_rejection_by_rule() -> None:
     if not evidence.exists():
         pytest.skip("T-A2 evidence is generated after geometry unit tests")
     comparison = json.loads((evidence / "geometry_comparison.json").read_text(encoding="utf-8"))
-    from datasets.thermal.canonical_geometry import evaluate_candidate_eligibility_and_ranking
-    eval_res = evaluate_candidate_eligibility_and_ranking(comparison["candidate_results"])
-    g2_entries = [item for item in eval_res["ranking_trace"] if item["profile_id"].startswith("G2")]
+    g2_entries = [item for item in comparison["candidate_results"] if item["profile"]["profile_id"].startswith("G2")]
     for entry in g2_entries:
-        assert entry["eligible"] is False
-        assert "MASKED_PADDING_PIXELS_PRESENT" in entry["failed_constraints"]
+        assert entry["admissible"] is False
+        assert entry["rejection_reason"] == "ADMISSIBILITY_NO_SYNTHETIC_PADDING"
 
 
 def test_antialias_field_semantics_and_mapping() -> None:
     for profile in make_candidate_profiles():
+        serialized = profile.to_dict()
+        assert "antialias" not in serialized
+        assert serialized["interpolation_semantics"] == profile.interpolation.upper()
+        assert serialized["edge_handling"] in {"EDGE_CLAMPING", "MASKED_NAN_PADDING"}
         if profile.interpolation == "bilinear":
             assert profile.coordinate_mapping == "HALF_PIXEL_CENTER"
-            assert profile.explicit_antialias_prefilter in (False, "NO_EXPLICIT_ANTIALIAS_PREFILTER")
+            assert profile.explicit_antialias_prefilter == "NO_EXPLICIT_ANTIALIAS_PREFILTER"
         elif profile.interpolation == "area":
             assert profile.coordinate_mapping == "EXACT_SOURCE_AREA_INTEGRATION"
-            assert profile.explicit_antialias_prefilter in (False, "NO_EXPLICIT_ANTIALIAS_PREFILTER")
+            assert profile.explicit_antialias_prefilter == "NO_EXPLICIT_ANTIALIAS_PREFILTER"
 
 
 def test_source_bbox_clipping_vs_candidate_crop_loss_separation() -> None:
@@ -286,3 +297,76 @@ def test_source_bbox_clipping_vs_candidate_crop_loss_separation() -> None:
     assert res_g1["source_bbox_outside_source_frame"] is False
     assert res_g1["source_bbox_clipped_area_fraction"] == 0.0
     assert res_g1["candidate_crop_additional_bbox_area_loss"] == 200.0
+
+
+def _comparison_fixture() -> tuple[dict, list[dict]]:
+    evidence = ROOT / "datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame"
+    policy = json.loads((evidence / "geometry_selection_policy.json").read_text(encoding="utf-8"))
+    comparison = json.loads((evidence / "geometry_comparison.json").read_text(encoding="utf-8"))
+    return policy, comparison["candidate_results"]
+
+
+def test_selection_threshold_boundary_and_mandatory_gate() -> None:
+    from datasets.thermal.geometry_selection import apply_selection_policy
+
+    policy, candidates = _comparison_fixture()
+    candidate = deepcopy(next(item for item in candidates if item["profile"]["profile_id"] == "G1_FIXED_ASPECT_CROP_BILINEAR"))
+    candidate["geometry"]["source_fov_retained_fraction"] = 0.95
+    assert apply_selection_policy([candidate], policy)["selected_profile_id"] == candidate["profile"]["profile_id"]
+    candidate["geometry"]["source_fov_retained_fraction"] = 0.949999
+    with pytest.raises(ValueError):
+        apply_selection_policy([candidate], policy)
+    candidate["geometry"]["source_fov_retained_fraction"] = 0.95
+    candidate["finite_valid_output"] = False
+    with pytest.raises(ValueError):
+        apply_selection_policy([candidate], policy)
+
+
+def test_declared_tie_uses_lexical_candidate_id() -> None:
+    from datasets.thermal.geometry_selection import apply_selection_policy
+
+    policy, candidates = _comparison_fixture()
+    source = deepcopy(next(item for item in candidates if item["profile"]["profile_id"] == "G0_DIRECT_STRETCH_BILINEAR"))
+    left = deepcopy(source)
+    right = deepcopy(source)
+    for item, candidate_id in ((left, "TIE_B"), (right, "TIE_A")):
+        item["profile"]["candidate_id"] = candidate_id
+        item["profile"]["profile_id"] = candidate_id
+        item["profile"]["interpolation"] = "bilinear"
+    right["mean_absolute_shift_celsius"] = left["mean_absolute_shift_celsius"]
+    result = apply_selection_policy([left, right], policy)
+    assert result["selected_candidate_id"] == "TIE_A"
+    assert result["candidates"][0]["tie_group"] == result["candidates"][1]["tie_group"]
+
+
+def test_validator_detects_policy_metric_and_profile_tampering(tmp_path: Path) -> None:
+    evidence = ROOT / "datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame"
+    copied = tmp_path / "evidence"
+    shutil.copytree(evidence, copied)
+    from scripts.validate_thermal_t_a2 import validate_evidence
+
+    policy_path = copied / "geometry_selection_policy.json"
+    policy = json.loads(policy_path.read_text(encoding="utf-8"))
+    policy["admissibility_thresholds"]["source_fov_retained_fraction_min"]["value"] = 0.99
+    policy_path.write_text(json.dumps(policy, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    result = validate_evidence(repo_root=ROOT, evidence_dir=copied, check_checksums=False, verify_real_payload=False)
+    assert result["evidence_validation"] == "FAIL"
+    assert "WINNER_DERIVATION_MISMATCH" in {item["code"] for item in result["errors"]}
+
+    shutil.copytree(evidence, copied / "metric_case")
+    metric_path = copied / "metric_case" / "geometry_candidate_registry.json"
+    metrics = json.loads(metric_path.read_text(encoding="utf-8"))
+    metrics["candidates"][0]["geometry"]["anisotropy_ratio_excess"] += 1.0
+    metric_path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    result = validate_evidence(repo_root=ROOT, evidence_dir=copied / "metric_case", check_checksums=False, verify_real_payload=False)
+    assert result["evidence_validation"] == "FAIL"
+    assert "CANDIDATE_RANKING_INCONSISTENT" in {item["code"] for item in result["errors"]}
+
+    shutil.copytree(evidence, copied / "profile_case")
+    profile_path = copied / "profile_case" / "geometry_candidate_registry.json"
+    profile_data = json.loads(profile_path.read_text(encoding="utf-8"))
+    profile_data["candidates"][0]["profile"]["crop_xyxy"] = [1, 0, 639, 480]
+    profile_path.write_text(json.dumps(profile_data, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    result = validate_evidence(repo_root=ROOT, evidence_dir=copied / "profile_case", check_checksums=False, verify_real_payload=False)
+    assert result["evidence_validation"] == "FAIL"
+    assert "PROFILE_METRIC_INCONSISTENCY" in {item["code"] for item in result["errors"]}

@@ -7,6 +7,7 @@ import argparse
 import ast
 import hashlib
 import json
+import math
 import re
 import sys
 from pathlib import Path, PurePosixPath
@@ -26,7 +27,7 @@ from datasets.thermal.canonical_geometry import (  # noqa: E402
     canonicalize_physical_frame,
     make_candidate_profiles,
     precision_error,
-    selected_geometry_profile,
+    profile_for_id,
     source_to_canonical_trace,
 )
 from datasets.thermal.raw_reader import SDTThermalRawReader  # noqa: E402
@@ -42,14 +43,13 @@ REQUIRED_JSON = [
     "coordinate_trace_contract.json",
     "geometry_candidate_registry.json",
     "geometry_comparison.json",
+    "geometry_selection_policy.json",
     "invalid_pixel_policy.json",
     "pilot_geometry_summary.json",
     "selected_geometry_profile.json",
     "visual_spotcheck_registry.json",
 ]
 PILOT_PER_CLASS = 12
-EXPECTED_PROFILE_ID = "G1_FIXED_ASPECT_CROP_BILINEAR"
-EXPECTED_CROP = [10, 0, 630, 480]
 EXPECTED_PILOT_COUNT = 48
 
 
@@ -192,8 +192,7 @@ def _validate_predecessors(repo_root: Path, errors: list[dict[str, str]]) -> tup
     return a0, a1
 
 
-def _validate_synthetic_coordinate_contract(errors: list[dict[str, str]]) -> None:
-    profile = selected_geometry_profile()
+def _validate_synthetic_coordinate_contract(profile: Any, errors: list[dict[str, str]]) -> None:
     rows = np.arange(SOURCE_SHAPE[0], dtype=np.float64)[:, None]
     cols = np.arange(SOURCE_SHAPE[1], dtype=np.float64)[None, :]
     gradient = rows * 1000.0 + cols
@@ -202,21 +201,19 @@ def _validate_synthetic_coordinate_contract(errors: list[dict[str, str]]) -> Non
     if not (values[0, 0] < values[0, -1] and values[0, 0] < values[-1, 0] and values[-1, -1] > values[0, -1]):
         _error(errors, "COORDINATE_AXIS_ORDER_FAILED", "synthetic_gradient", "Rows/columns are not monotonic in source order.")
     traces = [canonical_to_source_trace(profile, 0, 0), canonical_to_source_trace(profile, 61, 79)]
-    if any(item["status"] != "MEASURED_SOURCE_SUPPORT" for item in traces):
+    if any(item["status"] not in {"MEASURED_SOURCE_SUPPORT", "CANONICAL_PADDING_INVALID"} for item in traces):
         _error(errors, "COORDINATE_TRACE_FAILED", "synthetic_trace", "Selected profile has an invalid witness trace.")
-    if source_to_canonical_trace(profile, 0, 0)["status"] != "SOURCE_CROPPED_OUT":
-        _error(errors, "FIXED_CROP_TRACE_FAILED", "synthetic_trace", "Source column 0 should be outside the selected fixed crop.")
-    if source_to_canonical_trace(profile, 0, 10)["status"] != "MEASURED_CANONICAL_COORDINATE":
-        _error(errors, "FIXED_CROP_BOUNDARY_TRACE_FAILED", "synthetic_trace", "Crop boundary coordinate is not traceable.")
+    if source_to_canonical_trace(profile, profile.crop_top, profile.crop_left)["status"] != "MEASURED_CANONICAL_COORDINATE":
+        _error(errors, "CROP_BOUNDARY_TRACE_FAILED", "synthetic_trace", "Candidate crop boundary coordinate is not traceable.")
     hot = np.zeros(SOURCE_SHAPE, dtype=np.float64)
     hot[220:260, 280:320] = 100.0
     hot_frame = canonicalize_physical_frame(hot, profile)
     peak = np.unravel_index(np.nanargmax(hot_frame.physical_frame), hot_frame.physical_frame.shape)
-    if not (20 <= peak[0] <= 40 and 30 <= peak[1] <= 45):
+    if not (10 <= peak[0] <= 50 and 15 <= peak[1] <= 65):
         _error(errors, "ASYMMETRIC_HOT_REGION_MAPPING_FAILED", "synthetic_hot_region", str(peak))
     constant = canonicalize_physical_frame(np.full(SOURCE_SHAPE, 26.85, dtype=np.float64), profile)
-    if not np.all(constant.physical_frame == np.float32(26.85)) or not np.all(constant.validity_mask):
-        _error(errors, "CONSTANT_PHYSICAL_FRAME_NOT_PRESERVED", "synthetic_constant", "Constant Celsius frame changed or became invalid.")
+    if not np.all(constant.physical_frame[constant.validity_mask] == np.float32(26.85)):
+        _error(errors, "CONSTANT_PHYSICAL_FRAME_NOT_PRESERVED", "synthetic_constant", "Constant Celsius frame changed.")
     invalid = np.ones(SOURCE_SHAPE, dtype=bool)
     invalid[0, 0] = False
     try:
@@ -233,6 +230,95 @@ def _validate_synthetic_coordinate_contract(errors: list[dict[str, str]]) -> Non
         pass
     else:
         _error(errors, "NAN_NOT_FAIL_CLOSED", "synthetic_nan", "NaN source was accepted.")
+
+
+def _independent_selection(candidates: list[dict[str, Any]], policy: dict[str, Any], errors: list[dict[str, str]]) -> tuple[list[dict[str, Any]], dict[str, Any] | None]:
+    """Recompute gates/rank from evidence and policy without generator imports."""
+    evaluated: list[dict[str, Any]] = []
+    thresholds = policy.get("admissibility_thresholds", {})
+    interpolation_order = policy.get("interpolation_preference", {})
+    for index, candidate in enumerate(candidates):
+        location = f"candidate[{index}]"
+        profile = candidate.get("profile", {})
+        profile_id = profile.get("profile_id")
+        try:
+            if profile != profile_for_id(profile_id).to_dict():
+                _error(errors, "PROFILE_METRIC_INCONSISTENCY", f"{location}.profile", "Profile does not match predeclared candidate definition.")
+        except Exception as exc:
+            _error(errors, "UNKNOWN_CANDIDATE_PROFILE", f"{location}.profile_id", str(exc))
+        gates = {
+            "SOURCE_AND_CANONICAL_SHAPES": profile.get("source_shape") == list(SOURCE_SHAPE) and profile.get("canonical_shape") == list(CANONICAL_SHAPE),
+            "PHYSICAL_FRAME_CONTRACT": profile.get("source_unit") == "CELSIUS" and profile.get("canonical_unit") == "CELSIUS" and profile.get("canonical_dtype") == "float32",
+            "SOURCE_AS_STORED_ORIENTATION": profile.get("rotation") == 0 and profile.get("horizontal_flip") is False and profile.get("vertical_flip") is False,
+            "FINITE_VALID_OUTPUT": candidate.get("finite_valid_output") is True,
+            "CONSTANT_TEMPERATURE_PRESERVED": candidate.get("constant_temperature_preserved") is True,
+            "DETERMINISTIC_REPEATED_CANONICALIZATION": candidate.get("repeated_canonicalization_deterministic") is True,
+        }
+        failed_mandatory = [key for key, passed in gates.items() if not passed]
+        geometry = candidate.get("geometry", {})
+        bbox = candidate.get("bbox_fov_diagnostic", {})
+        fov = float(geometry.get("source_fov_retained_fraction", float("nan")))
+        padding = float(geometry.get("padding_percentage", float("nan")))
+        bbox_min = float(bbox.get("minimum_bbox_retention_due_to_candidate_transform", float("nan")))
+        bbox_loss_fraction = float(bbox.get("additional_bbox_area_loss_due_to_candidate_crop_fraction", float("nan")))
+        fov_limit = float(thresholds.get("source_fov_retained_fraction_min", {}).get("value", float("nan")))
+        bbox_limit = float(thresholds.get("minimum_bbox_retention_due_to_candidate_transform_min", {}).get("value", float("nan")))
+        padding_limit = float(thresholds.get("padding_percentage_max", {}).get("value", float("nan")))
+        bbox_loss_limit = float(thresholds.get("candidate_crop_additional_bbox_area_loss_fraction_max", {}).get("value", float("nan")))
+        admissibility_checks = {
+            "SOURCE_FOV_WITHIN_THRESHOLD": fov >= fov_limit,
+            "BBOX_RETENTION_WITHIN_THRESHOLD": bbox_min >= bbox_limit,
+            "NO_SYNTHETIC_PADDING": padding <= padding_limit,
+            "NO_MATERIAL_ADDITIONAL_CROP_BBOX_LOSS": bbox_loss_fraction <= bbox_loss_limit,
+        }
+        failed_admissibility = [key for key, passed in admissibility_checks.items() if not passed]
+        admissible = not failed_mandatory and not failed_admissibility
+        interpolation = str(profile.get("interpolation", "")).lower()
+        metrics = {
+            "anisotropy_ratio_excess": float(geometry.get("anisotropy_ratio_excess", float("nan"))),
+            "padding_percentage": padding,
+            "interpolation_preference_rank": int(interpolation_order.get(interpolation, 999)),
+            "mean_absolute_shift_celsius": float(candidate.get("mean_absolute_shift_celsius", float("nan"))),
+            "range_compression_distance_from_one": abs(float(candidate.get("range_compression_ratio", float("nan"))) - 1.0),
+            "round_trip_mae": float(candidate.get("round_trip", {}).get("mae", float("nan"))),
+            "candidate_id": str(profile.get("candidate_id", "")),
+        }
+        if any(not math.isfinite(float(value)) for key, value in metrics.items() if key != "candidate_id"):
+            _error(errors, "METRIC_NONFINITE", location, str(metrics))
+        reasons = [f"MANDATORY_{key}" for key in failed_mandatory] + [f"ADMISSIBILITY_{key}" for key in failed_admissibility]
+        item = dict(candidate)
+        item.update({
+            "mandatory_gates": {"all_pass": not failed_mandatory, "checks": gates, "failed": failed_mandatory},
+            "admissibility": {"all_pass": admissible, "checks": admissibility_checks, "failed": failed_admissibility},
+            "admissible": admissible,
+            "rejection_reason": reasons[0] if reasons else None,
+            "ranking_metrics": metrics,
+        })
+        evaluated.append(item)
+    sort_key = lambda item: tuple(item["ranking_metrics"][key] for key in ("anisotropy_ratio_excess", "padding_percentage", "interpolation_preference_rank", "mean_absolute_shift_celsius", "range_compression_distance_from_one", "round_trip_mae", "candidate_id"))
+    admissible = sorted((item for item in evaluated if item["admissible"]), key=sort_key)
+    tolerance = float(policy.get("tie_definition", {}).get("numeric_tolerance", 1e-12))
+    tie_fields = policy.get("tie_definition", {}).get("fields", list(POLICY_NUMERIC_FIELDS))
+    previous = None
+    tie_number = 0
+    for item in evaluated:
+        item["rank"] = None
+        item["tie_group"] = None
+        item["final_selection_status"] = "REJECTED_POLICY" if not item["admissible"] else "ADMISSIBLE_NOT_SELECTED"
+    for rank, item in enumerate(admissible, 1):
+        item["rank"] = rank
+        if previous is not None and all(abs(float(item["ranking_metrics"][field]) - float(previous["ranking_metrics"][field])) <= tolerance for field in tie_fields):
+            item["tie_group"] = previous["tie_group"]
+        else:
+            tie_number += 1
+            item["tie_group"] = f"TIE_GROUP_{tie_number:02d}"
+        previous = item
+    winner = admissible[0] if admissible else None
+    if winner is not None:
+        winner["final_selection_status"] = "SELECTED"
+    for item in evaluated:
+        item["selection_reason"] = "SELECTED_BY_DECLARED_POLICY" if item is winner else ("ADMISSIBLE_NOT_SELECTED_BY_DECLARED_RANKING" if item["admissible"] else f"REJECTED_BY_DECLARED_POLICY:{item['rejection_reason']}")
+    return sorted(evaluated, key=lambda item: item["profile"].get("candidate_id", "")), winner
 
 
 def validate_evidence(
