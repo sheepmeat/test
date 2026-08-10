@@ -236,6 +236,54 @@ class TestMMWaveMB4(unittest.TestCase):
             with self.assertRaises(MB4ValidationError):
                 validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
 
+    def test_validator_fails_on_seed42_prediction_mismatch(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            preds_file = tmp_manifest / "validation_predictions.npz"
+            orig_preds = np.load(preds_file)
+            corrupted_dict = {k: orig_preds[k].copy() for k in orig_preds.files}
+            corrupted_dict["M-B3_CONV1D_GAP_BASELINE_seed_42"][0] = (corrupted_dict["M-B3_CONV1D_GAP_BASELINE_seed_42"][0] + 1) % 3
+            np.savez_compressed(preds_file, **corrupted_dict)
+
+            with self.assertRaises(MB4ValidationError):
+                validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_subject_class_fp_or_tn_corruption(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            subj_file = tmp_manifest / "subject_level_seed_metrics.json"
+            data = json.loads(subj_file.read_text(encoding="utf-8"))
+            run_item = data["subject_diagnostics_by_run"]["M-B3_CONV1D_GAP_BASELINE_seed_42"]
+            first_sid = list(run_item["per_subject"].keys())[0]
+            run_item["per_subject"][first_sid]["class_metrics"]["NORMAL"]["fp"] += 1
+            subj_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB4ValidationError):
+                validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_seed42_initial_weight_mismatch(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            tr_file = tmp_manifest / "training_runs.json"
+            data = json.loads(tr_file.read_text(encoding="utf-8"))
+            data["training_runs"]["M-B3_CONV1D_GAP_BASELINE_seed_42"]["initial_weights_sha256"] = "0" * 64
+            tr_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB4ValidationError):
+                validate_m_b4_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
 
 if __name__ == "__main__":
     unittest.main()

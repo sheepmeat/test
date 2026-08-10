@@ -158,27 +158,90 @@ def validate_m_b4_artifacts(
 
     val_y = np.array([w["safenest_label_id"] for w in val_data["windows"]], dtype=int)
 
-    # 5. Verify Seed 42 Reuse against M-B3 Evidence
+    # 5. Verify Seed 42 Reuse against Authoritative M-B3 Evidence
     seed42_audit_file = manifest_dir / "seed42_reuse_audit.json"
     if not seed42_audit_file.is_file():
         raise MB4ValidationError("seed42_reuse_audit.json missing!")
     seed42_audit_data = json.loads(seed42_audit_file.read_text(encoding="utf-8"))
 
     mb3_tr_file = root_dir / "datasets/mmwave/manifests/M-B3_architecture_comparison/training_runs.json"
+    if not mb3_tr_file.is_file():
+        raise MB4ValidationError("M-B3 training_runs.json missing!")
     mb3_tr_data = json.loads(mb3_tr_file.read_text(encoding="utf-8")).get("training_runs", {})
-    mb3_weights_file = root_dir / "datasets/mmwave/manifests/M-B3_architecture_comparison/architecture_weights.npz"
-    mb3_weights = np.load(mb3_weights_file)
+
     mb3_preds_file = root_dir / "datasets/mmwave/manifests/M-B3_architecture_comparison/validation_predictions.npz"
+    if not mb3_preds_file.is_file():
+        raise MB4ValidationError("M-B3 validation_predictions.npz missing!")
     mb3_preds = np.load(mb3_preds_file)
+
+    mb3_res_file = root_dir / "datasets/mmwave/manifests/M-B3_architecture_comparison/architecture_results.json"
+    if not mb3_res_file.is_file():
+        raise MB4ValidationError("M-B3 architecture_results.json missing!")
+    mb3_res_data = json.loads(mb3_res_file.read_text(encoding="utf-8")).get("results", {})
+
+    mb4_tr_file = manifest_dir / "training_runs.json"
+    if not mb4_tr_file.is_file():
+        raise MB4ValidationError("M-B4 training_runs.json missing!")
+    mb4_tr_data = json.loads(mb4_tr_file.read_text(encoding="utf-8")).get("training_runs", {})
+
+    mb4_preds_file = manifest_dir / "validation_predictions.npz"
+    if not mb4_preds_file.is_file():
+        raise MB4ValidationError("M-B4 validation_predictions.npz missing!")
+    mb4_preds = np.load(mb4_preds_file)
 
     shortlist_ids = ["M-B3_CONV1D_GAP_BASELINE", "M-B3_SEPARABLECONV1D_GAP"]
 
     for aid in shortlist_ids:
-        audit_item = seed42_audit_data.get("audit_results", {}).get(aid, {})
-        if not audit_item.get("reused"):
-            raise MB4ValidationError(f"Seed 42 reuse audit recorded false for {aid}")
-        if audit_item.get("computed_weights_sha256") != mb3_tr_data[aid]["final_weights_sha256"]:
-            raise MB4ValidationError(f"Seed 42 weight SHA mismatch for {aid}")
+        run_key_42 = f"{aid}_seed_42"
+
+        # Check M-B4 training_runs.json for seed 42
+        if run_key_42 not in mb4_tr_data:
+            raise MB4ValidationError(f"Seed 42 training run '{run_key_42}' missing from M-B4 training_runs.json")
+        mb4_run_42 = mb4_tr_data[run_key_42]
+        if mb4_run_42.get("seed") != 42:
+            raise MB4ValidationError(f"Declared seed for '{run_key_42}' is not 42: got {mb4_run_42.get('seed')}")
+        if mb4_run_42.get("architecture_id") != aid:
+            raise MB4ValidationError(f"Architecture ID mismatch for '{run_key_42}': got {mb4_run_42.get('architecture_id')}")
+
+        # Check M-B3 authoritative training run
+        if aid not in mb3_tr_data:
+            raise MB4ValidationError(f"M-B3 training run for '{aid}' missing from M-B3 training_runs.json")
+        mb3_run = mb3_tr_data[aid]
+
+        # 1. Initial weights SHA-256 equality
+        if mb4_run_42.get("initial_weights_sha256") != mb3_run.get("initial_weights_sha256"):
+            raise MB4ValidationError(
+                f"Seed 42 initial weights SHA mismatch for {aid}: M-B3={mb3_run.get('initial_weights_sha256')}, M-B4={mb4_run_42.get('initial_weights_sha256')}"
+            )
+
+        # 2. Final numerical weights SHA-256 equality
+        if mb4_run_42.get("final_weights_sha256") != mb3_run.get("final_weights_sha256"):
+            raise MB4ValidationError(
+                f"Seed 42 final weights SHA mismatch for {aid}: M-B3={mb3_run.get('final_weights_sha256')}, M-B4={mb4_run_42.get('final_weights_sha256')}"
+            )
+
+        # 3. Exact prediction vector equality
+        if aid not in mb3_preds.files or run_key_42 not in mb4_preds.files:
+            raise MB4ValidationError(f"Prediction array missing for {aid} in M-B3 or M-B4 prediction NPZ files")
+        pred_3 = mb3_preds[aid]
+        pred_4 = mb4_preds[run_key_42]
+        if not np.array_equal(pred_3, pred_4):
+            raise MB4ValidationError(f"Seed 42 prediction vector mismatch between M-B3 and M-B4 for {aid}")
+
+        # 4. Recomputed Macro F1 and Accuracy equality against M-B3 architecture_results.json
+        cm_seed42 = compute_one_vs_rest_false_positives(val_y, pred_4)
+        f1_calc_42 = float(np.mean([cm_seed42[c]["f1_score"] for c in LABEL_NAMES]))
+        acc_calc_42 = float(np.mean(pred_4 == val_y))
+        dist_calc_42 = {c: int(np.sum(pred_4 == idx)) for idx, c in enumerate(LABEL_NAMES)}
+
+        mb3_arch_res = mb3_res_data.get(aid, {})
+        exp_f1_3 = mb3_arch_res.get("float_macro_f1")
+        exp_acc_3 = mb3_arch_res.get("float_accuracy")
+
+        if round(f1_calc_42, 6) != round(exp_f1_3, 6):
+            raise MB4ValidationError(f"Seed 42 recomputed Macro F1 mismatch for {aid}: calc={f1_calc_42}, M-B3={exp_f1_3}")
+        if round(acc_calc_42, 6) != round(exp_acc_3, 6):
+            raise MB4ValidationError(f"Seed 42 recomputed Accuracy mismatch for {aid}: calc={acc_calc_42}, M-B3={exp_acc_3}")
 
     # 6. Verify Seed 43/44 Initialization Identity
     tr_file = manifest_dir / "training_runs.json"
@@ -403,7 +466,7 @@ def validate_m_b4_artifacts(
     if act_backup != exp_backup:
         raise MB4ValidationError(f"Backup architecture selection mismatch: expected {exp_backup}, got {act_backup}")
 
-    # 11. Fully Validate Subject-Level Seed Metrics (17 Subjects × 6 Runs)
+    # 11. Fully Validate Subject-Level Seed Metrics (17 Subjects × 6 Runs x 3 Classes)
     subj_file = manifest_dir / "subject_level_seed_metrics.json"
     if not subj_file.is_file():
         raise MB4ValidationError("subject_level_seed_metrics.json missing!")
@@ -437,6 +500,23 @@ def validate_m_b4_artifacts(
                 for k_stat in ("window_count", "accuracy", "subject_macro_f1", "apnea_fp", "apnea_fn", "rapid_fp", "rapid_fn", "prediction_distribution"):
                     if art_s.get(k_stat) != calc_s.get(k_stat):
                         raise MB4ValidationError(f"Subject {sid} metric '{k_stat}' mismatch for {run_key}: manifest={art_s.get(k_stat)}, calc={calc_s.get(k_stat)}")
+
+                # Full per-class subject metrics comparison (support, tp, fp, tn, fn, recall, precision, f1)
+                art_cm_map = art_s.get("class_metrics", {})
+                calc_cm_map = calc_s.get("class_metrics", {})
+
+                for cname in LABEL_NAMES:
+                    if cname not in art_cm_map or cname not in calc_cm_map:
+                        raise MB4ValidationError(f"Subject {sid} missing class_metrics for '{cname}' in {run_key}")
+
+                    art_cm = art_cm_map[cname]
+                    calc_cm = calc_cm_map[cname]
+
+                    for fld in ("support", "tp", "fp", "tn", "fn", "recall", "precision", "f1"):
+                        if art_cm.get(fld) != calc_cm.get(fld):
+                            raise MB4ValidationError(
+                                f"Subject {sid} class_metrics field '{cname}.{fld}' mismatch for {run_key}: manifest={art_cm.get(fld)}, calc={calc_cm.get(fld)}"
+                            )
 
     # 12. Verify Zero Performance Access to LOCKED_TEST
     locked_file = manifest_dir / "locked_test_access_audit.json"
