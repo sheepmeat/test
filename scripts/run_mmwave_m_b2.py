@@ -31,6 +31,7 @@ from mmwave_m_b1_preprocessing import (
     transform_signals,
 )
 from mmwave_m_b2_imbalance import (
+    rank_imbalance_strategies,
     LABEL_NAMES,
     STRATEGIES,
     build_multiclass_focal_loss,
@@ -468,25 +469,8 @@ def run_m_b2_pipeline(root_dir: Path = ROOT_DIR) -> dict[str, Any]:
     print("6. Training and validation metric calculation complete.")
 
     # 7. Select Winner using Pre-Registered 7-Step Ranking Rule
-    candidates = [r for r in imbalance_results.values() if not r["is_class_collapsed"]]
-    if not candidates:
-        raise RuntimeError("ALL 4 CLASS-IMBALANCE STRATEGIES COLLAPSED! No valid candidate winner.")
-
-    simplicity_order = {"M-B2_CE_UNWEIGHTED": 0, "M-B2_CE_CLASS_WEIGHT": 1, "M-B2_CE_RANDOM_OVERSAMPLE": 2, "M-B2_FOCAL_CLASS_ALPHA": 3}
-
-    candidates.sort(
-        key=lambda r: (
-            r["macro_f1"],
-            r["min_per_class_recall"],
-            r["macro_precision"],
-            -r["macro_fpr"],
-            -simplicity_order[r["strategy_id"]],
-            r["strategy_id"],
-        ),
-        reverse=True,
-    )
-
-    winner = candidates[0]
+    ranked_candidates = rank_imbalance_strategies(list(imbalance_results.values()), eps=1e-5)
+    winner = ranked_candidates[0]
     winner_sid = winner["strategy_id"]
 
     baseline_res = imbalance_results["M-B2_CE_UNWEIGHTED"]

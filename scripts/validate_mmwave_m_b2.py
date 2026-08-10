@@ -28,6 +28,7 @@ from mmwave_m_b1_preprocessing import (
     transform_signals,
 )
 from mmwave_m_b2_imbalance import (
+    rank_imbalance_strategies,
     LABEL_NAMES,
     STRATEGIES,
     build_oversampling_plan,
@@ -224,6 +225,9 @@ def validate_m_b2_artifacts(
         raise MB2ValidationError(f"Oversampled index count mismatch: expected 435, got {len(calc_ovs_indices)}")
 
     tot_effective = 0
+    dups_by_class = {0: 0, 1: 0, 2: 0}
+    eff_by_class = {0: 0, 1: 0, 2: 0}
+
     for pos, row in enumerate(ovs_lines):
         exp_r = calc_plan_records[pos]
         if row.get("window_id") != exp_r["window_id"]:
@@ -233,15 +237,26 @@ def validate_m_b2_artifacts(
         if row.get("effective_multiplicity", 0) < 1:
             raise MB2ValidationError(f"effective_multiplicity must be >= 1 at index {pos}!")
 
+        cid = row.get("class_id")
+        add_dup = row.get("additional_duplicate_count", 0)
+        eff_mult = row.get("effective_multiplicity", 0)
+
+        dups_by_class[cid] += add_dup
+        eff_by_class[cid] += eff_mult
+
         # Majority class (APNEA=2) duplication check
-        if row.get("class_id") == 2:
-            if row.get("additional_duplicate_count", -1) != 0 or row.get("effective_multiplicity", -1) != 1:
+        if cid == 2:
+            if add_dup != 0 or eff_mult != 1:
                 raise MB2ValidationError(f"M-B2_OVERSAMPLING_PROTOCOL_VIOLATION: Majority class APNEA sample at index {pos} was duplicated!")
 
-        tot_effective += row.get("effective_multiplicity", 0)
+        tot_effective += eff_mult
 
     if tot_effective != 435:
         raise MB2ValidationError(f"Total effective oversampled rows mismatch: expected 435, got {tot_effective}")
+    if dups_by_class != {0: 43, 1: 65, 2: 0}:
+        raise MB2ValidationError(f"Duplicate counts by class mismatch: expected {{0: 43, 1: 65, 2: 0}}, got {dups_by_class}")
+    if eff_by_class != {0: 145, 1: 145, 2: 145}:
+        raise MB2ValidationError(f"Effective class counts mismatch: expected {{0: 145, 1: 145, 2: 145}}, got {eff_by_class}")
 
     # Focal Loss Profile
     focal_file = manifest_dir / "focal_loss_profile.json"
@@ -303,32 +318,8 @@ def validate_m_b2_artifacts(
         })
 
     # 9. Execute Pre-Registered 7-Step Strategy Selection Rule
-    eligible_candidates = [r for r in recomputed_ranking if not r["is_collapsed"]]
-    if not eligible_candidates:
-        raise MB2ValidationError("ALL 4 IMBALANCE STRATEGIES COLLAPSED! No valid candidate winner.")
-
-    # Ranking sort key:
-    # 1. Macro F1 descending
-    # 2. Min recall descending
-    # 3. Macro precision descending
-    # 4. Macro FPR ascending (lower is better)
-    # 5. Simpler intervention preference index ascending
-    # 6. Strategy ID lexicographic
-    simplicity_order = {"M-B2_CE_UNWEIGHTED": 0, "M-B2_CE_CLASS_WEIGHT": 1, "M-B2_CE_RANDOM_OVERSAMPLE": 2, "M-B2_FOCAL_CLASS_ALPHA": 3}
-
-    eligible_candidates.sort(
-        key=lambda r: (
-            r["macro_f1"],
-            r["min_recall"],
-            r["macro_precision"],
-            -r["macro_fpr"],
-            -simplicity_order[r["strategy_id"]],
-            r["strategy_id"],
-        ),
-        reverse=True,
-    )
-
-    recomputed_winner = eligible_candidates[0]["strategy_id"]
+    ranked_candidates = rank_imbalance_strategies(recomputed_ranking, eps=1e-5)
+    recomputed_winner = ranked_candidates[0]["strategy_id"]
 
     sel_file = manifest_dir / "selected_imbalance_strategy.json"
     if not sel_file.is_file():

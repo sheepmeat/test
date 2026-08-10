@@ -169,6 +169,56 @@ def compute_one_vs_rest_false_positives(
     return metrics
 
 
+def rank_imbalance_strategies(
+    results: list[dict[str, Any]], eps: float = 1e-5
+) -> list[dict[str, Any]]:
+    """Rank imbalance strategies under pre-registered 7-step rule with numerical tie tolerance eps."""
+    candidates = [r for r in results if not r.get("is_class_collapsed", False)]
+    if not candidates:
+        raise ValueError("ALL 4 CLASS-IMBALANCE STRATEGIES COLLAPSED! No valid candidate winner.")
+
+    simplicity_order = {
+        "M-B2_CE_UNWEIGHTED": 0,
+        "M-B2_CE_CLASS_WEIGHT": 1,
+        "M-B2_CE_RANDOM_OVERSAMPLE": 2,
+        "M-B2_FOCAL_CLASS_ALPHA": 3,
+    }
+
+    def compare_pair(a: dict[str, Any], b: dict[str, Any]) -> int:
+        # Step 2: Macro F1
+        f1_diff = a["macro_f1"] - b["macro_f1"]
+        if abs(f1_diff) > eps:
+            return 1 if f1_diff > 0 else -1
+
+        # Step 3: Min recall
+        rec_diff = a["min_per_class_recall"] - b["min_per_class_recall"]
+        if abs(rec_diff) > eps:
+            return 1 if rec_diff > 0 else -1
+
+        # Step 4: Macro precision
+        prec_diff = a["macro_precision"] - b["macro_precision"]
+        if abs(prec_diff) > eps:
+            return 1 if prec_diff > 0 else -1
+
+        # Step 5: Macro FPR (lower is better)
+        fpr_diff = b["macro_fpr"] - a["macro_fpr"]
+        if abs(fpr_diff) > eps:
+            return 1 if fpr_diff > 0 else -1
+
+        # Step 6: Simpler intervention
+        simp_diff = simplicity_order.get(b["strategy_id"], 99) - simplicity_order.get(a["strategy_id"], 99)
+        if simp_diff != 0:
+            return 1 if simp_diff > 0 else -1
+
+        # Step 7: Lexicographic strategy ID
+        return 1 if a["strategy_id"] < b["strategy_id"] else -1
+
+    import functools
+
+    candidates.sort(key=functools.cmp_to_key(compare_pair), reverse=True)
+    return candidates
+
+
 def compute_subject_level_diagnostics(
     val_windows: list[dict[str, Any]], val_preds: np.ndarray
 ) -> dict[str, Any]:
