@@ -102,6 +102,7 @@ python3 -m compileall -q inference risk sensors integrated_node scripts tests
 ## 문서
 
 - [mmWave A–E 실행 순서](docs/20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md)
+- [mmWave Phase B 개요](docs/MMWAVE_PHASE_B_OVERVIEW.md)
 - [팀 인수인계 기준판](docs/TEAM_HANDOFF_GUIDE_V5.md)
 - [Sensor provider 계약](docs/reports/V5_SENSOR_PROVIDER_CONTRACT.md)
 - [Release readiness](docs/reports/V5_RELEASE_READINESS.md)
