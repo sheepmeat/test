@@ -60,9 +60,9 @@ The zip archive contains exactly 3 uncompressed text files:
 
 | Member File | Uncompressed Size (Bytes) | SHA-256 Hash | Raw Data Rows | Occupancy 0 | Occupancy 1 |
 |---|---|---|---|---|---|
-| `datatraining.txt` | 596,674 | `fa1fef2be0fb4a9cfb09ecb7ebf93e9b1eb8efb507d4b9fb3ff85640263f10ef` | 8,143 | 6,414 | 1,729 |
-| `datatest.txt` | 200,766 | `6c1fb5ecfa47ca4aa20b411d9f8e404bf79efc4403bc68efef155099efed0ff1` | 2,665 | 1,693 | 972 |
-| `datatest2.txt` | 699,664 | `3ecf35926ec03eddd5c8535ac574aeed4e1cf6f9db1edddbc0173e46c7ad7f5f` | 9,752 | 7,703 | 2,049 |
+| `datatraining.txt` | 596,674 | `b2c4d0ce2b9e4e453c476f7125ef31aeec2d1f5c7f5572d0e80de3df6521ab56` | 8,143 | 6,414 | 1,729 |
+| `datatest.txt` | 200,766 | `1b92c7c1b2838963464fa891a610cf3c5db4becb7189189b29b330107a584c7f` | 2,665 | 1,693 | 972 |
+| `datatest2.txt` | 699,664 | `d026d1bd5aeccd4aff4f3b3710d48e40613bd5fc370db7e61bbdcaa50d985095` | 9,752 | 7,703 | 2,049 |
 | **Total** | **1,497,104** | — | **20,560** | **15,810 (76.89%)** | **4,750 (23.11%)** |
 
 ---
