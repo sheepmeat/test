@@ -361,28 +361,30 @@
       "checksum_availability": "OFFICIAL MD5 FOR ALL FILES; local test MD5 and SHA-256 verified",
       "dtype": "uint16 PNG",
       "duplicate_near_duplicate_risk": "UNKNOWN; synthetic variants and static real poses require a later diagnostic",
-      "event_count": "ZERO_FALL_EVENTS",
+      "event_count": "ZERO TEMPORALLY ANNOTATED FALL EVENTS",
       "event_identifiers": "ABSENT",
-      "event_level_evaluation_compatibility": "NO",
+      "event_level_evaluation_compatibility": "NOT_VERIFIABLE; usable for sensor-level lying/post-fall posture evidence, not temporal fall-onset or end evaluation",
       "evidence_category": "OFFICIAL_EXTERNAL_SOURCE_VERIFIED",
-      "explicit_justification": "Identity, representation and inventory are strong, but the source is a pose dataset with no fall events or leakage-resistant grouping; license terms also require review.",
+      "explicit_justification": "Selected with limitations for SafeNest sensor-level posture classification: lying is usable as post-fall posture evidence whose persistence and multisensor corroboration determine risk. Source identity, thermal/depth encoding, official split inventory, checksums and safe-reader semantics are documented; event-level fall claims remain prohibited.",
       "fall_event_boundary_quality": "NOT_APPLICABLE; STATIC POSE IMAGES",
-      "fall_labels": "ABSENT; labels are lying, sitting, standing and empty room",
-      "fallback_grouping_feasibility": "ORIGINAL TRAIN/VALIDATION/TEST SPLITS ONLY; no event/scene identifier per row",
+      "fall_labels": "SOURCE LABELS: lying, sitting, standing and empty room; SafeNest maps lying to HUMAN_FALL only as a derived post-fall lying-posture proxy",
+      "fallback_grouping_feasibility": "ACCEPTED LIMITATION: preserve the official synthetic train / synthetic validation / real test split exactly; never perform a frame-random resplit",
       "file_format": "PNG plus labels.txt",
       "frame_rate": "NOT_APPLICABLE_STATIC_IMAGE_PAIRS",
       "genuine_thermal_status": "MIXED: 8,000 real test thermal/depth pairs; 40,000 synthetic train/validation pairs",
-      "grouping_status": "LOCAL_GROUPING_INSUFFICIENT",
+      "grouping_status": "ACCEPTED_OFFICIAL_SPLIT_LIMITATION",
       "hard_negative_coverage": "LYING, SITTING, STANDING, EMPTY ROOM ACROSS FOUR ROOM TYPES",
-      "inventory_status": "DETERMINISTIC_PARTIAL_LOCAL_PLUS_OFFICIAL_FILE_REGISTRY",
+      "inventory_status": "DETERMINISTIC_INVENTORY_WITH_OFFICIAL_CHECKSUMS",
       "known_limitations": [
-        "Lying is not a fall.",
-        "No subject/session/sequence/event identifiers or timestamps.",
-        "Train/validation are synthetic.",
-        "Official license metadata and record text conflict."
+        "The source lying label is a SafeNest post-fall posture proxy, not proof that a fall event occurred.",
+        "No subject/session/sequence/event identifiers or timestamps are supplied.",
+        "Train/validation are synthetic and test is real; the official split must remain intact.",
+        "Event-level onset/end performance and subject-wise generalization are not verifiable.",
+        "Official license metadata and record text conflict; the stricter non-commercial research restriction governs this selection.",
+        "Train parts and validation are local cloud placeholders and require owner-authorized hydration before T-A1 reads them."
       ],
-      "label_semantics_status": "VERIFIED_POSE_ONLY_UNUSABLE_FOR_FALL",
-      "license_status": "NEEDS_MANUAL_REVIEW",
+      "label_semantics_status": "USABLE_DERIVED_POST_FALL_POSTURE_PROXY",
+      "license_status": "VERIFIED_ACCEPTABLE_WITH_NONCOMMERCIAL_RESEARCH_RESTRICTION",
       "license_terms": "CONFLICT: Zenodo metadata CC-BY-4.0; record description says non-commercial research purposes only",
       "materialization_state": "MIXED: test materialized; train parts and validation are dataless placeholders",
       "model_training_permission": "SYNTHETIC TRAIN/VALIDATION EXPLICITLY INTENDED FOR MODEL TRAINING; NON_COMMERCIAL LIMIT APPLIES",
@@ -391,7 +393,7 @@
       "official_distribution_location": "https://zenodo.org/records/4124309",
       "official_source_or_limitation": "Official Zenodo record, API metadata and readme reviewed.",
       "original_publication": "https://doi.org/10.1109/ICIP40778.2020.9191284",
-      "overall_status": "REJECTED_LABEL_QUALITY",
+      "overall_status": "SELECTED",
       "redistribution_restrictions": "NEEDS_MANUAL_REVIEW_DUE_TO_OFFICIAL_TERM_CONFLICT",
       "representation_classification": "MULTIMODAL",
       "representation_details": {
@@ -401,6 +403,29 @@
       "research_use_permission": "NON_COMMERCIAL_RESEARCH_EXPLICITLY_PERMITTED",
       "rgb_colorized_only": false,
       "safe_reader_documentation_status": "DOCUMENTED",
+      "safenest_label_mapping": {
+        "0": {
+          "mapping_type": "DERIVED_POST_FALL_POSTURE_PROXY",
+          "source_label": "lying",
+          "target_label": "HUMAN_FALL"
+        },
+        "1": {
+          "mapping_type": "DIRECT_POSTURE_EVIDENCE",
+          "source_label": "sitting",
+          "target_label": "HUMAN_NORMAL"
+        },
+        "2": {
+          "mapping_type": "DIRECT_POSTURE_EVIDENCE",
+          "source_label": "standing",
+          "target_label": "HUMAN_NORMAL"
+        },
+        "3": {
+          "mapping_type": "DIRECT_PRESENCE_EVIDENCE",
+          "source_label": "empty room",
+          "target_label": "NOT_HUMAN"
+        }
+      },
+      "safenest_sensor_role": "POST_FALL_LYING_POSTURE_EVIDENCE; persistence and multisensor fusion escalate suspicion; no single thermal frame confirms a fall event",
       "scene_identifiers": "FOUR ROOM TYPES AS LABEL BALANCING FACTOR, BUT NO PER-ROW SCENE ID DOCUMENTED",
       "sensor_model": {
         "real_depth": "Orbbec Astra",
@@ -419,7 +444,7 @@
       "source_identity_status": "VERIFIED",
       "source_orientation": "ELEVATED_CAMERA; thermal native 160x120 bilinearly upscaled to 640x480",
       "stable_identifier": "doi:10.5281/zenodo.4124309",
-      "staged_vs_natural_fall_semantics": "NO FALL EVENTS; real test contains uniquely posed postures",
+      "staged_vs_natural_fall_semantics": "NO TEMPORAL FALL EVENTS; real test contains uniquely posed postures including lying",
       "subject_count": "NOT_DOCUMENTED",
       "subject_identifiers": "ABSENT",
       "subject_wise_split_feasibility": "NO",

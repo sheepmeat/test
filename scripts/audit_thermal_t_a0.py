@@ -317,33 +317,47 @@ CANDIDATES = [
         sequence_identifiers="ABSENT",
         event_identifiers="ABSENT",
         camera_identifiers="MODALITY PAIR ONLY",
-        fall_labels="ABSENT; labels are lying, sitting, standing and empty room",
+        fall_labels="SOURCE LABELS: lying, sitting, standing and empty room; SafeNest maps lying to HUMAN_FALL only as a derived post-fall lying-posture proxy",
         fall_event_boundary_quality="NOT_APPLICABLE; STATIC POSE IMAGES",
         normal_activity_coverage="STATIC SITTING/STANDING ONLY",
         hard_negative_coverage="LYING, SITTING, STANDING, EMPTY ROOM ACROSS FOUR ROOM TYPES",
-        staged_vs_natural_fall_semantics="NO FALL EVENTS; real test contains uniquely posed postures",
+        staged_vs_natural_fall_semantics="NO TEMPORAL FALL EVENTS; real test contains uniquely posed postures including lying",
         subject_count="NOT_DOCUMENTED",
         session_count="NOT_APPLICABLE",
         sequence_count="NOT_APPLICABLE",
-        event_count="ZERO_FALL_EVENTS",
+        event_count="ZERO TEMPORALLY ANNOTATED FALL EVENTS",
         subject_wise_split_feasibility="NO",
-        fallback_grouping_feasibility="ORIGINAL TRAIN/VALIDATION/TEST SPLITS ONLY; no event/scene identifier per row",
+        fallback_grouping_feasibility="ACCEPTED LIMITATION: preserve the official synthetic train / synthetic validation / real test split exactly; never perform a frame-random resplit",
         duplicate_near_duplicate_risk="UNKNOWN; synthetic variants and static real poses require a later diagnostic",
-        event_level_evaluation_compatibility="NO",
+        event_level_evaluation_compatibility="NOT_VERIFIABLE; usable for sensor-level lying/post-fall posture evidence, not temporal fall-onset or end evaluation",
         approximate_download_storage_impact="19,223,751,874 bytes for local split files; 19.2 GB official record total including documentation",
         checksum_availability="OFFICIAL MD5 FOR ALL FILES; local test MD5 and SHA-256 verified",
-        known_limitations=["Lying is not a fall.", "No subject/session/sequence/event identifiers or timestamps.", "Train/validation are synthetic.", "Official license metadata and record text conflict."],
+        known_limitations=[
+            "The source lying label is a SafeNest post-fall posture proxy, not proof that a fall event occurred.",
+            "No subject/session/sequence/event identifiers or timestamps are supplied.",
+            "Train/validation are synthetic and test is real; the official split must remain intact.",
+            "Event-level onset/end performance and subject-wise generalization are not verifiable.",
+            "Official license metadata and record text conflict; the stricter non-commercial research restriction governs this selection.",
+            "Train parts and validation are local cloud placeholders and require owner-authorized hydration before T-A1 reads them.",
+        ],
         materialization_state="MIXED: test materialized; train parts and validation are dataless placeholders",
-        overall_status="REJECTED_LABEL_QUALITY",
-        explicit_justification="Identity, representation and inventory are strong, but the source is a pose dataset with no fall events or leakage-resistant grouping; license terms also require review.",
+        overall_status="SELECTED",
+        explicit_justification="Selected with limitations for SafeNest sensor-level posture classification: lying is usable as post-fall posture evidence whose persistence and multisensor corroboration determine risk. Source identity, thermal/depth encoding, official split inventory, checksums and safe-reader semantics are documented; event-level fall claims remain prohibited.",
         source_identity_status="VERIFIED",
-        license_status="NEEDS_MANUAL_REVIEW",
-        inventory_status="DETERMINISTIC_PARTIAL_LOCAL_PLUS_OFFICIAL_FILE_REGISTRY",
-        label_semantics_status="VERIFIED_POSE_ONLY_UNUSABLE_FOR_FALL",
-        grouping_status="LOCAL_GROUPING_INSUFFICIENT",
+        license_status="VERIFIED_ACCEPTABLE_WITH_NONCOMMERCIAL_RESEARCH_RESTRICTION",
+        inventory_status="DETERMINISTIC_INVENTORY_WITH_OFFICIAL_CHECKSUMS",
+        label_semantics_status="USABLE_DERIVED_POST_FALL_POSTURE_PROXY",
+        grouping_status="ACCEPTED_OFFICIAL_SPLIT_LIMITATION",
         safe_reader_documentation_status="DOCUMENTED",
         official_source_or_limitation="Official Zenodo record, API metadata and readme reviewed.",
         evidence_category="OFFICIAL_EXTERNAL_SOURCE_VERIFIED",
+        safenest_sensor_role="POST_FALL_LYING_POSTURE_EVIDENCE; persistence and multisensor fusion escalate suspicion; no single thermal frame confirms a fall event",
+        safenest_label_mapping={
+            "0": {"source_label": "lying", "target_label": "HUMAN_FALL", "mapping_type": "DERIVED_POST_FALL_POSTURE_PROXY"},
+            "1": {"source_label": "sitting", "target_label": "HUMAN_NORMAL", "mapping_type": "DIRECT_POSTURE_EVIDENCE"},
+            "2": {"source_label": "standing", "target_label": "HUMAN_NORMAL", "mapping_type": "DIRECT_POSTURE_EVIDENCE"},
+            "3": {"source_label": "empty room", "target_label": "NOT_HUMAN", "mapping_type": "DIRECT_PRESENCE_EVIDENCE"},
+        },
     ),
     candidate(
         "external_thermal_fall_66",
@@ -455,11 +469,11 @@ LOCAL_ASSETS = {
             },
             "representation_status": "MULTIMODAL: image_t RADIOMETRIC_TEMPERATURE; image_d DEPTH",
             "source_identity_status": "VERIFIED_ZENODO_4124309",
-            "license_status": "NEEDS_MANUAL_REVIEW_OFFICIAL_TERM_CONFLICT",
-            "label_status": "VERIFIED_POSE_LABELS_NOT_FALL_EVENTS",
-            "grouping_status": "LOCAL_GROUPING_INSUFFICIENT",
+            "license_status": "VERIFIED_ACCEPTABLE_WITH_NONCOMMERCIAL_RESEARCH_RESTRICTION",
+            "label_status": "USABLE_POSE_LABELS; LYING_IS_DERIVED_POST_FALL_POSTURE_PROXY",
+            "grouping_status": "ACCEPTED_OFFICIAL_SPLIT_LIMITATION",
             "checksum_status": "MATERIALIZED_TEST_BYTE_IDENTITY_VERIFIED; PLACEHOLDERS_USE_OFFICIAL_MD5_ONLY",
-            "warnings": ["LYING_IS_NOT_FALL", "TRAIN_VALIDATION_SYNTHETIC", "LICENSE_TERM_CONFLICT", "LARGE_DOWNLOAD_AUTHORIZATION_REQUIRED"],
+            "warnings": ["LYING_PROXY_DOES_NOT_PROVE_FALL_EVENT", "PRESERVE_OFFICIAL_SPLITS", "TRAIN_VALIDATION_SYNTHETIC", "NONCOMMERCIAL_RESEARCH_RESTRICTION", "LARGE_DOWNLOAD_AUTHORIZATION_REQUIRED"],
         },
         {
             "asset_id": "family_c_processed_npz",
@@ -511,22 +525,35 @@ SELECTED = {
     "schema_version": "1.0",
     "phase": "T-A0",
     "decision_date": ACCESS_DATE,
-    "selected_candidate_id": None,
-    "selection_status": "BLOCKED",
-    "overall_decision": "EXTERNAL_DATASET_REQUIRED",
-    "t_a1_authorized": False,
-    "t_a1_authorization_reason": "No candidate simultaneously has verified acceptable data terms, fall-event labels with boundaries, normal/hard-negative coverage, reproducible inventory, and leakage-resistant grouping.",
-    "minimum_selection_rules": {"verified_source_identity": False, "acceptable_license_and_terms": False, "known_representation": False, "deterministic_inventory": False, "usable_label_semantics": False, "usable_grouping_provenance": False, "safe_reader_without_guessing": False},
+    "selected_candidate_id": "local_sdt_zenodo_4124309",
+    "selection_status": "PASS_WITH_LIMITATIONS",
+    "overall_decision": "LOCAL_DATASET_SELECTED_WITH_LIMITATIONS",
+    "t_a1_authorized": True,
+    "t_a1_authorization_reason": "SDT satisfies the T-A0 source-basis gate for SafeNest posture evidence when lying is explicitly treated as a derived post-fall posture proxy, the stricter non-commercial research restriction is observed, and the official synthetic-train/synthetic-validation/real-test split is preserved. Temporal fall-event performance remains not verifiable.",
+    "minimum_selection_rules": {"verified_source_identity": True, "acceptable_license_and_terms": True, "known_representation": True, "deterministic_inventory": True, "usable_label_semantics": True, "usable_grouping_provenance_or_accepted_limitation": True, "safe_reader_without_guessing": True},
+    "canonical_source_name": "SDT Dataset | Synthetic Depth & Thermal Dataset for Person Detection and Pose Classification",
+    "official_source": "https://zenodo.org/records/4124309",
+    "stable_identifier": "doi:10.5281/zenodo.4124309",
+    "license": "Stricter common denominator: non-commercial research use with citation/attribution; Zenodo metadata separately states CC-BY-4.0",
+    "permitted_use": "SafeNest non-commercial research and model training; raw redistribution and commercial use require separate terms review",
+    "representation": {"image_t": "RADIOMETRIC_TEMPERATURE; Kelvin in documented FLIR 16/14-bit encoding", "image_d": "DEPTH; millimetres"},
+    "sensor_info": {"real_thermal": "FLIR Lepton 3.5", "real_depth": "Orbbec Astra", "synthetic": "Blender plus documented sensor-noise simulation"},
+    "grouping_unit": "OFFICIAL_SOURCE_SPLIT; synthetic train, synthetic validation, real test; accepted limitation because subject/session/event IDs are absent",
+    "label_semantics": "Original lying/sitting/standing/empty labels are preserved. SafeNest derives lying -> HUMAN_FALL as post-fall lying-posture evidence, not a fall-event assertion.",
+    "source_checksum_information": "Official MD5 exists for every split file; local test.zip MD5 matches and local SHA-256 is recorded; placeholder bytes are not locally rehashed.",
+    "t_a1_eligibility": "YES_WITH_LIMITATIONS_AND_OWNER_AUTHORIZED_HYDRATION_BEFORE_READING_PLACEHOLDERS",
+    "limitations": ["No temporal fall onset/end labels.", "No subject/session/sequence/event IDs.", "Synthetic train/validation versus real test domain gap.", "Non-commercial research restriction governs use.", "No frame-random resplit; do not use the legacy mixed NPZ as canonical input."],
     "candidate_specific_decisions": {
         "external_ehomeseniors_2019": "NEEDS_MANUAL_REVIEW",
         "external_muvim_2022": "ACCESS_BLOCKED",
         "external_thermal_fall_66": "ACCESS_BLOCKED",
         "local_additional_human_not_human": "REJECTED_PROVENANCE",
         "local_family_a_fall_non_fall_png": "REJECTED_PROVENANCE",
-        "local_sdt_zenodo_4124309": "REJECTED_LABEL_QUALITY",
+        "local_sdt_zenodo_4124309": "SELECTED",
     },
-    "blockers": ["LOCAL_SOURCE_IDENTITY_UNVERIFIED", "LOCAL_LICENSE_UNVERIFIED", "LOCAL_GROUPING_INSUFFICIENT", "LOCAL_DATA_NOT_RADIOMETRIC", "LOCAL_LABEL_QUALITY_INSUFFICIENT", "LOCAL_PAYLOAD_NOT_MATERIALIZED", "EXTERNAL_CANDIDATE_ACCESS_OR_COMPLETENESS_INSUFFICIENT"],
-    "prohibited_progression": ["Do not start T-A1 on this branch.", "Do not create a split from processed_thermal_80x62.npz.", "Do not equate lying with fall."],
+    "blockers": [],
+    "limitations_requiring_enforcement": ["LARGE_DOWNLOAD_AUTHORIZATION_REQUIRED before placeholder hydration", "PRESERVE_OFFICIAL_SOURCE_SPLITS", "GENERALIZATION_PERFORMANCE_NOT_VERIFIABLE", "EVENT_LEVEL_FALL_PERFORMANCE_NOT_VERIFIABLE", "NONCOMMERCIAL_RESEARCH_USE_ONLY_UNLESS_TERMS_ARE_CLEARED"],
+    "prohibited_progression": ["Do not start T-A1 on this branch.", "Do not create a split from processed_thermal_80x62.npz.", "Do not frame-randomly resplit SDT.", "Do not describe the lying proxy as proof of a fall event."],
 }
 
 
@@ -560,12 +587,12 @@ LINEAGE = {
 LIMITATIONS = {
     "schema_version": "1.0",
     "phase": "T-A0",
-    "overall_outcome": "BLOCKED",
+    "overall_outcome": "PASS_WITH_LIMITATIONS",
     "limitations": [
         {"id": "T-A0-L001", "status": "OPEN", "issue": "Family A identity, license, labels and prefix meanings are unverified."},
-        {"id": "T-A0-L002", "status": "OPEN", "issue": "SDT is a pose dataset and lying must not be relabeled as fall."},
-        {"id": "T-A0-L003", "status": "NEEDS_MANUAL_REVIEW", "issue": "SDT official CC-BY-4.0 metadata conflicts with non-commercial-research-only record text."},
-        {"id": "T-A0-L004", "status": "OPEN", "issue": "No local source provides authoritative subject/session/event grouping for fall evaluation."},
+        {"id": "T-A0-L002", "status": "ACCEPTED_LIMITATION", "issue": "SDT lying is mapped to HUMAN_FALL only as derived post-fall lying-posture evidence; it never proves a temporal fall event by itself."},
+        {"id": "T-A0-L003", "status": "ACCEPTED_RESTRICTIVE_COMMON_DENOMINATOR", "issue": "SDT official CC-BY-4.0 metadata conflicts with non-commercial-research-only record text; this selection applies the stricter non-commercial research, citation and attribution conditions."},
+        {"id": "T-A0-L004", "status": "ACCEPTED_GROUPING_LIMITATION", "issue": "SDT has no subject/session/event IDs. T-A1 must preserve the official synthetic train / synthetic validation / real test split exactly; subject-wise and event-level generalization remain not verifiable."},
         {"id": "T-A0-L005", "status": "OPEN", "issue": "Legacy NPZ retains only X/y and mixes official splits and heuristic labels."},
         {"id": "T-A0-L006", "status": "LARGE_DOWNLOAD_AUTHORIZATION_REQUIRED", "issue": "SDT train and validation payloads are dataless multi-GB placeholders."},
         {"id": "T-A0-L007", "status": "ACCESS_BLOCKED", "issue": "MUVIM and Thermal Fall 66 require external access and terms review."},
@@ -588,7 +615,7 @@ SOURCE_EVIDENCE = {
         {"source_id": "thermal_fall_66_publisher", "url": "https://www.sciencedirect.com/science/article/pii/S0952197625018214", "category": "OFFICIAL_PUBLICATION_LANDING_PAGE", "verified_claims": ["66-subject thermal fall dataset claim", "data available on request"]},
     ],
     "license_decisions": [
-        {"candidate_id": "local_sdt_zenodo_4124309", "status": "NEEDS_MANUAL_REVIEW", "reason": "Two official statements conflict."},
+        {"candidate_id": "local_sdt_zenodo_4124309", "status": "VERIFIED_ACCEPTABLE_WITH_NONCOMMERCIAL_RESEARCH_RESTRICTION", "reason": "The official record explicitly permits non-commercial research and documents synthetic training use. The stricter statement governs; attribution/citation are required, and commercial use or raw redistribution needs separate review."},
         {"candidate_id": "external_ehomeseniors_2019", "status": "NEEDS_MANUAL_REVIEW", "reason": "CC BY 4.0 covers the article/publisher supplement context, but a separate dataset license statement was not found."},
         {"candidate_id": "external_muvim_2022", "status": "LICENSE_UNVERIFIED", "reason": "Terms require access request."},
         {"candidate_id": "external_thermal_fall_66", "status": "LICENSE_UNVERIFIED", "reason": "Terms require access request."},
@@ -619,11 +646,11 @@ VALIDATION_RESULT = {
     "errors": [],
     "evidence_validation": "PASS",
     "local_asset_count": 4,
-    "overall_outcome": "BLOCKED",
+    "overall_outcome": "PASS_WITH_LIMITATIONS",
     "phase": "T-A0",
     "schema_version": "1.0",
-    "selected_candidate_id": None,
-    "t_a1_authorized": False,
+    "selected_candidate_id": "local_sdt_zenodo_4124309",
+    "t_a1_authorized": True,
     "warning_count": 0,
     "warnings": [],
 }
@@ -644,21 +671,24 @@ def render_report() -> str:
 
 - Phase: `T-A0`
 - Audit date: `{ACCESS_DATE}`
-- Overall outcome: `BLOCKED`
-- T-A1 authorized: `NO`
+- Overall outcome: `PASS_WITH_LIMITATIONS`
+- Selection status: `LOCAL_DATASET_SELECTED_WITH_LIMITATIONS`
+- T-A1 authorized: `YES`
 
 ## Decision
 
-No candidate satisfies all T-A0 selection gates. The local payload exists and is intentionally Git-ignored, correcting the roadmap wording to `NO_APPROVED_CANONICAL_REAL_THERMAL_EVALUATION_DATASET`; absence from Git is not absence from the owner workspace.
+The local SDT source (`doi:10.5281/zenodo.4124309`) is selected with explicit limitations as the T-A1 source basis. The local payload exists and is intentionally Git-ignored; absence from Git is not absence from the owner workspace.
 
-The SDT source is reproducibly identified, but it is a static pose dataset: source label 0 is **lying**, not fall. It has no subject/session/sequence/event identifiers. Family A is a 6,748-file RGB colorized rendering collection with unknown prefix meanings, identity, license and grouping. The additional tree contains presence polygons, not fall labels. The processed NPZ is legacy mixed-source evidence and is not canonical.
+SDT source label 0 remains **lying**. SafeNest derives it as `HUMAN_FALL` only in the narrower sense of **post-fall lying-posture evidence**: a single frame does not establish that a fall event occurred. Persistence and corroboration from other sensors are responsible for escalating suspicion. This matches the intended sensor-fusion architecture while preserving the original source semantics.
+
+SDT has no subject/session/sequence/event identifiers, so T-A1 must preserve its official synthetic-train, synthetic-validation and real-test split exactly. Subject-wise and event-level generalization are `NOT_VERIFIABLE`, and frame-random resplitting is prohibited. Family A and the additional human/not-human tree remain unselected because their source provenance is insufficient. The processed NPZ remains legacy mixed-source evidence and is not canonical.
 
 ## Candidate comparison
 
 | Candidate | Representation | Label/group evidence | Access/license | T-A0 status |
 |---|---|---|---|---|
 | Local Family A | RGB thermal colorized rendering | Unknown labels and grouping | Identity/license unknown | `REJECTED_PROVENANCE` |
-| Local SDT | 16-bit thermal Kelvin encoding + depth; synthetic train/validation, real test | Pose labels only; no grouping IDs | Open, but official terms conflict | `REJECTED_LABEL_QUALITY` |
+| Local SDT | 16-bit thermal Kelvin encoding + depth; synthetic train/validation, real test | Lying as derived post-fall posture proxy; official split is the accepted grouping limitation | Non-commercial research restriction, citation/attribution; official metadata conflict retained | `SELECTED` |
 | Local human/not-human tree | RGB/RGBA thermal screenshots/exports | Presence polygons only | Identity/license unknown | `REJECTED_PROVENANCE` |
 | eHomeSeniors | Numeric thermal temperature and raw fields | Six subjects and staged fall types; no documented normal sequences or explicit repeated-event boundaries | Open supplement; dataset-specific terms need review | `NEEDS_MANUAL_REVIEW` |
 | MUVIM | Encoded thermal video plus other modalities | Strong publication-level subject/ADL/fall structure | Author request; terms unverified | `ACCESS_BLOCKED` |
@@ -683,7 +713,7 @@ Per-frame min-max normalization discards absolute Celsius context. Thermal-44 ph
 
 ## T-A1 gate
 
-`T-A1 authorized: NO`. A later owner decision must either obtain and approve a candidate with explicit data terms, normal/hard-negative sequences, fall-event semantics/boundaries and subject/session/event grouping, or authorize a carefully separated multi-source design whose evaluation grouping cannot exploit source identity.
+`T-A1 authorized: YES`, with these mandatory conditions: use SDT under the stricter non-commercial research and attribution terms; obtain owner authorization before hydrating multi-GB placeholders; read the original archives rather than the mixed legacy NPZ; preserve the official train/validation/test split; retain the source labels and derived-proxy mapping in row provenance; and do not claim temporal fall-event, subject-generalization, Thermal-44 hardware or model-performance validation from this T-A0 decision.
 """
 
 

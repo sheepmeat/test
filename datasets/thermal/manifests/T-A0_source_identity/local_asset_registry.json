@@ -89,7 +89,7 @@
       "git_ignore_rule": "/datasets/raw_archives/",
       "git_ignore_state": "GIT_IGNORED_PAYLOAD",
       "git_visibility": false,
-      "grouping_status": "LOCAL_GROUPING_INSUFFICIENT",
+      "grouping_status": "ACCEPTED_OFFICIAL_SPLIT_LIMITATION",
       "inventory_summary": {
         "entries": [
           {
@@ -184,8 +184,8 @@
           }
         }
       },
-      "label_status": "VERIFIED_POSE_LABELS_NOT_FALL_EVENTS",
-      "license_status": "NEEDS_MANUAL_REVIEW_OFFICIAL_TERM_CONFLICT",
+      "label_status": "USABLE_POSE_LABELS; LYING_IS_DERIVED_POST_FALL_POSTURE_PROXY",
+      "license_status": "VERIFIED_ACCEPTABLE_WITH_NONCOMMERCIAL_RESEARCH_RESTRICTION",
       "locally_readable_status": "test.zip READABLE_OFFLINE; train parts and validation.zip LOCAL_CLOUD_PLACEHOLDER",
       "logical_size_bytes": 19223751874,
       "materialization_state": "MIXED",
@@ -198,9 +198,10 @@
       "representation_status": "MULTIMODAL: image_t RADIOMETRIC_TEMPERATURE; image_d DEPTH",
       "source_identity_status": "VERIFIED_ZENODO_4124309",
       "warnings": [
-        "LYING_IS_NOT_FALL",
+        "LYING_PROXY_DOES_NOT_PROVE_FALL_EVENT",
+        "PRESERVE_OFFICIAL_SPLITS",
         "TRAIN_VALIDATION_SYNTHETIC",
-        "LICENSE_TERM_CONFLICT",
+        "NONCOMMERCIAL_RESEARCH_RESTRICTION",
         "LARGE_DOWNLOAD_AUTHORIZATION_REQUIRED"
       ]
     },

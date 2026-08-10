@@ -3,8 +3,8 @@
   "license_decisions": [
     {
       "candidate_id": "local_sdt_zenodo_4124309",
-      "reason": "Two official statements conflict.",
-      "status": "NEEDS_MANUAL_REVIEW"
+      "reason": "The official record explicitly permits non-commercial research and documents synthetic training use. The stricter statement governs; attribution/citation are required, and commercial use or raw redistribution needs separate review.",
+      "status": "VERIFIED_ACCEPTABLE_WITH_NONCOMMERCIAL_RESEARCH_RESTRICTION"
     },
     {
       "candidate_id": "external_ehomeseniors_2019",

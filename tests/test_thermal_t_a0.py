@@ -184,6 +184,53 @@ class TestThermalTA0Validator(unittest.TestCase):
         self.assertEqual(result["evidence_validation"], "PASS")
         self.assertTrue(result["t_a1_authorized"])
 
+    def test_selected_post_fall_posture_proxy_with_official_split_limitation(self):
+        def mutate(docs):
+            item = docs["candidate_registry.json"]["candidates"][0]
+            item.update(
+                {
+                    "license_status": "VERIFIED_ACCEPTABLE_WITH_NONCOMMERCIAL_RESEARCH_RESTRICTION",
+                    "inventory_status": "DETERMINISTIC_INVENTORY_WITH_OFFICIAL_CHECKSUMS",
+                    "label_semantics_status": "USABLE_DERIVED_POST_FALL_POSTURE_PROXY",
+                    "grouping_status": "ACCEPTED_OFFICIAL_SPLIT_LIMITATION",
+                    "fallback_grouping_feasibility": "Preserve official train/validation/test; never perform a frame-random resplit",
+                    "safenest_sensor_role": "Post-fall posture evidence; no single thermal frame confirms a fall event",
+                    "safenest_label_mapping": {"0": {"source_label": "lying", "target_label": "HUMAN_FALL", "mapping_type": "DERIVED_POST_FALL_POSTURE_PROXY"}},
+                }
+            )
+
+        result = self.validate(mutate)
+        self.assertEqual(result["evidence_validation"], "PASS")
+        self.assertEqual(result["overall_outcome"], "PASS_WITH_LIMITATIONS")
+        self.assertTrue(result["t_a1_authorized"])
+
+    def test_post_fall_proxy_without_single_frame_guard_fails(self):
+        def mutate(docs):
+            item = docs["candidate_registry.json"]["candidates"][0]
+            item.update(
+                {
+                    "label_semantics_status": "USABLE_DERIVED_POST_FALL_POSTURE_PROXY",
+                    "safenest_sensor_role": "Fall detector",
+                    "safenest_label_mapping": {"0": {"source_label": "lying", "target_label": "HUMAN_FALL", "mapping_type": "DIRECT_FALL_EVENT"}},
+                }
+            )
+
+        result = self.validate(mutate)
+        self.assertIn("POST_FALL_PROXY_GUARD_MISSING", self.codes(result))
+
+    def test_accepted_official_split_without_resplit_guard_fails(self):
+        def mutate(docs):
+            item = docs["candidate_registry.json"]["candidates"][0]
+            item.update(
+                {
+                    "grouping_status": "ACCEPTED_OFFICIAL_SPLIT_LIMITATION",
+                    "fallback_grouping_feasibility": "Use the official split when convenient",
+                }
+            )
+
+        result = self.validate(mutate)
+        self.assertIn("OFFICIAL_SPLIT_GUARD_MISSING", self.codes(result))
+
     def test_local_git_ignored_source_is_valid(self):
         result = self.validate()
         self.assertEqual(result["evidence_validation"], "PASS")

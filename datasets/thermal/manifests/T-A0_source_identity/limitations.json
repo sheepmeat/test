@@ -13,18 +13,18 @@
     },
     {
       "id": "T-A0-L002",
-      "issue": "SDT is a pose dataset and lying must not be relabeled as fall.",
-      "status": "OPEN"
+      "issue": "SDT lying is mapped to HUMAN_FALL only as derived post-fall lying-posture evidence; it never proves a temporal fall event by itself.",
+      "status": "ACCEPTED_LIMITATION"
     },
     {
       "id": "T-A0-L003",
-      "issue": "SDT official CC-BY-4.0 metadata conflicts with non-commercial-research-only record text.",
-      "status": "NEEDS_MANUAL_REVIEW"
+      "issue": "SDT official CC-BY-4.0 metadata conflicts with non-commercial-research-only record text; this selection applies the stricter non-commercial research, citation and attribution conditions.",
+      "status": "ACCEPTED_RESTRICTIVE_COMMON_DENOMINATOR"
     },
     {
       "id": "T-A0-L004",
-      "issue": "No local source provides authoritative subject/session/event grouping for fall evaluation.",
-      "status": "OPEN"
+      "issue": "SDT has no subject/session/event IDs. T-A1 must preserve the official synthetic train / synthetic validation / real test split exactly; subject-wise and event-level generalization remain not verifiable.",
+      "status": "ACCEPTED_GROUPING_LIMITATION"
     },
     {
       "id": "T-A0-L005",
@@ -52,7 +52,7 @@
       "status": "DEFERRED_T_C"
     }
   ],
-  "overall_outcome": "BLOCKED",
+  "overall_outcome": "PASS_WITH_LIMITATIONS",
   "phase": "T-A0",
   "schema_version": "1.0"
 }

@@ -2,21 +2,24 @@
 
 - Phase: `T-A0`
 - Audit date: `2026-08-10`
-- Overall outcome: `BLOCKED`
-- T-A1 authorized: `NO`
+- Overall outcome: `PASS_WITH_LIMITATIONS`
+- Selection status: `LOCAL_DATASET_SELECTED_WITH_LIMITATIONS`
+- T-A1 authorized: `YES`
 
 ## Decision
 
-No candidate satisfies all T-A0 selection gates. The local payload exists and is intentionally Git-ignored, correcting the roadmap wording to `NO_APPROVED_CANONICAL_REAL_THERMAL_EVALUATION_DATASET`; absence from Git is not absence from the owner workspace.
+The local SDT source (`doi:10.5281/zenodo.4124309`) is selected with explicit limitations as the T-A1 source basis. The local payload exists and is intentionally Git-ignored; absence from Git is not absence from the owner workspace.
 
-The SDT source is reproducibly identified, but it is a static pose dataset: source label 0 is **lying**, not fall. It has no subject/session/sequence/event identifiers. Family A is a 6,748-file RGB colorized rendering collection with unknown prefix meanings, identity, license and grouping. The additional tree contains presence polygons, not fall labels. The processed NPZ is legacy mixed-source evidence and is not canonical.
+SDT source label 0 remains **lying**. SafeNest derives it as `HUMAN_FALL` only in the narrower sense of **post-fall lying-posture evidence**: a single frame does not establish that a fall event occurred. Persistence and corroboration from other sensors are responsible for escalating suspicion. This matches the intended sensor-fusion architecture while preserving the original source semantics.
+
+SDT has no subject/session/sequence/event identifiers, so T-A1 must preserve its official synthetic-train, synthetic-validation and real-test split exactly. Subject-wise and event-level generalization are `NOT_VERIFIABLE`, and frame-random resplitting is prohibited. Family A and the additional human/not-human tree remain unselected because their source provenance is insufficient. The processed NPZ remains legacy mixed-source evidence and is not canonical.
 
 ## Candidate comparison
 
 | Candidate | Representation | Label/group evidence | Access/license | T-A0 status |
 |---|---|---|---|---|
 | Local Family A | RGB thermal colorized rendering | Unknown labels and grouping | Identity/license unknown | `REJECTED_PROVENANCE` |
-| Local SDT | 16-bit thermal Kelvin encoding + depth; synthetic train/validation, real test | Pose labels only; no grouping IDs | Open, but official terms conflict | `REJECTED_LABEL_QUALITY` |
+| Local SDT | 16-bit thermal Kelvin encoding + depth; synthetic train/validation, real test | Lying as derived post-fall posture proxy; official split is the accepted grouping limitation | Non-commercial research restriction, citation/attribution; official metadata conflict retained | `SELECTED` |
 | Local human/not-human tree | RGB/RGBA thermal screenshots/exports | Presence polygons only | Identity/license unknown | `REJECTED_PROVENANCE` |
 | eHomeSeniors | Numeric thermal temperature and raw fields | Six subjects and staged fall types; no documented normal sequences or explicit repeated-event boundaries | Open supplement; dataset-specific terms need review | `NEEDS_MANUAL_REVIEW` |
 | MUVIM | Encoded thermal video plus other modalities | Strong publication-level subject/ADL/fall structure | Author request; terms unverified | `ACCESS_BLOCKED` |
@@ -41,4 +44,4 @@ Per-frame min-max normalization discards absolute Celsius context. Thermal-44 ph
 
 ## T-A1 gate
 
-`T-A1 authorized: NO`. A later owner decision must either obtain and approve a candidate with explicit data terms, normal/hard-negative sequences, fall-event semantics/boundaries and subject/session/event grouping, or authorize a carefully separated multi-source design whose evaluation grouping cannot exploit source identity.
+`T-A1 authorized: YES`, with these mandatory conditions: use SDT under the stricter non-commercial research and attribution terms; obtain owner authorization before hydrating multi-GB placeholders; read the original archives rather than the mixed legacy NPZ; preserve the official train/validation/test split; retain the source labels and derived-proxy mapping in row provenance; and do not claim temporal fall-event, subject-generalization, Thermal-44 hardware or model-performance validation from this T-A0 decision.

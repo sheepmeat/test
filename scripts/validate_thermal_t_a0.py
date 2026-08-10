@@ -62,6 +62,15 @@ ALLOWED_CANDIDATE_STATUS = {
     "REJECTED_LABEL_QUALITY", "ACCESS_BLOCKED", "NEEDS_MANUAL_REVIEW",
 }
 
+SELECTED_REQUIREMENT_VALUES = {
+    "source_identity_status": {"VERIFIED"},
+    "license_status": {"VERIFIED_ACCEPTABLE", "VERIFIED_ACCEPTABLE_WITH_NONCOMMERCIAL_RESEARCH_RESTRICTION"},
+    "inventory_status": {"DETERMINISTIC_INVENTORY", "DETERMINISTIC_INVENTORY_WITH_OFFICIAL_CHECKSUMS"},
+    "label_semantics_status": {"USABLE", "USABLE_DERIVED_POST_FALL_POSTURE_PROXY"},
+    "grouping_status": {"USABLE", "ACCEPTED_OFFICIAL_SPLIT_LIMITATION"},
+    "safe_reader_documentation_status": {"DOCUMENTED"},
+}
+
 
 def canonical_json(data: Any) -> str:
     return json.dumps(data, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
@@ -208,19 +217,20 @@ def validate_evidence(evidence_dir: Path, repo_root: Path) -> dict[str, Any]:
         if "label_semantics_status" not in item or item.get("label_semantics_status") in (None, ""):
             error(errors, "LABEL_SEMANTICS_MISSING", f"{loc}.label_semantics_status", "Label semantics status must be recorded.")
         if item.get("overall_status") == "SELECTED":
-            mandatory = {
-                "source_identity_status": "VERIFIED",
-                "license_status": "VERIFIED_ACCEPTABLE",
-                "inventory_status": "DETERMINISTIC_INVENTORY",
-                "label_semantics_status": "USABLE",
-                "grouping_status": "USABLE",
-                "safe_reader_documentation_status": "DOCUMENTED",
-            }
-            for field, expected in mandatory.items():
-                if item.get(field) != expected:
-                    error(errors, "SELECTED_CANDIDATE_REQUIREMENT_FAILED", f"{loc}.{field}", f"Selected candidate requires {expected}.")
+            for field, accepted in SELECTED_REQUIREMENT_VALUES.items():
+                if item.get(field) not in accepted:
+                    expected = ", ".join(sorted(accepted))
+                    error(errors, "SELECTED_CANDIDATE_REQUIREMENT_FAILED", f"{loc}.{field}", f"Selected candidate requires one of: {expected}.")
             if representation == "UNKNOWN":
                 error(errors, "SELECTED_CANDIDATE_REQUIREMENT_FAILED", f"{loc}.representation_classification", "Selected representation cannot be unknown.")
+            if item.get("label_semantics_status") == "USABLE_DERIVED_POST_FALL_POSTURE_PROXY":
+                role = str(item.get("safenest_sensor_role", ""))
+                mapping = item.get("safenest_label_mapping", {})
+                lying = mapping.get("0", {}) if isinstance(mapping, dict) else {}
+                if "no single thermal frame confirms a fall event" not in role or lying.get("mapping_type") != "DERIVED_POST_FALL_POSTURE_PROXY":
+                    error(errors, "POST_FALL_PROXY_GUARD_MISSING", loc, "A selected lying-posture proxy must explicitly prohibit single-frame fall confirmation and preserve its derived mapping type.")
+            if item.get("grouping_status") == "ACCEPTED_OFFICIAL_SPLIT_LIMITATION" and "never perform a frame-random resplit" not in str(item.get("fallback_grouping_feasibility", "")):
+                error(errors, "OFFICIAL_SPLIT_GUARD_MISSING", f"{loc}.fallback_grouping_feasibility", "An accepted official-split limitation must prohibit frame-random resplitting.")
 
     local = docs["local_asset_registry.json"]
     assets = local.get("assets")
@@ -261,6 +271,8 @@ def validate_evidence(evidence_dir: Path, repo_root: Path) -> dict[str, Any]:
             error(errors, "SELECTED_STATUS_MISMATCH", "selected_source_identity.json", "Selected registry candidate must have SELECTED status.")
         if authorized is not True:
             error(errors, "SELECTED_NOT_AUTHORIZED", "selected_source_identity.json:t_a1_authorized", "A valid selection must authorize T-A1.")
+        if selection_status not in {"PASS", "PASS_WITH_LIMITATIONS"}:
+            error(errors, "SELECTED_OUTCOME_INVALID", "selected_source_identity.json:selection_status", "A selected source requires PASS or PASS_WITH_LIMITATIONS.")
     else:
         if authorized is not False or selection_status not in {"BLOCKED", "NOT_VERIFIABLE"}:
             error(errors, "NO_SELECTION_OUTCOME_INVALID", "selected_source_identity.json", "No selection requires T-A1 false and BLOCKED/NOT_VERIFIABLE.")
