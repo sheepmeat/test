@@ -1,0 +1,16 @@
+{
+  "phase_id": "M-B0",
+  "diagnostic_status": "COMPLETED",
+  "methodology": "Standardized Waveform Pearson Correlation and Normalized RMSE (NRMSE)",
+  "train_only_calibration": {
+    "train_windows_count": 358,
+    "max_distinct_train_correlation": 0.9761453596507143,
+    "controlled_perturbation_correlation": 0.9999999951730261,
+    "rationale": "Distinct physiological breathing windows reach max r \u2248 0.92-0.97. Controlled micro-perturbations exhibit r > 0.999. The threshold r >= 0.995 isolates true signal replicas without flagging distinct physiological breathing."
+  },
+  "frozen_threshold_applied": {
+    "min_correlation": 0.995,
+    "max_nrmse": 0.05
+  },
+  "locked_test_used_for_threshold_tuning": false
+}
