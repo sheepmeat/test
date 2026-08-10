@@ -2,7 +2,7 @@
 
 ## 1. 문서 개요 및 핵심 한 줄 요약
 
-> **Phase A가 Zenodo 110 피험자의 실세계 mmWave 레이더 신호를 신뢰할 수 있는 30초 단위의 정규화 데이터셋과 무호흡 라벨로 재구성하는 단계였다면, Phase B는 그 데이터를 바탕으로 최적의 신호 처리(전처리)와 온디바이스 AI 모델을 비교·선정하여 최종 INT8 양자화 모델을 완성하는 단계입니다.**
+> **Phase A가 Zenodo 110 피험자의 실제 mmWave 레이더 신호를 신뢰할 수 있는 30초 단위의 비필터·비정규화 canonical phase 데이터셋과 자발적 숨참기 기반 SafeNest APNEA proxy label로 재구성하는 단계였다면, Phase B는 그 데이터를 바탕으로 최적의 신호 처리(전처리)와 온디바이스 AI 모델을 비교·선정하여 최종 INT8 양자화 모델을 완성하는 단계입니다.**
 
 본 문서는 SafeNest 레이더 신호 처리 및 온디바이스 AI 파이프라인을 직접 구현하지 않은 팀원도 **mmWave Phase B의 목적, 필요성, 수행 흐름, 검증 원칙 및 최종 산출물**을 명확히 이해할 수 있도록 작성된 종합 개요 문서입니다.
 
@@ -20,7 +20,7 @@ Phase A(A0~A6)에서는 raw 레이더 아카이브로부터 데이터의 신뢰�
 - **A3 (타임라인 정규화)**: 10 Hz 정규 타임라인 보정 및 30초/300샘플 단위 윈도우 생성
 - **A4 (라벨 매핑)**: Movesense 가슴 가속도계 기준 호흡률 및 자발적 숨참기 아티팩트 기반 라벨 매핑 (`NORMAL`, `RAPID_OR_ABNORMAL`, `APNEA`, `AMBIGUOUS`)
 - **A5 (피험자 수직 분할)**: 동일 피험자의 데이터가 섞이지 않도록 피험자 단위(Subject-level) 분할 고정 (TRAIN 77명 / VALIDATION 17명 / LOCKED_TEST 16명)
-- **A6 (전체 변환 및 무결성 감사)**: 530개 30초 윈도우 수치 데이터셋([`datasets/mmwave/processed/mmwave_canonical_real_v1.npy`](file:datasets/mmwave/processed/mmwave_canonical_real_v1.npy), $530 \times 300$ float64) 생성 및 교차 분할 누수(Cross-split leakage) 0건 검증
+- **A6 (전체 변환 및 무결성 감사)**: 530개 30초 윈도우 수치 데이터셋([`datasets/mmwave/processed/mmwave_canonical_real_v1.npy`](../datasets/mmwave/processed/mmwave_canonical_real_v1.npy), $530 \times 300$ float64) 생성 및 교차 분할 누수(Cross-split leakage) 0건 검증
 
 ### 2.2 Phase-A 산출물의 불변 경계 (Immutable Boundary)
 - Phase B는 Phase A에서 승인된 계보, 라벨 매핑, 피험자 분할(Split) 및 canonical 수치 데이터셋(`mmwave_canonical_real_v1.npy`)을 **절대 묵인 하에 변경하거나 재계산하지 않습니다.**
@@ -102,7 +102,7 @@ Phase A의 위상 데이터셋(`mmwave_canonical_real_v1.npy`)은 필터링이 �
 - **Z-score Normalization**: 진폭 정규화 (TRAIN 통계량 기준)
 
 ### 6.2 소거 실험(Ablation)의 목적
-"과거 구현에서 특정 필터를 사용했다"는 이유만으로 이를 무비판적으로 정답으로 채택하지 않습니다. 전처리 단계 각각을 온/오프(On/Off)하며 거치는 소거 실험을 통해, **실제 무호흡 및 이상 호흡 분류 성능을 높이는 최적의 전처리 조합**을 수치적 근거(VALIDATION 성능)로 선별합니다.
+"과거 구현에서 특정 필터를 사용했다"는 이유만으로 이를 무비판적으로 정답으로 채택하지 않습니다. 전처리 단계 각각을 온/오프(On/Off)하며 거치는 소거 실험을 통해, **자발적 숨참기 기반 APNEA proxy 및 이상 호흡 분류 성능을 높이는 최적의 전처리 조합**을 수치적 근거(VALIDATION 성능)로 선별합니다.
 
 ---
 
@@ -116,7 +116,7 @@ SafeNest mmWave 파이프라인의 라벨 체계는 다음과 같습니다:
 - **`AMBIGUOUS`**: 전이 구간 및 불확실 구간 (순수 클래스 학습 및 평가 시 제외, 프로버넌스 보존)
 
 ### 7.2 단순 Accuracy(정확도) 지표의 한계
-데이터셋 내에서 정상 호흡의 비중이 높을 경우, 모델이 모든 샘플을 `NORMAL`로만 예측해도 70~80%의 높은 Accuracy가 나올 수 있습니다. 이를 **클래스 붕괴(Class Collapse)**라 부르며, 안전 감지 시스템에서 위험한 무호흡(`APNEA`)을 놓치게 되므로 치명적입니다.
+데이터셋 내에서 정상 호흡의 비중이 높을 경우, 모델이 모든 샘플을 `NORMAL`로만 예측해도 높은 Accuracy가 나올 수 있습니다. 이를 **클래스 붕괴(Class Collapse)**라 부르며, SafeNest `APNEA` proxy class를 전혀 감지하지 못하므로 후보 모델로 사용할 수 없습니다.
 
 ### 7.3 Phase B 핵심 평가 지표
 따라서 Phase B에서는 단순 Accuracy 대신 다음 지표를 종합적으로 검증합니다:

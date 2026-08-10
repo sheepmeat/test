@@ -21,10 +21,12 @@
 - Runtime path resolution starts from the canonical root and must not fall back to a versioned sibling or archived snapshot.
 - Every generated dataset sample must preserve source dataset, subject, session, recording, time/window, extraction profile, label mapping, split, and quality provenance when applicable.
 
-## mmWave phase workflow
+## Multisensor phase workflow
 
-- Follow `docs/20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md`.
-- Complete and validate A0 through A6 before Phase B model selection.
+- Follow `docs/20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md` as the active master roadmap.
+- Use `docs/20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md` and `docs/MMWAVE_PHASE_B_OVERVIEW.md` for inherited mmWave details.
+- Run mmWave M-B, CO₂ C-A, Thermal T-A, and integration contract inventory I-0 in parallel when their files and evidence are independent; preserve the required phase order inside each sensor track.
+- For each sensor track, complete and validate its A0 through A6 before starting that sensor's Phase B model selection.
 - A4 voluntary breath-hold labels are derived SafeNest APNEA proxies and must never be described as clinical apnea.
 - A5 uses subject-level grouping. All recordings and windows from one subject must remain in exactly one split.
 - `AMBIGUOUS` A4 windows are excluded from pure-class training but retained for provenance and transition analysis.
