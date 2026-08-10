@@ -180,7 +180,7 @@ def _validate_static_geometry(repo_root: Path, errors: list[dict[str, str]]) -> 
                 _error(errors, "ARCHIVE_EXTRACTION", f"{path.as_posix()}:{node.lineno}", "Archive extraction is forbidden.")
 
 
-def _validate_predecessors(repo_root: Path, errors: list[dict[str, str]]) -> tuple[dict[str, Any], dict[str, Any]]:
+def _validate_predecessors(repo_root: Path, errors: list[dict[str, str]], verify_real_payload: bool) -> tuple[dict[str, Any], dict[str, Any]]:
     try:
         from scripts.validate_thermal_t_a0 import validate_evidence as validate_a0
         a0 = validate_a0(repo_root / T_A0_REL, repo_root)
@@ -191,7 +191,12 @@ def _validate_predecessors(repo_root: Path, errors: list[dict[str, str]]) -> tup
         _error(errors, "T_A0_VALIDATOR_ERROR", T_A0_REL, str(exc))
     try:
         from scripts.validate_thermal_t_a1 import validate_evidence as validate_a1
-        a1 = validate_a1(repo_root=repo_root, evidence_dir=repo_root / T_A1_REL, check_checksums=True, verify_real_payload=True)
+        a1 = validate_a1(
+            repo_root=repo_root,
+            evidence_dir=repo_root / T_A1_REL,
+            check_checksums=True,
+            verify_real_payload=verify_real_payload,
+        )
         if a1.get("evidence_validation") != "PASS":
             _error(errors, "T_A1_INVALID", T_A1_REL, canonical_json(a1).strip())
     except Exception as exc:
@@ -338,7 +343,7 @@ def validate_evidence(
 ) -> dict[str, Any]:
     errors: list[dict[str, str]] = []
     warnings: list[dict[str, str]] = []
-    a0, a1 = _validate_predecessors(repo_root, errors)
+    a0, a1 = _validate_predecessors(repo_root, errors, verify_real_payload)
     documents, paths = _load_json_documents(evidence_dir, errors)
     _validate_static_geometry(repo_root, errors)
 
