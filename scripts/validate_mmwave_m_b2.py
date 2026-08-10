@@ -228,26 +228,48 @@ def validate_m_b2_artifacts(
     dups_by_class = {0: 0, 1: 0, 2: 0}
     eff_by_class = {0: 0, 1: 0, 2: 0}
 
+    train_windows = train_data.get("windows", [])
+    if len(ovs_lines) != len(train_windows):
+        raise MB2ValidationError(f"Oversampling plan row count mismatch: expected {len(train_windows)}, got {len(ovs_lines)}")
+
     for pos, row in enumerate(ovs_lines):
-        exp_r = calc_plan_records[pos]
-        if row.get("window_id") != exp_r["window_id"]:
-            raise MB2ValidationError(f"Oversampling plan window_id mismatch at index {pos}!")
+        tw = train_windows[pos]
+
+        # Authoritative TRAIN row provenance validation
+        if row.get("train_index") != pos:
+            raise MB2ValidationError(f"Oversampling plan train_index mismatch at line {pos}: expected {pos}, got {row.get('train_index')}")
+        if row.get("canonical_sample_index") != tw["canonical_sample_index"]:
+            raise MB2ValidationError(f"Oversampling plan canonical_sample_index mismatch at line {pos}: expected {tw['canonical_sample_index']}, got {row.get('canonical_sample_index')}")
+        if row.get("window_id") != tw["window_id"]:
+            raise MB2ValidationError(f"Oversampling plan window_id mismatch at line {pos}: expected {tw['window_id']}, got {row.get('window_id')}")
+        if row.get("subject_id") != tw["subject_id"]:
+            raise MB2ValidationError(f"Oversampling plan subject_id mismatch at line {pos}: expected {tw['subject_id']}, got {row.get('subject_id')}")
+        if row.get("recording_id") != tw["recording_id"]:
+            raise MB2ValidationError(f"Oversampling plan recording_id mismatch at line {pos}: expected {tw['recording_id']}, got {row.get('recording_id')}")
+        if row.get("class_id") != tw["safenest_label_id"]:
+            raise MB2ValidationError(f"Oversampling plan class_id mismatch at line {pos}: expected {tw['safenest_label_id']}, got {row.get('class_id')}")
+        if row.get("class_name") != LABEL_NAMES[tw["safenest_label_id"]]:
+            raise MB2ValidationError(f"Oversampling plan class_name mismatch at line {pos}: expected {LABEL_NAMES[tw['safenest_label_id']]}, got {row.get('class_name')}")
+
         if row.get("original_occurrence") != 1:
-            raise MB2ValidationError(f"original_occurrence must be 1 at index {pos}!")
-        if row.get("effective_multiplicity", 0) < 1:
-            raise MB2ValidationError(f"effective_multiplicity must be >= 1 at index {pos}!")
+            raise MB2ValidationError(f"original_occurrence must be 1 at line {pos}!")
+
+        add_dup = row.get("additional_duplicate_count", -1)
+        eff_mult = row.get("effective_multiplicity", -1)
+
+        if add_dup < 0:
+            raise MB2ValidationError(f"additional_duplicate_count must be >= 0 at line {pos}!")
+        if eff_mult != 1 + add_dup:
+            raise MB2ValidationError(f"effective_multiplicity mismatch at line {pos}: expected 1 + {add_dup} = {1 + add_dup}, got {eff_mult}")
 
         cid = row.get("class_id")
-        add_dup = row.get("additional_duplicate_count", 0)
-        eff_mult = row.get("effective_multiplicity", 0)
-
         dups_by_class[cid] += add_dup
         eff_by_class[cid] += eff_mult
 
         # Majority class (APNEA=2) duplication check
         if cid == 2:
             if add_dup != 0 or eff_mult != 1:
-                raise MB2ValidationError(f"M-B2_OVERSAMPLING_PROTOCOL_VIOLATION: Majority class APNEA sample at index {pos} was duplicated!")
+                raise MB2ValidationError(f"M-B2_OVERSAMPLING_PROTOCOL_VIOLATION: Majority class APNEA sample at line {pos} was duplicated!")
 
         tot_effective += eff_mult
 
@@ -310,7 +332,7 @@ def validate_m_b2_artifacts(
             "macro_f1": round(macro_f1, 6),
             "macro_precision": round(macro_prec, 6),
             "macro_fpr": round(macro_fpr, 6),
-            "min_recall": round(min_rec, 6),
+            "min_per_class_recall": round(min_rec, 6),
             "apnea_recall": round(apnea_rec, 6),
             "rapid_recall": round(rapid_rec, 6),
             "accuracy": round(accuracy, 6),
@@ -339,8 +361,19 @@ def validate_m_b2_artifacts(
     mb1_runs_file = root_dir / "datasets/mmwave/manifests/M-B1_preprocessing_ablation/training_runs.json"
     mb1_runs = json.loads(mb1_runs_file.read_text(encoding="utf-8")).get("training_runs", {}).get("M-B1_D0_B1_Z1", {})
 
+    mb1_preds_file = root_dir / "datasets/mmwave/manifests/M-B1_preprocessing_ablation/validation_predictions.npz"
+    if not mb1_preds_file.is_file():
+        raise MB2ValidationError("M-B1 validation_predictions.npz not found for baseline equivalence comparison!")
+    mb1_val_preds = np.load(mb1_preds_file)["M-B1_D0_B1_Z1"]
+
+    if ce_unweighted_run.get("initial_weights_sha256") != mb1_runs.get("initial_weights_sha256"):
+        raise MB2ValidationError("M-B2_BASELINE_DRIFT: M-B2 CE_UNWEIGHTED initial weights SHA does not match frozen M-B1 BPF_ZSCORE initial weights SHA!")
     if ce_unweighted_run.get("final_weights_sha256") != mb1_runs.get("final_weights_sha256"):
         raise MB2ValidationError("M-B2_BASELINE_DRIFT: M-B2 CE_UNWEIGHTED final weights SHA does not match frozen M-B1 BPF_ZSCORE final weights SHA!")
+
+    ce_unweighted_preds = val_preds_npz.get("M-B2_CE_UNWEIGHTED")
+    if ce_unweighted_preds is None or not np.array_equal(ce_unweighted_preds, mb1_val_preds):
+        raise MB2ValidationError("M-B2_BASELINE_DRIFT: M-B2 CE_UNWEIGHTED VALIDATION prediction vector does not match frozen M-B1 BPF_ZSCORE prediction vector!")
 
     subj_file = manifest_dir / "subject_level_metrics.json"
     if not subj_file.is_file():

@@ -185,6 +185,51 @@ def rank_imbalance_strategies(
     }
 
     def compare_pair(a: dict[str, Any], b: dict[str, Any]) -> int:
+        if a["strategy_id"] == b["strategy_id"]:
+            return 0
+
+        # Step 2: Macro F1
+        f1_diff = a["macro_f1"] - b["macro_f1"]
+        if abs(f1_diff) > eps:
+            return 1 if f1_diff > 0 else -1
+
+        # Step 3: Min per-class recall
+        rec_diff = a["min_per_class_recall"] - b["min_per_class_recall"]
+        if abs(rec_diff) > eps:
+            return 1 if rec_diff > 0 else -1
+
+        # Step 4: Macro precision
+        prec_diff = a["macro_precision"] - b["macro_precision"]
+        if abs(prec_diff) > eps:
+            return 1 if prec_diff > 0 else -1
+
+        # Step 5: Macro FPR (lower is better)
+        fpr_diff = b["macro_fpr"] - a["macro_fpr"]
+        if abs(fpr_diff) > eps:
+            return 1 if fpr_diff > 0 else -1
+
+        # Step 6: Simpler intervention
+        simp_diff = simplicity_order.get(b["strategy_id"], 99) - simplicity_order.get(a["strategy_id"], 99)
+        if simp_diff != 0:
+            return 1 if simp_diff > 0 else -1
+
+        # Step 7: Lexicographic strategy ID
+        return 1 if a["strategy_id"] < b["strategy_id"] else -1
+
+    import functools
+
+    candidates.sort(key=functools.cmp_to_key(compare_pair), reverse=True)
+    return candidates
+
+
+    simplicity_order = {
+        "M-B2_CE_UNWEIGHTED": 0,
+        "M-B2_CE_CLASS_WEIGHT": 1,
+        "M-B2_CE_RANDOM_OVERSAMPLE": 2,
+        "M-B2_FOCAL_CLASS_ALPHA": 3,
+    }
+
+    def compare_pair(a: dict[str, Any], b: dict[str, Any]) -> int:
         # Step 2: Macro F1
         f1_diff = a["macro_f1"] - b["macro_f1"]
         if abs(f1_diff) > eps:
@@ -253,7 +298,16 @@ def compute_subject_level_diagnostics(
             fn = int(np.sum((y_pred != cid) & (y_true == cid)))
 
             if sub_c_true == 0:
-                c_metrics[cname] = "NOT_DEFINED_NO_SUPPORT"
+                c_metrics[cname] = {
+                    "support": 0,
+                    "tp": tp,
+                    "fp": fp,
+                    "tn": tn,
+                    "fn": fn,
+                    "recall": "NOT_DEFINED_NO_SUPPORT",
+                    "precision": "NOT_DEFINED_NO_SUPPORT" if (tp + fp) == 0 else round(float(tp / (tp + fp)), 6),
+                    "f1": "NOT_DEFINED_NO_SUPPORT",
+                }
             else:
                 prec = float(tp / (tp + fp)) if (tp + fp) > 0 else 0.0
                 rec = float(tp / (tp + fn)) if (tp + fn) > 0 else 0.0

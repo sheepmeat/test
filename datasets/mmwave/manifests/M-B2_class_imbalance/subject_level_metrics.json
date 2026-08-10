@@ -12,7 +12,16 @@
           "rapid_fp": 0,
           "rapid_fn": 2,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 0,
@@ -141,7 +150,16 @@
           "rapid_fp": 0,
           "rapid_fn": 0,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 2,
@@ -408,7 +426,16 @@
           "rapid_fp": 0,
           "rapid_fn": 2,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 0,
@@ -501,7 +528,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -630,7 +666,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -667,7 +712,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -704,7 +758,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -748,7 +811,16 @@
           "rapid_fp": 0,
           "rapid_fn": 2,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 2,
+              "tn": 2,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 0,
@@ -877,7 +949,16 @@
           "rapid_fp": 0,
           "rapid_fn": 0,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 2,
@@ -1144,7 +1225,16 @@
           "rapid_fp": 0,
           "rapid_fn": 2,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 0,
@@ -1237,7 +1327,16 @@
               "precision": 1.0,
               "f1": 1.0
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -1366,7 +1465,16 @@
               "precision": 0.5,
               "f1": 0.5
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 1,
@@ -1403,7 +1511,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -1440,7 +1557,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -1484,7 +1610,16 @@
           "rapid_fp": 0,
           "rapid_fn": 1,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 1,
@@ -1613,7 +1748,16 @@
           "rapid_fp": 0,
           "rapid_fn": 0,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 2,
@@ -1880,7 +2024,16 @@
           "rapid_fp": 0,
           "rapid_fn": 2,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 0,
@@ -1973,7 +2126,16 @@
               "precision": 0.0,
               "f1": 0.0
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -2102,7 +2264,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -2139,7 +2310,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -2176,7 +2356,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -2220,7 +2409,16 @@
           "rapid_fp": 0,
           "rapid_fn": 2,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 2,
+              "tn": 2,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 0,
@@ -2349,7 +2547,16 @@
           "rapid_fp": 0,
           "rapid_fn": 0,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 2,
@@ -2616,7 +2823,16 @@
           "rapid_fp": 0,
           "rapid_fn": 2,
           "class_metrics": {
-            "NORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "NORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "RAPID_OR_ABNORMAL": {
               "support": 2,
               "tp": 0,
@@ -2709,7 +2925,16 @@
               "precision": 0.5,
               "f1": 0.5
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 1,
@@ -2838,7 +3063,16 @@
               "precision": 0.5,
               "f1": 0.5
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 1,
@@ -2875,7 +3109,16 @@
               "precision": 1.0,
               "f1": 0.666667
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 1,
+              "tn": 3,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": 0.0,
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 2,
@@ -2912,7 +3155,16 @@
               "precision": 0.5,
               "f1": 0.5
             },
-            "RAPID_OR_ABNORMAL": "NOT_DEFINED_NO_SUPPORT",
+            "RAPID_OR_ABNORMAL": {
+              "support": 0,
+              "tp": 0,
+              "fp": 0,
+              "tn": 4,
+              "fn": 0,
+              "recall": "NOT_DEFINED_NO_SUPPORT",
+              "precision": "NOT_DEFINED_NO_SUPPORT",
+              "f1": "NOT_DEFINED_NO_SUPPORT"
+            },
             "APNEA": {
               "support": 2,
               "tp": 1,
