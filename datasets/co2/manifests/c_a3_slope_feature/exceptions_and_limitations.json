@@ -1,0 +1,49 @@
+{
+  "manifest_version": "1.0",
+  "phase": "C-A3",
+  "warnings": [
+    {
+      "code": "SOURCE_TIMEZONE_UNVERIFIED",
+      "severity": "WARNING",
+      "description": "Source timestamps remain timezone-naive SOURCE_ACQUISITION_CLOCK readings; UTC conversion is not claimed."
+    },
+    {
+      "code": "MODEL_TRAINING_LINEAGE_UNVERIFIED",
+      "severity": "WARNING",
+      "description": "Existing TFLite training script/dataset provenance remains unverified."
+    },
+    {
+      "code": "SCALER_FIT_LINEAGE_UNVERIFIED",
+      "severity": "WARNING",
+      "description": "Existing scaling metadata fit lineage remains unverified; C-A3 does not fit or overwrite scaler statistics."
+    },
+    {
+      "code": "GROUP_INDEPENDENCE_NOT_VERIFIABLE",
+      "severity": "WARNING",
+      "description": "All temporal blocks originate from a single office room."
+    },
+    {
+      "code": "DEVICE_UCI_CADENCE_DOMAIN_GAP",
+      "severity": "WARNING",
+      "description": "Active SCD40 adapter uses 0.2 Hz / 30-sample / 150s window while UCI source cadence is ~60s. C-A3 locks the 150s temporal duration and endpoint method; offline sample count therefore differs from device maxlen=30."
+    },
+    {
+      "code": "HISTORICAL_SCALER_COMPARISON_CONSISTENT_WITH_HISTORICAL_SCALER",
+      "severity": "WARNING",
+      "description": "TRAIN reconstructed slope vs historical scaler diagnostic: CONSISTENT_WITH_HISTORICAL_SCALER."
+    }
+  ],
+  "blockers": [],
+  "deferred_shared_integration_updates": [
+    {
+      "code": "DEFERRED_SHARED_INTEGRATION_UPDATE",
+      "targets": [
+        "docs/reports/SENSOR_DATA_CONTRACT.md",
+        "docs/reports/sensor_model_data_contract.json",
+        "models/model_manifest.json",
+        "datasets/MANIFEST.json"
+      ],
+      "reason": "Shared inventory/contract refresh belongs to a later approved integration commit after C-A3 review."
+    }
+  ]
+}
