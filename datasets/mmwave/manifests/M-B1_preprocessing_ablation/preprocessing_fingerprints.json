@@ -28,8 +28,8 @@
       "dtype": "float64"
     },
     "M-B1_D0_B1_Z0": {
-      "train_tensor_sha256": "ae57e8fa5f8c63c6f38ff62be6e2e0aba026935cdee91f38dca86fee606f4a28",
-      "validation_tensor_sha256": "13ebef251e58a0d11f0148e701098d2451c9c661b93df2f00e1daeee47111018",
+      "train_tensor_sha256": "0e1a50865a9ad9eb2be2e3d4e56d165c8935379576824a8719777f80f1fe9cc4",
+      "validation_tensor_sha256": "44d5a41fe2e6f4118f7186a8f1ee2b3d2d7b493caa23426c93edd601cc58387e",
       "train_shape": [
         327,
         300
@@ -41,8 +41,8 @@
       "dtype": "float64"
     },
     "M-B1_D1_B1_Z0": {
-      "train_tensor_sha256": "c0d5fc697033b5af7c0af2f8693ea088401f08bf6f9745fb602d6d1a56800baa",
-      "validation_tensor_sha256": "35654305bc45d54b4ed3bda9fcffd43c94003ee51738ae1d660d4aee45b7cfb5",
+      "train_tensor_sha256": "0289a380d139c1ed8e52a4a9e2918dc2a40c7cfc07a268d9b31509cc5be00e7b",
+      "validation_tensor_sha256": "7ece71495042f6e8af16a4b24651a15473448c79aede402c0c66976b3dd24def",
       "train_shape": [
         327,
         300
@@ -80,8 +80,8 @@
       "dtype": "float64"
     },
     "M-B1_D0_B1_Z1": {
-      "train_tensor_sha256": "f6923250366aa99bf64fc186345d8870c6caf0d77330f3b0053a3c726dd485ac",
-      "validation_tensor_sha256": "6057c8b41d9c123178be9335881e19458fbea8eb8c26740fd1a6598ddba96a50",
+      "train_tensor_sha256": "1b5fa2e1861b156e89513bda5059434edaed988469c243aa5897ede83ea7e04d",
+      "validation_tensor_sha256": "3b5e5e4541e81ef7ad5e9d86601ff1170a91eefa905767ad7252e281df4ba7ec",
       "train_shape": [
         327,
         300
@@ -93,8 +93,8 @@
       "dtype": "float64"
     },
     "M-B1_D1_B1_Z1": {
-      "train_tensor_sha256": "1616affc525b6004771a5d09fed3d267b35e2a927f0b75503e92123b4b07936e",
-      "validation_tensor_sha256": "cd51fee7fb556c7e28ab347009f8471595d3fa78d197c764bca92a3405ee25fe",
+      "train_tensor_sha256": "55f0d2bf3a648bb60a1463b7bb01301e91eed0703365a84f039d708cddab685d",
+      "validation_tensor_sha256": "77bb44610fbc383d15c2becbb2665e9ecaaab2a54f467200d74a0583681a940b",
       "train_shape": [
         327,
         300

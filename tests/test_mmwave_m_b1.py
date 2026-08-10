@@ -106,6 +106,20 @@ class TestMMWaveMB1(unittest.TestCase):
             with self.assertRaises(MB1ValidationError):
                 validate_m_b1_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
 
+    def test_validator_fails_on_malformed_checksum_line(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            chk_file = tmp_manifest / "checksums.sha256"
+            content = chk_file.read_text(encoding="utf-8")
+            chk_file.write_text("malformed_line_without_space\n" + content, encoding="utf-8")
+
+            with self.assertRaises(MB1ValidationError):
+                validate_m_b1_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
 
 if __name__ == "__main__":
     unittest.main()

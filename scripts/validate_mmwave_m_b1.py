@@ -3,7 +3,8 @@
 
 Independently validates M-B1 real-data preprocessing full-factorial ablation,
 recomputing Z-score statistics, transformed tensor fingerprints, validation metrics,
-class-collapse rejection, pre-registered winner ranking, and fail-closed checksum manifest.
+class-collapse rejection, pre-registered winner ranking, prediction index provenance,
+and fail-closed checksum manifest, anchoring to the immutable M-B0/A5/A6 identity chain.
 """
 
 from __future__ import annotations
@@ -27,6 +28,7 @@ from mmwave_m_b1_preprocessing import (
     transform_signals,
 )
 from mmwave_phase_b_access import LOCKED_TEST_AccessError, PhaseBAccessGuard
+from validate_mmwave_m_b0 import validate_m_b0_artifacts
 
 REQUIRED_MB1_ARTIFACTS = {
     "input_identity.json",
@@ -40,7 +42,9 @@ REQUIRED_MB1_ARTIFACTS = {
     "bpf_frequency_diagnostic.json",
     "apnea_proxy_preprocessing_diagnostic.json",
     "validation_predictions.npz",
+    "validation_prediction_index.jsonl",
     "selected_preprocessing_profile.json",
+    "reproducibility_comparison.json",
     "locked_test_access_audit.json",
     "determinism_audit.json",
     "run_environment.json",
@@ -66,7 +70,39 @@ def validate_m_b1_artifacts(
     if not manifest_dir.is_dir():
         raise MB1ValidationError(f"M-B1 manifest directory missing: {manifest_dir}")
 
-    # 1. Verify Upstream Immutable Artifacts
+    # 1. Independently Run and Verify M-B0 Gate & Upstream Identity Chain
+    mb0_res = validate_m_b0_artifacts(root_dir=root_dir)
+    if not mb0_res.get("validation_success") or mb0_res.get("m_b0_gate_status") != "PASS_WITH_WARNINGS":
+        raise MB1ValidationError("M-B0 standalone validation failed! Cannot validate M-B1 on top of invalid M-B0.")
+
+    # 1.1 Verify M-B0 Checksum Manifest Identity Chain
+    mb0_dir = root_dir / "datasets/mmwave/manifests/M-B0_evaluation_protocol"
+    mb0_checksums = mb0_dir / "checksums.sha256"
+    if not mb0_checksums.is_file():
+        raise MB1ValidationError("M-B0 checksums.sha256 missing!")
+
+    for line in mb0_checksums.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        parts = line.strip().split(maxsplit=1)
+        if len(parts) != 2:
+            raise MB1ValidationError(f"Malformed line in M-B0 checksums.sha256: '{line}'")
+        expected_sha, rel_n = parts[0].strip(), parts[1].strip()
+        target_f = mb0_dir / rel_n
+        if not target_f.is_file():
+            raise MB1ValidationError(f"M-B0 checksum target file missing: {rel_n}")
+        actual_sha = hashlib.sha256(target_f.read_bytes()).hexdigest()
+        if actual_sha != expected_sha:
+            raise MB1ValidationError(f"M-B0 checksum mismatch for '{rel_n}': expected {expected_sha}, got {actual_sha}")
+
+    # 1.2 Verify Upstream A5 Subject Split & A6 Matrix/Manifest Identities
+    a5_split_file = root_dir / "datasets/mmwave/splits/mmwave_real_subject_split_v1.json"
+    if not a5_split_file.is_file():
+        raise MB1ValidationError("A5 real subject split file missing!")
+    actual_a5_sha = hashlib.sha256(a5_split_file.read_bytes()).hexdigest()
+    if actual_a5_sha != "a1996ea00a1d5066eae6d25f022d04137085434d4768e27cbebcdad4e0385baa":
+        raise MB1ValidationError(f"A5 real subject split SHA changed! Got {actual_a5_sha}")
+
     canonical_npy = root_dir / "datasets/mmwave/processed/mmwave_canonical_real_v1.npy"
     if not canonical_npy.is_file():
         raise MB1ValidationError("Canonical matrix missing!")
@@ -74,9 +110,12 @@ def validate_m_b1_artifacts(
     if actual_npy_sha != "c2e2cd1615c7af0f0e21700f291ee12ac0347a9f7fc6ccc9f337433c16868f0e":
         raise MB1ValidationError(f"Canonical NPY SHA changed! Got {actual_npy_sha}")
 
-    mb0_dir = root_dir / "datasets/mmwave/manifests/M-B0_evaluation_protocol"
-    if not (mb0_dir / "m_b0_summary.json").is_file():
-        raise MB1ValidationError("M-B0 summary missing!")
+    a6_manifest = root_dir / "datasets/mmwave/manifests/a6_full_conversion/full_window_manifest.jsonl"
+    if not a6_manifest.is_file():
+        raise MB1ValidationError("A6 full_window_manifest.jsonl missing!")
+    actual_a6_sha = hashlib.sha256(a6_manifest.read_bytes()).hexdigest()
+    if actual_a6_sha != "1d1728eafdc3d4786e34fc663329a12a311322a698bdbf2fd01e6bce95c50acf":
+        raise MB1ValidationError(f"A6 window manifest SHA changed! Got {actual_a6_sha}")
 
     # 2. Test PhaseBAccessGuard LOCKED_TEST Fail-Closed Guard
     guard = PhaseBAccessGuard(root_dir=root_dir)
@@ -86,7 +125,7 @@ def validate_m_b1_artifacts(
     except LOCKED_TEST_AccessError:
         pass
 
-    # 3. Load Pure-Class Datasets
+    # 3. Load Pure-Class Datasets & Prove Validation Prediction Index Provenance
     train_data = guard.get_train_data(include_ambiguous=False)
     val_data = guard.get_validation_data(include_ambiguous=False)
 
@@ -95,6 +134,25 @@ def validate_m_b1_artifacts(
 
     train_signals = train_data["signals"]
     val_signals = val_data["signals"]
+
+    # 3.1 Verify validation_prediction_index.jsonl Provenance
+    val_idx_file = manifest_dir / "validation_prediction_index.jsonl"
+    if not val_idx_file.is_file():
+        raise MB1ValidationError(f"validation_prediction_index.jsonl missing: {val_idx_file}")
+
+    val_idx_lines = [json.loads(line) for line in val_idx_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+    if len(val_idx_lines) != 79:
+        raise MB1ValidationError(f"validation_prediction_index.jsonl row count mismatch: expected 79, got {len(val_idx_lines)}")
+
+    for pos, row in enumerate(val_idx_lines):
+        if row.get("split") != "VALIDATION":
+            raise MB1ValidationError(f"Non-VALIDATION row in validation_prediction_index.jsonl at line {pos}: split='{row.get('split')}'")
+        if row.get("validation_position") != pos:
+            raise MB1ValidationError(f"validation_position mismatch at line {pos}: got {row.get('validation_position')}")
+
+        w_exp = val_data["windows"][pos]
+        if row.get("window_id") != w_exp["window_id"] or row.get("canonical_sample_index") != w_exp["canonical_sample_index"]:
+            raise MB1ValidationError(f"Window mapping mismatch at position {pos} in validation_prediction_index.jsonl!")
 
     # 4. Verify 8 Preprocessing Profiles (2^3 Factorial)
     prof_file = manifest_dir / "preprocessing_profiles.json"
@@ -123,7 +181,6 @@ def validate_m_b1_artifacts(
         pid = prof["profile_id"]
         detrend, bpf, zscore = prof["detrend"], prof["bpf"], prof["zscore"]
 
-        # Recompute Z-score stats if zscore is True
         if zscore:
             calc_zstats = fit_train_zscore_statistics(train_signals, detrend=detrend, bpf=bpf)
             manif_z = loaded_zstats.get(pid, {})
@@ -133,7 +190,6 @@ def validate_m_b1_artifacts(
         else:
             stats_to_use = None
 
-        # Recompute transformed tensors
         calc_train_t = transform_signals(train_signals, detrend=detrend, bpf=bpf, zscore=zscore, zscore_stats=stats_to_use)
         calc_val_t = transform_signals(val_signals, detrend=detrend, bpf=bpf, zscore=zscore, zscore_stats=stats_to_use)
 
@@ -166,7 +222,6 @@ def validate_m_b1_artifacts(
         if len(preds) != len(val_true_ids):
             raise MB1ValidationError(f"Prediction count mismatch for {pid}: got {len(preds)}, expected {len(val_true_ids)}")
 
-        # Recompute Per-Class Metrics & Macro F1
         per_class = {}
         for cid in (0, 1, 2):
             cname = LABEL_ID_TO_NAME[cid]
@@ -183,12 +238,9 @@ def validate_m_b1_artifacts(
         macro_f1 = float(np.mean([per_class[c]["f1"] for c in ("NORMAL", "RAPID_OR_ABNORMAL", "APNEA")]))
         min_rec = float(min(per_class[c]["recall"] for c in ("NORMAL", "RAPID_OR_ABNORMAL", "APNEA")))
         apnea_rec = per_class["APNEA"]["recall"]
-        apnea_miss = 1.0 - apnea_rec
 
-        # Class Collapse Detection
         is_collapsed = (apnea_rec == 0.0) or (per_class["RAPID_OR_ABNORMAL"]["recall"] == 0.0)
 
-        # Check against manifest
         manif_res = loaded_ablation.get(pid, {})
         if abs(macro_f1 - manif_res.get("macro_f1", 0.0)) > 1e-4:
             raise MB1ValidationError(f"Macro F1 mismatch for {pid}: calc={macro_f1:.6f}, manifest={manif_res.get('macro_f1')}")
@@ -203,7 +255,6 @@ def validate_m_b1_artifacts(
         })
 
     # 7. Pre-Registered Winner Selection Ranking
-    # Sort according to 6-step rule
     eligible_candidates = [r for r in recomputed_ranking if not r["is_collapsed"]]
     if not eligible_candidates:
         raise MB1ValidationError("ALL 8 PREPROCESSING PROFILES COLLAPSED! No valid candidate winner.")
@@ -213,8 +264,8 @@ def validate_m_b1_artifacts(
             r["macro_f1"],
             r["min_recall"],
             r["apnea_recall"],
-            -r["num_operations"],  # Prefer fewer operations (higher negative value)
-            r["profile_id"],  # Lexicographic tie-breaker
+            -r["num_operations"],
+            r["profile_id"],
         ),
         reverse=True,
     )
@@ -229,7 +280,7 @@ def validate_m_b1_artifacts(
     if loaded_winner != recomputed_winner:
         raise MB1ValidationError(f"Winner selection mismatch! Recomputed winner={recomputed_winner}, Loaded={loaded_winner}")
 
-    # 8. HARDENED CHECKSUM MANIFEST VALIDATION
+    # 8. HARDENED CHECKSUM MANIFEST VALIDATION (Using MB1ValidationError on typo fix)
     checksums_file = manifest_dir / "checksums.sha256"
     if not checksums_file.is_file():
         raise MB1ValidationError(f"checksums.sha256 missing: {checksums_file}")
@@ -244,7 +295,7 @@ def validate_m_b1_artifacts(
 
         parts = line_str.split(maxsplit=1)
         if len(parts) != 2:
-            raise MB0ValidationError(f"Malformed checksum line {line_num} in checksums.sha256: '{line}'")
+            raise MB1ValidationError(f"Malformed checksum line {line_num} in checksums.sha256: '{line}'")
 
         digest, rel_name = parts[0].strip(), parts[1].strip()
 
@@ -272,20 +323,25 @@ def validate_m_b1_artifacts(
     if missing_required:
         raise MB1ValidationError(f"checksums.sha256 missing required M-B1 artifacts: {missing_required}")
 
-    # 9. Verify No Local Absolute Paths in JSON Manifests
-    for manifest_f in manifest_dir.glob("*.json"):
-        content_str = manifest_f.read_text(encoding="utf-8")
-        if "/Users/" in content_str or "file://" in content_str:
-            raise MB1ValidationError(f"Absolute local path found in machine-readable artifact {manifest_f.name}")
+    # 9. Verify No Local Absolute Paths in JSON/JSONL Manifests
+    for manifest_f in manifest_dir.glob("*"):
+        if manifest_f.suffix in (".json", ".jsonl"):
+            content_str = manifest_f.read_text(encoding="utf-8")
+            if "/Users/" in content_str or "file://" in content_str:
+                raise MB1ValidationError(f"Absolute local path found in machine-readable artifact {manifest_f.name}")
 
     return {
         "validation_success": True,
         "m_b1_gate_status": "PASS_WITH_WARNINGS",
         "m_b2_entry_status": "READY_WITH_CONDITIONS",
         "independently_measured": {
+            "m_b0_gate_verified": True,
+            "a5_split_sha": actual_a5_sha,
             "canonical_npy_sha": actual_npy_sha,
+            "a6_manifest_sha": actual_a6_sha,
             "train_window_count": len(train_data["windows"]),
             "validation_window_count": len(val_data["windows"]),
+            "validation_prediction_index_provenance_verified": True,
             "profiles_audited": len(PROFILES),
             "zscore_statistics_verified": True,
             "tensor_fingerprints_verified": True,
@@ -308,9 +364,11 @@ def main() -> None:
     print(f"Validation Success: {res['validation_success']}")
     print(f"M-B1 Gate Status: {res['m_b1_gate_status']}")
     print(f"M-B2 Entry Status: {res['m_b2_entry_status']}")
+    print(f"M-B0 Gate Verified: {res['independently_measured']['m_b0_gate_verified']}")
     print(f"Profiles Audited: {res['independently_measured']['profiles_audited']}")
     print(f"Recomputed Winner: {res['independently_measured']['recomputed_winner_profile']}")
     print(f"LOCKED_TEST Guard Verified: {res['independently_measured']['locked_test_access_blocked']}")
+    print(f"Prediction Index Provenance Verified: {res['independently_measured']['validation_prediction_index_provenance_verified']}")
     print(f"Hardened Checksums Verified: {res['independently_measured']['hardened_checksum_verification']}")
 
 
