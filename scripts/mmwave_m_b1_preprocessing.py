@@ -94,7 +94,6 @@ def apply_linear_detrend(signal: np.ndarray) -> np.ndarray:
 def apply_bpf(signal: np.ndarray, fs: float = 10.0, lowcut: float = 0.1, highcut: float = 0.5, order: int = 4) -> np.ndarray:
     """Apply zero-phase 4th-order Butterworth bandpass filter (0.1-0.5 Hz) along time axis."""
     b, a = scipy.signal.butter(order, [lowcut, highcut], btype="bandpass", fs=fs)
-    # Apply zero-phase filtering along last axis
     return scipy.signal.filtfilt(b, a, signal, axis=-1)
 
 
@@ -153,7 +152,7 @@ def compute_signal_diagnostics(signals: np.ndarray) -> dict[str, Any]:
     clip_exceed_count = int(np.sum(np.abs(flat) > 5.0))
     clip_exceed_ratio = float(clip_exceed_count / flat.size)
 
-    window_stds = np.std(signals, axis=1)
+    window_stds = np.std(signals, axis=-1)
     constant_win_count = int(np.sum(window_stds < 1e-12))
 
     return {

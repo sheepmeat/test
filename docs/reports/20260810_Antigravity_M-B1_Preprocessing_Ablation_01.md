@@ -3,7 +3,7 @@
 - **Author**: Antigravity Implementation Engineer
 - **Date**: 2026-08-10
 - **Target Repository**: `https://github.com/sheepmeat/test.git`
-- **Branch**: `feature/M-B1-reproducibility-refinement`
+- **Branch**: `feature/M-B1-clean-final`
 - **Phase M-B1 Gate Status**: `PASS_WITH_WARNINGS`
 - **M-B2 Entry Status**: `READY_WITH_CONDITIONS`
 - **Pinned Environment**: Python 3.9.6 / TensorFlow 2.20.0 / NumPy 1.26.4 / SciPy 1.13.1 (`requirements-mac.txt` compliant)
@@ -17,8 +17,8 @@ Phase M-B1 conducts a $2^3$ full-factorial offline preprocessing ablation experi
 
 Key achievements of Phase M-B1 Refinement:
 1. **Pinned Environment Execution**: Reproduced the complete $2^3$ full-factorial ablation experiment under pinned `numpy==1.26.4`, `tensorflow==2.20.0`, `scipy==1.13.1`.
-2. **100% Reproducibility Verification**: Verified that all 8 profile Macro F1 scores, per-class recalls, prediction distributions, and winner selection match 100% between historical NumPy 2.0.2 and pinned NumPy 1.26.4.
-3. **VALIDATION-Only Winner Selection**: Evaluated performance strictly on VALIDATION split (79 pure-class windows) under the pre-registered 6-step ranking rule. Selected **`M-B1_D0_B1_Z1` (`BPF_ZSCORE`)** with VALIDATION Macro F1 = **`0.663708`**, Accuracy = `0.721519`, APNEA Recall = `1.000000`.
+2. **Winner Selection**: Under pinned environment `numpy==1.26.4`, profile **`M-B1_D0_B1_Z1` (`BPF_ZSCORE`)** achieved highest VALIDATION Macro F1 = **`0.663708`**, Accuracy = `0.721519`, APNEA Recall = `1.000000` under the pre-registered 6-step ranking rule.
+3. **Reproducibility Analysis**: Compared pinned NumPy 1.26.4 results directly against historical NumPy 2.0.2 results. Historical winner `DETREND_ONLY` (Macro F1 = 0.652975) was superseded by `BPF_ZSCORE` (Macro F1 = 0.663708).
 4. **Hardened Upstream Identity Chain**: Standalone validator independently verified the immutable M-B0 checksum chain (`checksums.sha256`), M-B0 evaluation contract, A5 subject split, A6 canonical NPY, and A6 window manifest.
 5. **Strict Prediction Index Provenance**: Generated `validation_prediction_index.jsonl` establishing 1:1 window mapping strictly for the 79 VALIDATION samples with `0` TRAIN or LOCKED_TEST exposure.
 6. **Strict LOCKED_TEST Isolation**: Confirmed `0` performance access attempts to LOCKED_TEST (`scripts/mmwave_phase_b_access.py` guard verified).
@@ -52,18 +52,23 @@ Under the pre-registered 6-step ranking rule:
 
 ## 4. Environment Reproducibility Comparison (NumPy 2.0.2 vs Pinned NumPy 1.26.4)
 
-| Profile ID | Name | Old NumPy 2.0.2 Macro F1 | New Pinned NumPy 1.26.4 Macro F1 | Delta Macro F1 | Identical Result |
-|---|---|---|---|---|---|
-| `M-B1_D0_B0_Z0` | `RAW` | 0.578420 | 0.578420 | +0.000000 | YES |
-| `M-B1_D1_B0_Z0` | `DETREND_ONLY` | 0.652975 | 0.652975 | +0.000000 | YES (WINNER) |
-| `M-B1_D0_B1_Z0` | `BPF_ONLY` | 0.617935 | 0.617935 | +0.000000 | YES |
-| `M-B1_D1_B1_Z0` | `DETREND_BPF` | 0.626101 | 0.626101 | +0.000000 | YES |
-| `M-B1_D0_B0_Z1` | `ZSCORE_ONLY` | 0.276332 | 0.276332 | +0.000000 | YES |
-| `M-B1_D1_B0_Z1` | `DETREND_ZSCORE` | 0.212598 | 0.212598 | +0.000000 | YES |
-| `M-B1_D0_B1_Z1` | `BPF_ZSCORE` | 0.622384 | 0.622384 | +0.000000 | YES |
-| `M-B1_D1_B1_Z1` | `DETREND_BPF_ZSCORE` | 0.608933 | 0.608933 | +0.000000 | YES |
+- **Historical Winner**: `M-B1_D1_B0_Z0` (`DETREND_ONLY`, Macro F1 = 0.652975)
+- **Pinned Winner**: `M-B1_D0_B1_Z1` (`BPF_ZSCORE`, Macro F1 = 0.663708)
+- **Winner Changed**: YES (`M-B1_D1_B0_Z0` superseded by `M-B1_D0_B1_Z1`)
+- **Verdict**: `WINNER_CHANGED (Historical NumPy 2.0.2 selected DETREND_ONLY, whereas pinned NumPy 1.26.4 selected BPF_ZSCORE)`
 
-- **Verdict**: 100% Identical Reproduction. The selected winner remained `M-B1_D0_B1_Z1` (`BPF_ZSCORE`) with Macro F1 = `0.663708`.
+### Measured Profile Comparisons
+
+| Profile ID | Name | Old NumPy 2.0.2 Macro F1 | New Pinned NumPy 1.26.4 Macro F1 | Delta Macro F1 | Status |
+|---|---|---|---|---|---|
+| `M-B1_D0_B0_Z0` | `RAW` | `0.578420` | `0.578435` | `+0.000015` | `PREDICTIONS_DIFFERENT` |
+| `M-B1_D1_B0_Z0` | `DETREND_ONLY` | `0.652975` | `0.652975` | `+0.000000` | `PREDICTIONS_DIFFERENT` |
+| `M-B1_D0_B1_Z0` | `BPF_ONLY` | `0.617935` | `0.617859` | `-0.000076` | `PREDICTIONS_DIFFERENT` |
+| `M-B1_D1_B1_Z0` | `DETREND_BPF` | `0.626101` | `0.614146` | `-0.011955` | `PREDICTIONS_DIFFERENT` |
+| `M-B1_D0_B0_Z1` | `ZSCORE_ONLY` | `0.276332` | `0.276260` | `-0.000072` | `PREDICTIONS_DIFFERENT` |
+| `M-B1_D1_B0_Z1` | `DETREND_ZSCORE` | `0.212598` | `0.212644` | `+0.000046` | `IDENTICAL` |
+| `M-B1_D0_B1_Z1` | `BPF_ZSCORE` | `0.622384` | `0.663708` | `+0.041324` | `PREDICTIONS_DIFFERENT` |
+| `M-B1_D1_B1_Z1` | `DETREND_BPF_ZSCORE` | `0.608933` | `0.611265` | `+0.002332` | `PREDICTIONS_DIFFERENT` |
 
 ---
 

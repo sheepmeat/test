@@ -120,6 +120,37 @@ class TestMMWaveMB1(unittest.TestCase):
             with self.assertRaises(MB1ValidationError):
                 validate_m_b1_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
 
+    def test_validator_fails_on_unpinned_environment(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            env_file = tmp_manifest / "run_environment.json"
+            data = json.loads(env_file.read_text(encoding="utf-8"))
+            data["numpy_version"] = "2.0.2"  # Unpinned version
+            env_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB1ValidationError):
+                validate_m_b1_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
+    def test_validator_fails_on_contradictory_reproducibility_verdict(self) -> None:
+        if not self.manifest_dir.is_dir():
+            return
+        with tempfile.TemporaryDirectory() as tmpdir:
+            tmp_manifest = Path(tmpdir)
+            shutil.copytree(self.manifest_dir, tmp_manifest, dirs_exist_ok=True)
+
+            repro_file = tmp_manifest / "reproducibility_comparison.json"
+            data = json.loads(repro_file.read_text(encoding="utf-8"))
+            data["winner_changed"] = True
+            data["reproducibility_verdict"] = "VERIFIED_IDENTICAL (Contradiction!)"
+            repro_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+            with self.assertRaises(MB1ValidationError):
+                validate_m_b1_artifacts(root_dir=ROOT_DIR, manifest_dir=tmp_manifest)
+
 
 if __name__ == "__main__":
     unittest.main()

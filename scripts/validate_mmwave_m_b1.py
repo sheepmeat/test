@@ -4,7 +4,7 @@
 Independently validates M-B1 real-data preprocessing full-factorial ablation,
 recomputing Z-score statistics, transformed tensor fingerprints, validation metrics,
 class-collapse rejection, pre-registered winner ranking, prediction index provenance,
-and fail-closed checksum manifest, anchoring to the immutable M-B0/A5/A6 identity chain.
+environment compliance, and fail-closed checksum manifest, anchoring to the immutable M-B0/A5/A6 identity chain.
 """
 
 from __future__ import annotations
@@ -70,12 +70,50 @@ def validate_m_b1_artifacts(
     if not manifest_dir.is_dir():
         raise MB1ValidationError(f"M-B1 manifest directory missing: {manifest_dir}")
 
-    # 1. Independently Run and Verify M-B0 Gate & Upstream Identity Chain
+    # 1. Verify Pinned Environment Preflight & requirements-mac.txt SHA-256
+    env_file = manifest_dir / "run_environment.json"
+    if not env_file.is_file():
+        raise MB1ValidationError("run_environment.json missing!")
+    env_data = json.loads(env_file.read_text(encoding="utf-8"))
+
+    if env_data.get("tensorflow_version") != "2.20.0":
+        raise MB1ValidationError(f"Invalid TensorFlow version in run_environment.json: got {env_data.get('tensorflow_version')}, expected 2.20.0")
+    if env_data.get("numpy_version") != "1.26.4":
+        raise MB1ValidationError(f"Invalid NumPy version in run_environment.json: got {env_data.get('numpy_version')}, expected 1.26.4")
+    if env_data.get("scipy_version") != "1.13.1":
+        raise MB1ValidationError(f"Invalid SciPy version in run_environment.json: got {env_data.get('scipy_version')}, expected 1.13.1")
+    if not env_data.get("pinned_environment_verified"):
+        raise MB1ValidationError("run_environment.json pinned_environment_verified must be True!")
+
+    req_mac = root_dir / "requirements-mac.txt"
+    if not req_mac.is_file():
+        raise MB1ValidationError("requirements-mac.txt missing from repository root!")
+    actual_req_sha = hashlib.sha256(req_mac.read_bytes()).hexdigest()
+    recorded_req_sha = env_data.get("requirements_mac_sha256")
+    if recorded_req_sha != actual_req_sha:
+        raise MB1ValidationError(f"requirements-mac.txt SHA mismatch in run_environment.json! Expected {actual_req_sha}, got {recorded_req_sha}")
+
+    # 2. Independently Load and Verify M-B1 input_identity.json Upstream Hashes
+    input_id_file = manifest_dir / "input_identity.json"
+    if not input_id_file.is_file():
+        raise MB1ValidationError("input_identity.json missing!")
+    input_id_data = json.loads(input_id_file.read_text(encoding="utf-8"))
+
+    for item in input_id_data.get("inputs", []):
+        rel_p = item.get("repository_relative_path", "")
+        recorded_sha = item.get("measured_sha256", "")
+        target_f = root_dir / rel_p
+        if not target_f.is_file():
+            raise MB1ValidationError(f"Upstream identity file missing: {rel_p}")
+        measured_sha = hashlib.sha256(target_f.read_bytes()).hexdigest()
+        if measured_sha != recorded_sha:
+            raise MB1ValidationError(f"Upstream identity SHA mismatch for '{rel_p}': expected {recorded_sha}, got {measured_sha}")
+
+    # 3. Independently Run and Verify M-B0 Gate & Upstream Identity Chain
     mb0_res = validate_m_b0_artifacts(root_dir=root_dir)
     if not mb0_res.get("validation_success") or mb0_res.get("m_b0_gate_status") != "PASS_WITH_WARNINGS":
         raise MB1ValidationError("M-B0 standalone validation failed! Cannot validate M-B1 on top of invalid M-B0.")
 
-    # 1.1 Verify M-B0 Checksum Manifest Identity Chain
     mb0_dir = root_dir / "datasets/mmwave/manifests/M-B0_evaluation_protocol"
     mb0_checksums = mb0_dir / "checksums.sha256"
     if not mb0_checksums.is_file():
@@ -95,7 +133,7 @@ def validate_m_b1_artifacts(
         if actual_sha != expected_sha:
             raise MB1ValidationError(f"M-B0 checksum mismatch for '{rel_n}': expected {expected_sha}, got {actual_sha}")
 
-    # 1.2 Verify Upstream A5 Subject Split & A6 Matrix/Manifest Identities
+    # Upstream A5 Subject Split & A6 Matrix/Manifest Identities
     a5_split_file = root_dir / "datasets/mmwave/splits/mmwave_real_subject_split_v1.json"
     if not a5_split_file.is_file():
         raise MB1ValidationError("A5 real subject split file missing!")
@@ -117,7 +155,7 @@ def validate_m_b1_artifacts(
     if actual_a6_sha != "1d1728eafdc3d4786e34fc663329a12a311322a698bdbf2fd01e6bce95c50acf":
         raise MB1ValidationError(f"A6 window manifest SHA changed! Got {actual_a6_sha}")
 
-    # 2. Test PhaseBAccessGuard LOCKED_TEST Fail-Closed Guard
+    # 4. Test PhaseBAccessGuard LOCKED_TEST Fail-Closed Guard
     guard = PhaseBAccessGuard(root_dir=root_dir)
     try:
         guard.get_model_selection_dataset("LOCKED_TEST")
@@ -125,7 +163,7 @@ def validate_m_b1_artifacts(
     except LOCKED_TEST_AccessError:
         pass
 
-    # 3. Load Pure-Class Datasets & Prove Validation Prediction Index Provenance
+    # 5. Load Pure-Class Datasets & Verify Validation Prediction Index Provenance
     train_data = guard.get_train_data(include_ambiguous=False)
     val_data = guard.get_validation_data(include_ambiguous=False)
 
@@ -135,7 +173,6 @@ def validate_m_b1_artifacts(
     train_signals = train_data["signals"]
     val_signals = val_data["signals"]
 
-    # 3.1 Verify validation_prediction_index.jsonl Provenance
     val_idx_file = manifest_dir / "validation_prediction_index.jsonl"
     if not val_idx_file.is_file():
         raise MB1ValidationError(f"validation_prediction_index.jsonl missing: {val_idx_file}")
@@ -154,7 +191,7 @@ def validate_m_b1_artifacts(
         if row.get("window_id") != w_exp["window_id"] or row.get("canonical_sample_index") != w_exp["canonical_sample_index"]:
             raise MB1ValidationError(f"Window mapping mismatch at position {pos} in validation_prediction_index.jsonl!")
 
-    # 4. Verify 8 Preprocessing Profiles (2^3 Factorial)
+    # 6. Verify 8 Preprocessing Profiles (2^3 Factorial)
     prof_file = manifest_dir / "preprocessing_profiles.json"
     if not prof_file.is_file():
         raise MB1ValidationError(f"preprocessing_profiles.json missing: {prof_file}")
@@ -168,7 +205,7 @@ def validate_m_b1_artifacts(
     if profile_ids != expected_ids:
         raise MB1ValidationError(f"Profile ID mismatch! Expected {expected_ids}, got {profile_ids}")
 
-    # 5. Independently Recompute Z-Score Statistics & Tensor Fingerprints
+    # 7. Independently Recompute Z-Score Statistics & Tensor Fingerprints
     zstat_file = manifest_dir / "train_fit_statistics.json"
     fingerprint_file = manifest_dir / "preprocessing_fingerprints.json"
     if not zstat_file.is_file() or not fingerprint_file.is_file():
@@ -200,7 +237,7 @@ def validate_m_b1_artifacts(
         if train_fp != manif_fp.get("train_tensor_sha256") or val_fp != manif_fp.get("validation_tensor_sha256"):
             raise MB1ValidationError(f"Tensor fingerprint mismatch for {pid}!")
 
-    # 6. Verify Validation Predictions & Recompute Metrics
+    # 8. Verify Validation Predictions & Recompute Metrics
     npz_file = manifest_dir / "validation_predictions.npz"
     ablation_file = manifest_dir / "ablation_results.json"
     if not npz_file.is_file() or not ablation_file.is_file():
@@ -254,7 +291,7 @@ def validate_m_b1_artifacts(
             "num_operations": int(prof["detrend"]) + int(prof["bpf"]) + int(prof["zscore"]),
         })
 
-    # 7. Pre-Registered Winner Selection Ranking
+    # 9. Pre-Registered Winner Selection Ranking
     eligible_candidates = [r for r in recomputed_ranking if not r["is_collapsed"]]
     if not eligible_candidates:
         raise MB1ValidationError("ALL 8 PREPROCESSING PROFILES COLLAPSED! No valid candidate winner.")
@@ -280,7 +317,34 @@ def validate_m_b1_artifacts(
     if loaded_winner != recomputed_winner:
         raise MB1ValidationError(f"Winner selection mismatch! Recomputed winner={recomputed_winner}, Loaded={loaded_winner}")
 
-    # 8. HARDENED CHECKSUM MANIFEST VALIDATION (Using MB1ValidationError on typo fix)
+    # 10. Verify Semantic Integrity of reproducibility_comparison.json
+    repro_file = manifest_dir / "reproducibility_comparison.json"
+    if not repro_file.is_file():
+        raise MB1ValidationError("reproducibility_comparison.json missing!")
+    repro_data = json.loads(repro_file.read_text(encoding="utf-8"))
+
+    hist_winner = repro_data.get("historical_winner", "")
+    pin_winner = repro_data.get("pinned_winner", "")
+    winner_changed = repro_data.get("winner_changed")
+
+    expected_changed = bool("M-B1_D1_B0_Z0" not in pin_winner)
+    if winner_changed != expected_changed:
+        raise MB1ValidationError(f"reproducibility_comparison.json winner_changed mismatch! Declared={winner_changed}, Expected={expected_changed}")
+
+    verdict = repro_data.get("reproducibility_verdict", "")
+    if winner_changed and ("VERIFIED_IDENTICAL" in verdict or "100% Identical" in verdict):
+        raise MB1ValidationError("Contradictory reproducibility_comparison.json: winner_changed is True but verdict claims VERIFIED_IDENTICAL!")
+
+    profs_comp = repro_data.get("profile_comparisons", {})
+    for pid, pdata in profs_comp.items():
+        old_f1 = pdata.get("old_numpy_202", {}).get("macro_f1", 0.0)
+        new_f1 = pdata.get("new_pinned_numpy_1264", {}).get("macro_f1", 0.0)
+        calc_delta = round(new_f1 - old_f1, 6)
+        manif_delta = pdata.get("delta_macro_f1", 0.0)
+        if abs(calc_delta - manif_delta) > 1e-5:
+            raise MB1ValidationError(f"Delta Macro F1 mismatch for {pid}: calc={calc_delta}, manifest={manif_delta}")
+
+    # 11. HARDENED CHECKSUM MANIFEST VALIDATION
     checksums_file = manifest_dir / "checksums.sha256"
     if not checksums_file.is_file():
         raise MB1ValidationError(f"checksums.sha256 missing: {checksums_file}")
@@ -323,7 +387,7 @@ def validate_m_b1_artifacts(
     if missing_required:
         raise MB1ValidationError(f"checksums.sha256 missing required M-B1 artifacts: {missing_required}")
 
-    # 9. Verify No Local Absolute Paths in JSON/JSONL Manifests
+    # 12. Verify No Local Absolute Paths in JSON/JSONL Manifests
     for manifest_f in manifest_dir.glob("*"):
         if manifest_f.suffix in (".json", ".jsonl"):
             content_str = manifest_f.read_text(encoding="utf-8")
@@ -335,6 +399,9 @@ def validate_m_b1_artifacts(
         "m_b1_gate_status": "PASS_WITH_WARNINGS",
         "m_b2_entry_status": "READY_WITH_CONDITIONS",
         "independently_measured": {
+            "pinned_environment_verified": True,
+            "requirements_mac_sha_verified": True,
+            "input_identity_upstream_verified": True,
             "m_b0_gate_verified": True,
             "a5_split_sha": actual_a5_sha,
             "canonical_npy_sha": actual_npy_sha,
@@ -348,6 +415,7 @@ def validate_m_b1_artifacts(
             "validation_metrics_recomputed": True,
             "recomputed_winner_profile": recomputed_winner,
             "locked_test_access_blocked": True,
+            "reproducibility_verdict_consistent": True,
             "hardened_checksum_verification": True,
         },
         "declared_policy_attributes": {
@@ -364,6 +432,8 @@ def main() -> None:
     print(f"Validation Success: {res['validation_success']}")
     print(f"M-B1 Gate Status: {res['m_b1_gate_status']}")
     print(f"M-B2 Entry Status: {res['m_b2_entry_status']}")
+    print(f"Pinned Environment Verified: {res['independently_measured']['pinned_environment_verified']}")
+    print(f"Upstream Identity Verified: {res['independently_measured']['input_identity_upstream_verified']}")
     print(f"M-B0 Gate Verified: {res['independently_measured']['m_b0_gate_verified']}")
     print(f"Profiles Audited: {res['independently_measured']['profiles_audited']}")
     print(f"Recomputed Winner: {res['independently_measured']['recomputed_winner_profile']}")
