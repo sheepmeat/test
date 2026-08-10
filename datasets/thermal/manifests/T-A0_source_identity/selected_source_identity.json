@@ -1,0 +1,41 @@
+{
+  "blockers": [
+    "LOCAL_SOURCE_IDENTITY_UNVERIFIED",
+    "LOCAL_LICENSE_UNVERIFIED",
+    "LOCAL_GROUPING_INSUFFICIENT",
+    "LOCAL_DATA_NOT_RADIOMETRIC",
+    "LOCAL_LABEL_QUALITY_INSUFFICIENT",
+    "LOCAL_PAYLOAD_NOT_MATERIALIZED",
+    "EXTERNAL_CANDIDATE_ACCESS_OR_COMPLETENESS_INSUFFICIENT"
+  ],
+  "candidate_specific_decisions": {
+    "external_ehomeseniors_2019": "NEEDS_MANUAL_REVIEW",
+    "external_muvim_2022": "ACCESS_BLOCKED",
+    "external_thermal_fall_66": "ACCESS_BLOCKED",
+    "local_additional_human_not_human": "REJECTED_PROVENANCE",
+    "local_family_a_fall_non_fall_png": "REJECTED_PROVENANCE",
+    "local_sdt_zenodo_4124309": "REJECTED_LABEL_QUALITY"
+  },
+  "decision_date": "2026-08-10",
+  "minimum_selection_rules": {
+    "acceptable_license_and_terms": false,
+    "deterministic_inventory": false,
+    "known_representation": false,
+    "safe_reader_without_guessing": false,
+    "usable_grouping_provenance": false,
+    "usable_label_semantics": false,
+    "verified_source_identity": false
+  },
+  "overall_decision": "EXTERNAL_DATASET_REQUIRED",
+  "phase": "T-A0",
+  "prohibited_progression": [
+    "Do not start T-A1 on this branch.",
+    "Do not create a split from processed_thermal_80x62.npz.",
+    "Do not equate lying with fall."
+  ],
+  "schema_version": "1.0",
+  "selected_candidate_id": null,
+  "selection_status": "BLOCKED",
+  "t_a1_authorization_reason": "No candidate simultaneously has verified acceptable data terms, fall-event labels with boundaries, normal/hard-negative coverage, reproducible inventory, and leakage-resistant grouping.",
+  "t_a1_authorized": false
+}

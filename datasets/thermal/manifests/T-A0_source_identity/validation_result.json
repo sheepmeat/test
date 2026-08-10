@@ -1,0 +1,14 @@
+{
+  "candidate_count": 6,
+  "error_count": 0,
+  "errors": [],
+  "evidence_validation": "PASS",
+  "local_asset_count": 4,
+  "overall_outcome": "BLOCKED",
+  "phase": "T-A0",
+  "schema_version": "1.0",
+  "selected_candidate_id": null,
+  "t_a1_authorized": false,
+  "warning_count": 0,
+  "warnings": []
+}
