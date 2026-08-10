@@ -1,0 +1,79 @@
+{
+  "limitations": [
+    "Thermal-44 physical orientation remains unverified; this is a software canonical convention only.",
+    "Fixed 10-pixel side crop trades 3.125% source area for lower aspect distortion."
+  ],
+  "model_performance_used": false,
+  "phase": "T-A2",
+  "physical_dtype": "float32",
+  "physical_unit": "CELSIUS",
+  "profile": {
+    "antialias": "NONE_FOR_NEAREST; EXPLICIT_AREA_SUPPORT_FOR_AREA; HALF_PIXEL_CENTER_FOR_BILINEAR",
+    "candidate_id": "G1_FIXED_ASPECT_CROP_BILINEAR",
+    "canonical_dtype": "float32",
+    "canonical_shape": [
+      62,
+      80
+    ],
+    "canonical_unit": "CELSIUS",
+    "coordinate_convention": "row-major; pixel centers at integer source coordinates; output center maps with half-pixel formula",
+    "crop_xyxy": [
+      10,
+      0,
+      630,
+      480
+    ],
+    "geometry_policy": "FIXED_ASPECT_CROP",
+    "horizontal_flip": false,
+    "interpolation": "bilinear",
+    "invalid_pixel_policy": "FAIL_CLOSED_SOURCE_INVALID; CLAMP_EDGE",
+    "padding_tblr": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "profile_id": "G1_FIXED_ASPECT_CROP_BILINEAR",
+    "resize_shape": [
+      62,
+      80
+    ],
+    "rotation": 0,
+    "source_shape": [
+      480,
+      640
+    ],
+    "source_unit": "CELSIUS",
+    "vertical_flip": false
+  },
+  "profile_id": "G1_FIXED_ASPECT_CROP_BILINEAR",
+  "schema_version": "1.0",
+  "selection_rule": [
+    "NO_UNSUPPORTED_SEMANTIC_TRANSFORMATION",
+    "SOURCE_AS_STORED_ORIENTATION_AND_DETERMINISTIC_MAPPING",
+    "VALID_PHYSICAL_VALUE_PRESERVATION",
+    "MINIMAL_ARTIFICIAL_CONTENT",
+    "MINIMAL_UNACCEPTABLE_SOURCE_FOV_LOSS",
+    "MINIMAL_GEOMETRIC_DISTORTION",
+    "STABLE_TEMPERATURE_STATISTICS",
+    "SIMPLE_REPRODUCIBLE_IMPLEMENTATION",
+    "FIXED_62X80_SOFTWARE_GRID_COMPATIBILITY"
+  ],
+  "selection_status": "GEOMETRY_PROFILE_SELECTED_WITH_LIMITATIONS",
+  "source_orientation": {
+    "array_column_direction": "column 0 is left / increasing column moves right",
+    "array_row_direction": "row 0 is top / increasing row moves down",
+    "evidence": [
+      "official SDT image_t documentation",
+      "labels bbox coordinate bounds",
+      "asymmetric synthetic coordinate fixtures",
+      "visual spot check"
+    ],
+    "exif_orientation": "NOT_APPLICABLE_PNG",
+    "horizontal_flip": false,
+    "origin": "top-left pixel-center convention",
+    "rotation": 0,
+    "status": "SOURCE_ORIENTATION_AS_STORED",
+    "vertical_flip": false
+  }
+}
