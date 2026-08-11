@@ -13,7 +13,7 @@ import json
 import re
 import sys
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, Optional
 
 import numpy as np
 
@@ -22,16 +22,13 @@ sys.path.insert(0, str(ROOT_DIR / "scripts"))
 
 from mmwave_m_b8_benchmark import (  # noqa: E402
     BENCHMARK_METRICS,
-    CONFIRMATION_MEASURED_ITERATIONS,
     DELEGATE_RUNTIME_MODE,
-    FORMAL_MEASURED_ITERATIONS,
     FORMAL_SEED_ORDERS,
     FORMAL_SERIES_COUNT,
     FROZEN_SEEDS,
     MANIFEST_RELATIVE,
     MEMORY_MEASUREMENT_TYPE,
     MEMORY_METHOD,
-    METRIC_TFLITE_INVOKE_ONLY,
     MINIMUM_IDLE_SECONDS,
     NUM_THREADS,
     PERCENTILE_METHOD,
@@ -39,7 +36,6 @@ from mmwave_m_b8_benchmark import (  # noqa: E402
     build_complete_evidence,
     build_quantized_input_identities,
     build_static_evidence,
-    confirmation_stability,
     cross_seed_latency_summary,
     make_run_index,
     prepare_benchmark_inputs,

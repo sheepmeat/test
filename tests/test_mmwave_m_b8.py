@@ -6,7 +6,6 @@ the evidence/validator contract and never execute a wall-clock benchmark.
 
 from __future__ import annotations
 
-import copy
 import hashlib
 import json
 import shutil
