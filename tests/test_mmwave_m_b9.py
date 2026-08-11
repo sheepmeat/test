@@ -81,8 +81,20 @@ class TestMMWaveMB9(unittest.TestCase):
         self.assertEqual(locked["label_access_attempts"], 0)
         self.assertFalse(locked["locked_test_inputs_loaded"])
 
+    def test_m_b8_wording_is_unambiguous(self):
+        experiment = json.loads((OUT / "experiment_contract.json").read_text())
+        environment = json.loads((OUT / "run_environment.json").read_text())
+        summary = json.loads((OUT / "m_b9_summary.json").read_text())
+        for payload in (experiment, environment, summary):
+            self.assertNotIn("formal_m_b8_latency_measurement_started", payload)
+            self.assertNotIn("m_b8_latency_measurement_started", payload)
+            self.assertFalse(payload["formal_m_b8_latency_measurement_rerun_during_m_b9"])
+        self.assertTrue(experiment["m_b8_prior_formal_latency_benchmark_completed"])
+        self.assertTrue(environment["m_b8_prior_formal_latency_benchmark_completed"])
+        self.assertTrue(summary["m_b8_prior_formal_latency_benchmark_completed"])
+
     def test_negative_corruption_cases(self):
-        """All 32 focused corruption probes must be rejected by contract guards."""
+        """All real isolated corruption workspaces must fail closed."""
         for case_id in NEGATIVE_CASES:
             with self.subTest(case_id=case_id):
                 self.assertTrue(_negative_case_detected(case_id, ROOT))

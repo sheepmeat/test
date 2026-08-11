@@ -16,13 +16,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.1981802,
+          "timestamp": 1786465957.628028,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.39453125,
           "error": null,
-          "latency_ms": 0.2716670000006971,
+          "latency_ms": 0.2710409999995278,
           "metadata": {
             "class_index": 1,
             "fallback_reason": null,
@@ -73,7 +73,7 @@
           "score": 0.5,
           "sensor_id": "mmwave",
           "state": "RAPID_OR_ABNORMAL",
-          "timestamp": 1786462734.197879,
+          "timestamp": 1786465957.627727,
           "valid": true
         },
         "pir": {
@@ -87,7 +87,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.198186,
+          "timestamp": 1786465957.628034,
           "valid": true
         },
         "thermal44": {
@@ -101,7 +101,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.197858,
+          "timestamp": 1786465957.627705,
           "valid": true
         }
       },
@@ -158,13 +158,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.203949,
+          "timestamp": 1786465957.6338902,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.5234375,
           "error": null,
-          "latency_ms": 0.31949999999980605,
+          "latency_ms": 0.28683300000054146,
           "metadata": {
             "class_index": 0,
             "fallback_reason": null,
@@ -215,7 +215,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "NORMAL",
-          "timestamp": 1786462734.2036018,
+          "timestamp": 1786465957.6335769,
           "valid": true
         },
         "pir": {
@@ -229,7 +229,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.203955,
+          "timestamp": 1786465957.6338959,
           "valid": true
         },
         "thermal44": {
@@ -243,7 +243,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2035918,
+          "timestamp": 1786465957.633565,
           "valid": true
         }
       },
@@ -300,13 +300,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.209378,
+          "timestamp": 1786465957.639313,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.765625,
           "error": null,
-          "latency_ms": 0.2367080000000854,
+          "latency_ms": 0.24629099999984305,
           "metadata": {
             "class_index": 2,
             "fallback_reason": null,
@@ -357,7 +357,7 @@
           "score": 1.0,
           "sensor_id": "mmwave",
           "state": "APNEA",
-          "timestamp": 1786462734.2091148,
+          "timestamp": 1786465957.63904,
           "valid": true
         },
         "pir": {
@@ -371,7 +371,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.209383,
+          "timestamp": 1786465957.639318,
           "valid": true
         },
         "thermal44": {
@@ -385,7 +385,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.209107,
+          "timestamp": 1786465957.6390321,
           "valid": true
         }
       },
@@ -442,13 +442,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2146728,
+          "timestamp": 1786465957.644593,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.3515625,
           "error": null,
-          "latency_ms": 0.2283339999999967,
+          "latency_ms": 0.2420829999998375,
           "metadata": {
             "class_index": 1,
             "fallback_reason": null,
@@ -499,7 +499,7 @@
           "score": 0.5,
           "sensor_id": "mmwave",
           "state": "RAPID_OR_ABNORMAL",
-          "timestamp": 1786462734.214419,
+          "timestamp": 1786465957.644325,
           "valid": true
         },
         "pir": {
@@ -513,7 +513,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.214678,
+          "timestamp": 1786465957.644598,
           "valid": true
         },
         "thermal44": {
@@ -527,7 +527,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.214411,
+          "timestamp": 1786465957.644317,
           "valid": true
         }
       },
@@ -584,13 +584,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.220151,
+          "timestamp": 1786465957.6502578,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.359375,
           "error": null,
-          "latency_ms": 0.2662920000000568,
+          "latency_ms": 0.27245800000041953,
           "metadata": {
             "class_index": 1,
             "fallback_reason": null,
@@ -641,7 +641,7 @@
           "score": 0.5,
           "sensor_id": "mmwave",
           "state": "RAPID_OR_ABNORMAL",
-          "timestamp": 1786462734.219859,
+          "timestamp": 1786465957.6499588,
           "valid": true
         },
         "pir": {
@@ -655,7 +655,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.220157,
+          "timestamp": 1786465957.650263,
           "valid": true
         },
         "thermal44": {
@@ -669,7 +669,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.21985,
+          "timestamp": 1786465957.64995,
           "valid": true
         }
       },
@@ -726,13 +726,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.225462,
+          "timestamp": 1786465957.65573,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.3515625,
           "error": null,
-          "latency_ms": 0.23341699999956944,
+          "latency_ms": 0.24570800000045523,
           "metadata": {
             "class_index": 2,
             "fallback_reason": null,
@@ -783,7 +783,7 @@
           "score": 1.0,
           "sensor_id": "mmwave",
           "state": "APNEA",
-          "timestamp": 1786462734.225203,
+          "timestamp": 1786465957.655458,
           "valid": true
         },
         "pir": {
@@ -797,7 +797,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.225468,
+          "timestamp": 1786465957.655735,
           "valid": true
         },
         "thermal44": {
@@ -811,7 +811,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.225195,
+          "timestamp": 1786465957.65545,
           "valid": true
         }
       },
@@ -868,13 +868,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.230722,
+          "timestamp": 1786465957.661037,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.46484375,
           "error": null,
-          "latency_ms": 0.22825000000015194,
+          "latency_ms": 0.23749999999989058,
           "metadata": {
             "class_index": 2,
             "fallback_reason": null,
@@ -925,7 +925,7 @@
           "score": 1.0,
           "sensor_id": "mmwave",
           "state": "APNEA",
-          "timestamp": 1786462734.230468,
+          "timestamp": 1786465957.660774,
           "valid": true
         },
         "pir": {
@@ -939,7 +939,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.230728,
+          "timestamp": 1786465957.661042,
           "valid": true
         },
         "thermal44": {
@@ -953,7 +953,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.230461,
+          "timestamp": 1786465957.660766,
           "valid": true
         }
       },
@@ -1010,13 +1010,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2368262,
+          "timestamp": 1786465957.666662,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.421875,
           "error": null,
-          "latency_ms": 0.30312499999940457,
+          "latency_ms": 0.2589579999998648,
           "metadata": {
             "class_index": 0,
             "fallback_reason": null,
@@ -1067,7 +1067,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "NORMAL",
-          "timestamp": 1786462734.236496,
+          "timestamp": 1786465957.666377,
           "valid": true
         },
         "pir": {
@@ -1081,7 +1081,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.236831,
+          "timestamp": 1786465957.666668,
           "valid": true
         },
         "thermal44": {
@@ -1095,7 +1095,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2364821,
+          "timestamp": 1786465957.666369,
           "valid": true
         }
       },
@@ -1152,13 +1152,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.242303,
+          "timestamp": 1786465957.6720672,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.60546875,
           "error": null,
-          "latency_ms": 0.24429200000053441,
+          "latency_ms": 0.24920800000050036,
           "metadata": {
             "class_index": 2,
             "fallback_reason": null,
@@ -1209,7 +1209,7 @@
           "score": 1.0,
           "sensor_id": "mmwave",
           "state": "APNEA",
-          "timestamp": 1786462734.242032,
+          "timestamp": 1786465957.671793,
           "valid": true
         },
         "pir": {
@@ -1223,7 +1223,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2423081,
+          "timestamp": 1786465957.672073,
           "valid": true
         },
         "thermal44": {
@@ -1237,7 +1237,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.242025,
+          "timestamp": 1786465957.6717849,
           "valid": true
         }
       },
@@ -1294,7 +1294,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2473578,
+          "timestamp": 1786465957.677079,
           "valid": true
         },
         "mmwave": {
@@ -1330,7 +1330,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "WARMING_UP",
-          "timestamp": 1786462734.24734,
+          "timestamp": 1786465957.6770601,
           "valid": false
         },
         "pir": {
@@ -1344,7 +1344,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.247364,
+          "timestamp": 1786465957.6770859,
           "valid": true
         },
         "thermal44": {
@@ -1358,7 +1358,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.247332,
+          "timestamp": 1786465957.677052,
           "valid": true
         }
       },
@@ -1419,7 +1419,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2525032,
+          "timestamp": 1786465957.6820369,
           "valid": true
         },
         "mmwave": {
@@ -1452,7 +1452,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "INVALID_SHAPE",
-          "timestamp": 1786462734.252478,
+          "timestamp": 1786465957.682017,
           "valid": false
         },
         "pir": {
@@ -1466,7 +1466,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.252508,
+          "timestamp": 1786465957.6820421,
           "valid": true
         },
         "thermal44": {
@@ -1480,7 +1480,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.252469,
+          "timestamp": 1786465957.682009,
           "valid": true
         }
       },
@@ -1541,7 +1541,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.257459,
+          "timestamp": 1786465957.687189,
           "valid": true
         },
         "mmwave": {
@@ -1574,7 +1574,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "NAN_OR_INF",
-          "timestamp": 1786462734.257432,
+          "timestamp": 1786465957.6871629,
           "valid": false
         },
         "pir": {
@@ -1588,7 +1588,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2574642,
+          "timestamp": 1786465957.687194,
           "valid": true
         },
         "thermal44": {
@@ -1602,7 +1602,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2574239,
+          "timestamp": 1786465957.687155,
           "valid": true
         }
       },
@@ -1663,7 +1663,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.26233,
+          "timestamp": 1786465957.692152,
           "valid": true
         },
         "mmwave": {
@@ -1696,7 +1696,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "NAN_OR_INF",
-          "timestamp": 1786462734.262305,
+          "timestamp": 1786465957.692128,
           "valid": false
         },
         "pir": {
@@ -1710,7 +1710,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.262335,
+          "timestamp": 1786465957.692157,
           "valid": true
         },
         "thermal44": {
@@ -1724,7 +1724,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2622972,
+          "timestamp": 1786465957.69212,
           "valid": true
         }
       },
@@ -1785,13 +1785,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2677782,
+          "timestamp": 1786465957.697261,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.39453125,
           "error": null,
-          "latency_ms": 0.4165419999999642,
+          "latency_ms": 0.2726250000000263,
           "metadata": {
             "class_index": 1,
             "fallback_reason": null,
@@ -1842,7 +1842,7 @@
           "score": 0.5,
           "sensor_id": "mmwave",
           "state": "RAPID_OR_ABNORMAL",
-          "timestamp": 1786462730.2673259,
+          "timestamp": 1786465953.696966,
           "valid": true
         },
         "pir": {
@@ -1856,7 +1856,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2677839,
+          "timestamp": 1786465957.6972659,
           "valid": true
         },
         "thermal44": {
@@ -1870,7 +1870,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2673159,
+          "timestamp": 1786465957.696959,
           "valid": true
         }
       },
@@ -1931,7 +1931,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2727869,
+          "timestamp": 1786465957.702581,
           "valid": true
         },
         "mmwave": {
@@ -1964,7 +1964,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "FAULT",
-          "timestamp": 1786462734.272774,
+          "timestamp": 1786465957.702568,
           "valid": false
         },
         "pir": {
@@ -1978,7 +1978,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.272792,
+          "timestamp": 1786465957.702585,
           "valid": true
         },
         "thermal44": {
@@ -1992,7 +1992,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2727659,
+          "timestamp": 1786465957.70256,
           "valid": true
         }
       },
@@ -2053,7 +2053,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.27766,
+          "timestamp": 1786465957.70752,
           "valid": true
         },
         "mmwave": {
@@ -2066,7 +2066,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "PROVIDER_READ_EXCEPTION",
-          "timestamp": 1786462734.277656,
+          "timestamp": 1786465957.707516,
           "valid": false
         },
         "pir": {
@@ -2080,7 +2080,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.2776651,
+          "timestamp": 1786465957.707525,
           "valid": true
         },
         "thermal44": {
@@ -2094,7 +2094,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.277646,
+          "timestamp": 1786465957.707504,
           "valid": true
         }
       },
@@ -2155,7 +2155,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.342554,
+          "timestamp": 1786465959.772464,
           "valid": true
         },
         "mmwave": {
@@ -2163,13 +2163,13 @@
           "error": "PROVIDER_READ_TIMEOUT",
           "latency_ms": 0.0,
           "metadata": {
-            "elapsed_sec": 2.0600869159999995,
+            "elapsed_sec": 2.0601471670000002,
             "timeout_sec": 2.0
           },
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "PROVIDER_READ_TIMEOUT",
-          "timestamp": 1786462736.342539,
+          "timestamp": 1786465959.772445,
           "valid": false
         },
         "pir": {
@@ -2183,7 +2183,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.342588,
+          "timestamp": 1786465959.772515,
           "valid": true
         },
         "thermal44": {
@@ -2197,7 +2197,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462734.282401,
+          "timestamp": 1786465957.712265,
           "valid": true
         }
       },
@@ -2258,7 +2258,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.358459,
+          "timestamp": 1786465959.787735,
           "valid": true
         },
         "mmwave": {
@@ -2292,7 +2292,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "MODEL_UNAVAILABLE",
-          "timestamp": 1786462736.35844,
+          "timestamp": 1786465959.787714,
           "valid": false
         },
         "pir": {
@@ -2306,7 +2306,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.3584661,
+          "timestamp": 1786465959.787741,
           "valid": true
         },
         "thermal44": {
@@ -2320,7 +2320,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.358426,
+          "timestamp": 1786465959.787698,
           "valid": true
         }
       },
@@ -2381,7 +2381,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.370146,
+          "timestamp": 1786465959.799532,
           "valid": true
         },
         "mmwave": {
@@ -2415,7 +2415,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "MODEL_UNAVAILABLE",
-          "timestamp": 1786462736.3701189,
+          "timestamp": 1786465959.799513,
           "valid": false
         },
         "pir": {
@@ -2429,7 +2429,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.370155,
+          "timestamp": 1786465959.7995389,
           "valid": true
         },
         "thermal44": {
@@ -2443,7 +2443,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.3701,
+          "timestamp": 1786465959.7995,
           "valid": true
         }
       },
@@ -2504,7 +2504,7 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.379097,
+          "timestamp": 1786465959.808157,
           "valid": true
         },
         "mmwave": {
@@ -2518,7 +2518,7 @@
           "score": 0.0,
           "sensor_id": "mmwave",
           "state": "PROVIDER_CONNECT_FAILED",
-          "timestamp": 1786462736.379091,
+          "timestamp": 1786465959.808152,
           "valid": false
         },
         "pir": {
@@ -2532,7 +2532,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.379106,
+          "timestamp": 1786465959.8081632,
           "valid": true
         },
         "thermal44": {
@@ -2546,7 +2546,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.379074,
+          "timestamp": 1786465959.80814,
           "valid": true
         }
       },
@@ -2607,13 +2607,13 @@
           "score": 0.0,
           "sensor_id": "co2",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.387624,
+          "timestamp": 1786465959.816437,
           "valid": true
         },
         "mmwave": {
           "confidence": 0.39453125,
           "error": null,
-          "latency_ms": 0.45016600000025164,
+          "latency_ms": 0.5645410000001405,
           "metadata": {
             "class_index": 1,
             "fallback_reason": null,
@@ -2664,7 +2664,7 @@
           "score": 0.5,
           "sensor_id": "mmwave",
           "state": "RAPID_OR_ABNORMAL",
-          "timestamp": 1786462736.3871412,
+          "timestamp": 1786465959.815841,
           "valid": true
         },
         "pir": {
@@ -2678,7 +2678,7 @@
           "score": 0.0,
           "sensor_id": "pir",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.3876312,
+          "timestamp": 1786465959.816444,
           "valid": true
         },
         "thermal44": {
@@ -2692,7 +2692,7 @@
           "score": 0.0,
           "sensor_id": "thermal44",
           "state": "NEUTRAL_SUPPORT",
-          "timestamp": 1786462736.387129,
+          "timestamp": 1786465959.815828,
           "valid": true
         }
       },

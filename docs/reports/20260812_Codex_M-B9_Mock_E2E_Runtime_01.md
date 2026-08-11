@@ -5,7 +5,7 @@
 - Input scope: deterministic pure-class VALIDATION windows only; LOCKED_TEST access `0`.
 - Model scope: M-B6 Stage-C strict INT8 artifacts through phase-local runtime manifests; no binaries duplicated.
 - Execution scope: bounded `SafeNestIntegratedNode(..., sensors=...)` calls with `start()`, one `step()`, and `shutdown()` in `finally`.
-- M-B8 formal latency measurement: not started; M-B8 Mac latency remains the predecessor's authoritative measurement.
+- M-B8 formal latency benchmark was completed in the predecessor phase; M-B9 did not rerun it.
 
 ## Shared default warning
 
@@ -75,6 +75,7 @@ The injected disagreement scenario used APNEA as metadata-only truth on a NORMAL
 - InferenceResult fields and finalist metadata were captured for `21` bounded node results; valid finalist rows use `score_source=MODEL_PREDICTION`, explicit model ID/SHA, class index, probabilities, and `fallback_used=false`.
 - Fresh risk-engine recomputation against the exact sensor dictionaries entering risk matched node core fields: `True`.
 - `SafeNestRiskOutput.to_json()` parsed with finite values and current schema fields for every row: `True`.
+- The standalone validator independently reconstructs and compares InferenceResult, fallback, fault/stale/timeout, risk-input, risk-engine, and JSON audits against fresh bounded execution; timestamps and latency are the only excluded nondeterministic fields.
 - Missing/wrong-identity finalist scenarios record the legacy fallback identity as invalid and never as finalist success; valid finalist rows have no fallback: `True`.
 - LOCKED_TEST access attempts, labels, predictions, and performance reads: `0`; the immutable lock remains in force.
 
@@ -97,6 +98,9 @@ This is mock-provider/runtime compatibility evidence only. It does not claim pro
 - Explicit finalist strategy: all seeds 42/43/44, deterministic VALIDATION selection, no seed selection.
 - Preprocessing before/after: legacy z-score-only path repaired locally to authoritative BPF_ZSCORE for explicit manifests.
 - Runtime files: strict interpreter manifest loading, finalist mock provider, bounded integrated node.
+- M-B8 wording: predecessor formal benchmark completed; `formal_m_b8_latency_measurement_rerun_during_m_b9=false`.
+- Validator-truth closure: stored-vs-fresh scenarios and all six fresh audit gates are independently checked; real isolated corruption workspaces must fail closed.
+- Real validator-failure corruption tests: 33 isolated temporary-workspace cases, including SHA/bytes/seed/quantization/preprocessing, prediction/truth/fallback, fault/stale/timeout, risk/JSON/LOCKED_TEST, checksum, absolute/traversal paths, and duplicate-binary rejection.
 - Findings: `REQUIRED REFINEMENT` M-B9_RUNTIME_PREPROCESSING_MISMATCH is `RESOLVED_LOCALLY`; `NON-BLOCKING IMPROVEMENT` M-B9_MOCK_SCOPE_ONLY records mock-only scope; no `BLOCKER` remains.
 
 YES — M-B10 candidate-selection setup may begin after independent review; LOCKED_TEST remains locked until the separately authorized M-B10 final-test gate
