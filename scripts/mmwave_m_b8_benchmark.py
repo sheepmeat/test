@@ -734,6 +734,27 @@ SAFE_NEST_WORKLOAD_PATTERNS: Tuple[str, ...] = (
 )
 
 
+def classify_known_safenest_workload(command: str, args: str) -> Optional[str]:
+    """Identify actual SafeNest Python/test jobs without matching observer shells.
+
+    A shell command that merely *mentions* ``run_mmwave`` (for example a
+    process-status query) is not a workload.  SafeNest training/evaluation
+    jobs in this repository execute under Python or pytest, so constrain the
+    detector to those executable families before inspecting their arguments.
+    """
+    executable = Path(command).name.lower()
+    is_python = "python" in executable
+    is_pytest = "pytest" in executable or executable in {"py.test", "pytest"}
+    if not (is_python or is_pytest):
+        return None
+    lowered = args.lower()
+    if is_pytest:
+        return "pytest"
+    return next(
+        (pattern for pattern in SAFE_NEST_WORKLOAD_PATTERNS if pattern in lowered), None
+    )
+
+
 def _ancestor_pids() -> set:
     ancestors = {os.getpid()}
     current = os.getppid()
@@ -786,8 +807,7 @@ def find_known_safenest_workloads() -> List[Dict[str, Any]]:
             continue
         command = parts[2]
         args = parts[3]
-        lowered = f"{command} {args}".lower()
-        matched_pattern = next((pattern for pattern in SAFE_NEST_WORKLOAD_PATTERNS if pattern in lowered), None)
+        matched_pattern = classify_known_safenest_workload(command, args)
         if matched_pattern:
             matches.append(
                 {

@@ -32,6 +32,7 @@ from mmwave_m_b8_benchmark import (  # noqa: E402
     build_complete_evidence,
     build_quantized_input_identities,
     build_static_evidence,
+    classify_known_safenest_workload,
     make_run_index,
     prepare_benchmark_inputs,
     render_report,
@@ -441,19 +442,32 @@ class TestMmwaveMB8(unittest.TestCase):
                 monotonic_clock=lambda: 0.0,
             )
 
-    def test_27_report_renders_all_required_latency_sections_from_evidence(self) -> None:
+    def test_27_workload_detector_ignores_observer_shell_but_keeps_co2_worker(self) -> None:
+        self.assertIsNone(
+            classify_known_safenest_workload(
+                "/bin/zsh", "-lc ps -axo command | rg run_mmwave_m_b8.py --formal"
+            )
+        )
+        self.assertEqual(
+            classify_known_safenest_workload(
+                "/usr/bin/python3", "scripts/validate_co2_final_integrity.py"
+            ),
+            "validate_co2",
+        )
+
+    def test_28_report_renders_all_required_latency_sections_from_evidence(self) -> None:
         report = render_report(self.evidence)
         self.assertIn("Raw-sample provenance", report)
         self.assertIn("Per-seed preprocessing and quantization latency", report)
         self.assertIn("Mac-development reference comparison", report)
         self.assertIn("M-B8 benchmarks this specific Mac environment only", report)
 
-    def test_28_rejects_malformed_checksum(self) -> None:
+    def test_29_rejects_malformed_checksum(self) -> None:
         path = self.manifest / "checksums.sha256"
         path.write_text(path.read_text(encoding="utf-8") + "bad-checksum\n", encoding="utf-8")
         self._assert_rejected()
 
-    def test_29_rejects_checksum_path_traversal(self) -> None:
+    def test_30_rejects_checksum_path_traversal(self) -> None:
         path = self.manifest / "checksums.sha256"
         lines = path.read_text(encoding="utf-8").splitlines()
         digest = lines[0].split(maxsplit=1)[0]
