@@ -208,6 +208,40 @@ def compute_endpoint_slope_ppm_per_min(
     return float((float(co2_now) - float(co2_history_start)) / elapsed_minutes)
 
 
+def compute_causal_linear_regression_slope_ppm_per_min(
+    co2_values: Sequence[float],
+    elapsed_seconds_from_anchor: Sequence[float],
+) -> float:
+    """
+    Fit CO2 = intercept + slope * elapsed_minutes on causal history support.
+
+    elapsed_seconds_from_anchor must be actual SOURCE_ACQUISITION_CLOCK deltas
+    from the history anchor (not sample_count * nominal period). Returns slope
+    in ppm/min as float64. Requires at least two distinct timestamps.
+    """
+    if len(co2_values) != len(elapsed_seconds_from_anchor):
+        raise ValueError("co2_values and elapsed_seconds_from_anchor length mismatch")
+    if len(co2_values) < 2:
+        raise ValueError("linear regression requires at least two samples")
+    xs = [float(v) / 60.0 for v in elapsed_seconds_from_anchor]
+    ys = [float(v) for v in co2_values]
+    if any(not _is_finite_number(v) for v in xs + ys):
+        raise ValueError("non-finite regression inputs")
+    if len({x for x in xs}) < 2:
+        raise ValueError("linear regression requires at least two distinct timestamps")
+    n = float(len(xs))
+    mean_x = sum(xs) / n
+    mean_y = sum(ys) / n
+    var_x = sum((x - mean_x) ** 2 for x in xs)
+    if var_x == 0.0:
+        raise ValueError("zero time variance")
+    cov_xy = sum((x - mean_x) * (y - mean_y) for x, y in zip(xs, ys))
+    slope = float(cov_xy / var_x)
+    if not _is_finite_number(slope):
+        raise ValueError("non-finite regression slope")
+    return slope
+
+
 def _group_observations_by_block(
     observations: Sequence[CO2SourceRowObservation],
 ) -> Dict[str, List[_TimedRow]]:
@@ -233,12 +267,18 @@ def _group_observations_by_block(
 def _find_history_start(
     block_rows: Sequence[_TimedRow],
     target_index: int,
+    *,
+    history_duration_seconds: float = HISTORY_DURATION_SECONDS,
 ) -> Tuple[Optional[int], str]:
     """
     Walk backward within the same block only.
 
     Returns (history_start_index, unavailable_status_if_none).
     Crossing a forbidden internal gap truncates usable history.
+
+    history_duration_seconds is a minimum-history threshold: the first past
+    sample (walking backward from the current row) whose actual source-clock
+    age is at least this threshold becomes the history anchor.
     """
     if target_index <= 0:
         return None, STATUS_WARMUP
@@ -252,7 +292,7 @@ def _find_history_start(
             crossed_gap = True
             break
         elapsed = (block_rows[target_index].dt - block_rows[k].dt).total_seconds()
-        if elapsed >= HISTORY_DURATION_SECONDS:
+        if elapsed >= float(history_duration_seconds):
             return k, STATUS_AVAILABLE
 
     if crossed_gap:
@@ -260,10 +300,25 @@ def _find_history_start(
     return None, STATUS_WARMUP
 
 
-def reconstruct_block_slope_features(
+def reconstruct_block_slope_features_with_params(
     block_rows: Sequence[_TimedRow],
+    *,
+    method: str = SLOPE_METHOD,
+    history_duration_seconds: float = HISTORY_DURATION_SECONDS,
+    feature_contract_id: str = FEATURE_PROFILE_ID,
 ) -> List[SlopeFeatureRecord]:
-    """Reconstruct CO2_slope for one temporal acquisition block."""
+    """
+    Reconstruct CO2_slope for one temporal acquisition block.
+
+    Preserves C-A3 causal / gap / restart semantics. `history_duration_seconds`
+    is a minimum-history threshold using actual source-clock elapsed time.
+    Supported methods:
+      - ENDPOINT_DIFFERENCE
+      - CAUSAL_LINEAR_REGRESSION
+    """
+    if method not in ("ENDPOINT_DIFFERENCE", "CAUSAL_LINEAR_REGRESSION"):
+        raise ValueError(f"Unsupported slope method: {method}")
+
     records: List[SlopeFeatureRecord] = []
     for i, row in enumerate(block_rows):
         obs = row.obs
@@ -280,7 +335,7 @@ def reconstruct_block_slope_features(
                     temporal_block_id=row.block_id,
                     future_split_role=row.future_split_role,
                     feature_name=FEATURE_NAME,
-                    feature_contract_id=FEATURE_PROFILE_ID,
+                    feature_contract_id=feature_contract_id,
                     history_start_source_row_identifier=None,
                     history_end_source_row_identifier=None,
                     history_start_physical_line=None,
@@ -292,7 +347,7 @@ def reconstruct_block_slope_features(
                     history_elapsed_seconds=None,
                     source_sample_count_used=0,
                     history_source_row_identifiers=tuple(),
-                    slope_method=SLOPE_METHOD,
+                    slope_method=method,
                     slope_unit=FEATURE_UNIT,
                     feature_status=STATUS_NONFINITE,
                     co2_slope=None,
@@ -302,7 +357,11 @@ def reconstruct_block_slope_features(
             )
             continue
 
-        history_start_idx, unavailable_status = _find_history_start(block_rows, i)
+        history_start_idx, unavailable_status = _find_history_start(
+            block_rows,
+            i,
+            history_duration_seconds=float(history_duration_seconds),
+        )
         if history_start_idx is None:
             records.append(
                 SlopeFeatureRecord(
@@ -314,7 +373,7 @@ def reconstruct_block_slope_features(
                     temporal_block_id=row.block_id,
                     future_split_role=row.future_split_role,
                     feature_name=FEATURE_NAME,
-                    feature_contract_id=FEATURE_PROFILE_ID,
+                    feature_contract_id=feature_contract_id,
                     history_start_source_row_identifier=None,
                     history_end_source_row_identifier=None,
                     history_start_physical_line=None,
@@ -326,7 +385,7 @@ def reconstruct_block_slope_features(
                     history_elapsed_seconds=None,
                     source_sample_count_used=1,
                     history_source_row_identifiers=(obs.source_row_identifier,),
-                    slope_method=SLOPE_METHOD,
+                    slope_method=method,
                     slope_unit=FEATURE_UNIT,
                     feature_status=unavailable_status,
                     co2_slope=None,
@@ -348,7 +407,7 @@ def reconstruct_block_slope_features(
                     temporal_block_id=row.block_id,
                     future_split_role=row.future_split_role,
                     feature_name=FEATURE_NAME,
-                    feature_contract_id=FEATURE_PROFILE_ID,
+                    feature_contract_id=feature_contract_id,
                     history_start_source_row_identifier=None,
                     history_end_source_row_identifier=None,
                     history_start_physical_line=None,
@@ -360,7 +419,7 @@ def reconstruct_block_slope_features(
                     history_elapsed_seconds=None,
                     source_sample_count_used=0,
                     history_source_row_identifiers=tuple(),
-                    slope_method=SLOPE_METHOD,
+                    slope_method=method,
                     slope_unit=FEATURE_UNIT,
                     feature_status=STATUS_NONFINITE,
                     co2_slope=None,
@@ -373,7 +432,16 @@ def reconstruct_block_slope_features(
         start_row = block_rows[history_start_idx]
         co2_start = float(start_row.obs.co2)
         elapsed_seconds = float((row.dt - start_row.dt).total_seconds())
-        slope = compute_endpoint_slope_ppm_per_min(co2_now, co2_start, elapsed_seconds)
+        if method == "ENDPOINT_DIFFERENCE":
+            slope = compute_endpoint_slope_ppm_per_min(co2_now, co2_start, elapsed_seconds)
+        else:
+            co2_vals = [float(w.obs.co2) for w in window]
+            elapsed_vals = [
+                float((w.dt - start_row.dt).total_seconds()) for w in window
+            ]
+            slope = compute_causal_linear_regression_slope_ppm_per_min(
+                co2_vals, elapsed_vals
+            )
         if not _is_finite_number(slope):
             raise ValueError(
                 f"Nonfinite slope produced for {obs.source_member_name}:"
@@ -390,7 +458,7 @@ def reconstruct_block_slope_features(
                 temporal_block_id=row.block_id,
                 future_split_role=row.future_split_role,
                 feature_name=FEATURE_NAME,
-                feature_contract_id=FEATURE_PROFILE_ID,
+                feature_contract_id=feature_contract_id,
                 history_start_source_row_identifier=start_row.obs.source_row_identifier,
                 history_end_source_row_identifier=obs.source_row_identifier,
                 history_start_physical_line=start_row.obs.source_physical_line_number,
@@ -404,7 +472,7 @@ def reconstruct_block_slope_features(
                 history_source_row_identifiers=tuple(
                     w.obs.source_row_identifier for w in window
                 ),
-                slope_method=SLOPE_METHOD,
+                slope_method=method,
                 slope_unit=FEATURE_UNIT,
                 feature_status=STATUS_AVAILABLE,
                 co2_slope=slope,
@@ -413,6 +481,35 @@ def reconstruct_block_slope_features(
             )
         )
     return records
+
+
+def reconstruct_block_slope_features(
+    block_rows: Sequence[_TimedRow],
+) -> List[SlopeFeatureRecord]:
+    """Reconstruct CO2_slope for one temporal acquisition block (C-A3 baseline)."""
+    return reconstruct_block_slope_features_with_params(block_rows)
+
+
+def reconstruct_all_slope_features_with_params(
+    observations: Sequence[CO2SourceRowObservation],
+    *,
+    method: str = SLOPE_METHOD,
+    history_duration_seconds: float = HISTORY_DURATION_SECONDS,
+    feature_contract_id: str = FEATURE_PROFILE_ID,
+) -> List[SlopeFeatureRecord]:
+    """Reconstruct CO2_slope for all source rows under explicit candidate params."""
+    grouped = _group_observations_by_block(observations)
+    all_records: List[SlopeFeatureRecord] = []
+    for member in MEMBER_ORDER:
+        all_records.extend(
+            reconstruct_block_slope_features_with_params(
+                grouped[member],
+                method=method,
+                history_duration_seconds=history_duration_seconds,
+                feature_contract_id=feature_contract_id,
+            )
+        )
+    return all_records
 
 
 def reconstruct_all_slope_features(
