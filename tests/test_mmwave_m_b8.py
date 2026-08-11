@@ -30,7 +30,7 @@ from mmwave_m_b8_benchmark import (  # noqa: E402
     MEMORY_METHOD,
     REQUIRED_OUTPUT_FILENAMES,
     build_complete_evidence,
-    build_quantized_input_identities,
+    build_benchmark_input_evidence,
     build_static_evidence,
     classify_known_safenest_workload,
     make_run_index,
@@ -123,22 +123,7 @@ class TestMmwaveMB8(unittest.TestCase):
             "formal_benchmark_environment_ready": True,
             "known_safenest_workload_checks": conditions,
             "machine_model_identifier": "TEST_MAC",
-            "input_cycle_identity_sha256": inputs["input_cycle_identity_sha256"],
-            "input_cycle_size": inputs["input_cycle_size"],
-            "canonical_validation_tensor_sha256": inputs["canonical_validation_tensor_sha256"],
-            "m_b1_preprocessed_validation_tensor_sha256": inputs[
-                "m_b1_preprocessed_validation_tensor_sha256"
-            ],
-            "m_b6_model_ready_float32_tensor_sha256": inputs[
-                "m_b6_model_ready_float32_tensor_sha256"
-            ],
-            "m_b1_preprocessed_tensor_shape": inputs["m_b1_preprocessed_tensor_shape"],
-            "m_b1_preprocessed_tensor_dtype": inputs["m_b1_preprocessed_tensor_dtype"],
-            "model_ready_tensor_shape": inputs["model_ready_tensor_shape"],
-            "model_ready_tensor_dtype": inputs["model_ready_tensor_dtype"],
-            "precomputed_strict_int8_input_cycles": build_quantized_input_identities(
-                artifacts, inputs["model_inputs"]
-            ),
+            **build_benchmark_input_evidence(inputs, artifacts),
         }
 
     @staticmethod

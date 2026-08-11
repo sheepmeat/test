@@ -27,7 +27,7 @@ from mmwave_m_b8_benchmark import (  # noqa: E402
     TFLiteBenchmarkSession,
     benchmark_confirmation_invoke,
     benchmark_seed_series,
-    build_quantized_input_identities,
+    build_benchmark_input_evidence,
     build_complete_evidence,
     build_memory_observation,
     build_static_evidence,
@@ -57,9 +57,6 @@ def run_smoke_checks(root_dir: Path = ROOT_DIR) -> Dict[str, Any]:
     """Exercise one frozen functional path without reading a timing clock or writing evidence."""
     static = build_static_evidence(root_dir)
     inputs = prepare_benchmark_inputs(root_dir)
-    quantized_input_identities = build_quantized_input_identities(
-        static["artifacts"], inputs["model_inputs"]
-    )
     seed = FROZEN_SEEDS[0]
     artifact = static["artifacts"][seed]
     session = TFLiteBenchmarkSession(root_dir / artifact["relative_path"])
@@ -146,26 +143,9 @@ def run_formal_benchmark(root_dir: Path = ROOT_DIR) -> Dict[str, Any]:
         _assert_no_new_workload(f"AFTER_CONFIRMATION_SEED_{seed}")
 
     environment = capture_machine_environment(series_idle_conditions)
+    environment.update(build_benchmark_input_evidence(inputs, static["artifacts"]))
     memory = build_memory_observation(memory_series)
     evidence = build_complete_evidence(static, run_index, raw_arrays, environment, memory)
-    evidence["benchmark_environment.json"].update(
-        {
-            "input_cycle_identity_sha256": inputs["input_cycle_identity_sha256"],
-            "input_cycle_size": inputs["input_cycle_size"],
-            "canonical_validation_tensor_sha256": inputs["canonical_validation_tensor_sha256"],
-            "m_b1_preprocessed_validation_tensor_sha256": inputs[
-                "m_b1_preprocessed_validation_tensor_sha256"
-            ],
-            "m_b6_model_ready_float32_tensor_sha256": inputs[
-                "m_b6_model_ready_float32_tensor_sha256"
-            ],
-            "m_b1_preprocessed_tensor_shape": inputs["m_b1_preprocessed_tensor_shape"],
-            "m_b1_preprocessed_tensor_dtype": inputs["m_b1_preprocessed_tensor_dtype"],
-            "model_ready_tensor_shape": inputs["model_ready_tensor_shape"],
-            "model_ready_tensor_dtype": inputs["model_ready_tensor_dtype"],
-            "precomputed_strict_int8_input_cycles": quantized_input_identities,
-        }
-    )
     return evidence
 
 

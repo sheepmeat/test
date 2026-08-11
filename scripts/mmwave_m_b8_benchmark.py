@@ -468,6 +468,30 @@ def build_quantized_input_identities(
     return identities
 
 
+def build_benchmark_input_evidence(
+    inputs: Dict[str, Any], artifacts: Dict[int, Dict[str, Any]]
+) -> Dict[str, Any]:
+    """Return the persisted identity record for all in-memory benchmark inputs."""
+    return {
+        "input_cycle_identity_sha256": inputs["input_cycle_identity_sha256"],
+        "input_cycle_size": inputs["input_cycle_size"],
+        "canonical_validation_tensor_sha256": inputs["canonical_validation_tensor_sha256"],
+        "m_b1_preprocessed_validation_tensor_sha256": inputs[
+            "m_b1_preprocessed_validation_tensor_sha256"
+        ],
+        "m_b6_model_ready_float32_tensor_sha256": inputs[
+            "m_b6_model_ready_float32_tensor_sha256"
+        ],
+        "m_b1_preprocessed_tensor_shape": inputs["m_b1_preprocessed_tensor_shape"],
+        "m_b1_preprocessed_tensor_dtype": inputs["m_b1_preprocessed_tensor_dtype"],
+        "model_ready_tensor_shape": inputs["model_ready_tensor_shape"],
+        "model_ready_tensor_dtype": inputs["model_ready_tensor_dtype"],
+        "precomputed_strict_int8_input_cycles": build_quantized_input_identities(
+            artifacts, inputs["model_inputs"]
+        ),
+    }
+
+
 def build_input_identity(root_dir: Path, artifacts: Dict[int, Dict[str, Any]]) -> Dict[str, Any]:
     inputs: List[Dict[str, str]] = []
     for relative_path, role in INPUT_IDENTITY_PATHS:
