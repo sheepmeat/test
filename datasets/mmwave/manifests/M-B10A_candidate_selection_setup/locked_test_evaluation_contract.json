@@ -1,0 +1,40 @@
+{
+  "access_authorization": "Requires separate explicit M-B10B authorization after independent review; no authorization is granted by M-B10A.",
+  "access_mechanism_reference": "PhaseBAccessGuard final-evaluation API is reserved for the separately authorized final pass.",
+  "candidate_reference": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120",
+  "candidate_sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5",
+  "contract_status": "PREREGISTERED_NOT_EXECUTED",
+  "evaluation_passes": 1,
+  "final_result_claims_prohibited_until_execution": [
+    "MR60",
+    "real_sensor validated",
+    "production",
+    "clinical apnea"
+  ],
+  "forbidden_pretest_artifacts": [
+    "LOCKED_TEST labels",
+    "LOCKED_TEST tensors",
+    "LOCKED_TEST predictions",
+    "LOCKED_TEST performance metrics"
+  ],
+  "phase_id": "M-B10A",
+  "recalibration_after_access": false,
+  "required_metrics": [
+    "accuracy",
+    "macro_f1",
+    "macro_precision",
+    "macro_recall",
+    "per_class_precision_recall_f1",
+    "confusion_matrix",
+    "APNEA_proxy_recall",
+    "APNEA_proxy_precision",
+    "invalid_or_fallback_count",
+    "input_saturation_ratio"
+  ],
+  "retraining_after_access": false,
+  "selection_and_tuning_after_access": false,
+  "source_split": "LOCKED_TEST",
+  "structural_window_count": 88,
+  "subject_count": 16,
+  "threshold_tuning_after_access": false
+}

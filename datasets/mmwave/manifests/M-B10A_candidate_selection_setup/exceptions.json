@@ -1,0 +1,28 @@
+{
+  "blockers": [],
+  "non_blocking_improvements": [
+    {
+      "description": "Severe M-B7 profiles remain diagnostic and are not hard-gated by the frozen rule.",
+      "finding_class": "NON-BLOCKING IMPROVEMENT",
+      "id": "SEVERE_PROFILE_DIAGNOSTIC"
+    },
+    {
+      "description": "M-B8 latency is macOS-only offline evidence; no Raspberry Pi or MR60 claim is made.",
+      "finding_class": "NON-BLOCKING IMPROVEMENT",
+      "id": "MAC_ONLY_LATENCY"
+    }
+  ],
+  "phase_id": "M-B10A",
+  "required_refinements": [
+    {
+      "description": "Independent review must approve the frozen rule, lineage, gates, and winner before M-B10B.",
+      "finding_class": "REQUIRED REFINEMENT",
+      "id": "INDEPENDENT_REVIEW"
+    },
+    {
+      "description": "M-B4 architecture-level seed sensitivity remains a warning; a single-seed winner does not erase it.",
+      "finding_class": "REQUIRED REFINEMENT",
+      "id": "SEED_SENSITIVITY"
+    }
+  ]
+}

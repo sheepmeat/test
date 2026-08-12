@@ -1,0 +1,31 @@
+{
+  "baselines": [
+    {
+      "baseline_id": "mmwave_resp_int8",
+      "bytes": 466616,
+      "deployment_allowed_in_historical_manifest": false,
+      "exclusion_reason": "Historical v0.1.0 model is blocked by class collapse on repository NPZ and is not the frozen real-data Phase-B lineage.",
+      "manifest_sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
+      "path": "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+      "pool_eligible": false,
+      "role": "HISTORICAL_BASELINE_ONLY",
+      "sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
+      "validation_status": "BLOCKED"
+    },
+    {
+      "baseline_id": "mmwave_resp_int8_v0.2.0_candidate",
+      "bytes": 22472,
+      "deployment_allowed_in_historical_manifest": true,
+      "exclusion_reason": "Historical v0.2.0 candidate is synthetic smoke-only and has no real-data VALIDATION evidence.",
+      "manifest_sha256": "85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff",
+      "path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
+      "pool_eligible": false,
+      "role": "HISTORICAL_BASELINE_ONLY",
+      "sha256": "85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff",
+      "validation_status": "SYNTHETIC_SMOKE_ONLY"
+    }
+  ],
+  "candidate_pool_exclusion_rule": "Historical and synthetic baselines are context-only; they cannot win the real-data strict-INT8 pool.",
+  "phase_id": "M-B10A",
+  "registry_status": "BASELINES_REGISTERED_EXCLUDED_FROM_CANDIDATE_POOL"
+}

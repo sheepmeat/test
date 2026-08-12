@@ -1,0 +1,57 @@
+{
+  "authorization_recommendation": "NO — independent review required before M-B10B.",
+  "candidate_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120",
+  "clinical_performance": "NOT_EVALUATED",
+  "deciding_criterion": {
+    "absolute_difference": 0.224991,
+    "criterion_rank": 1,
+    "description": "Higher clean strict-INT8 VALIDATION Macro F1",
+    "direction": "higher",
+    "metric": "clean_strict_int8_macro_f1",
+    "runner_up_value": 0.44124,
+    "winner_value": 0.666231
+  },
+  "deployment_allowed": false,
+  "locked_test_accessed": false,
+  "m_b10b_started": false,
+  "model": {
+    "bytes": 22080,
+    "expected_stage_artifact": {
+      "bytes": 22080,
+      "input_dtype": "int8",
+      "m_b5_selected_int8_reused": true,
+      "output_dtype": "int8",
+      "relative_path": "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
+      "seed": 42,
+      "select_tf_ops_count": 0,
+      "sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5",
+      "stage": "Stage C (Strict INT8 TFLite)"
+    },
+    "input_dtype": "int8",
+    "input_scale": 0.041720833629369736,
+    "input_shape": [
+      1,
+      300,
+      1
+    ],
+    "input_zero_point": -3,
+    "output_dtype": "int8",
+    "output_scale": 0.00390625,
+    "output_shape": [
+      1,
+      3
+    ],
+    "output_zero_point": -128,
+    "relative_path": "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
+    "select_tf_ops_count": 0,
+    "sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5"
+  },
+  "model_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8",
+  "mr60_validation": "NOT_PERFORMED",
+  "phase_id": "M-B10A",
+  "production_claim": false,
+  "real_sensor_validation": "NOT_PERFORMED",
+  "seed": 42,
+  "selection_rule_sha256": "cddf98cbcf2231075bcfc02db2223fbc80fa33f7c52e23820609b5a273046f84",
+  "status": "M-B10_PRELOCKED_REAL_DATA_CANDIDATE"
+}
