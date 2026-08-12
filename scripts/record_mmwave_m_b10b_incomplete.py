@@ -243,6 +243,8 @@ Total formal model inference invocations: `0`
 
 ## Final result status
 
+Internal status: `M-B10B_ONE_TIME_EVALUATION_INCOMPLETE_NO_RERUN`
+
 The one-time accessor returned `{{audit_actual}}` pure-class rows because the existing final accessor excludes `AMBIGUOUS` windows, while M-B10A preregistered structural identity is `88` windows. The structural identity gate therefore failed before model inference. No labels, tensors, predictions, or metrics were persisted from the returned payload.
 
 The execution is invalid/incomplete as final performance evidence. The consumed split must not be reopened or reused in this experimental cycle.
@@ -305,8 +307,6 @@ Predefined numerical final-test threshold: `FINAL_LOCKED_TEST_NUMERICAL_ACCEPTAN
 ## M-B11 authorization recommendation
 
 NO — M-B10B execution integrity requires review; LOCKED_TEST must NOT be reopened
-
-M-B10B_ONE_TIME_EVALUATION_INCOMPLETE_NO_RERUN
 """.replace("{audit_actual}", str(audit.get("structural_rows_returned", 0))).rstrip() + "\n",
         encoding="utf-8",
     )
