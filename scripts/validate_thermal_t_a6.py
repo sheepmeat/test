@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Standalone non-hydrating validator for Thermal T-A6 Stage 1.
+"""Standalone non-hydrating validator for Thermal T-A6.
 
 ``REAL_STAGE1`` validates the complete local real-test artifact when present,
 or returns an explicit BLOCKED result when the owner-confirmed payload is not
-currently materialized.  ``FULL_DATASET`` is reserved for the later Colab
-stage and cannot pass while synthetic TRAIN/VALIDATION evidence is absent.
+currently materialized.  ``FULL_DATASET`` validates the compact Stage-2 bundle
+emitted by the owner-started Colab runner without opening bulk payloads.
 """
 
 from __future__ import annotations
@@ -38,6 +38,7 @@ CORE_JSON = REQUIRED_JSON[:-1]
 CHECKSUMS_NAME = "checksums.sha256"
 PORTABLE_PATH_RE = re.compile(r"^(?!/)(?!~)(?!file://)(?![A-Za-z]:)(?!.*\\).+$")
 MODEL_METRIC_KEYS = {"accuracy", "precision", "recall", "f1", "macro_f1", "confusion_matrix", "prediction_distribution", "loss", "auc"}
+FULL_DATASET_PHASE = "T-A6_COLAB_STAGE2"
 
 
 def canonical_json(value: Any) -> str:
@@ -312,9 +313,87 @@ def _validate_real_artifact(docs: Mapping[str, Any], root: Path, errors: list[di
     return not errors
 
 
+def _validate_full_dataset(
+    *,
+    repo_root: Path,
+    evidence_dir: Path,
+    errors: list[dict[str, str]],
+) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
+    """Validate the live Stage-2 compact bundle and inherited predecessors.
+
+    The compact validator is intentionally called on the current evidence
+    directory rather than trusting its persisted ``validation_result.json``.
+    This keeps the full validator fail-closed if any Stage-2 evidence file is
+    changed after a prior validation run.
+    """
+
+    predecessors = _run_predecessors(repo_root, errors)
+    try:
+        from datasets.thermal.t_a6_stage2 import validate_stage2_bundle
+
+        stage2 = validate_stage2_bundle(evidence_dir, require_validation_result=True)
+    except Exception as exc:
+        stage2 = {
+            "schema_version": "1.0",
+            "phase": FULL_DATASET_PHASE,
+            "evidence_validation": "FAIL",
+            "overall_outcome": "NOT_VERIFIABLE",
+            "full_t_a6_gate": "NOT_YET_COMPLETE",
+            "t_b_authorized": False,
+            "error_count": 1,
+            "warning_count": 0,
+            "errors": [{"code": "STAGE2_VALIDATOR_EXCEPTION", "location": "evidence_dir", "message": str(exc)}],
+            "warnings": [],
+        }
+
+    for item in stage2.get("errors", []):
+        if not isinstance(item, Mapping):
+            _error(errors, "STAGE2_VALIDATION_FAILED", "T-A6_execution_result", str(item))
+            continue
+        _error(
+            errors,
+            f"STAGE2_{item.get('code', 'VALIDATION_FAILED')}",
+            f"T-A6_execution_result/{item.get('location', '')}",
+            str(item.get("message", "Stage-2 compact evidence validation failed.")),
+        )
+    return stage2, predecessors
+
+
 def validate_evidence(*, repo_root: Path = ROOT, evidence_dir: Path | None = None, mode: str = "REAL_STAGE1", check_checksums: bool = True) -> dict[str, Any]:
     repo_root = repo_root.resolve()
     evidence_dir = (evidence_dir or repo_root / EVIDENCE_REL).resolve()
+    if mode == "FULL_DATASET":
+        errors: list[dict[str, str]] = []
+        stage2, predecessors = _validate_full_dataset(repo_root=repo_root, evidence_dir=evidence_dir, errors=errors)
+        predecessor_pass = all(result.get("evidence_validation") == "PASS" for result in predecessors.values()) and len(predecessors) == 6
+        stage2_pass = stage2.get("evidence_validation") == "PASS"
+        sorted_errors = sorted(errors, key=lambda item: (item["code"], item["location"], item["message"]))
+        sorted_warnings = sorted(stage2.get("warnings", []), key=lambda item: (str(item.get("code", "")), str(item.get("location", "")), str(item.get("message", ""))))
+        gate = not sorted_errors and predecessor_pass and stage2_pass
+        predecessor_summary = {
+            phase: {
+                "evidence_validation": result.get("evidence_validation", "FAIL"),
+                "overall_outcome": result.get("overall_outcome", "NOT_VERIFIABLE"),
+            }
+            for phase, result in sorted(predecessors.items())
+        }
+        return {
+            "schema_version": "1.0",
+            "phase": FULL_DATASET_PHASE,
+            "mode": mode,
+            "evidence_validation": "PASS" if gate else "FAIL",
+            "overall_outcome": "PASS_WITH_LIMITATIONS" if gate else "NOT_VERIFIABLE",
+            "stage1_gate": "T_A6_STAGE1_COMPLETE" if stage2_pass and predecessor_pass else "NOT_YET_COMPLETE",
+            "stage1_gate_source": "REAL_EVAL_DEVELOPMENT role independently validated inside the Stage-2 bundle",
+            "full_t_a6_gate": "T_A6_FULL_COMPLETE_WITH_LIMITATIONS" if gate else "NOT_YET_COMPLETE",
+            "t_b_authorized": False,
+            "predecessors": predecessor_summary,
+            "stage2_validation": stage2,
+            "error_count": len(sorted_errors),
+            "warning_count": len(sorted_warnings),
+            "errors": sorted_errors,
+            "warnings": sorted_warnings,
+        }
     errors: list[dict[str, str]] = []
     warnings: list[dict[str, str]] = []
     if mode not in {"REAL_STAGE1", "FULL_DATASET"}:
