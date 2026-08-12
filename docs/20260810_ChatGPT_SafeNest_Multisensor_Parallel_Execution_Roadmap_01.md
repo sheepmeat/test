@@ -1,7 +1,7 @@
 # SafeNest 멀티센서 병렬 A–E 실행 로드맵
 
-- 문서 버전: `01`
-- 기준일: `2026-08-10`
+- 문서 버전: `02`
+- 기준일: `2026-08-13`
 - canonical component root: 이 문서의 상위 저장소에서 `AGENTS.md`가 위치한 디렉터리
 - 적용 대상: mmWave, CO₂, Thermal 온디바이스 AI 데이터·모델·runtime 검증
 - 후속 통합 대상: PIR 보조 신호 및 멀티센서 risk fusion
@@ -27,6 +27,52 @@
 | `I-` | Integration | 공용 provider 계약, replay simulation, risk fusion, Pi 통합 |
 
 기존 mmWave 문서의 `A0`, `B0` 등은 각각 `M-A0`, `M-B0`와 같은 의미다. 기존 본문은 evidence 보존을 위해 이름을 일괄 치환하지 않는다.
+
+## 0.1 팀 저장소 PR·브랜치 증거 오버레이 (2026-08-13 검토)
+
+이 절은 팀 저장소의 실제 센서 구현·실측 자료와 현재 로드맵의 연결점을 기록하기 위한 보강 규칙이다. 검토 기준은 팀 저장소 `main`의 `f3bd342eabcad27dc2c3ecdc16f035b8b13cb153`과 그 시점에 존재한 원격 branch·PR이다. 팀 저장소의 구버전 `ondevice_ai/` 트리는 이번 방향성 판정과 phase evidence의 근거에서 **제외**한다. 이 절은 파일을 자동 이관하라는 지시가 아니며, 미병합 자료를 standalone 학습 데이터로 자동 편입하지 않는다.
+
+### 0.1.1 증거 층위와 병합 상태 해석
+
+팀 저장소 자료는 다음 세 층위로 분리한다.
+
+| 증거 층위 | 대표 경로/자료 | 로드맵에서의 용도 | 금지 해석 |
+|---|---|---|---|
+| standalone offline evidence | 이 저장소의 `datasets/`, `models/`, A/B manifest·validator | 재현 가능한 전처리·split·모델 비교·locked test | 팀 실센서 로그를 근거 없이 A/B에 섞기 |
+| device-domain evidence | 팀 `devices/<sensor>/`의 firmware, raw log, calibration, 분석 보고서 | M-C/C-C/T-C의 실제 입력·장치 결함·domain gap 검증 | public dataset 성능이나 모델 일반화 성능으로 승격 |
+| integration evidence | 팀 `devices/esp32_node/`, `integration/`, 통신 규격·LCD/Pi 자료 | I-0/I-1/I-2의 packet·timestamp·provider·fail-closed 계약 검증 | 통합 노드 동작을 개별 AI 정확도로 주장 |
+
+PR이 `open`이거나 branch에만 존재하면 **후보 evidence**일 뿐 팀 `main`의 승인된 기준이 아니다. 에이전트는 PR/branch 자료를 사용할 때 source branch, head SHA, base SHA, 병합 상태, 원본 checksum, 제한사항을 report에 남긴다. 병합되지 않은 자료는 원본을 보존한 채 C/I 검증 입력으로만 참조하고, standalone A/B artifact를 덮어쓰지 않는다.
+
+### 0.1.2 2026-08-13 원격 PR·branch 확인 결과
+
+다음 목록은 팀 저장소의 `ondevice_ai/` 변경을 제외하고 센서·실행·통합 방향에 영향을 주는 원격 자료만 요약한 것이다.
+
+| 상태 | 대상 | 확인된 사실 | 이 로드맵에서의 인지·처리 |
+|---|---|---|---|
+| `OPEN` | PR #14 `feature/co2-scd40-verification` (`ea925e4`) | SCD40 preflight 30/30 valid, 재시도 baseline 300/300 valid, 호기 상승·복귀 329/360 valid, 결측률 8.61%. 센서 분리 60초 원시 시험은 `NOT VERIFIED`; 보고서 판정은 `PARTIAL` | C-C의 실제 입력·결측·재연결 evidence로 참조한다. 분리·stale·reconnect 계약이 끝나기 전 C-C 완료나 최종 CO₂ 증거로 승격하지 않는다 |
+| `OPEN` | PR #15 `feature/thermal-v5-real-validation` (`e4cb7d8`) | 실제 열화상 raw frame 수신·62×80 parse·TFLite·fail-closed·UDP 경로 검증 자료가 있다. TCP 단계의 brownout/655.3°C 오류와 UDP 전환이 기록되어 있다. 문서에는 Thermal-90/MI48 계열과 Thermal-44 명칭이 혼재한다 | T-C의 runtime/domain-gap 입력으로 보존한다. `ALL PASS` 문구만으로 T-B 학습 성능·낙상 일반화·T-C 완료를 인정하지 않는다. 센서 모델명, 원시 frame 단위·calibration·orientation·프로토콜을 먼저 reconcile한다 |
+| `OPEN` | PR #12 `feature/esp32-lcd-integration` (`c9f4583`) | ESP32 4센서 수집과 Pi/LCD 상태 전달을 실제 장치에서 확인했다. 다만 Thermal은 약 70% 고정/무효 pixel 때문에 full-frame stream을 끄고 `thermal_max_c`만 전송하며, 호흡수 noise와 통신 조건도 기록되어 있다 | I-0/I-1 packet·validity·timestamp·runtime evidence로 참조한다. 이 경로의 scalar thermal telemetry를 full-frame T-A/T-B 입력과 동일시하지 않는다 |
+| `OPEN` | PR #11 `agent/add-competition-package` (`4ac9878`) | ESP32/Pi 실행 패키지와 통신·설치 문서를 추가한다. 새로운 학습 데이터나 센서 정확도 evidence는 추가하지 않는다 | I-6 handoff/운용 참고로만 사용한다. A/B/C 성능 근거로 사용하지 않는다 |
+| `NO PR` | `codex/mmwave-20rpm-root-cause` (`0e8538c`), `codex/mmwave-phase-integration` (`b0d3c95`) | MR60 실제 로그·phase·presence·window 자료와 20 rpm 저-SNR 원인 분석이 있다. 20 rpm 오차의 직접 원인은 TFLite보다 입력 품질과 estimator validity gate로 분석되었다 | M-C domain/gap 분석 및 M-D 수집 설계의 근거로 보존한다. production 변경이나 A/B 학습 편입은 별도 review·회귀검증 후 결정한다 |
+
+PR #13의 `ondevice_ai` 동기화 변경은 이 오버레이의 범위에서 제외한다. PR 설명에 언급된 `feature/pir-verification`은 이 검토 시점 원격 branch 목록에서 확인되지 않았으므로 승인된 PIR evidence로 간주하지 않는다.
+
+### 0.1.3 센서별 필수 인지 사항
+
+- **mmWave**: 팀 MR60 자료는 presence·distance·raw phase·timestamp가 있는 장치 domain 자료다. 단일 피험자·제한된 조건, 저진폭/phase stale·presence loss·퇴실 hysteresis가 존재한다. `breath_phase`의 단위·sampling·window·gap·quality gate를 standalone canonical signal과 먼저 매핑하고, 실측 로그는 무작위로 학습에 섞지 않는다. A4의 voluntary breath-hold label은 SafeNest proxy이며 clinical apnea가 아니다.
+- **CO₂**: PR #14의 SCD40 ppm 시계열은 실제 장치 증거지만 occupancy/환경 변화 자료이지 질식·유해가스 ground truth가 아니다. UCI occupancy target과 SCD40 safety rule을 분리한다. 첫 baseline 실패와 호기 시험의 결측을 숨기지 않고, 센서 분리·stale·reconnect를 완료한 뒤 C-C를 잠근다.
+- **Thermal**: PR #15의 full-frame path와 PR #12의 `thermal_max_c` scalar path는 서로 다른 runtime contract다. Thermal-90/MI48/Thermal-44 명칭, 62×80 geometry, raw uint16→°C 변환, calibration, orientation, invalid pixel 정책을 하나의 provenance로 reconcile하기 전에는 서로의 결과를 합치지 않는다. 자세/`LYING` proxy는 실제 낙상 사건이나 임상 성능을 의미하지 않는다.
+- **PIR**: 독립 AI 재학습 트랙이 아니라 mmWave 재실·퇴실과 위험 rule을 보조하는 binary evidence다. 별도 branch/실측이 승인되기 전에는 I-0 계약·fault/replay 대상으로만 다룬다.
+- **통합**: ESP32 `safenest.telemetry.v1`, TCP 9000, thermal frame type 2, `thermal_max_c` scalar, `valid`/`SensorState`/stale semantics를 I-0 inventory에 함께 기록한다. 센서별 offline candidate가 고정되기 전에 learned fusion을 최적화하지 않는다.
+
+### 0.1.4 PR·branch 자료를 phase에 연결하는 추가 gate
+
+1. `M-C`, `C-C`, `T-C`는 팀 PR의 “실제 동작 확인”을 그대로 완료로 복사하지 않고, raw source·checksum·unit·timestamp·calibration·failure registry를 standalone canonical contract와 대조한다.
+2. 실제 하드웨어 log는 immutable raw evidence로 보존하고, 재생(replay)용 파생 파일을 별도 namespace로 만든다. 원본을 relabel하거나 overwrite하지 않는다.
+3. C phase에서 발견한 통신 결측, dead pixel, stale phase, low-SNR, sensor identity mismatch가 모델 문제인지 입력/장치 문제인지 분리하여 기록한다. 입력 문제를 곧바로 재학습 사유로 쓰지 않는다.
+4. 팀 PR이 병합되었더라도 `devices/`의 device-domain evidence와 standalone `datasets/`의 A/B evidence를 자동으로 합치지 않는다. 병합은 source/base SHA와 충돌·ownership 검토가 끝난 뒤 별도 handoff에서 수행한다.
+5. 최종 흐름은 변경하지 않는다: **standalone A/B 재현성 확보 → 실제 장치 C 검증 → 측정된 gap만 D에서 보완 → I에서 replay·rule fusion·Pi 검증**.
 
 ## 1. 현재 출발 상태
 
