@@ -16,6 +16,7 @@ if str(ROOT / "scripts") not in sys.path:
     sys.path.insert(0, str(ROOT / "scripts"))
 
 from mmwave_m_b10a_selection import REQUIRED_OUTPUTS, SEEDS  # noqa: E402
+from mmwave_m_b10b_baseline_preprocessing import BaselinePreprocessingError, prepare_v01, prepare_v02  # noqa: E402
 from validate_mmwave_m_b10a import (  # noqa: E402
     NEGATIVE_CASES,
     MB10AValidationError,
@@ -89,6 +90,48 @@ class TestMMWaveMB10A(unittest.TestCase):
         self.assertEqual(len(registry["baselines"]), 2)
         self.assertTrue(all(row["pool_eligible"] is False for row in registry["baselines"]))
         self.assertTrue(all(row["exclusion_reason"] for row in registry["baselines"]))
+
+    def test_baseline_executable_preprocessing_contracts_are_frozen(self) -> None:
+        registry = json.loads((OUT / "historical_baseline_registry.json").read_text())
+        contracts = {row["baseline_id"]: row["executable_preprocessing_contract"] for row in registry["baselines"]}
+        self.assertEqual(
+            contracts["mmwave_resp_int8"]["steps"][2]["operation"],
+            "FIXED_Z_SCORE",
+        )
+        self.assertEqual(
+            [step["operation"] for step in contracts["mmwave_resp_int8_v0.2.0_candidate"]["steps"]],
+            ["VALIDATE_WINDOW", "LINEAR_DETREND", "BUTTERWORTH_BANDPASS_ZERO_PHASE", "FIXED_Z_SCORE", "CLIP", "RESHAPE", "AFFINE_INT8_QUANTIZE"],
+        )
+        for contract in contracts.values():
+            self.assertEqual(contract["execution_status"], "EXECUTABLE_COMPATIBILITY_BENCHMARK")
+            self.assertEqual(contract["invalid_input_policy"], "FAIL_CLOSED_NO_PREDICTION")
+            self.assertEqual(contract["fallback_policy"], "NO_HEURISTIC_FALLBACK")
+            self.assertEqual(contract["preprocessing_fit_policy"], "NO_FIT_DURING_M-B10B")
+
+    def test_baseline_executors_are_fail_closed_and_deterministic(self) -> None:
+        window = [float(index) / 100.0 for index in range(300)]
+        for executor in (prepare_v01, prepare_v02):
+            first = executor(window)
+            second = executor(window)
+            self.assertEqual(first["contract_id"], second["contract_id"])
+            self.assertEqual(first["input_int8"].tolist(), second["input_int8"].tolist())
+            self.assertEqual(first["input_int8"].shape, (1, 300, 1))
+            self.assertEqual(first["input_int8"].dtype.name, "int8")
+        with self.assertRaises(BaselinePreprocessingError):
+            prepare_v01([0.0] * 299)
+        with self.assertRaises(BaselinePreprocessingError):
+            prepare_v02([float("nan")] * 300)
+
+    def test_review_refinement_sources_are_explicit(self) -> None:
+        evidence = json.loads((OUT / "candidate_selection_evidence.json").read_text())
+        b8 = json.loads((ROOT / "datasets/mmwave/manifests/M-B8_mac_latency_footprint/cross_seed_latency_summary.json").read_text())["cross_seed_metrics"]
+        for row in evidence["candidate_evidence"]:
+            self.assertEqual(row["eligibility_evidence"]["E6"]["source_paths"], ["datasets/mmwave/manifests/M-B9_mock_e2e/fallback_audit.json", "datasets/mmwave/manifests/M-B9_mock_e2e/scenario_results.json"])
+            self.assertTrue(row["m_b9_runtime_identity"]["prediction_identity"]["seed_gate"]["exact"])
+            if row["seed"] == 42:
+                self.assertIn("N_VALID_EXPLICIT_FINALIST", row["m_b9_runtime_identity"]["valid_finalist_fallback"]["scenario_ids"])
+            seed = str(row["seed"])
+            self.assertEqual(row["ranking_metrics"]["m_b8_pipeline_p99_ns"], b8["PREPROCESSING_QUANTIZATION_INVOKE"]["per_seed_pooled_statistics"][seed]["statistics_ns"]["p99"])
 
     def test_no_sample_level_locked_test_fields_or_local_paths(self) -> None:
         for path in OUT.glob("*.json"):

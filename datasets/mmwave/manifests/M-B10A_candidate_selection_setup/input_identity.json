@@ -266,6 +266,26 @@
       "sha256": "68762bab9f03fbed54d7176159d45833f3b560afbfc248c00ae2f5926a586e0c"
     },
     {
+      "bytes": 5309,
+      "path": "datasets/mmwave/manifests/M-B9_mock_e2e/fallback_audit.json",
+      "sha256": "0276fd504e07746b832dce1e59d236d4a0fa8b7cb8bbac7ae8bd7834dc73590b"
+    },
+    {
+      "bytes": 341094,
+      "path": "datasets/mmwave/manifests/M-B9_mock_e2e/scenario_results.json",
+      "sha256": "26f924e3d807a39dd90ea4b7de03df970c8ffb1d43c2da2bc3d026762cce925d"
+    },
+    {
+      "bytes": 249513,
+      "path": "datasets/mmwave/manifests/M-B9_mock_e2e/scenario_results.jsonl",
+      "sha256": "eaf9ab473a08e8893defccb4c7dfdd78e0ebb9795f6f300a81d81939fc90de61"
+    },
+    {
+      "bytes": 41309,
+      "path": "datasets/mmwave/manifests/M-B9_mock_e2e/inference_result_audit.json",
+      "sha256": "dcf838cc5ef7cb286012a8b73a2af724459f50820c7f27ef859e368f03b01586"
+    },
+    {
       "bytes": 1398,
       "path": "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_manifest_contract.json",
       "sha256": "c47dff5a1075929a418538442def189ac0c6ef977276a0d90646b920f8355cd0"
@@ -319,6 +339,31 @@
       "bytes": 11864,
       "path": "datasets/mmwave/splits/mmwave_real_subject_split_v1.json",
       "sha256": "a1996ea00a1d5066eae6d25f022d04137085434d4768e27cbebcdad4e0385baa"
+    },
+    {
+      "bytes": 7363,
+      "path": "models/model_manifest.json",
+      "sha256": "ef0946008af944e424a83c1dd53a66c04e9fc71228843a33f3fb79a227a6921d"
+    },
+    {
+      "bytes": 594,
+      "path": "models/mmwave/sensor_stats_metadata_v0.1.0.json",
+      "sha256": "a875a8369ff7adf5477cec009b99c0c6d0fbb8b0e60e5b0b07a551f3780d2e37"
+    },
+    {
+      "bytes": 4443,
+      "path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+      "sha256": "36039a6cffbc57162dbb4c720034da6dcfa49ef2f2d33238bee65a62aa133127"
+    },
+    {
+      "bytes": 410,
+      "path": "models/mmwave/training_config.json",
+      "sha256": "a36d669c487899317f5a97e40670b5ae004322ae7779706ae8df8806d6791eba"
+    },
+    {
+      "bytes": 4058,
+      "path": "scripts/mmwave_m_b10b_baseline_preprocessing.py",
+      "sha256": "8ca87f457d0a151cffa2da23ae9ab9d87764b144fa826b91444776f3dc58ec4f"
     },
     {
       "bytes": 2190,
@@ -376,5 +421,5 @@
   "phase_id": "M-B10A",
   "source_scope": "FROZEN_REAL_DATA_VALIDATION_ONLY",
   "title": "Pre-LOCKED_TEST real-data candidate-selection setup input identity lock",
-  "total_inputs": 73
+  "total_inputs": 82
 }

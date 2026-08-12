@@ -314,6 +314,70 @@ def _independent_subject_summary(source_root: Path, seed: int) -> dict[str, Any]
     }
 
 
+_VALID_M_B9_FINALIST_SCENARIOS = ("A_NORMAL", "B_RAPID_OR_ABNORMAL", "C_APNEA")
+
+
+def _independent_runtime_prediction_gate(seed: int, prediction_identity: dict[str, Any]) -> dict[str, Any]:
+    """Recompute the seed-local M-B9 direct/runtime prediction identity gate."""
+    rows = [row for row in prediction_identity.get("rows", []) if int(row.get("seed", -1)) == seed]
+    row_exact = all(
+        row.get("output_int8_exact") is True
+        and row.get("probabilities_exact") is True
+        and row.get("top1_exact") is True
+        for row in rows
+    )
+    return {
+        "row_count": len(rows),
+        "expected_row_count": len(LABELS),
+        "aggregate_exact": prediction_identity.get("all_int8_outputs_exact") is True and prediction_identity.get("all_probability_vectors_exact") is True and prediction_identity.get("all_top1_exact") is True,
+        "row_exact": row_exact,
+        "exact": len(rows) == len(LABELS) and row_exact and prediction_identity.get("all_int8_outputs_exact") is True and prediction_identity.get("all_probability_vectors_exact") is True and prediction_identity.get("all_top1_exact") is True,
+    }
+
+
+def _independent_valid_finalist_fallback_gate(seed: int, fallback_audit: dict[str, Any], runtime_identity: dict[str, Any], scenario_results: dict[str, Any]) -> dict[str, Any]:
+    """Recompute E6 from M-B9 valid finalist records, excluding fault diagnostics."""
+    runtime_variant = next((row for row in runtime_identity.get("variants", []) if int(row.get("seed", -1)) == seed), None)
+    expected_model_id = runtime_variant.get("model_id") if runtime_variant else None
+    expected_scenarios = list(_VALID_M_B9_FINALIST_SCENARIOS)
+    if seed == 42:
+        expected_scenarios.append("N_VALID_EXPLICIT_FINALIST")
+    rows = [
+        row for row in fallback_audit.get("records", [])
+        if row.get("seed") is not None and int(row.get("seed")) == seed and row.get("scenario_id") in expected_scenarios
+    ]
+    record_exact = all(
+        row.get("model_id") == expected_model_id
+        and row.get("valid") is True
+        and row.get("fallback_used") is False
+        and row.get("reason") is None
+        and row.get("score_source") == "MODEL_PREDICTION"
+        for row in rows
+    )
+    runtime_rows = [
+        row for row in scenario_results.get("records", [])
+        if row.get("seed") is not None and int(row.get("seed")) == seed and row.get("scenario_id") in expected_scenarios
+    ]
+    runtime_exact = all(
+        row.get("mmwave_result", {}).get("valid") is True
+        and row.get("mmwave_result", {}).get("metadata", {}).get("model_id") == expected_model_id
+        and row.get("mmwave_result", {}).get("metadata", {}).get("fallback_used") is False
+        and row.get("mmwave_result", {}).get("metadata", {}).get("fallback_reason") is None
+        and row.get("mmwave_result", {}).get("metadata", {}).get("score_source") == "MODEL_PREDICTION"
+        for row in runtime_rows
+    )
+    return {
+        "record_count": len(rows),
+        "expected_record_count": len(expected_scenarios),
+        "scenario_ids": sorted(row.get("scenario_id") for row in rows),
+        "record_exact": record_exact,
+        "audit_summary_exact": fallback_audit.get("valid_finalist_records_have_no_fallback") is True,
+        "runtime_record_count": len(runtime_rows),
+        "runtime_exact": runtime_exact,
+        "exact": len(rows) == len(expected_scenarios) and {row.get("scenario_id") for row in rows} == set(expected_scenarios) and record_exact and fallback_audit.get("valid_finalist_records_have_no_fallback") is True and len(runtime_rows) == len(expected_scenarios) and {row.get("scenario_id") for row in runtime_rows} == set(expected_scenarios) and runtime_exact,
+    }
+
+
 def _guard_structural_readiness(source_root: Path) -> dict[str, Any]:
     path = _source_path(source_root, "scripts/mmwave_phase_b_access.py")
     text = path.read_text(encoding="utf-8")
@@ -364,6 +428,8 @@ def _validate_candidate_pool(source_root: Path, artifacts: dict[str, Any], label
     b8_cross = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B8_mac_latency_footprint/cross_seed_latency_summary.json"))["cross_seed_metrics"]
     b8_footprint = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B8_mac_latency_footprint/artifact_footprint.json"))["strict_int8_artifacts"]
     b9_prediction = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_prediction_identity.json"))
+    b9_fallback = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/fallback_audit.json"))
+    b9_scenarios = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/scenario_results.json"))
     recomputed_candidates: list[dict[str, Any]] = []
     for seed in SEEDS:
         candidate = next((row for row in by_id.values() if int(row.get("seed", -1)) == seed), None)
@@ -429,14 +495,16 @@ def _validate_candidate_pool(source_root: Path, artifacts: dict[str, Any], label
         runtime_variant = next((row for row in b9_runtime.get("variants", []) if int(row.get("seed", -1)) == seed), None)
         if runtime_variant is None:
             raise MB10AValidationError(f"M-B10A_RUNTIME_VARIANT_MISSING:{seed}")
+        runtime_prediction_gate = _independent_runtime_prediction_gate(seed, b9_prediction)
+        finalist_fallback_gate = _independent_valid_finalist_fallback_gate(seed, b9_fallback, b9_runtime, b9_scenarios)
         clean_class_collapse = bool(clean["class_collapse"]["collapsed"])
         gates = {
             "E1": True,  # input identity and upstream path/hash checks are performed before this function
             "E2": bool(actual["flex_select_absent"]),
             "E3": not clean_class_collapse,
             "E4": not bool(b6_collapses[f"{ARCHITECTURE_ID}_seed_{seed}"].get("new_collapse_a_to_c") or b6_collapses[f"{ARCHITECTURE_ID}_seed_{seed}"].get("new_collapse_b_to_c")),
-            "E5": runtime_variant.get("path") == model_path and runtime_variant.get("actual_sha256") == actual["sha256"] and int(runtime_variant.get("actual_bytes", -1)) == actual["bytes"],
-            "E6": int(b7_summary.get("invalid_or_fallback_sample_count", -1)) == 0 and int(_independent_metrics(source_root, seed, "M-B7_CLEAN", labels)["evaluated_sample_count"]) >= 79,
+            "E5": runtime_variant.get("path") == model_path and runtime_variant.get("actual_sha256") == actual["sha256"] and int(runtime_variant.get("actual_bytes", -1)) == actual["bytes"] and runtime_prediction_gate["exact"],
+            "E6": finalist_fallback_gate["exact"],
             "E7": b1.get("selected_profile_id") == "M-B1_D0_B1_Z1" and b1.get("selected_profile_name") == "BPF_ZSCORE" and runtime_pre_exact,
             "E8": (
                 a5_summary.get("validation_success") is True
@@ -463,7 +531,7 @@ def _validate_candidate_pool(source_root: Path, artifacts: dict[str, Any], label
             "moderate_max_input_saturation_ratio": max(float(row["input_saturation_ratio"]) for row in moderate.values()),
             "m_b6_positive_float_to_int8_macro_f1_degradation": float(b6_pairs[f"{ARCHITECTURE_ID}_seed_{seed}"]["a_to_c"]["positive_macro_f1_degradation"]),
             "m_b6_keras_to_int8_top1_agreement": float(b6_pairs[f"{ARCHITECTURE_ID}_seed_{seed}"]["a_to_c"]["top1_agreement"]),
-            "m_b8_pipeline_p99_ns": float(candidate["ranking_metrics"]["m_b8_pipeline_p99_ns"]),
+            "m_b8_pipeline_p99_ns": expected_pipeline_p99,
             "tflite_bytes": int(actual["bytes"]),
             "training_seed": seed,
         }
@@ -547,12 +615,85 @@ def _validate_selected_candidate(source_root: Path, output_dir: Path, artifacts:
     runtime = selected.get("m_b9_runtime_identity", {}).get("model_identity", {})
     if runtime.get("actual_sha256") != actual["sha256"] or runtime.get("path") != MODEL_PATHS[int(candidate["seed"])]:
         raise MB10AValidationError("M-B10A_SELECTED_RUNTIME_MISMATCH")
+    b9_prediction = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_prediction_identity.json"))
+    b9_runtime = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_model_identity.json"))
+    b9_fallback = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/fallback_audit.json"))
+    b9_scenarios = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/scenario_results.json"))
+    seed = int(candidate["seed"])
+    if _independent_runtime_prediction_gate(seed, b9_prediction)["exact"] is not True or _independent_valid_finalist_fallback_gate(seed, b9_fallback, b9_runtime, b9_scenarios)["exact"] is not True:
+        raise MB10AValidationError("M-B10A_SELECTED_RUNTIME_PREDICTION_OR_FALLBACK_GATE")
     evidence_sha = _sha256(output_dir / "candidate_selection_evidence.json")
     if selected.get("selection_evidence_sha256") != evidence_sha:
         raise MB10AValidationError("M-B10A_SELECTED_EVIDENCE_SHA_MISMATCH")
     required_limitations = {"INITIALIZATION_SEED_SENSITIVITY", "MAC_ONLY_LATENCY", "OFFLINE_PERTURBATION_ONLY", "MOCK_E2E_ONLY", "NO_MR60_VALIDATION", "APNEA_PROXY_SCOPE", "LOCKED_TEST_NOT_EVALUATED"}
     if not required_limitations.issubset(set(selected.get("limitations", []))):
         raise MB10AValidationError("M-B10A_SELECTED_LIMITATIONS_INCOMPLETE")
+
+
+def _validate_executable_preprocessing_contract(source_root: Path, row: dict[str, Any], manifest_model: dict[str, Any], model_key: str) -> None:
+    contract = row.get("executable_preprocessing_contract")
+    expected_id = "M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1" if model_key == "mmwave" else "M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1"
+    if not isinstance(contract, dict) or row.get("preprocessing_contract_id") != expected_id or contract.get("contract_id") != expected_id:
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_ID:{row.get('baseline_id')}")
+    if contract.get("schema_version") != "M-B10B_BASELINE_EXECUTABLE_PREPROCESSING_CONTRACT_V1" or contract.get("execution_status") != "EXECUTABLE_COMPATIBILITY_BENCHMARK" or contract.get("execution_scope") != "LOCKED_TEST_ONLY_AFTER_EXPLICIT_M-B10B_AUTHORIZATION":
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_STATUS:{row.get('baseline_id')}")
+    executor = contract.get("executor", {})
+    executor_path = _source_path(source_root, executor.get("path", ""))
+    expected_entrypoint = "prepare_v01" if model_key == "mmwave" else "prepare_v02"
+    if executor.get("path") != "scripts/mmwave_m_b10b_baseline_preprocessing.py" or executor.get("entrypoint") != expected_entrypoint or not executor_path.is_file() or executor.get("sha256") != _sha256(executor_path):
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_EXECUTOR:{row.get('baseline_id')}")
+    if contract.get("source_split") != "LOCKED_TEST" or contract.get("invalid_input_policy") != "FAIL_CLOSED_NO_PREDICTION" or contract.get("fallback_policy") != "NO_HEURISTIC_FALLBACK" or contract.get("preprocessing_fit_policy") != "NO_FIT_DURING_M-B10B":
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_POLICY:{row.get('baseline_id')}")
+    source_window = contract.get("source_window_contract", {})
+    if source_window.get("path") != "datasets/mmwave/processed/mmwave_canonical_real_v1.npy" or source_window.get("sample_rate_hz") != 10.0 or source_window.get("window_samples") != 300 or source_window.get("window_seconds") != 30.0 or source_window.get("input_shape") != [300] or source_window.get("input_dtype") != "float32" or source_window.get("input_semantic") != "resp_phase_unwrapped_clutter_removed":
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_WINDOW:{row.get('baseline_id')}")
+    if contract.get("class_map") != {"0": "NORMAL", "1": "RAPID_OR_ABNORMAL", "2": "APNEA"}:
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_CLASS_MAP:{row.get('baseline_id')}")
+    model_identity = contract.get("model_identity", {})
+    model_path = _source_path(source_root, manifest_model["path"])
+    if model_identity.get("model_id") != manifest_model.get("model_id") or model_identity.get("path") != manifest_model.get("path") or model_identity.get("sha256") != _sha256(model_path) or int(model_identity.get("bytes", -1)) != model_path.stat().st_size:
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_MODEL:{row.get('baseline_id')}")
+    actual_model = _inspect_tflite(source_root, manifest_model["path"])
+    input_contract = model_identity.get("input", {})
+    output_contract = model_identity.get("output", {})
+    if input_contract.get("shape") != actual_model["input_shape"] or input_contract.get("dtype") != actual_model["input_dtype"] or not _close(float(input_contract.get("scale")), actual_model["input_scale"], 1e-12) or int(input_contract.get("zero_point", 999)) != actual_model["input_zero_point"] or output_contract.get("shape") != actual_model["output_shape"] or output_contract.get("dtype") != actual_model["output_dtype"] or not _close(float(output_contract.get("scale")), actual_model["output_scale"], 1e-12) or int(output_contract.get("zero_point", 999)) != actual_model["output_zero_point"]:
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_TENSOR:{row.get('baseline_id')}")
+    metadata_path = manifest_model.get("metadata_path")
+    sources = contract.get("metadata_sources", [])
+    metadata_file = _source_path(source_root, metadata_path)
+    if len(sources) != 1 or sources[0].get("path") != metadata_path or sources[0].get("sha256") != _sha256(metadata_file) or int(sources[0].get("bytes", -1)) != metadata_file.stat().st_size:
+        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_METADATA:{row.get('baseline_id')}")
+    steps = contract.get("steps", [])
+    operations = [step.get("operation") for step in steps]
+    if model_key == "mmwave":
+        metadata = _load_json(metadata_file)
+        if operations != ["VALIDATE_WINDOW", "IDENTITY_SEMANTIC_ADAPTER", "FIXED_Z_SCORE", "RESHAPE", "AFFINE_INT8_QUANTIZE"]:
+            raise MB10AValidationError("M-B10A_BASELINE_V0_1_STEP_SEQUENCE")
+        zscore = steps[2].get("parameters", {})
+        if not _close(float(zscore.get("mean")), float(metadata["mean"]), 1e-12) or not _close(float(zscore.get("std")), float(metadata["std"]), 1e-12) or zscore.get("fit_split") != "NONE_AT_M-B10B":
+            raise MB10AValidationError("M-B10A_BASELINE_V0_1_STATS")
+        if contract.get("native_preprocessing_status") != "UNKNOWN_NOT_CLAIMED" or contract.get("native_reproduction_claim") is not False or not contract.get("unknown_native_steps"):
+            raise MB10AValidationError("M-B10A_BASELINE_V0_1_NATIVE_DISCLOSURE")
+        if contract.get("interpretation") != "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK":
+            raise MB10AValidationError("M-B10A_BASELINE_V0_1_INTERPRETATION")
+    else:
+        metadata = _load_json(metadata_file)
+        training_config = _load_json(_source_path(source_root, "models/mmwave/training_config.json"))
+        if operations != ["VALIDATE_WINDOW", "LINEAR_DETREND", "BUTTERWORTH_BANDPASS_ZERO_PHASE", "FIXED_Z_SCORE", "CLIP", "RESHAPE", "AFFINE_INT8_QUANTIZE"]:
+            raise MB10AValidationError("M-B10A_BASELINE_V0_2_STEP_SEQUENCE")
+        bpf = steps[2].get("parameters", {})
+        if bpf.get("sample_rate_hz") != 10.0 or bpf.get("lowcut_hz") != 0.1 or bpf.get("highcut_hz") != 0.5 or bpf.get("order") != 4:
+            raise MB10AValidationError("M-B10A_BASELINE_V0_2_BPF")
+        zscore = steps[3].get("parameters", {})
+        if not _close(float(zscore.get("mean")), float(metadata["scaler"]["mean"]), 1e-12) or not _close(float(zscore.get("std")), float(metadata["scaler"]["std"]), 1e-12) or zscore.get("fit_split") != "NONE_AT_M-B10B":
+            raise MB10AValidationError("M-B10A_BASELINE_V0_2_STATS")
+        clip = steps[4].get("parameters", {})
+        if clip.get("min") != training_config["preprocessor"]["clip_min"] or clip.get("max") != training_config["preprocessor"]["clip_max"]:
+            raise MB10AValidationError("M-B10A_BASELINE_V0_2_CLIP")
+        if contract.get("native_preprocessing_status") != "RECORDED_EXPERIMENTAL_PIPELINE_METADATA" or contract.get("native_reproduction_claim") is not False or not contract.get("unknown_native_steps"):
+            raise MB10AValidationError("M-B10A_BASELINE_V0_2_NATIVE_DISCLOSURE")
+        if contract.get("interpretation") != "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK":
+            raise MB10AValidationError("M-B10A_BASELINE_V0_2_INTERPRETATION")
 
 
 def _validate_baselines(source_root: Path, registry: dict[str, Any], pool: dict[str, Any]) -> None:
@@ -571,11 +712,12 @@ def _validate_baselines(source_root: Path, registry: dict[str, Any], pool: dict[
         if not row.get("exclusion_reason"):
             raise MB10AValidationError(f"M-B10A_BASELINE_REASON:{baseline_id}")
         if baseline_id == "mmwave_resp_int8":
-            expected = ("HISTORICAL_REPOSITORY_MODEL_WITH_CLASS_COLLAPSE", "EXACT_NATIVE_HISTORICAL_PREPROCESSING_UNKNOWN", False, "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK")
+            expected = ("HISTORICAL_REPOSITORY_MODEL_WITH_CLASS_COLLAPSE", "EXECUTABLE_COMPATIBILITY_CONTRACT_NATIVE_UNKNOWN", False, "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK")
         else:
-            expected = ("SYNTHETIC_TRAINING_EXTERNAL_COMPATIBILITY_ONLY", "SYNTHETIC_PIPELINE_METADATA_ONLY", False, "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK")
+            expected = ("SYNTHETIC_TRAINING_EXTERNAL_COMPATIBILITY_ONLY", "EXECUTABLE_COMPATIBILITY_CONTRACT_METADATA_FROZEN", False, "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK")
         if (row.get("lineage_status"), row.get("preprocessing_status"), row.get("exact_native_preprocessing_known"), row.get("final_test_interpretation")) != expected:
             raise MB10AValidationError(f"M-B10A_BASELINE_LINEAGE_LABEL:{baseline_id}")
+        _validate_executable_preprocessing_contract(source_root, row, manifest[key], key)
     pool_ids = set(pool.get("candidate_ids", []))
     if any("mmwave_resp_int8" in candidate_id for candidate_id in pool_ids):
         raise MB10AValidationError("M-B10A_HISTORICAL_BASELINE_IN_POOL")
@@ -604,6 +746,22 @@ def _validate_locked_protocol(source_root: Path, artifacts: dict[str, Any], sele
     post_test = contract.get("post_test_policy", {})
     if any(post_test.get(key) is not False for key in ("selection_or_tuning_after_access", "retraining_after_access", "recalibration_after_access", "threshold_tuning_after_access")) or post_test.get("new_experiment_cycle_required_for_any_improvement") is not True:
         raise MB10AValidationError("M-B10A_POST_TEST_POLICY_INCOMPLETE")
+    planned_models = contract.get("planned_models", [])
+    if len(planned_models) != 3:
+        raise MB10AValidationError("M-B10A_PLANNED_MODEL_CONTRACT_COUNT")
+    baseline_registry = artifacts["historical_baseline_registry.json"].get("baselines", [])
+    registry_by_id = {row.get("baseline_id"): row for row in baseline_registry}
+    for planned in planned_models:
+        if planned.get("role") == "HISTORICAL_BASELINE_ONLY":
+            registered = registry_by_id.get(planned.get("model_id"))
+            if registered is None or planned.get("preprocessing_contract_id") != registered.get("preprocessing_contract_id") or planned.get("executable_preprocessing_contract") != registered.get("executable_preprocessing_contract"):
+                raise MB10AValidationError(f"M-B10A_PLANNED_BASELINE_CONTRACT_MISMATCH:{planned.get('model_id')}")
+        elif planned.get("role") == "SELECTED_NEW_REAL_DATA_CANDIDATE":
+            executable = planned.get("executable_preprocessing_contract", {})
+            if planned.get("preprocessing_contract_id") != "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1" or executable.get("execution_status") != "FROZEN_RUNTIME_IDENTITY_FROM_M-B9" or executable.get("invalid_input_policy") != "FAIL_CLOSED_NO_PREDICTION" or executable.get("fallback_policy") != "NO_HEURISTIC_FALLBACK" or executable.get("fit_split") != "TRAIN":
+                raise MB10AValidationError("M-B10A_SELECTED_PREPROCESSING_CONTRACT_INCOMPLETE")
+        else:
+            raise MB10AValidationError("M-B10A_PLANNED_MODEL_ROLE_INVALID")
     mechanism = readiness.get("final_access_mechanism", {})
     actual_mechanism = _guard_structural_readiness(source_root)
     if readiness.get("final_access_mechanism_ready") is not True or mechanism != actual_mechanism or actual_mechanism.get("ready") is not True or actual_mechanism.get("final_accessor_called") is not False:
@@ -618,6 +776,17 @@ def _validate_summary(artifacts: dict[str, Any], ranking: dict[str, Any], rule_s
         raise MB10AValidationError("M-B10A_SUMMARY_LOCKED_TEST_CONTAMINATION")
     if summary.get("model_trainings") != 0 or summary.get("model_conversions") != 0 or summary.get("formal_m_b8_latency_measurement_rerun") is not False or summary.get("final_access_mechanism_ready") is not True:
         raise MB10AValidationError("M-B10A_UNAUTHORIZED_WORK")
+    expected_closed = {
+        "HISTORICAL_BASELINE_EXECUTABLE_PREPROCESSING_CONTRACT",
+        "M_B9_VALID_FINALIST_FALLBACK_E6",
+        "M_B9_RUNTIME_PREDICTION_IDENTITY_E5",
+        "M_B8_PIPELINE_P99_SOURCE_RECONSTRUCTION",
+    }
+    if set(summary.get("review_refinements_closed", [])) != expected_closed:
+        raise MB10AValidationError("M-B10A_REVIEW_REFINEMENTS_NOT_CLOSED")
+    exceptions = artifacts["exceptions.json"]
+    if set(item.get("id") for item in exceptions.get("closed_review_refinements", [])) != expected_closed or any(item.get("status") != "CLOSED" for item in exceptions.get("closed_review_refinements", [])):
+        raise MB10AValidationError("M-B10A_EXCEPTION_CLOSURE_NOT_BOUND")
 
 
 def _run_upstream_validators(source_root: Path) -> None:

@@ -29,6 +29,12 @@
   "model_trainings": 0,
   "phase_id": "M-B10A",
   "phase_title": "Pre-LOCKED_TEST Real-Data Offline Candidate Selection Setup",
+  "review_refinements_closed": [
+    "HISTORICAL_BASELINE_EXECUTABLE_PREPROCESSING_CONTRACT",
+    "M_B9_VALID_FINALIST_FALLBACK_E6",
+    "M_B9_RUNTIME_PREDICTION_IDENTITY_E5",
+    "M_B8_PIPELINE_P99_SOURCE_RECONSTRUCTION"
+  ],
   "selected_candidate_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120",
   "selection_epsilon": 1e-05,
   "selection_rule_sha256": "cddf98cbcf2231075bcfc02db2223fbc80fa33f7c52e23820609b5a273046f84",

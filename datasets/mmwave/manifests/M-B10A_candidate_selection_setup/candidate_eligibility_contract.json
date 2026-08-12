@@ -34,14 +34,14 @@
     },
     {
       "hard_gate": true,
-      "name": "M-B9 runtime identity matches M-B6 artifact",
-      "pass_condition": "Runtime identity path, SHA, bytes, and model version match the M-B6 Stage-C artifact.",
+      "name": "M-B9 runtime and prediction identity match M-B6 artifact",
+      "pass_condition": "Runtime path, SHA, bytes, model version, and direct/runtime INT8 output, probability, and Top-1 identities match the M-B6 Stage-C artifact.",
       "rule_id": "E5"
     },
     {
       "hard_gate": true,
       "name": "Valid finalist with no heuristic fallback",
-      "pass_condition": "M-B7 clean evidence has zero invalid/fallback samples and model prediction source.",
+      "pass_condition": "M-B9 valid finalist scenario records are valid, use MODEL_PREDICTION, and have no fallback or fallback reason; fault scenarios remain diagnostic.",
       "rule_id": "E6"
     },
     {

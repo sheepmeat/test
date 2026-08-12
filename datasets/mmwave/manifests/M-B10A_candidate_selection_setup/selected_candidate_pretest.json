@@ -207,6 +207,44 @@
       "all_top1_exact": true,
       "row_count": 3,
       "runtime_stage": "MMWaveInterpreter.EXPLICIT_RUNTIME_MANIFEST",
+      "seed_gate": {
+        "aggregate_exact": {
+          "all_int8_outputs_exact": true,
+          "all_probability_vectors_exact": true,
+          "all_top1_exact": true
+        },
+        "exact": true,
+        "expected_row_count": 3,
+        "row_checks": [
+          {
+            "canonical_sample_index": 59,
+            "output_int8_exact": true,
+            "probabilities_exact": true,
+            "seed": 42,
+            "top1_exact": true,
+            "window_id": "dataset-10_5281_zenodo_18599983-p012-lying-post_exercise__W0000"
+          },
+          {
+            "canonical_sample_index": 43,
+            "output_int8_exact": true,
+            "probabilities_exact": true,
+            "seed": 42,
+            "top1_exact": true,
+            "window_id": "dataset-10_5281_zenodo_18599983-p009-lying-post_exercise__W0000"
+          },
+          {
+            "canonical_sample_index": 44,
+            "output_int8_exact": true,
+            "probabilities_exact": true,
+            "seed": 42,
+            "top1_exact": true,
+            "window_id": "dataset-10_5281_zenodo_18599983-p009-lying-rest__W0000"
+          }
+        ],
+        "row_count": 3,
+        "seed": 42,
+        "source_path": "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_prediction_identity.json"
+      },
       "source_stage": "DIRECT_FRESH_STRICT_INT8_TFLITE"
     },
     "preprocessing_identity_rows": [
@@ -321,6 +359,102 @@
       "risk_recomputation_exact": true,
       "runtime_identity_exact": true,
       "scenario_count": 21
+    },
+    "valid_finalist_fallback": {
+      "all_valid_finalist_no_fallback": true,
+      "expected_model_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8",
+      "fallback_audit_exact": true,
+      "fault_scenarios_are_diagnostic_only": true,
+      "record_checks": [
+        {
+          "fallback_absent": true,
+          "fallback_reason_absent": true,
+          "fallback_used": false,
+          "model_id_match": true,
+          "scenario_id": "A_NORMAL",
+          "score_source_model_prediction": true,
+          "seed": 42,
+          "valid": true
+        },
+        {
+          "fallback_absent": true,
+          "fallback_reason_absent": true,
+          "fallback_used": false,
+          "model_id_match": true,
+          "scenario_id": "B_RAPID_OR_ABNORMAL",
+          "score_source_model_prediction": true,
+          "seed": 42,
+          "valid": true
+        },
+        {
+          "fallback_absent": true,
+          "fallback_reason_absent": true,
+          "fallback_used": false,
+          "model_id_match": true,
+          "scenario_id": "C_APNEA",
+          "score_source_model_prediction": true,
+          "seed": 42,
+          "valid": true
+        },
+        {
+          "fallback_absent": true,
+          "fallback_reason_absent": true,
+          "fallback_used": false,
+          "model_id_match": true,
+          "scenario_id": "N_VALID_EXPLICIT_FINALIST",
+          "score_source_model_prediction": true,
+          "seed": 42,
+          "valid": true
+        }
+      ],
+      "record_count": 4,
+      "runtime_record_checks": [
+        {
+          "fallback_absent": true,
+          "fallback_reason_absent": true,
+          "model_id_match": true,
+          "scenario_id": "A_NORMAL",
+          "score_source_model_prediction": true,
+          "valid": true
+        },
+        {
+          "fallback_absent": true,
+          "fallback_reason_absent": true,
+          "model_id_match": true,
+          "scenario_id": "B_RAPID_OR_ABNORMAL",
+          "score_source_model_prediction": true,
+          "valid": true
+        },
+        {
+          "fallback_absent": true,
+          "fallback_reason_absent": true,
+          "model_id_match": true,
+          "scenario_id": "C_APNEA",
+          "score_source_model_prediction": true,
+          "valid": true
+        },
+        {
+          "fallback_absent": true,
+          "fallback_reason_absent": true,
+          "model_id_match": true,
+          "scenario_id": "N_VALID_EXPLICIT_FINALIST",
+          "score_source_model_prediction": true,
+          "valid": true
+        }
+      ],
+      "runtime_record_count": 4,
+      "runtime_scenario_exact": true,
+      "scenario_ids": [
+        "A_NORMAL",
+        "B_RAPID_OR_ABNORMAL",
+        "C_APNEA",
+        "N_VALID_EXPLICIT_FINALIST"
+      ],
+      "seed": 42,
+      "source_paths": [
+        "datasets/mmwave/manifests/M-B9_mock_e2e/fallback_audit.json",
+        "datasets/mmwave/manifests/M-B9_mock_e2e/scenario_results.json"
+      ]
     }
   },
   "model": {
@@ -410,7 +544,7 @@
   "production_claim": false,
   "real_sensor_validation": "NOT_PERFORMED",
   "seed": 42,
-  "selection_evidence_sha256": "fcf8698e17144244997bcc1e820f676cfc7677e2046b89f2a2fb6f0810bc7a62",
+  "selection_evidence_sha256": "6ab4551ee9d5257951477a21b7013426368c1804b423b93924483b9605adacf7",
   "selection_rule_sha256": "cddf98cbcf2231075bcfc02db2223fbc80fa33f7c52e23820609b5a273046f84",
   "status": "M-B10_PRELOCKED_REAL_DATA_CANDIDATE",
   "training_identity": {
