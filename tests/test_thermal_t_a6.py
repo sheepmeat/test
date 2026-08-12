@@ -38,6 +38,7 @@ from scripts.run_thermal_t_a6_colab import (  # noqa: E402
     save_resume_ledger,
 )
 from scripts.validate_thermal_t_a6 import validate_evidence  # noqa: E402
+from tests.test_thermal_t_a6_stage2 import _write_valid_bundle  # noqa: E402
 
 
 def test_source_to_canonical_is_deterministic_and_source_unchanged() -> None:
@@ -197,11 +198,30 @@ def test_stage1_validator_does_not_claim_full_t_a6_or_t_b() -> None:
     assert result["t_b_authorized"] is False
 
 
-def test_full_dataset_mode_cannot_pass_stage1() -> None:
+def test_full_dataset_mode_requires_stage2_bundle() -> None:
     evidence = ROOT / "datasets/thermal/manifests/T-A6_full_conversion_integrity"
     result = validate_evidence(repo_root=ROOT, evidence_dir=evidence, mode="FULL_DATASET", check_checksums=True)
     assert result["overall_outcome"] == "NOT_VERIFIABLE"
     assert result["stage1_gate"] == "NOT_YET_COMPLETE"
+
+
+def test_full_dataset_mode_live_validates_stage2_bundle(tmp_path: Path) -> None:
+    bundle = tmp_path / "T-A6_execution_result"
+    _write_valid_bundle(bundle)
+    result = validate_evidence(repo_root=ROOT, evidence_dir=bundle, mode="FULL_DATASET", check_checksums=True)
+    assert result["evidence_validation"] == "PASS"
+    assert result["overall_outcome"] == "PASS_WITH_LIMITATIONS"
+    assert result["full_t_a6_gate"] == "T_A6_FULL_COMPLETE_WITH_LIMITATIONS"
+    assert result["t_b_authorized"] is False
+    assert result["stage2_validation"]["evidence_validation"] == "PASS"
+
+    execution = bundle / "execution_summary.json"
+    value = json.loads(execution.read_text(encoding="utf-8"))
+    value["t_b_authorized"] = True
+    execution.write_text(canonical_json(value), encoding="utf-8")
+    result = validate_evidence(repo_root=ROOT, evidence_dir=bundle, mode="FULL_DATASET", check_checksums=False)
+    assert result["evidence_validation"] == "FAIL"
+    assert any(item["code"] == "STAGE2_DOWNSTREAM_GATE_ESCALATION" for item in result["errors"])
 
 
 def test_validator_rejects_absolute_path(tmp_path: Path) -> None:

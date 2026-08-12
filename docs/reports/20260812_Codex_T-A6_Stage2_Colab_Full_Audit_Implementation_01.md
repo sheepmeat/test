@@ -62,3 +62,12 @@ python scripts/run_thermal_t_a6_colab.py \
 The output `FULL_AUDIT_COMPLETE_WITH_LIMITATIONS` is not a model result and is
 not T-B authorization.  The compact bundle must be returned for the final
 Thermal T-A6 validator review.
+
+## Full validator closure
+
+`scripts/validate_thermal_t_a6.py --mode FULL_DATASET` now accepts the compact
+`T-A6_execution_result/` directory as its evidence root.  It live-calls the
+Stage-2 compact validator and independently runs the T-A0 through T-A5
+predecessor chain; it does not trust a previously persisted
+`validation_result.json` as proof of current validity.  The full gate remains
+`T_A6_FULL_COMPLETE_WITH_LIMITATIONS` and `t_b_authorized` remains `false`.
