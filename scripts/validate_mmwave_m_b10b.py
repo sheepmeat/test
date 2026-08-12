@@ -85,7 +85,10 @@ def _safe_relative(relative: str) -> Path:
     return path
 
 
-def _validate_checksums(out: Path) -> None:
+INCOMPLETE_FORENSIC_EXTRA_FILES = {"incident_root_cause.json"}
+
+
+def _validate_checksums(out: Path, *, extra_allowed: set[str] | None = None) -> None:
     path = out / "checksums.sha256"
     if not path.is_file():
         _raise("CHECKSUM_MANIFEST_MISSING")
@@ -106,7 +109,7 @@ def _validate_checksums(out: Path) -> None:
             _raise(f"CHECKSUM_TARGET_INVALID:{relative}")
         if sha256_file(target) != digest:
             _raise(f"CHECKSUM_MISMATCH:{relative}")
-    expected = FINAL_OUTPUT_FILES - {"checksums.sha256"}
+    expected = (FINAL_OUTPUT_FILES | (extra_allowed or set())) - {"checksums.sha256"}
     if seen != expected:
         _raise(f"CHECKSUM_COVERAGE:missing={sorted(expected - seen)}:unexpected={sorted(seen - expected)}")
     actual = {item.name for item in out.iterdir() if item.is_file() and item.name != "checksums.sha256"}
@@ -297,21 +300,51 @@ def _validate_post_access(root: Path, out: Path) -> dict[str, Any]:
                 _raise("INCOMPLETE_FAILURE_AUDIT_INVALID")
             if terminal_audit.get("expected_structural_windows") != 88 or terminal_audit.get("actual_structural_windows") != 75:
                 _raise("INCOMPLETE_STRUCTURAL_IDENTITY_NOT_PRESERVED")
-            _validate_checksums(out)
+            _validate_checksums(out, extra_allowed=INCOMPLETE_FORENSIC_EXTRA_FILES)
             _validate_machine_paths(out)
             exceptions = _load(out / "exceptions.json")
             summary = _load(out / "m_b10b_summary.json")
             consumption = _load(out / "test_split_consumption_record.json")
+            incident = _load(out / "incident_root_cause.json")
             if exceptions.get("classification") != "BLOCKER" or exceptions.get("code") != "M-B10B_LOCKED_SPLIT_IDENTITY_MISMATCH" or exceptions.get("no_rerun_performed") is not True:
                 _raise("INCOMPLETE_EXCEPTION_REGISTRY_INVALID")
             if summary.get("status") != "INCOMPLETE_NO_RERUN" or summary.get("final_accessor_invocations") != 1 or summary.get("model_inference_invocations") != 0 or summary.get("m_b11_started") is not False:
                 _raise("INCOMPLETE_SUMMARY_INVALID")
+            if (
+                summary.get("runtime_detection_code") != "M-B10B_LOCKED_SPLIT_IDENTITY_MISMATCH"
+                or summary.get("forensic_root_cause") != "PRETEST_CONTRACT_COUNT_SEMANTICS_CONFLATION"
+                or summary.get("forensic_status") != "INCIDENT_ROOT_CAUSE_CLOSED"
+                or summary.get("performance_result") != "NOT_AVAILABLE"
+            ):
+                _raise("INCOMPLETE_FORENSIC_SUMMARY_INVALID")
+            if (
+                incident.get("root_cause_id") != "PRETEST_CONTRACT_COUNT_SEMANTICS_CONFLATION"
+                or incident.get("runtime_detection_code") != "M-B10B_LOCKED_SPLIT_IDENTITY_MISMATCH"
+                or incident.get("recovery_evaluation_authorized") is not False
+                or incident.get("locked_test_reopen_authorized") is not False
+                or incident.get("m_b11_authorized") is not False
+            ):
+                _raise("INCOMPLETE_INCIDENT_ROOT_CAUSE_INVALID")
             if consumption.get("status") != "LOCKED_TEST_CONSUMED_FOR_FINAL_PHASE_B_EVALUATION_INCOMPLETE" or consumption.get("no_rerun_performed") is not True:
                 _raise("INCOMPLETE_CONSUMPTION_RECORD_INVALID")
             report = root / "docs/reports/20260812_Codex_M-B10B_One_Time_Locked_Test_Final_Evaluation_01.md"
-            if not report.is_file() or "M-B10B_ONE_TIME_EVALUATION_INCOMPLETE_NO_RERUN" not in report.read_text(encoding="utf-8"):
+            report_text = report.read_text(encoding="utf-8") if report.is_file() else ""
+            if (
+                not report.is_file()
+                or "M-B10B_ONE_TIME_EVALUATION_INCOMPLETE_NO_RERUN" not in report_text
+                or "PRETEST_CONTRACT_COUNT_SEMANTICS_CONFLATION" not in report_text
+            ):
                 _raise("INCOMPLETE_REPORT_MISSING")
-            return {"validation_status": "INCOMPLETE_NO_RERUN", "phase_id": "M-B10B", "mode": "POST_ACCESS_TERMINAL_FAILURE", "final_accessor_invocations": 1, "model_inference_invocations": 0, "blocker": "M-B10B_LOCKED_SPLIT_IDENTITY_MISMATCH"}
+            return {
+                "validation_status": "INCOMPLETE_NO_RERUN",
+                "phase_id": "M-B10B",
+                "mode": "POST_ACCESS_TERMINAL_FAILURE",
+                "final_accessor_invocations": 1,
+                "model_inference_invocations": 0,
+                "blocker": "M-B10B_LOCKED_SPLIT_IDENTITY_MISMATCH",
+                "forensic_root_cause": "PRETEST_CONTRACT_COUNT_SEMANTICS_CONFLATION",
+                "forensic_status": "INCIDENT_ROOT_CAUSE_CLOSED",
+            }
     _validate_checksums(out)
     _validate_machine_paths(out)
     registry = _validate_registry(_load(out / "locked_test_registry.json"))
