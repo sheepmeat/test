@@ -13,16 +13,15 @@
     "performance_exposure": false
   },
   "E3_persistent_sample_registry": {
-    "labels_persisted_from_returned_payload": false,
+    "actual_registry_rows": 0,
     "persisted_sample_registry_exposure": false,
-    "raw_tensors_persisted": false,
-    "registry_generated": true,
-    "sample_ids_persisted": false,
-    "subject_ids_persisted": false
+    "placeholder_registry_exists": true,
+    "prediction_ledger_rows": 0,
+    "raw_tensors_persisted": false
   },
   "E4_payload_logging": {
-    "labels_or_tensors_persisted_flag": true,
-    "ledger_rows": 0,
+    "input_id_labels_tensors_not_persisted": true,
+    "metrics_results_available": false,
     "post_access_labels_logged": false,
     "post_access_sample_ids_logged": false,
     "post_access_subject_ids_logged": false,

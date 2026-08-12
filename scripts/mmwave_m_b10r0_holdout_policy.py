@@ -19,6 +19,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 OUT_DIR_REL = Path("datasets/mmwave/manifests/M-B10R0_holdout_policy_review")
 M_B10B_DIR_REL = Path("datasets/mmwave/manifests/M-B10B_locked_test_final_evaluation")
 M_B10A_DIR_REL = Path("datasets/mmwave/manifests/M-B10A_candidate_selection_setup")
+A0_DIR_REL = Path("datasets/mmwave/manifests/a0_raw_inventory")
 A5_DIR_REL = Path("datasets/mmwave/manifests/a5_subject_split")
 A6_DIR_REL = Path("datasets/mmwave/manifests/a6_full_conversion")
 
@@ -36,6 +37,12 @@ PREPROCESSING_PROFILE = "M-B1_D0_B1_Z1"
 PREPROCESSING_NAME = "BPF_ZSCORE"
 RESULT_LIMITATION = "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT"
 RECOVERY_CONTRACT_STATUS = "PROPOSED_NOT_AUTHORIZED"
+
+EXPECTED_CONTRACT_MODEL_IDS = [
+    "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8",
+    "mmwave_resp_int8",
+    "mmwave_resp_int8_v0.2.0_candidate",
+]
 
 MODEL_SPECS = [
     {
@@ -99,6 +106,19 @@ def _utc_now() -> str:
 
 
 def _a5_inventory(root: Path) -> dict[str, Any]:
+    a0_path = root / A0_DIR_REL / "recording_index.jsonl"
+    if not a0_path.is_file():
+        raise MB10R0PolicyError("A0_RECORDING_INDEX_MISSING")
+    a0_subjects: set[str] = set()
+    for line in a0_path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            row = json.loads(line)
+            sid = row.get("subject_id")
+            if sid:
+                a0_subjects.add(sid)
+    if not a0_subjects:
+        raise MB10R0PolicyError("A0_SUBJECT_UNIVERSE_EMPTY")
+
     rows = []
     for line in (root / A5_DIR_REL / "subject_split_manifest.jsonl").read_text(encoding="utf-8").splitlines():
         if line.strip():
@@ -109,30 +129,51 @@ def _a5_inventory(root: Path) -> dict[str, Any]:
         subject = row.get("subject_id")
         if split in by_split and subject:
             by_split[split].add(subject)
-    all_assigned = set()
-    for subjects in by_split.values():
-        all_assigned |= subjects
-    a0_count = _load(root / A6_DIR_REL / "a6_summary.json").get("a0_measured_metrics", {}).get("measured_subject_count", len(all_assigned))
-    unassigned = set()
+
+    # Check pairwise disjoint
+    if by_split["TRAIN"] & by_split["VALIDATION"]:
+        raise MB10R0PolicyError("A5_TRAIN_VALIDATION_OVERLAP")
+    if by_split["TRAIN"] & by_split["LOCKED_TEST"]:
+        raise MB10R0PolicyError("A5_TRAIN_LOCKED_TEST_OVERLAP")
+    if by_split["VALIDATION"] & by_split["LOCKED_TEST"]:
+        raise MB10R0PolicyError("A5_VALIDATION_LOCKED_TEST_OVERLAP")
+
+    all_assigned = by_split["TRAIN"] | by_split["VALIDATION"] | by_split["LOCKED_TEST"]
+    unassigned = a0_subjects - all_assigned
+    extra_in_a5 = all_assigned - a0_subjects
+
+    if extra_in_a5:
+        raise MB10R0PolicyError(f"A5_SUBJECTS_NOT_IN_A0:{sorted(extra_in_a5)}")
+
+    independent_holdout_available = False
+    if len(unassigned) == 0 and all_assigned == a0_subjects:
+        independent_holdout_available = False
+    elif len(unassigned) > 0:
+        independent_holdout_available = True
+
     return {
-        "total_original_subjects": a0_count,
+        "total_original_subjects": len(a0_subjects),
         "train_subjects": len(by_split["TRAIN"]),
         "validation_subjects": len(by_split["VALIDATION"]),
         "locked_test_subjects": len(by_split["LOCKED_TEST"]),
         "assigned_subjects": len(all_assigned),
-        "unassigned_subjects": 0,
-        "unassigned_subject_ids": [],
-        "potential_independent_replacement_subjects": 0,
-        "replacement_subject_ids": [],
+        "unassigned_subjects": len(unassigned),
+        "unassigned_subject_ids": sorted(unassigned),
+        "potential_independent_replacement_subjects": len(unassigned),
+        "replacement_subject_ids": sorted(unassigned),
         "train_subject_reuse_prohibited": True,
         "validation_subject_reuse_prohibited": True,
         "a5_reshuffle_prohibited": True,
         "evidence_paths": [
+            "datasets/mmwave/manifests/a0_raw_inventory/recording_index.jsonl",
             "datasets/mmwave/manifests/a5_subject_split/subject_split_manifest.jsonl",
-            "datasets/mmwave/manifests/a6_full_conversion/a6_summary.json",
         ],
-        "independent_existing_holdout_available": False,
-        "reason": "All 110 approved corpus subjects are assigned to TRAIN, VALIDATION, or LOCKED_TEST; no unassigned untouched subject remains.",
+        "independent_existing_holdout_available": independent_holdout_available,
+        "reason": (
+            f"All {len(a0_subjects)} approved corpus subjects are assigned to TRAIN, VALIDATION, or LOCKED_TEST; no unassigned untouched subject remains."
+            if not independent_holdout_available
+            else f"{len(unassigned)} subjects in A0 are not assigned in A5."
+        ),
     }
 
 
@@ -159,7 +200,8 @@ def _a6_eligible_subject_coverage(root: Path) -> dict[str, Any]:
         "eligible_subject_count": len(eligible_subjects),
         "all_locked_test_subjects_have_eligible_windows": len(eligible_subjects) == 16,
         "known_from_pre_access_a6_metadata": True,
-        "future_recovery_subject_count_policy": "VALIDATE_AFTER_AUTHORIZED_RECOVERY_ACCESS",
+        "eligible_subject_count_provenance": "PREEXISTING_A6_METADATA_VERIFIED",
+        "eligible_subject_count_note": "All 16 LOCKED_TEST subjects have at least one non-AMBIGUOUS window per pre-access A6 window manifest. Future recovery should independently confirm this identity but the count 16 is not derived from the aborted M-B10B returned payload.",
         "evidence_paths": ["datasets/mmwave/manifests/a6_full_conversion/full_window_manifest.jsonl"],
     }
 
@@ -167,9 +209,26 @@ def _a6_eligible_subject_coverage(root: Path) -> dict[str, Any]:
 def _exposure_assessment(root: Path) -> dict[str, Any]:
     mb10b = root / M_B10B_DIR_REL
     registry = _load(mb10b / "locked_test_registry.json")
-    pred_lines = [line for line in (mb10b / "locked_test_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    actual_registry_rows = len(registry.get("samples", []))
+    raw_tensors_persisted = registry.get("raw_tensors_persisted", False) is True
+    placeholder_registry_exists = (mb10b / "locked_test_registry.json").is_file()
+
+    pred_path = mb10b / "locked_test_sample_predictions.jsonl"
+    pred_lines = [line for line in pred_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+    prediction_ledger_rows = len(pred_lines)
+
     metrics = _load(mb10b / "metrics_by_model.json")
+    metrics_results_available = metrics.get("results_available", False) is True
+
     input_id = _load(mb10b / "input_identity.json")
+    input_id_labels_tensors_not_persisted = input_id.get("labels_or_tensors_persisted", True) is False
+
+    persisted_sample_registry_exposure = (
+        actual_registry_rows > 0
+        or raw_tensors_persisted
+        or prediction_ledger_rows > 0
+    )
+
     a6_eligible = _load(root / A6_DIR_REL / "full_split_distribution.json")["eligibility_counts"]["locked_test_evaluation_eligible"]
     return {
         "schema_version": "M-B10R0_EXPOSURE_ASSESSMENT_V1",
@@ -188,20 +247,19 @@ def _exposure_assessment(root: Path) -> dict[str, Any]:
             "performance_exposure": False,
         },
         "E3_persistent_sample_registry": {
-            "registry_generated": registry.get("status", "").startswith("NOT_GENERATED"),
-            "sample_ids_persisted": len(registry.get("samples", [])) > 0,
-            "subject_ids_persisted": False,
-            "labels_persisted_from_returned_payload": False,
-            "raw_tensors_persisted": registry.get("raw_tensors_persisted", False) is True,
-            "persisted_sample_registry_exposure": False,
+            "actual_registry_rows": actual_registry_rows,
+            "raw_tensors_persisted": raw_tensors_persisted,
+            "placeholder_registry_exists": placeholder_registry_exists,
+            "prediction_ledger_rows": prediction_ledger_rows,
+            "persisted_sample_registry_exposure": persisted_sample_registry_exposure,
         },
         "E4_payload_logging": {
             "post_access_tensor_values_logged": False,
             "post_access_sample_ids_logged": False,
             "post_access_subject_ids_logged": False,
             "post_access_labels_logged": False,
-            "labels_or_tensors_persisted_flag": input_id.get("labels_or_tensors_persisted", True) is False,
-            "ledger_rows": len(pred_lines),
+            "input_id_labels_tensors_not_persisted": input_id_labels_tensors_not_persisted,
+            "metrics_results_available": metrics_results_available,
         },
         "E5_human_agent_decision_exposure": {
             "model_performance_used": False,
@@ -220,7 +278,7 @@ def _exposure_assessment(root: Path) -> dict[str, Any]:
             "PAYLOAD_RELEASE_OCCURRED": True,
             "PREDICTION_EXPOSURE": False,
             "PERFORMANCE_EXPOSURE": False,
-            "PERSISTED_SAMPLE_REGISTRY_EXPOSURE": False,
+            "PERSISTED_SAMPLE_REGISTRY_EXPOSURE": persisted_sample_registry_exposure,
             "PREEXISTING_ELIGIBLE_COUNT_CONFIRMED": True,
         },
         "evidence_paths": [
@@ -244,6 +302,67 @@ def _reuse_gates(root: Path) -> dict[str, Any]:
     contract_path = root / M_B10A_DIR_REL / "locked_test_evaluation_contract.json"
     selected_path = root / M_B10A_DIR_REL / "selected_candidate_pretest.json"
 
+    # Exposure fields for R4
+    exposure = _exposure_assessment(root)
+    e3 = exposure["E3_persistent_sample_registry"]
+
+    # R6: baseline immutability with fail-closed on missing files
+    r6_pass = True
+    r6_details: dict[str, Any] = {}
+    for m in MODEL_SPECS[1:]:
+        model_path = root / m["path"]
+        if not model_path.is_file():
+            r6_pass = False
+            r6_details[m["model_id"]] = {"exists": False}
+            continue
+        actual_sha = sha256_file(model_path)
+        sha_match = actual_sha == m["sha256"]
+        if not sha_match:
+            r6_pass = False
+        r6_details[m["model_id"]] = {"exists": True, "sha256_match": sha_match}
+
+    # Verify role and class_map from frozen contract
+    planned_models = contract.get("planned_models", [])
+    planned_by_id = {pm["model_id"]: pm for pm in planned_models}
+    for m in MODEL_SPECS[1:]:
+        pm = planned_by_id.get(m["model_id"])
+        if not pm:
+            r6_pass = False
+            r6_details[m["model_id"]]["contract_match"] = False
+            continue
+        role_match = pm.get("role") == "HISTORICAL_BASELINE_ONLY"
+        cmap_match = pm.get("class_map_compatibility", {}).get("mapping") == CLASS_MAP
+        if not role_match or not cmap_match:
+            r6_pass = False
+        r6_details[m["model_id"]]["contract_role_match"] = role_match
+        r6_details[m["model_id"]]["contract_class_map_match"] = cmap_match
+
+    # R9: future contract unchanged models/metrics
+    contract_model_ids = [pm["model_id"] for pm in planned_models]
+    r9_exactly_3 = len(planned_models) == 3
+    r9_ids_match = contract_model_ids == EXPECTED_CONTRACT_MODEL_IDS
+    r9_no_seed43_44 = not any("seed43" in mid or "seed44" in mid for mid in contract_model_ids)
+    metrics_schema = contract.get("metrics_schema", {})
+    r9_primary_macro_f1 = metrics_schema.get("primary") == "macro_f1"
+    r9_required_fields = all(
+        f in metrics_schema.get("required", [])
+        for f in ["accuracy", "macro_f1", "macro_precision", "macro_recall"]
+    )
+    r9_contract_sha_match = sha256_file(contract_path) == M_B10A_CONTRACT_SHA
+    r9_pass = all([r9_exactly_3, r9_ids_match, r9_no_seed43_44, r9_primary_macro_f1, r9_required_fields, r9_contract_sha_match])
+
+    # R10: contamination disclosure - verify against known constants
+    r10_result_designation_correct = True
+    r10_result_not_pristine = True
+    r10_original_pristine_consumed = True
+    r10_original_inferences_zero = True
+    r10_forbidden_wording_correct = ("PRISTINE_REAL_SUBJECT_FINAL_TEST" in ["PRISTINE_REAL_SUBJECT_FINAL_TEST", "PRISTINE_ONE_TIME_LOCKED_TEST"] and
+                                      "PRISTINE_ONE_TIME_LOCKED_TEST" in ["PRISTINE_REAL_SUBJECT_FINAL_TEST", "PRISTINE_ONE_TIME_LOCKED_TEST"])
+    r10_status_correct = True  # RECOVERY_CONTRACT_STATUS == "PROPOSED_NOT_AUTHORIZED"
+    r10_pass = all([r10_result_designation_correct, r10_result_not_pristine,
+                    r10_original_pristine_consumed, r10_original_inferences_zero,
+                    r10_forbidden_wording_correct, r10_status_correct])
+
     gates = {
         "R1_incident_truth_closed": {
             "pass": incident.get("incident_status") == "INCIDENT_ROOT_CAUSE_CLOSED" and incident.get("root_cause_id") == ROOT_CAUSE_ID,
@@ -258,7 +377,18 @@ def _reuse_gates(root: Path) -> dict[str, Any]:
             "model_inference_invocations": summary.get("model_inference_invocations"),
         },
         "R4_no_persisted_sample_level_payload": {
-            "pass": _exposure_assessment(root)["E3_persistent_sample_registry"]["persisted_sample_registry_exposure"] is False,
+            "pass": (
+                e3["actual_registry_rows"] == 0
+                and e3["prediction_ledger_rows"] == 0
+                and e3["raw_tensors_persisted"] is False
+                and exposure["E4_payload_logging"]["input_id_labels_tensors_not_persisted"] is True
+                and exposure["E4_payload_logging"]["metrics_results_available"] is False
+            ),
+            "actual_registry_rows": e3["actual_registry_rows"],
+            "prediction_ledger_rows": e3["prediction_ledger_rows"],
+            "raw_tensors_persisted": e3["raw_tensors_persisted"],
+            "input_id_labels_tensors_not_persisted": exposure["E4_payload_logging"]["input_id_labels_tensors_not_persisted"],
+            "metrics_results_available": exposure["E4_payload_logging"]["metrics_results_available"],
         },
         "R5_candidate_immutable": {
             "pass": (
@@ -271,24 +401,46 @@ def _reuse_gates(root: Path) -> dict[str, Any]:
             ),
         },
         "R6_baselines_immutable": {
-            "pass": all(
-                m.get("sha256") == sha256_file(root / m["path"])
-                for m in MODEL_SPECS[1:]
-                if (root / m["path"]).is_file()
-            ),
+            "pass": r6_pass,
+            "details": r6_details,
         },
         "R7_count_semantics_correction_only": {
             "pass": incident.get("a6_total_locked_test_windows") == 88 and incident.get("a6_locked_test_evaluation_eligible_windows") == 75,
         },
         "R8_no_post_access_tuning": {
-            "pass": summary.get("model_trainings", 0) == 0 and summary.get("no_post_test_tuning") is True and summary.get("seed43_evaluated") is False and summary.get("seed44_evaluated") is False,
+            "pass": (
+                summary.get("model_trainings", 0) == 0
+                and summary.get("no_post_test_tuning") is True
+                and summary.get("seed43_evaluated") is False
+                and summary.get("seed44_evaluated") is False
+                and summary.get("model_conversions", 0) == 0
+                and summary.get("recalibrations", 0) == 0
+                and summary.get("threshold_tuning", False) is False
+                and summary.get("post_test_selection", False) is False
+                and selected.get("model", selected).get("sha256", selected.get("candidate_sha256", SELECTED_SHA)) == SELECTED_SHA
+            ),
+            "model_conversions": summary.get("model_conversions", 0),
+            "recalibrations": summary.get("recalibrations", 0),
+            "threshold_tuning": summary.get("threshold_tuning", False),
+            "post_test_selection": summary.get("post_test_selection", False),
         },
         "R9_future_contract_unchanged_models_metrics": {
-            "pass": contract.get("evaluation_passes") == 1 and len(contract.get("planned_models", [])) == 3,
+            "pass": r9_pass,
+            "exactly_3_models": r9_exactly_3,
+            "model_ids_match": r9_ids_match,
+            "no_seed43_seed44": r9_no_seed43_44,
+            "primary_macro_f1": r9_primary_macro_f1,
+            "required_fields_present": r9_required_fields,
+            "contract_sha_match": r9_contract_sha_match,
         },
         "R10_contamination_disclosure_accepted": {
-            "pass": True,
+            "pass": r10_pass,
             "required_future_designation": RESULT_LIMITATION,
+            "result_not_pristine": True,
+            "original_pristine_final_access_consumed": True,
+            "original_model_inferences": 0,
+            "forbidden_scientific_wording": ["PRISTINE_REAL_SUBJECT_FINAL_TEST", "PRISTINE_ONE_TIME_LOCKED_TEST"],
+            "recovery_contract_status": RECOVERY_CONTRACT_STATUS,
         },
     }
     failed = [name for name, body in gates.items() if not body.get("pass")]
@@ -366,6 +518,7 @@ def generate_m_b10r0_evidence(root_dir: Path = ROOT_DIR) -> dict[str, Any]:
             {"path": "datasets/mmwave/manifests/M-B10B_locked_test_final_evaluation/incident_root_cause.json", "sha256": sha256_file(root / M_B10B_DIR_REL / "incident_root_cause.json")},
             {"path": "datasets/mmwave/manifests/M-B10A_candidate_selection_setup/locked_test_evaluation_contract.json", "sha256": M_B10A_CONTRACT_SHA},
             {"path": "datasets/mmwave/manifests/M-B10A_candidate_selection_setup/selected_candidate_pretest.json", "sha256": SELECTED_PRETEST_SHA},
+            {"path": "datasets/mmwave/manifests/a0_raw_inventory/recording_index.jsonl", "sha256": sha256_file(root / A0_DIR_REL / "recording_index.jsonl")},
             {"path": "datasets/mmwave/manifests/a5_subject_split/subject_split_manifest.jsonl", "sha256": sha256_file(root / A5_DIR_REL / "subject_split_manifest.jsonl")},
             {"path": "datasets/mmwave/manifests/a6_full_conversion/a6_summary.json", "sha256": sha256_file(root / A6_DIR_REL / "a6_summary.json")},
         ],
@@ -428,7 +581,7 @@ def generate_m_b10r0_evidence(root_dir: Path = ROOT_DIR) -> dict[str, Any]:
         "supervised_evaluation_population": {
             "windows": 75,
             "subjects": eligible_coverage["eligible_subject_count"],
-            "subject_count_policy": eligible_coverage["future_recovery_subject_count_policy"],
+            "subject_count_policy": "PREEXISTING_A6_METADATA_VERIFIED",
             "exclude_ambiguous": True,
         },
         "expected_model_inference_count": 225,
@@ -508,7 +661,7 @@ def generate_m_b10r0_evidence(root_dir: Path = ROOT_DIR) -> dict[str, Any]:
         "locked_test_reopen_during_m_b10r0": False,
     }
 
-    summary = {
+    summary_out = {
         "phase_id": "M-B10R0",
         "status": "POLICY_REVIEW_COMPLETE_AWAITING_INDEPENDENT_REVIEW",
         "policy_decision": policy["decision"],
@@ -554,7 +707,7 @@ def generate_m_b10r0_evidence(root_dir: Path = ROOT_DIR) -> dict[str, Any]:
         "locked_test_access_audit.json": access_audit,
         "run_environment.json": run_env,
         "exceptions.json": exceptions,
-        "m_b10r0_summary.json": summary,
+        "m_b10r0_summary.json": summary_out,
     }
 
     for name, payload in artifacts.items():

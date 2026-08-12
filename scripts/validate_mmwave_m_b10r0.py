@@ -21,6 +21,7 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from scripts.mmwave_m_b10r0_holdout_policy import (  # noqa: E402
+    EXPECTED_CONTRACT_MODEL_IDS,
     INCIDENT_CLOSURE_COMMIT,
     M_B10A_CONTRACT_SHA,
     MODEL_SPECS,
@@ -174,6 +175,58 @@ def validate_m_b10r0_artifacts(root_dir: Path = ROOT_DIR, output_dir: Path | Non
         stored_gate = stored_gates["gates"].get(gate_name)
         if not stored_gate or stored_gate.get("pass") != gate_body.get("pass"):
             _raise(f"GATE_MISMATCH:{gate_name}")
+
+    # Independently verify individual R4 fields
+    r4 = gate_results["gates"]["R4_no_persisted_sample_level_payload"]
+    if r4.get("actual_registry_rows", -1) != 0:
+        _raise("R4_REGISTRY_ROWS_NONZERO")
+    if r4.get("prediction_ledger_rows", -1) != 0:
+        _raise("R4_PREDICTION_LEDGER_NONZERO")
+    if r4.get("raw_tensors_persisted") is not False:
+        _raise("R4_RAW_TENSORS_PERSISTED")
+    if r4.get("input_id_labels_tensors_not_persisted") is not True:
+        _raise("R4_LABELS_TENSORS_PERSISTED")
+    if r4.get("metrics_results_available") is not False:
+        _raise("R4_METRICS_RESULTS_AVAILABLE")
+
+    # Independently verify R6 details
+    r6 = gate_results["gates"]["R6_baselines_immutable"]
+    if not r6.get("pass"):
+        _raise("R6_BASELINES_NOT_IMMUTABLE")
+    for model_id, detail in r6.get("details", {}).items():
+        if not detail.get("exists"):
+            _raise(f"R6_BASELINE_MISSING:{model_id}")
+        if not detail.get("sha256_match"):
+            _raise(f"R6_BASELINE_SHA_MISMATCH:{model_id}")
+
+    # Independently verify R8 fields
+    r8 = gate_results["gates"]["R8_no_post_access_tuning"]
+    if not r8.get("pass"):
+        _raise("R8_POST_ACCESS_TUNING_DETECTED")
+
+    # Independently verify R9 fields
+    r9 = gate_results["gates"]["R9_future_contract_unchanged_models_metrics"]
+    if not r9.get("pass"):
+        _raise("R9_CONTRACT_MODELS_METRICS_CHANGED")
+    if not r9.get("exactly_3_models"):
+        _raise("R9_NOT_EXACTLY_3_MODELS")
+    if not r9.get("model_ids_match"):
+        _raise("R9_MODEL_IDS_MISMATCH")
+    if not r9.get("no_seed43_seed44"):
+        _raise("R9_SEED43_OR_SEED44_PRESENT")
+    if not r9.get("contract_sha_match"):
+        _raise("R9_CONTRACT_SHA_MISMATCH")
+
+    # Independently verify R10 fields
+    r10 = gate_results["gates"]["R10_contamination_disclosure_accepted"]
+    if not r10.get("pass"):
+        _raise("R10_CONTAMINATION_DISCLOSURE_FAILED")
+    if r10.get("required_future_designation") != RESULT_LIMITATION:
+        _raise("R10_WRONG_RESULT_DESIGNATION")
+    if r10.get("result_not_pristine") is not True:
+        _raise("R10_RESULT_NOT_PRISTINE_FALSE")
+    if r10.get("recovery_contract_status") != RECOVERY_CONTRACT_STATUS:
+        _raise("R10_RECOVERY_CONTRACT_STATUS_WRONG")
 
     if stored_policy["decision"] != expected_policy["decision"]:
         _raise("POLICY_DECISION_RECOMPUTATION_MISMATCH")

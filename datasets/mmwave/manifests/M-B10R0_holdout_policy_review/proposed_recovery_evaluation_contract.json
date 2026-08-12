@@ -36,7 +36,7 @@
   },
   "supervised_evaluation_population": {
     "exclude_ambiguous": true,
-    "subject_count_policy": "VALIDATE_AFTER_AUTHORIZED_RECOVERY_ACCESS",
+    "subject_count_policy": "PREEXISTING_A6_METADATA_VERIFIED",
     "subjects": 16,
     "windows": 75
   },

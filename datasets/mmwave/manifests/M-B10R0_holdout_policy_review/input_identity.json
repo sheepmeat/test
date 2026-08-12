@@ -17,6 +17,10 @@
       "sha256": "b6ba2516b5e9a46c0f3a7dec408973c7eb1bdc333adff6ac17c322bbc6875db8"
     },
     {
+      "path": "datasets/mmwave/manifests/a0_raw_inventory/recording_index.jsonl",
+      "sha256": "31cb924ab7821913c760773bfb22aebc3a3252c14afc073da933e0f6f274dd8c"
+    },
+    {
       "path": "datasets/mmwave/manifests/a5_subject_split/subject_split_manifest.jsonl",
       "sha256": "777cdaa1a8cda54ab0db63dcc916d3ba208c10f30cc2f48d3bc91e94bcb2dfc7"
     },

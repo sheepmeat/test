@@ -3,8 +3,16 @@
   "failed_gates": [],
   "gates": {
     "R10_contamination_disclosure_accepted": {
+      "forbidden_scientific_wording": [
+        "PRISTINE_REAL_SUBJECT_FINAL_TEST",
+        "PRISTINE_ONE_TIME_LOCKED_TEST"
+      ],
+      "original_model_inferences": 0,
+      "original_pristine_final_access_consumed": true,
       "pass": true,
-      "required_future_designation": "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT"
+      "recovery_contract_status": "PROPOSED_NOT_AUTHORIZED",
+      "required_future_designation": "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT",
+      "result_not_pristine": true
     },
     "R1_incident_truth_closed": {
       "evidence": [
@@ -22,22 +30,51 @@
       "pass": true
     },
     "R4_no_persisted_sample_level_payload": {
-      "pass": true
+      "actual_registry_rows": 0,
+      "input_id_labels_tensors_not_persisted": true,
+      "metrics_results_available": false,
+      "pass": true,
+      "prediction_ledger_rows": 0,
+      "raw_tensors_persisted": false
     },
     "R5_candidate_immutable": {
       "pass": true
     },
     "R6_baselines_immutable": {
+      "details": {
+        "mmwave_resp_int8": {
+          "contract_class_map_match": true,
+          "contract_role_match": true,
+          "exists": true,
+          "sha256_match": true
+        },
+        "mmwave_resp_int8_v0.2.0_candidate": {
+          "contract_class_map_match": true,
+          "contract_role_match": true,
+          "exists": true,
+          "sha256_match": true
+        }
+      },
       "pass": true
     },
     "R7_count_semantics_correction_only": {
       "pass": true
     },
     "R8_no_post_access_tuning": {
-      "pass": true
+      "model_conversions": 0,
+      "pass": true,
+      "post_test_selection": false,
+      "recalibrations": 0,
+      "threshold_tuning": false
     },
     "R9_future_contract_unchanged_models_metrics": {
-      "pass": true
+      "contract_sha_match": true,
+      "exactly_3_models": true,
+      "model_ids_match": true,
+      "no_seed43_seed44": true,
+      "pass": true,
+      "primary_macro_f1": true,
+      "required_fields_present": true
     }
   },
   "phase_id": "M-B10R0",

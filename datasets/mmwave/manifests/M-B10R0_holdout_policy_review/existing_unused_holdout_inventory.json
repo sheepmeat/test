@@ -2,8 +2,8 @@
   "a5_reshuffle_prohibited": true,
   "assigned_subjects": 110,
   "evidence_paths": [
-    "datasets/mmwave/manifests/a5_subject_split/subject_split_manifest.jsonl",
-    "datasets/mmwave/manifests/a6_full_conversion/a6_summary.json"
+    "datasets/mmwave/manifests/a0_raw_inventory/recording_index.jsonl",
+    "datasets/mmwave/manifests/a5_subject_split/subject_split_manifest.jsonl"
   ],
   "independent_existing_holdout_available": false,
   "locked_test_subjects": 16,
