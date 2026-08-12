@@ -168,11 +168,11 @@ Branch: `feature/M-B10B-locked-test-final-evaluation`
 
 Pre-access harness commit: `7073374`
 
-Final evidence commit: NOT CREATED — incomplete execution evidence is preserved for review
+Final evidence commit: `a2992e0`
 
-Head commit: `c18e6c2`
+Head commit: `a2992e0`
 
-PR: NOT CREATED — execution-integrity blocker
+PR: [#47](https://github.com/sheepmeat/test/pull/47)
 
 ## M-B10A frozen contract
 
@@ -282,7 +282,7 @@ Predefined numerical final-test threshold: `FINAL_LOCKED_TEST_NUMERICAL_ACCEPTAN
 - Thermal: `0`
 - Integration/shared: `0`
 - raw payload: `0`
-- Working tree: pending incomplete-evidence commit
+- Working tree: clean at evidence handoff
 
 ## Claim boundaries
 
