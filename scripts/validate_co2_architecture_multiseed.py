@@ -90,9 +90,25 @@ ALLOWED_EXACT_PATHS = {
     "tests/test_co2_architecture_multiseed.py",
 }
 
+# Later CO₂ phases are allowed to add their own namespace without weakening
+# the cross-track checks below.  C-B3's original validator predated C-B5 and
+# otherwise treated legitimate CO₂ robustness evidence as branch contamination.
+C_B5_FORWARD_COMPATIBLE_PREFIXES = (
+    "datasets/co2/b5_robustness.py",
+    "datasets/co2/manifests/c_b5_robustness_final_lock/",
+    "models/co2/candidates/c_b5/",
+    "scripts/run_co2_b5.py",
+    "scripts/validate_co2_b5.py",
+    "tests/test_co2_b5.py",
+)
+
 
 def _allowed_path(path: str) -> bool:
-    return path in ALLOWED_EXACT_PATHS or path.startswith(f"{ARTIFACT_DIR_REL}/")
+    return (
+        path in ALLOWED_EXACT_PATHS
+        or path.startswith(f"{ARTIFACT_DIR_REL}/")
+        or any(path == prefix or path.startswith(prefix) for prefix in C_B5_FORWARD_COMPATIBLE_PREFIXES)
+    )
 
 
 def _run_script(root: Path, script: str, *args: str) -> Tuple[bool, str]:
