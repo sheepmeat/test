@@ -45,12 +45,16 @@ from scripts.mmwave_m_b10r1_recovery_eval import (  # noqa: E402
     SELECTED_CANDIDATE_ID,
     SELECTED_MODEL_ID,
     SELECTED_PATH,
+    SELECTED_PREPROCESSING_CONTRACT_ID,
     SELECTED_SHA,
     V01_PATH,
+    V01_PREPROCESSING_CONTRACT_ID,
     V01_SHA,
     V02_PATH,
+    V02_PREPROCESSING_CONTRACT_ID,
     V02_SHA,
     build_bound_contract_identity,
+    build_execution_freeze_identity,
     build_preaccess_readiness,
     frozen_model_specs,
     future_ledger_schema,
@@ -75,6 +79,7 @@ REQUIRED_OUTPUTS = {
     "recovery_access_audit.json",
     "future_result_schema.json",
     "future_ledger_schema.json",
+    "execution_freeze_identity.json",
     "run_environment.json",
     "exceptions.json",
     "m_b10r1a_summary.json",
@@ -168,6 +173,22 @@ must carry designation `{RESULT_LIMITATION}`.
 - No LOCKED_TEST reopen during this phase
 - No M-B10R1-B authorization
 - No M-B11 start
+
+## Recovery-path truth closures (M-B10R1A final)
+
+- Window-vs-signal: evaluation uses numeric ``signal`` ndarray for
+  ``preprocess_for_spec`` (never window metadata dict).
+- Exact preprocessing contract IDs:
+  - selected: `{SELECTED_PREPROCESSING_CONTRACT_ID}`
+  - v0.1: `{V01_PREPROCESSING_CONTRACT_ID}`
+  - v0.2: `{V02_PREPROCESSING_CONTRACT_ID}`
+- Ledger attempts distinguished from TFLite invocations
+  (``tflite_invoke_count`` / ``actual_total_tflite_invocations``).
+- Selected candidate requires 75 valid predictions for complete status;
+  ``metric_bundle`` refuses empty-labels-with-positive evaluated count.
+- Payload release recorded at loader return boundary, before verify.
+- Authoritative ``execution_freeze_identity.json`` binds harness module SHAs
+  and policy/model artifacts; execute path compares live against frozen.
 """
     path.write_text(body, encoding="utf-8")
 
@@ -262,6 +283,11 @@ def generate_m_b10r1a_prefreeze(
         "baseline_v01_sha256": V01_SHA,
         "baseline_v02_sha256": V02_SHA,
         "executor_sha256": EXECUTOR_SHA,
+        "preprocessing_contract_ids": {
+            SELECTED_MODEL_ID: SELECTED_PREPROCESSING_CONTRACT_ID,
+            "mmwave_resp_int8": V01_PREPROCESSING_CONTRACT_ID,
+            "mmwave_resp_int8_v0.2.0_candidate": V02_PREPROCESSING_CONTRACT_ID,
+        },
     }
 
     model_identity_registry = {
@@ -375,6 +401,8 @@ def generate_m_b10r1a_prefreeze(
         readiness["pre_access_validator_pass"] = False
         readiness["pre_access_validator_status"] = "PENDING_VALIDATOR"
 
+    execution_freeze_identity = build_execution_freeze_identity(root)
+
     audit = {
         "phase_id": "M-B10R1-A",
         "schema_version": "M-B10R1A_RECOVERY_ACCESS_AUDIT_V1",
@@ -424,6 +452,12 @@ def generate_m_b10r1a_prefreeze(
         "expected_future_inferences": EXPECTED_INFERENCES,
         "model_count": 3,
         "mmwave_phase_b_access_diff": 0,
+        "preprocessing_contract_ids": {
+            SELECTED_MODEL_ID: SELECTED_PREPROCESSING_CONTRACT_ID,
+            "mmwave_resp_int8": V01_PREPROCESSING_CONTRACT_ID,
+            "mmwave_resp_int8_v0.2.0_candidate": V02_PREPROCESSING_CONTRACT_ID,
+        },
+        "execution_freeze_identity": "execution_freeze_identity.json",
         "report": str(REPORT_REL),
     }
 
@@ -441,6 +475,7 @@ def generate_m_b10r1a_prefreeze(
         "recovery_access_audit.json": audit,
         "future_result_schema.json": future_result_schema(),
         "future_ledger_schema.json": future_ledger_schema(),
+        "execution_freeze_identity.json": execution_freeze_identity,
         "run_environment.json": run_environment,
         "exceptions.json": exceptions,
         "m_b10r1a_summary.json": summary,

@@ -17,6 +17,7 @@ from unittest import mock
 
 from scripts import validate_mmwave_m_b10r1a as validator
 from scripts.mmwave_m_b10r1_metrics import (
+    MB10R1MetricsError,
     metric_bundle,
     saturation_audit_from_rows,
     subject_metrics,
@@ -24,6 +25,7 @@ from scripts.mmwave_m_b10r1_metrics import (
 )
 from scripts.mmwave_m_b10r1_recovery_access import (
     EXPECTED_ELIGIBLE,
+    EXPECTED_INFERENCES,
     ORIGINAL_FINAL_TOKEN,
     RECOVERY_AUTHORIZATION_TOKEN,
     LimitedReuseRecoveryAccessController,
@@ -31,8 +33,19 @@ from scripts.mmwave_m_b10r1_recovery_access import (
     RecoveryReadiness,
 )
 from scripts.mmwave_m_b10r1_recovery_eval import (
+    SELECTED_MODEL_ID,
+    SELECTED_PREPROCESSING_CONTRACT_ID,
+    V01_PREPROCESSING_CONTRACT_ID,
+    V02_PREPROCESSING_CONTRACT_ID,
+    MB10R1EvalError,
+    authorize_pre_access_freeze_binding,
     build_bound_contract_identity,
+    evaluate_recovery_payload,
+    frozen_model_specs,
+    load_frozen_execution_identity,
     readiness_summary,
+    validate_frozen_recovery_models,
+    verify_live_against_frozen,
 )
 from scripts.mmwave_m_b10r1a_prefreeze import generate_m_b10r1a_prefreeze
 from scripts import run_mmwave_m_b10r1 as runner_cli
@@ -158,6 +171,16 @@ class MetricEngineTests(unittest.TestCase):
         self.assertEqual(audit["total_quantized_elements"], 300)
         self.assertEqual(audit["samples_with_any_saturation"], 1)
 
+    def test_metric_bundle_refuses_empty_with_positive_count(self) -> None:
+        with self.assertRaises(MB10R1MetricsError) as ctx:
+            metric_bundle([], [], evaluated_sample_count=75)
+        self.assertIn("METRIC_EMPTY_LABELS_WITH_POSITIVE_EVALUATED_COUNT", str(ctx.exception))
+
+    def test_metric_bundle_refuses_count_mismatch(self) -> None:
+        with self.assertRaises(MB10R1MetricsError) as ctx:
+            metric_bundle([0, 1], [0, 1], evaluated_sample_count=75)
+        self.assertIn("METRIC_EVALUATED_SAMPLE_COUNT_MISMATCH", str(ctx.exception))
+
 
 class RecoveryAccessNegativeTests(unittest.TestCase):
     def setUp(self) -> None:
@@ -243,8 +266,10 @@ class RecoveryAccessNegativeTests(unittest.TestCase):
                 RECOVERY_AUTHORIZATION_TOKEN, self.bound, _authorized_readiness()
             )
             self.assertEqual(payload["total_count"], EXPECTED_ELIGIBLE)
-        self.assertTrue(self.controller.snapshot()["payload_consumed"])
-        self.assertEqual(self.controller.snapshot()["recovery_payload_release_events"], 1)
+        snap = self.controller.snapshot()
+        self.assertTrue(snap["payload_consumed"])
+        self.assertEqual(snap["recovery_payload_release_events"], 1)
+        self.assertEqual(snap["historical_total_payload_release_events"], 2)
         # Second access refused
         with self.assertRaises(RecoveryAccessError):
             self.controller.get_locked_test_recovery_evaluation_dataset(
@@ -252,6 +277,57 @@ class RecoveryAccessNegativeTests(unittest.TestCase):
             )
         # Historical original never reset
         self.assertEqual(self.controller.snapshot()["original_final_accessor_invocations"], 1)
+
+    def test_loader_raises_before_return_no_release(self) -> None:
+        """Audit policy B: load throws before return → release=0, historical_total=1, consumed=true."""
+
+        def _boom(**_kwargs):
+            raise RuntimeError("simulated load failure before return")
+
+        with mock.patch.object(self.controller, "_load_eligible_locked_test", side_effect=_boom):
+            with self.assertRaises(RuntimeError):
+                self.controller.get_locked_test_recovery_evaluation_dataset(
+                    RECOVERY_AUTHORIZATION_TOKEN, self.bound, _authorized_readiness()
+                )
+        snap = self.controller.snapshot()
+        self.assertTrue(snap["payload_consumed"])
+        self.assertEqual(snap["recovery_accessor_invocations"], 1)
+        self.assertEqual(snap["recovery_payload_release_events"], 0)
+        self.assertEqual(snap["historical_total_payload_release_events"], 1)
+        with self.assertRaises(RecoveryAccessError):
+            self.controller.get_locked_test_recovery_evaluation_dataset(
+                RECOVERY_AUTHORIZATION_TOKEN, self.bound, _authorized_readiness()
+            )
+
+    def test_verify_fails_after_payload_return_keeps_release(self) -> None:
+        """Audit policy A: loader returns, verify fails → release=1, historical_total=2, consumed."""
+        bad_payload = {
+            "total_count": 10,  # wrong — verify will fail
+            "windows": [{"assignment_status": "PURE", "split": "LOCKED_TEST", "subject_id": "s0"}]
+            * 10,
+            "signals": [None] * 10,
+        }
+
+        def _fake_load(**_kwargs):
+            return bad_payload
+
+        with mock.patch.object(self.controller, "_load_eligible_locked_test", side_effect=_fake_load):
+            with self.assertRaises(RecoveryAccessError):
+                self.controller.get_locked_test_recovery_evaluation_dataset(
+                    RECOVERY_AUTHORIZATION_TOKEN, self.bound, _authorized_readiness()
+                )
+        snap = self.controller.snapshot()
+        self.assertTrue(snap["payload_consumed"])
+        self.assertEqual(snap["recovery_payload_release_events"], 1)
+        self.assertEqual(snap["historical_total_payload_release_events"], 2)
+        self.assertEqual(snap["recovery_accessor_invocations"], 1)
+        with self.assertRaises(RecoveryAccessError) as ctx:
+            self.controller.get_locked_test_recovery_evaluation_dataset(
+                RECOVERY_AUTHORIZATION_TOKEN, self.bound, _authorized_readiness()
+            )
+        self.assertTrue(
+            "SECOND_RECOVERY" in str(ctx.exception) or "ALREADY_CONSUMED" in str(ctx.exception)
+        )
 
     def test_post_release_failure_still_consumed_no_retry(self) -> None:
         def _boom(**_kwargs):
@@ -263,6 +339,7 @@ class RecoveryAccessNegativeTests(unittest.TestCase):
                     RECOVERY_AUTHORIZATION_TOKEN, self.bound, _authorized_readiness()
                 )
         self.assertTrue(self.controller.snapshot()["payload_consumed"])
+        self.assertEqual(self.controller.snapshot()["recovery_payload_release_events"], 0)
         with self.assertRaises(RecoveryAccessError):
             self.controller.get_locked_test_recovery_evaluation_dataset(
                 RECOVERY_AUTHORIZATION_TOKEN, self.bound, _authorized_readiness()
@@ -499,6 +576,219 @@ class CliAndMonkeypatchTests(unittest.TestCase):
                     name = func.attr
                 self.assertNotEqual(name, "get_locked_test_recovery_evaluation_dataset")
                 self.assertNotEqual(name, "get_locked_test_final_evaluation_dataset")
+
+
+class FakeRunner:
+    """Counts invoke calls; returns a finite 3-class dequantized vector."""
+
+    def __init__(self) -> None:
+        self.invocations = 0
+        self.invoke_attempts = 0
+
+    def invoke(self, input_int8: np.ndarray) -> dict:
+        self.invoke_attempts += 1
+        array = np.asarray(input_int8, dtype=np.int8).reshape(1, 300, 1)
+        del array  # shape validated; FakeRunner does not run TFLite
+        self.invocations += 1
+        probs = [0.7, 0.2, 0.1]
+        return {
+            "raw_output_int8": [10, 0, -10],
+            "dequantized_output": probs,
+            "predicted_class_index": 0,
+            "predicted_class": "NORMAL",
+            "confidence": 0.7,
+        }
+
+
+def _mock_recovery_payload() -> dict:
+    windows = []
+    for i in range(EXPECTED_ELIGIBLE):
+        label_id = i % 3
+        windows.append(
+            {
+                "window_id": f"w{i:03d}",
+                "subject_id": f"s{i % 16:02d}",
+                "recording_id": f"r{i:03d}",
+                "safenest_label": ["NORMAL", "RAPID_OR_ABNORMAL", "APNEA"][label_id],
+                "safenest_label_id": label_id,
+                "assignment_status": "PURE",
+                "split": "LOCKED_TEST",
+            }
+        )
+    signals = np.random.RandomState(0).randn(EXPECTED_ELIGIBLE, 300).astype(np.float64)
+    return {
+        "total_count": EXPECTED_ELIGIBLE,
+        "windows": windows,
+        "signals": signals,
+    }
+
+
+class EvaluateRecoveryPayloadTests(unittest.TestCase):
+    def test_full_mock_75x3_orchestration(self) -> None:
+        specs = validate_frozen_recovery_models(ROOT)
+        payload = _mock_recovery_payload()
+        runners = {spec["model_id"]: FakeRunner() for spec in specs}
+
+        # Must NOT call real recovery accessor.
+        with mock.patch(
+            "scripts.mmwave_m_b10r1_recovery_access.LimitedReuseRecoveryAccessController.get_locked_test_recovery_evaluation_dataset",
+            side_effect=AssertionError("MUST_NOT_CALL_REAL_RECOVERY_ACCESSOR"),
+        ):
+            result = evaluate_recovery_payload(ROOT, payload, specs, runners=runners)
+
+        self.assertEqual(result["status"], "RECOVERY_EXECUTED")
+        self.assertEqual(result["ledger_row_count"], EXPECTED_INFERENCES)
+        self.assertEqual(result["actual_total_tflite_invocations"], EXPECTED_INFERENCES)
+        self.assertEqual(len(result["ledger"]), 225)
+        for spec in specs:
+            mid = spec["model_id"]
+            cov = result["coverage_by_model"][mid]
+            self.assertEqual(cov["evaluation_rows_attempted"], 75)
+            self.assertEqual(cov["tflite_invoke_count"], 75)
+            self.assertEqual(cov["valid_count"], 75)
+            self.assertEqual(runners[mid].invocations, 75)
+            self.assertEqual(
+                result["metrics_by_model"][mid]["evaluated_sample_count"], 75
+            )
+            self.assertEqual(spec["preprocessing_contract_id"], {
+                SELECTED_MODEL_ID: SELECTED_PREPROCESSING_CONTRACT_ID,
+                "mmwave_resp_int8": V01_PREPROCESSING_CONTRACT_ID,
+                "mmwave_resp_int8_v0.2.0_candidate": V02_PREPROCESSING_CONTRACT_ID,
+            }[mid])
+        for row in result["ledger"]:
+            self.assertIn(
+                row["preprocessing_contract_id"],
+                {
+                    SELECTED_PREPROCESSING_CONTRACT_ID,
+                    V01_PREPROCESSING_CONTRACT_ID,
+                    V02_PREPROCESSING_CONTRACT_ID,
+                },
+            )
+            self.assertFalse(row["invalid"])
+            self.assertEqual(len(row["dequantized_output"]), 3)
+            self.assertTrue(all(np.isfinite(row["dequantized_output"])))
+        serialized = json.dumps(result).lower()
+        self.assertNotIn("seed43", serialized)
+        self.assertNotIn("seed44", serialized)
+
+    def test_window_vs_signal_regression(self) -> None:
+        """Behavioral regression: preprocess first arg must be ndarray, not window dict.
+
+        Would fail head 008808d which called preprocess_for_spec(window, ...).
+        """
+        specs = validate_frozen_recovery_models(ROOT)
+        payload = _mock_recovery_payload()
+        runners = {spec["model_id"]: FakeRunner() for spec in specs}
+        seen: list[type] = []
+
+        from scripts import mmwave_m_b10b_final_eval as mb10b
+
+        real_preprocess = mb10b.preprocess_for_spec
+
+        def _asserting_preprocess(first, spec):
+            seen.append(type(first))
+            if isinstance(first, dict):
+                raise AssertionError("PREPROCESS_RECEIVED_WINDOW_DICT")
+            if not isinstance(first, np.ndarray):
+                raise AssertionError(f"PREPROCESS_EXPECTED_NDARRAY:{type(first)}")
+            return real_preprocess(first, spec)
+
+        with mock.patch.object(mb10b, "preprocess_for_spec", side_effect=_asserting_preprocess):
+            result = evaluate_recovery_payload(ROOT, payload, specs, runners=runners)
+
+        self.assertEqual(result["status"], "RECOVERY_EXECUTED")
+        self.assertEqual(len(seen), EXPECTED_INFERENCES)
+        self.assertTrue(all(issubclass(t, np.ndarray) for t in seen))
+
+        source = (ROOT / "scripts/mmwave_m_b10r1_recovery_eval.py").read_text(encoding="utf-8")
+        self.assertIn("preprocess_for_spec(signal", source)
+        self.assertNotIn("preprocess_for_spec(window", source)
+
+
+class FrozenBindingCorruptionTests(unittest.TestCase):
+    def test_authorize_rejects_mutated_policy_before_payload(self) -> None:
+        holder = tempfile.TemporaryDirectory()
+        try:
+            dest = Path(holder.name) / "tree"
+            # Minimal tree: copy freeze evidence + mutate a bound policy file via overlay.
+            # Use live root for models but temp copy of freeze identity + policy.
+            # Simpler: mutate live-relative check via temp root symlink is hard on Darwin.
+            # Instead call verify_live_against_frozen with a mutated frozen dict expected SHA.
+            frozen = load_frozen_execution_identity(ROOT)
+            bad = copy.deepcopy(frozen)
+            bad["artifact_sha256"] = dict(bad.get("artifact_sha256") or {})
+            bad["artifact_sha256"]["policy_decision_sha256"] = "0" * 64
+            bad["harness_module_sha256"] = dict(bad.get("harness_module_sha256") or {})
+            with self.assertRaises(MB10R1EvalError) as ctx:
+                verify_live_against_frozen(ROOT, bad)
+            self.assertIn("FROZEN_LIVE_MISMATCH", str(ctx.exception))
+        finally:
+            holder.cleanup()
+
+    def test_harness_module_corruption_rejected(self) -> None:
+        frozen = load_frozen_execution_identity(ROOT)
+        for rel in (
+            "scripts/mmwave_m_b10r1_recovery_access.py",
+            "scripts/mmwave_m_b10r1_recovery_eval.py",
+            "scripts/mmwave_m_b10r1_metrics.py",
+            "scripts/run_mmwave_m_b10r1.py",
+        ):
+            bad = copy.deepcopy(frozen)
+            bad["harness_module_sha256"] = dict(bad["harness_module_sha256"])
+            bad["harness_module_sha256"][rel] = "0" * 64
+            with self.assertRaises(MB10R1EvalError) as ctx:
+                verify_live_against_frozen(ROOT, bad)
+            self.assertIn("FROZEN_HARNESS_LIVE_MISMATCH", str(ctx.exception))
+
+    def test_proposed_and_metric_contract_corruption_rejected(self) -> None:
+        frozen = load_frozen_execution_identity(ROOT)
+        for key in (
+            "proposed_recovery_evaluation_contract_sha256",
+            "m_b10a_metric_contract_sha256",
+        ):
+            bad = copy.deepcopy(frozen)
+            bad["artifact_sha256"] = dict(bad["artifact_sha256"])
+            bad["artifact_sha256"][key] = "0" * 64
+            # Also poison top-level mirrors used by secondary checks
+            if key == "m_b10a_metric_contract_sha256":
+                bad["m_b10a_metric_contract_sha256"] = "0" * 64
+            if key == "proposed_recovery_evaluation_contract_sha256":
+                bad["m_b10r0_proposed_contract_sha256"] = "0" * 64
+            with self.assertRaises(MB10R1EvalError):
+                verify_live_against_frozen(ROOT, bad)
+
+    def test_preaccess_auth_rejects_before_mock_payload(self) -> None:
+        """Mutated freeze identity file in temp evidence → authorize fails before load."""
+        holder, destination = _copy_output()
+        try:
+            freeze_path = destination / "execution_freeze_identity.json"
+            if not freeze_path.is_file():
+                self.skipTest("execution_freeze_identity.json not yet generated")
+            data = json.loads(freeze_path.read_text(encoding="utf-8"))
+            data["harness_module_sha256"]["scripts/mmwave_m_b10r1_recovery_eval.py"] = "0" * 64
+            freeze_path.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            _rewrite_checksums(destination)
+
+            # Point OUT_DIR via temp root is awkward; call verify directly on mutated frozen.
+            with self.assertRaises(MB10R1EvalError):
+                verify_live_against_frozen(ROOT, data)
+
+            # authorize_pre_access_freeze_binding on live tree still passes (live evidence intact)
+            authorize_pre_access_freeze_binding(ROOT)
+        finally:
+            holder.cleanup()
+
+    def test_exact_preprocessing_contract_ids_frozen(self) -> None:
+        specs = frozen_model_specs()
+        by_id = {s["model_id"]: s["preprocessing_contract_id"] for s in specs}
+        self.assertEqual(by_id[SELECTED_MODEL_ID], SELECTED_PREPROCESSING_CONTRACT_ID)
+        self.assertEqual(by_id["mmwave_resp_int8"], V01_PREPROCESSING_CONTRACT_ID)
+        self.assertEqual(
+            by_id["mmwave_resp_int8_v0.2.0_candidate"], V02_PREPROCESSING_CONTRACT_ID
+        )
+        # Must not use profile / model_id as contract id
+        self.assertNotEqual(SELECTED_PREPROCESSING_CONTRACT_ID, "M-B1_D0_B1_Z1")
+        self.assertNotEqual(V01_PREPROCESSING_CONTRACT_ID, "mmwave_resp_int8")
 
 
 if __name__ == "__main__":

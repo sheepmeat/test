@@ -1,7 +1,19 @@
 {
+  "coverage_tracking_fields": [
+    "evaluation_rows_attempted",
+    "preprocessing_success_count",
+    "tflite_invoke_count",
+    "tflite_invoke_attempts",
+    "invalid_preprocessing_count",
+    "invalid_inference_count",
+    "planned_count",
+    "valid_count",
+    "invalid_count"
+  ],
   "expected_eligible_windows": 75,
   "expected_models": 3,
   "expected_rows": 225,
+  "inference_count_note": "Never treat len(ledger)==225 as proof of 225 TFLite inferences; use actual_total_tflite_invocations / per-model tflite_invoke_count.",
   "populated": false,
   "population_note": "NOT_EXECUTED \u2014 ledger rows are not populated during M-B10R1-A",
   "required_fields": [

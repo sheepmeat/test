@@ -7,6 +7,18 @@ loads LOCKED_TEST via the private ``_get_split_dataset`` helper with
 ``include_ambiguous=False`` — never ``get_locked_test_final_evaluation_dataset``.
 
 M-B10R1-A never supplies a valid authorization for real access.
+
+Payload-release audit semantics
+-------------------------------
+Once ``_load_eligible_locked_test()`` successfully RETURNS a payload object:
+  - Immediately record ``recovery_payload_release_events += 1``
+  - ``historical_total = original_final + recovery_payload_release_events``
+  - Persist BEFORE ``_verify_payload()``
+If verification then fails: payload_consumed remains true, release remains 1,
+historical total remains 2, no retry / no rollback.
+If loading throws BEFORE returning a payload: do NOT increment
+``recovery_payload_release_events``; accessor invocation + payload_consumed=true
+are still recorded (conservative); historical total stays 1.
 """
 
 from __future__ import annotations
@@ -134,15 +146,6 @@ class LimitedReuseRecoveryAccessController:
         phase_b_guard: Any | None = None,
     ) -> dict[str, Any]:
         """One-shot recovery payload release. Forbidden during M-B10R1-A."""
-        # Increment invocation attempt counter only after basic token shape check?
-        # Spec: refuse unauthorized; only increment recovery counters on success path
-        # for payload release. Invocation tracking: count attempts that pass token
-        # gate OR count all successful releases. Design says:
-        # recovery_accessor_invocations and recovery_payload_release_events.
-        # Second recovery: recovery_payload_release_events >= 1 fails.
-        # We'll increment accessor invocations when authorization + readiness pass
-        # and we attempt load; payload release on successful return.
-
         if authorization_token == ORIGINAL_FINAL_TOKEN:
             raise RecoveryAccessError(
                 "ORIGINAL_FINAL_TOKEN_REJECTED_FOR_RECOVERY:"
@@ -188,20 +191,34 @@ class LimitedReuseRecoveryAccessController:
         self._persist()
 
         try:
-            payload = self._load_eligible_locked_test(phase_b_guard=phase_b_guard, include_ambiguous=include_ambiguous)
-            self._verify_payload(payload)
+            payload = self._load_eligible_locked_test(
+                phase_b_guard=phase_b_guard, include_ambiguous=include_ambiguous
+            )
         except Exception:
-            # Keep consumed=True; never reset original counters.
+            # Load threw BEFORE returning a payload object:
+            # do NOT increment recovery_payload_release_events; historical total stays 1.
+            # accessor_invocations already incremented; payload_consumed remains true.
             self._persist()
             raise
 
-        self._state["recovery_payload_release_events"] = int(self._state.get("recovery_payload_release_events", 0)) + 1
-        # Historical total becomes 2 only after a successful recovery release.
+        # Payload object successfully returned — record release BEFORE verify.
+        # Order is intentional: verification failure must not roll back the release.
+        self._state["recovery_payload_release_events"] = (
+            int(self._state.get("recovery_payload_release_events", 0)) + 1
+        )
         self._state["historical_total_payload_release_events"] = (
             int(self._state.get("original_final_payload_release_events", 1))
             + int(self._state["recovery_payload_release_events"])
         )
         self._persist()
+
+        try:
+            self._verify_payload(payload)
+        except Exception:
+            # Keep release=1, historical_total=2, consumed=true; no retry / no rollback.
+            self._persist()
+            raise
+
         return payload
 
     def _verify_bound_contract(self, bound: dict[str, Any]) -> None:

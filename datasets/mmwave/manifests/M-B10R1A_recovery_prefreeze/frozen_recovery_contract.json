@@ -6,6 +6,11 @@
     "baseline_v02_sha256": "85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff",
     "executor_sha256": "8ca87f457d0a151cffa2da23ae9ab9d87764b144fa826b91444776f3dc58ec4f",
     "m_b10a_metric_contract_sha256": "ba6429ecfe685de1807ec85b55e697ee12e24138e6b96e94715b0a1a6b19e0f7",
+    "preprocessing_contract_ids": {
+      "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+      "mmwave_resp_int8": "M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1",
+      "mmwave_resp_int8_v0.2.0_candidate": "M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1"
+    },
     "selected_model_sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5"
   },
   "bound_contract_identity": {
@@ -28,6 +33,11 @@
     "original_final_token_rejected": "AUTHORIZED_FINAL_LOCKED_TEST_EVALUATION_TOKEN_V1",
     "policy_decision_sha256": "1367982c96f03b6d846acd4105f69cf8716395b783cd398faa0df9c6aca64916",
     "positional_truncation": false,
+    "preprocessing_contract_ids": {
+      "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+      "mmwave_resp_int8": "M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1",
+      "mmwave_resp_int8_v0.2.0_candidate": "M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1"
+    },
     "proposed_recovery_evaluation_contract_sha256": "a1f8563573a335526a3ec9579a19b62a472737d82fac7ddc3ef338101c2d1a3f",
     "recovery_authorization_token_id": "M_B10R1_LIMITED_REUSE_RECOVERY_AUTHORIZATION_V1",
     "result_limitation": "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT",

@@ -19,6 +19,11 @@
     "original_final_token_rejected": "AUTHORIZED_FINAL_LOCKED_TEST_EVALUATION_TOKEN_V1",
     "policy_decision_sha256": "1367982c96f03b6d846acd4105f69cf8716395b783cd398faa0df9c6aca64916",
     "positional_truncation": false,
+    "preprocessing_contract_ids": {
+      "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
+      "mmwave_resp_int8": "M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1",
+      "mmwave_resp_int8_v0.2.0_candidate": "M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1"
+    },
     "proposed_recovery_evaluation_contract_sha256": "a1f8563573a335526a3ec9579a19b62a472737d82fac7ddc3ef338101c2d1a3f",
     "recovery_authorization_token_id": "M_B10R1_LIMITED_REUSE_RECOVERY_AUTHORIZATION_V1",
     "result_limitation": "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT",

@@ -77,11 +77,25 @@ REQUIRED_OUTPUTS = {
     "recovery_access_audit.json",
     "future_result_schema.json",
     "future_ledger_schema.json",
+    "execution_freeze_identity.json",
     "run_environment.json",
     "exceptions.json",
     "m_b10r1a_summary.json",
     "checksums.sha256",
 }
+
+SELECTED_PREPROCESSING_CONTRACT_ID = "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1"
+V01_PREPROCESSING_CONTRACT_ID = "M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1"
+V02_PREPROCESSING_CONTRACT_ID = "M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1"
+SELECTED_MODEL_ID = "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8"
+
+HARNESS_MODULE_RELS = (
+    "scripts/mmwave_m_b10r1_recovery_access.py",
+    "scripts/mmwave_m_b10r1_recovery_eval.py",
+    "scripts/mmwave_m_b10r1_metrics.py",
+    "scripts/run_mmwave_m_b10r1.py",
+    "scripts/mmwave_m_b10b_baseline_preprocessing.py",
+)
 
 
 class MB10R1AValidationError(Exception):
@@ -179,13 +193,6 @@ def _inspect_recovery_access_source(root: Path) -> None:
         _raise("ORIGINAL_TOKEN_REJECTION_CONSTANT_MISSING")
     if "SECOND_RECOVERY" not in source and "recovery_payload_release_events" not in source:
         _raise("SECOND_ACCESS_REFUSAL_MISSING")
-    # Forbid assigning original counter to 0.
-    for node in ast.walk(tree):
-        if isinstance(node, ast.Assign):
-            for target in node.targets:
-                if isinstance(target, ast.Subscript):
-                    continue
-            # String-level: reject resets of historical original counters to 0.
     if re.search(
         r'original_final_accessor_invocations["\']?\s*[:=]\s*0\b',
         source,
@@ -195,6 +202,62 @@ def _inspect_recovery_access_source(root: Path) -> None:
         _raise("PRIVATE_SPLIT_LOADER_REQUIRED")
     if "include_ambiguous=False" not in source and "include_ambiguous = False" not in source:
         _raise("INCLUDE_AMBIGUOUS_FALSE_REQUIRED")
+    # Payload release must be recorded at loader return boundary, before verify.
+    load_idx = source.find("self._load_eligible_locked_test")
+    release_idx = source.find('recovery_payload_release_events')
+    # Find the increment after load: second occurrence of assignment pattern after load.
+    verify_idx = source.find("self._verify_payload")
+    if load_idx < 0 or verify_idx < 0:
+        _raise("ACCESS_LOAD_OR_VERIFY_MISSING")
+    # Require release increment text between load call and verify call.
+    between = source[load_idx:verify_idx]
+    if "recovery_payload_release_events" not in between:
+        _raise("PAYLOAD_RELEASE_NOT_BEFORE_VERIFY")
+    if "_persist" not in between:
+        _raise("PAYLOAD_RELEASE_NOT_PERSISTED_BEFORE_VERIFY")
+
+
+def _inspect_recovery_eval_source(root: Path) -> None:
+    path = root / RECOVERY_EVAL_MODULE
+    source = path.read_text(encoding="utf-8")
+    if "def evaluate_recovery_payload" not in source:
+        _raise("EVALUATE_RECOVERY_PAYLOAD_MISSING")
+    if "preprocess_for_spec(signal" not in source:
+        _raise("EVAL_PREPROCESS_MUST_USE_SIGNAL")
+    if "preprocess_for_spec(window" in source:
+        _raise("EVAL_PREPROCESS_USES_WINDOW_METADATA")
+    if "actual_total_tflite_invocations" not in source:
+        _raise("EVAL_MISSING_TFLITE_INVOKE_TRACKING")
+    for field in (
+        "evaluation_rows_attempted",
+        "preprocessing_success_count",
+        "tflite_invoke_count",
+        "invalid_preprocessing_count",
+        "invalid_inference_count",
+    ):
+        if field not in source:
+            _raise(f"EVAL_MISSING_COVERAGE_FIELD:{field}")
+    for contract_id in (
+        SELECTED_PREPROCESSING_CONTRACT_ID,
+        V01_PREPROCESSING_CONTRACT_ID,
+        V02_PREPROCESSING_CONTRACT_ID,
+    ):
+        if contract_id not in source:
+            _raise(f"EVAL_MISSING_PREPROCESSING_CONTRACT_ID:{contract_id}")
+    if "load_frozen_execution_identity" not in source:
+        _raise("EVAL_MISSING_LOAD_FROZEN_IDENTITY")
+    if "verify_live_against_frozen" not in source:
+        _raise("EVAL_MISSING_VERIFY_LIVE_AGAINST_FROZEN")
+    if "authorize_pre_access_freeze_binding" not in source:
+        _raise("EVAL_MISSING_PREACCESS_FREEZE_BINDING")
+
+
+def _inspect_metrics_source(root: Path) -> None:
+    source = (root / RECOVERY_METRICS_MODULE).read_text(encoding="utf-8")
+    if "METRIC_EMPTY_LABELS_WITH_POSITIVE_EVALUATED_COUNT" not in source:
+        _raise("METRIC_BUNDLE_EMPTY_GUARD_MISSING")
+    if "METRIC_EVALUATED_SAMPLE_COUNT_MISMATCH" not in source:
+        _raise("METRIC_BUNDLE_COUNT_MISMATCH_GUARD_MISSING")
 
 
 def _inspect_validator_self(root: Path) -> None:
@@ -363,6 +426,39 @@ def validate_m_b10r1a_artifacts(
     for mid in ids:
         if mid and ("seed43" in str(mid) or "seed44" in str(mid)):
             _raise(f"FORBIDDEN_MODEL_ID:{mid}")
+    expected_contracts = {
+        SELECTED_MODEL_ID: SELECTED_PREPROCESSING_CONTRACT_ID,
+        "mmwave_resp_int8": V01_PREPROCESSING_CONTRACT_ID,
+        "mmwave_resp_int8_v0.2.0_candidate": V02_PREPROCESSING_CONTRACT_ID,
+    }
+    for model in model_list:
+        mid = model.get("model_id")
+        expected = expected_contracts.get(mid)
+        if expected is None:
+            _raise(f"UNEXPECTED_MODEL_ID:{mid}")
+        if model.get("preprocessing_contract_id") != expected:
+            _raise(f"MODEL_PREPROCESSING_CONTRACT_MISMATCH:{mid}")
+
+    # Authoritative execution freeze identity
+    freeze = artifacts["execution_freeze_identity.json"]
+    if freeze.get("schema_version") != "M-B10R1A_EXECUTION_FREEZE_IDENTITY_V1":
+        _raise("FREEZE_IDENTITY_SCHEMA_MISMATCH")
+    harness = freeze.get("harness_module_sha256") or {}
+    for rel in HARNESS_MODULE_RELS:
+        if rel not in harness:
+            _raise(f"FREEZE_HARNESS_SHA_MISSING:{rel}")
+        live_mod = sha256_file(root / rel)
+        if live_mod != harness[rel]:
+            _raise(f"FREEZE_HARNESS_SHA_MISMATCH:{rel}")
+    freeze_contracts = freeze.get("preprocessing_contract_ids") or {}
+    for mid, expected in expected_contracts.items():
+        if freeze_contracts.get(mid) != expected:
+            _raise(f"FREEZE_PREPROCESSING_CONTRACT_MISMATCH:{mid}")
+    if freeze.get("m_b10a_metric_contract_sha256") != M_B10A_CONTRACT_SHA:
+        # Allow live recompute equality as authoritative check
+        live_m_b10a = sha256_file(root / M_B10A_DIR_REL / "locked_test_evaluation_contract.json")
+        if freeze.get("m_b10a_metric_contract_sha256") != live_m_b10a:
+            _raise("FREEZE_M_B10A_METRIC_SHA_MISMATCH")
 
     baseline = artifacts["baseline_identity_registry.json"]
     if baseline.get("executor_sha256") != EXECUTOR_SHA:
@@ -402,6 +498,16 @@ def validate_m_b10r1a_artifacts(
     ledger = artifacts["future_ledger_schema.json"]
     if ledger.get("status") != "NOT_EXECUTED":
         _raise("LEDGER_STATUS_MUST_BE_NOT_EXECUTED")
+    coverage_fields = ledger.get("coverage_tracking_fields") or []
+    for field in (
+        "evaluation_rows_attempted",
+        "preprocessing_success_count",
+        "tflite_invoke_count",
+        "invalid_preprocessing_count",
+        "invalid_inference_count",
+    ):
+        if field not in coverage_fields and field not in json.dumps(ledger):
+            _raise(f"LEDGER_MISSING_COVERAGE_FIELD:{field}")
     if RESULT_LIMITATION not in json.dumps(ledger):
         # designation may live on result schema only; require on at least one
         pass
@@ -450,6 +556,8 @@ def validate_m_b10r1a_artifacts(
         _raise("REPORT_MISSING_LOCKED_TEST_NOT_REOPENED")
 
     _inspect_recovery_access_source(root)
+    _inspect_recovery_eval_source(root)
+    _inspect_metrics_source(root)
     _inspect_runner_default(root)
 
     # Required source modules exist

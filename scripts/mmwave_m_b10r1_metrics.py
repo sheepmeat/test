@@ -26,9 +26,21 @@ def metric_bundle(
     *,
     evaluated_sample_count: int | None = None,
 ) -> dict[str, Any]:
-    """Frozen M-B0/M-B10A metrics with support-zero values defined as 0.0."""
-    truth = np.asarray(list(labels), dtype=np.int64)
-    pred = np.asarray(list(predictions), dtype=np.int64)
+    """Frozen M-B0/M-B10A metrics with support-zero values defined as 0.0.
+
+    Guard: never claim a positive evaluated_sample_count from empty labels
+    (e.g. ``metric_bundle([], [], evaluated_sample_count=75)`` is refused).
+    When ``evaluated_sample_count`` is provided it must equal ``len(labels)``.
+    """
+    truth_list = list(labels)
+    pred_list = list(predictions)
+    if evaluated_sample_count is not None:
+        if int(evaluated_sample_count) > 0 and len(truth_list) == 0:
+            raise MB10R1MetricsError("METRIC_EMPTY_LABELS_WITH_POSITIVE_EVALUATED_COUNT")
+        if int(evaluated_sample_count) != len(truth_list):
+            raise MB10R1MetricsError("METRIC_EVALUATED_SAMPLE_COUNT_MISMATCH")
+    truth = np.asarray(truth_list, dtype=np.int64)
+    pred = np.asarray(pred_list, dtype=np.int64)
     if truth.shape != pred.shape:
         raise MB10R1MetricsError("METRIC_LABEL_PREDICTION_SHAPE_MISMATCH")
     if truth.size and (np.any((truth < 0) | (truth > 2)) or np.any((pred < 0) | (pred > 2))):

@@ -9,7 +9,7 @@
 | Field | Value |
 |---|---|
 | Phase | M-B10R1-A |
-| Generated at (UTC) | 2026-08-12T15:31:49Z |
+| Generated at (UTC) | 2026-08-12T15:59:29Z |
 | Recovery execution authorized | false |
 | Recovery payload release authorized | false |
 | New recovery accessor invocations | 0 |
@@ -73,3 +73,19 @@ must carry designation `REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT`.
 - No LOCKED_TEST reopen during this phase
 - No M-B10R1-B authorization
 - No M-B11 start
+
+## Recovery-path truth closures (M-B10R1A final)
+
+- Window-vs-signal: evaluation uses numeric ``signal`` ndarray for
+  ``preprocess_for_spec`` (never window metadata dict).
+- Exact preprocessing contract IDs:
+  - selected: `M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1`
+  - v0.1: `M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1`
+  - v0.2: `M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1`
+- Ledger attempts distinguished from TFLite invocations
+  (``tflite_invoke_count`` / ``actual_total_tflite_invocations``).
+- Selected candidate requires 75 valid predictions for complete status;
+  ``metric_bundle`` refuses empty-labels-with-positive evaluated count.
+- Payload release recorded at loader return boundary, before verify.
+- Authoritative ``execution_freeze_identity.json`` binds harness module SHAs
+  and policy/model artifacts; execute path compares live against frozen.
