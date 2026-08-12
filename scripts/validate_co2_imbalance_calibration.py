@@ -5,12 +5,13 @@
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import math
 import subprocess
 import sys
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Mapping, Sequence, Tuple
+from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
 
 import numpy as np
 
@@ -136,6 +137,185 @@ PROTECTED_SHARED = {
     SYNTHETIC_FIXTURE_REL,
 }
 
+# Scope ownership is deliberately narrower than “anything containing co2”.
+# These are repository-local namespaces whose ownership is established by the
+# active tree.  Shared/root paths are checked before these rules so a
+# production asset or global contract cannot become allowed merely because it
+# lives below a CO₂ directory.
+C_B2_ARTIFACT_DRIFT = "C_B2_ARTIFACT_DRIFT"
+C_B2_OWNED = "C_B2_OWNED"
+CO2_SAME_TRACK = "CO2_SAME_TRACK"
+MMWAVE_OTHER_TRACK = "MMWAVE_OTHER_TRACK"
+THERMAL_OTHER_TRACK = "THERMAL_OTHER_TRACK"
+INTEGRATION_OTHER_TRACK = "INTEGRATION_OTHER_TRACK"
+SHARED_OR_UNAUTHORIZED = "SHARED_OR_UNAUTHORIZED"
+
+_C_B2_ARTIFACT_PREFIX = f"{ARTIFACT_DIR_REL}/"
+_CO2_LOCAL_PREFIXES = (
+    "datasets/co2/",
+    "models/co2/",
+    "sensors/co2/",
+    "benchmarks/co2/",
+)
+_CO2_LOCAL_PATTERNS = (
+    "inference/co2_*.py",
+    "scripts/co2_standalone/*",
+    "scripts/*co2*.py",
+    "tests/test_co2*.py",
+    "docs/reports/co2/*",
+    "docs/reports/co2_*.md",
+)
+_MMWAVE_PREFIXES = (
+    "datasets/mmwave/",
+    "models/mmwave/",
+    "sensors/mmwave/",
+    "devices/mmwave/",
+    "benchmarks/mmwave/",
+)
+_MMWAVE_PATTERNS = (
+    "scripts/*mmwave*.py",
+    "tests/test_mmwave*.py",
+    "docs/reports/mmwave/*",
+    "docs/reports/mmwave_*.md",
+)
+_THERMAL_PREFIXES = (
+    "datasets/thermal/",
+    "models/thermal/",
+    "models/thermal44/",
+    "sensors/thermal/",
+    "sensors/thermal44/",
+    "devices/thermal/",
+    "devices/thermal44/",
+    "benchmarks/thermal/",
+)
+_THERMAL_PATTERNS = (
+    "scripts/*thermal*.py",
+    "tests/test_thermal*.py",
+    "docs/reports/thermal/*",
+    "docs/reports/thermal_*.md",
+)
+_INTEGRATION_PREFIXES = (
+    "shared/",
+    "risk/",
+    "integrated_node/",
+    "devices/",
+    "ondevice_ai/",
+    ".github/",
+)
+
+
+def _matches_path_rule(path: str, prefixes: Sequence[str], patterns: Sequence[str]) -> bool:
+    return path.startswith(prefixes) or any(
+        fnmatch.fnmatchcase(path, pattern) for pattern in patterns
+    )
+
+
+def classify_path_ownership(path: str) -> str:
+    """Classify a changed path for predecessor isolation.
+
+    C-B2 evidence is immutable even though it is same-track.  Later CO₂
+    phases are allowed only after that protected namespace is checked, while
+    cross-track and shared paths remain hard failures.
+    """
+
+    normalized = str(path).replace("\\", "/")
+    if normalized.startswith("./"):
+        normalized = normalized[2:]
+    if (
+        normalized.startswith("/")
+        or normalized in PROTECTED_SHARED
+    ):
+        return SHARED_OR_UNAUTHORIZED
+    if normalized.startswith(_C_B2_ARTIFACT_PREFIX):
+        return C_B2_ARTIFACT_DRIFT
+    if normalized in ALLOWED_EXACT_PATHS:
+        return C_B2_OWNED
+    if _matches_path_rule(normalized, _MMWAVE_PREFIXES, _MMWAVE_PATTERNS):
+        return MMWAVE_OTHER_TRACK
+    if _matches_path_rule(normalized, _THERMAL_PREFIXES, _THERMAL_PATTERNS):
+        return THERMAL_OTHER_TRACK
+    if _matches_path_rule(normalized, _CO2_LOCAL_PREFIXES, _CO2_LOCAL_PATTERNS):
+        return CO2_SAME_TRACK
+    if normalized.startswith(_INTEGRATION_PREFIXES):
+        return INTEGRATION_OTHER_TRACK
+    return SHARED_OR_UNAUTHORIZED
+
+
+def audit_path_scope(
+    scope_paths: Sequence[str],
+    unique_commit_paths: Optional[Mapping[str, Sequence[str]]] = None,
+) -> Dict[str, Any]:
+    """Audit working-tree and unique-commit paths without reading artifacts.
+
+    The pure helper makes forward-compatibility behavior testable with small
+    fixtures while the full validator still performs all C-B2 evidence and
+    fingerprint checks independently.
+    """
+
+    errors: List[str] = []
+    classifications: Dict[str, str] = {}
+    same_track_paths: set[str] = set()
+    cross_track_paths: set[str] = set()
+
+    def record(path: str, *, commit: Optional[str] = None) -> None:
+        normalized = str(path).replace("\\", "/")
+        ownership = classify_path_ownership(normalized)
+        classifications[normalized] = ownership
+        if ownership == CO2_SAME_TRACK:
+            same_track_paths.add(normalized)
+            return
+        if ownership in {C_B2_OWNED}:
+            return
+        if ownership == C_B2_ARTIFACT_DRIFT:
+            errors.append(f"C_B2_ARTIFACT_DRIFT: {normalized}")
+            return
+        if ownership == MMWAVE_OTHER_TRACK:
+            cross_track_paths.add(normalized)
+            errors.append(
+                f"PARALLEL_TRACK_BRANCH_CONTAMINATION: {commit[:12] + ' ' if commit else ''}{normalized}"
+            )
+            if commit is None:
+                errors.append(f"mmWave contamination: {normalized}")
+            return
+        if ownership == THERMAL_OTHER_TRACK:
+            cross_track_paths.add(normalized)
+            errors.append(
+                f"PARALLEL_TRACK_BRANCH_CONTAMINATION: {commit[:12] + ' ' if commit else ''}{normalized}"
+            )
+            if commit is None:
+                errors.append(f"Thermal contamination: {normalized}")
+            return
+        if ownership == INTEGRATION_OTHER_TRACK:
+            cross_track_paths.add(normalized)
+            errors.append(
+                f"PARALLEL_TRACK_BRANCH_CONTAMINATION: {commit[:12] + ' ' if commit else ''}{normalized}"
+            )
+            if commit is None:
+                errors.append(f"Integration/shared contamination: {normalized}")
+            return
+        errors.append(f"Unauthorized non-C-B2 path in branch/worktree: {normalized}")
+
+    for path in scope_paths:
+        record(path)
+        normalized = str(path).replace("\\", "/")
+        if "raw_archives" in normalized or normalized.endswith((".zip", ".csv")):
+            errors.append(f"Raw payload in diff: {normalized}")
+    for commit, paths in (unique_commit_paths or {}).items():
+        for path in paths:
+            record(path, commit=commit)
+            normalized = str(path).replace("\\", "/")
+            if "raw_archives" in normalized or normalized.endswith((".zip", ".csv")):
+                errors.append(f"Raw payload in branch history: {commit[:12]} {normalized}")
+
+    return {
+        "errors": list(dict.fromkeys(errors)),
+        "path_ownership_classification": {
+            path: classifications[path] for path in sorted(classifications)
+        },
+        "same_track_later_phase_paths": sorted(same_track_paths),
+        "cross_track_contamination_paths": sorted(cross_track_paths),
+    }
+
 
 def _close(a: Any, b: Any, *, atol: float = 1e-14) -> bool:
     try:
@@ -179,7 +359,7 @@ def _extract_status_paths(status_text: str) -> List[str]:
 
 
 def _allowed_c_b2_path(path: str) -> bool:
-    return path in ALLOWED_EXACT_PATHS or path.startswith(f"{ARTIFACT_DIR_REL}/")
+    return classify_path_ownership(path) == C_B2_OWNED
 
 
 def _compare_metric_block(
@@ -802,32 +982,20 @@ def validate(
             errors.append(f"Determinism regeneration failed: {exc}")
             determinism_status = "FAIL"
 
-    # 50: C-B2-only working-tree/history/PR-diff scope.
+    # 50: C-B2 working-tree/history/PR-diff scope.  Later same-track CO₂
+    # phases are valid predecessor context; only cross-track, shared, unknown,
+    # or C-B2-artifact paths are rejected.
     changed = _git(repo_root, "diff", "--name-only", "origin/main...HEAD")
     status = _git(repo_root, "status", "--porcelain", "--untracked-files=all")
     scope_paths = set(changed.stdout.splitlines()) | set(
         _extract_status_paths(status.stdout)
     )
     scope_paths.discard("")
-    for path in sorted(scope_paths):
-        lower = path.lower()
-        if path in PROTECTED_SHARED:
-            errors.append(f"Protected/shared/production file modified: {path}")
-        if not _allowed_c_b2_path(path):
-            errors.append(f"Unauthorized non-C-B2 path in branch/worktree: {path}")
-        if "mmwave" in lower:
-            errors.append(f"mmWave contamination: {path}")
-        if "thermal" in lower:
-            errors.append(f"Thermal contamination: {path}")
-        if path.startswith(("shared/", "risk/", "integrated_node/", ".github/")):
-            errors.append(f"Integration/shared contamination: {path}")
-        if "raw_archives" in path or path.endswith((".zip", ".csv")):
-            errors.append(f"Raw payload in diff: {path}")
-
     unique_commits_result = _git(repo_root, "rev-list", "origin/main..HEAD")
     unique_commits = [x for x in unique_commits_result.stdout.splitlines() if x]
+    unique_commit_paths: Dict[str, List[str]] = {}
     for commit in unique_commits:
-        files = _git(
+        unique_commit_paths[commit] = _git(
             repo_root,
             "diff-tree",
             "--no-commit-id",
@@ -835,11 +1003,8 @@ def validate(
             "-r",
             commit,
         ).stdout.splitlines()
-        for path in files:
-            if path and not _allowed_c_b2_path(path):
-                errors.append(
-                    f"PARALLEL_TRACK_BRANCH_CONTAMINATION: {commit[:12]} {path}"
-                )
+    scope_audit = audit_path_scope(sorted(scope_paths), unique_commit_paths)
+    errors.extend(scope_audit["errors"])
 
     diff_check = _git(repo_root, "diff", "--check")
     if diff_check.returncode != 0 or diff_check.stdout.strip():
@@ -879,6 +1044,15 @@ def validate(
         "determinism": determinism_status,
         "unique_branch_commits": unique_commits,
         "changed_or_untracked_paths": sorted(scope_paths),
+        "path_ownership_classification": scope_audit[
+            "path_ownership_classification"
+        ],
+        "same_track_later_phase_paths": scope_audit[
+            "same_track_later_phase_paths"
+        ],
+        "cross_track_contamination_paths": scope_audit[
+            "cross_track_contamination_paths"
+        ],
         "error_count": len(errors),
         "warning_count": len(warnings),
     }

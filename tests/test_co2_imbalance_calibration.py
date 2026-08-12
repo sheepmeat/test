@@ -63,7 +63,18 @@ from datasets.co2.offline_experiment import (
     assert_no_forbidden_path_markers,
 )
 from datasets.co2.raw_reader import compute_sha256_file, get_repo_root
-from scripts.validate_co2_imbalance_calibration import validate as validate_c_b2
+from scripts.validate_co2_imbalance_calibration import (
+    C_B2_ARTIFACT_DRIFT,
+    C_B2_OWNED,
+    CO2_SAME_TRACK,
+    INTEGRATION_OTHER_TRACK,
+    MMWAVE_OTHER_TRACK,
+    SHARED_OR_UNAUTHORIZED,
+    THERMAL_OTHER_TRACK,
+    audit_path_scope,
+    classify_path_ownership,
+    validate as validate_c_b2,
+)
 
 
 def _bundle(role: str, n: int = 4) -> MatrixBundle:
@@ -393,6 +404,107 @@ def test_predecessor_fingerprint_mismatch_rejected():
 def test_absolute_path_rejected():
     assert assert_no_forbidden_path_markers('{"path":"/Users/example/private"}')
     assert assert_no_forbidden_path_markers('{"path":"datasets/co2/relative.json"}') == []
+
+
+def test_clean_historical_c_b2_validator_remains_pass_with_warnings():
+    result = validate_c_b2(
+        get_repo_root(), rerun_determinism=False, run_predecessors=False
+    )
+    assert result["status"] == "PASS_WITH_WARNINGS"
+    assert result["errors"] == []
+
+
+def test_later_co2_file_is_same_track_not_contamination():
+    audit = audit_path_scope(["datasets/co2/tflite_equivalence.py"])
+    assert audit["errors"] == []
+    assert audit["path_ownership_classification"]["datasets/co2/tflite_equivalence.py"] == CO2_SAME_TRACK
+    assert audit["same_track_later_phase_paths"] == ["datasets/co2/tflite_equivalence.py"]
+
+
+def test_later_co2_manifest_is_same_track_not_contamination():
+    path = "datasets/co2/manifests/c_b5_robustness/robustness_report.json"
+    audit = audit_path_scope([path])
+    assert audit["errors"] == []
+    assert audit["path_ownership_classification"][path] == CO2_SAME_TRACK
+
+
+def test_later_co2_unique_commit_is_allowed():
+    path = "models/co2/candidates/c_b5/robust_candidate.tflite"
+    audit = audit_path_scope([], {"c0ffee1234567890": [path]})
+    assert audit["errors"] == []
+    assert audit["path_ownership_classification"][path] == CO2_SAME_TRACK
+
+
+def test_future_co2_script_test_and_report_namespaces_are_allowed():
+    paths = [
+        "scripts/validate_co2_c_b6.py",
+        "tests/test_co2_c_b6.py",
+        "docs/reports/co2_c_b6.md",
+        "inference/co2_c_b6.py",
+    ]
+    audit = audit_path_scope(paths)
+    assert audit["errors"] == []
+    assert all(
+        audit["path_ownership_classification"][path] == CO2_SAME_TRACK
+        for path in paths
+    )
+
+
+@pytest.mark.parametrize(
+    ("path", "ownership"),
+    [
+        ("datasets/mmwave/future_model.json", MMWAVE_OTHER_TRACK),
+        ("devices/mmwave/src/provider.py", MMWAVE_OTHER_TRACK),
+        ("datasets/thermal/future_frame.json", THERMAL_OTHER_TRACK),
+        ("devices/thermal44/src/provider.py", THERMAL_OTHER_TRACK),
+        ("shared/contracts/sensor.py", INTEGRATION_OTHER_TRACK),
+        ("integrated_node/fusion.py", INTEGRATION_OTHER_TRACK),
+    ],
+)
+def test_other_track_paths_are_rejected(path, ownership):
+    audit = audit_path_scope([path])
+    assert audit["path_ownership_classification"][path] == ownership
+    assert any(
+        "PARALLEL_TRACK_BRANCH_CONTAMINATION" in error
+        for error in audit["errors"]
+    )
+
+
+def test_other_track_unique_commit_is_rejected():
+    path = "scripts/run_mmwave_future.py"
+    audit = audit_path_scope([], {"deadbeef12345678": [path]})
+    assert any(
+        "PARALLEL_TRACK_BRANCH_CONTAMINATION" in error
+        for error in audit["errors"]
+    )
+
+
+def test_unauthorized_shared_root_path_is_rejected():
+    path = "README.md"
+    audit = audit_path_scope([path])
+    assert audit["path_ownership_classification"][path] == SHARED_OR_UNAUTHORIZED
+    assert any("Unauthorized non-C-B2 path" in error for error in audit["errors"])
+
+
+def test_c_b2_locked_artifact_mutation_is_rejected_even_same_track():
+    path = f"{ARTIFACT_DIR_REL}/reference_threshold_result.json"
+    audit = audit_path_scope([path])
+    assert audit["path_ownership_classification"][path] == C_B2_ARTIFACT_DRIFT
+    assert any("C_B2_ARTIFACT_DRIFT" in error for error in audit["errors"])
+
+
+def test_c_b2_tooling_path_is_owned_by_corrective_validator():
+    path = "scripts/validate_co2_imbalance_calibration.py"
+    audit = audit_path_scope([path], {"cafebabe12345678": [path]})
+    assert audit["errors"] == []
+    assert audit["path_ownership_classification"][path] == C_B2_OWNED
+
+
+def test_production_co2_asset_remains_protected():
+    path = "models/co2/co2_occupancy_int8_v0.1.0.tflite"
+    audit = audit_path_scope([path])
+    assert audit["path_ownership_classification"][path] == SHARED_OR_UNAUTHORIZED
+    assert any("Unauthorized non-C-B2 path" in error for error in audit["errors"])
 
 
 def test_ece_contract_is_ten_equal_width_bins():
