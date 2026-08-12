@@ -1,0 +1,45 @@
+{
+  "all_r1_r10_pass": true,
+  "failed_gates": [],
+  "gates": {
+    "R10_contamination_disclosure_accepted": {
+      "pass": true,
+      "required_future_designation": "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT"
+    },
+    "R1_incident_truth_closed": {
+      "evidence": [
+        "incident_root_cause.json",
+        "validate_mmwave_m_b10b_incident.py"
+      ],
+      "pass": true
+    },
+    "R2_exactly_one_previous_access": {
+      "accessor_invocations": 1,
+      "pass": true
+    },
+    "R3_zero_model_evaluation": {
+      "model_inference_invocations": 0,
+      "pass": true
+    },
+    "R4_no_persisted_sample_level_payload": {
+      "pass": true
+    },
+    "R5_candidate_immutable": {
+      "pass": true
+    },
+    "R6_baselines_immutable": {
+      "pass": true
+    },
+    "R7_count_semantics_correction_only": {
+      "pass": true
+    },
+    "R8_no_post_access_tuning": {
+      "pass": true
+    },
+    "R9_future_contract_unchanged_models_metrics": {
+      "pass": true
+    }
+  },
+  "phase_id": "M-B10R0",
+  "schema_version": "M-B10R0_REUSE_GATE_RESULTS_V1"
+}
