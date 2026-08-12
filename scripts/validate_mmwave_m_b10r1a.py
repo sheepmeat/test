@@ -232,7 +232,7 @@ def validate_m_b10r1a_artifacts(
     *,
     output_dir: Path | None = None,
     skip_upstream: bool = False,
-    mark_validator_pass: bool = True,
+    mark_validator_pass: bool = False,
 ) -> dict[str, Any]:
     root = Path(root)
     out = Path(output_dir) if output_dir is not None else root / OUT_DIR_REL
@@ -301,6 +301,10 @@ def validate_m_b10r1a_artifacts(
         _raise("READINESS_NEW_ACCESSOR_NOT_0")
     if int(readiness.get("new_payload_release_events", -1)) != 0:
         _raise("READINESS_NEW_PAYLOAD_NOT_0")
+    # Frozen M-B10R1-A evidence must already record a successful pre-access validator stamp.
+    # (mark_validator_pass=True may be used once during freeze to create that stamp.)
+    if not mark_validator_pass and readiness.get("pre_access_validator_pass") is not True:
+        _raise("READINESS_VALIDATOR_PASS_NOT_TRUE")
 
     # Population
     pop = artifacts["recovery_population_contract.json"]
@@ -501,13 +505,14 @@ def validate_m_b10r1a_artifacts(
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser_skip = False
     args = list(argv) if argv is not None else sys.argv[1:]
-    if "--skip-upstream" in args:
-        parser_skip = True
-        args = [a for a in args if a != "--skip-upstream"]
+    parser_skip = "--skip-upstream" in args
+    stamp = "--stamp-pass" in args
+    args = [a for a in args if a not in {"--skip-upstream", "--stamp-pass"}]
     try:
-        result = validate_m_b10r1a_artifacts(ROOT_DIR, skip_upstream=parser_skip)
+        result = validate_m_b10r1a_artifacts(
+            ROOT_DIR, skip_upstream=parser_skip, mark_validator_pass=stamp
+        )
     except MB10R1AValidationError as exc:
         print(json.dumps({"validation_status": "FAIL", "error": str(exc)}, indent=2, sort_keys=True))
         return 1

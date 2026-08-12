@@ -277,7 +277,10 @@ class PrefreezeValidatorTests(unittest.TestCase):
             generate_m_b10r1a_prefreeze(ROOT)
 
     def test_validator_passes(self) -> None:
-        result = validator.validate_m_b10r1a_artifacts(ROOT, skip_upstream=True, mark_validator_pass=True)
+        # Never stamp/mutate the live prefreeze tree from unit tests.
+        result = validator.validate_m_b10r1a_artifacts(
+            ROOT, skip_upstream=True, mark_validator_pass=False
+        )
         self.assertEqual(result["validation_status"], "PASS")
         self.assertFalse(result["recovery_execution_authorized"])
 
@@ -447,20 +450,28 @@ class CliAndMonkeypatchTests(unittest.TestCase):
         def _forbidden(*_a, **_k):
             raise RuntimeError("FORBIDDEN_M_B10R1A_REAL_RECOVERY_ACCESS")
 
-        with mock.patch(
-            "scripts.mmwave_m_b10r1_recovery_access.LimitedReuseRecoveryAccessController.get_locked_test_recovery_evaluation_dataset",
-            side_effect=_forbidden,
-        ):
-            # Generator constructs controller but must not call get_*
-            result = generate_m_b10r1a_prefreeze(ROOT)
-            self.assertFalse(result["recovery_executed"])
-            # Pre-access CLI
-            self.assertEqual(runner_cli.main(["--pre-access"]), 0)
-            # Validator
-            outcome = validator.validate_m_b10r1a_artifacts(
-                ROOT, skip_upstream=True, mark_validator_pass=True
-            )
-            self.assertEqual(outcome["validation_status"], "PASS")
+        holder = tempfile.TemporaryDirectory()
+        try:
+            with mock.patch(
+                "scripts.mmwave_m_b10r1_recovery_access.LimitedReuseRecoveryAccessController.get_locked_test_recovery_evaluation_dataset",
+                side_effect=_forbidden,
+            ):
+                # Pre-access CLI must not call recovery get_*
+                self.assertEqual(runner_cli.main(["--pre-access"]), 0)
+                # Validator against live committed evidence must not call recovery get_*
+                outcome = validator.validate_m_b10r1a_artifacts(
+                    ROOT, skip_upstream=True, mark_validator_pass=False
+                )
+                self.assertEqual(outcome["validation_status"], "PASS")
+                # Validate an isolated evidence copy (never mutate committed tree)
+                dest = Path(holder.name) / "evidence"
+                shutil.copytree(OUT, dest)
+                outcome2 = validator.validate_m_b10r1a_artifacts(
+                    ROOT, output_dir=dest, skip_upstream=True, mark_validator_pass=False
+                )
+                self.assertEqual(outcome2["validation_status"], "PASS")
+        finally:
+            holder.cleanup()
 
     def test_recovery_module_never_calls_final_accessor(self) -> None:
         source = (ROOT / "scripts/mmwave_m_b10r1_recovery_access.py").read_text(encoding="utf-8")
