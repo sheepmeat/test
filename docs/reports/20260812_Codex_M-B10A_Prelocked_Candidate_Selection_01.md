@@ -42,6 +42,13 @@ Pool identity is fixed to M-B3_CONV1D_GAP_BASELINE + M-B1 BPF_ZSCORE + M-B2 CE_U
 - M-B4 architecture-level seed sensitivity (mean/std/worst clean Float Macro F1): 0.481275 / 0.138266 / 0.329107 (worst seed 44).
 - Seed 44 fails hard E11 on `M-B7_AMP_X0_75` and `M-B7_COMBINED_MODERATE`; severe profiles are diagnostic only.
 
+## Complete pre-LOCKED_TEST evidence coverage
+
+- Seed 42: VALIDATION subjects=17 (worst `dataset-10_5281_zenodo_18599983-p050` Macro F1 0.222222, median 0.600000); M-B6 A→C probability MAE 0.006319, Top-1 0.987342; M-B8 invoke/pipeline P99 9333.01/164461.75 ns (Mac-only); M-B9 runtime/preprocessing identity exact: True.
+- Seed 43: VALIDATION subjects=17 (worst `dataset-10_5281_zenodo_18599983-p075` Macro F1 0.000000, median 0.388889); M-B6 A→C probability MAE 0.001030, Top-1 0.936709; M-B8 invoke/pipeline P99 8917.00/164212.33 ns (Mac-only); M-B9 runtime/preprocessing identity exact: True.
+- Seed 44: VALIDATION subjects=17 (worst `dataset-10_5281_zenodo_18599983-p012` Macro F1 0.166667, median 0.333334); M-B6 A→C probability MAE 0.008439, Top-1 1.000000; M-B8 invoke/pipeline P99 8959.41/166380.00 ns (Mac-only); M-B9 runtime/preprocessing identity exact: True.
+- Gate records include repository-relative source paths and supporting values for E1–E11; no sample-level LOCKED_TEST evidence rows are generated.
+
 ## Historical baselines
 
 - `mmwave_resp_int8`: `models/mmwave/mmwave_resp_int8_v0.1.0.tflite`, SHA-256 `43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158`, pool eligible: NO (BLOCKED).
@@ -51,6 +58,9 @@ Pool identity is fixed to M-B3_CONV1D_GAP_BASELINE + M-B1 BPF_ZSCORE + M-B2 CE_U
 
 - Final contract is preregistered for one LOCKED_TEST pass with accuracy, Macro F1/precision/recall, per-class metrics, confusion matrix, APNEA proxy precision/recall, invalid/fallback count, and input saturation.
 - No selection, tuning, retraining, recalibration, or threshold changes are allowed after access; readiness used: NO; independent review required.
+- Per-class fields are frozen as support/TP/FP/TN/FN/precision/recall/F1/FPR; subject-level accuracy/Macro F1/per-class support-aware metrics, worst and median subject Macro F1 are frozen.
+- No applicable predefined numerical acceptance threshold exists: `FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED`.
+- Guard readiness is structurally confirmed from `scripts/mmwave_phase_b_access.py`; final accessor used: NO.
 - No final performance number is present in M-B10A artifacts.
 
 ## Warnings and authorization
@@ -66,6 +76,6 @@ The final LOCKED_TEST metrics contract is preregistered but unused. M-B10B autho
 
 ## Verification and artifacts
 
-- M-B10A validator: PASS; focused unittest: 8 methods (7 negative corruption cases as subtests); upstream M-B0 through M-B9 plus A5/A6 validators: PASS.
+- M-B10A validator: PASS; focused unittest: 9 methods (7 negative corruption cases as subtests); upstream M-B0 through M-B9 plus A5/A6 validators: PASS.
 - Evidence directory: `datasets/mmwave/manifests/M-B10A_candidate_selection_setup/` (16 machine-readable outputs plus checksums).
 - Report: `docs/reports/20260812_Codex_M-B10A_Prelocked_Candidate_Selection_01.md`; LOCKED_TEST access readiness used: NO.

@@ -1,6 +1,8 @@
 {
+  "acceptance_threshold_source": null,
   "access_authorization": "Requires separate explicit M-B10B authorization after independent review; no authorization is granted by M-B10A.",
   "access_mechanism_reference": "PhaseBAccessGuard final-evaluation API is reserved for the separately authorized final pass.",
+  "applicable_predefined_numerical_acceptance_threshold": "FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED",
   "candidate_reference": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120",
   "candidate_sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5",
   "contract_status": "PREREGISTERED_NOT_EXECUTED",
@@ -17,7 +19,100 @@
     "LOCKED_TEST predictions",
     "LOCKED_TEST performance metrics"
   ],
+  "metrics_schema": {
+    "apnea_proxy_fields": [
+      "precision",
+      "recall",
+      "misses"
+    ],
+    "diagnostics": [
+      "confusion_matrix",
+      "prediction_distribution",
+      "class_collapse_status"
+    ],
+    "per_class_fields": [
+      "support",
+      "tp",
+      "fp",
+      "tn",
+      "fn",
+      "precision",
+      "recall",
+      "f1_score",
+      "fpr"
+    ],
+    "primary": "macro_f1",
+    "rapid_or_abnormal_fields": [
+      "recall"
+    ],
+    "required": [
+      "accuracy",
+      "macro_f1",
+      "macro_precision",
+      "macro_recall"
+    ],
+    "selected_real_candidate_extra": [
+      "model_sha256",
+      "preprocessing_identity",
+      "strict_int8_structural_identity",
+      "input_saturation_ratio",
+      "runtime_identity"
+    ],
+    "subject_level": [
+      "subject_accuracy",
+      "subject_macro_f1",
+      "per_class_metrics_where_support_exists",
+      "worst_subject_macro_f1",
+      "median_subject_macro_f1"
+    ]
+  },
   "phase_id": "M-B10A",
+  "planned_models": [
+    {
+      "class_map_compatibility": {
+        "APNEA": 2,
+        "NORMAL": 0,
+        "RAPID_OR_ABNORMAL": 1
+      },
+      "exact_native_preprocessing_known": true,
+      "final_test_interpretation": "REAL_DATA_OFFLINE_FINAL_TEST_CANDIDATE_ONLY",
+      "lineage_status": "FROZEN_REAL_DATA_PHASE_B_LINEAGE",
+      "model_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8",
+      "path": "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
+      "preprocessing_policy": "BPF_ZSCORE_EXACT_M-B1_RUNTIME_IDENTITY",
+      "role": "SELECTED_NEW_REAL_DATA_CANDIDATE",
+      "sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5"
+    },
+    {
+      "class_map_compatibility": "STRUCTURAL_CLASS_MAP_REVIEW_REQUIRED",
+      "exact_native_preprocessing_known": false,
+      "final_test_interpretation": "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK",
+      "lineage_status": "HISTORICAL_REPOSITORY_MODEL_WITH_CLASS_COLLAPSE",
+      "model_id": "mmwave_resp_int8",
+      "path": "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+      "preprocessing_policy": "EXACT_NATIVE_HISTORICAL_PREPROCESSING_UNKNOWN",
+      "role": "HISTORICAL_BASELINE_ONLY",
+      "sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158"
+    },
+    {
+      "class_map_compatibility": "EXPECTED_THREE_CLASS_MAP_REQUIRES_FINAL_CHECK",
+      "exact_native_preprocessing_known": false,
+      "final_test_interpretation": "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK",
+      "lineage_status": "SYNTHETIC_TRAINING_EXTERNAL_COMPATIBILITY_ONLY",
+      "model_id": "mmwave_resp_int8_v0.2.0_candidate",
+      "path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
+      "preprocessing_policy": "SYNTHETIC_PIPELINE_METADATA_ONLY",
+      "role": "HISTORICAL_BASELINE_ONLY",
+      "sha256": "85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff"
+    }
+  ],
+  "post_test_policy": {
+    "new_experiment_cycle_required_for_any_improvement": true,
+    "recalibration_after_access": false,
+    "retraining_after_access": false,
+    "selection_or_tuning_after_access": false,
+    "threshold_tuning_after_access": false
+  },
   "recalibration_after_access": false,
   "required_metrics": [
     "accuracy",

@@ -11,6 +11,7 @@
     "winner_value": 0.666231
   },
   "eligible_candidate_count": 2,
+  "final_access_mechanism_ready": true,
   "finding_classes": [
     "BLOCKER",
     "REQUIRED REFINEMENT",

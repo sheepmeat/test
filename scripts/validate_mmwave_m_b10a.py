@@ -294,6 +294,39 @@ def _independent_metrics(source_root: Path, seed: int, profile: str, labels: np.
     return result
 
 
+def _independent_subject_summary(source_root: Path, seed: int) -> dict[str, Any]:
+    path = _source_path(source_root, "datasets/mmwave/manifests/M-B7_perturbation_robustness/subject_level_robustness.json")
+    data = _load_json(path)
+    source = data["profiles"]["M-B7_CLEAN"]["per_seed"][str(seed)]["per_subject"]
+    ordered = {subject_id: source[subject_id] for subject_id in sorted(source)}
+    values = np.asarray([float(row["subject_macro_f1"]) for row in ordered.values()], dtype=np.float64)
+    worst_id = min(ordered, key=lambda subject_id: (float(ordered[subject_id]["subject_macro_f1"]), subject_id))
+    return {
+        "subject_count": len(ordered),
+        "subject_ids": list(ordered),
+        "subject_macro_f1_mean": round(float(np.mean(values)), 6),
+        "subject_macro_f1_median": round(float(np.median(values)), 6),
+        "subject_macro_f1_p25": round(float(np.percentile(values, 25)), 6),
+        "worst_subject_id": worst_id,
+        "worst_subject_macro_f1": round(float(ordered[worst_id]["subject_macro_f1"]), 6),
+        "worst_subject_per_class": ordered[worst_id]["per_class"],
+        "per_subject": ordered,
+    }
+
+
+def _guard_structural_readiness(source_root: Path) -> dict[str, Any]:
+    path = _source_path(source_root, "scripts/mmwave_phase_b_access.py")
+    text = path.read_text(encoding="utf-8")
+    checks = {
+        "model_selection_denies_locked_test": "if split_upper == \"LOCKED_TEST\":" in text and "LOCKED_TEST_AccessError" in text,
+        "final_evaluation_accessor_exists": "def get_locked_test_final_evaluation_dataset" in text,
+        "final_accessor_requires_explicit_authorization": "authorization_token: str | None = None" in text and "AUTHORIZED_FINAL_LOCKED_TEST_EVALUATION_TOKEN_V1" in text,
+        "structural_audit_is_sanitized": "sanitized_for_structural_audit" in text,
+        "sanitized_fields_exclude_labels": "safenest_label" in text and "FORBIDDEN_LABEL_FIELDS" in text,
+    }
+    return {"source_path": "scripts/mmwave_phase_b_access.py", **checks, "final_accessor_called": False, "ready": all(checks.values())}
+
+
 def _candidate_by_id(pool: dict[str, Any]) -> dict[str, dict[str, Any]]:
     candidates = pool.get("candidates")
     if not isinstance(candidates, list) or len(candidates) != 3:
@@ -319,11 +352,18 @@ def _validate_candidate_pool(source_root: Path, artifacts: dict[str, Any], label
     b9_pre = json.loads(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_preprocessing_identity.json").read_text(encoding="utf-8"))
     b6_collapses = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B6_stage_equivalence/class_collapse_transition_audit.json"))["class_collapse_transitions"]
     b6_pairs = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B6_stage_equivalence/pairwise_equivalence_metrics.json"))["pairwise_equivalence"]
+    b4_architecture = next(
+        row for row in _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B4_multiseed_stability/multi_seed_results.json"))["multi_seed_results"]
+        if row.get("architecture_id") == ARCHITECTURE_ID
+    )
     b7_summary = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B7_perturbation_robustness/m_b7_summary.json"))
     b7_clean = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B7_perturbation_robustness/clean_baseline_results.json"))["per_seed"]
     b1 = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B1_preprocessing_ablation/selected_preprocessing_profile.json"))
     a5_summary = _load_json(_source_path(source_root, "datasets/mmwave/manifests/a5_subject_split/a5_summary.json"))
     a6_summary = _load_json(_source_path(source_root, "datasets/mmwave/manifests/a6_full_conversion/a6_summary.json"))
+    b8_cross = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B8_mac_latency_footprint/cross_seed_latency_summary.json"))["cross_seed_metrics"]
+    b8_footprint = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B8_mac_latency_footprint/artifact_footprint.json"))["strict_int8_artifacts"]
+    b9_prediction = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_prediction_identity.json"))
     recomputed_candidates: list[dict[str, Any]] = []
     for seed in SEEDS:
         candidate = next((row for row in by_id.values() if int(row.get("seed", -1)) == seed), None)
@@ -343,6 +383,8 @@ def _validate_candidate_pool(source_root: Path, artifacts: dict[str, Any], label
                 raise MB10AValidationError(f"M-B10A_MODEL_CONTRACT_MISMATCH:{seed}:{field}")
         if actual["input_dtype"] != "int8" or actual["output_dtype"] != "int8" or actual["input_shape"] != [1, 300, 1] or actual["output_shape"] != [1, 3] or not actual["flex_select_absent"]:
             raise MB10AValidationError(f"M-B10A_STRICT_INT8_CONTRACT:{seed}")
+        if model_claim.get("operator_inventory") and list(model_claim.get("operator_inventory")) != list(actual["op_names"]):
+            raise MB10AValidationError(f"M-B10A_OPERATOR_INVENTORY_MISMATCH:{seed}")
         clean = _independent_metrics(source_root, seed, "M-B7_CLEAN", labels)
         clean_predictions = clean.pop("predictions")
         moderate: dict[str, Any] = {}
@@ -361,6 +403,24 @@ def _validate_candidate_pool(source_root: Path, artifacts: dict[str, Any], label
                 "input_saturation_ratio": row["saturation_ratio"],
                 "collapsed": bool(row["class_collapse"]["collapsed"]),
             }
+        subject_summary = _independent_subject_summary(source_root, seed)
+        expected_b4_seed = _load_json(_source_path(source_root, "datasets/mmwave/manifests/M-B4_multiseed_stability/per_seed_results.json"))["per_seed_results"][f"{ARCHITECTURE_ID}_seed_{seed}"]
+        candidate_b4 = candidate.get("m_b4_seed_stability", {})
+        if candidate_b4.get("architecture_level", {}).get("architecture_id") != ARCHITECTURE_ID or candidate_b4.get("candidate_seed_validation", {}).get("final_weights_sha256") != expected_b4_seed.get("final_weights_sha256"):
+            raise MB10AValidationError(f"M-B10A_B4_EVIDENCE_MISMATCH:{seed}")
+        if candidate.get("subject_level", {}).get("worst_subject_id") != subject_summary["worst_subject_id"] or not _close(float(candidate.get("subject_level", {}).get("subject_macro_f1_median", -1)), subject_summary["subject_macro_f1_median"], 2e-5):
+            raise MB10AValidationError(f"M-B10A_SUBJECT_EVIDENCE_MISMATCH:{seed}")
+        candidate_b6 = candidate.get("m_b6_stage_equivalence", {}).get("pairwise", {})
+        if not _close(float(candidate_b6.get("a_to_c", {}).get("output_probability_mae", -1)), float(b6_pairs[f"{ARCHITECTURE_ID}_seed_{seed}"]["a_to_c"]["output_probability_mae"]), 2e-6):
+            raise MB10AValidationError(f"M-B10A_B6_EVIDENCE_MISMATCH:{seed}")
+        expected_pipeline_p99 = float(b8_cross["PREPROCESSING_QUANTIZATION_INVOKE"]["per_seed_pooled_statistics"][str(seed)]["statistics_ns"]["p99"])
+        expected_invoke_p99 = float(b8_cross["TFLITE_INVOKE_ONLY"]["per_seed_pooled_statistics"][str(seed)]["statistics_ns"]["p99"])
+        candidate_b8 = candidate.get("m_b8_latency_footprint", {})
+        if not _close(float(candidate_b8.get("pipeline_p99_ns", -1)), expected_pipeline_p99, 1e-6) or not _close(float(candidate_b8.get("invoke_p99_ns", -1)), expected_invoke_p99, 1e-6) or candidate_b8.get("artifact_footprint", {}).get("sha256") != b8_footprint[str(seed)].get("sha256"):
+            raise MB10AValidationError(f"M-B10A_B8_EVIDENCE_MISMATCH:{seed}")
+        candidate_b9 = candidate.get("m_b9_runtime_identity", {}).get("model_identity", {})
+        if candidate_b9.get("actual_sha256") != actual["sha256"] or candidate_b9.get("path") != model_path or candidate_b9.get("sha256_match") is not True:
+            raise MB10AValidationError(f"M-B10A_B9_EVIDENCE_MISMATCH:{seed}")
         runtime_rows = [row for row in b9_pre.get("rows", []) if int(row.get("seed", -1)) == seed]
         runtime_pre_exact = bool(runtime_rows) and all(
             row.get("preprocessing_profile") == "BPF_ZSCORE" and row.get("bpf_exact") is True and row.get("zscore_exact") is True and row.get("model_ready_exact") is True and row.get("input_int8_exact") is True and row.get("saturation_exact") is True
@@ -396,7 +456,7 @@ def _validate_candidate_pool(source_root: Path, artifacts: dict[str, Any], label
             "clean_min_per_class_recall": clean["min_per_class_recall"],
             "clean_apnea_proxy_recall": clean["per_class"]["APNEA"]["recall"],
             "clean_apnea_proxy_precision": clean["per_class"]["APNEA"]["precision"],
-            "worst_subject_clean_macro_f1": candidate["ranking_metrics"]["worst_subject_clean_macro_f1"],
+            "worst_subject_clean_macro_f1": subject_summary["worst_subject_macro_f1"],
             "moderate_worst_positive_macro_f1_degradation": max(float(row["positive_macro_f1_degradation"]) for row in moderate.values()),
             "moderate_worst_positive_recall_degradation": max(float(row["maximum_positive_per_class_recall_degradation"]) for row in moderate.values()),
             "moderate_min_top1_agreement": min(float(row["top1_agreement"]) for row in moderate.values()),
@@ -467,6 +527,34 @@ def _validate_ranking(artifacts: dict[str, Any], recomputed: list[dict[str, Any]
         raise MB10AValidationError("M-B10A_SELECTED_PRETEST_OVERCLAIM")
 
 
+def _validate_selected_candidate(source_root: Path, output_dir: Path, artifacts: dict[str, Any], by_id: dict[str, dict[str, Any]]) -> None:
+    selected = artifacts["selected_candidate_pretest.json"]
+    candidate_id = selected.get("candidate_id")
+    if not isinstance(candidate_id, str) or candidate_id not in by_id:
+        raise MB10AValidationError("M-B10A_SELECTED_CANDIDATE_ID_INVALID")
+    candidate = by_id[candidate_id]
+    model = selected.get("model", {})
+    actual = _inspect_tflite(source_root, MODEL_PATHS[int(candidate["seed"])])
+    for field in ("relative_path", "sha256", "bytes", "input_dtype", "input_shape", "input_scale", "input_zero_point", "output_dtype", "output_shape", "output_scale", "output_zero_point", "select_tf_ops_count"):
+        if model.get(field) != candidate.get("model", {}).get(field):
+            raise MB10AValidationError(f"M-B10A_SELECTED_MODEL_CLAIM_MISMATCH:{field}")
+    if model.get("sha256") != actual["sha256"] or model.get("bytes") != actual["bytes"] or model.get("input_dtype") != actual["input_dtype"] or model.get("output_dtype") != actual["output_dtype"] or model.get("input_shape") != actual["input_shape"] or model.get("output_shape") != actual["output_shape"]:
+        raise MB10AValidationError("M-B10A_SELECTED_MODEL_ACTUAL_MISMATCH")
+    if selected.get("architecture_id") != candidate.get("architecture_id") or selected.get("calibration_profile") != candidate.get("calibration_profile") or selected.get("training_identity", {}).get("final_weights_sha256") != candidate.get("training_weights_sha256"):
+        raise MB10AValidationError("M-B10A_SELECTED_LINEAGE_MISMATCH")
+    if selected.get("preprocessing", {}).get("profile_id") != candidate.get("preprocessing_profile") or selected.get("preprocessing", {}).get("profile_name") != candidate.get("preprocessing_name"):
+        raise MB10AValidationError("M-B10A_SELECTED_PREPROCESSING_MISMATCH")
+    runtime = selected.get("m_b9_runtime_identity", {}).get("model_identity", {})
+    if runtime.get("actual_sha256") != actual["sha256"] or runtime.get("path") != MODEL_PATHS[int(candidate["seed"])]:
+        raise MB10AValidationError("M-B10A_SELECTED_RUNTIME_MISMATCH")
+    evidence_sha = _sha256(output_dir / "candidate_selection_evidence.json")
+    if selected.get("selection_evidence_sha256") != evidence_sha:
+        raise MB10AValidationError("M-B10A_SELECTED_EVIDENCE_SHA_MISMATCH")
+    required_limitations = {"INITIALIZATION_SEED_SENSITIVITY", "MAC_ONLY_LATENCY", "OFFLINE_PERTURBATION_ONLY", "MOCK_E2E_ONLY", "NO_MR60_VALIDATION", "APNEA_PROXY_SCOPE", "LOCKED_TEST_NOT_EVALUATED"}
+    if not required_limitations.issubset(set(selected.get("limitations", []))):
+        raise MB10AValidationError("M-B10A_SELECTED_LIMITATIONS_INCOMPLETE")
+
+
 def _validate_baselines(source_root: Path, registry: dict[str, Any], pool: dict[str, Any]) -> None:
     manifest = _load_json(_source_path(source_root, "models/model_manifest.json"))["models"]
     rows = registry.get("baselines")
@@ -482,12 +570,18 @@ def _validate_baselines(source_root: Path, registry: dict[str, Any], pool: dict[
             raise MB10AValidationError(f"M-B10A_BASELINE_HASH:{baseline_id}")
         if not row.get("exclusion_reason"):
             raise MB10AValidationError(f"M-B10A_BASELINE_REASON:{baseline_id}")
+        if baseline_id == "mmwave_resp_int8":
+            expected = ("HISTORICAL_REPOSITORY_MODEL_WITH_CLASS_COLLAPSE", "EXACT_NATIVE_HISTORICAL_PREPROCESSING_UNKNOWN", False, "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK")
+        else:
+            expected = ("SYNTHETIC_TRAINING_EXTERNAL_COMPATIBILITY_ONLY", "SYNTHETIC_PIPELINE_METADATA_ONLY", False, "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK")
+        if (row.get("lineage_status"), row.get("preprocessing_status"), row.get("exact_native_preprocessing_known"), row.get("final_test_interpretation")) != expected:
+            raise MB10AValidationError(f"M-B10A_BASELINE_LINEAGE_LABEL:{baseline_id}")
     pool_ids = set(pool.get("candidate_ids", []))
     if any("mmwave_resp_int8" in candidate_id for candidate_id in pool_ids):
         raise MB10AValidationError("M-B10A_HISTORICAL_BASELINE_IN_POOL")
 
 
-def _validate_locked_protocol(artifacts: dict[str, Any], selected_id: str | None) -> None:
+def _validate_locked_protocol(source_root: Path, artifacts: dict[str, Any], selected_id: str | None) -> None:
     contract = artifacts["locked_test_evaluation_contract.json"]
     readiness = artifacts["locked_test_access_readiness.json"]
     audit = artifacts["locked_test_access_audit.json"]
@@ -502,6 +596,18 @@ def _validate_locked_protocol(artifacts: dict[str, Any], selected_id: str | None
         raise MB10AValidationError("M-B10A_LOCKED_TEST_AUDIT_NONZERO")
     if any(audit.get(field) is not False for field in ("locked_test_inputs_loaded", "locked_test_labels_loaded", "locked_test_prediction_output_generated", "locked_test_performance_computed")):
         raise MB10AValidationError("M-B10A_LOCKED_TEST_ARTIFACT_ACCESS")
+    metrics_schema = contract.get("metrics_schema", {})
+    if metrics_schema.get("primary") != "macro_f1" or metrics_schema.get("per_class_fields") != ["support", "tp", "fp", "tn", "fn", "precision", "recall", "f1_score", "fpr"] or "misses" not in metrics_schema.get("apnea_proxy_fields", []) or "worst_subject_macro_f1" not in metrics_schema.get("subject_level", []):
+        raise MB10AValidationError("M-B10A_FINAL_METRIC_SCHEMA_INCOMPLETE")
+    if contract.get("applicable_predefined_numerical_acceptance_threshold") != "FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED" or contract.get("acceptance_threshold_source") is not None:
+        raise MB10AValidationError("M-B10A_ACCEPTANCE_THRESHOLD_NOT_PREREGISTERED")
+    post_test = contract.get("post_test_policy", {})
+    if any(post_test.get(key) is not False for key in ("selection_or_tuning_after_access", "retraining_after_access", "recalibration_after_access", "threshold_tuning_after_access")) or post_test.get("new_experiment_cycle_required_for_any_improvement") is not True:
+        raise MB10AValidationError("M-B10A_POST_TEST_POLICY_INCOMPLETE")
+    mechanism = readiness.get("final_access_mechanism", {})
+    actual_mechanism = _guard_structural_readiness(source_root)
+    if readiness.get("final_access_mechanism_ready") is not True or mechanism != actual_mechanism or actual_mechanism.get("ready") is not True or actual_mechanism.get("final_accessor_called") is not False:
+        raise MB10AValidationError("M-B10A_FINAL_ACCESS_MECHANISM_READINESS")
 
 
 def _validate_summary(artifacts: dict[str, Any], ranking: dict[str, Any], rule_sha: str) -> None:
@@ -510,7 +616,7 @@ def _validate_summary(artifacts: dict[str, Any], ranking: dict[str, Any], rule_s
         raise MB10AValidationError("M-B10A_SUMMARY_NOT_BOUND_TO_INDEPENDENT_RESULT")
     if summary.get("locked_test_accesses") != 0 or summary.get("locked_test_performance_computed") is not False or summary.get("m_b10b_started") is not False:
         raise MB10AValidationError("M-B10A_SUMMARY_LOCKED_TEST_CONTAMINATION")
-    if summary.get("model_trainings") != 0 or summary.get("model_conversions") != 0 or summary.get("formal_m_b8_latency_measurement_rerun") is not False:
+    if summary.get("model_trainings") != 0 or summary.get("model_conversions") != 0 or summary.get("formal_m_b8_latency_measurement_rerun") is not False or summary.get("final_access_mechanism_ready") is not True:
         raise MB10AValidationError("M-B10A_UNAUTHORIZED_WORK")
 
 
@@ -548,8 +654,9 @@ def validate_m_b10a_artifacts(root_dir: Path = ROOT_DIR, output_dir: Path | None
     labels, _subjects, _window_ids = _load_validation_index_from_root(source_root)
     recomputed, by_id = _validate_candidate_pool(source_root, artifacts, labels)
     _validate_ranking(artifacts, recomputed, rule_sha)
+    _validate_selected_candidate(source_root, out, artifacts, by_id)
     _validate_baselines(source_root, artifacts["historical_baseline_registry.json"], artifacts["candidate_pool.json"])
-    _validate_locked_protocol(artifacts, artifacts["candidate_ranking.json"].get("selected_candidate_id"))
+    _validate_locked_protocol(source_root, artifacts, artifacts["candidate_ranking.json"].get("selected_candidate_id"))
     _validate_summary(artifacts, artifacts["candidate_ranking.json"], rule_sha)
     if run_upstream:
         _run_upstream_validators(source_root)

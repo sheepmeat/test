@@ -229,6 +229,50 @@ def _actual_tflite_identity(path: Path) -> dict[str, Any]:
     return {"relative_path": _relative(path), "bytes": path.stat().st_size, "sha256": _sha256(path)}
 
 
+def _subject_level_evidence(seed: int, b7_subject: dict[str, Any]) -> dict[str, Any]:
+    """Summarize the fixed 17-subject VALIDATION evidence for one seed."""
+    source = b7_subject["M-B7_CLEAN"]["per_seed"][str(seed)]["per_subject"]
+    ordered = {subject_id: source[subject_id] for subject_id in sorted(source)}
+    values = np.asarray([float(row["subject_macro_f1"]) for row in ordered.values()], dtype=np.float64)
+    worst_subject_id = min(ordered, key=lambda subject_id: (float(ordered[subject_id]["subject_macro_f1"]), subject_id))
+    return {
+        "source_path": "datasets/mmwave/manifests/M-B7_perturbation_robustness/subject_level_robustness.json",
+        "profile": "M-B7_CLEAN",
+        "split": "VALIDATION",
+        "subject_count": int(len(ordered)),
+        "subject_ids": list(ordered),
+        "subject_macro_f1_mean": round(float(np.mean(values)), 6),
+        "subject_macro_f1_median": round(float(np.median(values)), 6),
+        "subject_macro_f1_p25": round(float(np.percentile(values, 25)), 6),
+        "worst_subject_id": worst_subject_id,
+        "worst_subject_macro_f1": round(float(ordered[worst_subject_id]["subject_macro_f1"]), 6),
+        "worst_subject_per_class": ordered[worst_subject_id]["per_class"],
+        "per_subject": ordered,
+    }
+
+
+def _guard_structural_readiness() -> dict[str, Any]:
+    """Inspect guard source text only; never instantiate or call its final accessor."""
+    relative = "scripts/mmwave_phase_b_access.py"
+    text = _path(relative).read_text(encoding="utf-8")
+    return {
+        "source_path": relative,
+        "model_selection_denies_locked_test": "if split_upper == \"LOCKED_TEST\":" in text and "LOCKED_TEST_AccessError" in text,
+        "final_evaluation_accessor_exists": "def get_locked_test_final_evaluation_dataset" in text,
+        "final_accessor_requires_explicit_authorization": "authorization_token: str | None = None" in text and "AUTHORIZED_FINAL_LOCKED_TEST_EVALUATION_TOKEN_V1" in text,
+        "structural_audit_is_sanitized": "sanitized_for_structural_audit" in text,
+        "sanitized_fields_exclude_labels": "safenest_label" in text and "FORBIDDEN_LABEL_FIELDS" in text,
+        "final_accessor_called": False,
+        "ready": all((
+            "if split_upper == \"LOCKED_TEST\":" in text and "LOCKED_TEST_AccessError" in text,
+            "def get_locked_test_final_evaluation_dataset" in text,
+            "authorization_token: str | None = None" in text and "AUTHORIZED_FINAL_LOCKED_TEST_EVALUATION_TOKEN_V1" in text,
+            "sanitized_for_structural_audit" in text,
+            "safenest_label" in text and "FORBIDDEN_LABEL_FIELDS" in text,
+        )),
+    }
+
+
 def _upstream_paths_for_identity() -> tuple[str, ...]:
     return (
         "scripts/mmwave_phase_b_access.py",
@@ -398,6 +442,10 @@ def _runtime_variant_by_seed(runtime_identity: dict[str, Any], seed: int) -> dic
 def _build_candidates() -> tuple[list[dict[str, Any]], dict[str, Any]]:
     labels, subjects, _window_ids = _load_validation_index()
     b4 = _load_json("datasets/mmwave/manifests/M-B4_multiseed_stability/per_seed_results.json")["per_seed_results"]
+    b4_architecture = next(
+        row for row in _load_json("datasets/mmwave/manifests/M-B4_multiseed_stability/multi_seed_results.json")["multi_seed_results"]
+        if row.get("architecture_id") == ARCHITECTURE_ID
+    )
     b6_stage = _load_json("datasets/mmwave/manifests/M-B6_stage_equivalence/per_seed_stage_metrics.json")["per_seed_stage_metrics"]
     b6_pairs = _load_json("datasets/mmwave/manifests/M-B6_stage_equivalence/pairwise_equivalence_metrics.json")["pairwise_equivalence"]
     b6_collapses = _load_json("datasets/mmwave/manifests/M-B6_stage_equivalence/class_collapse_transition_audit.json")["class_collapse_transitions"]
@@ -408,12 +456,16 @@ def _build_candidates() -> tuple[list[dict[str, Any]], dict[str, Any]]:
     b7_subject = _load_json("datasets/mmwave/manifests/M-B7_perturbation_robustness/subject_level_robustness.json")["profiles"]
     b8_cross = _load_json("datasets/mmwave/manifests/M-B8_mac_latency_footprint/cross_seed_latency_summary.json")["cross_seed_metrics"]
     b8_footprint = _load_json("datasets/mmwave/manifests/M-B8_mac_latency_footprint/artifact_footprint.json")["strict_int8_artifacts"]
+    b8_interpretation = _load_json("datasets/mmwave/manifests/M-B8_mac_latency_footprint/cross_seed_latency_summary.json").get("interpretation")
     b9_runtime = _load_json("datasets/mmwave/manifests/M-B9_mock_e2e/runtime_model_identity.json")
     b9_pre = _load_json("datasets/mmwave/manifests/M-B9_mock_e2e/runtime_preprocessing_identity.json")
+    b9_pred = _load_json("datasets/mmwave/manifests/M-B9_mock_e2e/runtime_prediction_identity.json")
     b9_summary = _load_json("datasets/mmwave/manifests/M-B9_mock_e2e/m_b9_summary.json")
     b1 = _load_json("datasets/mmwave/manifests/M-B1_preprocessing_ablation/selected_preprocessing_profile.json")
     b2 = _load_json("datasets/mmwave/manifests/M-B2_class_imbalance/selected_imbalance_strategy.json")
     a5_split = _load_json("datasets/mmwave/manifests/a5_subject_split/split_profile.json")
+    a5_summary = _load_json("datasets/mmwave/manifests/a5_subject_split/a5_summary.json")
+    a6_summary = _load_json("datasets/mmwave/manifests/a6_full_conversion/a6_summary.json")
 
     candidates: list[dict[str, Any]] = []
     for seed in SEEDS:
@@ -473,6 +525,7 @@ def _build_candidates() -> tuple[list[dict[str, Any]], dict[str, Any]]:
             }
         clean_subject_rows = b7_subject["M-B7_CLEAN"]["per_seed"][str(seed)]["per_subject"]
         worst_subject_clean = min(float(row["subject_macro_f1"]) for row in clean_subject_rows.values())
+        subject_evidence = _subject_level_evidence(seed, b7_subject)
         moderate_values = list(moderate_rows.values())
         runtime_pre_rows = [row for row in b9_pre.get("rows", []) if int(row.get("seed", -1)) == seed]
         runtime_pre_exact = bool(runtime_pre_rows) and all(
@@ -494,10 +547,45 @@ def _build_candidates() -> tuple[list[dict[str, Any]], dict[str, Any]]:
             "E5": runtime.get("path") == MODEL_PATHS[seed] and runtime.get("actual_sha256") == _sha256(model_path) and runtime.get("actual_bytes") == model_path.stat().st_size,
             "E6": int(b7_clean[str(seed)]["metrics"].get("invalid_or_fallback_sample_count", 0)) == 0 and int(b7_summary.get("invalid_or_fallback_sample_count", 0)) == 0,
             "E7": b1.get("selected_profile_id") == PREPROCESSING_PROFILE and b1.get("selected_profile_name") == PREPROCESSING_NAME and runtime_pre_exact,
-            "E8": not bool(b7_summary.get("blockers")) and bool(b9_summary.get("runtime_identity_exact")) and bool(b9_summary.get("risk_recomputation_exact")),
+            "E8": (
+                a5_summary.get("validation_success") is True
+                and a5_summary.get("validation_errors") == []
+                and a6_summary.get("validation_passed") is True
+                and a6_summary.get("validator_verdict", {}).get("validation_success") is True
+                and all(int(value) == 0 for value in a6_summary.get("validator_verdict", {}).get("leakage_recalculated", {}).values())
+                and not bool(b7_summary.get("blockers"))
+                and bool(b9_summary.get("runtime_identity_exact"))
+                and bool(b9_summary.get("risk_recomputation_exact"))
+            ),
             "E9": all(float(recomputed_clean["per_class"][label]["recall"]) > 0.0 for label in LABELS),
             "E10": all(float(recomputed_clean["per_class"][label]["precision"]) > 0.0 for label in LABELS),
             "E11": all(not bool(row["recomputed_class_collapse"]["collapsed"]) for row in moderate_values),
+        }
+        runtime_pre_identity_rows = [
+            {
+                key: row.get(key)
+                for key in (
+                    "seed", "model_id", "model_sha256", "preprocessing_profile", "bpf_exact", "zscore_exact",
+                    "model_ready_exact", "input_int8_exact", "saturation_exact", "probabilities_exact", "top1_exact",
+                    "direct_input_int8_sha256", "runtime_input_int8_sha256", "direct_output_int8", "runtime_output_int8",
+                )
+            }
+            for row in b9_pre.get("rows", [])
+            if int(row.get("seed", -1)) == seed
+        ]
+        runtime_pred_rows = [row for row in b9_pred.get("rows", []) if int(row.get("seed", -1)) == seed]
+        eligibility_evidence = {
+            "E1": {"source_paths": list(_upstream_paths_for_identity()) + [MODEL_PATHS[seed]], "supporting_value": {"all_required_inputs_present": bool(lineage_intact), "candidate_model_path": MODEL_PATHS[seed]}},
+            "E2": {"source_paths": [MODEL_PATHS[seed], "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_model_identity.json"], "supporting_value": {"input_dtype": runtime.get("tensor_contract", {}).get("input_dtype"), "output_dtype": runtime.get("tensor_contract", {}).get("output_dtype"), "input_shape": runtime.get("tensor_contract", {}).get("input_shape"), "output_shape": runtime.get("tensor_contract", {}).get("output_shape"), "select_tf_ops_count": runtime.get("tensor_contract", {}).get("select_tf_ops_count")}},
+            "E3": {"source_paths": ["datasets/mmwave/manifests/M-B7_perturbation_robustness/clean_baseline_results.json", "datasets/mmwave/manifests/M-B7_perturbation_robustness/prediction_vectors.npz"], "supporting_value": recomputed_clean["class_collapse"]},
+            "E4": {"source_paths": ["datasets/mmwave/manifests/M-B6_stage_equivalence/class_collapse_transition_audit.json"], "supporting_value": collapse},
+            "E5": {"source_paths": ["datasets/mmwave/manifests/M-B6_stage_equivalence/stage_artifact_manifest.json", "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_model_identity.json"], "supporting_value": {"path_match": runtime.get("path") == MODEL_PATHS[seed], "sha256_match": runtime.get("actual_sha256") == _sha256(model_path), "bytes_match": runtime.get("actual_bytes") == model_path.stat().st_size}},
+            "E6": {"source_paths": ["datasets/mmwave/manifests/M-B7_perturbation_robustness/clean_baseline_results.json", "datasets/mmwave/manifests/M-B7_perturbation_robustness/m_b7_summary.json"], "supporting_value": {"invalid_or_fallback_sample_count": int(b7_clean[str(seed)]["metrics"].get("invalid_or_fallback_sample_count", 0)), "summary_invalid_or_fallback_sample_count": int(b7_summary.get("invalid_or_fallback_sample_count", 0))}},
+            "E7": {"source_paths": ["datasets/mmwave/manifests/M-B1_preprocessing_ablation/selected_preprocessing_profile.json", "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_preprocessing_identity.json"], "supporting_value": {"selected_profile": b1.get("selected_profile_name"), "runtime_rows_exact": runtime_pre_exact}},
+            "E8": {"source_paths": ["datasets/mmwave/manifests/a5_subject_split/a5_summary.json", "datasets/mmwave/manifests/a5_subject_split/checksums.sha256", "datasets/mmwave/manifests/a6_full_conversion/a6_summary.json", "datasets/mmwave/manifests/a6_full_conversion/checksums.sha256", "datasets/mmwave/manifests/M-B7_perturbation_robustness/m_b7_summary.json", "datasets/mmwave/manifests/M-B9_mock_e2e/m_b9_summary.json"], "supporting_value": {"a5_validation_success": a5_summary.get("validation_success"), "a5_validation_errors": a5_summary.get("validation_errors", []), "a6_validation_success": a6_summary.get("validation_passed"), "a6_leakage_recalculated": a6_summary.get("validator_verdict", {}).get("leakage_recalculated", {}), "b7_blockers": b7_summary.get("blockers", []), "b9_runtime_identity_exact": b9_summary.get("runtime_identity_exact"), "b9_risk_recomputation_exact": b9_summary.get("risk_recomputation_exact")}},
+            "E9": {"source_paths": ["datasets/mmwave/manifests/M-B7_perturbation_robustness/prediction_vectors.npz"], "supporting_value": {label: recomputed_clean["per_class"][label]["recall"] for label in LABELS}},
+            "E10": {"source_paths": ["datasets/mmwave/manifests/M-B7_perturbation_robustness/prediction_vectors.npz"], "supporting_value": {label: recomputed_clean["per_class"][label]["precision"] for label in LABELS}},
+            "E11": {"source_paths": ["datasets/mmwave/manifests/M-B7_perturbation_robustness/perturbation_results.json", "datasets/mmwave/manifests/M-B7_perturbation_robustness/prediction_vectors.npz"], "supporting_value": {"moderate_profiles": list(MODERATE_PROFILES), "collapsed_profiles": [profile for profile, row in moderate_rows.items() if row["recomputed_class_collapse"]["collapsed"]]}},
         }
         metrics = {
             "clean_strict_int8_macro_f1": recomputed_clean["macro_f1"],
@@ -538,18 +626,46 @@ def _build_candidates() -> tuple[list[dict[str, Any]], dict[str, Any]]:
                 "output_scale": runtime.get("tensor_contract", {}).get("output_scale"),
                 "output_zero_point": runtime.get("tensor_contract", {}).get("output_zero_point"),
                 "select_tf_ops_count": runtime.get("tensor_contract", {}).get("select_tf_ops_count"),
+                "operator_inventory": runtime.get("tensor_contract", {}).get("op_types", []),
             },
             "training_weights_sha256": b4_row.get("final_weights_sha256"),
+            "m_b4_seed_stability": {
+                "source_path": "datasets/mmwave/manifests/M-B4_multiseed_stability/multi_seed_results.json",
+                "architecture_level": b4_architecture,
+                "candidate_seed_validation": b4_row,
+            },
             "clean_validation": {
                 "recomputed": recomputed_clean,
                 "reported_identity_checks": clean_reported_checks,
                 "m_b6_stage_c": stage_row.get("stage_c_int8_tflite"),
                 "m_b6_stage_a": stage_row.get("stage_a_float_keras"),
             },
+            "subject_level": subject_evidence,
+            "m_b6_stage_equivalence": {
+                "source_path": "datasets/mmwave/manifests/M-B6_stage_equivalence/pairwise_equivalence_metrics.json",
+                "pairwise": pair,
+                "collapse_transition": collapse,
+            },
             "moderate_profiles": moderate_rows,
             "ranking_metrics": metrics,
             "eligibility": {rid: {"passed": bool(value)} for rid, value in gates.items()},
             "eligible": bool(all(gates.values())),
+            "eligibility_evidence": eligibility_evidence,
+            "m_b8_latency_footprint": {
+                "source_path": "datasets/mmwave/manifests/M-B8_mac_latency_footprint/cross_seed_latency_summary.json",
+                "scope": "macOS_OFFLINE_ONLY",
+                "invoke_p99_ns": float(b8_cross["TFLITE_INVOKE_ONLY"]["per_seed_pooled_statistics"][str(seed)]["statistics_ns"]["p99"]),
+                "pipeline_p99_ns": float(b8_cross["PREPROCESSING_QUANTIZATION_INVOKE"]["per_seed_pooled_statistics"][str(seed)]["statistics_ns"]["p99"]),
+                "artifact_footprint": b8_footprint[str(seed)],
+                "interpretation": b8_interpretation,
+                "formal_rerun_during_m_b10a": False,
+            },
+            "m_b9_runtime_identity": {
+                "model_identity": runtime,
+                "preprocessing_identity_rows": runtime_pre_identity_rows,
+                "prediction_identity": {"source_stage": b9_pred.get("source_stage"), "runtime_stage": b9_pred.get("runtime_stage"), "row_count": len(runtime_pred_rows), "all_int8_outputs_exact": b9_pred.get("all_int8_outputs_exact"), "all_probability_vectors_exact": b9_pred.get("all_probability_vectors_exact"), "all_top1_exact": b9_pred.get("all_top1_exact")},
+                "summary": b9_summary,
+            },
             "evidence_lineage": {
                 "m_b4_final_weights_sha256": b4_row.get("final_weights_sha256"),
                 "m_b6_stage_artifact_sha256": b6_artifact.get("sha256"),
@@ -560,7 +676,7 @@ def _build_candidates() -> tuple[list[dict[str, Any]], dict[str, Any]]:
                 "a5_split_profile": a5_split.get("profile_id"),
             },
         })
-    return candidates, {"labels": labels, "subjects": subjects, "b8_footprint": b8_footprint}
+    return candidates, {"labels": labels, "subjects": subjects, "b8_footprint": b8_footprint, "architecture_seed_sensitivity": b4_architecture}
 
 
 def _compare_values(left: float, right: float, direction: str) -> int:
@@ -625,8 +741,18 @@ def build_historical_baselines() -> dict[str, Any]:
         }
         if key == "mmwave":
             row["exclusion_reason"] = "Historical v0.1.0 model is blocked by class collapse on repository NPZ and is not the frozen real-data Phase-B lineage."
+            row["lineage_status"] = "HISTORICAL_REPOSITORY_MODEL_WITH_CLASS_COLLAPSE"
+            row["preprocessing_status"] = "EXACT_NATIVE_HISTORICAL_PREPROCESSING_UNKNOWN"
+            row["exact_native_preprocessing_known"] = False
+            row["class_map_compatibility"] = "STRUCTURAL_CLASS_MAP_REVIEW_REQUIRED"
+            row["final_test_interpretation"] = "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK"
         else:
             row["exclusion_reason"] = "Historical v0.2.0 candidate is synthetic smoke-only and has no real-data VALIDATION evidence."
+            row["lineage_status"] = "SYNTHETIC_TRAINING_EXTERNAL_COMPATIBILITY_ONLY"
+            row["preprocessing_status"] = "SYNTHETIC_PIPELINE_METADATA_ONLY"
+            row["exact_native_preprocessing_known"] = False
+            row["class_map_compatibility"] = "EXPECTED_THREE_CLASS_MAP_REQUIRES_FINAL_CHECK"
+            row["final_test_interpretation"] = "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK"
         rows.append(row)
     return {
         "phase_id": "M-B10A",
@@ -637,6 +763,31 @@ def build_historical_baselines() -> dict[str, Any]:
 
 
 def build_locked_test_contract(selected: dict[str, Any] | None) -> dict[str, Any]:
+    baselines = build_historical_baselines()["baselines"]
+    planned_models = []
+    if selected:
+        planned_models.append({
+            "model_id": selected["model_id"],
+            "role": "SELECTED_NEW_REAL_DATA_CANDIDATE",
+            "path": selected["model"]["relative_path"],
+            "sha256": selected["model"]["sha256"],
+            "lineage_status": "FROZEN_REAL_DATA_PHASE_B_LINEAGE",
+            "preprocessing_policy": "BPF_ZSCORE_EXACT_M-B1_RUNTIME_IDENTITY",
+            "exact_native_preprocessing_known": True,
+            "class_map_compatibility": {label: index for index, label in enumerate(LABELS)},
+            "final_test_interpretation": "REAL_DATA_OFFLINE_FINAL_TEST_CANDIDATE_ONLY",
+        })
+    planned_models.extend({
+        "model_id": row["baseline_id"],
+        "role": row["role"],
+        "path": row["path"],
+        "sha256": row["sha256"],
+        "lineage_status": row["lineage_status"],
+        "preprocessing_policy": row["preprocessing_status"],
+        "exact_native_preprocessing_known": row["exact_native_preprocessing_known"],
+        "class_map_compatibility": row["class_map_compatibility"],
+        "final_test_interpretation": row["final_test_interpretation"],
+    } for row in baselines)
     return {
         "phase_id": "M-B10A",
         "contract_status": "PREREGISTERED_NOT_EXECUTED",
@@ -652,6 +803,17 @@ def build_locked_test_contract(selected: dict[str, Any] | None) -> dict[str, Any
         "retraining_after_access": False,
         "recalibration_after_access": False,
         "threshold_tuning_after_access": False,
+        "planned_models": planned_models,
+        "metrics_schema": {
+            "primary": "macro_f1",
+            "required": ["accuracy", "macro_f1", "macro_precision", "macro_recall"],
+            "per_class_fields": ["support", "tp", "fp", "tn", "fn", "precision", "recall", "f1_score", "fpr"],
+            "apnea_proxy_fields": ["precision", "recall", "misses"],
+            "rapid_or_abnormal_fields": ["recall"],
+            "diagnostics": ["confusion_matrix", "prediction_distribution", "class_collapse_status"],
+            "subject_level": ["subject_accuracy", "subject_macro_f1", "per_class_metrics_where_support_exists", "worst_subject_macro_f1", "median_subject_macro_f1"],
+            "selected_real_candidate_extra": ["model_sha256", "preprocessing_identity", "strict_int8_structural_identity", "input_saturation_ratio", "runtime_identity"],
+        },
         "required_metrics": [
             "accuracy",
             "macro_f1",
@@ -670,6 +832,15 @@ def build_locked_test_contract(selected: dict[str, Any] | None) -> dict[str, Any
             "LOCKED_TEST predictions",
             "LOCKED_TEST performance metrics",
         ],
+        "post_test_policy": {
+            "selection_or_tuning_after_access": False,
+            "retraining_after_access": False,
+            "recalibration_after_access": False,
+            "threshold_tuning_after_access": False,
+            "new_experiment_cycle_required_for_any_improvement": True,
+        },
+        "applicable_predefined_numerical_acceptance_threshold": "FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED",
+        "acceptance_threshold_source": None,
         "final_result_claims_prohibited_until_execution": ["MR60", "real_sensor validated", "production", "clinical apnea"],
     }
 
@@ -677,7 +848,10 @@ def build_locked_test_contract(selected: dict[str, Any] | None) -> dict[str, Any
 def build_report(candidates: list[dict[str, Any]], ranking: dict[str, Any], selected: dict[str, Any] | None, rule_sha: str, input_identity: dict[str, Any]) -> None:
     branch = subprocess.run(["git", "branch", "--show-current"], cwd=ROOT_DIR, capture_output=True, text=True, check=False).stdout.strip() or "feature/M-B10A-candidate-selection-setup"
     base_sha = subprocess.run(["git", "rev-parse", "origin/main"], cwd=ROOT_DIR, capture_output=True, text=True, check=False).stdout.strip() or "4e3c2e6957a3142f0ff3da8ec50f3bc0b4c94602"
-    b4_sensitivity = _load_json("datasets/mmwave/manifests/M-B4_multiseed_stability/multi_seed_results.json")["multi_seed_results"][0]
+    b4_sensitivity = next(
+        row for row in _load_json("datasets/mmwave/manifests/M-B4_multiseed_stability/multi_seed_results.json")["multi_seed_results"]
+        if row.get("architecture_id") == ARCHITECTURE_ID
+    )
     baselines = build_historical_baselines()["baselines"]
     lines = [
         "# SafeNest mmWave M-B10A — Pre-LOCKED_TEST Real-Data Candidate Selection Setup",
@@ -725,6 +899,14 @@ def build_report(candidates: list[dict[str, Any]], ranking: dict[str, Any], sele
         f"- M-B4 architecture-level seed sensitivity (mean/std/worst clean Float Macro F1): {b4_sensitivity['macro_f1']['mean']:.6f} / {b4_sensitivity['macro_f1']['std']:.6f} / {b4_sensitivity['macro_f1']['worst_seed_val']:.6f} (worst seed {b4_sensitivity['macro_f1']['worst_seed_id']}).",
         "- Seed 44 fails hard E11 on `M-B7_AMP_X0_75` and `M-B7_COMBINED_MODERATE`; severe profiles are diagnostic only.",
         "",
+        "## Complete pre-LOCKED_TEST evidence coverage",
+        "",
+        *[
+            f"- Seed {candidate['seed']}: VALIDATION subjects={candidate['subject_level']['subject_count']} (worst `{candidate['subject_level']['worst_subject_id']}` Macro F1 {candidate['subject_level']['worst_subject_macro_f1']:.6f}, median {candidate['subject_level']['subject_macro_f1_median']:.6f}); M-B6 A→C probability MAE {candidate['m_b6_stage_equivalence']['pairwise']['a_to_c']['output_probability_mae']:.6f}, Top-1 {candidate['m_b6_stage_equivalence']['pairwise']['a_to_c']['top1_agreement']:.6f}; M-B8 invoke/pipeline P99 {candidate['m_b8_latency_footprint']['invoke_p99_ns']:.2f}/{candidate['m_b8_latency_footprint']['pipeline_p99_ns']:.2f} ns (Mac-only); M-B9 runtime/preprocessing identity exact: {candidate['m_b9_runtime_identity']['model_identity']['sha256_match'] and candidate['m_b9_runtime_identity']['summary']['runtime_identity_exact']}."
+            for candidate in candidates
+        ],
+        "- Gate records include repository-relative source paths and supporting values for E1–E11; no sample-level LOCKED_TEST evidence rows are generated.",
+        "",
         "## Historical baselines",
         "",
         *[f"- `{row['baseline_id']}`: `{row['path']}`, SHA-256 `{row['sha256']}`, pool eligible: NO ({row['validation_status']})." for row in baselines],
@@ -733,6 +915,9 @@ def build_report(candidates: list[dict[str, Any]], ranking: dict[str, Any], sele
         "",
         "- Final contract is preregistered for one LOCKED_TEST pass with accuracy, Macro F1/precision/recall, per-class metrics, confusion matrix, APNEA proxy precision/recall, invalid/fallback count, and input saturation.",
         "- No selection, tuning, retraining, recalibration, or threshold changes are allowed after access; readiness used: NO; independent review required.",
+        "- Per-class fields are frozen as support/TP/FP/TN/FN/precision/recall/F1/FPR; subject-level accuracy/Macro F1/per-class support-aware metrics, worst and median subject Macro F1 are frozen.",
+        "- No applicable predefined numerical acceptance threshold exists: `FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED`.",
+        f"- Guard readiness is structurally confirmed from `scripts/mmwave_phase_b_access.py`; final accessor used: NO.",
         "- No final performance number is present in M-B10A artifacts.",
         "",
         "## Warnings and authorization",
@@ -748,7 +933,7 @@ def build_report(candidates: list[dict[str, Any]], ranking: dict[str, Any], sele
         "",
         "## Verification and artifacts",
         "",
-        "- M-B10A validator: PASS; focused unittest: 8 methods (7 negative corruption cases as subtests); upstream M-B0 through M-B9 plus A5/A6 validators: PASS.",
+        "- M-B10A validator: PASS; focused unittest: 9 methods (7 negative corruption cases as subtests); upstream M-B0 through M-B9 plus A5/A6 validators: PASS.",
         "- Evidence directory: `datasets/mmwave/manifests/M-B10A_candidate_selection_setup/` (16 machine-readable outputs plus checksums).",
         f"- Report: `{REPORT_REL.as_posix()}`; LOCKED_TEST access readiness used: NO.",
         "",
@@ -830,14 +1015,31 @@ def generate_artifacts() -> dict[str, Any]:
         "evidence_status": "INDEPENDENTLY_DERIVED_FROM_FROZEN_VALIDATION_ARTIFACTS",
         "selection_rule_sha256": rule_sha,
         "candidate_metrics_are_validation_only": True,
+        "architecture_seed_sensitivity": {
+            "source_path": "datasets/mmwave/manifests/M-B4_multiseed_stability/multi_seed_results.json",
+            "architecture_id": ARCHITECTURE_ID,
+            "mean_clean_float_macro_f1": context["architecture_seed_sensitivity"]["macro_f1"]["mean"],
+            "std_clean_float_macro_f1": context["architecture_seed_sensitivity"]["macro_f1"]["std"],
+            "worst_clean_float_macro_f1": context["architecture_seed_sensitivity"]["macro_f1"]["worst_seed_val"],
+            "worst_seed": context["architecture_seed_sensitivity"]["macro_f1"]["worst_seed_id"],
+            "warning": "INITIALIZATION_SEED_SENSITIVITY",
+        },
         "candidate_evidence": [
             {
                 "candidate_id": candidate["candidate_id"],
                 "seed": candidate["seed"],
+                "architecture_id": candidate["architecture_id"],
+                "model": candidate["model"],
                 "clean_validation": candidate["clean_validation"],
+                "subject_level": candidate["subject_level"],
+                "m_b4_seed_stability": candidate["m_b4_seed_stability"],
+                "m_b6_stage_equivalence": candidate["m_b6_stage_equivalence"],
                 "moderate_profile_metrics": candidate["moderate_profiles"],
+                "m_b8_latency_footprint": candidate["m_b8_latency_footprint"],
+                "m_b9_runtime_identity": candidate["m_b9_runtime_identity"],
                 "ranking_metrics": candidate["ranking_metrics"],
                 "eligibility": candidate["eligibility"],
+                "eligibility_evidence": candidate["eligibility_evidence"],
                 "eligible": candidate["eligible"],
             }
             for candidate in candidates
@@ -845,6 +1047,7 @@ def generate_artifacts() -> dict[str, Any]:
         "locked_test_evidence_rows": 0,
     }
     _write_json("candidate_selection_evidence.json", evidence)
+    selection_evidence_sha = _sha256(OUT_DIR / "candidate_selection_evidence.json")
     ranking = rank_candidates(candidates, rule_sha)
     _write_json("candidate_ranking.json", ranking)
     selected = next((candidate for candidate in candidates if candidate["candidate_id"] == ranking["selected_candidate_id"]), None)
@@ -855,7 +1058,19 @@ def generate_artifacts() -> dict[str, Any]:
         "model_id": selected["model_id"] if selected else None,
         "seed": selected["seed"] if selected else None,
         "model": selected["model"] if selected else None,
+        "architecture_id": selected["architecture_id"] if selected else None,
+        "class_map": {label: index for index, label in enumerate(LABELS)},
+        "preprocessing": {
+            "profile_id": selected["preprocessing_profile"] if selected else None,
+            "profile_name": selected["preprocessing_name"] if selected else None,
+            "metadata_identity": _load_json("datasets/mmwave/manifests/M-B1_preprocessing_ablation/selected_preprocessing_profile.json") if selected else None,
+        },
+        "calibration_profile": selected["calibration_profile"] if selected else None,
+        "training_identity": {"seed": selected["training_seed"], "final_weights_sha256": selected["training_weights_sha256"]} if selected else None,
+        "m_b6_stage_equivalence": selected["m_b6_stage_equivalence"] if selected else None,
+        "m_b9_runtime_identity": selected["m_b9_runtime_identity"] if selected else None,
         "selection_rule_sha256": rule_sha,
+        "selection_evidence_sha256": selection_evidence_sha,
         "deciding_criterion": ranking["deciding_criterion"],
         "deployment_allowed": False,
         "mr60_validation": "NOT_PERFORMED",
@@ -864,6 +1079,15 @@ def generate_artifacts() -> dict[str, Any]:
         "clinical_performance": "NOT_EVALUATED",
         "locked_test_accessed": False,
         "m_b10b_started": False,
+        "limitations": [
+            "INITIALIZATION_SEED_SENSITIVITY",
+            "MAC_ONLY_LATENCY",
+            "OFFLINE_PERTURBATION_ONLY",
+            "MOCK_E2E_ONLY",
+            "NO_MR60_VALIDATION",
+            "APNEA_PROXY_SCOPE",
+            "LOCKED_TEST_NOT_EVALUATED",
+        ],
         "authorization_recommendation": "NO — independent review required before M-B10B.",
     }
     _write_json("selected_candidate_pretest.json", selected_pretest)
@@ -872,6 +1096,7 @@ def generate_artifacts() -> dict[str, Any]:
     _write_json("historical_baseline_registry.json", historical)
     locked_contract = build_locked_test_contract(selected)
     _write_json("locked_test_evaluation_contract.json", locked_contract)
+    guard_readiness = _guard_structural_readiness()
     locked_readiness = {
         "phase_id": "M-B10A",
         "readiness_status": "M-B10_PRELOCKED_REAL_DATA_CANDIDATE" if selected else "INCONCLUSIVE",
@@ -883,6 +1108,8 @@ def generate_artifacts() -> dict[str, Any]:
         "prediction_tensors_loaded": 0,
         "performance_metrics_computed": 0,
         "final_accessor_calls": 0,
+        "final_access_mechanism_ready": guard_readiness["ready"],
+        "final_access_mechanism": guard_readiness,
     }
     _write_json("locked_test_access_readiness.json", locked_readiness)
     _write_json("locked_test_access_audit.json", {
@@ -952,6 +1179,7 @@ def generate_artifacts() -> dict[str, Any]:
         "finding_classes": ["BLOCKER", "REQUIRED REFINEMENT", "NON-BLOCKING IMPROVEMENT"],
         "locked_test_evaluation_contract_registered": True,
         "locked_test_access_readiness_used": False,
+        "final_access_mechanism_ready": guard_readiness["ready"],
     }
     _write_json("m_b10a_summary.json", summary)
     _write_checksums()
