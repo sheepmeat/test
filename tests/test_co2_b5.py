@@ -15,11 +15,13 @@ from datasets.co2.b5_robustness import (
     THRESHOLD,
     _scenario_grid,
     build_protocol,
+    evaluate_locked_test_once,
     load_eligible_ids,
     load_split_rows,
     make_scenario_rows,
     reconstruct_features,
     stable_sha256,
+    LockedTestAuthorizationError,
 )
 from datasets.co2.tflite_equivalence import quantize_int8_input
 
@@ -107,3 +109,32 @@ def test_generated_artifacts_keep_candidate_identity_and_zero_robustness_test_ac
     assert payload["locked_test_used"] is False
     assert payload["locked_test_predictions"] == 0
     assert payload["locked_test_metrics"] == 0
+
+
+def test_direct_locked_test_guard_rejects_tampered_freeze() -> None:
+    import json
+
+    freeze = json.loads((ROOT / ARTIFACT_DIR_REL / "pre_locked_test_candidate_freeze.json").read_text(encoding="utf-8"))
+    tampered = copy.deepcopy(freeze)
+    tampered["candidate"]["threshold"] = 0.5
+    with pytest.raises(LockedTestAuthorizationError, match="CHECKSUM|IDENTITY"):
+        evaluate_locked_test_once(object(), ROOT, tampered)
+
+
+def test_direct_locked_test_guard_rejects_nonzero_prior_access() -> None:
+    import json
+
+    freeze = json.loads((ROOT / ARTIFACT_DIR_REL / "pre_locked_test_candidate_freeze.json").read_text(encoding="utf-8"))
+    tampered = copy.deepcopy(freeze)
+    tampered["locked_test_prior_access"]["predictions"] = 1
+    tampered["freeze_sha256"] = stable_sha256({k: v for k, v in tampered.items() if k != "freeze_sha256"})
+    with pytest.raises(LockedTestAuthorizationError, match="PRIOR_ACCESS"):
+        evaluate_locked_test_once(object(), ROOT, tampered)
+
+
+def test_completed_locked_test_artifact_blocks_double_evaluation() -> None:
+    import json
+
+    freeze = json.loads((ROOT / ARTIFACT_DIR_REL / "pre_locked_test_candidate_freeze.json").read_text(encoding="utf-8"))
+    with pytest.raises(LockedTestAuthorizationError, match="DOUBLE_EVALUATION"):
+        evaluate_locked_test_once(object(), ROOT, freeze)

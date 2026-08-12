@@ -715,8 +715,19 @@ def validate_pre_locked_test_freeze(root: Path, freeze: Mapping[str, Any], proto
 
 def evaluate_locked_test_once(tf: Any, root: Path, freeze: Mapping[str, Any]) -> Dict[str, Any]:
     """Perform the single unperturbed LOCKED_TEST evaluation after freeze."""
-    if freeze.get("freeze_profile_id") != FREEZE_ID:
+    if freeze.get("freeze_profile_id") != FREEZE_ID or freeze.get("freeze_status") != "VALID_PRE_LOCKED_TEST":
         raise LockedTestAuthorizationError("C_B5_LOCKED_TEST_NOT_AUTHORIZED")
+    if freeze.get("freeze_sha256") != stable_sha256({k: v for k, v in freeze.items() if k != "freeze_sha256"}):
+        raise LockedTestAuthorizationError("C_B5_PRETEST_FREEZE_CHECKSUM_MISMATCH")
+    candidate = freeze.get("candidate", {})
+    if candidate.get("model_sha256") != INT8_MODEL_SHA256 or candidate.get("threshold") != THRESHOLD or candidate.get("feature_order") != list(FEATURE_ORDER) or candidate.get("scaler_fingerprint") != SCALER_FINGERPRINT:
+        raise LockedTestAuthorizationError("C_B5_LOCKED_TEST_CANDIDATE_IDENTITY_MISMATCH")
+    prior = freeze.get("locked_test_prior_access", {})
+    if any(int(prior.get(key, -1)) != 0 for key in ("feature_access", "target_access", "predictions", "probabilities", "metrics")):
+        raise LockedTestAuthorizationError("C_B5_LOCKED_TEST_PRIOR_ACCESS")
+    decisions = freeze.get("decision_state", {})
+    if not all(bool(decisions.get(key)) for key in ("MODEL_SELECTION_COMPLETE", "FEATURE_SELECTION_COMPLETE", "SLOPE_SELECTION_COMPLETE", "IMBALANCE_SELECTION_COMPLETE", "THRESHOLD_SELECTION_COMPLETE", "QUANTIZATION_COMPLETE", "ROBUSTNESS_REVIEW_COMPLETE", "NO_FURTHER_SELECTION_AUTHORIZED", "LOCKED_TEST_EVALUATION_AUTHORIZED_ONCE")):
+        raise LockedTestAuthorizationError("C_B5_LOCKED_TEST_DECISIONS_NOT_FROZEN")
     out_path = root / ARTIFACT_DIR_REL / "locked_test_evaluation.json"
     if out_path.exists():
         raise LockedTestAuthorizationError("C_B5_LOCKED_TEST_DOUBLE_EVALUATION")
