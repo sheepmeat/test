@@ -17,10 +17,12 @@ from unittest import mock
 from scripts import mmwave_m_b11_artifact_lock as generator
 from scripts import validate_mmwave_m_b11 as validator
 from scripts.mmwave_m_b10r1_result_writer import SELECTED_MODEL_ID, V01_MODEL_ID, V02_MODEL_ID
-from scripts.mmwave_m_b11_artifact_lock import LOCK_DIR_REL, SENSOR_LOCK_REL, write_checksums
+from scripts.mmwave_m_b11_artifact_lock import B_DIR_REL, LOCK_DIR_REL, SENSOR_LOCK_REL, write_checksums
 
 ROOT = Path(__file__).resolve().parents[1]
 LOCK = ROOT / LOCK_DIR_REL
+B_EVIDENCE = ROOT / B_DIR_REL
+SENSOR = ROOT / SENSOR_LOCK_REL
 
 
 def _sha256_file(path: Path) -> str:
@@ -63,14 +65,42 @@ class MB11Tests(unittest.TestCase):
             _rewrite_checksums(lock_dir)
         return lock_dir
 
+    def _copy_b(self) -> Path:
+        tmp = Path(tempfile.mkdtemp(prefix="m_b11_b_"))
+        shutil.copytree(B_EVIDENCE, tmp / "b")
+        return tmp / "b"
+
+    def _mutate_b_ledger(self, mutator) -> Path:
+        b_dir = self._copy_b()
+        path = b_dir / "recovery_sample_predictions.jsonl"
+        rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        mutator(rows)
+        path.write_text("".join(json.dumps(row, sort_keys=True) + "\n" for row in rows), encoding="utf-8")
+        return b_dir
+
     def _expect_fail(self, lock_dir: Path, fragment: str) -> None:
         with self.assertRaises(validator.MB11ValidationError) as ctx:
             self._validate_copy(lock_dir)
         self.assertIn(fragment, str(ctx.exception))
 
+    def _expect_fail_b(self, b_dir: Path, fragment: str) -> None:
+        with self.assertRaises(validator.MB11ValidationError) as ctx:
+            validator.validate_m_b11(ROOT, b_dir=b_dir)
+        self.assertIn(fragment, str(ctx.exception))
+
     def test_valid_lock_passes(self) -> None:
         result = validator.validate_m_b11(ROOT)
         self.assertEqual(result["status"], "PASS")
+        self.assertFalse(result["generator_ledger_analyzer_reused"])
+        self.assertEqual(result["source_ledger"]["unique_ids"], 75)
+        self.assertEqual(result["source_ledger"]["models"], 3)
+        self.assertEqual(result["source_ledger"]["pairs"], 225)
+        self.assertEqual(result["source_ledger"]["duplicates"], 0)
+        self.assertEqual(result["source_ledger"]["missing"], 0)
+        self.assertEqual(result["source_ledger"]["unexpected"], 0)
+        self.assertEqual(result["source_ledger"]["label_mismatches"], 0)
+        self.assertEqual(result["source_ledger"]["subject_mismatches"], 0)
+        self.assertEqual(result["source_ledger"]["recording_mismatches"], 0)
 
     def test_no_access_monkeypatch_still_passes(self) -> None:
         def boom(*_args, **_kwargs):
@@ -287,35 +317,107 @@ class MB11Tests(unittest.TestCase):
             "claim_boundary_lock.json",
             lambda payload: payload.__setitem__("result_not_pristine", False),
         )
-        self._expect_fail(lock_dir, "CLAIM_RESULT_NOT_PRISTINE_FALSE")
+        self._expect_fail(lock_dir, "RESULT_NOT_PRISTINE_FALSE")
 
     def test_pristine_claim_inserted(self) -> None:
         lock_dir = self._mutate(
             "claim_boundary_lock.json",
             lambda payload: payload.__setitem__("PRISTINE_LOCKED_TEST", True),
         )
-        self._expect_fail(lock_dir, "FORBIDDEN_PRISTINE_CLAIM")
+        self._expect_fail(lock_dir, "FORBIDDEN_POSITIVE_CLAIM")
 
     def test_mr60_validated_true(self) -> None:
         lock_dir = self._mutate(
             "claim_boundary_lock.json",
             lambda payload: payload.__setitem__("MR60_device_validation_complete", True),
         )
-        self._expect_fail(lock_dir, "FORBIDDEN_TRUE_CLAIM:MR60_device_validation_complete")
+        self._expect_fail(lock_dir, "FORBIDDEN_POSITIVE_CLAIM")
 
     def test_deployment_ready_true(self) -> None:
         lock_dir = self._mutate(
             "claim_boundary_lock.json",
             lambda payload: payload.__setitem__("deployment_ready", True),
         )
-        self._expect_fail(lock_dir, "FORBIDDEN_TRUE_CLAIM:deployment_ready")
+        self._expect_fail(lock_dir, "FORBIDDEN_POSITIVE_CLAIM")
 
     def test_clinical_apnea_validated_true(self) -> None:
         lock_dir = self._mutate(
             "claim_boundary_lock.json",
             lambda payload: payload.__setitem__("clinical_apnea_validated", True),
         )
-        self._expect_fail(lock_dir, "FORBIDDEN_TRUE_CLAIM:clinical_apnea_validated")
+        self._expect_fail(lock_dir, "FORBIDDEN_POSITIVE_CLAIM")
+
+    def test_identity_result_limitation_pristine(self) -> None:
+        lock_dir = self._mutate(
+            "artifact_lock_identity.json",
+            lambda payload: payload.__setitem__("result_limitation", "PRISTINE_LOCKED_TEST"),
+        )
+        self._expect_fail(lock_dir, "FORBIDDEN_POSITIVE_CLAIM")
+
+    def test_sensor_local_deployment_ready_true(self) -> None:
+        sensor_tmp = Path(tempfile.mkdtemp(prefix="m_b11_sensor_")) / SENSOR.name
+        shutil.copy2(SENSOR, sensor_tmp)
+        payload = _load(sensor_tmp)
+        payload["deployment_ready"] = True
+        _dump(sensor_tmp, payload)
+        with self.assertRaises(validator.MB11ValidationError) as ctx:
+            validator.validate_m_b11(ROOT, sensor_lock_path=sensor_tmp)
+        self.assertIn("FORBIDDEN_POSITIVE_CLAIM", str(ctx.exception))
+
+    def test_summary_phase_b_release_ready_true(self) -> None:
+        lock_dir = self._mutate(
+            "artifact_lock_summary.json",
+            lambda payload: payload.__setitem__("Phase_B_release_ready", True),
+        )
+        self._expect_fail(lock_dir, "FORBIDDEN_POSITIVE_CLAIM")
+
+    def test_recording_changed_for_only_one_model_row(self) -> None:
+        def mutate(payload: dict) -> None:
+            payload["samples"][0]["models"][V01_MODEL_ID]["recording_id"] = "mutated-recording"
+
+        lock_dir = self._mutate("final_sample_registry_lock.json", mutate)
+        self._expect_fail(lock_dir, "LOCK_CROSS_MODEL_RECORDING")
+
+    def test_sample_level_recording_changed(self) -> None:
+        def mutate(payload: dict) -> None:
+            payload["samples"][0]["recording_id"] = "mutated-sample-recording"
+
+        lock_dir = self._mutate("final_sample_registry_lock.json", mutate)
+        self._expect_fail(lock_dir, "LOCK_SAMPLE_RECORDING")
+
+    def test_source_duplicate_ledger_pair(self) -> None:
+        def mutate(rows: list) -> None:
+            rows.append(json.loads(json.dumps(rows[0])))
+
+        self._expect_fail_b(self._mutate_b_ledger(mutate), "SOURCE_DUPLICATE_PAIR")
+
+    def test_source_missing_ledger_pair(self) -> None:
+        def mutate(rows: list) -> None:
+            rows.pop(0)
+
+        self._expect_fail_b(self._mutate_b_ledger(mutate), "SOURCE_MISSING_PAIR")
+
+    def test_source_unexpected_fourth_model_pair(self) -> None:
+        def mutate(rows: list) -> None:
+            extra = json.loads(json.dumps(rows[0]))
+            extra["model_id"] = "fourth_model"
+            rows.append(extra)
+
+        self._expect_fail_b(self._mutate_b_ledger(mutate), "SOURCE_UNEXPECTED_PAIR")
+
+    def test_source_recording_mismatch(self) -> None:
+        def mutate(rows: list) -> None:
+            window_id = rows[0]["window_id"]
+            for row in rows:
+                if row["window_id"] == window_id and row["model_id"] == V01_MODEL_ID:
+                    row["recording_id"] = "mutated-source-recording"
+                    return
+
+        self._expect_fail_b(self._mutate_b_ledger(mutate), "SOURCE_RECORDING_MISMATCH")
+
+    def test_validator_does_not_reuse_generator_ledger_analyzer(self) -> None:
+        source = Path(validator.__file__).read_text(encoding="utf-8")
+        self.assertNotIn("analyze_recovery_ledger", source)
 
     def test_absolute_path(self) -> None:
         lock_dir = self._mutate(

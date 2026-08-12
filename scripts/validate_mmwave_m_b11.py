@@ -52,28 +52,66 @@ from scripts.mmwave_m_b11_artifact_lock import (  # noqa: E402
     TRAINING_STRATEGY_ID,
     V01_TFLITE_REL,
     V02_TFLITE_REL,
-    analyze_recovery_ledger,
     inspect_tflite_identity,
     load_json,
     load_jsonl,
     require_repo_relative,
 )
 
-FORBIDDEN_CLAIMS = (
-    "PRISTINE_LOCKED_TEST",
-    "FIRST_LOCKED_TEST_EVALUATION",
-)
-FORBIDDEN_TRUE_FLAGS = (
+HEX64 = re.compile(r"^[0-9a-f]{64}$")
+FORBIDDEN_DESIGNATION_TOKENS = {
+    "pristine_locked_test",
+    "first_locked_test_evaluation",
+}
+FORBIDDEN_TRUE_KEY_TOKENS = {
+    "pristine_locked_test",
+    "first_locked_test_evaluation",
     "deployment_ready",
     "production_ready",
     "clinical_apnea_validated",
-    "MR60_device_validation_complete",
-    "Raspberry_Pi_validation_complete",
-    "Phase_B_release_ready",
+    "mr60_device_validation_complete",
+    "mr60_validated",
+    "mr60_validation_complete",
+    "raspberry_pi_validation_complete",
+    "raspberry_pi_validated",
+    "rpi_validated",
+    "rpi_validation_complete",
     "locked_test_reopen_allowed",
     "recovery_reopen_allowed",
-)
-HEX64 = re.compile(r"^[0-9a-f]{64}$")
+    "phase_b_release_ready",
+}
+TRUTHY_TOKENS = {"true", "yes", "validated", "complete"}
+FORBIDDEN_POSITIVE_VALUE_TOKENS = FORBIDDEN_DESIGNATION_TOKENS | FORBIDDEN_TRUE_KEY_TOKENS
+ALLOWED_GENERATOR_IMPORTS = {
+    "A5_SPLIT_REL",
+    "A6_MANIFEST_REL",
+    "ARCHITECTURE_ID",
+    "ARTIFACT_STATUS",
+    "B_DIR_REL",
+    "CALIBRATION_ID",
+    "CANONICAL_NPY_REL",
+    "CLASS_MAP",
+    "EXECUTION_PREPROCESSING_CONTRACT_ID",
+    "EXPECTED_ELIGIBLE",
+    "EXPECTED_MODELS",
+    "EXPECTED_PAIRS",
+    "LOCK_DIR_REL",
+    "LOCK_JSON_FILES",
+    "PREPROCESSING_PROFILE_ID",
+    "RAW_ARCHIVE_REL",
+    "RESULT_LIMITATION",
+    "RUNTIME_MODEL_ID",
+    "SELECTED_CANDIDATE_ID",
+    "SELECTED_TFLITE_REL",
+    "SENSOR_LOCK_REL",
+    "TRAINING_STRATEGY_ID",
+    "V01_TFLITE_REL",
+    "V02_TFLITE_REL",
+    "inspect_tflite_identity",
+    "load_json",
+    "load_jsonl",
+    "require_repo_relative",
+}
 
 
 class MB11ValidationError(Exception):
@@ -103,6 +141,10 @@ def _inspect_no_accessor_or_invoke() -> None:
         "invoke",
     }
     for node in ast.walk(tree):
+        if isinstance(node, ast.ImportFrom) and node.module == "scripts.mmwave_m_b11_artifact_lock":
+            for alias in node.names:
+                if alias.name == "*" or alias.name not in ALLOWED_GENERATOR_IMPORTS:
+                    _raise(f"VALIDATOR_IMPORTS_GENERATOR:{alias.name}")
         if isinstance(node, ast.Call):
             func = node.func
             name = func.id if isinstance(func, ast.Name) else (
@@ -170,6 +212,170 @@ def _require_equal(actual: Any, expected: Any, code: str) -> None:
         _raise(f"{code}:{actual}!={expected}")
 
 
+def _normalize_token(value: Any) -> str:
+    return re.sub(r"[^a-z0-9]+", "_", str(value).lower()).strip("_")
+
+
+def _is_truthy_claim(value: Any) -> bool:
+    if value is True:
+        return True
+    if isinstance(value, str) and _normalize_token(value) in TRUTHY_TOKENS:
+        return True
+    return False
+
+
+def _present_identity(value: Any) -> str | None:
+    if value is None:
+        return None
+    text = str(value).strip()
+    if text in {"", "None", "null", "NULL"}:
+        return None
+    return text
+
+
+def _reject_forbidden_claims(payload: Any, *, context: str) -> None:
+    """Fail-closed recursive inspection of every lock artifact, not just claim_boundary."""
+
+    def walk(node: Any, path: str) -> None:
+        if isinstance(node, dict):
+            for key, value in node.items():
+                child = f"{path}.{key}"
+                token = _normalize_token(key)
+                if token in FORBIDDEN_TRUE_KEY_TOKENS and _is_truthy_claim(value):
+                    _raise(f"FORBIDDEN_POSITIVE_CLAIM:{context}:{child}:{value}")
+                if isinstance(value, str) and _normalize_token(value) in FORBIDDEN_POSITIVE_VALUE_TOKENS:
+                    _raise(f"FORBIDDEN_POSITIVE_CLAIM:{context}:{child}:{value}")
+                walk(value, child)
+            return
+        if isinstance(node, list):
+            for index, item in enumerate(node):
+                walk(item, f"{path}[{index}]")
+            return
+        if isinstance(node, str) and _normalize_token(node) in FORBIDDEN_POSITIVE_VALUE_TOKENS:
+            _raise(f"FORBIDDEN_POSITIVE_CLAIM:{context}:{path}:{node}")
+
+    walk(payload, "$")
+
+
+def _require_non_pristine_fields(payload: dict[str, Any], *, context: str) -> None:
+    if "result_limitation" in payload:
+        _require_equal(payload.get("result_limitation"), RESULT_LIMITATION, f"LIMITATION:{context}")
+    if "result_designation" in payload:
+        _require_equal(payload.get("result_designation"), RESULT_LIMITATION, f"DESIGNATION:{context}")
+    if "result_not_pristine" in payload and payload.get("result_not_pristine") is not True:
+        _raise(f"RESULT_NOT_PRISTINE_FALSE:{context}")
+
+
+def inspect_source_ledger(
+    registry: dict[str, Any],
+    ledger: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Validator-owned 75 x 3 Cartesian and identity gate. Does not use the generator analyzer."""
+    ordered = list(registry.get("ordered_window_ids") or [])
+    unique_ids = list(dict.fromkeys(ordered))
+    if len(ordered) != EXPECTED_ELIGIBLE or len(unique_ids) != EXPECTED_ELIGIBLE:
+        _raise(f"SOURCE_UNIQUE_IDS:{len(unique_ids)}")
+    by_pair: dict[tuple[str, str], list[dict[str, Any]]] = {}
+    by_window: dict[str, dict[str, dict[str, Any]]] = {}
+    observed_models: set[str] = set()
+    for row in ledger:
+        window_id = str(row.get("window_id"))
+        model_id = str(row.get("model_id"))
+        observed_models.add(model_id)
+        key = (window_id, model_id)
+        by_pair.setdefault(key, []).append(row)
+        by_window.setdefault(window_id, {})[model_id] = row
+    expected_pairs = {(window_id, model_id) for window_id in unique_ids for model_id in EXPECTED_MODELS}
+    actual_pairs = set(by_pair)
+    duplicates = sorted(
+        f"{window_id}|{model_id}"
+        for (window_id, model_id), rows in by_pair.items()
+        if len(rows) != 1
+    )
+    missing = sorted(
+        f"{window_id}|{model_id}"
+        for window_id, model_id in sorted(expected_pairs - actual_pairs)
+    )
+    unexpected = sorted(
+        f"{window_id}|{model_id}"
+        for window_id, model_id in sorted(actual_pairs - expected_pairs)
+    )
+    if duplicates:
+        _raise(f"SOURCE_DUPLICATE_PAIR:{len(duplicates)}")
+    if missing:
+        _raise(f"SOURCE_MISSING_PAIR:{len(missing)}")
+    if unexpected:
+        _raise(f"SOURCE_UNEXPECTED_PAIR:{len(unexpected)}")
+    if observed_models != set(EXPECTED_MODELS):
+        _raise(f"SOURCE_MODEL_SET:{sorted(observed_models)}")
+    if len(ledger) != EXPECTED_PAIRS:
+        _raise(f"SOURCE_LEDGER_ROW_COUNT:{len(ledger)}")
+    label_mismatches = 0
+    subject_mismatches = 0
+    recording_mismatches = 0
+    samples: list[dict[str, Any]] = []
+    for window_id in unique_ids:
+        rows = by_window.get(window_id) or {}
+        if set(rows) != set(EXPECTED_MODELS):
+            _raise(f"SOURCE_WINDOW_MODEL_SET:{window_id}")
+        labels = {_present_identity(rows[model_id].get("true_class")) for model_id in EXPECTED_MODELS}
+        label_indexes = {int(rows[model_id].get("true_class_index")) for model_id in EXPECTED_MODELS}
+        subjects = {_present_identity(rows[model_id].get("subject_id")) for model_id in EXPECTED_MODELS}
+        recordings = [_present_identity(rows[model_id].get("recording_id")) for model_id in EXPECTED_MODELS]
+        if None in labels or len(labels) != 1 or len(label_indexes) != 1:
+            label_mismatches += 1
+        if None in subjects or len(subjects) != 1:
+            subject_mismatches += 1
+        present_recordings = {item for item in recordings if item is not None}
+        if present_recordings:
+            if len(present_recordings) != 1 or any(item is None for item in recordings):
+                recording_mismatches += 1
+        seed42 = rows[SELECTED_MODEL_ID]
+        samples.append(
+            {
+                "window_id": window_id,
+                "subject_id": str(seed42.get("subject_id")),
+                "recording_id": _present_identity(seed42.get("recording_id")),
+                "true_class": str(seed42.get("true_class")),
+                "true_class_index": int(seed42.get("true_class_index")),
+                "models": {
+                    model_id: {
+                        "true_class": str(rows[model_id].get("true_class")),
+                        "true_class_index": int(rows[model_id].get("true_class_index")),
+                        "subject_id": str(rows[model_id].get("subject_id")),
+                        "recording_id": _present_identity(rows[model_id].get("recording_id")),
+                        "predicted_class_index": int(rows[model_id].get("predicted_class_index")),
+                    }
+                    for model_id in EXPECTED_MODELS
+                },
+            }
+        )
+    if label_mismatches:
+        _raise(f"SOURCE_LABEL_MISMATCH:{label_mismatches}")
+    if subject_mismatches:
+        _raise(f"SOURCE_SUBJECT_MISMATCH:{subject_mismatches}")
+    if recording_mismatches:
+        _raise(f"SOURCE_RECORDING_MISMATCH:{recording_mismatches}")
+    return {
+        "unique_eligible_window_ids": len(unique_ids),
+        "ordered_window_ids": unique_ids,
+        "model_ids": list(EXPECTED_MODELS),
+        "expected_pairs": EXPECTED_PAIRS,
+        "actual_pairs": len(ledger),
+        "duplicates": 0,
+        "missing": 0,
+        "unexpected": 0,
+        "cross_model_label_mismatches": 0,
+        "cross_model_subject_mismatches": 0,
+        "cross_model_recording_mismatches": 0,
+        "samples": samples,
+        "per_model_rows": {
+            model_id: [by_window[window_id][model_id] for window_id in unique_ids]
+            for model_id in EXPECTED_MODELS
+        },
+    }
+
+
 def validate_m_b11(
     root: Path | None = None,
     *,
@@ -189,6 +395,9 @@ def validate_m_b11(
     locks = {name: load_json(lock_dir / name) for name in LOCK_JSON_FILES}
     for name, payload in locks.items():
         _reject_unsafe_paths(payload, context=name)
+        if isinstance(payload, dict):
+            _reject_forbidden_claims(payload, context=name)
+            _require_non_pristine_fields(payload, context=name)
 
     identity = locks["artifact_lock_identity.json"]
     source = locks["source_lineage_lock.json"]
@@ -222,21 +431,6 @@ def validate_m_b11(
     _require_equal(identity.get("runtime_model_id"), RUNTIME_MODEL_ID, "RUNTIME_MODEL_ID")
     _require_equal(identity.get("class_map"), CLASS_MAP, "CLASS_MAP")
 
-    blob = json.dumps(locks, sort_keys=True)
-    for claim in FORBIDDEN_CLAIMS:
-        if f'"{claim}": true' in blob.lower() or f'"{claim}":true' in blob.replace(" ", "").lower():
-            _raise(f"FORBIDDEN_PRISTINE_CLAIM:{claim}")
-        if claims.get(claim) is True:
-            _raise(f"FORBIDDEN_PRISTINE_CLAIM:{claim}")
-    if "PRISTINE_LOCKED_TEST" in blob and claims.get("PRISTINE_LOCKED_TEST") is not False:
-        _raise("PRISTINE_CLAIM_INSERTED")
-    if claims.get("result_not_pristine") is not True:
-        _raise("CLAIM_RESULT_NOT_PRISTINE_FALSE")
-    if claims.get("result_limitation") != RESULT_LIMITATION:
-        _raise("CLAIM_RESULT_LIMITATION_MISMATCH")
-    for flag in FORBIDDEN_TRUE_FLAGS:
-        if claims.get(flag) is True:
-            _raise(f"FORBIDDEN_TRUE_CLAIM:{flag}")
     if claims.get("M-B12_required") is not True:
         _raise("M_B12_REQUIRED_MISSING")
     if "seed43" in json.dumps(model).lower() or "seed44" in json.dumps(model).lower():
@@ -318,18 +512,26 @@ def validate_m_b11(
 
     b_registry = load_json(b_dir / "recovery_registry.json")
     b_ledger = load_jsonl(b_dir / "recovery_sample_predictions.jsonl")
-    analysis = analyze_recovery_ledger(b_registry, b_ledger)
+    analysis = inspect_source_ledger(b_registry, b_ledger)
     _require_equal(analysis["unique_eligible_window_ids"], EXPECTED_ELIGIBLE, "UNIQUE_IDS")
     _require_equal(analysis["actual_pairs"], EXPECTED_PAIRS, "PAIRS")
     _require_equal(analysis["model_ids"], list(EXPECTED_MODELS), "MODEL_SET")
+    _require_equal(analysis["duplicates"], 0, "SOURCE_DUP")
+    _require_equal(analysis["missing"], 0, "SOURCE_MISSING")
+    _require_equal(analysis["unexpected"], 0, "SOURCE_UNEXPECTED")
+    _require_equal(analysis["cross_model_label_mismatches"], 0, "SOURCE_LABEL")
+    _require_equal(analysis["cross_model_subject_mismatches"], 0, "SOURCE_SUBJECT")
+    _require_equal(analysis["cross_model_recording_mismatches"], 0, "SOURCE_RECORDING")
     _require_equal(registry_lock["unique_eligible_window_ids"], EXPECTED_ELIGIBLE, "LOCK_UNIQUE_IDS")
     _require_equal(registry_lock["actual_pairs"], EXPECTED_PAIRS, "LOCK_PAIRS")
     _require_equal(registry_lock["duplicates"], 0, "LOCK_DUP")
     _require_equal(registry_lock["missing"], 0, "LOCK_MISSING")
     _require_equal(registry_lock["unexpected"], 0, "LOCK_UNEXPECTED")
+    _require_equal(registry_lock.get("cross_model_recording_mismatches"), 0, "LOCK_RECORDING_MISMATCH_FIELD")
     _require_equal(registry_lock["ordered_window_ids"], analysis["ordered_window_ids"], "LOCK_WINDOW_ORDER")
     if len(registry_lock.get("samples") or []) != EXPECTED_ELIGIBLE:
         _raise("LOCK_SAMPLE_COUNT")
+    live_by_window = {item["window_id"]: item for item in analysis["samples"]}
     lock_pairs = set()
     lock_models = set()
     for sample in registry_lock["samples"]:
@@ -337,19 +539,35 @@ def validate_m_b11(
         if set(models) != set(EXPECTED_MODELS):
             _raise(f"LOCK_SAMPLE_MODEL_SET:{sample.get('window_id')}")
         truths = {str(models[mid].get("true_class")) for mid in EXPECTED_MODELS}
+        truth_indexes = {int(models[mid].get("true_class_index")) for mid in EXPECTED_MODELS}
         subjects = {str(models[mid].get("subject_id")) for mid in EXPECTED_MODELS}
-        if len(truths) != 1:
+        recordings = [_present_identity(models[mid].get("recording_id")) for mid in EXPECTED_MODELS]
+        if len(truths) != 1 or len(truth_indexes) != 1:
             _raise(f"LOCK_CROSS_MODEL_LABEL:{sample.get('window_id')}")
         if len(subjects) != 1:
             _raise(f"LOCK_CROSS_MODEL_SUBJECT:{sample.get('window_id')}")
-        live_sample = next(item for item in analysis["samples"] if item["window_id"] == sample["window_id"])
+        present_recordings = {item for item in recordings if item is not None}
+        if present_recordings and (len(present_recordings) != 1 or any(item is None for item in recordings)):
+            _raise(f"LOCK_CROSS_MODEL_RECORDING:{sample.get('window_id')}")
+        sample_recording = _present_identity(sample.get("recording_id"))
+        if present_recordings:
+            shared_recording = next(iter(present_recordings))
+            if sample_recording is not None and sample_recording != shared_recording:
+                _raise(f"LOCK_SAMPLE_RECORDING_INTERNAL:{sample.get('window_id')}")
+        live_sample = live_by_window.get(str(sample.get("window_id")))
+        if live_sample is None:
+            _raise(f"LOCK_SAMPLE_NOT_IN_SOURCE:{sample.get('window_id')}")
         if sample["true_class"] != live_sample["true_class"] or sample["subject_id"] != live_sample["subject_id"]:
             _raise(f"LOCK_SAMPLE_IDENTITY_MISMATCH:{sample['window_id']}")
+        if sample_recording != live_sample["recording_id"]:
+            _raise(f"LOCK_SAMPLE_RECORDING_MISMATCH:{sample['window_id']}")
         for mid in EXPECTED_MODELS:
             lock_pairs.add((sample["window_id"], mid))
             lock_models.add(mid)
             if models[mid]["predicted_class_index"] != live_sample["models"][mid]["predicted_class_index"]:
                 _raise(f"LOCK_PREDICTION_MISMATCH:{sample['window_id']}:{mid}")
+            if _present_identity(models[mid].get("recording_id")) != live_sample["models"][mid]["recording_id"]:
+                _raise(f"LOCK_MODEL_RECORDING_MISMATCH:{sample['window_id']}:{mid}")
     if len(lock_pairs) != EXPECTED_PAIRS:
         _raise(f"LOCK_PAIR_CARDINALITY:{len(lock_pairs)}")
     if lock_models != set(EXPECTED_MODELS):
@@ -482,6 +700,8 @@ def validate_m_b11(
         _raise("SENSOR_LOCK_MISSING")
     sensor = load_json(sensor_lock_path)
     _reject_unsafe_paths(sensor, context="sensor_lock")
+    _reject_forbidden_claims(sensor, context="sensor_lock")
+    _require_non_pristine_fields(sensor, context="sensor_lock")
     _require_equal(sensor.get("status"), ARTIFACT_STATUS, "SENSOR_STATUS")
     _require_equal(sensor.get("sha256"), live_model["sha256"], "SENSOR_SHA")
     _require_equal(sensor.get("candidate_id"), SELECTED_CANDIDATE_ID, "SENSOR_CANDIDATE")
@@ -497,6 +717,18 @@ def validate_m_b11(
         "candidate_id": SELECTED_CANDIDATE_ID,
         "model_sha256": live_model["sha256"],
         "macro_f1": seed42["macro_f1"],
+        "source_ledger": {
+            "unique_ids": analysis["unique_eligible_window_ids"],
+            "models": len(analysis["model_ids"]),
+            "pairs": analysis["actual_pairs"],
+            "duplicates": analysis["duplicates"],
+            "missing": analysis["missing"],
+            "unexpected": analysis["unexpected"],
+            "label_mismatches": analysis["cross_model_label_mismatches"],
+            "subject_mismatches": analysis["cross_model_subject_mismatches"],
+            "recording_mismatches": analysis["cross_model_recording_mismatches"],
+        },
+        "generator_ledger_analyzer_reused": False,
     }
 
 

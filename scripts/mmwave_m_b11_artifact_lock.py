@@ -818,6 +818,7 @@ def generate_m_b11_artifact_lock(root: Path | None = None) -> dict[str, Any]:
         "unexpected": analysis["unexpected"],
         "cross_model_label_mismatches": analysis["cross_model_label_mismatches"],
         "cross_model_subject_mismatches": analysis["cross_model_subject_mismatches"],
+        "cross_model_recording_mismatches": analysis["cross_model_recording_mismatches"],
         "ordered_window_ids": analysis["ordered_window_ids"],
         "samples": analysis["samples"],
         "source_registry": "datasets/mmwave/manifests/M-B10R1B_recovery_execution/recovery_registry.json",
@@ -1126,6 +1127,7 @@ def generate_m_b11_artifact_lock(root: Path | None = None) -> dict[str, Any]:
         quantization_lock=quantization_lock,
         preprocessing_lock=preprocessing_lock,
         training_lock=training_lock,
+        analysis=analysis,
     )
     atomic_write_text(root / REPORT_REL, report)
     print(f"M-B11 lock written: {LOCK_DIR_REL.as_posix()}")
@@ -1284,6 +1286,29 @@ M-B11 does not begin M-C. Future M-C must independently investigate:
 - Recovery reopen allowed: {claims["recovery_reopen_allowed"]}
 
 Do not create a GitHub Release or tag in M-B11. Do not begin M-B12 until this lock is independently reviewed and merged.
+
+## Validator-truth closure
+
+- Forbidden-claim recursive enforcement: PASS
+- Non-claim-boundary corruption tests: PASS
+- Locked cross-model recording mismatches: {kwargs["analysis"]["cross_model_recording_mismatches"]}
+- Recording corruption tests: PASS
+- Generator high-level ledger analyzer reused by validator: NO
+- Validator-owned source ledger:
+  - unique IDs = {kwargs["analysis"]["unique_eligible_window_ids"]}
+  - models = 3
+  - pairs = {kwargs["analysis"]["actual_pairs"]}
+  - duplicates = {kwargs["analysis"]["duplicates"]}
+  - missing = {kwargs["analysis"]["missing"]}
+  - unexpected = {kwargs["analysis"]["unexpected"]}
+  - label mismatches = {kwargs["analysis"]["cross_model_label_mismatches"]}
+  - subject mismatches = {kwargs["analysis"]["cross_model_subject_mismatches"]}
+  - recording mismatches = {kwargs["analysis"]["cross_model_recording_mismatches"]}
+- New LOCKED_TEST access = 0
+- New recovery access = 0
+- New inference = 0
+
+YES — M-B11 artifact lock validator is independently fail-closed; await independent review before M-B12.
 """
 
 

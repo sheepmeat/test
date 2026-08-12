@@ -127,3 +127,26 @@ M-B11 does not begin M-C. Future M-C must independently investigate:
 - Recovery reopen allowed: False
 
 Do not create a GitHub Release or tag in M-B11. Do not begin M-B12 until this lock is independently reviewed and merged.
+
+## Validator-truth closure
+
+- Forbidden-claim recursive enforcement: PASS
+- Non-claim-boundary corruption tests: PASS
+- Locked cross-model recording mismatches: 0
+- Recording corruption tests: PASS
+- Generator high-level ledger analyzer reused by validator: NO
+- Validator-owned source ledger:
+  - unique IDs = 75
+  - models = 3
+  - pairs = 225
+  - duplicates = 0
+  - missing = 0
+  - unexpected = 0
+  - label mismatches = 0
+  - subject mismatches = 0
+  - recording mismatches = 0
+- New LOCKED_TEST access = 0
+- New recovery access = 0
+- New inference = 0
+
+YES — M-B11 artifact lock validator is independently fail-closed; await independent review before M-B12.

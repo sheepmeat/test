@@ -1,6 +1,7 @@
 {
   "actual_pairs": 225,
   "cross_model_label_mismatches": 0,
+  "cross_model_recording_mismatches": 0,
   "cross_model_subject_mismatches": 0,
   "duplicates": 0,
   "expected_pairs": 225,
