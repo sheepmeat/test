@@ -26,7 +26,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from datasets.thermal.canonical_converter import sha256_file
-from datasets.thermal.t_a6_stage2 import Stage2AuditError
+from datasets.thermal.t_a6_stage2 import ROLE_ORDER, Stage2AuditError
 
 SYNTHETIC_PARTS = ("train.zip.001", "train.zip.002", "train.zip.003", "train.zip.004")
 REQUIRED_SYNTHETIC = SYNTHETIC_PARTS + ("validation.zip",)

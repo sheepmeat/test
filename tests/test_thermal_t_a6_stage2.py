@@ -34,7 +34,12 @@ from datasets.thermal.t_a6_stage2 import (
     validate_stage2_bundle,
     verify_synthetic_source_contract,
 )
+from scripts.run_thermal_t_a6_colab import ROLE_ORDER as RUNNER_ROLE_ORDER
 from scripts.run_thermal_t_a6_colab import ColabExecutionError, _reuse_or_convert, startup_checks
+
+
+def test_colab_runner_uses_canonical_role_order() -> None:
+    assert RUNNER_ROLE_ORDER == ROLE_ORDER
 
 
 def _png(array: np.ndarray) -> bytes:
