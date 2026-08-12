@@ -1,0 +1,19 @@
+{
+  "final_accessor_invocations": 1,
+  "locked_test_consumed": true,
+  "m_b11_authorization_recommendation": "NO",
+  "m_b11_started": false,
+  "model_conversions": 0,
+  "model_inference_invocations": 0,
+  "model_trainings": 0,
+  "models_evaluated": [],
+  "no_post_test_tuning": true,
+  "phase_id": "M-B10B",
+  "post_test_selection": false,
+  "recalibrations": 0,
+  "seed43_evaluated": false,
+  "seed44_evaluated": false,
+  "selected_candidate_unchanged": true,
+  "status": "INCOMPLETE_NO_RERUN",
+  "threshold_tuning": false
+}

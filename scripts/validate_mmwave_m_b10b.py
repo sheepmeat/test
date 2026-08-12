@@ -285,6 +285,33 @@ def _validate_post_access(root: Path, out: Path) -> dict[str, Any]:
         _raise(f"FROZEN_CONTRACT_GATE:{exc}")
     if not out.is_dir():
         _raise("RESULT_DIRECTORY_MISSING")
+    # A structural mismatch after the one authorized accessor is a terminal
+    # state.  Validate the preserved audit and explicit NOT_GENERATED evidence
+    # without attempting to interpret or reacquire any LOCKED_TEST payload.
+    if (out / "one_time_access_audit.json").is_file():
+        terminal_audit = _load(out / "one_time_access_audit.json")
+        if terminal_audit.get("post_access_status") == "INCOMPLETE_NO_RERUN":
+            if terminal_audit.get("access_consumed") is not True or terminal_audit.get("accessor_invocation_count") != 1 or terminal_audit.get("second_accessor_invocation") is not False:
+                _raise("INCOMPLETE_ACCESS_AUDIT_INVALID")
+            if terminal_audit.get("failure") != "M-B10B_LOCKED_SPLIT_IDENTITY_MISMATCH" or terminal_audit.get("completed_model_inference_invocations") != 0 or terminal_audit.get("no_rerun_performed") is not True:
+                _raise("INCOMPLETE_FAILURE_AUDIT_INVALID")
+            if terminal_audit.get("expected_structural_windows") != 88 or terminal_audit.get("actual_structural_windows") != 75:
+                _raise("INCOMPLETE_STRUCTURAL_IDENTITY_NOT_PRESERVED")
+            _validate_checksums(out)
+            _validate_machine_paths(out)
+            exceptions = _load(out / "exceptions.json")
+            summary = _load(out / "m_b10b_summary.json")
+            consumption = _load(out / "test_split_consumption_record.json")
+            if exceptions.get("classification") != "BLOCKER" or exceptions.get("code") != "M-B10B_LOCKED_SPLIT_IDENTITY_MISMATCH" or exceptions.get("no_rerun_performed") is not True:
+                _raise("INCOMPLETE_EXCEPTION_REGISTRY_INVALID")
+            if summary.get("status") != "INCOMPLETE_NO_RERUN" or summary.get("final_accessor_invocations") != 1 or summary.get("model_inference_invocations") != 0 or summary.get("m_b11_started") is not False:
+                _raise("INCOMPLETE_SUMMARY_INVALID")
+            if consumption.get("status") != "LOCKED_TEST_CONSUMED_FOR_FINAL_PHASE_B_EVALUATION_INCOMPLETE" or consumption.get("no_rerun_performed") is not True:
+                _raise("INCOMPLETE_CONSUMPTION_RECORD_INVALID")
+            report = root / "docs/reports/20260812_Codex_M-B10B_One_Time_Locked_Test_Final_Evaluation_01.md"
+            if not report.is_file() or "M-B10B_ONE_TIME_EVALUATION_INCOMPLETE_NO_RERUN" not in report.read_text(encoding="utf-8"):
+                _raise("INCOMPLETE_REPORT_MISSING")
+            return {"validation_status": "INCOMPLETE_NO_RERUN", "phase_id": "M-B10B", "mode": "POST_ACCESS_TERMINAL_FAILURE", "final_accessor_invocations": 1, "model_inference_invocations": 0, "blocker": "M-B10B_LOCKED_SPLIT_IDENTITY_MISMATCH"}
     _validate_checksums(out)
     _validate_machine_paths(out)
     registry = _validate_registry(_load(out / "locked_test_registry.json"))

@@ -22,6 +22,11 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / final_eval.OUT_DIR_REL
 
 
+def _successful_result_evidence_available() -> bool:
+    ledger = OUT / "locked_test_sample_predictions.jsonl"
+    return ledger.is_file() and len([line for line in ledger.read_text().splitlines() if line.strip()]) == 264
+
+
 def _copy_output() -> tuple[tempfile.TemporaryDirectory[str], Path]:
     holder = tempfile.TemporaryDirectory()
     destination = Path(holder.name) / "evidence"
@@ -184,7 +189,14 @@ class MB10BPreAccessTests(unittest.TestCase):
         with self.assertRaises(final_eval.MB10BExecutionError):
             final_eval.metric_bundle([0, 1], [0, 3])
 
-    @unittest.skipUnless(OUT.is_dir() and (OUT / "checksums.sha256").is_file(), "post-access evidence not yet available")
+    @unittest.skipUnless(OUT.is_dir() and (OUT / "one_time_access_audit.json").is_file(), "terminal access audit not yet available")
+    def test_terminal_incomplete_access_is_preserved_by_real_validator(self) -> None:
+        result = validate_m_b10b_artifacts(ROOT, output_dir=OUT)
+        self.assertEqual(result["validation_status"], "INCOMPLETE_NO_RERUN")
+        self.assertEqual(result["final_accessor_invocations"], 1)
+        self.assertEqual(result["model_inference_invocations"], 0)
+
+    @unittest.skipUnless(_successful_result_evidence_available(), "successful post-access ledger not available")
     def test_post_access_corruption_matrix_uses_real_validator(self) -> None:
         """Exercise the actual post-access validator against 24 mutations."""
         def mutate_prediction(path: Path) -> None:
