@@ -50,20 +50,269 @@ MODEL_SPECS = [
         "role": "SELECTED_NEW_REAL_DATA_CANDIDATE",
         "path": "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
         "sha256": SELECTED_SHA,
+        "seed": 42,
+        "candidate_id": SELECTED_CANDIDATE_ID,
     },
     {
         "model_id": "mmwave_resp_int8",
-        "role": "HISTORICAL_MODEL_COMPATIBILITY_BASELINE",
+        "role": "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK",
         "path": "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
         "sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
     },
     {
         "model_id": "mmwave_resp_int8_v0.2.0_candidate",
-        "role": "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BASELINE",
+        "role": "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK",
         "path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
         "sha256": "85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff",
     },
 ]
+
+FORBIDDEN_PRISTINE_CLAIMS = {
+    "PRISTINE_LOCKED_TEST",
+    "PRISTINE_ONE_TIME_LOCKED_TEST",
+    "PRISTINE_REAL_SUBJECT_FINAL_TEST",
+    "FIRST_LOCKED_TEST_EVALUATION",
+    "LOCKED_TEST_NOT_CONSUMED",
+    "NO_INFORMATION_EXPOSURE",
+    "ORIGINAL_ACCESS_UNUSED",
+}
+
+REQUIRED_FORBIDDEN_SCIENTIFIC_WORDING = [
+    "PRISTINE_REAL_SUBJECT_FINAL_TEST",
+    "PRISTINE_ONE_TIME_LOCKED_TEST",
+    "PRISTINE_LOCKED_TEST",
+    "FIRST_LOCKED_TEST_EVALUATION",
+    "LOCKED_TEST_NOT_CONSUMED",
+    "NO_INFORMATION_EXPOSURE",
+    "ORIGINAL_ACCESS_UNUSED",
+]
+
+FROZEN_BASELINE_EXPECTATIONS = json.loads(r"""
+{
+  "mmwave_resp_int8": {
+    "bytes": 466616,
+    "class_map": {
+      "0": "NORMAL",
+      "1": "RAPID_OR_ABNORMAL",
+      "2": "APNEA"
+    },
+    "contract_id": "M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1",
+    "executor": {
+      "entrypoint": "prepare_v01",
+      "path": "scripts/mmwave_m_b10b_baseline_preprocessing.py",
+      "sha256": "8ca87f457d0a151cffa2da23ae9ab9d87764b144fa826b91444776f3dc58ec4f"
+    },
+    "fallback_policy": "NO_HEURISTIC_FALLBACK",
+    "input": {
+      "dtype": "int8",
+      "scale": 0.03259856998920441,
+      "shape": [
+        1,
+        300,
+        1
+      ],
+      "zero_point": -13
+    },
+    "interpretation": "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK",
+    "metadata_sources": [
+      {
+        "bytes": 594,
+        "path": "models/mmwave/sensor_stats_metadata_v0.1.0.json",
+        "sha256": "a875a8369ff7adf5477cec009b99c0c6d0fbb8b0e60e5b0b07a551f3780d2e37"
+      }
+    ],
+    "output": {
+      "dtype": "int8",
+      "scale": 0.00390625,
+      "shape": [
+        1,
+        3
+      ],
+      "zero_point": -128
+    },
+    "path": "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+    "sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158",
+    "steps": [
+      {
+        "operation": "VALIDATE_WINDOW",
+        "parameters": {
+          "allow_padding": false,
+          "allow_resampling": false,
+          "allow_truncation": false,
+          "dtype": "float32",
+          "exact_samples": 300,
+          "require_all_finite": true
+        },
+        "step": 1
+      },
+      {
+        "operation": "IDENTITY_SEMANTIC_ADAPTER",
+        "parameters": {
+          "input_semantic": "resp_phase_unwrapped_clutter_removed",
+          "native_semantic_alignment_claim": false,
+          "transformation": "NONE"
+        },
+        "step": 2
+      },
+      {
+        "operation": "FIXED_Z_SCORE",
+        "parameters": {
+          "fit_split": "NONE_AT_M-B10B",
+          "mean": 0.006091983988881111,
+          "stats_source": "models/mmwave/sensor_stats_metadata_v0.1.0.json",
+          "std": 2.5013835430145264
+        },
+        "step": 3
+      },
+      {
+        "operation": "RESHAPE",
+        "parameters": {
+          "dtype": "float32",
+          "shape": [
+            1,
+            300,
+            1
+          ]
+        },
+        "step": 4
+      },
+      {
+        "operation": "AFFINE_INT8_QUANTIZE",
+        "parameters": {
+          "rounding": "nearest_even_numpy_rint",
+          "saturate_to": [
+            -128,
+            127
+          ],
+          "scale": 0.03259856998920441,
+          "zero_point": -13
+        },
+        "step": 5
+      }
+    ]
+  },
+  "mmwave_resp_int8_v0.2.0_candidate": {
+    "bytes": 22472,
+    "class_map": {
+      "0": "NORMAL",
+      "1": "RAPID_OR_ABNORMAL",
+      "2": "APNEA"
+    },
+    "contract_id": "M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1",
+    "executor": {
+      "entrypoint": "prepare_v02",
+      "path": "scripts/mmwave_m_b10b_baseline_preprocessing.py",
+      "sha256": "8ca87f457d0a151cffa2da23ae9ab9d87764b144fa826b91444776f3dc58ec4f"
+    },
+    "fallback_policy": "NO_HEURISTIC_FALLBACK",
+    "input": {
+      "dtype": "int8",
+      "scale": 0.012282303534448147,
+      "shape": [
+        1,
+        300,
+        1
+      ],
+      "zero_point": 12
+    },
+    "interpretation": "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK",
+    "metadata_sources": [
+      {
+        "bytes": 4443,
+        "path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+        "sha256": "36039a6cffbc57162dbb4c720034da6dcfa49ef2f2d33238bee65a62aa133127"
+      }
+    ],
+    "output": {
+      "dtype": "int8",
+      "scale": 0.00390625,
+      "shape": [
+        1,
+        3
+      ],
+      "zero_point": -128
+    },
+    "path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
+    "sha256": "85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff",
+    "steps": [
+      {
+        "operation": "VALIDATE_WINDOW",
+        "parameters": {
+          "allow_padding": false,
+          "allow_resampling": false,
+          "allow_truncation": false,
+          "dtype": "float32",
+          "exact_samples": 300,
+          "require_all_finite": true
+        },
+        "step": 1
+      },
+      {
+        "operation": "LINEAR_DETREND",
+        "parameters": {
+          "method": "window_mean_subtraction"
+        },
+        "step": 2
+      },
+      {
+        "operation": "BUTTERWORTH_BANDPASS_ZERO_PHASE",
+        "parameters": {
+          "highcut_hz": 0.5,
+          "implementation": "scipy.signal.butter_and_filtfilt",
+          "lowcut_hz": 0.1,
+          "order": 4,
+          "sample_rate_hz": 10.0
+        },
+        "step": 3
+      },
+      {
+        "operation": "FIXED_Z_SCORE",
+        "parameters": {
+          "fit_split": "NONE_AT_M-B10B",
+          "mean": 0.17212218046188354,
+          "method": "z_score",
+          "stats_source": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+          "std": 1.7171541452407837
+        },
+        "step": 4
+      },
+      {
+        "operation": "CLIP",
+        "parameters": {
+          "max": 5.0,
+          "min": -5.0
+        },
+        "step": 5
+      },
+      {
+        "operation": "RESHAPE",
+        "parameters": {
+          "dtype": "float32",
+          "shape": [
+            1,
+            300,
+            1
+          ]
+        },
+        "step": 6
+      },
+      {
+        "operation": "AFFINE_INT8_QUANTIZE",
+        "parameters": {
+          "rounding": "nearest_even_numpy_rint",
+          "saturate_to": [
+            -128,
+            127
+          ],
+          "scale": 0.012282303534448147,
+          "zero_point": 12
+        },
+        "step": 7
+      }
+    ]
+  }
+}
+""")
 
 REQUIRED_OUTPUTS = {
     "input_identity.json",
@@ -252,6 +501,15 @@ def _exposure_assessment(root: Path) -> dict[str, Any]:
             "placeholder_registry_exists": placeholder_registry_exists,
             "prediction_ledger_rows": prediction_ledger_rows,
             "persisted_sample_registry_exposure": persisted_sample_registry_exposure,
+            "sample_ids_persisted": False if actual_registry_rows == 0 else any(
+                bool(sample.get("sample_id") or sample.get("id")) for sample in registry.get("samples", [])
+            ),
+            "subject_ids_persisted": False if actual_registry_rows == 0 else any(
+                bool(sample.get("subject_id")) for sample in registry.get("samples", [])
+            ),
+            "labels_persisted": False if actual_registry_rows == 0 else any(
+                sample.get("label") is not None or sample.get("label_id") is not None for sample in registry.get("samples", [])
+            ),
         },
         "E4_payload_logging": {
             "post_access_tensor_values_logged": False,
@@ -292,76 +550,277 @@ def _exposure_assessment(root: Path) -> dict[str, Any]:
     }
 
 
-def _reuse_gates(root: Path) -> dict[str, Any]:
+def _verify_baseline_immutability(root: Path) -> tuple[bool, dict[str, Any]]:
+    """Fail-closed R6 checks against frozen historical baseline registry + live files."""
+    registry_path = root / M_B10A_DIR_REL / "historical_baseline_registry.json"
+    details: dict[str, Any] = {}
+    if not registry_path.is_file():
+        return False, {"error": "HISTORICAL_BASELINE_REGISTRY_MISSING"}
+
+    registry = _load(registry_path)
+    by_id = {b.get("baseline_id"): b for b in registry.get("baselines", [])}
+    all_pass = True
+
+    for baseline_id, expected in FROZEN_BASELINE_EXPECTATIONS.items():
+        detail: dict[str, Any] = {"baseline_id": baseline_id}
+        failures: list[str] = []
+        baseline = by_id.get(baseline_id)
+        if baseline is None:
+            all_pass = False
+            details[baseline_id] = {"exists_in_registry": False, "failure_reasons": ["BASELINE_MISSING_FROM_REGISTRY"]}
+            continue
+
+        epc = baseline.get("executable_preprocessing_contract") or {}
+        mi = epc.get("model_identity") or {}
+        model_rel = expected["path"]
+        model_path = root / model_rel
+        detail["model_path"] = model_rel
+        detail["model_exists"] = model_path.is_file()
+        if not model_path.is_file():
+            all_pass = False
+            detail["failure_reasons"] = ["MODEL_FILE_MISSING"]
+            details[baseline_id] = detail
+            continue
+
+        actual_sha = sha256_file(model_path)
+        actual_bytes = model_path.stat().st_size
+        detail["sha256_match"] = (
+            actual_sha == expected["sha256"]
+            and actual_sha == mi.get("sha256")
+            and actual_sha == baseline.get("sha256")
+        )
+        detail["bytes_match"] = (
+            actual_bytes == expected["bytes"]
+            and actual_bytes == mi.get("bytes")
+            and actual_bytes == baseline.get("bytes")
+        )
+        detail["input_tensor_match"] = mi.get("input") == expected["input"]
+        detail["output_tensor_match"] = mi.get("output") == expected["output"]
+        out_shape = (mi.get("output") or {}).get("shape") or []
+        detail["output_class_count_3"] = bool(out_shape) and out_shape[-1] == 3
+        detail["class_map_match"] = epc.get("class_map") == CLASS_MAP == expected["class_map"]
+        detail["interpretation_match"] = epc.get("interpretation") == expected["interpretation"]
+        detail["contract_id_match"] = epc.get("contract_id") == expected["contract_id"]
+        detail["steps_match"] = epc.get("steps") == expected["steps"]
+        detail["fallback_policy_match"] = epc.get("fallback_policy") == expected["fallback_policy"] == "NO_HEURISTIC_FALLBACK"
+
+        meta_list = epc.get("metadata_sources") or []
+        meta0 = meta_list[0] if meta_list else {}
+        meta_rel = meta0.get("path") or ""
+        meta_path = root / meta_rel if meta_rel else None
+        detail["metadata_exists"] = bool(meta_path and meta_path.is_file())
+        if detail["metadata_exists"]:
+            meta_sha = sha256_file(meta_path)
+            detail["metadata_sha_match"] = (
+                meta_sha == expected["metadata_sources"][0]["sha256"]
+                and meta_sha == meta0.get("sha256")
+            )
+        else:
+            detail["metadata_sha_match"] = False
+            failures.append("METADATA_FILE_MISSING")
+
+        executor = epc.get("executor") or {}
+        exec_rel = executor.get("path") or ""
+        exec_path = root / exec_rel if exec_rel else None
+        detail["executor_exists"] = bool(exec_path and exec_path.is_file())
+        if detail["executor_exists"]:
+            exec_sha = sha256_file(exec_path)
+            detail["executor_sha_match"] = (
+                exec_sha == expected["executor"]["sha256"]
+                and exec_sha == executor.get("sha256")
+            )
+        else:
+            detail["executor_sha_match"] = False
+            failures.append("EXECUTOR_FILE_MISSING")
+
+        required_bools = [
+            "model_exists",
+            "sha256_match",
+            "bytes_match",
+            "input_tensor_match",
+            "output_tensor_match",
+            "output_class_count_3",
+            "class_map_match",
+            "interpretation_match",
+            "contract_id_match",
+            "steps_match",
+            "fallback_policy_match",
+            "metadata_exists",
+            "metadata_sha_match",
+            "executor_exists",
+            "executor_sha_match",
+        ]
+        for key in required_bools:
+            if detail.get(key) is not True:
+                failures.append(key.upper() + "_FAILED" if not key.endswith("exists") else key.upper() + "_FALSE")
+        if failures:
+            all_pass = False
+        detail["failure_reasons"] = failures
+        details[baseline_id] = detail
+
+    return all_pass, details
+
+
+def _build_proposed_recovery_contract(root: Path, eligible_coverage: dict[str, Any]) -> dict[str, Any]:
+    """Assemble the proposed (not authorized) recovery evaluation contract."""
+    contract_path = root / M_B10A_DIR_REL / "locked_test_evaluation_contract.json"
+    mb10a_contract = _load(contract_path)
+    metrics_schema = json.loads(json.dumps(mb10a_contract.get("metrics_schema")))  # deep copy
+
+    planned_models: list[dict[str, Any]] = []
+    for spec in MODEL_SPECS:
+        entry = {
+            "model_id": spec["model_id"],
+            "role": spec["role"],
+            "path": spec["path"],
+            "sha256": spec["sha256"],
+        }
+        if "seed" in spec:
+            entry["seed"] = spec["seed"]
+        if "candidate_id" in spec:
+            entry["candidate_id"] = spec["candidate_id"]
+        planned_models.append(entry)
+
+    return {
+        "schema_version": "M-B10R0_PROPOSED_RECOVERY_CONTRACT_V1",
+        "phase_id": "M-B10R0",
+        "status": RECOVERY_CONTRACT_STATUS,
+        "recovery_execution_authorized": False,
+        "locked_test_reopen_authorized": False,
+        "independent_review_required": True,
+        "selected_candidate": SELECTED_CANDIDATE_ID,
+        "selected_model_id": SELECTED_MODEL_ID,
+        "selected_seed": 42,
+        "planned_models": planned_models,
+        "models": [m["model_id"] for m in MODEL_SPECS],
+        "model_count": 3,
+        "structural_context": {"subjects": 16, "total_windows": 88, "ambiguous_windows": 13},
+        "supervised_evaluation_population": {
+            "windows": 75,
+            "subjects": eligible_coverage["eligible_subject_count"],
+            "subject_count_policy": "PREEXISTING_A6_METADATA_VERIFIED",
+            "exclude_ambiguous": True,
+        },
+        "expected_model_inference_count": 225,
+        "metrics_schema": metrics_schema,
+        "metrics_schema_source": "datasets/mmwave/manifests/M-B10A_candidate_selection_setup/locked_test_evaluation_contract.json",
+        "acceptance_threshold": "FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED",
+        "candidate_reselection_prohibited": True,
+        "training_prohibited": True,
+        "recalibration_prohibited": True,
+        "threshold_tuning_prohibited": True,
+        "second_recovery_evaluation_prohibited": True,
+        "required_result_designation": RESULT_LIMITATION,
+        "result_limitation_fields": {
+            "original_pristine_final_access_consumed": True,
+            "original_model_inferences": 0,
+            "reuse_exception_reviewed": True,
+            "result_not_pristine": True,
+        },
+        "allowed_scientific_wording": "OFFLINE_REAL_DATA_RECOVERY_EVALUATION_WITH_HOLDOUT_REUSE_LIMITATION",
+        "forbidden_scientific_wording": list(REQUIRED_FORBIDDEN_SCIENTIFIC_WORDING),
+    }
+
+
+def _reuse_gates(root: Path, recovery_contract: dict[str, Any] | None = None) -> dict[str, Any]:
     mb10b = root / M_B10B_DIR_REL
     incident = _load(mb10b / "incident_root_cause.json")
     audit = _load(mb10b / "one_time_access_audit.json")
     summary = _load(mb10b / "m_b10b_summary.json")
     selected = _load(root / M_B10A_DIR_REL / "selected_candidate_pretest.json")
-    contract = _load(root / M_B10A_DIR_REL / "locked_test_evaluation_contract.json")
     contract_path = root / M_B10A_DIR_REL / "locked_test_evaluation_contract.json"
     selected_path = root / M_B10A_DIR_REL / "selected_candidate_pretest.json"
+    mb10a_contract = _load(contract_path)
 
-    # Exposure fields for R4
+    if recovery_contract is None:
+        eligible_coverage = _a6_eligible_subject_coverage(root)
+        recovery_contract = _build_proposed_recovery_contract(root, eligible_coverage)
+
     exposure = _exposure_assessment(root)
     e3 = exposure["E3_persistent_sample_registry"]
 
-    # R6: baseline immutability with fail-closed on missing files
-    r6_pass = True
-    r6_details: dict[str, Any] = {}
-    for m in MODEL_SPECS[1:]:
-        model_path = root / m["path"]
-        if not model_path.is_file():
-            r6_pass = False
-            r6_details[m["model_id"]] = {"exists": False}
-            continue
-        actual_sha = sha256_file(model_path)
-        sha_match = actual_sha == m["sha256"]
-        if not sha_match:
-            r6_pass = False
-        r6_details[m["model_id"]] = {"exists": True, "sha256_match": sha_match}
+    r6_pass, r6_details = _verify_baseline_immutability(root)
 
-    # Verify role and class_map from frozen contract
-    planned_models = contract.get("planned_models", [])
-    planned_by_id = {pm["model_id"]: pm for pm in planned_models}
-    for m in MODEL_SPECS[1:]:
-        pm = planned_by_id.get(m["model_id"])
-        if not pm:
-            r6_pass = False
-            r6_details[m["model_id"]]["contract_match"] = False
-            continue
-        role_match = pm.get("role") == "HISTORICAL_BASELINE_ONLY"
-        cmap_match = pm.get("class_map_compatibility", {}).get("mapping") == CLASS_MAP
-        if not role_match or not cmap_match:
-            r6_pass = False
-        r6_details[m["model_id"]]["contract_role_match"] = role_match
-        r6_details[m["model_id"]]["contract_class_map_match"] = cmap_match
-
-    # R9: future contract unchanged models/metrics
-    contract_model_ids = [pm["model_id"] for pm in planned_models]
-    r9_exactly_3 = len(planned_models) == 3
-    r9_ids_match = contract_model_ids == EXPECTED_CONTRACT_MODEL_IDS
-    r9_no_seed43_44 = not any("seed43" in mid or "seed44" in mid for mid in contract_model_ids)
-    metrics_schema = contract.get("metrics_schema", {})
-    r9_primary_macro_f1 = metrics_schema.get("primary") == "macro_f1"
-    r9_required_fields = all(
-        f in metrics_schema.get("required", [])
-        for f in ["accuracy", "macro_f1", "macro_precision", "macro_recall"]
+    # R8: no post-access tuning + identity cross-check
+    preprocessing = selected.get("preprocessing") or {}
+    selected_sha = selected.get("model", {}).get("sha256") or selected.get("candidate_sha256")
+    r8_pass = (
+        selected.get("seed") == 42
+        and selected_sha == SELECTED_SHA
+        and preprocessing.get("profile_name") == PREPROCESSING_NAME
+        and preprocessing.get("profile_id") == PREPROCESSING_PROFILE
+        and selected.get("calibration_profile") == CALIBRATION_PROFILE
+        and selected.get("class_map") == CLASS_MAP
+        and summary.get("model_trainings", 0) == 0
+        and summary.get("model_conversions", 0) == 0
+        and summary.get("recalibrations", 0) == 0
+        and summary.get("threshold_tuning", False) is False
+        and summary.get("post_test_selection", False) is False
+        and summary.get("seed43_evaluated") is False
+        and summary.get("seed44_evaluated") is False
+        and summary.get("no_post_test_tuning") is True
+        and summary.get("selected_candidate_unchanged") is True
     )
-    r9_contract_sha_match = sha256_file(contract_path) == M_B10A_CONTRACT_SHA
-    r9_pass = all([r9_exactly_3, r9_ids_match, r9_no_seed43_44, r9_primary_macro_f1, r9_required_fields, r9_contract_sha_match])
 
-    # R10: contamination disclosure - verify against known constants
-    r10_result_designation_correct = True
-    r10_result_not_pristine = True
-    r10_original_pristine_consumed = True
-    r10_original_inferences_zero = True
-    r10_forbidden_wording_correct = ("PRISTINE_REAL_SUBJECT_FINAL_TEST" in ["PRISTINE_REAL_SUBJECT_FINAL_TEST", "PRISTINE_ONE_TIME_LOCKED_TEST"] and
-                                      "PRISTINE_ONE_TIME_LOCKED_TEST" in ["PRISTINE_REAL_SUBJECT_FINAL_TEST", "PRISTINE_ONE_TIME_LOCKED_TEST"])
-    r10_status_correct = True  # RECOVERY_CONTRACT_STATUS == "PROPOSED_NOT_AUTHORIZED"
-    r10_pass = all([r10_result_designation_correct, r10_result_not_pristine,
-                    r10_original_pristine_consumed, r10_original_inferences_zero,
-                    r10_forbidden_wording_correct, r10_status_correct])
+    # R9: validate ACTUAL proposed recovery contract
+    planned = recovery_contract.get("planned_models") or []
+    models_flat = recovery_contract.get("models") or [m.get("model_id") for m in planned]
+    planned_ids = [m.get("model_id") for m in planned]
+    expected_ids = [m["model_id"] for m in MODEL_SPECS]
+    sha_by_id = {m["model_id"]: m["sha256"] for m in MODEL_SPECS}
+    planned_shas_ok = all(m.get("sha256") == sha_by_id.get(m.get("model_id")) for m in planned)
+    no_seed43_44 = not any(
+        ("seed43" in str(mid)) or ("seed44" in str(mid)) for mid in planned_ids + list(models_flat)
+    )
+    metrics_norm = json.dumps(recovery_contract.get("metrics_schema"), sort_keys=True)
+    mb10a_metrics_norm = json.dumps(mb10a_contract.get("metrics_schema"), sort_keys=True)
+    structural = recovery_contract.get("structural_context") or {}
+    supervised = recovery_contract.get("supervised_evaluation_population") or {}
+    r9_checks = {
+        "planned_models_length_3": len(planned) == 3,
+        "models_list_length_3": len(models_flat) == 3,
+        "model_ids_exact": planned_ids == expected_ids and models_flat == expected_ids,
+        "model_shas_exact": planned_shas_ok,
+        "no_seed43_seed44": no_seed43_44,
+        "structural_total_windows_88": structural.get("total_windows") == 88,
+        "eligible_windows_75": supervised.get("windows") == 75,
+        "ambiguous_windows_13": structural.get("ambiguous_windows") == 13,
+        "expected_inference_225": recovery_contract.get("expected_model_inference_count") == 225,
+        "metrics_schema_deep_equal": metrics_norm == mb10a_metrics_norm,
+        "acceptance_threshold_unchanged": recovery_contract.get("acceptance_threshold")
+        == "FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED",
+        "status_proposed_not_authorized": recovery_contract.get("status") == RECOVERY_CONTRACT_STATUS,
+        "recovery_execution_authorized_false": recovery_contract.get("recovery_execution_authorized") is False,
+        "locked_test_reopen_authorized_false": recovery_contract.get("locked_test_reopen_authorized") is False,
+        "mb10a_contract_sha_match": sha256_file(contract_path) == M_B10A_CONTRACT_SHA,
+    }
+    r9_pass = all(r9_checks.values())
+
+    # R10: contamination disclosure derived from incident/audit/recovery contract
+    rlf = recovery_contract.get("result_limitation_fields") or {}
+    designation = recovery_contract.get("required_result_designation")
+    allowed_wording = str(recovery_contract.get("allowed_scientific_wording") or "")
+    forbidden_list = recovery_contract.get("forbidden_scientific_wording") or []
+    designation_ok = designation == RESULT_LIMITATION and designation not in FORBIDDEN_PRISTINE_CLAIMS
+    allowed_ok = not any(claim in allowed_wording for claim in FORBIDDEN_PRISTINE_CLAIMS)
+    forbidden_list_ok = all(term in forbidden_list for term in REQUIRED_FORBIDDEN_SCIENTIFIC_WORDING)
+    r10_checks = {
+        "accessor_invocation_count_1": audit.get("accessor_invocation_count") == 1,
+        "locked_test_consumed": incident.get("locked_test_consumed") is True,
+        "completed_model_inference_0": audit.get("completed_model_inference_invocations") == 0,
+        "predictions_generated_false": incident.get("predictions_generated") is False,
+        "metrics_generated_false": incident.get("metrics_generated") is False,
+        "designation_correct": designation_ok,
+        "result_not_pristine": rlf.get("result_not_pristine") is True,
+        "original_pristine_consumed": rlf.get("original_pristine_final_access_consumed") is True,
+        "original_model_inferences_0": rlf.get("original_model_inferences") == 0,
+        "status_proposed_not_authorized": recovery_contract.get("status") == RECOVERY_CONTRACT_STATUS,
+        "recovery_execution_authorized_false": recovery_contract.get("recovery_execution_authorized") is False,
+        "locked_test_reopen_authorized_false": recovery_contract.get("locked_test_reopen_authorized") is False,
+        "allowed_wording_clean": allowed_ok,
+        "forbidden_wording_list_complete": forbidden_list_ok,
+    }
+    r10_pass = all(r10_checks.values())
 
     gates = {
         "R1_incident_truth_closed": {
@@ -381,12 +840,18 @@ def _reuse_gates(root: Path) -> dict[str, Any]:
                 e3["actual_registry_rows"] == 0
                 and e3["prediction_ledger_rows"] == 0
                 and e3["raw_tensors_persisted"] is False
+                and e3.get("sample_ids_persisted") is False
+                and e3.get("subject_ids_persisted") is False
+                and e3.get("labels_persisted") is False
                 and exposure["E4_payload_logging"]["input_id_labels_tensors_not_persisted"] is True
                 and exposure["E4_payload_logging"]["metrics_results_available"] is False
             ),
             "actual_registry_rows": e3["actual_registry_rows"],
             "prediction_ledger_rows": e3["prediction_ledger_rows"],
             "raw_tensors_persisted": e3["raw_tensors_persisted"],
+            "sample_ids_persisted": e3.get("sample_ids_persisted"),
+            "subject_ids_persisted": e3.get("subject_ids_persisted"),
+            "labels_persisted": e3.get("labels_persisted"),
             "input_id_labels_tensors_not_persisted": exposure["E4_payload_logging"]["input_id_labels_tensors_not_persisted"],
             "metrics_results_available": exposure["E4_payload_logging"]["metrics_results_available"],
         },
@@ -408,39 +873,31 @@ def _reuse_gates(root: Path) -> dict[str, Any]:
             "pass": incident.get("a6_total_locked_test_windows") == 88 and incident.get("a6_locked_test_evaluation_eligible_windows") == 75,
         },
         "R8_no_post_access_tuning": {
-            "pass": (
-                summary.get("model_trainings", 0) == 0
-                and summary.get("no_post_test_tuning") is True
-                and summary.get("seed43_evaluated") is False
-                and summary.get("seed44_evaluated") is False
-                and summary.get("model_conversions", 0) == 0
-                and summary.get("recalibrations", 0) == 0
-                and summary.get("threshold_tuning", False) is False
-                and summary.get("post_test_selection", False) is False
-                and selected.get("model", selected).get("sha256", selected.get("candidate_sha256", SELECTED_SHA)) == SELECTED_SHA
-            ),
+            "pass": r8_pass,
             "model_conversions": summary.get("model_conversions", 0),
             "recalibrations": summary.get("recalibrations", 0),
             "threshold_tuning": summary.get("threshold_tuning", False),
             "post_test_selection": summary.get("post_test_selection", False),
+            "selected_sha": selected_sha,
+            "preprocessing_profile": preprocessing.get("profile_id"),
+            "preprocessing_name": preprocessing.get("profile_name"),
+            "calibration_profile": selected.get("calibration_profile"),
+            "no_post_test_tuning": summary.get("no_post_test_tuning"),
+            "selected_candidate_unchanged": summary.get("selected_candidate_unchanged"),
         },
         "R9_future_contract_unchanged_models_metrics": {
             "pass": r9_pass,
-            "exactly_3_models": r9_exactly_3,
-            "model_ids_match": r9_ids_match,
-            "no_seed43_seed44": r9_no_seed43_44,
-            "primary_macro_f1": r9_primary_macro_f1,
-            "required_fields_present": r9_required_fields,
-            "contract_sha_match": r9_contract_sha_match,
+            "checks": r9_checks,
         },
         "R10_contamination_disclosure_accepted": {
             "pass": r10_pass,
-            "required_future_designation": RESULT_LIMITATION,
-            "result_not_pristine": True,
-            "original_pristine_final_access_consumed": True,
-            "original_model_inferences": 0,
-            "forbidden_scientific_wording": ["PRISTINE_REAL_SUBJECT_FINAL_TEST", "PRISTINE_ONE_TIME_LOCKED_TEST"],
-            "recovery_contract_status": RECOVERY_CONTRACT_STATUS,
+            "checks": r10_checks,
+            "required_future_designation": designation,
+            "result_not_pristine": rlf.get("result_not_pristine"),
+            "original_pristine_final_access_consumed": rlf.get("original_pristine_final_access_consumed"),
+            "original_model_inferences": rlf.get("original_model_inferences"),
+            "forbidden_scientific_wording": forbidden_list,
+            "recovery_contract_status": recovery_contract.get("status"),
         },
     }
     failed = [name for name, body in gates.items() if not body.get("pass")]
@@ -507,7 +964,8 @@ def generate_m_b10r0_evidence(root_dir: Path = ROOT_DIR) -> dict[str, Any]:
     eligible_coverage = _a6_eligible_subject_coverage(root)
     holdout_inventory = _a5_inventory(root)
     exposure = _exposure_assessment(root)
-    gate_results = _reuse_gates(root)
+    recovery_contract = _build_proposed_recovery_contract(root, eligible_coverage)
+    gate_results = _reuse_gates(root, recovery_contract=recovery_contract)
     policy = _policy_decision(root, holdout_inventory, gate_results)
 
     input_identity = {
@@ -566,41 +1024,6 @@ def generate_m_b10r0_evidence(root_dir: Path = ROOT_DIR) -> dict[str, Any]:
         "hard_gate_model": "PASS_OR_FAIL_WITH_EVIDENCE",
         "no_composite_safety_score": True,
         "contamination_disclosure_required": RESULT_LIMITATION,
-    }
-
-    recovery_contract = {
-        "schema_version": "M-B10R0_PROPOSED_RECOVERY_CONTRACT_V1",
-        "phase_id": "M-B10R0",
-        "status": RECOVERY_CONTRACT_STATUS,
-        "selected_candidate": SELECTED_CANDIDATE_ID,
-        "selected_model_id": SELECTED_MODEL_ID,
-        "selected_seed": 42,
-        "models": [m["model_id"] for m in MODEL_SPECS],
-        "model_count": 3,
-        "structural_context": {"subjects": 16, "total_windows": 88, "ambiguous_windows": 13},
-        "supervised_evaluation_population": {
-            "windows": 75,
-            "subjects": eligible_coverage["eligible_subject_count"],
-            "subject_count_policy": "PREEXISTING_A6_METADATA_VERIFIED",
-            "exclude_ambiguous": True,
-        },
-        "expected_model_inference_count": 225,
-        "metrics_schema_source": "datasets/mmwave/manifests/M-B10A_candidate_selection_setup/locked_test_evaluation_contract.json",
-        "acceptance_threshold": "FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED",
-        "candidate_reselection_prohibited": True,
-        "training_prohibited": True,
-        "recalibration_prohibited": True,
-        "threshold_tuning_prohibited": True,
-        "second_recovery_evaluation_prohibited": True,
-        "required_result_designation": RESULT_LIMITATION,
-        "result_limitation_fields": {
-            "original_pristine_final_access_consumed": True,
-            "original_model_inferences": 0,
-            "reuse_exception_reviewed": True,
-            "result_not_pristine": True,
-        },
-        "allowed_scientific_wording": "OFFLINE_REAL_DATA_RECOVERY_EVALUATION_WITH_HOLDOUT_REUSE_LIMITATION",
-        "forbidden_scientific_wording": ["PRISTINE_REAL_SUBJECT_FINAL_TEST", "PRISTINE_ONE_TIME_LOCKED_TEST"],
     }
 
     future_access = {

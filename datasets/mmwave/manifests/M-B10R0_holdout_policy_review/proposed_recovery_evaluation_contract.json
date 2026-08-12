@@ -5,8 +5,62 @@
   "expected_model_inference_count": 225,
   "forbidden_scientific_wording": [
     "PRISTINE_REAL_SUBJECT_FINAL_TEST",
-    "PRISTINE_ONE_TIME_LOCKED_TEST"
+    "PRISTINE_ONE_TIME_LOCKED_TEST",
+    "PRISTINE_LOCKED_TEST",
+    "FIRST_LOCKED_TEST_EVALUATION",
+    "LOCKED_TEST_NOT_CONSUMED",
+    "NO_INFORMATION_EXPOSURE",
+    "ORIGINAL_ACCESS_UNUSED"
   ],
+  "independent_review_required": true,
+  "locked_test_reopen_authorized": false,
+  "metrics_schema": {
+    "apnea_proxy_fields": [
+      "precision",
+      "recall",
+      "misses"
+    ],
+    "diagnostics": [
+      "confusion_matrix",
+      "prediction_distribution",
+      "class_collapse_status"
+    ],
+    "per_class_fields": [
+      "support",
+      "tp",
+      "fp",
+      "tn",
+      "fn",
+      "precision",
+      "recall",
+      "f1_score",
+      "fpr"
+    ],
+    "primary": "macro_f1",
+    "rapid_or_abnormal_fields": [
+      "recall"
+    ],
+    "required": [
+      "accuracy",
+      "macro_f1",
+      "macro_precision",
+      "macro_recall"
+    ],
+    "selected_real_candidate_extra": [
+      "model_sha256",
+      "preprocessing_identity",
+      "strict_int8_structural_identity",
+      "input_saturation_ratio",
+      "runtime_identity"
+    ],
+    "subject_level": [
+      "subject_accuracy",
+      "subject_macro_f1",
+      "per_class_metrics_where_support_exists",
+      "worst_subject_macro_f1",
+      "median_subject_macro_f1"
+    ]
+  },
   "metrics_schema_source": "datasets/mmwave/manifests/M-B10A_candidate_selection_setup/locked_test_evaluation_contract.json",
   "model_count": 3,
   "models": [
@@ -15,7 +69,30 @@
     "mmwave_resp_int8_v0.2.0_candidate"
   ],
   "phase_id": "M-B10R0",
+  "planned_models": [
+    {
+      "candidate_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120",
+      "model_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8",
+      "path": "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
+      "role": "SELECTED_NEW_REAL_DATA_CANDIDATE",
+      "seed": 42,
+      "sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5"
+    },
+    {
+      "model_id": "mmwave_resp_int8",
+      "path": "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+      "role": "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK",
+      "sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158"
+    },
+    {
+      "model_id": "mmwave_resp_int8_v0.2.0_candidate",
+      "path": "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
+      "role": "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK",
+      "sha256": "85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff"
+    }
+  ],
   "recalibration_prohibited": true,
+  "recovery_execution_authorized": false,
   "required_result_designation": "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT",
   "result_limitation_fields": {
     "original_model_inferences": 0,

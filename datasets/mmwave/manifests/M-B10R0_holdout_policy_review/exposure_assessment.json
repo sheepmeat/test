@@ -14,10 +14,13 @@
   },
   "E3_persistent_sample_registry": {
     "actual_registry_rows": 0,
+    "labels_persisted": false,
     "persisted_sample_registry_exposure": false,
     "placeholder_registry_exists": true,
     "prediction_ledger_rows": 0,
-    "raw_tensors_persisted": false
+    "raw_tensors_persisted": false,
+    "sample_ids_persisted": false,
+    "subject_ids_persisted": false
   },
   "E4_payload_logging": {
     "input_id_labels_tensors_not_persisted": true,

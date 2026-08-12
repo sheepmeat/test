@@ -172,7 +172,10 @@ Future recovery contract status: `PROPOSED_NOT_AUTHORIZED`
 - Metrics: exact frozen M-B10A schema
 - Required result designation: `REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT`
 - Allowed wording: `OFFLINE_REAL_DATA_RECOVERY_EVALUATION_WITH_HOLDOUT_REUSE_LIMITATION`
-- Forbidden wording: `PRISTINE_REAL_SUBJECT_FINAL_TEST`
+- Forbidden wording includes: `PRISTINE_REAL_SUBJECT_FINAL_TEST`,
+  `PRISTINE_ONE_TIME_LOCKED_TEST`, `PRISTINE_LOCKED_TEST`,
+  `FIRST_LOCKED_TEST_EVALUATION`, `LOCKED_TEST_NOT_CONSUMED`,
+  `NO_INFORMATION_EXPOSURE`, `ORIGINAL_ACCESS_UNUSED`
 
 Original `original_final_accessor_invocations = 1` must remain immutable.
 A future authorized recovery would be a second payload release event, not a
@@ -215,7 +218,8 @@ Forbidden: `LOCKED_TEST_PRISTINE`, `RECOVERY_ALREADY_AUTHORIZED`,
 
 ## Validation
 
-- M-B10R0 validator: PASS
+- M-B10R0 validator: PASS (independently recomputes R1–R10 and policy decision;
+  does not import generator `_reuse_gates` / `_policy_decision`)
 - M-B10B incident regression: PASS
 - M-B10A regression: PASS (`--skip-upstream`)
 
