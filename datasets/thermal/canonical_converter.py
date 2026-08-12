@@ -735,63 +735,74 @@ def convert_sdt_partition(
     source_hashes: list[str] = []
     decoded_hashes: list[str] = []
     canonical_hashes: list[str] = []
+    failed_rows: list[dict[str, Any]] = []
     stats = _RunningStats()
     try:
         with zipfile.ZipFile(source_archive, "r") as archive, temp_provenance.open("w", encoding="utf-8") as provenance:
             for index in range(expected_count):
-                info = thermal_infos[index]
-                payload = SDTThermalRawReader._read_bounded_member(archive, info, limit=MAX_IMAGE_MEMBER_BYTES)
-                encoded, flags = SDTThermalRawReader._decode_thermal_png(payload, info.filename)
-                physical = encoded_to_celsius(encoded)
-                canonical = canonicalize_physical_frame(physical, profile, source_frame_hash=encoded_frame_sha256(encoded))
-                frame = np.asarray(canonical.physical_frame, dtype=CANONICAL_DTYPE, order="C")
-                stats.update(frame)
-                label = labels[index]
-                mapped = _synthetic_mapping(label.source_pose_label, label.source_pose_name)
-                row = {
-                    "canonical_sample_index": index,
-                    "stable_sample_id": f"{DATASET_ID}:{stem}:{index:05d}",
-                    "source_dataset_id": DATASET_ID,
-                    "source_doi": DATASET_DOI,
-                    "source_split": stem,
-                    "source_domain": "SYNTHETIC",
-                    "source_archive_path": identity["path"],
-                    "source_archive_size_bytes": identity["size_bytes"],
-                    "source_archive_sha256": identity["sha256"],
-                    "source_member": info.filename,
-                    "source_member_index": int(index),
-                    "source_member_crc32": f"{info.CRC:08x}",
-                    "source_member_sha256": sha256_bytes(payload),
-                    "source_frame_index": index,
-                    "source_frame_sha256": encoded_frame_sha256(encoded),
-                    "source_pose_label": int(label.source_pose_label),
-                    "source_pose_name": label.source_pose_name,
-                    "source_bbox": list(label.source_bbox),
-                    "source_shape": [480, 640],
-                    "source_dtype": "uint16",
-                    "source_representation": "RADIOMETRIC_TEMPERATURE_ENCODED_UINT16",
-                    "source_temperature_encoding": "kelvin_centiunits; celsius=(raw-27315)/100",
-                    "source_subject_status": "ABSENT", "source_session_status": "ABSENT", "source_sequence_status": "ABSENT", "source_event_status": "ABSENT",
-                    "t_a1_reader_contract": "T-A1_SOURCE_FRAME_PROVENANCE_CONTRACT",
-                    "t_a2_geometry_profile_id": config.geometry_profile_id,
-                    "t_a3_temporal_policy_id": config.temporal_policy_id,
-                    "t_a4_semantic_policy_id": config.semantic_policy_id,
-                    "t_a5_split_policy_id": config.split_policy_id,
-                    "t_a5_assignment_rule_id": config.assignment_rule_id,
-                    "safenest_assignment": {"safenest_assignment_role": config.safenest_role, "source_split": stem, "source_domain": "SYNTHETIC", "split_assignment_status": "ASSIGNED_T_A5_IMMUTABLE"},
-                    **mapped,
-                    "canonical_shape": list(CANONICAL_SHAPE), "canonical_dtype": "float32", "canonical_unit": "CELSIUS",
-                    "canonical_frame_hash": canonical.canonical_frame_hash,
-                    "canonical_tensor_row_sha256": sha256_bytes(frame.tobytes(order="C")),
-                    "quality_status": "SUCCESS_WITH_WARNING" if flags else "SUCCESS",
-                    "quality_warning_codes": sorted(flags), "conversion_status": "SUCCESS_WITH_WARNING" if flags else "SUCCESS",
-                }
-                mmap[index] = frame
-                provenance.write(canonical_json_line(row))
-                statuses.append(row["conversion_status"])
-                source_hashes.append(row["source_member_sha256"]); decoded_hashes.append(row["source_frame_sha256"]); canonical_hashes.append(row["canonical_frame_hash"])
+                try:
+                    info = thermal_infos[index]
+                    payload = SDTThermalRawReader._read_bounded_member(archive, info, limit=MAX_IMAGE_MEMBER_BYTES)
+                    encoded, flags = SDTThermalRawReader._decode_thermal_png(payload, info.filename)
+                    physical = encoded_to_celsius(encoded)
+                    canonical = canonicalize_physical_frame(physical, profile, source_frame_hash=encoded_frame_sha256(encoded))
+                    frame = np.asarray(canonical.physical_frame, dtype=CANONICAL_DTYPE, order="C")
+                    stats.update(frame)
+                    label = labels[index]
+                    mapped = _synthetic_mapping(label.source_pose_label, label.source_pose_name)
+                    row = {
+                        "canonical_sample_index": index,
+                        "stable_sample_id": f"{DATASET_ID}:{stem}:{index:05d}",
+                        "source_dataset_id": DATASET_ID,
+                        "source_doi": DATASET_DOI,
+                        "source_split": stem,
+                        "source_domain": "SYNTHETIC",
+                        "source_archive_path": identity["path"],
+                        "source_archive_size_bytes": identity["size_bytes"],
+                        "source_archive_sha256": identity["sha256"],
+                        "source_member": info.filename,
+                        "source_member_index": int(index),
+                        "source_member_crc32": f"{info.CRC:08x}",
+                        "source_member_sha256": sha256_bytes(payload),
+                        "source_frame_index": index,
+                        "source_frame_sha256": encoded_frame_sha256(encoded),
+                        "source_pose_label": int(label.source_pose_label),
+                        "source_pose_name": label.source_pose_name,
+                        "source_bbox": list(label.source_bbox),
+                        "source_shape": [480, 640],
+                        "source_dtype": "uint16",
+                        "source_representation": "RADIOMETRIC_TEMPERATURE_ENCODED_UINT16",
+                        "source_temperature_encoding": "kelvin_centiunits; celsius=(raw-27315)/100",
+                        "source_subject_status": "ABSENT", "source_session_status": "ABSENT", "source_sequence_status": "ABSENT", "source_event_status": "ABSENT",
+                        "t_a1_reader_contract": "T-A1_SOURCE_FRAME_PROVENANCE_CONTRACT",
+                        "t_a2_geometry_profile_id": config.geometry_profile_id,
+                        "t_a3_temporal_policy_id": config.temporal_policy_id,
+                        "t_a4_semantic_policy_id": config.semantic_policy_id,
+                        "t_a5_split_policy_id": config.split_policy_id,
+                        "t_a5_assignment_rule_id": config.assignment_rule_id,
+                        "safenest_assignment": {"safenest_assignment_role": config.safenest_role, "source_split": stem, "source_domain": "SYNTHETIC", "split_assignment_status": "ASSIGNED_T_A5_IMMUTABLE"},
+                        **mapped,
+                        "canonical_shape": list(CANONICAL_SHAPE), "canonical_dtype": "float32", "canonical_unit": "CELSIUS",
+                        "canonical_frame_hash": canonical.canonical_frame_hash,
+                        "canonical_tensor_row_sha256": sha256_bytes(frame.tobytes(order="C")),
+                        "quality_status": "SUCCESS_WITH_WARNING" if flags else "SUCCESS",
+                        "quality_warning_codes": sorted(flags), "conversion_status": "SUCCESS_WITH_WARNING" if flags else "SUCCESS",
+                    }
+                    mmap[index] = frame
+                    provenance.write(canonical_json_line(row))
+                    statuses.append(row["conversion_status"])
+                    source_hashes.append(row["source_member_sha256"]); decoded_hashes.append(row["source_frame_sha256"]); canonical_hashes.append(row["canonical_frame_hash"])
+                except Exception as exc:
+                    failed_rows.append({"source_frame_index": index, "status": "FAILED", "error_code": _error_code(exc), "message": str(exc)})
+                    statuses.append("FAILED")
     finally:
         mmap.flush(); del mmap
+    if failed_rows:
+        temp_artifact.unlink(missing_ok=True)
+        temp_provenance.unlink(missing_ok=True)
+        raise ConversionIncompleteError(
+            f"{stem} conversion failed for {len(failed_rows)} source frames; no canonical artifact was finalized: {failed_rows[:3]}"
+        )
     os.replace(temp_artifact, artifact_path)
     os.replace(temp_provenance, provenance_path)
     exact = {
@@ -806,7 +817,7 @@ def convert_sdt_partition(
         "canonical_shape": list(CANONICAL_SHAPE), "canonical_dtype": "float32", "canonical_unit": "CELSIUS", "geometry_profile_id": config.geometry_profile_id,
         "artifact_path": f"{artifact_dir.name}/{artifact_path.name}", "provenance_path": f"{artifact_dir.name}/{provenance_path.name}",
         "artifact_sha256": sha256_file(artifact_path), "provenance_sha256": sha256_file(provenance_path), "artifact_size_bytes": artifact_path.stat().st_size, "provenance_size_bytes": provenance_path.stat().st_size,
-        "quality": {"temperature_distribution": stats.summary(), "warning_count": sum(1 for status in statuses if status == "SUCCESS_WITH_WARNING")}, "exact_duplicate_audit": exact,
+        "quality": {"temperature_distribution": stats.summary(), "warning_count": sum(1 for status in statuses if status == "SUCCESS_WITH_WARNING"), "silent_skips": 0, "failed_rows": failed_rows}, "exact_duplicate_audit": exact,
         "finalized_status": "FINALIZED",
     }
     _atomic_json(ledger_path, summary)
