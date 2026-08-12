@@ -2,7 +2,7 @@
   "a_directory_immutable": true,
   "a_readiness_must_remain_historically_false": true,
   "a_readiness_mutation_required_for_b": false,
-  "approval": false,
+  "approval": true,
   "baseline_model_ids": [
     "mmwave_resp_int8",
     "mmwave_resp_int8_v0.2.0_candidate"
@@ -14,20 +14,20 @@
   "expected_selected_valid_predictions": 75,
   "expected_subjects": 16,
   "independent_review_required": true,
-  "independent_reviewer_authorization": false,
+  "independent_reviewer_authorization": true,
   "model_count": 3,
-  "notes": "M-B10R1-A overlay template only. Independent reviewer must populate this B-side record in M-B10R1-B. A recovery_execution_authorized and recovery_payload_release_authorized remain historically false forever.",
+  "notes": "Independent reviewer authorization for exactly one limited-reuse recovery payload release under the frozen M-B10R1-A contract. A recovery_execution_authorized and recovery_payload_release_authorized remain historically false forever. No retry. No second release. No code change. No M-B11.",
   "one_recovery_release_only": true,
   "phase_id": "M-B10R1-B",
   "prefreeze_head_informational": "c3ead3b28d9925f78f0724a63444d9217c55cea8",
-  "recovery_execution_authorized": false,
-  "recovery_payload_release_authorized": false,
+  "recovery_execution_authorized": true,
+  "recovery_payload_release_authorized": true,
   "result_limitation": "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT",
   "result_not_pristine": true,
   "retry_prohibited": true,
-  "reviewed_m_b10r1a_head_sha": null,
-  "reviewed_m_b10r1a_head_sha_status": "PENDING_INDEPENDENT_REVIEW",
+  "reviewed_m_b10r1a_head_sha": "ca4b55b09555de34172a98f1a7ac05c24c1f2dac",
+  "reviewed_m_b10r1a_head_sha_status": "BOUND",
   "schema_version": "M-B10R1B_AUTHORIZATION_RECORD_V1",
   "selected_model_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8",
-  "status": "NOT_AUTHORIZED_NOT_EXECUTED"
+  "status": "AUTHORIZED_FOR_ONE_RECOVERY_RELEASE"
 }
