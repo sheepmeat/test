@@ -1,0 +1,21 @@
+{
+  "M-B10R1B_started": false,
+  "ambiguous_windows": 13,
+  "expected_future_inferences": 225,
+  "generated_at": "2026-08-12T15:31:49Z",
+  "m_b11_started": false,
+  "mmwave_phase_b_access_diff": 0,
+  "model_count": 3,
+  "new_payload_release_events": 0,
+  "new_recovery_accessor_invocations": 0,
+  "phase_id": "M-B10R1-A",
+  "policy_decision": "LIMITED_LOCKED_TEST_REUSE_EXCEPTION_RECOMMENDED",
+  "recovery_execution_authorized": false,
+  "recovery_payload_release_authorized": false,
+  "report": "docs/reports/20260813_Cursor_M-B10R1A_Recovery_PreFreeze_01.md",
+  "result_limitation": "REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT",
+  "status": "RECOVERY_HARNESS_PREFREEZE_COMPLETE",
+  "structural_windows": 88,
+  "subjects": 16,
+  "supervised_eligible_windows": 75
+}
