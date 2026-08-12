@@ -18,10 +18,12 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 from scripts.mmwave_m_b10r1_recovery_eval import (  # noqa: E402
+    MB10R1EvalError,
     execute_authorized_recovery,
     readiness_summary,
     run_validation_smoke,
 )
+from scripts.mmwave_m_b10r1_recovery_access import RecoveryAccessError  # noqa: E402
 from scripts.mmwave_m_b10r1a_prefreeze import generate_m_b10r1a_prefreeze  # noqa: E402
 
 
@@ -76,8 +78,23 @@ def main(argv: list[str] | None = None) -> int:
                 )
             )
             return 2
-        result = execute_authorized_recovery(ROOT_DIR, args.authorization_token)
+        try:
+            result = execute_authorized_recovery(ROOT_DIR, args.authorization_token)
+        except (MB10R1EvalError, RecoveryAccessError) as exc:
+            print(
+                json.dumps(
+                    {
+                        "status": "REFUSED",
+                        "reason": str(exc),
+                        "recovery_payload_released": False,
+                    },
+                    indent=2,
+                    sort_keys=True,
+                )
+            )
+            return 2
         # Never print full ledger by default in CLI success path summary.
+        # Full 225-row ledger is already persisted under the B result directory.
         slim = {k: v for k, v in result.items() if k != "ledger"}
         print(json.dumps(slim, indent=2, sort_keys=True))
         return 0

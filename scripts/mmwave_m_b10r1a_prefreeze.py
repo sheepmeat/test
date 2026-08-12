@@ -7,7 +7,6 @@ Never calls recovery accessor or LOCKED_TEST final accessor.
 from __future__ import annotations
 
 import copy
-import hashlib
 import json
 import platform
 import sys
@@ -29,6 +28,12 @@ from scripts.mmwave_m_b10r1_recovery_access import (  # noqa: E402
     RECOVERY_AUTHORIZATION_TOKEN,
     RESULT_LIMITATION,
     LimitedReuseRecoveryAccessController,
+)
+from scripts.mmwave_m_b10r1_result_writer import (  # noqa: E402
+    B_OUT_DIR_REL,
+    a_directory_immutability_contract,
+    future_b_result_directory_schema,
+    not_authorized_overlay_template,
 )
 from scripts.mmwave_m_b10r1_recovery_eval import (  # noqa: E402
     EXECUTOR_PATH,
@@ -56,7 +61,6 @@ from scripts.mmwave_m_b10r1_recovery_eval import (  # noqa: E402
     build_bound_contract_identity,
     build_execution_freeze_identity,
     build_preaccess_readiness,
-    frozen_model_specs,
     future_ledger_schema,
     future_result_schema,
     sha256_file,
@@ -80,6 +84,9 @@ REQUIRED_OUTPUTS = {
     "future_result_schema.json",
     "future_ledger_schema.json",
     "execution_freeze_identity.json",
+    "a_directory_immutability_contract.json",
+    "future_b_authorization_overlay.json",
+    "future_b_result_directory_schema.json",
     "run_environment.json",
     "exceptions.json",
     "m_b10r1a_summary.json",
@@ -189,6 +196,19 @@ must carry designation `{RESULT_LIMITATION}`.
 - Payload release recorded at loader return boundary, before verify.
 - Authoritative ``execution_freeze_identity.json`` binds harness module SHAs
   and policy/model artifacts; execute path compares live against frozen.
+- M-B10R1-A directory is immutable after merge. Future M-B10R1-B must not
+  mutate A readiness, A runtime state, A audit, or A checksums.
+- B authorization overlay lives at
+  ``datasets/mmwave/manifests/M-B10R1B_recovery_execution/authorization_record.json``
+  with status ``NOT_AUTHORIZED_NOT_EXECUTED`` and ``approval=false``.
+- Future execution reads the B overlay; A
+  ``recovery_execution_authorized`` / ``recovery_payload_release_authorized``
+  remain historically false forever.
+- Durable result writer and post-access validator
+  (``scripts/validate_mmwave_m_b10r1b.py``) are frozen now; they validate
+  stored B evidence only and never reopen LOCKED_TEST.
+- Frozen bound-contract fallback removed: missing
+  ``bound_contract_identity`` stops before payload release.
 """
     path.write_text(body, encoding="utf-8")
 
@@ -393,6 +413,10 @@ def generate_m_b10r1a_prefreeze(
         "expected_subjects": EXPECTED_SUBJECTS,
         "result_limitation": RESULT_LIMITATION,
         "authorization_during_m_b10r1a": False,
+        "b_authorization_overlay_path": str(B_OUT_DIR_REL / "authorization_record.json"),
+        "a_readiness_mutation_required_for_b": False,
+        "future_b_runtime_state_path": str(B_OUT_DIR_REL / "recovery_access_runtime_state.json"),
+        "a_runtime_state_mutation_required": False,
     }
 
     readiness = build_preaccess_readiness(root, validator_pass=validator_pass_placeholder)
@@ -458,6 +482,10 @@ def generate_m_b10r1a_prefreeze(
             "mmwave_resp_int8_v0.2.0_candidate": V02_PREPROCESSING_CONTRACT_ID,
         },
         "execution_freeze_identity": "execution_freeze_identity.json",
+        "b_authorization_overlay": str(B_OUT_DIR_REL / "authorization_record.json"),
+        "b_authorization_status": "NOT_AUTHORIZED_NOT_EXECUTED",
+        "a_directory_immutable_after_merge": True,
+        "a_readiness_mutation_required_for_b": False,
         "report": str(REPORT_REL),
     }
 
@@ -476,6 +504,8 @@ def generate_m_b10r1a_prefreeze(
         "future_result_schema.json": future_result_schema(),
         "future_ledger_schema.json": future_ledger_schema(),
         "execution_freeze_identity.json": execution_freeze_identity,
+        "a_directory_immutability_contract.json": a_directory_immutability_contract(),
+        "future_b_result_directory_schema.json": future_b_result_directory_schema(),
         "run_environment.json": run_environment,
         "exceptions.json": exceptions,
         "m_b10r1a_summary.json": summary,
@@ -483,6 +513,24 @@ def generate_m_b10r1a_prefreeze(
 
     for name, payload in artifacts.items():
         (out / name).write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+    freeze_sha = sha256_file(out / "execution_freeze_identity.json")
+    overlay = not_authorized_overlay_template(
+        freeze_sha=freeze_sha,
+        a_head=None,
+    )
+    overlay["reviewed_m_b10r1a_head_sha_status"] = "PENDING_INDEPENDENT_REVIEW"
+    overlay["prefreeze_head_informational"] = execution_freeze_identity.get("pre_freeze_head")
+    (out / "future_b_authorization_overlay.json").write_text(
+        json.dumps(overlay, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+
+    b_out = root / B_OUT_DIR_REL
+    b_out.mkdir(parents=True, exist_ok=True)
+    # Template only — never populate measured B results during M-B10R1-A.
+    (b_out / "authorization_record.json").write_text(
+        json.dumps(overlay, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
 
     # Runtime state is supporting audit; include in checksums.
     checksum_lines = []

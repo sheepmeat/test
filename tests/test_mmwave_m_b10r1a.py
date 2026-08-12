@@ -41,12 +41,21 @@ from scripts.mmwave_m_b10r1_recovery_eval import (
     authorize_pre_access_freeze_binding,
     build_bound_contract_identity,
     evaluate_recovery_payload,
+    execute_authorized_recovery,
     frozen_model_specs,
     load_frozen_execution_identity,
     readiness_summary,
+    require_frozen_bound_contract,
     validate_frozen_recovery_models,
     verify_live_against_frozen,
 )
+from scripts.mmwave_m_b10r1_result_writer import (
+    B_AUTHORIZATION_STATUS_GRANTED,
+    persist_recovery_results,
+    persist_terminal_failure,
+    not_authorized_overlay_template,
+)
+from scripts import validate_mmwave_m_b10r1b as b_validator
 from scripts.mmwave_m_b10r1a_prefreeze import generate_m_b10r1a_prefreeze
 from scripts import run_mmwave_m_b10r1 as runner_cli
 
@@ -523,6 +532,37 @@ class CliAndMonkeypatchTests(unittest.TestCase):
         rc = runner_cli.main(["--execute-authorized-limited-reuse-recovery"])
         self.assertEqual(rc, 2)
 
+    def test_execute_with_token_refused_by_b_overlay(self) -> None:
+        called = {"recovery": False}
+
+        def _boom(*_a, **_k):
+            called["recovery"] = True
+            raise AssertionError("recovery must not be called")
+
+        a_runtime = json.loads(
+            (OUT / "recovery_access_runtime_state.json").read_text(encoding="utf-8")
+        )
+        with mock.patch(
+            "scripts.mmwave_m_b10r1_recovery_access.LimitedReuseRecoveryAccessController.get_locked_test_recovery_evaluation_dataset",
+            side_effect=_boom,
+        ):
+            rc = runner_cli.main(
+                [
+                    "--execute-authorized-limited-reuse-recovery",
+                    "--authorization-token",
+                    RECOVERY_AUTHORIZATION_TOKEN,
+                ]
+            )
+        self.assertEqual(rc, 2)
+        self.assertFalse(called["recovery"])
+        after = json.loads((OUT / "recovery_access_runtime_state.json").read_text(encoding="utf-8"))
+        self.assertEqual(after, a_runtime)
+        self.assertEqual(after["recovery_accessor_invocations"], 0)
+        self.assertEqual(after["recovery_payload_release_events"], 0)
+        with self.assertRaises(MB10R1EvalError) as ctx:
+            execute_authorized_recovery(ROOT, RECOVERY_AUTHORIZATION_TOKEN)
+        self.assertIn("B_AUTHORIZATION", str(ctx.exception))
+
     def test_monkeypatch_forbids_real_recovery_during_generator_validator(self) -> None:
         def _forbidden(*_a, **_k):
             raise RuntimeError("FORBIDDEN_M_B10R1A_REAL_RECOVERY_ACCESS")
@@ -732,6 +772,8 @@ class FrozenBindingCorruptionTests(unittest.TestCase):
             "scripts/mmwave_m_b10r1_recovery_eval.py",
             "scripts/mmwave_m_b10r1_metrics.py",
             "scripts/run_mmwave_m_b10r1.py",
+            "scripts/mmwave_m_b10r1_result_writer.py",
+            "scripts/validate_mmwave_m_b10r1b.py",
         ):
             bad = copy.deepcopy(frozen)
             bad["harness_module_sha256"] = dict(bad["harness_module_sha256"])
@@ -789,6 +831,398 @@ class FrozenBindingCorruptionTests(unittest.TestCase):
         # Must not use profile / model_id as contract id
         self.assertNotEqual(SELECTED_PREPROCESSING_CONTRACT_ID, "M-B1_D0_B1_Z1")
         self.assertNotEqual(V01_PREPROCESSING_CONTRACT_ID, "mmwave_resp_int8")
+
+    def test_missing_bound_contract_fail_closed(self) -> None:
+        frozen = load_frozen_execution_identity(ROOT)
+        bad = copy.deepcopy(frozen)
+        del bad["bound_contract_identity"]
+        with self.assertRaises(MB10R1EvalError) as ctx:
+            require_frozen_bound_contract(bad)
+        self.assertIn("FROZEN_BOUND_CONTRACT_IDENTITY_MISSING_STOP_BEFORE_PAYLOAD", str(ctx.exception))
+        source = (ROOT / "scripts/mmwave_m_b10r1_recovery_eval.py").read_text(encoding="utf-8")
+        self.assertNotIn("or build_bound_contract_identity", source)
+
+
+def _granted_mock_authorization() -> dict:
+    overlay = not_authorized_overlay_template(freeze_sha="a" * 64, a_head="b" * 40)
+    overlay["approval"] = True
+    overlay["status"] = B_AUTHORIZATION_STATUS_GRANTED
+    overlay["independent_reviewer_authorization"] = True
+    overlay["recovery_execution_authorized"] = True
+    overlay["recovery_payload_release_authorized"] = True
+    overlay["reviewed_m_b10r1a_head_sha"] = "b" * 40
+    overlay["reviewed_m_b10r1a_head_sha_status"] = "BOUND"
+    return overlay
+
+
+def _mock_runtime_after_release() -> dict:
+    return {
+        "schema_version": "M-B10R1B_RECOVERY_ACCESS_RUNTIME_STATE_V1",
+        "original_final_accessor_invocations": 1,
+        "original_locked_test_consumed": True,
+        "original_final_payload_release_events": 1,
+        "recovery_accessor_invocations": 1,
+        "recovery_payload_release_events": 1,
+        "historical_total_payload_release_events": 2,
+        "payload_consumed": True,
+        "rerun_performed": False,
+        "automatic_retry": False,
+    }
+
+
+def _write_mock_b_tree(destination: Path) -> dict:
+    specs = validate_frozen_recovery_models(ROOT)
+    payload = _mock_recovery_payload()
+    runners = {spec["model_id"]: FakeRunner() for spec in specs}
+    evaluation = evaluate_recovery_payload(ROOT, payload, specs, runners=runners)
+    persist_recovery_results(
+        destination,
+        evaluation,
+        runtime_state=_mock_runtime_after_release(),
+        authorization=_granted_mock_authorization(),
+        frozen=load_frozen_execution_identity(ROOT),
+        specs=specs,
+    )
+    return evaluation
+
+
+class DurableResultAndBValidatorTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.holder = tempfile.TemporaryDirectory()
+        cls.golden = Path(cls.holder.name) / "golden"
+        cls.evaluation = _write_mock_b_tree(cls.golden)
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        cls.holder.cleanup()
+
+    def _copy_golden(self) -> tuple[tempfile.TemporaryDirectory[str], Path]:
+        holder = tempfile.TemporaryDirectory()
+        dest = Path(holder.name) / "b"
+        shutil.copytree(self.golden, dest)
+        return holder, dest
+
+    def test_mock_end_to_end_persist_and_b_validator(self) -> None:
+        self.assertEqual(self.evaluation["ledger_row_count"], EXPECTED_INFERENCES)
+        self.assertEqual(self.evaluation["actual_total_tflite_invocations"], EXPECTED_INFERENCES)
+        ledger_path = self.golden / "recovery_sample_predictions.jsonl"
+        rows = [json.loads(line) for line in ledger_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        self.assertEqual(len(rows), 225)
+        result = b_validator.validate_m_b10r1b_artifacts(output_dir=self.golden)
+        self.assertEqual(result["validation_status"], "PASS")
+        self.assertEqual(result["ledger_row_count"], 225)
+        self.assertFalse(result["locked_test_accessed"])
+
+    def test_no_reaccess_monkeypatch_still_validates_mock_tree(self) -> None:
+        def _forbidden(*_a, **_k):
+            raise RuntimeError("ACCESSOR_MUST_NOT_BE_CALLED")
+
+        with mock.patch(
+            "scripts.mmwave_m_b10r1_recovery_access.LimitedReuseRecoveryAccessController.get_locked_test_recovery_evaluation_dataset",
+            side_effect=_forbidden,
+        ), mock.patch(
+            "scripts.mmwave_phase_b_access.PhaseBAccessGuard.get_locked_test_final_evaluation_dataset",
+            side_effect=_forbidden,
+        ), mock.patch(
+            "scripts.mmwave_phase_b_access.PhaseBAccessGuard._get_split_dataset",
+            side_effect=_forbidden,
+        ):
+            result = b_validator.validate_m_b10r1b_artifacts(output_dir=self.golden)
+        self.assertEqual(result["validation_status"], "PASS")
+
+    def test_b_validator_source_never_calls_accessors(self) -> None:
+        source = (ROOT / "scripts/validate_mmwave_m_b10r1b.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        for node in ast.walk(tree):
+            if isinstance(node, ast.Call):
+                func = node.func
+                name = func.id if isinstance(func, ast.Name) else (
+                    func.attr if isinstance(func, ast.Attribute) else None
+                )
+                self.assertNotEqual(name, "get_locked_test_recovery_evaluation_dataset")
+                self.assertNotEqual(name, "get_locked_test_final_evaluation_dataset")
+                self.assertNotEqual(name, "execute_authorized_recovery")
+
+    def test_terminal_failure_persistence(self) -> None:
+        holder = tempfile.TemporaryDirectory()
+        try:
+            dest = Path(holder.name) / "fail"
+            persist_terminal_failure(
+                dest,
+                runtime_state=_mock_runtime_after_release(),
+                authorization=_granted_mock_authorization(),
+                exception=RuntimeError("simulated post-payload failure"),
+                failure_stage="POST_PAYLOAD_EVALUATION",
+                ledger=[{"window_id": "w000", "model_id": SELECTED_MODEL_ID, "invalid": True}],
+                completed_inference_count=3,
+            )
+            summary = json.loads((dest / "m_b10r1b_summary.json").read_text(encoding="utf-8"))
+            audit = json.loads((dest / "one_time_recovery_access_audit.json").read_text(encoding="utf-8"))
+            self.assertEqual(summary["status"], "PARTIAL_INCOMPLETE")
+            self.assertEqual(audit["recovery_payload_release_events"], 1)
+            self.assertEqual(audit["historical_total_payload_release_events"], 2)
+            self.assertTrue(audit["payload_consumed"])
+            self.assertFalse(audit["rerun_performed"])
+            self.assertFalse(summary["metrics_populated"])
+            with self.assertRaises(b_validator.MB10R1BValidationError):
+                b_validator.validate_m_b10r1b_artifacts(output_dir=dest)
+        finally:
+            holder.cleanup()
+
+    def _assert_b_fail(self, dest: Path) -> None:
+        with self.assertRaises(b_validator.MB10R1BValidationError):
+            b_validator.validate_m_b10r1b_artifacts(output_dir=dest)
+
+    def test_prediction_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            rows = [json.loads(line) for line in (dest / "recovery_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+            rows[0]["predicted_class_index"] = (int(rows[0]["predicted_class_index"]) + 1) % 3
+            rows[0]["predicted_class"] = ["NORMAL", "RAPID_OR_ABNORMAL", "APNEA"][rows[0]["predicted_class_index"]]
+            (dest / "recovery_sample_predictions.jsonl").write_text(
+                "".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_true_label_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            rows = [json.loads(line) for line in (dest / "recovery_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+            rows[0]["true_class_index"] = (int(rows[0]["true_class_index"]) + 1) % 3
+            (dest / "recovery_sample_predictions.jsonl").write_text(
+                "".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_row_deleted_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            rows = [json.loads(line) for line in (dest / "recovery_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+            (dest / "recovery_sample_predictions.jsonl").write_text(
+                "".join(json.dumps(r, sort_keys=True) + "\n" for r in rows[:-1]), encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_row_duplicated_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            rows = [json.loads(line) for line in (dest / "recovery_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+            rows.append(copy.deepcopy(rows[0]))
+            (dest / "recovery_sample_predictions.jsonl").write_text(
+                "".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_model_sha_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            rows = [json.loads(line) for line in (dest / "recovery_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+            rows[0]["model_sha256"] = "0" * 64
+            (dest / "recovery_sample_predictions.jsonl").write_text(
+                "".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_preprocessing_contract_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            rows = [json.loads(line) for line in (dest / "recovery_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+            rows[0]["preprocessing_contract_id"] = "MUTATED_CONTRACT"
+            (dest / "recovery_sample_predictions.jsonl").write_text(
+                "".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_seed43_inserted_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            rows = [json.loads(line) for line in (dest / "recovery_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+            rows[0]["model_id"] = "M-B3_CONV1D_GAP_BASELINE_seed43_M-B6_STRICT_INT8"
+            (dest / "recovery_sample_predictions.jsonl").write_text(
+                "".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_fourth_model_inserted_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            rows = [json.loads(line) for line in (dest / "recovery_sample_predictions.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+            extra = copy.deepcopy(rows[0])
+            extra["model_id"] = "unexpected_fourth_model"
+            extra["window_id"] = "w_extra"
+            rows.append(extra)
+            (dest / "recovery_sample_predictions.jsonl").write_text(
+                "".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_stored_macro_f1_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "metrics_by_model.json").read_text(encoding="utf-8"))
+            data[SELECTED_MODEL_ID]["macro_f1"] = 0.123456
+            (dest / "metrics_by_model.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_confusion_matrix_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "metrics_by_model.json").read_text(encoding="utf-8"))
+            data[SELECTED_MODEL_ID]["confusion_matrix"][0][0] += 1
+            (dest / "metrics_by_model.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_apnea_misses_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "metrics_by_model.json").read_text(encoding="utf-8"))
+            data[SELECTED_MODEL_ID]["apnea_proxy"]["misses"] = 99
+            (dest / "metrics_by_model.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_subject_metric_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "subject_level_metrics.json").read_text(encoding="utf-8"))
+            data[SELECTED_MODEL_ID]["worst_subject_macro_f1"] = 0.0
+            (dest / "subject_level_metrics.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_saturation_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "selected_candidate_quantization_audit.json").read_text(encoding="utf-8"))
+            data["input_saturation_ratio"] = 0.999
+            data["samples_with_any_saturation"] = 75
+            (dest / "selected_candidate_quantization_audit.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_inference_count_changed_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "m_b10r1b_summary.json").read_text(encoding="utf-8"))
+            data["actual_total_tflite_invocations"] = 224
+            (dest / "m_b10r1b_summary.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_access_release_not_1_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "one_time_recovery_access_audit.json").read_text(encoding="utf-8"))
+            data["recovery_payload_release_events"] = 0
+            (dest / "one_time_recovery_access_audit.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_historical_total_not_2_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "one_time_recovery_access_audit.json").read_text(encoding="utf-8"))
+            data["historical_total_payload_release_events"] = 1
+            (dest / "one_time_recovery_access_audit.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_rerun_true_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "m_b10r1b_summary.json").read_text(encoding="utf-8"))
+            data["rerun_performed"] = True
+            (dest / "m_b10r1b_summary.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_result_not_pristine_false_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "m_b10r1b_summary.json").read_text(encoding="utf-8"))
+            data["result_not_pristine"] = False
+            (dest / "m_b10r1b_summary.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            _rewrite_checksums(dest)
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
+
+    def test_checksum_corruption_fails(self) -> None:
+        holder, dest = self._copy_golden()
+        try:
+            data = json.loads((dest / "m_b10r1b_summary.json").read_text(encoding="utf-8"))
+            data["note"] = "tampered"
+            (dest / "m_b10r1b_summary.json").write_text(
+                json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+            )
+            self._assert_b_fail(dest)
+        finally:
+            holder.cleanup()
 
 
 if __name__ == "__main__":

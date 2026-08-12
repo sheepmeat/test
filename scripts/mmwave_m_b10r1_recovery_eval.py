@@ -43,8 +43,15 @@ from scripts.mmwave_m_b10r1_recovery_access import (  # noqa: E402
     RECOVERY_AUTHORIZATION_TOKEN,
     RESULT_LIMITATION,
     LimitedReuseRecoveryAccessController,
-    RecoveryAccessError,
     RecoveryReadiness,
+)
+from scripts.mmwave_m_b10r1_result_writer import (  # noqa: E402
+    B_AUTHORIZATION_STATUS_GRANTED,
+    B_OUT_DIR_REL,
+    initialize_b_runtime_from_a,
+    load_b_authorization_record,
+    persist_recovery_results,
+    persist_terminal_failure,
 )
 
 OUT_DIR_REL = Path("datasets/mmwave/manifests/M-B10R1A_recovery_prefreeze")
@@ -88,6 +95,8 @@ HARNESS_MODULE_RELS = (
     "scripts/mmwave_m_b10r1_metrics.py",
     "scripts/run_mmwave_m_b10r1.py",
     "scripts/mmwave_m_b10b_baseline_preprocessing.py",
+    "scripts/mmwave_m_b10r1_result_writer.py",
+    "scripts/validate_mmwave_m_b10r1b.py",
 )
 
 # Frozen SHA keys → repository-relative paths (authoritative freeze identity).
@@ -159,6 +168,19 @@ RESULT_SCHEMA_STATUS = "NOT_POPULATED"
 
 class MB10R1EvalError(Exception):
     """Recovery evaluation harness error."""
+
+    def __init__(
+        self,
+        message: str,
+        *,
+        ledger: list[dict[str, Any]] | None = None,
+        coverage: dict[str, Any] | None = None,
+        completed_inference_count: int | None = None,
+    ) -> None:
+        super().__init__(message)
+        self.ledger = ledger
+        self.coverage = coverage
+        self.completed_inference_count = completed_inference_count
 
 
 def sha256_file(path: Path) -> str:
@@ -451,11 +473,20 @@ def verify_live_against_frozen(root: Path, frozen: dict[str, Any]) -> None:
         raise MB10R1EvalError("FROZEN_M_B10R0_PROPOSED_LIVE_MISMATCH")
 
 
+def require_frozen_bound_contract(frozen: dict[str, Any]) -> dict[str, Any]:
+    """Fail-closed: never rebuild bound contract identity at execute time."""
+    bound = frozen.get("bound_contract_identity")
+    if not isinstance(bound, dict) or not bound:
+        raise MB10R1EvalError("FROZEN_BOUND_CONTRACT_IDENTITY_MISSING_STOP_BEFORE_PAYLOAD")
+    return bound
+
+
 def authorize_pre_access_freeze_binding(root: Path) -> dict[str, Any]:
     """Load frozen identity, verify checksum coverage, compare live→frozen. No payload."""
     frozen = load_frozen_execution_identity(root)
     verify_freeze_identity_in_checksums(root)
     verify_live_against_frozen(root, frozen)
+    require_frozen_bound_contract(frozen)
     return frozen
 
 
@@ -690,7 +721,12 @@ def evaluate_recovery_payload(
             ledger.append(row)
 
     if len(ledger) != EXPECTED_INFERENCES:
-        raise MB10R1EvalError(f"INFERENCE_COUNT_MISMATCH:{len(ledger)}")
+        raise MB10R1EvalError(
+            f"INFERENCE_COUNT_MISMATCH:{len(ledger)}",
+            ledger=ledger,
+            coverage=coverage,
+            completed_inference_count=sum(c["tflite_invoke_count"] for c in coverage.values()),
+        )
 
     # Prefer runner.invocations attribute when present (actual invoke calls).
     runner_invocation_total = 0
@@ -712,48 +748,64 @@ def evaluate_recovery_payload(
     if selected_invalid != 0 or selected_cov["valid_count"] != EXPECTED_ELIGIBLE:
         raise MB10R1EvalError(
             "SELECTED_INCOMPLETE_COVERAGE:"
-            f"valid={selected_cov['valid_count']};invalid={selected_invalid}"
+            f"valid={selected_cov['valid_count']};invalid={selected_invalid}",
+            ledger=ledger,
+            coverage=coverage,
+            completed_inference_count=actual_total_tflite_invocations,
         )
     if selected_cov["tflite_invoke_count"] != EXPECTED_ELIGIBLE:
         raise MB10R1EvalError(
-            f"SELECTED_TFLITE_INVOKE_MISMATCH:{selected_cov['tflite_invoke_count']}"
+            f"SELECTED_TFLITE_INVOKE_MISMATCH:{selected_cov['tflite_invoke_count']}",
+            ledger=ledger,
+            coverage=coverage,
+            completed_inference_count=actual_total_tflite_invocations,
         )
 
     metrics_by_model: dict[str, Any] = {}
     subject_by_model: dict[str, Any] = {}
-    for spec in specs:
-        mid = spec["model_id"]
-        model_rows = [r for r in ledger if r["model_id"] == mid]
-        valid_rows = [r for r in model_rows if not r.get("invalid")]
-        labels = [int(r["true_class_index"]) for r in valid_rows]
-        preds = [int(r["predicted_class_index"]) for r in valid_rows]
-        # Metrics only from actual valid prediction rows; denominators explicit.
-        # Never metric_bundle([], [], evaluated_sample_count=75).
-        bundle = metric_bundle(labels, preds, evaluated_sample_count=len(labels))
-        bundle["planned_count"] = EXPECTED_ELIGIBLE
-        bundle["valid_count"] = len(valid_rows)
-        bundle["invalid_count"] = len(model_rows) - len(valid_rows)
-        bundle["coverage"] = dict(coverage[mid])
-        metrics_by_model[mid] = bundle
-        subject_by_model[mid] = subject_metrics(valid_rows)
+    try:
+        for spec in specs:
+            mid = spec["model_id"]
+            model_rows = [r for r in ledger if r["model_id"] == mid]
+            valid_rows = [r for r in model_rows if not r.get("invalid")]
+            labels = [int(r["true_class_index"]) for r in valid_rows]
+            preds = [int(r["predicted_class_index"]) for r in valid_rows]
+            # Metrics only from actual valid prediction rows; denominators explicit.
+            # Never metric_bundle([], [], evaluated_sample_count=75).
+            bundle = metric_bundle(labels, preds, evaluated_sample_count=len(labels))
+            bundle["planned_count"] = EXPECTED_ELIGIBLE
+            bundle["valid_count"] = len(valid_rows)
+            bundle["invalid_count"] = len(model_rows) - len(valid_rows)
+            bundle["coverage"] = dict(coverage[mid])
+            metrics_by_model[mid] = bundle
+            subject_by_model[mid] = subject_metrics(valid_rows)
 
-    seed42_rows = [r for r in ledger if r["model_id"] == SELECTED_MODEL_ID and not r.get("invalid")]
-    return {
-        "status": "RECOVERY_EXECUTED",
-        "result_limitation": RESULT_LIMITATION,
-        "result_not_pristine": True,
-        "ledger_row_count": len(ledger),
-        "expected_inferences": EXPECTED_INFERENCES,
-        "actual_total_tflite_invocations": actual_total_tflite_invocations,
-        "runner_invocations_by_model": runner_invocation_by_model,
-        "coverage_by_model": coverage,
-        "metrics_by_model": metrics_by_model,
-        "subject_metrics_by_model": subject_by_model,
-        "saturation_audit_seed42": saturation_audit_from_rows(seed42_rows),
-        "ledger": ledger,
-        "acceptance_threshold": "FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED",
-        "note": "No performance threshold gating; no retry; no post-result model branching.",
-    }
+        seed42_rows = [r for r in ledger if r["model_id"] == SELECTED_MODEL_ID and not r.get("invalid")]
+        return {
+            "status": "RECOVERY_EXECUTED",
+            "result_limitation": RESULT_LIMITATION,
+            "result_not_pristine": True,
+            "ledger_row_count": len(ledger),
+            "expected_inferences": EXPECTED_INFERENCES,
+            "actual_total_tflite_invocations": actual_total_tflite_invocations,
+            "runner_invocations_by_model": runner_invocation_by_model,
+            "coverage_by_model": coverage,
+            "metrics_by_model": metrics_by_model,
+            "subject_metrics_by_model": subject_by_model,
+            "saturation_audit_seed42": saturation_audit_from_rows(seed42_rows),
+            "ledger": ledger,
+            "acceptance_threshold": "FINAL_LOCKED_TEST_NUMERICAL_ACCEPTANCE_THRESHOLD_NOT_PREDEFINED",
+            "note": "No performance threshold gating; no retry; no post-result model branching.",
+        }
+    except MB10R1EvalError:
+        raise
+    except Exception as exc:
+        raise MB10R1EvalError(
+            f"EVALUATION_FAILED:{exc}",
+            ledger=ledger,
+            coverage=coverage,
+            completed_inference_count=actual_total_tflite_invocations,
+        ) from exc
 
 
 def run_validation_smoke(root: Path, *, attempt_tflite: bool = False) -> dict[str, Any]:
@@ -826,23 +878,81 @@ def run_validation_smoke(root: Path, *, attempt_tflite: bool = False) -> dict[st
     }
 
 
-def execute_authorized_recovery(root: Path, authorization_token: str) -> dict[str, Any]:
-    """Irreversible recovery path. MUST NOT be called during M-B10R1-A."""
+def _assert_a_readiness_historically_false(root: Path) -> dict[str, Any]:
+    """A readiness flags describe M-B10R1-A history and must remain false forever."""
     readiness_path = root / OUT_DIR_REL / "recovery_access_readiness.json"
     if not readiness_path.is_file():
         raise MB10R1EvalError("READINESS_MANIFEST_MISSING")
     readiness_doc = load_json(readiness_path)
-    if readiness_doc.get("recovery_execution_authorized") is not True:
-        raise MB10R1EvalError("READINESS_EXECUTION_NOT_AUTHORIZED")
-    if readiness_doc.get("recovery_payload_release_authorized") is not True:
-        raise MB10R1EvalError("READINESS_PAYLOAD_NOT_AUTHORIZED")
-    if readiness_doc.get("pre_access_validator_pass") is not True:
-        raise MB10R1EvalError("READINESS_VALIDATOR_NOT_PASS")
+    if readiness_doc.get("recovery_execution_authorized") is not False:
+        raise MB10R1EvalError("A_READINESS_MUST_REMAIN_HISTORICALLY_FALSE")
+    if readiness_doc.get("recovery_payload_release_authorized") is not False:
+        raise MB10R1EvalError("A_PAYLOAD_AUTH_MUST_REMAIN_HISTORICALLY_FALSE")
+    return readiness_doc
+
+
+def _assert_b_authorization_granted(overlay: dict[str, Any], freeze_sha: str) -> None:
+    """B-side overlay is the only grant. A flags are never flipped to true."""
+    if overlay.get("approval") is not True:
+        raise MB10R1EvalError("B_AUTHORIZATION_APPROVAL_FALSE")
+    if overlay.get("status") != B_AUTHORIZATION_STATUS_GRANTED:
+        raise MB10R1EvalError("B_AUTHORIZATION_STATUS_NOT_GRANTED")
+    if overlay.get("independent_reviewer_authorization") is not True:
+        raise MB10R1EvalError("B_INDEPENDENT_REVIEWER_NOT_AUTHORIZED")
+    if overlay.get("recovery_execution_authorized") is not True:
+        raise MB10R1EvalError("B_OVERLAY_EXECUTION_NOT_AUTHORIZED")
+    if overlay.get("recovery_payload_release_authorized") is not True:
+        raise MB10R1EvalError("B_OVERLAY_PAYLOAD_NOT_AUTHORIZED")
+    if overlay.get("one_recovery_release_only") is not True:
+        raise MB10R1EvalError("B_OVERLAY_ONE_RELEASE_REQUIRED")
+    if overlay.get("retry_prohibited") is not True:
+        raise MB10R1EvalError("B_OVERLAY_RETRY_MUST_BE_PROHIBITED")
+    if int(overlay.get("expected_eligible_windows", -1)) != EXPECTED_ELIGIBLE:
+        raise MB10R1EvalError("B_OVERLAY_ELIGIBLE_MISMATCH")
+    if int(overlay.get("expected_subjects", -1)) != EXPECTED_SUBJECTS:
+        raise MB10R1EvalError("B_OVERLAY_SUBJECTS_MISMATCH")
+    if int(overlay.get("expected_model_inference_count", -1)) != EXPECTED_INFERENCES:
+        raise MB10R1EvalError("B_OVERLAY_INFERENCE_COUNT_MISMATCH")
+    if int(overlay.get("model_count", -1)) != 3:
+        raise MB10R1EvalError("B_OVERLAY_MODEL_COUNT_NOT_3")
+    if overlay.get("result_not_pristine") is not True:
+        raise MB10R1EvalError("B_OVERLAY_RESULT_NOT_PRISTINE_REQUIRED")
+    if overlay.get("result_limitation") != RESULT_LIMITATION:
+        raise MB10R1EvalError("B_OVERLAY_RESULT_LIMITATION_MISMATCH")
+    if overlay.get("execution_freeze_identity_sha256") != freeze_sha:
+        raise MB10R1EvalError("B_OVERLAY_FREEZE_SHA_MISMATCH")
+    head = overlay.get("reviewed_m_b10r1a_head_sha")
+    if not isinstance(head, str) or len(head) != 40:
+        raise MB10R1EvalError("B_OVERLAY_REVIEWED_HEAD_MISSING")
+
+
+def execute_authorized_recovery(root: Path, authorization_token: str) -> dict[str, Any]:
+    """Irreversible recovery path. MUST NOT be called during M-B10R1-A.
+
+    Authorization is the B overlay, not A readiness. A flags stay historically false.
+    Runtime state is persisted under the B output directory only.
+    """
+    _assert_a_readiness_historically_false(root)
+    try:
+        overlay = load_b_authorization_record(root)
+    except Exception as exc:
+        raise MB10R1EvalError(f"B_AUTHORIZATION_RECORD_UNREADABLE:{exc}") from exc
 
     # Freeze binding BEFORE payload release — live compared against frozen snapshot.
     frozen = authorize_pre_access_freeze_binding(root)
-    bound = frozen.get("bound_contract_identity") or build_bound_contract_identity(root)
+    bound = require_frozen_bound_contract(frozen)
+    freeze_sha = sha256_file(root / OUT_DIR_REL / EXECUTION_FREEZE_IDENTITY_NAME)
+    _assert_b_authorization_granted(overlay, freeze_sha)
+
     specs = validate_frozen_recovery_models(root)
+    b_out = root / B_OUT_DIR_REL
+    b_state_path = b_out / "recovery_access_runtime_state.json"
+    try:
+        initialize_b_runtime_from_a(root, b_state_path)
+    except Exception as exc:
+        raise MB10R1EvalError(f"B_RUNTIME_INIT_FAILED:{exc}") from exc
+
+    # Grant comes from B overlay. A readiness is not mutated to true.
     readiness = RecoveryReadiness(
         recovery_execution_authorized=True,
         recovery_payload_release_authorized=True,
@@ -852,17 +962,58 @@ def execute_authorized_recovery(root: Path, authorization_token: str) -> dict[st
         pre_access_validator_pass=True,
         M_B10R1B_started=True,
     )
-    controller = LimitedReuseRecoveryAccessController(root)
-    # Single payload transaction for all three models.
-    payload = controller.get_locked_test_recovery_evaluation_dataset(
-        authorization_token=authorization_token,
-        bound_contract_identity=bound,
-        readiness=readiness,
-    )
+    controller = LimitedReuseRecoveryAccessController(root, audit_state_path=b_state_path)
+    try:
+        payload = controller.get_locked_test_recovery_evaluation_dataset(
+            authorization_token=authorization_token,
+            bound_contract_identity=bound,
+            readiness=readiness,
+        )
+    except Exception as exc:
+        snap = controller.snapshot()
+        if int(snap.get("recovery_payload_release_events", 0)) >= 1:
+            persist_terminal_failure(
+                b_out,
+                runtime_state=snap,
+                authorization=overlay,
+                exception=exc,
+                failure_stage="PAYLOAD_VERIFY",
+            )
+        raise
+
     if int(payload["total_count"]) != EXPECTED_ELIGIBLE:
+        persist_terminal_failure(
+            b_out,
+            runtime_state=controller.snapshot(),
+            authorization=overlay,
+            exception=MB10R1EvalError("POST_RELEASE_COUNT_MISMATCH"),
+            failure_stage="POST_RELEASE_COUNT",
+        )
         raise MB10R1EvalError("POST_RELEASE_COUNT_MISMATCH")
 
-    return evaluate_recovery_payload(root, payload, specs, runners=None)
+    try:
+        evaluation = evaluate_recovery_payload(root, payload, specs, runners=None)
+        persist_recovery_results(
+            b_out,
+            evaluation,
+            runtime_state=controller.snapshot(),
+            authorization=overlay,
+            frozen=frozen,
+            specs=specs,
+        )
+        return evaluation
+    except Exception as exc:
+        persist_terminal_failure(
+            b_out,
+            runtime_state=controller.snapshot(),
+            authorization=overlay,
+            exception=exc,
+            failure_stage="POST_PAYLOAD_EVALUATION",
+            ledger=getattr(exc, "ledger", None),
+            coverage=getattr(exc, "coverage", None),
+            completed_inference_count=getattr(exc, "completed_inference_count", None),
+        )
+        raise
 
 
 def readiness_summary(root: Path) -> dict[str, Any]:

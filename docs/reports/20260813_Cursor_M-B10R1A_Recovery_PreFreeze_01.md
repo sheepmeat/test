@@ -9,7 +9,7 @@
 | Field | Value |
 |---|---|
 | Phase | M-B10R1-A |
-| Generated at (UTC) | 2026-08-12T15:59:29Z |
+| Generated at (UTC) | 2026-08-12T19:44:45Z |
 | Recovery execution authorized | false |
 | Recovery payload release authorized | false |
 | New recovery accessor invocations | 0 |
@@ -89,3 +89,16 @@ must carry designation `REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT`.
 - Payload release recorded at loader return boundary, before verify.
 - Authoritative ``execution_freeze_identity.json`` binds harness module SHAs
   and policy/model artifacts; execute path compares live against frozen.
+- M-B10R1-A directory is immutable after merge. Future M-B10R1-B must not
+  mutate A readiness, A runtime state, A audit, or A checksums.
+- B authorization overlay lives at
+  ``datasets/mmwave/manifests/M-B10R1B_recovery_execution/authorization_record.json``
+  with status ``NOT_AUTHORIZED_NOT_EXECUTED`` and ``approval=false``.
+- Future execution reads the B overlay; A
+  ``recovery_execution_authorized`` / ``recovery_payload_release_authorized``
+  remain historically false forever.
+- Durable result writer and post-access validator
+  (``scripts/validate_mmwave_m_b10r1b.py``) are frozen now; they validate
+  stored B evidence only and never reopen LOCKED_TEST.
+- Frozen bound-contract fallback removed: missing
+  ``bound_contract_identity`` stops before payload release.

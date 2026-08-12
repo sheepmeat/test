@@ -25,6 +25,8 @@ from __future__ import annotations
 
 import copy
 import json
+import os
+import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -115,11 +117,20 @@ class LimitedReuseRecoveryAccessController:
 
     def _persist(self, state: dict[str, Any] | None = None) -> None:
         payload = state if state is not None else self._state
-        self.audit_state_path.parent.mkdir(parents=True, exist_ok=True)
-        self.audit_state_path.write_text(
-            json.dumps(payload, indent=2, sort_keys=True) + "\n",
-            encoding="utf-8",
-        )
+        path = self.audit_state_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        fd, tmp_name = tempfile.mkstemp(prefix=f".{path.name}.", suffix=".tmp", dir=str(path.parent))
+        tmp_path = Path(tmp_name)
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as handle:
+                handle.write(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+                handle.flush()
+                os.fsync(handle.fileno())
+            os.replace(tmp_path, path)
+        except Exception:
+            if tmp_path.exists():
+                tmp_path.unlink()
+            raise
 
     def snapshot(self) -> dict[str, Any]:
         return copy.deepcopy(self._state)

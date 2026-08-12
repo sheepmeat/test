@@ -78,6 +78,9 @@ REQUIRED_OUTPUTS = {
     "future_result_schema.json",
     "future_ledger_schema.json",
     "execution_freeze_identity.json",
+    "a_directory_immutability_contract.json",
+    "future_b_authorization_overlay.json",
+    "future_b_result_directory_schema.json",
     "run_environment.json",
     "exceptions.json",
     "m_b10r1a_summary.json",
@@ -95,6 +98,8 @@ HARNESS_MODULE_RELS = (
     "scripts/mmwave_m_b10r1_metrics.py",
     "scripts/run_mmwave_m_b10r1.py",
     "scripts/mmwave_m_b10b_baseline_preprocessing.py",
+    "scripts/mmwave_m_b10r1_result_writer.py",
+    "scripts/validate_mmwave_m_b10r1b.py",
 )
 
 
@@ -250,6 +255,20 @@ def _inspect_recovery_eval_source(root: Path) -> None:
         _raise("EVAL_MISSING_VERIFY_LIVE_AGAINST_FROZEN")
     if "authorize_pre_access_freeze_binding" not in source:
         _raise("EVAL_MISSING_PREACCESS_FREEZE_BINDING")
+    if "or build_bound_contract_identity" in source:
+        _raise("EVAL_BOUND_LIVE_REBUILD_FALLBACK")
+    if "FROZEN_BOUND_CONTRACT_IDENTITY_MISSING_STOP_BEFORE_PAYLOAD" not in source:
+        _raise("EVAL_MISSING_FAIL_CLOSED_BOUND")
+    if "B_OUT_DIR_REL" not in source and "M-B10R1B_recovery_execution" not in source:
+        _raise("EVAL_MISSING_B_OUTPUT_DIR")
+    if "A_READINESS_MUST_REMAIN_HISTORICALLY_FALSE" not in source:
+        _raise("EVAL_MISSING_A_HISTORICAL_FALSE_GUARD")
+    if "load_b_authorization_record" not in source:
+        _raise("EVAL_MISSING_B_AUTHORIZATION_OVERLAY")
+    if "persist_recovery_results" not in source:
+        _raise("EVAL_MISSING_DURABLE_RESULT_WRITER")
+    if "persist_terminal_failure" not in source:
+        _raise("EVAL_MISSING_TERMINAL_FAILURE_PERSISTENCE")
 
 
 def _inspect_metrics_source(root: Path) -> None:
@@ -258,6 +277,24 @@ def _inspect_metrics_source(root: Path) -> None:
         _raise("METRIC_BUNDLE_EMPTY_GUARD_MISSING")
     if "METRIC_EVALUATED_SAMPLE_COUNT_MISMATCH" not in source:
         _raise("METRIC_BUNDLE_COUNT_MISMATCH_GUARD_MISSING")
+
+
+def _inspect_b_validator_source(root: Path) -> None:
+    path = root / "scripts/validate_mmwave_m_b10r1b.py"
+    source = path.read_text(encoding="utf-8")
+    tree = ast.parse(source)
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Call):
+            func = node.func
+            name = func.id if isinstance(func, ast.Name) else (
+                func.attr if isinstance(func, ast.Attribute) else None
+            )
+            if name in {
+                "get_locked_test_recovery_evaluation_dataset",
+                "get_locked_test_final_evaluation_dataset",
+                "execute_authorized_recovery",
+            }:
+                _raise(f"B_VALIDATOR_CALLS_FORBIDDEN_ACCESS:{name}")
 
 
 def _inspect_validator_self(root: Path) -> None:
@@ -545,6 +582,58 @@ def validate_m_b10r1a_artifacts(
         _raise("SUMMARY_NEW_ACCESSOR_NOT_0")
     if int(summary.get("new_payload_release_events", -1)) != 0:
         _raise("SUMMARY_NEW_PAYLOAD_NOT_0")
+    if summary.get("a_readiness_mutation_required_for_b") is not False:
+        _raise("SUMMARY_A_READINESS_MUTATION_MUST_BE_FALSE")
+    if summary.get("b_authorization_status") != "NOT_AUTHORIZED_NOT_EXECUTED":
+        _raise("SUMMARY_B_OVERLAY_NOT_TEMPLATE")
+
+    overlay = artifacts["future_b_authorization_overlay.json"]
+    if overlay.get("approval") is not False:
+        _raise("A_OVERLAY_TEMPLATE_APPROVAL_TRUE")
+    if overlay.get("status") != "NOT_AUTHORIZED_NOT_EXECUTED":
+        _raise("A_OVERLAY_TEMPLATE_STATUS")
+    if overlay.get("recovery_execution_authorized") is not False:
+        _raise("A_OVERLAY_TEMPLATE_EXECUTION_AUTHORIZED")
+    if overlay.get("independent_reviewer_authorization") is not False:
+        _raise("A_OVERLAY_TEMPLATE_REVIEWER_AUTHORIZED")
+    freeze_sha = sha256_file(out / "execution_freeze_identity.json")
+    if overlay.get("execution_freeze_identity_sha256") != freeze_sha:
+        _raise("A_OVERLAY_FREEZE_SHA_MISMATCH")
+
+    immutability = artifacts["a_directory_immutability_contract.json"]
+    if immutability.get("m_b10r1a_directory_immutable_after_merge") is not True:
+        _raise("A_IMMUTABILITY_CONTRACT_MISSING")
+    if immutability.get("a_readiness_recovery_execution_authorized_forever") is not False:
+        _raise("A_IMMUTABILITY_EXECUTION_MUST_STAY_FALSE")
+    if immutability.get("future_b_must_not_mutate_a_readiness") is not True:
+        _raise("A_IMMUTABILITY_B_MUST_NOT_MUTATE_READINESS")
+
+    b_schema = artifacts["future_b_result_directory_schema.json"]
+    if b_schema.get("populated_during_m_b10r1a") is not False:
+        _raise("B_SCHEMA_MARKED_POPULATED")
+    if b_schema.get("status") != "NOT_POPULATED":
+        _raise("B_SCHEMA_STATUS_NOT_TEMPLATE")
+
+    b_dir = root / "datasets/mmwave/manifests/M-B10R1B_recovery_execution"
+    if b_dir.is_dir():
+        for name in (
+            "recovery_sample_predictions.jsonl",
+            "metrics_by_model.json",
+            "m_b10r1b_summary.json",
+            "model_evaluation_coverage.json",
+            "recovery_access_runtime_state.json",
+        ):
+            if (b_dir / name).is_file():
+                _raise(f"B_RESULT_POPULATED_DURING_A:{name}")
+        b_auth_path = b_dir / "authorization_record.json"
+        if b_auth_path.is_file():
+            b_auth = load_json(b_auth_path)
+            if b_auth.get("approval") is True:
+                _raise("B_OVERLAY_APPROVAL_TRUE_DURING_A")
+            if b_auth.get("status") != "NOT_AUTHORIZED_NOT_EXECUTED":
+                _raise("B_OVERLAY_STATUS_NOT_TEMPLATE_DURING_A")
+            if b_auth.get("recovery_execution_authorized") is not False:
+                _raise("B_OVERLAY_EXECUTION_AUTHORIZED_DURING_A")
 
     report_path = root / REPORT_REL
     if not report_path.is_file():
@@ -559,6 +648,7 @@ def validate_m_b10r1a_artifacts(
     _inspect_recovery_eval_source(root)
     _inspect_metrics_source(root)
     _inspect_runner_default(root)
+    _inspect_b_validator_source(root)
 
     # Required source modules exist
     for rel in (
@@ -567,6 +657,8 @@ def validate_m_b10r1a_artifacts(
         RECOVERY_METRICS_MODULE,
         PREFREEZE_MODULE,
         RUNNER_MODULE,
+        Path("scripts/mmwave_m_b10r1_result_writer.py"),
+        Path("scripts/validate_mmwave_m_b10r1b.py"),
     ):
         if not (root / rel).is_file():
             _raise(f"MODULE_MISSING:{rel}")
