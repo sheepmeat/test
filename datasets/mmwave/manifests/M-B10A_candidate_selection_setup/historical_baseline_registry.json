@@ -3,7 +3,23 @@
     {
       "baseline_id": "mmwave_resp_int8",
       "bytes": 466616,
-      "class_map_compatibility": "STRUCTURAL_CLASS_MAP_REVIEW_REQUIRED",
+      "class_map_compatibility": {
+        "evidence_paths": [
+          "models/model_manifest.json",
+          "models/mmwave/sensor_stats_metadata_v0.1.0.json",
+          "models/mmwave/mmwave_resp_int8_v0.1.0.tflite"
+        ],
+        "mapping": {
+          "0": "NORMAL",
+          "1": "RAPID_OR_ABNORMAL",
+          "2": "APNEA"
+        },
+        "status": "FROZEN_COMPATIBLE",
+        "tflite_output_shape": [
+          1,
+          3
+        ]
+      },
       "deployment_allowed_in_historical_manifest": false,
       "exact_native_preprocessing_known": false,
       "exclusion_reason": "Historical v0.1.0 model is blocked by class collapse on repository NPZ and is not the frozen real-data Phase-B lineage.",
@@ -12,6 +28,23 @@
           "0": "NORMAL",
           "1": "RAPID_OR_ABNORMAL",
           "2": "APNEA"
+        },
+        "class_map_compatibility": {
+          "evidence_paths": [
+            "models/model_manifest.json",
+            "models/mmwave/sensor_stats_metadata_v0.1.0.json",
+            "models/mmwave/mmwave_resp_int8_v0.1.0.tflite"
+          ],
+          "mapping": {
+            "0": "NORMAL",
+            "1": "RAPID_OR_ABNORMAL",
+            "2": "APNEA"
+          },
+          "status": "FROZEN_COMPATIBLE",
+          "tflite_output_shape": [
+            1,
+            3
+          ]
         },
         "contract_id": "M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1",
         "execution_scope": "LOCKED_TEST_ONLY_AFTER_EXPLICIT_M-B10B_AUTHORIZATION",
@@ -148,7 +181,23 @@
     {
       "baseline_id": "mmwave_resp_int8_v0.2.0_candidate",
       "bytes": 22472,
-      "class_map_compatibility": "EXPECTED_THREE_CLASS_MAP_REQUIRES_FINAL_CHECK",
+      "class_map_compatibility": {
+        "evidence_paths": [
+          "models/model_manifest.json",
+          "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+          "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite"
+        ],
+        "mapping": {
+          "0": "NORMAL",
+          "1": "RAPID_OR_ABNORMAL",
+          "2": "APNEA"
+        },
+        "status": "FROZEN_COMPATIBLE",
+        "tflite_output_shape": [
+          1,
+          3
+        ]
+      },
       "deployment_allowed_in_historical_manifest": true,
       "exact_native_preprocessing_known": false,
       "exclusion_reason": "Historical v0.2.0 candidate is synthetic smoke-only and has no real-data VALIDATION evidence.",
@@ -157,6 +206,23 @@
           "0": "NORMAL",
           "1": "RAPID_OR_ABNORMAL",
           "2": "APNEA"
+        },
+        "class_map_compatibility": {
+          "evidence_paths": [
+            "models/model_manifest.json",
+            "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+            "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite"
+          ],
+          "mapping": {
+            "0": "NORMAL",
+            "1": "RAPID_OR_ABNORMAL",
+            "2": "APNEA"
+          },
+          "status": "FROZEN_COMPATIBLE",
+          "tflite_output_shape": [
+            1,
+            3
+          ]
         },
         "contract_id": "M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1",
         "execution_scope": "LOCKED_TEST_ONLY_AFTER_EXPLICIT_M-B10B_AUTHORIZATION",

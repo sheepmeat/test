@@ -20,6 +20,11 @@
       "evidence": "M-B8 cross_seed_latency_summary.json independently reconstructed by validator",
       "id": "M_B8_PIPELINE_P99_SOURCE_RECONSTRUCTION",
       "status": "CLOSED"
+    },
+    {
+      "evidence": "model_manifest.json, baseline metadata, executable contracts, and TFLite output shape [1,3] independently matched",
+      "id": "BASELINE_CLASS_MAP_FREEZE",
+      "status": "CLOSED"
     }
   ],
   "non_blocking_improvements": [

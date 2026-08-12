@@ -94,6 +94,7 @@ class TestMMWaveMB10A(unittest.TestCase):
     def test_baseline_executable_preprocessing_contracts_are_frozen(self) -> None:
         registry = json.loads((OUT / "historical_baseline_registry.json").read_text())
         contracts = {row["baseline_id"]: row["executable_preprocessing_contract"] for row in registry["baselines"]}
+        expected_map = {"0": "NORMAL", "1": "RAPID_OR_ABNORMAL", "2": "APNEA"}
         self.assertEqual(
             contracts["mmwave_resp_int8"]["steps"][2]["operation"],
             "FIXED_Z_SCORE",
@@ -107,6 +108,22 @@ class TestMMWaveMB10A(unittest.TestCase):
             self.assertEqual(contract["invalid_input_policy"], "FAIL_CLOSED_NO_PREDICTION")
             self.assertEqual(contract["fallback_policy"], "NO_HEURISTIC_FALLBACK")
             self.assertEqual(contract["preprocessing_fit_policy"], "NO_FIT_DURING_M-B10B")
+            self.assertEqual(contract["class_map"], expected_map)
+            self.assertEqual(contract["class_map_compatibility"]["status"], "FROZEN_COMPATIBLE")
+            self.assertEqual(contract["class_map_compatibility"]["mapping"], expected_map)
+        for row in registry["baselines"]:
+            self.assertEqual(row["class_map_compatibility"]["status"], "FROZEN_COMPATIBLE")
+            self.assertEqual(row["class_map_compatibility"]["mapping"], expected_map)
+
+        final_contract = json.loads((OUT / "locked_test_evaluation_contract.json").read_text())
+        for planned in final_contract["planned_models"]:
+            if planned["role"] == "HISTORICAL_BASELINE_ONLY":
+                self.assertEqual(planned["class_map_compatibility"]["mapping"], expected_map)
+                self.assertEqual(planned["executable_preprocessing_contract"]["class_map_compatibility"]["mapping"], expected_map)
+
+        for path in OUT.glob("*.json"):
+            self.assertNotIn("STRUCTURAL_" + "CLASS_MAP_REVIEW_REQUIRED", path.read_text())
+            self.assertNotIn("EXPECTED_" + "THREE_CLASS_MAP_REQUIRES_FINAL_CHECK", path.read_text())
 
     def test_baseline_executors_are_fail_closed_and_deterministic(self) -> None:
         window = [float(index) / 100.0 for index in range(300)]
@@ -155,10 +172,13 @@ class TestMMWaveMB10A(unittest.TestCase):
             self.assertEqual(set(row["eligibility_evidence"]), {f"E{i}" for i in range(1, 12)})
 
     def test_negative_corruption_cases_fail_closed(self) -> None:
-        """Seven isolated corruption cases are subtests of one test method."""
+        """Isolated corruption cases are subtests of one test method."""
         for case_id in NEGATIVE_CASES:
             with self.subTest(case_id=case_id):
                 self.assertTrue(_negative_case_detected(case_id, ROOT))
+
+    def test_baseline_class_map_corruption_hits_real_validator(self) -> None:
+        self.assertTrue(_negative_case_detected("baseline_class_map_corruption", ROOT))
 
 
 if __name__ == "__main__":

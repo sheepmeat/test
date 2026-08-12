@@ -70,12 +70,44 @@
   "planned_models": [
     {
       "class_map_compatibility": {
-        "APNEA": 2,
-        "NORMAL": 0,
-        "RAPID_OR_ABNORMAL": 1
+        "evidence_paths": [
+          "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_manifests/seed42_runtime_manifest.json",
+          "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite"
+        ],
+        "mapping": {
+          "0": "NORMAL",
+          "1": "RAPID_OR_ABNORMAL",
+          "2": "APNEA"
+        },
+        "status": "FROZEN_COMPATIBLE",
+        "tflite_output_shape": [
+          1,
+          3
+        ]
       },
       "exact_native_preprocessing_known": true,
       "executable_preprocessing_contract": {
+        "class_map": {
+          "0": "NORMAL",
+          "1": "RAPID_OR_ABNORMAL",
+          "2": "APNEA"
+        },
+        "class_map_compatibility": {
+          "evidence_paths": [
+            "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_manifests/seed42_runtime_manifest.json",
+            "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite"
+          ],
+          "mapping": {
+            "0": "NORMAL",
+            "1": "RAPID_OR_ABNORMAL",
+            "2": "APNEA"
+          },
+          "status": "FROZEN_COMPATIBLE",
+          "tflite_output_shape": [
+            1,
+            3
+          ]
+        },
         "contract_id": "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1",
         "execution_status": "FROZEN_RUNTIME_IDENTITY_FROM_M-B9",
         "fallback_policy": "NO_HEURISTIC_FALLBACK",
@@ -94,13 +126,46 @@
       "sha256": "6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5"
     },
     {
-      "class_map_compatibility": "STRUCTURAL_CLASS_MAP_REVIEW_REQUIRED",
+      "class_map_compatibility": {
+        "evidence_paths": [
+          "models/model_manifest.json",
+          "models/mmwave/sensor_stats_metadata_v0.1.0.json",
+          "models/mmwave/mmwave_resp_int8_v0.1.0.tflite"
+        ],
+        "mapping": {
+          "0": "NORMAL",
+          "1": "RAPID_OR_ABNORMAL",
+          "2": "APNEA"
+        },
+        "status": "FROZEN_COMPATIBLE",
+        "tflite_output_shape": [
+          1,
+          3
+        ]
+      },
       "exact_native_preprocessing_known": false,
       "executable_preprocessing_contract": {
         "class_map": {
           "0": "NORMAL",
           "1": "RAPID_OR_ABNORMAL",
           "2": "APNEA"
+        },
+        "class_map_compatibility": {
+          "evidence_paths": [
+            "models/model_manifest.json",
+            "models/mmwave/sensor_stats_metadata_v0.1.0.json",
+            "models/mmwave/mmwave_resp_int8_v0.1.0.tflite"
+          ],
+          "mapping": {
+            "0": "NORMAL",
+            "1": "RAPID_OR_ABNORMAL",
+            "2": "APNEA"
+          },
+          "status": "FROZEN_COMPATIBLE",
+          "tflite_output_shape": [
+            1,
+            3
+          ]
         },
         "contract_id": "M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1",
         "execution_scope": "LOCKED_TEST_ONLY_AFTER_EXPLICIT_M-B10B_AUTHORIZATION",
@@ -233,13 +298,46 @@
       "sha256": "43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158"
     },
     {
-      "class_map_compatibility": "EXPECTED_THREE_CLASS_MAP_REQUIRES_FINAL_CHECK",
+      "class_map_compatibility": {
+        "evidence_paths": [
+          "models/model_manifest.json",
+          "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+          "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite"
+        ],
+        "mapping": {
+          "0": "NORMAL",
+          "1": "RAPID_OR_ABNORMAL",
+          "2": "APNEA"
+        },
+        "status": "FROZEN_COMPATIBLE",
+        "tflite_output_shape": [
+          1,
+          3
+        ]
+      },
       "exact_native_preprocessing_known": false,
       "executable_preprocessing_contract": {
         "class_map": {
           "0": "NORMAL",
           "1": "RAPID_OR_ABNORMAL",
           "2": "APNEA"
+        },
+        "class_map_compatibility": {
+          "evidence_paths": [
+            "models/model_manifest.json",
+            "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+            "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite"
+          ],
+          "mapping": {
+            "0": "NORMAL",
+            "1": "RAPID_OR_ABNORMAL",
+            "2": "APNEA"
+          },
+          "status": "FROZEN_COMPATIBLE",
+          "tflite_output_shape": [
+            1,
+            3
+          ]
         },
         "contract_id": "M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1",
         "execution_scope": "LOCKED_TEST_ONLY_AFTER_EXPLICIT_M-B10B_AUTHORIZATION",

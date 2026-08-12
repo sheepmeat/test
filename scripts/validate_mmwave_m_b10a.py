@@ -52,6 +52,43 @@ class MB10AValidationError(RuntimeError):
     """Raised when M-B10A evidence fails closed."""
 
 
+EXPECTED_BASELINE_CLASS_MAP = {
+    "0": "NORMAL",
+    "1": "RAPID_OR_ABNORMAL",
+    "2": "APNEA",
+}
+CLASS_MAP_UNRESOLVED_TOKENS = ("REVIEW", "REQUIRED", "UNKNOWN", "EXPECTED")
+
+
+def _normalize_class_map(value: Any, context: str) -> dict[str, str]:
+    if not isinstance(value, dict):
+        raise MB10AValidationError(f"M-B10A_CLASS_MAP_NOT_OBJECT:{context}")
+    normalized = {str(key): value_item for key, value_item in value.items()}
+    if set(normalized) != set(EXPECTED_BASELINE_CLASS_MAP) or any(not isinstance(item, str) for item in normalized.values()):
+        raise MB10AValidationError(f"M-B10A_CLASS_MAP_KEYS_OR_TYPES:{context}")
+    normalized = {key: str(normalized[key]) for key in sorted(normalized)}
+    if normalized != EXPECTED_BASELINE_CLASS_MAP:
+        raise MB10AValidationError(f"M-B10A_CLASS_MAP_MAPPING_MISMATCH:{context}")
+    return normalized
+
+
+def _validate_class_map_compatibility(value: Any, expected_evidence_paths: list[str], context: str) -> None:
+    if isinstance(value, str):
+        upper = value.upper()
+        if any(token in upper for token in CLASS_MAP_UNRESOLVED_TOKENS):
+            raise MB10AValidationError(f"M-B10A_CLASS_MAP_UNRESOLVED_PLACEHOLDER:{context}")
+        raise MB10AValidationError(f"M-B10A_CLASS_MAP_COMPATIBILITY_NOT_OBJECT:{context}")
+    if not isinstance(value, dict):
+        raise MB10AValidationError(f"M-B10A_CLASS_MAP_COMPATIBILITY_INVALID:{context}")
+    if value.get("status") != "FROZEN_COMPATIBLE":
+        raise MB10AValidationError(f"M-B10A_CLASS_MAP_COMPATIBILITY_STATUS:{context}")
+    _normalize_class_map(value.get("mapping"), f"{context}.mapping")
+    if value.get("evidence_paths") != expected_evidence_paths:
+        raise MB10AValidationError(f"M-B10A_CLASS_MAP_COMPATIBILITY_EVIDENCE:{context}")
+    if value.get("tflite_output_shape") != [1, 3]:
+        raise MB10AValidationError(f"M-B10A_CLASS_MAP_COMPATIBILITY_OUTPUT_SHAPE:{context}")
+
+
 def _source_path(source_root: Path, relative: str | Path) -> Path:
     path = Path(relative)
     if path.is_absolute() or ".." in path.parts or "\\" in str(relative) or str(relative).startswith("~"):
@@ -647,13 +684,21 @@ def _validate_executable_preprocessing_contract(source_root: Path, row: dict[str
     source_window = contract.get("source_window_contract", {})
     if source_window.get("path") != "datasets/mmwave/processed/mmwave_canonical_real_v1.npy" or source_window.get("sample_rate_hz") != 10.0 or source_window.get("window_samples") != 300 or source_window.get("window_seconds") != 30.0 or source_window.get("input_shape") != [300] or source_window.get("input_dtype") != "float32" or source_window.get("input_semantic") != "resp_phase_unwrapped_clutter_removed":
         raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_WINDOW:{row.get('baseline_id')}")
-    if contract.get("class_map") != {"0": "NORMAL", "1": "RAPID_OR_ABNORMAL", "2": "APNEA"}:
-        raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_CLASS_MAP:{row.get('baseline_id')}")
+    expected_class_map_paths = ["models/model_manifest.json", manifest_model.get("metadata_path"), manifest_model.get("path")]
+    _normalize_class_map(contract.get("class_map"), f"{row.get('baseline_id')}.executable_preprocessing_contract.class_map")
+    _validate_class_map_compatibility(contract.get("class_map_compatibility"), expected_class_map_paths, f"{row.get('baseline_id')}.executable_preprocessing_contract.class_map_compatibility")
+    _validate_class_map_compatibility(row.get("class_map_compatibility"), expected_class_map_paths, f"{row.get('baseline_id')}.class_map_compatibility")
+    if _normalize_class_map(manifest_model.get("class_map"), f"{row.get('baseline_id')}.model_manifest.class_map") != EXPECTED_BASELINE_CLASS_MAP:
+        raise MB10AValidationError(f"M-B10A_BASELINE_MANIFEST_CLASS_MAP:{row.get('baseline_id')}")
+    if _normalize_class_map(_load_json(_source_path(source_root, manifest_model.get("metadata_path"))).get("class_map"), f"{row.get('baseline_id')}.metadata.class_map") != EXPECTED_BASELINE_CLASS_MAP:
+        raise MB10AValidationError(f"M-B10A_BASELINE_METADATA_CLASS_MAP:{row.get('baseline_id')}")
     model_identity = contract.get("model_identity", {})
     model_path = _source_path(source_root, manifest_model["path"])
     if model_identity.get("model_id") != manifest_model.get("model_id") or model_identity.get("path") != manifest_model.get("path") or model_identity.get("sha256") != _sha256(model_path) or int(model_identity.get("bytes", -1)) != model_path.stat().st_size:
         raise MB10AValidationError(f"M-B10A_BASELINE_EXECUTABLE_CONTRACT_MODEL:{row.get('baseline_id')}")
     actual_model = _inspect_tflite(source_root, manifest_model["path"])
+    if actual_model["output_shape"] != [1, 3]:
+        raise MB10AValidationError(f"M-B10A_BASELINE_TFLITE_OUTPUT_CLASS_COUNT:{row.get('baseline_id')}")
     input_contract = model_identity.get("input", {})
     output_contract = model_identity.get("output", {})
     if input_contract.get("shape") != actual_model["input_shape"] or input_contract.get("dtype") != actual_model["input_dtype"] or not _close(float(input_contract.get("scale")), actual_model["input_scale"], 1e-12) or int(input_contract.get("zero_point", 999)) != actual_model["input_zero_point"] or output_contract.get("shape") != actual_model["output_shape"] or output_contract.get("dtype") != actual_model["output_dtype"] or not _close(float(output_contract.get("scale")), actual_model["output_scale"], 1e-12) or int(output_contract.get("zero_point", 999)) != actual_model["output_zero_point"]:
@@ -754,12 +799,24 @@ def _validate_locked_protocol(source_root: Path, artifacts: dict[str, Any], sele
     for planned in planned_models:
         if planned.get("role") == "HISTORICAL_BASELINE_ONLY":
             registered = registry_by_id.get(planned.get("model_id"))
-            if registered is None or planned.get("preprocessing_contract_id") != registered.get("preprocessing_contract_id") or planned.get("executable_preprocessing_contract") != registered.get("executable_preprocessing_contract"):
+            if registered is None or planned.get("preprocessing_contract_id") != registered.get("preprocessing_contract_id") or planned.get("executable_preprocessing_contract") != registered.get("executable_preprocessing_contract") or planned.get("class_map_compatibility") != registered.get("class_map_compatibility"):
                 raise MB10AValidationError(f"M-B10A_PLANNED_BASELINE_CONTRACT_MISMATCH:{planned.get('model_id')}")
         elif planned.get("role") == "SELECTED_NEW_REAL_DATA_CANDIDATE":
             executable = planned.get("executable_preprocessing_contract", {})
             if planned.get("preprocessing_contract_id") != "M-B10B_SELECTED_REAL_CANDIDATE_BPF_ZSCORE_V1" or executable.get("execution_status") != "FROZEN_RUNTIME_IDENTITY_FROM_M-B9" or executable.get("invalid_input_policy") != "FAIL_CLOSED_NO_PREDICTION" or executable.get("fallback_policy") != "NO_HEURISTIC_FALLBACK" or executable.get("fit_split") != "TRAIN":
                 raise MB10AValidationError("M-B10A_SELECTED_PREPROCESSING_CONTRACT_INCOMPLETE")
+            selected_model_path = planned.get("path")
+            seed = next((row.get("seed") for row in artifacts["candidate_pool.json"].get("candidates", []) if row.get("model", {}).get("relative_path") == selected_model_path), None)
+            if seed is None:
+                raise MB10AValidationError("M-B10A_SELECTED_CLASS_MAP_SEED_MISSING")
+            selected_class_map_paths = [f"datasets/mmwave/manifests/M-B9_mock_e2e/runtime_manifests/seed{int(seed)}_runtime_manifest.json", selected_model_path]
+            _validate_class_map_compatibility(planned.get("class_map_compatibility"), selected_class_map_paths, "selected_final_test_model.class_map_compatibility")
+            _normalize_class_map(executable.get("class_map"), "selected_final_test_model.executable_preprocessing_contract.class_map")
+            _validate_class_map_compatibility(executable.get("class_map_compatibility"), selected_class_map_paths, "selected_final_test_model.executable_preprocessing_contract.class_map_compatibility")
+            runtime_manifest = _load_json(_source_path(source_root, selected_class_map_paths[0]))
+            _normalize_class_map(runtime_manifest.get("runtime_model", {}).get("class_map"), "selected_final_test_model.runtime_manifest.class_map")
+            if runtime_manifest.get("runtime_model", {}).get("output", {}).get("shape") != [1, 3]:
+                raise MB10AValidationError("M-B10A_SELECTED_TFLITE_OUTPUT_CLASS_COUNT")
         else:
             raise MB10AValidationError("M-B10A_PLANNED_MODEL_ROLE_INVALID")
     mechanism = readiness.get("final_access_mechanism", {})
@@ -781,6 +838,7 @@ def _validate_summary(artifacts: dict[str, Any], ranking: dict[str, Any], rule_s
         "M_B9_VALID_FINALIST_FALLBACK_E6",
         "M_B9_RUNTIME_PREDICTION_IDENTITY_E5",
         "M_B8_PIPELINE_P99_SOURCE_RECONSTRUCTION",
+        "BASELINE_CLASS_MAP_FREEZE",
     }
     if set(summary.get("review_refinements_closed", [])) != expected_closed:
         raise MB10AValidationError("M-B10A_REVIEW_REFINEMENTS_NOT_CLOSED")
@@ -865,6 +923,7 @@ NEGATIVE_CASES = (
     "locked_test_protocol_corruption",
     "checksum_corruption",
     "forbidden_final_artifact",
+    "baseline_class_map_corruption",
 )
 
 
@@ -907,6 +966,20 @@ def _negative_case_detected(case_id: str, root_dir: Path = ROOT_DIR) -> bool:
         elif case_id == "forbidden_final_artifact":
             target = temp_out / "locked_test_predictions.json"
             target.write_text("{}\n", encoding="utf-8")
+        elif case_id == "baseline_class_map_corruption":
+            target = temp_out / "historical_baseline_registry.json"
+            data = _load_json(target)
+            corrupted = data["baselines"][0]["class_map_compatibility"]
+            corrupted["mapping"]["2"] = "NORMAL"
+            target.write_text(json.dumps(data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+            checksum_path = temp_out / "checksums.sha256"
+            checksum_rows = []
+            for line in checksum_path.read_text(encoding="utf-8").splitlines():
+                if line.endswith("  historical_baseline_registry.json"):
+                    checksum_rows.append(f"{_sha256(target)}  historical_baseline_registry.json")
+                else:
+                    checksum_rows.append(line)
+            checksum_path.write_text("\n".join(checksum_rows) + "\n", encoding="utf-8")
         try:
             validate_m_b10a_artifacts(source_root, output_dir=temp_out, run_upstream=False)
         except MB10AValidationError:

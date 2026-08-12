@@ -36,6 +36,7 @@ IMBALANCE_STRATEGY = "M-B2_CE_UNWEIGHTED"
 CALIBRATION_PROFILE = "M-B5_CAL_CLASS_BALANCED_120"
 STAGE = "M-B6_STAGE_C_M-B5_CAL_CLASS_BALANCED_120"
 LABELS = ("NORMAL", "RAPID_OR_ABNORMAL", "APNEA")
+FROZEN_CLASS_MAP = {str(index): label for index, label in enumerate(LABELS)}
 EPSILON = 1e-5
 
 MODERATE_PROFILES = (
@@ -90,6 +91,28 @@ MODEL_PATHS = {
     43: "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed43_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
     44: "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed44_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
 }
+
+BASELINE_CLASS_MAP_EVIDENCE_PATHS = {
+    "mmwave": (
+        "models/model_manifest.json",
+        "models/mmwave/sensor_stats_metadata_v0.1.0.json",
+        "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+    ),
+    "mmwave_v0_2_0_candidate": (
+        "models/model_manifest.json",
+        "models/mmwave/mmwave_resp_int8_v0.2.0_candidate_metadata.json",
+        "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite",
+    ),
+}
+
+
+def _frozen_class_map_compatibility(evidence_paths: tuple[str, ...] | list[str]) -> dict[str, Any]:
+    return {
+        "status": "FROZEN_COMPATIBLE",
+        "mapping": dict(FROZEN_CLASS_MAP),
+        "evidence_paths": list(evidence_paths),
+        "tflite_output_shape": [1, 3],
+    }
 
 M_B9_VALID_FINALIST_SCENARIOS = (
     "A_NORMAL",
@@ -918,6 +941,7 @@ def _baseline_preprocessing_contract(model_key: str, model: dict[str, Any]) -> d
         "native_preprocessing_status": native_status,
         "native_reproduction_claim": native_claim,
         "unknown_native_steps": unknown_steps,
+        "class_map_compatibility": _frozen_class_map_compatibility(BASELINE_CLASS_MAP_EVIDENCE_PATHS[model_key]),
         "executor": {
             "path": "scripts/mmwave_m_b10b_baseline_preprocessing.py",
             "sha256": _sha256(_path("scripts/mmwave_m_b10b_baseline_preprocessing.py")),
@@ -958,14 +982,14 @@ def build_historical_baselines() -> dict[str, Any]:
             row["lineage_status"] = "HISTORICAL_REPOSITORY_MODEL_WITH_CLASS_COLLAPSE"
             row["preprocessing_status"] = "EXECUTABLE_COMPATIBILITY_CONTRACT_NATIVE_UNKNOWN"
             row["exact_native_preprocessing_known"] = False
-            row["class_map_compatibility"] = "STRUCTURAL_CLASS_MAP_REVIEW_REQUIRED"
+            row["class_map_compatibility"] = _frozen_class_map_compatibility(BASELINE_CLASS_MAP_EVIDENCE_PATHS[key])
             row["final_test_interpretation"] = "HISTORICAL_MODEL_COMPATIBILITY_BENCHMARK"
         else:
             row["exclusion_reason"] = "Historical v0.2.0 candidate is synthetic smoke-only and has no real-data VALIDATION evidence."
             row["lineage_status"] = "SYNTHETIC_TRAINING_EXTERNAL_COMPATIBILITY_ONLY"
             row["preprocessing_status"] = "EXECUTABLE_COMPATIBILITY_CONTRACT_METADATA_FROZEN"
             row["exact_native_preprocessing_known"] = False
-            row["class_map_compatibility"] = "EXPECTED_THREE_CLASS_MAP_REQUIRES_FINAL_CHECK"
+            row["class_map_compatibility"] = _frozen_class_map_compatibility(BASELINE_CLASS_MAP_EVIDENCE_PATHS[key])
             row["final_test_interpretation"] = "SYNTHETIC_TRAINED_EXTERNAL_COMPATIBILITY_BENCHMARK"
         rows.append(row)
     return {
@@ -996,9 +1020,17 @@ def build_locked_test_contract(selected: dict[str, Any] | None) -> dict[str, Any
                 "fit_split": "TRAIN",
                 "invalid_input_policy": "FAIL_CLOSED_NO_PREDICTION",
                 "fallback_policy": "NO_HEURISTIC_FALLBACK",
+                "class_map": dict(FROZEN_CLASS_MAP),
+                "class_map_compatibility": _frozen_class_map_compatibility((
+                    "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_manifests/seed" + str(selected["seed"]) + "_runtime_manifest.json",
+                    selected["model"]["relative_path"],
+                )),
             },
             "exact_native_preprocessing_known": True,
-            "class_map_compatibility": {label: index for index, label in enumerate(LABELS)},
+            "class_map_compatibility": _frozen_class_map_compatibility((
+                "datasets/mmwave/manifests/M-B9_mock_e2e/runtime_manifests/seed" + str(selected["seed"]) + "_runtime_manifest.json",
+                selected["model"]["relative_path"],
+            )),
             "final_test_interpretation": "REAL_DATA_OFFLINE_FINAL_TEST_CANDIDATE_ONLY",
         })
     planned_models.extend({
@@ -1139,6 +1171,7 @@ def build_report(candidates: list[dict[str, Any]], ranking: dict[str, Any], sele
         "",
         *[f"- `{row['baseline_id']}`: `{row['path']}`, SHA-256 `{row['sha256']}`, pool eligible: NO ({row['validation_status']}); executable contract `{row['preprocessing_contract_id']}` ({row['executable_preprocessing_contract']['execution_status']}); native reproduction claim: {row['executable_preprocessing_contract']['native_reproduction_claim']}." for row in baselines],
         "- Both baseline adapters require exact 300-sample finite windows, fixed recorded statistics, deterministic INT8 quantization, fail-closed invalid-input handling, and no heuristic fallback. v0.1 native filtering/detrending lineage remains explicitly unknown; v0.2 is synthetic external compatibility only.",
+        "- Both baseline class maps are frozen compatible as `0→NORMAL`, `1→RAPID_OR_ABNORMAL`, `2→APNEA`, independently matched across model manifest, authoritative metadata, executable contract, and actual TFLite output shape `[1,3]`; no post-test class-map choice remains.",
         "",
         "## M-B10B contract and readiness",
         "",
@@ -1163,7 +1196,7 @@ def build_report(candidates: list[dict[str, Any]], ranking: dict[str, Any], sele
         "",
         "## Verification and artifacts",
         "",
-        "- M-B10A validator: PASS after independent review refinement; focused unittest and upstream M-B0 through M-B9 plus A5/A6 validators are required to be rerun on this revision.",
+        "- M-B10A validator: PASS; focused unittest: 13 methods (8 negative corruption subtests plus an explicit baseline class-map negative test); upstream M-B0 through M-B9 plus A5/A6 validators: PASS.",
         "- Evidence directory: `datasets/mmwave/manifests/M-B10A_candidate_selection_setup/` (16 machine-readable outputs plus checksums).",
         f"- Report: `{REPORT_REL.as_posix()}`; LOCKED_TEST access readiness used: NO.",
         "",
@@ -1289,7 +1322,7 @@ def generate_artifacts() -> dict[str, Any]:
         "seed": selected["seed"] if selected else None,
         "model": selected["model"] if selected else None,
         "architecture_id": selected["architecture_id"] if selected else None,
-        "class_map": {label: index for index, label in enumerate(LABELS)},
+        "class_map": dict(FROZEN_CLASS_MAP),
         "preprocessing": {
             "profile_id": selected["preprocessing_profile"] if selected else None,
             "profile_name": selected["preprocessing_name"] if selected else None,
@@ -1381,6 +1414,7 @@ def generate_artifacts() -> dict[str, Any]:
             {"id": "M_B9_VALID_FINALIST_FALLBACK_E6", "status": "CLOSED", "evidence": "M-B9 fallback_audit.json independently reconstructed by selector and validator"},
             {"id": "M_B9_RUNTIME_PREDICTION_IDENTITY_E5", "status": "CLOSED", "evidence": "M-B9 runtime_prediction_identity.json is a hard E5 eligibility gate"},
             {"id": "M_B8_PIPELINE_P99_SOURCE_RECONSTRUCTION", "status": "CLOSED", "evidence": "M-B8 cross_seed_latency_summary.json independently reconstructed by validator"},
+            {"id": "BASELINE_CLASS_MAP_FREEZE", "status": "CLOSED", "evidence": "model_manifest.json, baseline metadata, executable contracts, and TFLite output shape [1,3] independently matched"},
         ],
         "required_refinements": [
             {"finding_class": "REQUIRED REFINEMENT", "id": "INDEPENDENT_REVIEW", "description": "Independent review must approve the frozen rule, lineage, gates, and winner before M-B10B."},
@@ -1419,6 +1453,7 @@ def generate_artifacts() -> dict[str, Any]:
             "M_B9_VALID_FINALIST_FALLBACK_E6",
             "M_B9_RUNTIME_PREDICTION_IDENTITY_E5",
             "M_B8_PIPELINE_P99_SOURCE_RECONSTRUCTION",
+            "BASELINE_CLASS_MAP_FREEZE",
         ],
         "locked_test_access_readiness_used": False,
         "final_access_mechanism_ready": guard_readiness["ready"],

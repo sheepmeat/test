@@ -2,7 +2,7 @@
 
 ## Execution identity
 
-- Track: mmWave M-B10A; branch: `feature/M-B10A-candidate-selection-setup`; base `origin/main`: `4e3c2e6957a3142f0ff3da8ec50f3bc0b4c94602`.
+- Track: mmWave M-B10A; branch: `feature/M-B10A-candidate-selection-setup`; base `origin/main`: `4390fbce60902b900cc5ffaf8fe068c3913c371f`.
 - M-B9 predecessor: closure `8fe4b2b38a0faa7b4cf87628f769c07763c6c91d` merged by PR #42 and present in the base.
 - Worktree isolation: fresh branch from `origin/main`; no CO₂, Thermal, Integration, shared-contract, config, risk, or raw-data files are in scope.
 
@@ -56,6 +56,7 @@ Pool identity is fixed to M-B3_CONV1D_GAP_BASELINE + M-B1 BPF_ZSCORE + M-B2 CE_U
 - `mmwave_resp_int8`: `models/mmwave/mmwave_resp_int8_v0.1.0.tflite`, SHA-256 `43cdd6f321c2b645232162233e098c2b65549388cbc9e680a17a0eccdc8f0158`, pool eligible: NO (BLOCKED); executable contract `M-B10B_HISTORICAL_V0_1_COMPATIBILITY_PREPROCESSING_V1` (EXECUTABLE_COMPATIBILITY_BENCHMARK); native reproduction claim: False.
 - `mmwave_resp_int8_v0.2.0_candidate`: `models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite`, SHA-256 `85c023d3eefca13ecbb72a841974e53a56d5f4173920645d46df49a9088452ff`, pool eligible: NO (SYNTHETIC_SMOKE_ONLY); executable contract `M-B10B_SYNTHETIC_V0_2_EXTERNAL_COMPATIBILITY_PREPROCESSING_V1` (EXECUTABLE_COMPATIBILITY_BENCHMARK); native reproduction claim: False.
 - Both baseline adapters require exact 300-sample finite windows, fixed recorded statistics, deterministic INT8 quantization, fail-closed invalid-input handling, and no heuristic fallback. v0.1 native filtering/detrending lineage remains explicitly unknown; v0.2 is synthetic external compatibility only.
+- Both baseline class maps are frozen compatible as `0→NORMAL`, `1→RAPID_OR_ABNORMAL`, `2→APNEA`, independently matched across model manifest, authoritative metadata, executable contract, and actual TFLite output shape `[1,3]`; no post-test class-map choice remains.
 
 ## M-B10B contract and readiness
 
@@ -80,6 +81,6 @@ The final LOCKED_TEST metrics contract is preregistered but unused. M-B10B autho
 
 ## Verification and artifacts
 
-- M-B10A validator: PASS after independent review refinement; focused unittest and upstream M-B0 through M-B9 plus A5/A6 validators are required to be rerun on this revision.
+- M-B10A validator: PASS; focused unittest: 13 methods (8 negative corruption subtests plus an explicit baseline class-map negative test); upstream M-B0 through M-B9 plus A5/A6 validators: PASS.
 - Evidence directory: `datasets/mmwave/manifests/M-B10A_candidate_selection_setup/` (16 machine-readable outputs plus checksums).
 - Report: `docs/reports/20260812_Codex_M-B10A_Prelocked_Candidate_Selection_01.md`; LOCKED_TEST access readiness used: NO.

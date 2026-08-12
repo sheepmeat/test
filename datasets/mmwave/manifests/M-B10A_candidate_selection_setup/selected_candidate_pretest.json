@@ -4,9 +4,9 @@
   "calibration_profile": "M-B5_CAL_CLASS_BALANCED_120",
   "candidate_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120",
   "class_map": {
-    "APNEA": 2,
-    "NORMAL": 0,
-    "RAPID_OR_ABNORMAL": 1
+    "0": "NORMAL",
+    "1": "RAPID_OR_ABNORMAL",
+    "2": "APNEA"
   },
   "clinical_performance": "NOT_EVALUATED",
   "deciding_criterion": {
