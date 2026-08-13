@@ -6,6 +6,7 @@
 - [기존 mmWave A–E 상세 실행 순서](20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md)
 - [mmWave Phase B 개요](MMWAVE_PHASE_B_OVERVIEW.md)
 - [활성 팀 통합 프롬프트](TEAM_HANDOFF_GUIDE.md)
+- [멀티센서 중간배포 기술 맥락 및 인수인계](reports/20260813_SafeNest_Multisensor_Intermediate_Release_Technical_Context_01.md)
 - [A5 subject split·provenance 결과](reports/20260808_Antigravity_A5_Subject_Split_Provenance_01.md)
 - [A6 full conversion·integrity audit 결과](reports/20260808_Antigravity_A6_Full_Conversion_Integrity_Audit_01.md)
 
