@@ -60,15 +60,740 @@ B단계 M-B0부터 M-B12까지는 이 고정 데이터를 사용해 입력을 �
 
 무작위로 행을 섞어 나누는 대신 서로 떨어진 원본 시간 구간을 보존했다. `datatraining.txt`는 모델 학습용 TRAIN, `datatest.txt`는 모델 선택용 VALIDATION, `datatest2.txt`는 선택 완료 후 한 번만 확인하는 LOCKED_TEST이고, 변화 속도 계산에 필요한 초기 3행씩을 제외한 사용 가능 표본은 각각 8,140, 2,662, 9,749개이다. Temporal block split은 시간상 분리된 덩어리를 통째로 학습·검증·최종시험에 배정하는 방법으로, 바로 옆 시간대의 거의 같은 실내 환경값이 여러 용도에 함께 섞이는 위험을 줄인다. 다만 원본에는 사람이나 독립 측정 회차를 식별할 정보가 없어 group independence, 즉 평가 자료가 학습 자료와 다른 사람·측정 회차에서 나왔다고 증명할 수는 없다. 표준 표본과 각 표본의 용도는 `datasets/co2/manifests/c_a5_canonical_samples/canonical_source_samples.jsonl`과 `split_membership_manifest.json`에 기록되고, A단계 전체가 끊김 없이 연결되는지는 `scripts/validate_co2_final_integrity.py`가 확인한다.
 
-모델 입력 순서는 CO₂ 농도인 `CO2`, 온도인 `Temperature`, 상대습도인 `Humidity`, CO₂ 변화 속도인 `CO2_slope` 네 값으로 고정했다. `CO2_slope`는 현재 농도가 약 150초 전보다 분당 얼마나 변했는지를 실제 경과시간으로 나눈 값이며 단위는 ppm/min이다. ppm은 공기 백만 부분 중 CO₂가 몇 부분인지를 나타내는 농도 단위이고, ppm/min은 그 농도가 1분에 얼마나 변하는지를 뜻한다. Causal은 미래 측정값을 미리 보지 않고 현재와 과거 값만 사용한다는 뜻이고, 선택 방식의 고유 이름은 `ENDPOINT_H150`이다. 측정이 90초 넘게 끊기면 이전 이력을 이어 붙이지 않고 다시 시작하며, 각 파일의 초기 3개씩 총 9개 warmup 표본은 과거 값이 충분히 쌓이지 않은 준비 구간으로 남긴다. 이 변화 속도는 UCI 기록에서 검증한 저장 데이터 계산일 뿐, 실제 SCD40의 측정 간격·값 누락·센서 보정에서도 동일하게 계산된다는 뜻은 아니다. 정답 0인 `VACANT`는 빈방, 1인 `OCCUPIED`는 사람이 있는 방을 뜻할 뿐이며, CO₂ 위험 농도나 SafeNest 전체 위험도를 뜻하지 않는다. 원본의 조도 `Light`와 별도 습도 계산값 `HumidityRatio`는 후보 비교에는 사용했지만 선택 모델 입력에서는 제외했다.
+#### C-A3 — 현재 CO₂ 농도만으로는 알 수 없는 “변화 방향”을 입력에 추가한 단계
 
-C-B0~C-B5에서는 입력값의 직선 조합으로 판단하는 logistic regression, 여러 결정 트리의 투표를 쓰는 random forest, 층을 연결해 복잡한 관계를 배우는 작은 neural network를 다섯 초기값 seed에서 같은 VALIDATION 조건으로 비교했다. 선택된 `LINEAR_LOGISTIC`은 네 입력값에 각각 중요도를 곱해 더한 뒤 재실 확률로 바꾸는 단순 선형 분류기이며, 복잡한 모델보다 다시 만들기 쉬우면서 검증 성능도 안정적이었다. 값의 크기를 맞추는 StandardScaler는 TRAIN으로만 계산해 평가 정보가 섞이지 않게 했다. 학습 중 적은 `OCCUPIED` 사례를 반복 추출해 두 클래스 수를 맞추는 `BALANCED_RANDOM_OVERSAMPLE`을 사용했으며, 재실 판정 threshold는 0.58로 고정했다. 즉 모델이 낸 재실 확률이 0.58 이상일 때 `OCCUPIED`로 판단한다.
+C-A2까지 진행하면서 CO₂ 데이터가 어느 시간에 측정되었는지, 어떤 시간 구간을 학습과 검증에 사용할지까지는 정리되었다. 그러나 이 상태에서 모델이 볼 수 있는 `CO2` 값은 특정 시점의 농도 하나일 뿐이다. 예를 들어 두 방의 현재 농도가 모두 800 ppm이라면 입력값만 놓고 보았을 때 두 상황은 동일하다. 하지만 한쪽은 500→600→700→800 ppm처럼 계속 상승 중일 수 있고, 다른 한쪽은 1000→930→860→800 ppm처럼 하강 중일 수 있다. 즉 현재 농도 하나만으로는 “지금 CO₂가 쌓이고 있는지, 빠지고 있는지”를 구별할 수 없다.
 
-선택된 각 입력의 중요도인 가중치와 기본 보정값인 bias는 새로 학습하지 않고, 같은 선형 계산을 수행하는 Keras Dense 층으로 그대로 옮겼다. 그다음 일반 소수점 계산을 쓰는 Float TFLite와 8비트 정수 계산을 쓰는 full-integer INT8 TFLite로 변환했다. 이 exact bridge는 모델의 판단 공식을 바꾸지 않고 실행 파일 형식만 옮겼음을 수치로 확인하는 절차이다. 최종 모델 `models/co2/candidates/c_b4/full_integer_int8.tflite`의 SHA-256은 `bb2ed28533bca75d4fa3d06348e017c506df47d7c34b29574b77f70b6b386816`, 크기는 1,544 bytes이다. 입력 모양 `[1, 4]`는 한 번에 네 측정값을 받는다는 뜻이고, 출력 `[1, 1]`은 하나의 재실 확률을 낸다는 뜻이다. INT8 모델과 기준 모델은 VALIDATION 2,662개 중 7개, 즉 0.263%에서만 최종 판단이 달라 변환 전후 일치 기준을 통과했다. 다만 일부 입력이 INT8로 표현할 수 있는 최솟값이나 최댓값에 붙어 더 큰 차이를 구분하지 못하는 saturation이 VALIDATION 10,648개 값 중 3개, LOCKED_TEST 38,996개 값 중 159개에서 관측되었으므로 실제 장치 입력 범위를 다시 확인해야 한다.
+이 문제를 보완하기 위해 C-A3에서는 `CO2_slope`라는 추가 입력을 정의했다. 여기서 slope는 수학에서 말하는 기울기이며, 이 경우에는 **시간에 따라 CO₂ 농도가 얼마나 빠르게 변하는지**를 뜻한다. 예를 들어 3분 전 600 ppm이었던 값이 현재 750 ppm이라면 3분 동안 150 ppm 증가했으므로 변화 속도는 분당 50 ppm이다. 이를 `+50 ppm/min`이라고 표현한다. 반대로 같은 시간 동안 농도가 150 ppm 감소했다면 slope는 음수가 된다. 이렇게 현재 농도와 변화 속도를 함께 사용하면 모델은 “현재 800 ppm인 상태”뿐 아니라 “800 ppm까지 빠르게 상승한 상태인지, 하락해서 도달한 상태인지”까지 구별할 수 있다. 현재 CO₂ 자체가 센서가 직접 측정한 값이라면, `CO2_slope`는 여러 측정값에서 새로 계산한 **파생 입력(feature)**이다.
 
-C-B5는 모델 선택용 VALIDATION에 센서값이 한 방향으로 서서히 밀리는 drift와 무작위 흔들림인 잡음을 인위적으로 넣는 stress test를 먼저 수행했다. 이는 정상 입력이 조금 달라져도 모델이 버티는지 보는 가혹조건 시험이다. 그 후 후보를 변경할 수 없게 고정하고 LOCKED_TEST를 한 번만 평가했다. 최종 상태 `FINAL_OFFLINE_UCI_CANDIDATE_LOCKED`는 UCI 저장 데이터 기반 최종 후보가 잠겼다는 뜻이고, 평가 결과를 본 뒤의 추가 조정은 없었다. LOCKED_TEST 9,749개에서 전체 정답 비율은 0.754129, 두 클래스의 재현율을 같은 비중으로 평균낸 balanced accuracy는 0.728653, Macro F1은 0.685658이었다. 실제 재실 사례를 찾아낸 `OCCUPIED` 재현율은 0.684751이고, 재실 판단의 정밀도와 재현율을 함께 본 `OCCUPIED` F1은 0.538950이었다. VALIDATION Macro F1 0.908609보다 최종 결과가 크게 낮아 시간 구간이 바뀌었을 때 새 환경으로 일반화하는 성능 차이가 분명하다. VALIDATION 입력에 분당 +1 ppm씩 증가하는 인공 drift를 주면 Macro F1이 약 0.266으로, 분당 -2 ppm drift에서는 `OCCUPIED` 재현율이 약 0.112로 내려갔다. 이 값은 취약한 변화 방향을 찾는 인공 시험 결과이지 SCD40의 실제 오차 사양이나 성능 저하 원인을 확정한 결과가 아니다.
+다만 변화율을 계산할 때 단순히 “세 샘플 전과 비교한다”는 방식으로 처리하면 또 다른 문제가 생긴다. UCI 데이터는 대략 60초마다 측정되지만 실제 간격은 59초, 60초, 61초처럼 조금씩 달라진다. 측정 간격을 뜻하는 `cadence`가 정확히 일정하지 않은 것이다. 만약 세 샘플 전이면 항상 180초 전이라고 가정한다면 실제 경과 시간과 계산에 사용한 시간이 달라질 수 있고, 그러면 `ppm/min`이라는 물리 단위의 의미도 약해진다. 그래서 C-A3에서는 샘플 개수로 시간을 추정하지 않고 원본 `timestamp`, 즉 실제 측정 시각의 차이를 사용해 변화율을 계산한다. 이 덕분에 slope는 데이터 파일의 배열 위치가 아니라 실제 시간에 기반한 값이 된다.
 
-최종 후보의 설정·신원 기록(metadata)과 변경 방지 기록(lock)은 `models/co2/candidates/c_b5/final_candidate_metadata.json`과 `datasets/co2/manifests/c_b5_robustness_final_lock/`에 있다. 반면 `models/co2/co2_occupancy_int8_v0.1.0.tflite`와 기존 scaler는 세 입력을 쓰는 과거 실행용 자산으로, 새 네 입력 후보와 다른 모델이며 자동 교체되지 않았다. `models/model_manifest.json`도 현재 사용 가능한 모델 목록을 적은 과거 registry이므로 아직 새 B5 후보를 운영 모델로 지정하지 않는다. 다음 C-C에서는 팀 PR #14의 SCD40 자료를 사용해 실제 측정 주기, 초기 안정화, 값 누락, 과거 값이 새 값처럼 남는 stale 상태, 재연결, 환경 변화와 slope 계산을 확인하고 UCI 입력 분포와 비교해야 한다. 열린 PR #14에는 기본 연결 30/30개 유효, 재시도한 안정 상태 기준 시험(baseline) 300/300개 유효, 사람이 센서에 숨을 내쉰 뒤 값이 상승·복귀하는 시험 360개 중 329개 유효와 8.61% 결측이 기록되어 있다. 그러나 센서를 분리한 상태에서 60초 동안 원시 출력을 확인하는 시험은 아직 검증되지 않아 전체 판정도 “일부만 확인됨”을 뜻하는 `PARTIAL`이다. SCD40 검증 전에는 재실 판단 후보를 CO₂ 안전 경보 또는 배포 후보로 부를 수 없다.
+변화율 계산 방식은 `ENDPOINT_DIFFERENCE`로 정했다. 이는 일정한 과거 구간에서 선택한 과거 끝점과 현재 값을 비교하고, 두 시점 사이 실제 경과 시간으로 나누는 방식이다. 여러 중간값 전체에 복잡한 수학 모델을 맞추는 것이 아니라 과거와 현재의 차이를 직접 사용하므로 계산 과정이 단순하고, 나중에 실제 센서에서도 같은 원리를 구현하기 쉽다. 다만 과거를 얼마나 길게 볼지는 별도로 정해야 한다. 너무 짧은 구간을 보면 순간적인 흔들림에 지나치게 민감해질 수 있고, 지나치게 긴 구간을 보면 현재 변화가 오래된 정보에 묻힐 수 있다. C-A3에서는 먼저 재현 가능한 기준을 만들기 위해 약 150초의 과거 이력을 요구하는 baseline을 정했고, 이후 이를 `ENDPOINT_H150`이라고 부르게 되었다. 여기서 `H`는 history, 즉 과거 이력을 뜻한다.
+
+`H150`은 “정확히 150초 전 측정값을 반드시 사용한다”는 뜻은 아니다. UCI 데이터가 약 60초 간격이기 때문에 현재 시점에서 정확히 150초 전에 해당하는 샘플 자체가 없을 수 있다. 따라서 150초는 정확한 두 점의 거리라기보다 **slope를 계산하기 전에 충분한 과거 이력이 확보되어 있어야 한다는 기준**으로 이해하는 편이 정확하다. 이 구분이 중요한 이유는 나중에 실제 SCD40과 비교할 때 “150초 변화율”이라는 표현을 너무 단순하게 사용하면 실제 계산 방식과 다른 설명이 될 수 있기 때문이다.
+
+또한 데이터 중간에 긴 공백이 생긴 경우 이전 값을 계속 이어서 사용할 수 없다. 예를 들어 10시 2분에 650 ppm을 측정한 뒤 18분 동안 데이터가 없고 10시 20분에 900 ppm이 기록되었다면, 두 값만 연결해서 변화율을 만들 수는 있지만 중간 18분 동안 어떤 일이 있었는지는 알 수 없다. 센서 수집이 끊긴 것인지, 환경이 실제로 천천히 변한 것인지 판단할 근거가 없는데 이를 연속된 측정처럼 처리하면 잘못된 feature가 만들어질 수 있다. 그래서 C-A3에서는 측정 간격이 90초를 넘으면 과거 이력을 끊고 새로 시작하도록 했다. 이를 `gap restart`라고 한다. 같은 이유로 C-A2에서 서로 다른 시간 구간으로 나눈 block 사이에서도 이전 history를 이어 사용하지 않는다. 앞 단계에서 만든 시간 경계를 후속 feature 계산이 다시 무너뜨리지 않도록 한 것이다.
+
+실제 장치에서 사용할 수 있는 feature를 만들기 위해 미래 값도 사용하지 않는다. 저장된 데이터 파일을 offline에서 처리할 때는 현재 시점 이후의 값도 이미 파일에 존재하기 때문에, 개발자가 원한다면 미래 측정값까지 이용해 더 매끄러운 변화율을 만들 수 있다. 그러나 실제 Raspberry Pi가 현재 시점에서 추론할 때는 미래 데이터가 아직 존재하지 않는다. 학습할 때만 미래 정보를 보고 실제 실행에서는 보지 못한다면 offline 성능은 좋아 보여도 runtime에서 같은 입력을 재현할 수 없다. 그래서 C-A3의 slope는 현재와 과거 값만 사용하는 `PAST_ONLY`, 즉 **causal한 feature**로 정의했다. 여기서 causal은 현재 결과를 만들 때 미래 정보를 사용하지 않는다는 뜻이다.
+
+이 규칙을 지키면 각 시간 block의 시작 부분에서는 새로운 문제가 생긴다. slope를 계산하려면 일정량의 과거 데이터가 필요하지만 첫 번째, 두 번째, 세 번째 측정 시점에는 아직 그만큼 history가 쌓이지 않았기 때문이다. 이때 값을 억지로 0으로 채우면 안 된다. `slope=0`은 실제로 CO₂ 변화가 거의 없다는 의미인데, “과거 데이터가 부족해서 계산할 수 없음”과는 완전히 다른 상태이기 때문이다. 그래서 이 초기 구간은 `FEATURE_UNAVAILABLE_WARMUP`으로 남겼다. 세 개의 시간 block마다 3개씩, 총 9개의 warm-up 샘플이 생겼고, 전체 20,560개 관측 중 slope를 포함한 모델 입력에 사용할 수 있는 샘플은 20,551개가 되었다. warm-up 9개는 삭제한 것이 아니라 원본 계보에는 그대로 남겨 두되 현재 slope-dependent 모델에는 사용하지 않는 방식이다.
+
+따라서 C-A3의 핵심 성과는 단순히 `CO2_slope`라는 열 하나를 추가한 것이 아니다. 이전에는 “CO₂ 변화 속도를 사용한다”는 설명만 있었지만, 이후에는 **어떤 시간 기준으로 계산하는지, 미래 데이터를 쓰는지, 측정이 끊겼을 때 어떻게 처리하는지, 초기 history가 부족하면 어떻게 하는지까지 동일한 규칙으로 다시 계산할 수 있게 되었다.** 즉 하나의 아이디어가 재현 가능한 입력 계약으로 바뀐 것이다.
+
+다만 이 단계에서 `ENDPOINT_H150`이 최적이라고 결론낸 것은 아니다. C-A3는 우선 비교 가능한 기준을 만든 단계이며, 60초·120초·150초 history 중 어느 것이 더 좋은지, endpoint 방식과 다른 slope 방식 중 무엇이 더 좋은지는 뒤의 C-B1에서 실제 성능을 비교해 결정했다. 또한 UCI는 약 60초 간격의 저장 데이터이므로 이 slope가 실제 SCD40의 더 빠르거나 다른 sampling cadence에서도 같은 의미를 유지하는지는 아직 확인되지 않았다. 이 부분이 이후 C-C 실제 센서 검증으로 남은 이유이다.
+
+---
+
+#### C-A4 — 모델이 맞힌다는 `1`이 정확히 무엇을 의미하는지 고정한 단계
+
+C-A3까지 진행하면 모델에 넣을 입력은 점점 구체화되지만, 모델 학습에는 입력뿐 아니라 정답도 필요하다. 머신러닝에서 모델이 맞혀야 하는 값을 `target` 또는 `label`이라고 부른다. UCI Occupancy 데이터에는 정답이 `0`과 `1`로 기록되어 있는데, 숫자 자체만 보면 단순하지만 SafeNest 전체 시스템 안에서는 이 숫자의 의미를 명확히 하지 않으면 문제가 생길 수 있다.
+
+SafeNest에는 “방에 사람이 있는가”, “CO₂ 농도가 위험한가”, “작업자가 쓰러졌는가”, “센서가 고장났는가”, “전체 시스템 위험도가 높은가”처럼 서로 다른 상태가 존재한다. 이 상태들은 모두 프로그램상 0과 1로 표현할 수 있기 때문에 `Occupancy=1`이라는 값의 의미를 명시하지 않으면 나중에 모델 출력이 사람 재실 확률인지, CO₂ 위험 확률인지, 전체 위험도인지 혼동될 수 있다. 특히 추론 결과가 0.9처럼 확률 형태로 나오면 숫자가 크다는 이유만으로 “위험도 90%”라고 잘못 해석할 가능성이 있다.
+
+이를 막기 위해 C-A4에서는 원본 label을 `0 → VACANT`, `1 → OCCUPIED`로 고정했다. `VACANT`는 방이 비어 있음을, `OCCUPIED`는 사람이 방에 있음을 뜻한다. 또한 binary classification에서 기준이 되는 positive class를 `OCCUPIED`로 정했다. 따라서 후속 모델이 0.8이라는 확률을 출력한다면 그 값은 정확히 `P(OCCUPIED)=0.8`, 즉 사람이 방에 있을 가능성이 80%라는 뜻이다. **CO₂ 농도가 위험할 확률이나 SafeNest 전체 위험도가 80%라는 뜻은 아니다.** 실제 문서도 재실 판단과 CO₂ 안전 경보를 별개의 의미로 구분하고 있다.
+
+이 의미 구분은 단순한 문서 표현 문제가 아니라 학습 자체와도 관련된다. 예를 들어 개발자가 `CO2 > 1000 ppm`이면 `OCCUPIED=1`이라는 새로운 규칙을 만들어 정답으로 사용하고, 동시에 CO₂ 농도를 모델 입력으로 넣는다면 모델은 실제 재실 상태를 학습하는 것이 아니라 개발자가 만든 CO₂ threshold 규칙을 다시 흉내 내게 된다. 그래서 C-A4에서는 CO₂ 농도로 새로운 label을 만들지 않고 UCI 원본에 존재하는 Occupancy annotation을 그대로 보존했다. 전체 20,560개 관측의 원본 label 분포는 VACANT 15,810개, OCCUPIED 4,750개이며, 이 차이는 이후 클래스 불균형 문제로 이어져 C-B2에서 별도로 다루게 된다.
+
+따라서 C-A4가 끝난 뒤에는 모델 출력의 의미가 명확해졌다. 이제 후속 단계에서 precision, recall, threshold 같은 수치를 계산할 때도 “어떤 class를 positive로 보고 있는지”를 동일하게 해석할 수 있다. 동시에 Occupancy 모델과 안전 규칙을 분리했기 때문에 나중에 CO₂ 농도 자체를 이용한 safety rule이나 mmWave·Thermal과의 multisensor risk 판단을 별도의 층으로 설계할 수 있게 되었다.
+
+---
+
+#### C-A5 — “TRAIN 8,140개”가 정말 같은 8,140개인지 증명할 수 있게 만든 단계
+
+C-A4까지 진행하면 원본 row의 시간, feature, label 의미는 정리된다. 하지만 여러 모델을 비교하려면 또 하나의 문제가 남는다. 실험 A와 실험 B가 모두 “TRAIN 8,140개를 사용했다”고 기록되어 있어도, 실제로 두 실험이 같은 8,140개의 샘플을 사용했다고 단정할 수는 없다. 한쪽은 원본 row 1~8,140을 사용하고 다른 쪽은 4~8,143을 사용해도 개수는 동일하다. 이런 상태에서 두 모델의 성능이 다르면 그 차이가 모델 때문인지 학습 데이터 구성 때문인지 구분하기 어렵다.
+
+이를 해결하기 위해 C-A5에서는 각 원본 row를 하나의 **canonical sample**, 즉 SafeNest CO₂ 파이프라인에서 표준적으로 추적할 샘플로 만들고 고유한 sample ID를 부여했다. ID는 단순히 `sample_1`, `sample_2`처럼 처리 순서를 사용하지 않는다. 처리 순서는 sorting 방식이나 코드가 조금만 바뀌어도 달라질 수 있기 때문이다. 대신 어느 raw archive에서 왔는지, ZIP 내부의 어떤 파일인지, 어떤 source row인지, 실제 몇 번째 physical line인지 같은 `provenance` 정보를 기반으로 deterministic한 ID를 만든다. Provenance는 **이 샘플이 원본의 어디에서 왔는지를 거꾸로 추적할 수 있게 하는 계보 정보**이고, deterministic하다는 말은 같은 원본 row를 다시 처리하면 언제나 같은 ID가 나온다는 뜻이다.
+
+C-A2에서 `datatraining.txt`는 TRAIN, `datatest.txt`는 VALIDATION, `datatest2.txt`는 LOCKED_TEST라는 규칙을 이미 정했지만, C-A5에서는 이 규칙을 실제 sample ID 목록으로 만들어 고정했다. 이렇게 정책을 실제 데이터 목록으로 구체화하는 것을 `materialization`이라고 볼 수 있다. 어떤 sample이 어느 split에 들어가는지 기록한 목록은 `manifest` 형태로 남는다. Manifest는 사람이 읽는 설명문이 아니라 프로그램도 직접 읽어 확인할 수 있는 **구성 목록 또는 명세 파일**이다. 실제 canonical sample과 split membership은 `datasets/co2/manifests/c_a5_canonical_samples/` 아래에 기록되어 있다.
+
+이 단계에서는 전체 20,560개 source row를 모두 canonical sample로 남겼다. 그중 C-A3의 warm-up 9개는 slope를 계산할 수 없기 때문에 현재 B-series의 4-feature 모델에는 들어갈 수 없지만, 원본 계보에서 삭제하지는 않았다. 따라서 **canonical population은 20,560개이고, slope-dependent model에서 사용할 수 있는 eligible population은 20,551개**로 서로 구분된다. TRAIN 8,140개, VALIDATION 2,662개, LOCKED_TEST 9,749개라는 숫자는 이 eligible population을 split별로 나눈 결과이다.
+
+여기서 중요한 것은 sample 수만 저장한 것이 아니라 실제 ID 목록 자체를 고정했다는 점이다. 수천 개의 ID를 매번 하나씩 비교하는 것은 번거롭기 때문에 이 ordered sample ID 목록 전체에도 SHA-256 같은 hash를 계산해 `fingerprint`를 만들 수 있다. Fingerprint는 말 그대로 데이터 목록의 지문으로, 두 실험의 TRAIN fingerprint가 같다면 단순히 둘 다 8,140개라는 것보다 훨씬 강하게 “같은 sample universe를 사용했다”는 사실을 확인할 수 있다.
+
+따라서 C-A5 이후부터는 “두 모델이 같은 데이터로 비교되었다”는 말을 숫자만으로 주장하는 것이 아니라 실제 sample identity로 검증할 수 있게 되었다. 이 기반이 있었기 때문에 뒤의 B-series에서 slope 방식, imbalance 처리, architecture를 바꿀 때 **실험 대상 데이터는 그대로 두고 비교하려는 요소만 바꾸는 공정한 비교**가 가능해졌다.
+
+---
+
+#### C-A6 — A0부터 A5까지 각각 맞는 것과, 전체가 서로 맞게 연결되는 것은 다른 문제이기 때문에 수행한 단계
+
+C-A0부터 C-A5까지 각각 validator를 통과했다면 얼핏 보면 데이터 준비가 끝난 것처럼 보인다. 그러나 각 단계가 개별적으로 맞는다고 해서 전체 chain까지 반드시 맞는 것은 아니다. 예를 들어 A1에서 20,560개 row를 읽었고, A3에서 20,551개의 slope-eligible sample을 만들었고, A5에서도 20,560개의 canonical sample이 존재한다고 하더라도, 특정 canonical sample의 provenance가 실수로 다른 source row를 가리키거나 특정 row의 slope가 옆 row에서 계산되었다면 개수 검사만으로는 발견할 수 없다.
+
+이 때문에 C-A6에서는 앞 단계의 결과를 단순히 다시 나열하지 않고 **raw source에서 canonical sample까지 전체 연결을 다시 검사하는 integrity audit**을 수행했다. Integrity는 무결성, 즉 데이터가 누락되거나 다른 데이터와 잘못 연결되거나 의도하지 않게 변형되지 않은 상태를 뜻한다. Audit은 기존 보고서의 숫자를 믿는 것이 아니라 실제 파일과 machine-readable evidence를 다시 읽어 그 주장이 맞는지 재검증하는 과정이다. 따라서 C-A6가 확인하는 대상은 단순 count가 아니라 `raw archive → source row → timestamp/split → slope → target → canonical sample/provenance` 전체 계보다. A-series 전체 연결 검사는 `scripts/validate_co2_final_integrity.py` 같은 validator가 담당한다.
+
+이 과정을 통해 canonical sample 하나에서 출발해 원본 ZIP 내부의 어느 파일, 어느 row까지 거꾸로 찾아갈 수 있어야 하고, 반대로 원본 row 하나에서도 대응하는 canonical sample을 찾을 수 있어야 한다. 이런 성질을 `traceability`, 즉 **추적 가능성**이라고 한다. 모델에서 이상한 결과가 나온 경우 단순히 “전처리 데이터의 512번째 row”에서 멈추는 것이 아니라 실제 원본의 어느 측정값이었는지까지 확인할 수 있어야 나중에 오류 원인을 찾을 수 있다.
+
+A6에서 또 하나 해결해야 할 문제는 **검증이 끝난 뒤 파일이 바뀌는 상황**이다. 오늘 모든 manifest와 split이 올바르다고 검사했더라도 내일 누군가 slope profile이나 split membership 파일을 수정하면 B-series는 더 이상 A6에서 검증한 기준과 같은 데이터를 사용하지 않게 된다. 파일 이름이 그대로여도 내용은 달라질 수 있기 때문에 이름만 확인해서는 이런 변화를 알아낼 수 없다.
+
+그래서 A6에서는 중요한 A-series 산출물의 SHA-256을 저장해 `artifact lock`을 만들었다. Artifact는 manifest, registry, profile처럼 작업 과정에서 생성된 공식 산출물을 뜻한다. 각 artifact의 hash를 기준 상태로 저장해 두면 나중에 같은 이름의 파일이더라도 내용이 한 바이트라도 달라질 경우 checksum mismatch를 통해 변화를 발견할 수 있다. 현재 A-series 최종 integrity evidence는 `datasets/co2/manifests/c_a6_final_integrity_lock/`에 고정되어 있다.
+
+또 같은 raw source와 같은 코드로 다시 처리했을 때 sample ID나 manifest ordering이 매번 달라진다면 후속 실험을 재현할 수 없다. 그래서 동일 입력으로 같은 산출물이 나오는 `determinism`, 즉 결정성도 중요한 검사 대상이 된다. 데이터 준비 과정은 학습 모델처럼 seed에 따라 일부 결과가 달라지는 작업이 아니라, 같은 원본을 넣으면 항상 같은 canonical data가 나오는 것이 정상이다.
+
+C-A6가 완료되었다는 의미는 **좋은 CO₂ 모델을 만들었다는 뜻이 아니다.** 이 시점에서 얻은 것은 “실제 UCI 원본에서 출발해 어떤 데이터를 어떤 규칙으로 모델 실험에 사용할지 믿고 반복할 수 있는 baseline”이다. 이후 B-series에서 특정 slope가 좋다거나 특정 architecture가 좋다고 주장할 수 있는 이유도 먼저 A-series에서 데이터와 의미를 고정했기 때문이다. 모델 A와 모델 B의 성능 차이를 보았을 때, 적어도 원본 데이터가 몰래 바뀌었거나 split이 달라졌거나 label 의미가 달라져서 생긴 차이는 아니라는 근거가 생긴 것이다.
+
+---
+
+#### A3부터 A6까지를 하나의 흐름으로 이해하면
+
+C-A3에서 해결한 문제는 **“현재 CO₂ 숫자 하나만으로는 시간에 따른 변화 상태를 알 수 없다”**는 것이었다. 그래서 실제 timestamp와 과거 데이터만 이용하는 `ENDPOINT_H150` slope를 정의했다. 그 결과 현재 농도와 최근 변화 방향을 함께 표현할 수 있게 되었지만, 이 계산이 실제 SCD40 cadence에서도 동일한 의미를 가지는지는 아직 남았다.
+
+C-A4에서는 **“모델이 맞히는 0과 1의 의미가 시스템 내 다른 위험 상태와 섞일 수 있다”**는 문제를 해결했다. `VACANT/OCCUPIED`와 positive class를 고정해 재실 판단과 안전 판단을 분리했다.
+
+C-A5에서는 **“sample 수가 같다는 것만으로는 같은 데이터를 썼다고 증명할 수 없다”**는 문제를 해결했다. 모든 원본 row에 provenance 기반 canonical sample ID를 부여하고 split membership을 실제 ID 목록으로 고정했다. 그 결과 이후 B-series에서 동일한 데이터 위에서 한 변수씩 바꾸어 비교할 수 있게 되었다.
+
+마지막 C-A6에서는 **“각 단계가 따로 맞더라도 전체 연결이 틀릴 수 있고, 검증 후 산출물이 바뀔 수도 있다”**는 문제를 해결했다. Raw-to-canonical 전체 계보를 다시 감사하고 핵심 artifact의 checksum을 잠가, B-series가 항상 동일한 A-series 기준에서 시작하도록 했다.
+
+그래서 A-series 전체를 한 문장으로 요약하면, **CO₂ 모델을 학습하기 전에 ‘어느 원본의 어느 샘플을, 어떤 시간 규칙과 feature 의미와 label 의미로, 어느 split에서 사용할 것인지’를 나중에도 다시 증명할 수 있게 만든 과정**이라고 이해하면 됩니다.
+
+
+#### CO₂ B-Series — 이제부터는 “무엇을 쓸 것인가”를 고르는 단계
+
+A-series가 끝났을 때 우리는 모델 실험에 사용할 데이터 자체는 믿을 수 있는 상태가 되었습니다. 어느 raw row가 어느 canonical sample로 이어지는지, TRAIN·VALIDATION·LOCKED_TEST가 어떻게 나뉘는지, `CO2_slope`가 어떤 규칙으로 만들어지는지, `Occupancy=1`이 무엇을 의미하는지까지 모두 고정되었습니다.
+
+하지만 이것만으로는 아직 실제 모델을 만들 수 없습니다. A3에서 정한 slope 방식이 정말 가장 좋은지, VACANT가 훨씬 많은 불균형 데이터에서 어떤 학습전략을 써야 하는지, Logistic Regression과 MLP 중 무엇이 더 적합한지, 선택한 모델을 Raspberry Pi 계열에서 쓰기 좋은 TFLite INT8로 바꿔도 성능이 유지되는지, 그리고 Validation에서 좋았던 모델이 완전히 잠가둔 test에서도 실제로 잘 일반화되는지를 차례로 검증해야 합니다.
+
+그래서 B-series는 다음과 같은 흐름으로 진행되었습니다.
+
+| 작업한 단계 | 현재 단계에서 해결한 핵심 문제 |
+|---|---|
+| C-B0 | 후보마다 서로 다른 데이터·평가지표를 쓰면 비교 자체가 무의미하므로 모든 실험이 따를 공통 규칙을 먼저 고정 |
+| C-B1 | A3의 `ENDPOINT_H150`이 단지 임의 baseline인지 실제로 다른 slope 방식보다 좋은지 비교 |
+| C-B2 | VACANT가 많은 class imbalance 때문에 OCCUPIED를 놓칠 수 있으므로 imbalance 처리방식과 threshold를 비교 |
+| C-B3 | 동일한 feature와 학습조건에서 어떤 architecture가 가장 안정적인지 multi-seed로 비교 |
+| C-B4 | 선택된 float 모델을 TFLite 및 INT8로 변환했을 때 예측이 실질적으로 유지되는지 검증 |
+| C-B5 | 고정된 최종 후보가 perturbation과 unseen LOCKED_TEST에서도 얼마나 견디는지 확인하고 offline candidate를 최종 잠금 |
+
+---
+
+#### C-B0 — 모델을 비교하기 전에 “비교 규칙”부터 고정한 단계
+
+A-series까지 끝나면 여러 모델을 시험해볼 수 있지만, 아무 규칙 없이 바로 실험을 시작하면 결과를 비교하기 어렵습니다. 예를 들어 모델 A는 TRAIN 8,140개로 학습하고 모델 B는 warm-up row까지 포함한 다른 데이터를 사용하거나, 모델 A는 macro F1을 기준으로 선택하고 모델 B는 accuracy만 보고 선택한다면 어느 모델이 더 좋은지 공정하게 말하기 어렵습니다.
+
+또 하나의 위험은 실험을 반복하면서 Validation이나 LOCKED_TEST를 조금씩 다르게 사용하는 것입니다. 모델마다 사용한 sample이 다르거나, scaler를 Validation까지 포함해서 fit하거나, 특정 모델에서만 test 결과를 보며 threshold를 조정하면 비교 결과가 모델의 차이인지 실험 절차의 차이인지 알 수 없습니다. 이런 문제를 일반적으로 `data leakage` 또는 `evaluation leakage`라고 부릅니다. 여기서 leakage는 평가에 사용되어야 할 정보가 학습이나 선택 과정으로 흘러 들어가 성능이 실제보다 좋아 보이는 상황을 뜻합니다.
+
+그래서 C-B0에서는 어떤 모델을 만들기 전에 모든 B-series가 따라야 하는 **공통 experiment contract**를 먼저 만들었습니다. B-series에서 사용할 sample universe는 A5에서 고정된 그대로 TRAIN 8,140개, VALIDATION 2,662개, LOCKED_TEST 9,749개로 유지했고, LOCKED_TEST는 마지막 단계까지 봉인했습니다. 이 덕분에 이후 B1에서 slope를 비교하든 B3에서 architecture를 비교하든 항상 같은 사람이 시험문제를 푸는 것처럼 동일한 데이터 조건에서 비교할 수 있게 되었습니다.
+
+또 어떤 feature 조합을 비교할 수 있는지도 미리 구분했습니다. UCI 데이터에는 CO₂, Temperature, Humidity뿐 아니라 Light와 HumidityRatio도 존재하지만 실제 SCD40이 직접 제공하는 센서값은 CO₂, Temperature, Humidity입니다. Light는 SCD40 자체에서 나오지 않고, HumidityRatio 역시 원본 UCI 환경에서 계산된 값입니다. 따라서 최종 SafeNest 후보를 만들 때는 **실제 SCD40에서 얻을 수 있는 값 또는 그 값에서 계산 가능한 파생 feature를 우선해야 한다**는 방향을 잡았습니다.
+
+이 단계에서 `StandardScaler`도 중요한 역할을 합니다. 머신러닝 모델은 CO₂처럼 수백 단위의 값과 slope처럼 훨씬 작은 범위의 값이 동시에 들어오면 각 feature의 숫자 크기 차이에 영향을 받을 수 있습니다. StandardScaler는 각 feature를 대략 평균 0, 표준편차 1 수준으로 맞춰 서로 비슷한 수치 범위로 변환하는 도구입니다. 하지만 scaler 자체도 데이터에서 평균과 표준편차를 학습하기 때문에 반드시 TRAIN만 사용해야 합니다. Validation까지 사용해 scaler를 만들면 Validation 분포를 이미 일부 알고 모델을 평가하게 됩니다. B0에서는 이 원칙을 명시적으로 고정했습니다.
+
+평가지표도 이 단계에서 통일했습니다. Accuracy는 전체 샘플 중 맞힌 비율이지만 VACANT가 훨씬 많은 데이터에서는 VACANT만 잘 맞혀도 높게 나올 수 있습니다. 그래서 class별 F1을 각각 계산한 뒤 평균내는 `macro F1`과, 두 class의 recall을 균등하게 보는 `balanced accuracy`를 함께 사용했습니다. 이렇게 하면 다수 class인 VACANT에만 유리한 모델을 단순 accuracy 때문에 선택하는 문제를 줄일 수 있습니다.
+
+따라서 C-B0의 핵심은 모델을 하나 만든 것이 아니라, **이후 모든 모델이 같은 시험지·같은 채점규칙·같은 데이터 경계를 사용하도록 경기 규칙을 먼저 고정한 것**입니다. 이 단계가 있었기 때문에 뒤에서 어떤 후보가 우승했는지를 비교적 설득력 있게 설명할 수 있습니다.
+
+---
+
+#### C-B1 — A3에서 정한 slope가 실제로 좋은지 검증한 단계
+
+C-A3에서는 우선 재현 가능한 slope baseline으로 `ENDPOINT_H150`을 정의했습니다. 하지만 그 단계에서는 이것이 최적이라고 증명하지 않았습니다. 단지 “이 방식이라면 명확하고 causal하게 계산할 수 있다”는 기준을 만든 것입니다.
+
+문제는 slope를 만드는 방법이 여러 가지라는 점입니다. 가장 간단하게는 과거 endpoint와 현재 값을 빼는 방식이 있지만, 최근 여러 CO₂ 값에 직선을 맞춰 그 직선의 기울기를 사용할 수도 있습니다. 또한 과거를 60초 볼지, 120초 볼지, 150초 볼지에 따라서도 값이 달라집니다. 만약 A3에서 정한 150초를 아무 검증 없이 그대로 최종 모델에 사용한다면, 그 값은 단지 처음 선택한 값일 뿐 성능적으로 근거 있는 선택이라고 말하기 어렵습니다.
+
+그래서 C-B1에서는 slope 계산법만 바꾸고 나머지 조건은 최대한 동일하게 유지하는 **controlled ablation**을 수행했습니다. `Ablation`은 어떤 한 요소가 실제 성능에 얼마나 영향을 주는지 보기 위해 그 요소만 바꿔 비교하는 실험입니다. 여기서는 두 가지 slope 방식과 세 가지 history 길이를 조합했습니다.
+
+비교한 방식은 `ENDPOINT_DIFFERENCE`와 `CAUSAL_LINEAR_REGRESSION`이었습니다. Endpoint 방식은 앞서 설명한 것처럼 과거 한 지점과 현재 값을 이용하고, causal linear regression은 과거 여러 측정값에 직선을 맞춘 뒤 그 직선의 기울기를 slope로 사용하는 방식입니다. 두 방식 모두 미래값을 보지 않는 causal 조건을 유지했습니다.
+
+History는 60초, 120초, 150초를 비교했습니다. 따라서 총 6개 후보가 만들어졌고, 여기에 slope 자체를 사용하지 않는 control도 함께 두었습니다. 중요한 점은 모든 후보가 같은 TRAIN 8,140개와 VALIDATION 2,662개를 사용하고, 동일한 고정 probe model로 평가되었다는 것입니다. 여기서 `probe model`은 최종 모델을 고르기 위한 것이 아니라 **feature 자체의 유용성을 비교하기 위해 일부러 단순하고 동일하게 유지하는 시험용 모델**입니다. 모델까지 매번 바꾸면 성능 차이가 slope 때문인지 모델 때문인지 알기 어렵기 때문에 이 단계에서는 모델을 고정한 것입니다.
+
+결과적으로 순위는 `ENDPOINT_H150`이 가장 높았고, 그 다음이 `LINEAR_REGRESSION_H150`, 이후 120초와 60초 계열이 뒤를 이었습니다. `ENDPOINT_H150`의 Validation macro F1은 약 0.852였고 slope를 사용하지 않은 control은 약 0.844였습니다. 차이는 약 0.0084로 매우 크지는 않지만, 적어도 slope feature가 없는 경우보다 성능이 조금 더 좋아졌다는 근거가 생겼습니다.
+
+이 결과에서 중요한 점은 “150초가 엄청나게 압도적으로 좋았다”가 아닙니다. 오히려 **A3에서 임시 baseline으로 잡았던 ENDPOINT_H150이 controlled comparison에서도 가장 좋은 후보로 남았다**는 데 의미가 있습니다. 따라서 이후 단계에서는 slope 방식을 계속 바꾸지 않고 ENDPOINT_H150을 고정할 수 있게 되었습니다.
+
+다만 이 결과는 여전히 UCI 데이터 환경에서의 비교입니다. 실제 SCD40은 sampling cadence와 센서 noise 특성이 다를 수 있기 때문에 `ENDPOINT_H150`이 실제 장치에서도 최적이라는 뜻은 아닙니다. B1에서 확정한 것은 **offline UCI baseline으로서의 선택**입니다.
+
+---
+
+#### C-B2 — 데이터 수가 많은 VACANT에 모델이 치우치는 문제를 다룬 단계
+
+B1까지 진행하면 입력 feature는 사실상 정리됩니다. 하지만 target 분포를 보면 새로운 문제가 나타납니다. TRAIN에서 slope를 사용할 수 있는 sample은 8,140개인데, 그중 VACANT는 6,414개, OCCUPIED는 1,726개입니다. 대략 4배 가까운 차이가 있습니다.
+
+이런 상태를 `class imbalance`, 즉 클래스 불균형이라고 합니다. 단순하게 학습하면 모델은 많이 등장하는 VACANT를 더 잘 맞히는 방향으로 최적화되기 쉽습니다. 예를 들어 애매한 상황을 전부 VACANT로 판단해도 전체 accuracy는 어느 정도 높게 유지될 수 있지만, 우리가 관심을 갖는 OCCUPIED를 많이 놓칠 수 있습니다. 따라서 accuracy만 좋다고 좋은 occupancy model이라고 말할 수 없습니다.
+
+이를 해결하기 위해 C-B2에서는 세 가지 학습전략을 비교했습니다.
+
+첫 번째는 아무 보정도 하지 않는 `NATURAL`입니다. 원래 TRAIN 분포 그대로 학습합니다.
+
+두 번째는 `CLASS_WEIGHT_BALANCED`입니다. 실제 sample 수는 그대로 두되 OCCUPIED sample을 틀렸을 때 loss에 더 큰 벌점을 주는 방식입니다. 쉽게 말하면 적게 등장하는 class의 실수를 더 무겁게 계산해 학습 과정에서 균형을 맞추는 것입니다.
+
+세 번째는 `BALANCED_RANDOM_OVERSAMPLE`입니다. OCCUPIED sample을 무작위로 다시 뽑아 VACANT와 같은 6,414개 수준까지 학습 데이터상 빈도를 맞춥니다. 새로운 실제 데이터를 만드는 것은 아니고 기존 OCCUPIED sample을 반복해서 보여주는 방식입니다.
+
+이 세 방식은 모두 같은 feature, 같은 TRAIN-only scaler, 같은 Logistic Regression probe를 사용했습니다. 즉 이 단계에서는 imbalance 처리방법만 비교하려고 나머지를 고정했습니다.
+
+기본 threshold 0.5에서 NATURAL의 macro F1은 약 0.891이었고, class weight 방식은 약 0.903, oversampling 방식은 약 0.905였습니다. 특히 OCCUPIED recall은 NATURAL에서 약 0.804였지만 class weight와 oversampling에서는 약 0.942까지 올라갔습니다. `Recall`은 실제 OCCUPIED 중 모델이 얼마나 많이 찾아냈는지를 의미합니다. 따라서 불균형을 보정하면 사람 있음 상태를 놓치는 비율이 크게 줄어든다는 것을 확인할 수 있었습니다.
+
+다만 recall을 높이면 대체로 false positive가 증가합니다. 실제로 NATURAL보다 imbalance 보정 방식에서 VACANT를 OCCUPIED로 잘못 판단하는 FP가 증가했습니다. 즉 좋은 모델을 선택할 때는 무조건 recall이 가장 높은 것을 고르는 게 아니라, **OCCUPIED를 놓치는 문제와 불필요하게 OCCUPIED라고 판단하는 문제 사이의 trade-off**를 봐야 합니다.
+
+세 후보 중 최종적으로 `BALANCED_RANDOM_OVERSAMPLE`이 가장 좋은 macro F1과 balanced accuracy를 보여 B2의 winner가 되었습니다.
+
+---
+
+##### Threshold 0.58은 왜 따로 정했는가
+
+Logistic Regression은 단순히 0이나 1을 바로 출력하는 것이 아니라 `P(OCCUPIED)`에 가까운 확률값을 출력합니다.
+
+예를 들어:
+
+```text
+P(OCCUPIED) = 0.54
+```
+
+라고 할 때 기본 threshold 0.5를 사용하면 OCCUPIED로 판정합니다. 하지만 threshold를 0.6으로 높이면 같은 sample은 VACANT로 판정됩니다.
+
+즉 `threshold`는 **확률을 실제 class 판단으로 바꾸는 경계값**입니다.
+
+문제는 모델을 먼저 평가한 뒤 test 결과에 맞춰 threshold를 바꾸면 test leakage가 생긴다는 것입니다. 그래서 B2에서는 threshold 조정을 오직 VALIDATION에서만 수행했습니다. 0.05부터 0.95까지 미리 정해진 grid를 검사했고, 그중 0.58이 reference threshold로 선택되었습니다.
+
+0.58을 사용하면 macro F1이 약 0.9055에서 0.9081로 조금 올라갔지만 OCCUPIED recall은 약 0.942에서 0.920으로 낮아졌습니다. 대신 false positive는 183개에서 152개로 감소했습니다.
+
+이 결과가 보여주는 것은 threshold에도 trade-off가 있다는 점입니다. 0.58은 **안전 기준상 최적 threshold**가 아니라 B2의 Validation 성능 기준에서 선택된 offline model threshold입니다. 실제 안전 시스템에서 어느 수준의 false negative와 false positive를 허용해야 하는지는 별도의 safety contract가 필요합니다.
+
+따라서 이후 B3·B4·B5에서는 0.58을 다시 조정하지 않고 그대로 유지했습니다. 그래야 후속 성능을 보고 threshold를 계속 맞추는 일을 막을 수 있기 때문입니다.
+
+---
+
+#### C-B3 — Logistic Regression, Random Forest, MLP 중 무엇을 사용할지 고른 단계
+
+B2까지 끝나면 feature, scaler, imbalance strategy, threshold까지 사실상 고정됩니다. 이제 남는 큰 질문은 **어떤 모델 architecture를 사용할 것인가**입니다.
+
+복잡한 모델이 항상 더 좋은 것은 아닙니다. MLP 같은 신경망은 비선형 관계를 더 잘 표현할 수 있지만 학습 seed에 따라 결과가 흔들릴 수 있고, 모델 크기와 runtime 비용도 커질 수 있습니다. 반대로 Logistic Regression은 구조가 단순하지만 데이터 관계가 비교적 선형적이라면 오히려 안정적이고 충분히 좋은 성능을 낼 수 있습니다.
+
+그래서 C-B3에서는 동일한 데이터와 동일한 전처리 조건에서 네 가지 architecture를 비교했습니다.
+
+`LINEAR_LOGISTIC`은 선형 Logistic Regression, `TREE_RANDOM_FOREST`는 여러 decision tree를 조합하는 Random Forest, `TINY_MLP`와 `SMALL_MLP`는 크기가 다른 작은 신경망입니다.
+
+여기서는 단일 학습 결과 하나만 비교하지 않았습니다. 신경망은 초기 weight와 데이터 처리 순서 같은 randomness 때문에 seed가 바뀌면 성능도 달라질 수 있기 때문입니다. `seed`는 이러한 난수를 재현 가능하게 만드는 시작값입니다.
+
+C-B3에서는 5개의 seed를 사용해 각 architecture의 평균 성능, 표준편차, 최악의 seed 성능을 비교했습니다. 이를 `multi-seed evaluation`이라고 합니다. 한 번 운 좋게 높은 점수가 나온 모델보다 여러 번 돌려도 안정적으로 좋은 모델을 고르기 위한 것입니다.
+
+결과는 의외로 가장 단순한 `LINEAR_LOGISTIC`이 우승했습니다. 순위는 대체로 Logistic Regression, Tiny MLP, Small MLP, Random Forest 순이었습니다. Logistic 후보의 calibrated Validation macro F1은 약 0.9081이었고 seed가 바뀌어도 결과가 사실상 변하지 않았습니다.
+
+이 결과의 의미는 “MLP가 나쁜 모델이다”가 아닙니다. 현재 UCI 데이터와 선택된 네 가지 feature에서는 복잡한 비선형 모델을 사용할 만큼 추가적인 이득이 확인되지 않았다는 뜻입니다. 단순한 Logistic Regression이 동일 조건에서 가장 안정적이고 성능도 좋았기 때문에 굳이 복잡한 모델을 사용할 이유가 없었습니다.
+
+그래서 B3 이후 최종 offline architecture는:
+
+```text
+LINEAR_LOGISTIC
+```
+
+으로 고정되었습니다.
+
+---
+
+#### C-B4 — PC에서 잘 동작하는 모델을 실제 edge 배포형태로 바꿔도 같은 모델인가를 확인한 단계
+
+B3에서 선택된 Logistic Regression은 일반 Python/Scikit-learn 환경에서 사용하는 모델입니다. 하지만 SafeNest 최종 대상은 Raspberry Pi 계열의 edge 환경이므로 Python sklearn 객체를 그대로 배포하는 것보다 TFLite 같은 경량 inference format을 사용하는 편이 적합합니다.
+
+여기서 새로운 문제가 생깁니다.
+
+> “Logistic Regression을 TFLite로 바꾸면 정말 같은 결과가 나오는가?”
+
+그리고 더 나아가:
+
+> “Float32 모델을 INT8로 양자화해도 성능이 유지되는가?”
+
+를 확인해야 합니다.
+
+`Quantization`, 즉 양자화는 모델이 사용하는 숫자의 정밀도를 줄이는 과정입니다. Float32는 하나의 값을 32-bit 부동소수점으로 표현하지만 INT8은 -128~127 범위의 8-bit 정수로 표현합니다. INT8을 사용하면 모델 크기와 연산 비용을 줄일 수 있어 edge device에 유리하지만 숫자를 더 거칠게 표현하기 때문에 prediction이 달라질 수 있습니다.
+
+---
+
+##### sklearn Logistic Regression을 왜 Keras Dense로 옮겼는가
+
+Logistic Regression의 계산은 구조적으로 매우 단순합니다.
+
+입력 feature에 weight를 곱해 더하고 bias를 더한 뒤 sigmoid를 적용합니다.
+
+즉:
+
+```text
+Logistic Regression
+≈
+Dense(1) + sigmoid
+```
+
+로 표현할 수 있습니다.
+
+그래서 B4에서는 B3 모델을 새로 학습하지 않고, 이미 선택된 sklearn Logistic Regression의 **weight와 bias를 그대로 Keras의 Dense(1, sigmoid) layer로 옮겼습니다.**
+
+이것이 중요한 이유는 “비슷한 모델을 다시 학습했다”가 아니라 **같은 수학적 모델을 TFLite로 변환 가능한 표현으로 옮겼다**는 데 있습니다.
+
+실제로 sklearn reference와 Keras bridge 사이의 확률 차이는 극히 작았고 Validation label disagreement는 0개였습니다.
+
+---
+
+##### Float TFLite를 먼저 만든 이유
+
+바로 INT8로 변환하면 문제가 생겼을 때 원인이:
+
+```text
+sklearn → Keras 변환 문제인지
+Keras → TFLite 문제인지
+Float → INT8 quantization 문제인지
+```
+
+구분하기 어렵습니다.
+
+그래서 먼저 Float TFLite를 만들었습니다.
+
+흐름은:
+
+```text
+sklearn Logistic
+→
+Keras equivalent
+→
+Float TFLite
+```
+
+입니다.
+
+Float TFLite와 원래 모델의 Validation prediction은 사실상 동일했고 label disagreement도 0이었습니다.
+
+즉 이 시점에서 **TFLite format으로 옮기는 과정 자체는 모델 의미를 깨뜨리지 않았다**고 볼 수 있습니다.
+
+---
+
+##### 그 다음 INT8로 바꾸었다
+
+그 다음 Float TFLite를 full-integer INT8 모델로 quantization했습니다.
+
+INT8 변환에서는 어떤 실수 값 범위를 -128~127에 대응시킬지 정해야 하므로 실제 TRAIN 데이터 분포가 필요합니다. 이를 `representative dataset`이라고 합니다.
+
+B4에서는 Validation이나 LOCKED_TEST를 사용하지 않고 **TRAIN 8,140개 전체를 representative dataset으로 사용**했습니다.
+
+이 역시 leakage를 막기 위한 선택입니다.
+
+최종 INT8 후보는 현재:
+
+```text
+models/co2/candidates/c_b4/full_integer_int8.tflite
+```
+
+에 존재합니다.
+
+---
+
+##### INT8로 바뀌면서 성능은 얼마나 변했는가
+
+Validation에서 Float reference의 macro F1은 약 0.90812였고, INT8은 약 0.90861이었습니다.
+
+즉 quantization 때문에 성능이 의미 있게 무너지지 않았습니다.
+
+확률 자체에는 약간의 차이가 있었지만 전체 2,662개 Validation sample 중 class label이 달라진 것은 7개, 약 0.26%였습니다.
+
+그래서 B4에서:
+
+```text
+INT8 equivalence = PASS
+```
+
+가 되었습니다.
+
+여기서 equivalence는 모든 floating-point 숫자가 완전히 똑같다는 뜻이 아니라, **quantization 이후에도 모델 판단과 성능이 사전에 정한 허용범위 안에서 유지된다**는 뜻입니다.
+
+---
+
+##### 그런데 INT8 Saturation이라는 새로운 문제가 발견되었다
+
+INT8은 표현 가능한 범위가 제한되어 있습니다.
+
+예를 들어 scaler를 거친 어떤 feature가 quantization range보다 커지면 더 큰 값을 표현하지 못하고 최대값인 127 근처에 붙게 됩니다.
+
+이를 `saturation`, 즉 포화라고 합니다.
+
+Validation에서는 전체 10,648개 feature element 중 3개에서 saturation이 관찰되었고 모두 slope 쪽이었습니다.
+
+비율은 매우 작았기 때문에 B4를 막는 blocker는 아니었지만:
+
+```text
+INT8_INPUT_SATURATION_OBSERVED
+```
+
+warning으로 남겼습니다.
+
+중요한 것은 이것을 숨기기 위해 quantization range를 다시 맞추지 않았다는 점입니다. 그렇게 하면 B4에서 고정한 candidate가 다시 바뀌기 때문입니다.
+
+따라서 B4 이후에는 “현재 INT8 모델은 Validation에서는 충분히 원본 모델과 유사하지만 일부 extreme slope 입력에서 saturation 가능성이 있다”는 상태가 되었습니다.
+
+---
+
+#### C-B5 — 최종 후보를 흔들어보고, 마지막으로 LOCKED_TEST를 연 단계
+
+B4까지 오면 사실상 최종 후보가 만들어집니다.
+
+- feature: CO₂, Temperature, Humidity, CO2_slope
+- slope: ENDPOINT_H150
+- scaler: TRAIN-only StandardScaler
+- imbalance: balanced random oversampling
+- architecture: Linear Logistic
+- threshold: 0.58
+- model representation: full INT8 TFLite
+
+하지만 여기서 바로 “완성됐다”고 할 수는 없습니다.
+
+Validation에서 잘 동작했다는 것은 우리가 반복적으로 선택에 사용한 Validation distribution에서 좋았다는 뜻입니다. 실제 센서 환경에서는 CO₂ baseline이 조금 달라질 수도 있고, 센서 값에 noise가 생길 수도 있고, 측정 row가 누락되거나 timestamp가 흔들릴 수도 있습니다.
+
+그래서 B5에서는 모델을 더 고치는 것이 아니라:
+
+> **이미 선택된 후보가 얼마나 쉽게 흔들리는가**
+
+를 확인했습니다.
+
+---
+
+##### Robustness test를 왜 raw-level에서 했는가
+
+예를 들어 CO₂ drift를 시험한다고 해서 최종 feature matrix의 `CO2_slope` 숫자에 임의 값을 더하면 실제 sensor pipeline과 다른 검사가 됩니다.
+
+CO₂ raw 값이 변하면:
+
+```text
+CO2 자체가 변하고
+↓
+과거와 현재 차이가 변하고
+↓
+CO2_slope도 변하고
+↓
+scaler 출력도 변하고
+↓
+INT8 quantization 결과도 변한다
+```
+
+는 chain 전체가 영향을 받기 때문입니다.
+
+그래서 B5 robustness는 가능한 한 chronological raw source 단계에서 perturbation을 가한 뒤 C-A3/B1에서 고정한 slope를 다시 계산했습니다.
+
+`Perturbation`은 정상 입력에 의도적으로 작은 변화나 오류를 넣어 시스템이 얼마나 견디는지 보는 실험입니다.
+
+---
+
+##### 어떤 상황을 흔들어봤는가
+
+B5에서는 다음 종류의 offline stress를 수행했습니다.
+
+CO₂에는 일정 offset을 더하거나 빼는 경우와 시간에 따라 점점 변하는 linear drift를 넣었습니다. Humidity에는 noise를 추가했고, 일부 row를 누락시키거나 history가 stale한 경우도 시험했습니다. Timestamp도 ±1초, ±5초, ±10초 정도 흔들어 실제 elapsed time을 사용하는 slope가 얼마나 영향을 받는지 확인했습니다.
+
+이 값들은 실제 SCD40의 제조사 specification을 흉내낸 것이 아닙니다.
+
+따라서 결과의 의미는:
+
+> “SCD40이 실제로 이 정도 오차를 가진다.”
+
+가 아니라:
+
+> **“현재 모델이 특정 종류의 input distribution shift에 얼마나 민감한가.”**
+
+를 보는 기술적 stress test입니다.
+
+---
+
+##### Missing row에서는 성능뿐 아니라 feature availability도 봐야 했다
+
+예를 들어 데이터 한 row가 빠지면 원래 60초였던 gap이 120초가 될 수 있습니다.
+
+A3에서는 90초보다 큰 gap이 생기면 history를 restart합니다.
+
+그러면 일정 시간 동안 `CO2_slope` 자체를 계산할 수 없습니다.
+
+이 상황에서 unavailable sample을 그냥 평가 데이터에서 제거한 뒤 남은 sample의 F1만 보고하면 모델이 robust한 것처럼 보일 수 있습니다.
+
+하지만 실제 시스템에서는:
+
+> **“모델 성능이 낮다”**
+
+뿐 아니라
+
+> **“애초에 입력 feature를 만들 수 없다”**
+
+도 중요한 failure mode입니다.
+
+그래서 B5에서는 classification metric과 함께 feature availability도 별도로 기록했습니다.
+
+가장 나쁜 missing-row scenario에서도 2,662개 중 2,594개, 약 97.45%에서 feature를 사용할 수 있었습니다.
+
+---
+
+##### Robustness 결과에서 가장 중요한 것은 drift 민감성이었다
+
+결과를 보면 일부 CO₂ drift scenario에서 성능이 매우 크게 떨어졌습니다.
+
+예를 들어 +1 ppm/min의 synthetic drift에서는 macro F1이 약 0.266까지 내려갔고, -2 ppm/min에서는 OCCUPIED recall이 약 0.112까지 떨어졌습니다.
+
+또 -2 ppm/min 조건에서는 INT8 saturation도 크게 증가했습니다.
+
+이 결과는 실제 SCD40이 이 정도 drift를 가진다는 의미는 아닙니다.
+
+오히려:
+
+> **현재 scaler와 logistic model이 UCI TRAIN에서 학습한 feature distribution이 체계적으로 이동하면 prediction이 크게 흔들릴 수 있다.**
+
+는 경고입니다.
+
+이 때문에 실제 SCD40에서 feature distribution을 확인하는 C-C가 더 중요해졌습니다.
+
+---
+
+##### Mac latency는 왜 측정했는가
+
+B5에서는 INT8 모델의 inference latency도 측정했습니다.
+
+하지만 현재 개발환경은 Mac이므로 이 숫자를 Raspberry Pi 5 성능이라고 부를 수 없습니다.
+
+Mac arm64에서 한 번 inference하는 데 평균 약 0.002 ms 수준이 나왔지만, 이것은:
+
+```text
+HOST_MAC_LATENCY_SANITY_ONLY
+```
+
+입니다.
+
+목적은 “이 모델이 적어도 비정상적으로 느리지는 않다”는 기술적 sanity check일 뿐, 실제 Raspberry Pi 실시간 성능 인증이 아닙니다.
+
+실제 deployment latency는 device-domain 단계에서 별도로 봐야 합니다.
+
+---
+
+##### 왜 LOCKED_TEST는 맨 마지막에 한 번만 열었는가
+
+B5의 가장 중요한 부분은 robustness보다 오히려 LOCKED_TEST discipline입니다.
+
+VALIDATION은 B1에서 slope를 고를 때도 봤고, B2에서 imbalance strategy와 threshold를 고를 때도 봤고, B3에서 architecture를 고를 때도 봤습니다.
+
+즉 여러 의사결정에 사용된 데이터입니다.
+
+반대로 LOCKED_TEST는 그동안 전혀 사용하지 않았습니다.
+
+그래서 마지막에:
+
+```text
+model
+feature
+slope
+scaler
+imbalance strategy
+threshold
+INT8 artifact
+```
+
+를 모두 먼저 고정했습니다.
+
+이 상태를 `pre-LOCKED_TEST candidate freeze`라고 할 수 있습니다.
+
+그 뒤에야 처음으로 LOCKED_TEST의 실제 prediction과 metric을 계산했습니다.
+
+---
+
+##### LOCKED_TEST 결과가 왜 중요했는가
+
+Validation에서는 최종 INT8 candidate의 macro F1이 약:
+
+```text
+0.909
+```
+
+였습니다.
+
+하지만 LOCKED_TEST에서는:
+
+```text
+0.686
+```
+
+정도로 크게 떨어졌습니다.
+
+Balanced accuracy도 약 0.916에서 0.729로 내려갔고 OCCUPIED recall은 약 0.923에서 0.685로 감소했습니다.
+
+이를:
+
+```text
+LOCKED_TEST_GENERALIZATION_GAP_OBSERVED
+```
+
+라고 기록했습니다.
+
+`Generalization`은 모델이 학습·선택 과정에서 직접 보지 않은 새로운 데이터에서도 잘 동작하는 능력입니다.
+
+따라서 이 결과는:
+
+> Validation에서는 잘했지만 시간적으로 분리된 unseen block에서는 동일한 수준의 성능을 유지하지 못했다.
+
+는 의미입니다.
+
+---
+
+##### Test 성능이 떨어졌는데 왜 모델을 다시 고치지 않았는가
+
+여기서 가장 중요한 실험 원칙이 나옵니다.
+
+LOCKED_TEST 결과를 보고:
+
+```text
+threshold 0.58 → 0.45
+slope 변경
+MLP 다시 선택
+scaler 다시 fit
+```
+
+하면 test가 더 이상 test가 아닙니다.
+
+한 번 성능을 보고 모델을 고치면 test 정보가 model selection 과정에 들어가 버립니다.
+
+그러면 다음 test 결과는 사실상 Validation처럼 됩니다.
+
+그래서 성능이 낮게 나왔음에도:
+
+```text
+model change      없음
+scaler change     없음
+feature change    없음
+slope change      없음
+threshold change  없음
+LOCKED_TEST rerun 없음
+```
+
+으로 끝냈습니다.
+
+이것이 B5에서 가장 중요한 신뢰성 포인트입니다.
+
+좋지 않은 결과를 숨기지 않고 그대로 받아들였기 때문에 현재 모델의 실제 한계를 더 명확하게 알 수 있게 되었습니다.
+
+---
+
+##### INT8 saturation도 LOCKED_TEST에서 증가했다
+
+Validation에서는 saturation이:
+
+```text
+3 / 10,648 feature elements
+```
+
+이었지만 LOCKED_TEST에서는:
+
+```text
+159 / 38,996
+```
+
+으로 증가했습니다.
+
+159개 중 156개가 `CO2_slope`였습니다.
+
+따라서 LOCKED_TEST에서는 slope feature distribution이 Validation보다 quantization range 바깥으로 더 자주 벗어난다는 것을 알 수 있습니다.
+
+이 결과만으로 “saturation 때문에 성능이 떨어졌다”고 단정할 수는 없습니다. 전체 FP와 FN 수를 보면 saturation sample보다 훨씬 많은 prediction error가 존재하기 때문입니다.
+
+하지만:
+
+> **LOCKED_TEST의 feature distribution이 TRAIN/VALIDATION과 다르다는 추가적인 신호**
+
+로 볼 수 있습니다.
+
+---
+
+##### B5가 끝났다는 의미
+
+B5가 끝난 뒤 현재 CO₂ 모델의 공식 상태는:
+
+```text
+FINAL_OFFLINE_UCI_CANDIDATE_LOCKED
+```
+
+입니다.
+
+즉:
+
+> **UCI 데이터를 기준으로 feature 선택, imbalance 전략, architecture, threshold, TFLite INT8 변환, robustness, one-time test까지 끝낸 최종 offline candidate**
+
+입니다.
+
+하지만 이것은:
+
+```text
+Final production model
+SCD40 device validated model
+Safety-certified model
+```
+
+을 의미하지 않습니다.
+
+---
+
+#### B0부터 B5까지를 하나의 흐름으로 이해하면
+
+C-B0에서는 **모델마다 시험방법이 달라지면 공정한 비교가 불가능하다**는 문제를 해결했습니다. 모든 후보가 동일한 sample universe, scaler 원칙, metric, LOCKED_TEST 규칙을 따르게 만들었습니다.
+
+C-B1에서는 **A3에서 정한 slope가 단지 처음 만든 방식일 뿐 최적이라는 근거가 없었다**는 문제를 해결했습니다. 여섯 slope 후보를 같은 조건에서 비교했고 ENDPOINT_H150을 유지할 근거를 만들었습니다.
+
+C-B2에서는 **VACANT가 훨씬 많아 모델이 다수 class에 치우칠 수 있다**는 문제를 해결했습니다. Natural, class weighting, oversampling을 비교했고 balanced random oversampling을 선택했으며, threshold도 VALIDATION에서 0.58로 고정했습니다.
+
+C-B3에서는 **복잡한 모델이 실제로 더 좋은지 알 수 없다**는 문제를 해결했습니다. Logistic, Random Forest, Tiny MLP, Small MLP를 multi-seed로 비교했고 가장 단순한 Logistic Regression이 가장 안정적인 후보로 남았습니다.
+
+C-B4에서는 **PC에서 선택한 모델이 TFLite INT8로 변환된 뒤에도 같은 판단을 유지하는지 알 수 없다**는 문제를 해결했습니다. sklearn→Keras→Float TFLite→INT8 변환을 단계별로 검증해 edge 배포형 candidate를 만들었습니다.
+
+마지막 C-B5에서는 **Validation에서 좋았던 후보가 input perturbation과 완전히 unseen한 test에서도 견딜지 알 수 없다**는 문제를 해결했습니다. Robustness stress를 수행하고 모든 결정을 freeze한 뒤 LOCKED_TEST를 단 한 번 열었으며, 실제로 큰 generalization gap이 있음을 확인했습니다. 그 결과를 보고도 모델을 다시 tuning하지 않았기 때문에 최종 test의 독립성을 보존했습니다.
+
+---
+
+#### 결국 B-series 전체에서 한 일은 무엇인가
+
+A-series가:
+
+> **“어떤 데이터를 믿고 사용할 것인가?”**
+
+를 결정했다면,
+
+B-series는:
+
+> **“그 데이터를 가지고 어떤 방식과 모델을 선택해야 하는가?”**
+
+를 결정한 과정입니다.
+
+전체 흐름은 이렇게 볼 수 있습니다.
+
+```text
+A-Series
+실제 raw data의 신원과 계보를 고정
+        ↓
+같은 sample / 같은 split / 같은 feature 의미 보장
+        ↓
+B0
+공정한 비교 규칙 고정
+        ↓
+B1
+slope 선택
+        ↓
+B2
+imbalance strategy + threshold 선택
+        ↓
+B3
+architecture 선택
+        ↓
+B4
+TFLite / INT8 배포형태 검증
+        ↓
+B5
+robustness + unseen LOCKED_TEST
+        ↓
+FINAL_OFFLINE_UCI_CANDIDATE_LOCKED
+```
+
+그리고 B-series를 거치면서 얻은 가장 중요한 결론은 단순히 **“Macro F1이 얼마다”**가 아닙니다.
+
+Validation에서는 상당히 좋은 성능을 얻었지만 완전히 독립적으로 보존한 LOCKED_TEST에서 성능이 크게 떨어졌고, synthetic drift에서도 민감성이 확인되었습니다. 따라서 현재 후보가 UCI offline 환경에서는 가장 체계적으로 선택된 후보라는 점과, **실제 SCD40 환경에서도 그대로 잘 동작할 것이라는 주장은 아직 할 수 없다는 점을 동시에 알게 되었습니다.**
+
+그래서 다음 C-C가 자연스럽게 이어집니다.
+
+C-C에서 물어야 할 질문은 이제:
+
+> 실제 SCD40이 내는 CO₂·온도·습도 분포가 UCI TRAIN 분포와 얼마나 비슷한가?
+
+> 실제 SCD40 cadence에서 ENDPOINT_H150을 같은 의미로 구현할 수 있는가?
+
+> 실제 sensor 데이터가 scaler와 INT8 quantization range 안에 들어오는가?
+
+> UCI에서 관찰된 generalization gap과 drift sensitivity가 실제 센서에서도 나타나는가?
+
+입니다.
+
+즉 B-series가 끝난 것은 **모델 개발이 완전히 끝났다는 의미가 아니라, 실제 장치 검증에 가져갈 하나의 offline 후보를 이제야 제대로 고정했다는 의미**라고 이해하면 가장 정확합니다.
 
 ### Thermal: 모델 재학습 전에 열화상 데이터의 의미와 물리 단위 확정
 
