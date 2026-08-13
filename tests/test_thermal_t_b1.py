@@ -258,6 +258,100 @@ def test_full_mode_requires_owner_authorization(tmp_path: Path) -> None:
         )
 
 
+def _write_full_fixture(root: Path) -> Path:
+    """Create a compact, payload-free FULL_EXPERIMENT fixture."""
+
+    bundle = root / "T-B1-full"
+    bundle.mkdir()
+    expected_roles = {
+        "TRAIN": (32000, "749c847fc9ab50ea5eee8827f0d47b5ebaa48165732a382c59f8b96c565b9d93", "SYNTHETIC", "train_canonical.npy", "train_provenance.jsonl", "train-prov"),
+        "VALIDATION": (8000, "5d16451702c1bccfa945d9188d9b29a26ce11c8b33bf7a0dfbb25bfa86d74610", "SYNTHETIC", "validation_canonical.npy", "validation_provenance.jsonl", "validation-prov"),
+        "REAL_EVAL_DEVELOPMENT": (8000, "cd696e68aeec063cbc8185719b4f4dad3d038cb3d28eec0d3701b8311e4ad8f1", "REAL", "real_eval_development_canonical.npy", "real_eval_development_provenance.jsonl", "real-prov"),
+    }
+    dataset_roles = {
+        role: {
+            "role": role,
+            "rows": rows,
+            "sha256": digest,
+            "provenance_sha256": provenance,
+            "shape": [rows, 62, 80],
+            "dtype": "float32_little_endian",
+            "unit": "CELSIUS",
+            "source_domain": domain,
+        }
+        for role, (rows, digest, domain, _array, _prov, provenance) in expected_roles.items()
+    }
+    source = np.repeat(np.asarray([0, 1, 2]), [2000, 4000, 2000]).astype(np.int32)
+    metrics = runner.compute_metrics(source, source)
+    _, initial_fp, architecture = initial_weights(PRIMARY_SEED)
+    profile_rows = []
+    checkpoint_rows = []
+    for index, profile in enumerate(runner.PROFILE_IDS):
+        checkpoint_name = f"{profile}.weights.h5"
+        checkpoint_dir = bundle / "checkpoints"
+        checkpoint_dir.mkdir(exist_ok=True)
+        checkpoint_path = checkpoint_dir / checkpoint_name
+        checkpoint_path.write_bytes(f"checkpoint-{index}".encode("ascii"))
+        checkpoint_info = {"logical_path": f"checkpoints/{checkpoint_name}", "sha256": runner.sha256_file(checkpoint_path), "size_bytes": checkpoint_path.stat().st_size, "materialization": "PERSISTENT_EXTERNAL_OUTPUT"}
+        checkpoint_rows.append({**checkpoint_info, "profile_id": profile})
+        profile_rows.append({"profile_id": profile, "candidate_id": "SMALL_CNN_BASELINE_V1", "seed": PRIMARY_SEED, "status": "VALIDATION_COMPLETE", "initial_weight_fingerprint": initial_fp, "architecture_fingerprint": architecture, "parameter_count": 312131, "best_epoch": index + 1, "validation_metrics": metrics, "epoch_metrics": [], "checkpoint": checkpoint_info, "preprocessing_statistics": None})
+    p1_stats = runner.P1Statistics(mean=1.0, std=2.0, fit_sample_count=32000, fit_pixel_count=32000 * 62 * 80, fit_role="TRAIN", train_artifact_sha256=expected_roles["TRAIN"][1])
+    winner = dict(profile_rows[0])
+    winner.update({"selection_role": "VALIDATION", "rule_id": "THERMAL_T_B0_WINNER_RULE_001", "tie_tolerance": 1e-5})
+    documents = {
+        "environment.json": {"schema_version": "1.0", "phase": "T-B1", "backend": {"physical_devices": [{"name": "/physical_device:CPU:0", "device_type": "CPU"}]}, "canonical_root": "CONFIGURABLE_EXTERNAL_STORAGE_ROOT", "work_root": "CONFIGURABLE_LOCAL_SCRATCH_ROOT", "output_root": "CONFIGURABLE_EXTERNAL_OUTPUT_ROOT"},
+        "dataset_identity.json": {"canonical_root_configured": True, "roles": dataset_roles},
+        "target_identity.json": {"target_class_order": list(CLASS_ORDER), "mapping": {"EMPTY_ROOM": "NOT_HUMAN", "SITTING": "HUMAN_NORMAL", "STANDING": "HUMAN_NORMAL", "LYING": "HUMAN_FALL"}, "lying_semantics": "DERIVED_POSTURE_PROXY_NOT_EVENT_GROUND_TRUTH"},
+        "initialization_registry.json": {"schema_version": "1.0", "seed": PRIMARY_SEED, "candidate_id": "SMALL_CNN_BASELINE_V1", "initial_weight_fingerprint": initial_fp, "architecture_fingerprint": architecture, "parameter_count": 312131, "same_initial_weights_for_all_profiles": True},
+        "p0_preprocessing.json": {"profile_id": runner.PROFILE_IDS[0]},
+        "p1_preprocessing.json": {"profile_id": runner.PROFILE_IDS[1], **p1_stats.to_dict(), "statistics_checksum": p1_stats.checksum()},
+        "p2_preprocessing.json": {"profile_id": runner.PROFILE_IDS[2]},
+        "p0_training_summary.json": profile_rows[0],
+        "p1_training_summary.json": profile_rows[1],
+        "p2_training_summary.json": profile_rows[2],
+        "validation_comparison.json": {"schema_version": "1.0", "selection_role": "VALIDATION", "primary_metric": "macro_f1", "tie_tolerance": 1e-5, "rule_id": "THERMAL_T_B0_WINNER_RULE_001", "candidates": [{"profile_id": row["profile_id"], "candidate_id": row["candidate_id"], "best_epoch": row["best_epoch"], "parameter_count": row["parameter_count"], "validation_metrics": row["validation_metrics"]} for row in profile_rows], "winner_profile_id": runner.PROFILE_IDS[0]},
+        "winner_selection.json": winner,
+        "real_eval_development.json": {"schema_version": "1.0", "role": "REAL_EVAL_DEVELOPMENT", "reporting_view": "POST_SELECTION_REAL_DOMAIN_DEVELOPMENT_CHARACTERIZATION", "profile_id": runner.PROFILE_IDS[0], "checkpoint": winner["checkpoint"], "metrics": metrics, "used_for_winner_selection": False, "used_for_preprocessing_fit": False, "locked_test": False},
+        "checkpoint_registry.json": {"schema_version": "1.0", "storage_scope": "SSD_EXTERNAL_PERSISTENT", "checkpoint_count": 3, "checkpoints": checkpoint_rows, "winner_checkpoint": winner["checkpoint"], "bulk_checkpoints_tracked_in_git": False},
+        "metrics_registry.json": {"schema_version": "1.0", "validation": [], "real_eval_development": {"profile_id": runner.PROFILE_IDS[0], "metrics": metrics}},
+        "limitations.json": {"schema_version": "1.0", "locked_test_available": False, "subject_generalization": "NOT_VERIFIABLE", "near_duplicate_pairs": 14514, "sensitivity_subset": "SENSITIVITY_SUBSET_NOT_MATERIALIZABLE_FROM_CURRENT_COMPACT_EVIDENCE"},
+        "execution_summary.json": {"schema_version": "1.0", "status": "FINALIZED", "phase": "T-B1", "mode": "FULL_EXPERIMENT", "profile_order": list(runner.PROFILE_IDS), "selected_profile_id": runner.PROFILE_IDS[0], "full_training_performed": True, "new_trained_model_generated": True, "t_b2_authorized": "YES_WITH_LIMITATIONS"},
+    }
+    for name, value in documents.items():
+        (bundle / name).write_text(runner.canonical_json(value), encoding="utf-8")
+    _write_fixture_checksums(bundle)
+    return bundle
+
+
+def _write_fixture_checksums(bundle: Path) -> None:
+    entries = []
+    for path in sorted(bundle.rglob("*")):
+        if path.is_file() and path.name != "checksums.sha256":
+            entries.append(f"{runner.sha256_file(path)}  {path.relative_to(bundle).as_posix()}")
+    (bundle / "checksums.sha256").write_text("\n".join(entries) + "\n", encoding="utf-8")
+
+
+def test_full_validator_passes_materialized_fixture(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    fixture = _write_full_fixture(tmp_path)
+    monkeypatch.setattr(validator, "_validate_predecessors", lambda repo_root, errors: {"T-A6": {"evidence_validation": "PASS"}, "T-B0": {"evidence_validation": "PASS", "t_b1_authorized": "YES_WITH_LIMITATIONS"}})
+    result = validator.validate_evidence(repo_root=ROOT, evidence_dir=fixture, mode="FULL_EXPERIMENT")
+    assert result["evidence_validation"] == "PASS"
+    assert result["t_b2_authorized"] == "YES_WITH_LIMITATIONS"
+
+
+def test_full_validator_rejects_semantic_tamper_with_fresh_checksums(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    fixture = _write_full_fixture(tmp_path)
+    real_path = fixture / "real_eval_development.json"
+    real = json.loads(real_path.read_text(encoding="utf-8"))
+    real["used_for_winner_selection"] = True
+    real_path.write_text(runner.canonical_json(real), encoding="utf-8")
+    _write_fixture_checksums(fixture)
+    monkeypatch.setattr(validator, "_validate_predecessors", lambda repo_root, errors: {"T-A6": {"evidence_validation": "PASS"}, "T-B0": {"evidence_validation": "PASS", "t_b1_authorized": "YES_WITH_LIMITATIONS"}})
+    result = validator.validate_evidence(repo_root=ROOT, evidence_dir=fixture, mode="FULL_EXPERIMENT")
+    assert result["evidence_validation"] == "FAIL"
+    assert any(error["code"] == "REAL_EVALUATION_ORDER_INVALID" for error in result["errors"])
+
+
 def test_cpu_backend_policy_allows_missing_gpu() -> None:
     info = backend_info()
     assert info["gpu_optional"] is True

@@ -12,6 +12,7 @@ import json
 import os
 from pathlib import Path
 import shutil
+import subprocess
 import tempfile
 from typing import Any, Mapping, Sequence
 
@@ -240,7 +241,7 @@ def run_fixture_smoke(*, repo_root: str | Path, work_root: str | Path) -> dict[s
 
 
 def run_full_experiment(*, canonical_root: str | Path, work_root: str | Path, output_root: str | Path, repo_root: str | Path, dry_run: bool, owner_authorized: bool = False) -> dict[str, Any]:
-    """Later full experiment path; never called by Stage-1 validation."""
+    """Run the owner-authorized comparison and persist compact evidence."""
 
     if dry_run:
         records = validate_canonical_root(canonical_root, full_hash=True)
@@ -253,13 +254,18 @@ def run_full_experiment(*, canonical_root: str | Path, work_root: str | Path, ou
     if not owner_authorized:
         raise RunnerContractError("FULL_EXPERIMENT_OWNER_AUTHORIZATION_REQUIRED")
     # Full execution is intentionally available only behind the explicit owner
-    # flag.  The implementation below is not invoked during Stage-1.
+    # flag.  Canonical tensors stay external/read-only; checkpoints are copied
+    # to the persistent output before the local temporary directory is removed.
     canonical = validate_canonical_root(canonical_root, full_hash=True)
     root = Path(canonical_root).expanduser()
     work = Path(work_root).expanduser()
     output = Path(output_root).expanduser()
     work.mkdir(parents=True, exist_ok=True)
     output.mkdir(parents=True, exist_ok=True)
+    bundle_dir = output / "T-B1_execution_result"
+    checkpoint_output = bundle_dir / "checkpoints"
+    bundle_dir.mkdir(parents=True, exist_ok=True)
+    checkpoint_output.mkdir(parents=True, exist_ok=True)
     arrays: dict[str, np.ndarray] = {}
     labels: dict[str, np.ndarray] = {}
     files: dict[str, RoleFiles] = {}
@@ -269,6 +275,9 @@ def run_full_experiment(*, canonical_root: str | Path, work_root: str | Path, ou
         labels[role], _ = labels_from_provenance(files[role].provenance_path, EXPECTED_ROLES[role]["rows"])
     p1_stats = fit_p1_statistics(arrays["TRAIN"], train_artifact_sha256=canonical["roles"]["TRAIN"]["sha256"])
     frozen_weights, init_fingerprint, _ = initial_weights(PRIMARY_SEED)
+    budget = _load_t_b0_budget(Path(repo_root))
+    runtime = backend_info()
+    repo_commit = _repo_commit(Path(repo_root))
     with tempfile.TemporaryDirectory(prefix="t_b1_", dir=work) as temp_dir:
         checkpoint_dir = Path(temp_dir) / "checkpoints"
         profile_results: list[dict[str, Any]] = []
@@ -276,7 +285,18 @@ def run_full_experiment(*, canonical_root: str | Path, work_root: str | Path, ou
         for profile in PROFILE_IDS:
             train_x = apply_profile(profile, arrays["TRAIN"], p1_statistics=p1_stats)
             validation_x = apply_profile(profile, arrays["VALIDATION"], p1_statistics=p1_stats)
-            model, result = train_profile(train_x, labels["TRAIN"], validation_x, labels["VALIDATION"], profile_id=profile, seed=PRIMARY_SEED, frozen_initial_weights=frozen_weights, budget=_load_t_b0_budget(Path(repo_root)), checkpoint_path=checkpoint_dir / f"{profile}.weights.h5")
+            temporary_checkpoint = checkpoint_dir / f"{profile}.weights.h5"
+            model, result = train_profile(train_x, labels["TRAIN"], validation_x, labels["VALIDATION"], profile_id=profile, seed=PRIMARY_SEED, frozen_initial_weights=frozen_weights, budget=budget, checkpoint_path=temporary_checkpoint)
+            persistent_checkpoint = checkpoint_output / temporary_checkpoint.name
+            partial_checkpoint = persistent_checkpoint.with_name(persistent_checkpoint.name + ".partial")
+            shutil.copy2(temporary_checkpoint, partial_checkpoint)
+            os.replace(partial_checkpoint, persistent_checkpoint)
+            result["checkpoint"] = {
+                "logical_path": f"checkpoints/{persistent_checkpoint.name}",
+                "sha256": sha256_file(persistent_checkpoint),
+                "size_bytes": int(persistent_checkpoint.stat().st_size),
+                "materialization": "PERSISTENT_EXTERNAL_OUTPUT",
+            }
             result["preprocessing_statistics"] = p1_stats.to_dict() if profile == "P1_TRAIN_FITTED_GLOBAL_ZSCORE" else None
             profile_results.append(result)
             models[profile] = model
@@ -285,24 +305,107 @@ def run_full_experiment(*, canonical_root: str | Path, work_root: str | Path, ou
         real_x = apply_profile(selected_profile, arrays["REAL_EVAL_DEVELOPMENT"], p1_statistics=p1_stats)
         real_probabilities = models[selected_profile].predict(real_x, batch_size=64, verbose=0)
         real_metrics = compute_metrics(labels["REAL_EVAL_DEVELOPMENT"], np.argmax(real_probabilities, axis=1))
+        profile_by_id = {str(item["profile_id"]): item for item in profile_results}
+        validation_comparison = {
+            "schema_version": "1.0",
+            "selection_role": "VALIDATION",
+            "primary_metric": "macro_f1",
+            "tie_tolerance": 1e-5,
+            "rule_id": "THERMAL_T_B0_WINNER_RULE_001",
+            "candidates": [
+                {"profile_id": item["profile_id"], "candidate_id": item["candidate_id"], "best_epoch": item["best_epoch"], "parameter_count": item["parameter_count"], "validation_metrics": item["validation_metrics"]}
+                for item in profile_results
+            ],
+            "winner_profile_id": selected_profile,
+        }
+        checkpoint_registry = {
+            "schema_version": "1.0",
+            "storage_scope": "SSD_EXTERNAL_PERSISTENT",
+            "checkpoint_count": len(profile_results),
+            "checkpoints": [item["checkpoint"] | {"profile_id": item["profile_id"]} for item in profile_results],
+            "winner_checkpoint": dict(winner["checkpoint"]),
+            "bulk_checkpoints_tracked_in_git": False,
+        }
+        real_record = {
+            "schema_version": "1.0",
+            "role": "REAL_EVAL_DEVELOPMENT",
+            "reporting_view": "POST_SELECTION_REAL_DOMAIN_DEVELOPMENT_CHARACTERIZATION",
+            "profile_id": selected_profile,
+            "checkpoint": dict(profile_by_id[selected_profile]["checkpoint"]),
+            "metrics": real_metrics,
+            "used_for_winner_selection": False,
+            "used_for_preprocessing_fit": False,
+            "locked_test": False,
+        }
+        limitations = {
+            "schema_version": "1.0",
+            "phase": "T-B1",
+            "locked_test_available": False,
+            "subject_generalization": "NOT_VERIFIABLE",
+            "near_duplicate_pairs": 14514,
+            "sensitivity_subset": "SENSITIVITY_SUBSET_NOT_MATERIALIZABLE_FROM_CURRENT_COMPACT_EVIDENCE",
+            "posture_proxy": "LYING_TO_HUMAN_FALL_DERIVED_POSTURE_PROXY",
+            "thermal44_domain": "THERMAL44_DOMAIN_UNVERIFIED_DEFERRED_TO_T-C",
+            "license": "LICENSE_NONCOMMERCIAL_RESTRICTION_MANUAL_REVIEW_REQUIRED_FOR_RELEASE",
+            "t_b2_authorized": "YES_WITH_LIMITATIONS",
+        }
         result_bundle = {
+            "schema_version": "1.0",
             "status": "FINALIZED",
+            "phase": "T-B1",
             "mode": FULL_MODE,
-            "profile_results": profile_results,
-            "winner_selection": winner,
-            "real_eval_development": {"role": "REAL_EVAL_DEVELOPMENT", "profile_id": selected_profile, "metrics": real_metrics},
-            "dataset_identity": canonical,
-            "initialization": {"seed": PRIMARY_SEED, "initial_weight_fingerprint": init_fingerprint},
+            "profile_order": list(PROFILE_IDS),
+            "selected_profile_id": selected_profile,
             "full_training_performed": True,
             "new_trained_model_generated": True,
+            "t_b2_authorized": "YES_WITH_LIMITATIONS",
+            "bundle_artifacts": {
+                "environment": "environment.json", "dataset_identity": "dataset_identity.json", "target_identity": "target_identity.json", "initialization": "initialization_registry.json", "validation_comparison": "validation_comparison.json", "winner_selection": "winner_selection.json", "real_eval_development": "real_eval_development.json", "checkpoint_registry": "checkpoint_registry.json", "metrics_registry": "metrics_registry.json", "limitations": "limitations.json",
+            },
         }
-        _atomic_json(output / "T-B1_execution_result" / "execution_summary.json", result_bundle)
-    return {"status": "FINALIZED", "mode": FULL_MODE, "output_root_configured": True, "full_training_performed": True, "new_trained_model_generated": True}
+        _atomic_json(bundle_dir / "environment.json", {"schema_version": "1.0", "phase": "T-B1", "backend": runtime, "repo_commit": repo_commit, "canonical_root": "CONFIGURABLE_EXTERNAL_STORAGE_ROOT", "work_root": "CONFIGURABLE_LOCAL_SCRATCH_ROOT", "output_root": "CONFIGURABLE_EXTERNAL_OUTPUT_ROOT", "full_execution_authorized": True})
+        _atomic_json(bundle_dir / "dataset_identity.json", canonical)
+        _atomic_json(bundle_dir / "target_identity.json", {"schema_version": "1.0", "source_labels": ["EMPTY_ROOM", "SITTING", "STANDING", "LYING"], "target_class_order": ["NOT_HUMAN", "HUMAN_NORMAL", "HUMAN_FALL"], "mapping": {"EMPTY_ROOM": "NOT_HUMAN", "SITTING": "HUMAN_NORMAL", "STANDING": "HUMAN_NORMAL", "LYING": "HUMAN_FALL"}, "lying_semantics": "DERIVED_POSTURE_PROXY_NOT_EVENT_GROUND_TRUTH"})
+        _atomic_json(bundle_dir / "initialization_registry.json", {"schema_version": "1.0", "seed": PRIMARY_SEED, "candidate_id": BASELINE_ID, "initial_weight_fingerprint": init_fingerprint, "architecture_fingerprint": profile_results[0]["architecture_fingerprint"], "parameter_count": profile_results[0]["parameter_count"], "same_initial_weights_for_all_profiles": True})
+        _atomic_json(bundle_dir / "p0_preprocessing.json", {"schema_version": "1.0", "profile_id": PROFILE_IDS[0], "unit": "CELSIUS", "fit_role": None, "operation": "DIRECT_CANONICAL_VALUES_PLUS_CHANNEL"})
+        _atomic_json(bundle_dir / "p1_preprocessing.json", {"schema_version": "1.0", "profile_id": PROFILE_IDS[1], **p1_stats.to_dict(), "statistics_checksum": p1_stats.checksum()})
+        _atomic_json(bundle_dir / "p2_preprocessing.json", {"schema_version": "1.0", "profile_id": PROFILE_IDS[2], "operation": "LEGACY_PER_FRAME_MINMAX", "fit_role": None, "source_contract": "ThermalInterpreter._prepare_float_frame"})
+        for profile in PROFILE_IDS:
+            _atomic_json(bundle_dir / f"{profile[:2].lower()}_training_summary.json", profile_by_id[profile])
+        _atomic_json(bundle_dir / "validation_comparison.json", validation_comparison)
+        _atomic_json(bundle_dir / "winner_selection.json", winner)
+        _atomic_json(bundle_dir / "real_eval_development.json", real_record)
+        _atomic_json(bundle_dir / "checkpoint_registry.json", checkpoint_registry)
+        _atomic_json(bundle_dir / "metrics_registry.json", {"schema_version": "1.0", "validation": validation_comparison["candidates"], "real_eval_development": {"profile_id": selected_profile, "metrics": real_metrics}})
+        _atomic_json(bundle_dir / "limitations.json", limitations)
+        _atomic_json(bundle_dir / "execution_summary.json", result_bundle)
+        _write_bundle_checksums(bundle_dir)
+    return {"status": "FINALIZED", "mode": FULL_MODE, "output_root_configured": True, "bundle_relative_path": "T-B1_execution_result", "full_training_performed": True, "new_trained_model_generated": True, "selected_profile_id": selected_profile, "checkpoint_count": len(profile_results)}
 
 
 def _load_t_b0_budget(repo_root: Path) -> dict[str, Any]:
     path = repo_root / T_B0_REL / "training_budget_policy.json"
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _repo_commit(repo_root: Path) -> str | None:
+    try:
+        result = subprocess.run(["git", "-C", str(repo_root), "rev-parse", "HEAD"], check=True, capture_output=True, text=True)
+        return result.stdout.strip() or None
+    except (OSError, subprocess.CalledProcessError):
+        return None
+
+
+def _write_bundle_checksums(bundle_dir: Path) -> None:
+    """Write deterministic checksums for all finalized bundle files."""
+
+    entries: list[str] = []
+    for path in sorted(bundle_dir.rglob("*")):
+        if not path.is_file() or path.name == "checksums.sha256" or path.name.startswith("._") or path.name.endswith(".partial"):
+            continue
+        relative = path.relative_to(bundle_dir).as_posix()
+        entries.append(f"{sha256_file(path)}  {relative}")
+    (bundle_dir / "checksums.sha256").write_text("\n".join(entries) + "\n", encoding="utf-8")
 
 
 def _atomic_json(path: Path, value: Mapping[str, Any]) -> None:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Standalone validator for Thermal T-B1 Stage-1 infrastructure evidence."""
+"""Standalone validator for Thermal T-B1 Stage-1 and full-experiment evidence."""
 
 from __future__ import annotations
 
@@ -56,6 +56,26 @@ REQUIRED_JSON = [
     "stage1_validation_result.json",
 ]
 CHECKSUMS_NAME = "checksums.sha256"
+FULL_REQUIRED_JSON = [
+    "environment.json",
+    "dataset_identity.json",
+    "target_identity.json",
+    "initialization_registry.json",
+    "p0_preprocessing.json",
+    "p1_preprocessing.json",
+    "p2_preprocessing.json",
+    "p0_training_summary.json",
+    "p1_training_summary.json",
+    "p2_training_summary.json",
+    "validation_comparison.json",
+    "winner_selection.json",
+    "real_eval_development.json",
+    "checkpoint_registry.json",
+    "metrics_registry.json",
+    "limitations.json",
+    "execution_summary.json",
+]
+FULL_VALIDATION_RESULT = "validation_result.json"
 
 
 def sha256_file(path: Path) -> str:
@@ -85,6 +105,11 @@ def _walk(value: Any, location: str = "$") -> Iterable[tuple[str, Any]]:
 
 
 def _portable(value: str) -> bool:
+    # TensorFlow exposes physical device identifiers such as
+    # ``/physical_device:CPU:0``.  They are runtime identifiers, not persisted
+    # filesystem paths, and are normalized as such in the environment record.
+    if value.startswith("/physical_device:"):
+        return True
     if value.startswith(("/", "~/", "file://")) or "\\" in value:
         return False
     if "/Users/" in value or "/private/" in value or value.startswith("/Volumes/") or value.startswith("/content/"):
@@ -310,15 +335,237 @@ def _validate_checksums(evidence_dir: Path, errors: list[dict[str, str]]) -> Non
             _error(errors, "CHECKSUM_MISMATCH", relative, "Checksum is stale or incorrect.")
 
 
+def _load_full_documents(evidence_dir: Path, errors: list[dict[str, str]]) -> dict[str, Any]:
+    documents: dict[str, Any] = {}
+    for name in FULL_REQUIRED_JSON + [FULL_VALIDATION_RESULT]:
+        path = evidence_dir / name
+        if not path.is_file():
+            if name == FULL_VALIDATION_RESULT:
+                continue
+            _error(errors, "FULL_REQUIRED_ARTIFACT_MISSING", name, "Required T-B1 full-experiment JSON artifact is missing.")
+            continue
+        try:
+            text = path.read_text(encoding="utf-8")
+            value = json.loads(text)
+        except (OSError, json.JSONDecodeError) as exc:
+            _error(errors, "JSON_READ_FAILED", name, str(exc))
+            continue
+        documents[name] = value
+        if text != canonical_json(value):
+            _error(errors, "NONDETERMINISTIC_JSON", name, "JSON must use canonical sorted-key formatting.")
+        for location, item in _walk(value, name):
+            if isinstance(item, str) and not _portable(item):
+                _error(errors, "NONPORTABLE_PATH", location, item)
+            if isinstance(item, str) and item.startswith("archive/"):
+                _error(errors, "ARCHIVE_TREATED_AS_ACTIVE", location, item)
+            if isinstance(item, str) and any(token in item.lower() for token in ("/co2/", "/mmwave/", "integration/")):
+                _error(errors, "CROSS_TRACK_REFERENCE", location, item)
+    return documents
+
+
+def _validate_full_dataset_identity(documents: Mapping[str, Any], errors: list[dict[str, str]]) -> None:
+    dataset = documents.get("dataset_identity.json", {})
+    if dataset.get("canonical_root_configured") is not True:
+        _error(errors, "CANONICAL_ROOT_INVALID", "dataset_identity.json", "Canonical root was not validated.")
+    roles = dataset.get("roles", {})
+    expected = {
+        "TRAIN": (32000, "749c847fc9ab50ea5eee8827f0d47b5ebaa48165732a382c59f8b96c565b9d93", "SYNTHETIC"),
+        "VALIDATION": (8000, "5d16451702c1bccfa945d9188d9b29a26ce11c8b33bf7a0dfbb25bfa86d74610", "SYNTHETIC"),
+        "REAL_EVAL_DEVELOPMENT": (8000, "cd696e68aeec063cbc8185719b4f4dad3d038cb3d28eec0d3701b8311e4ad8f1", "REAL"),
+    }
+    if set(roles) != set(expected):
+        _error(errors, "ROLE_SET_INVALID", "dataset_identity.json:roles", "All three frozen T-B1 roles are required.")
+    for role, (rows, digest, domain) in expected.items():
+        item = roles.get(role, {})
+        if item.get("rows") != rows or item.get("sha256") != digest or item.get("source_domain") != domain:
+            _error(errors, "ROLE_IDENTITY_INVALID", f"dataset_identity.json:roles.{role}", "Canonical role identity does not match T-A6.")
+        if item.get("shape") != [rows, 62, 80] or item.get("dtype") != "float32_little_endian" or item.get("unit") != "CELSIUS":
+            _error(errors, "ROLE_TENSOR_CONTRACT_INVALID", f"dataset_identity.json:roles.{role}", "Shape/dtype/unit contract is invalid.")
+        if not item.get("provenance_sha256"):
+            _error(errors, "PROVENANCE_IDENTITY_MISSING", f"dataset_identity.json:roles.{role}", "Provenance checksum is required.")
+
+
+def _validate_full_training_contract(documents: Mapping[str, Any], errors: list[dict[str, str]]) -> None:
+    summary = documents.get("execution_summary.json", {})
+    if summary.get("phase") != "T-B1" or summary.get("mode") != "FULL_EXPERIMENT" or summary.get("status") != "FINALIZED":
+        _error(errors, "FULL_RESULT_ID_INVALID", "execution_summary.json", "Final result must identify T-B1 FULL_EXPERIMENT.")
+    if summary.get("full_training_performed") is not True or summary.get("new_trained_model_generated") is not True:
+        _error(errors, "FULL_TRAINING_FLAG_INVALID", "execution_summary.json", "Full execution flags are not true.")
+    if list(summary.get("profile_order", [])) != list(PROFILE_IDS):
+        _error(errors, "PROFILE_ORDER_INVALID", "execution_summary.json:profile_order", "P0/P1/P2 order is not frozen.")
+    if summary.get("t_b2_authorized") not in {"YES_WITH_LIMITATIONS", "NO"}:
+        _error(errors, "T_B2_AUTHORIZATION_INVALID", "execution_summary.json:t_b2_authorized", "T-B2 authorization must be explicit.")
+    target = documents.get("target_identity.json", {})
+    if target.get("target_class_order") != list(CLASS_ORDER) or target.get("mapping") != {"EMPTY_ROOM": "NOT_HUMAN", "SITTING": "HUMAN_NORMAL", "STANDING": "HUMAN_NORMAL", "LYING": "HUMAN_FALL"}:
+        _error(errors, "TARGET_MAPPING_INVALID", "target_identity.json", "Frozen source-to-target mapping is invalid.")
+    if target.get("lying_semantics") != "DERIVED_POSTURE_PROXY_NOT_EVENT_GROUND_TRUTH":
+        _error(errors, "POSTURE_PROXY_SEMANTICS_MISSING", "target_identity.json:lying_semantics", "LYING must remain a derived posture proxy.")
+    model = documents.get("initialization_registry.json", {})
+    create_small_cnn_baseline()
+    _, fingerprint, architecture = initial_weights(PRIMARY_SEED)
+    if model.get("seed") != PRIMARY_SEED or model.get("initial_weight_fingerprint") != fingerprint or model.get("architecture_fingerprint") != architecture or model.get("parameter_count") != EXPECTED_PARAMETER_COUNT:
+        _error(errors, "INITIALIZATION_CONTRACT_INVALID", "initialization_registry.json", "Seed, initial weights, architecture, or parameter count mismatch.")
+    if model.get("same_initial_weights_for_all_profiles") is not True:
+        _error(errors, "INITIALIZATION_NOT_SHARED", "initialization_registry.json", "Profiles must share frozen initial weights.")
+    for profile in PROFILE_IDS:
+        name = f"{profile[:2].lower()}_training_summary.json"
+        item = documents.get(name, {})
+        if item.get("profile_id") != profile or item.get("candidate_id") != BASELINE_ID or item.get("seed") != PRIMARY_SEED:
+            _error(errors, "PROFILE_IDENTITY_INVALID", name, "Profile/candidate/seed identity mismatch.")
+        if item.get("status") != "VALIDATION_COMPLETE" or item.get("initial_weight_fingerprint") != fingerprint or item.get("architecture_fingerprint") != architecture or item.get("parameter_count") != EXPECTED_PARAMETER_COUNT:
+            _error(errors, "PROFILE_TRAINING_CONTRACT_INVALID", name, "Training output does not match the frozen baseline contract.")
+        metrics = item.get("validation_metrics", {})
+        if metrics.get("class_order") != list(CLASS_ORDER) or metrics.get("sample_count") != 8000:
+            _error(errors, "VALIDATION_METRICS_INVALID", name, "Validation metric support/class order is invalid.")
+        checkpoint = item.get("checkpoint", {})
+        if not checkpoint.get("logical_path") or not re.fullmatch(r"checkpoints/[^/]+\.weights\.h5", str(checkpoint.get("logical_path"))):
+            _error(errors, "CHECKPOINT_IDENTITY_INVALID", name, "Persistent checkpoint logical identity is missing.")
+    p1 = documents.get("p1_preprocessing.json", {})
+    if p1.get("profile_id") != "P1_TRAIN_FITTED_GLOBAL_ZSCORE" or p1.get("fit_role") != "TRAIN" or p1.get("fit_sample_count") != 32000 or p1.get("fit_pixel_count") != 32000 * 62 * 80:
+        _error(errors, "P1_FIT_SCOPE_INVALID", "p1_preprocessing.json", "P1 statistics must be fitted from TRAIN only.")
+    try:
+        stats = P1Statistics(mean=float(p1["mean"]), std=float(p1["std"]), fit_sample_count=int(p1["fit_sample_count"]), fit_pixel_count=int(p1["fit_pixel_count"]), fit_role=str(p1["fit_role"]), train_artifact_sha256=str(p1["train_artifact_sha256"]), epsilon=float(p1["epsilon"]))
+        if p1.get("statistics_checksum") != stats.checksum():
+            _error(errors, "P1_STATISTICS_CHECKSUM_INVALID", "p1_preprocessing.json", "P1 statistics checksum is stale.")
+    except (KeyError, TypeError, ValueError, PreprocessingContractError) as exc:
+        _error(errors, "P1_STATISTICS_INVALID", "p1_preprocessing.json", str(exc))
+    comparison = documents.get("validation_comparison.json", {})
+    rows = comparison.get("candidates", [])
+    if [row.get("profile_id") for row in rows] != list(PROFILE_IDS):
+        _error(errors, "VALIDATION_CANDIDATE_SET_INVALID", "validation_comparison.json:candidates", "All profiles must be compared in frozen order.")
+    if comparison.get("selection_role") != "VALIDATION" or comparison.get("primary_metric") != "macro_f1" or comparison.get("tie_tolerance") != 1e-5:
+        _error(errors, "VALIDATION_POLICY_INVALID", "validation_comparison.json", "Winner policy is not frozen.")
+    try:
+        recomputed = select_validation_winner(rows)
+        if comparison.get("winner_profile_id") != recomputed.get("profile_id") or summary.get("selected_profile_id") != recomputed.get("profile_id"):
+            _error(errors, "WINNER_RECOMPUTATION_MISMATCH", "validation_comparison.json", "Winner does not recompute from VALIDATION metrics.")
+    except Exception as exc:
+        _error(errors, "WINNER_RECOMPUTATION_FAILED", "validation_comparison.json", str(exc))
+    winner = documents.get("winner_selection.json", {})
+    if winner.get("selection_role") != "VALIDATION" or winner.get("rule_id") != "THERMAL_T_B0_WINNER_RULE_001" or winner.get("real_metrics") is not None:
+        _error(errors, "WINNER_ROLE_INVALID", "winner_selection.json", "Winner must be selected on VALIDATION only.")
+    if winner.get("profile_id") != summary.get("selected_profile_id"):
+        _error(errors, "WINNER_ID_INVALID", "winner_selection.json", "Winner identity disagrees with summary.")
+    real = documents.get("real_eval_development.json", {})
+    if real.get("role") != "REAL_EVAL_DEVELOPMENT" or real.get("profile_id") != summary.get("selected_profile_id") or real.get("reporting_view") != "POST_SELECTION_REAL_DOMAIN_DEVELOPMENT_CHARACTERIZATION" or real.get("used_for_winner_selection") is not False or real.get("used_for_preprocessing_fit") is not False or real.get("locked_test") is not False:
+        _error(errors, "REAL_EVALUATION_ORDER_INVALID", "real_eval_development.json", "REAL must be winner-only, post-selection development characterization.")
+    if real.get("metrics", {}).get("sample_count") != 8000 or real.get("metrics", {}).get("class_order") != list(CLASS_ORDER):
+        _error(errors, "REAL_METRICS_INVALID", "real_eval_development.json:metrics", "REAL metric support/class order is invalid.")
+    limitations = documents.get("limitations.json", {})
+    if limitations.get("near_duplicate_pairs") != 14514 or limitations.get("sensitivity_subset") != "SENSITIVITY_SUBSET_NOT_MATERIALIZABLE_FROM_CURRENT_COMPACT_EVIDENCE" or limitations.get("locked_test_available") is not False or limitations.get("subject_generalization") != "NOT_VERIFIABLE":
+        _error(errors, "LIMITATIONS_REMOVED", "limitations.json", "T-A6/T-B0 limitations must remain explicit.")
+
+
+def _validate_full_checkpoints_and_checksums(evidence_dir: Path, documents: Mapping[str, Any], errors: list[dict[str, str]], warnings: list[dict[str, str]], *, check_checksums: bool) -> None:
+    registry = documents.get("checkpoint_registry.json", {})
+    scope = registry.get("storage_scope")
+    if scope not in {"SSD_EXTERNAL_PERSISTENT", "EXTERNAL_SSD_NOT_TRACKED"}:
+        _error(errors, "CHECKPOINT_SCOPE_INVALID", "checkpoint_registry.json:storage_scope", "Checkpoint storage scope must be explicit.")
+    for item in registry.get("checkpoints", []):
+        logical = str(item.get("logical_path", ""))
+        if not logical or not _portable(logical) or logical.startswith("../"):
+            _error(errors, "CHECKPOINT_PATH_INVALID", "checkpoint_registry.json", logical)
+            continue
+        path = evidence_dir / PurePosixPath(logical)
+        if path.is_file() and check_checksums:
+            if item.get("size_bytes") != path.stat().st_size or item.get("sha256") != sha256_file(path):
+                _error(errors, "CHECKPOINT_CHECKSUM_MISMATCH", logical, "Persistent checkpoint identity is stale.")
+        elif scope == "SSD_EXTERNAL_PERSISTENT":
+            _error(errors, "CHECKPOINT_MISSING", logical, "SSD checkpoint is missing from a materialized full bundle.")
+        else:
+            _warning(warnings, "CHECKPOINT_EXTERNAL_NOT_TRACKED", logical, "Compact Git evidence preserves the checkpoint SHA but not bulk checkpoint bytes.")
+    if not check_checksums:
+        return
+    checksum_path = evidence_dir / CHECKSUMS_NAME
+    if not checksum_path.is_file():
+        _error(errors, "CHECKSUM_REGISTRY_MISSING", CHECKSUMS_NAME, "Full bundle checksum registry is missing.")
+        return
+    entries: dict[str, str] = {}
+    previous = ""
+    for number, line in enumerate(checksum_path.read_text(encoding="utf-8").splitlines(), 1):
+        match = re.fullmatch(r"([0-9a-f]{64})  ([^\r\n]+)", line)
+        if not match:
+            _error(errors, "CHECKSUM_LINE_INVALID", f"{CHECKSUMS_NAME}:{number}", line)
+            continue
+        digest, relative = match.groups()
+        if relative <= previous:
+            _error(errors, "CHECKSUM_ORDER_NONDETERMINISTIC", f"{CHECKSUMS_NAME}:{number}", relative)
+        previous = relative
+        if not _portable(relative) or relative.startswith("../"):
+            _error(errors, "CHECKSUM_PATH_INVALID", f"{CHECKSUMS_NAME}:{number}", relative)
+        entries[relative] = digest
+    actual = {path.relative_to(evidence_dir).as_posix() for path in evidence_dir.rglob("*") if path.is_file() and path.name != CHECKSUMS_NAME and not path.name.startswith("._") and not path.name.endswith(".partial")}
+    if set(entries) != actual:
+        _error(errors, "CHECKSUM_ARTIFACT_SET_INVALID", CHECKSUMS_NAME, "Checksums must cover every materialized full-bundle artifact exactly once.")
+    for relative, digest in entries.items():
+        path = evidence_dir / PurePosixPath(relative)
+        if path.is_file() and sha256_file(path) != digest:
+            _error(errors, "CHECKSUM_MISMATCH", relative, "Checksum is stale or incorrect.")
+
+
+def _validate_full_evidence(*, repo_root: Path, evidence_dir: Path, check_checksums: bool) -> dict[str, Any]:
+    errors: list[dict[str, str]] = []
+    warnings: list[dict[str, str]] = []
+    documents = _load_full_documents(evidence_dir, errors)
+    predecessors = _validate_predecessors(repo_root, errors)
+    if all(name in documents for name in FULL_REQUIRED_JSON):
+        _validate_full_dataset_identity(documents, errors)
+        _validate_full_training_contract(documents, errors)
+        _validate_full_checkpoints_and_checksums(evidence_dir, documents, errors, warnings, check_checksums=check_checksums)
+    elif check_checksums:
+        _validate_full_checkpoints_and_checksums(evidence_dir, documents, errors, warnings, check_checksums=True)
+    if FULL_VALIDATION_RESULT in documents:
+        result_doc = documents[FULL_VALIDATION_RESULT]
+        if result_doc.get("phase") != "T-B1" or result_doc.get("stage") != "FULL_EXPERIMENT":
+            _error(errors, "VALIDATION_RESULT_ID_INVALID", FULL_VALIDATION_RESULT, "Full validation result identity is invalid.")
+    _warning(warnings, "NO_PRISTINE_LOCKED_TEST", "limitations.json", "REAL_EVAL_DEVELOPMENT is not an untouched final test.")
+    _warning(warnings, "GROUPING_NOT_VERIFIABLE", "limitations.json", "Subject/session/event generalization remains unavailable.")
+    _warning(warnings, "NEAR_DUPLICATE_OVERLAP", "limitations.json", "14,514 TRAIN-VALIDATION near-duplicate pairs remain disclosed.")
+    errors.sort(key=lambda item: (item["code"], item["location"], item["message"]))
+    warnings.sort(key=lambda item: (item["code"], item["location"], item["message"]))
+    predecessors_pass = predecessors.get("T-A6", {}).get("evidence_validation") == "PASS" and predecessors.get("T-B0", {}).get("evidence_validation") == "PASS"
+    passed = not errors and predecessors_pass
+    return {
+        "phase": "T-B1",
+        "stage": "FULL_EXPERIMENT",
+        "schema_version": "1.0",
+        "evidence_validation": "PASS" if passed else "FAIL",
+        "overall_outcome": "T_B1_FULL_COMPLETE_WITH_LIMITATIONS" if passed else "T_B1_FULL_BLOCKED",
+        "full_experiment": "FINALIZED" if passed else "BLOCKED",
+        "t_b2_authorized": "YES_WITH_LIMITATIONS" if passed else False,
+        "full_training_performed": bool(documents.get("execution_summary.json", {}).get("full_training_performed") is True),
+        "new_trained_model_generated": bool(documents.get("execution_summary.json", {}).get("new_trained_model_generated") is True),
+        "performance_winner_selected": bool(documents.get("execution_summary.json", {}).get("selected_profile_id")),
+        "winner_profile_id": documents.get("execution_summary.json", {}).get("selected_profile_id"),
+        "real_role": "REAL_EVAL_DEVELOPMENT",
+        "predecessors": predecessors,
+        "error_count": len(errors),
+        "errors": errors,
+        "warning_count": len(warnings),
+        "warnings": warnings,
+    }
+
+
+def write_full_result_and_checksums(evidence_dir: Path, result: Mapping[str, Any]) -> None:
+    evidence_dir.mkdir(parents=True, exist_ok=True)
+    (evidence_dir / FULL_VALIDATION_RESULT).write_text(canonical_json(dict(result)), encoding="utf-8")
+    entries: list[str] = []
+    for path in sorted(evidence_dir.rglob("*")):
+        if not path.is_file() or path.name == CHECKSUMS_NAME or path.name.startswith("._") or path.name.endswith(".partial"):
+            continue
+        entries.append(f"{sha256_file(path)}  {path.relative_to(evidence_dir).as_posix()}")
+    (evidence_dir / CHECKSUMS_NAME).write_text("\n".join(entries) + "\n", encoding="utf-8")
+
+
 def validate_evidence(*, repo_root: Path = ROOT, evidence_dir: Path | None = None, mode: str = "STAGE1_IMPLEMENTATION", check_checksums: bool = True) -> dict[str, Any]:
     repo_root = Path(repo_root).resolve()
     evidence_dir = Path(evidence_dir or repo_root / EVIDENCE_REL).resolve()
+    if mode == "FULL_EXPERIMENT":
+        return _validate_full_evidence(repo_root=repo_root, evidence_dir=evidence_dir, check_checksums=check_checksums)
     errors: list[dict[str, str]] = []
     warnings: list[dict[str, str]] = []
     documents = _load_documents(evidence_dir, errors)
     predecessors = _validate_predecessors(repo_root, errors)
-    if mode == "FULL_EXPERIMENT":
-        _error(errors, "FULL_EXPERIMENT_RESERVED", "mode", "FULL_EXPERIMENT validation is reserved for a later SSD-backed run.")
     if all(name in documents for name in REQUIRED_JSON):
         _validate_execution_contract(documents, errors)
         _validate_dataset_contract(documents, errors)
@@ -368,7 +615,7 @@ def write_result_and_checksums(evidence_dir: Path, result: Mapping[str, Any]) ->
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Validate Thermal T-B1 Stage-1 implementation evidence")
+    parser = argparse.ArgumentParser(description="Validate Thermal T-B1 Stage-1 or FULL_EXPERIMENT evidence")
     parser.add_argument("--repo-root", default=str(ROOT))
     parser.add_argument("--evidence-dir", default=str(ROOT / EVIDENCE_REL))
     parser.add_argument("--mode", choices=("STAGE1_IMPLEMENTATION", "FULL_EXPERIMENT"), default="STAGE1_IMPLEMENTATION")
@@ -377,7 +624,10 @@ def main() -> int:
     args = parser.parse_args()
     result = validate_evidence(repo_root=Path(args.repo_root), evidence_dir=Path(args.evidence_dir), mode=args.mode, check_checksums=not args.skip_checksums)
     if args.write_result:
-        write_result_and_checksums(Path(args.evidence_dir), result)
+        if args.mode == "FULL_EXPERIMENT":
+            write_full_result_and_checksums(Path(args.evidence_dir), result)
+        else:
+            write_result_and_checksums(Path(args.evidence_dir), result)
         result = validate_evidence(repo_root=Path(args.repo_root), evidence_dir=Path(args.evidence_dir), mode=args.mode, check_checksums=True)
     print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
     return 0 if result["evidence_validation"] == "PASS" else 1
