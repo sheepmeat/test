@@ -10,15 +10,15 @@
 | --- | --- | --- | --- | --- |
 | mmWave | A0~A6와 M-B0~M-B12 완료 | 실제 공개 레이더 데이터의 표준화, 한 사람의 자료가 학습과 평가에 동시에 들어가지 않는 분할, 저장 데이터 기반 경량 모델 비교와 후보 고정까지 완료 | M-C 실제 MR60 검증과 장치 결과를 반영한 최종 산출물 고정·통합 준비, 이후 공통 I단계 | MR60과 공개 데이터의 차이가 크면 M-D에서 필요한 조건의 데이터를 더 모아 재학습 |
 | CO₂ | C-A0~C-A6와 C-B0~C-B5 완료 | 실제 UCI 원본의 시간 계보, 모델에 넣는 측정 항목, 저장 데이터 기반 경량 재실 판단 모델 비교와 후보 고정까지 완료 | C-C 실제 SCD40 검증과 C-E 최종 산출물 고정·통합 준비, 이후 공통 I단계 | SCD40의 측정 범위·주기·환경 차이가 크면 C-D에서 확인된 차이를 채우는 데이터 확장과 재학습 |
-| Thermal | T-A0~T-A6 완료, B단계 시작 승인값 `t_b_authorized: false` | 48,000장 원본의 온도 단위, 화면을 62×80으로 바꾸는 규칙, 라벨 의미, 공식 데이터 분할과 중복 한계까지 확정 | T-B0 시작 조건 검토와 T-B 저장 데이터 기반 모델 비교, T-C 실제 열화상 센서 검증, T-E 최종 고정, 이후 공통 I단계 | 실제 장치나 평가 데이터의 빈틈이 확인되면 T-D에서 새 데이터 확보와 재학습 |
+| Thermal | 중간배포 기준 T-A0~T-A6 완료, 별도 개발선 T-B0 완료 | 48,000장 원본의 온도 단위, 62×80 변환, 라벨 의미, 공식 데이터 분할과 중복 한계를 확정했고, 별도 PR #57에서 후속 모델 비교 규칙까지 마련 | 중간배포 고정 후 T-B0 개발선 재검토·병합, T-B1부터 저장 데이터 기반 모델 비교, T-C 실제 열화상 센서 검증, T-E 최종 고정, 이후 공통 I단계 | 실제 장치나 평가 데이터의 빈틈이 확인되면 T-D에서 새 데이터 확보와 재학습 |
 
 **mmWave — 현재 위치.** 데이터 기반인 A단계와 저장 데이터 기반 모델 단계인 B단계가 모두 끝났으므로, 세 가지 증거 층 중 데이터 계보와 offline 후보의 두 층이 마련되었다. **완료의 의미.** 지금 모델은 같은 공개 데이터와 고정 규칙으로 다시 만들고 비교할 수 있지만 MR60에서 같은 신호가 들어오는지는 아직 증명되지 않았다. **남은 양.** 센서 자체의 필수 큰 관문은 M-C 실센서 검증과 그 결과를 반영한 최종 산출물 고정·통합 준비이며, 이후 세 센서 공통 I단계가 남아 있다. M-D는 반드시 수행하는 단계가 아니라 M-C에서 domain gap, 즉 공개 데이터와 MR60 신호의 의미나 수치 분포 차이가 확인될 때만 추가된다. **바로 다음 작업.** 약 20 rpm, 즉 분당 약 20회 호흡으로 관측된 현상을 포함해 MR60의 원시값(raw), 파동 위상값(phase), 사람 감지 여부(presence), 측정 시각(timestamp)을 확인해야 한다. 그리고 이를 초당 10회 측정한 값 300개로 구성한 30초 입력과, 호흡 주파수만 남긴 뒤 값의 크기를 표준화하는 `BPF_ZSCORE` 규칙에 맞춰 비교해야 한다. 일정한 조건에서 계획대로 자료를 모으는 controlled capture와 Raspberry Pi 실행 검증도 이때 수행한다.
 
 **CO₂ — 현재 위치.** 실제 원본을 복원한 C-A와 offline 후보를 고정한 C-B가 끝났으므로, CO₂도 데이터 계보와 저장 데이터 기반 모델의 두 증거 층이 마련되었다. **완료의 의미.** UCI 재실 데이터에서는 같은 입력 항목(feature), 값의 크기를 맞추는 변환(scaler), 재실 판정 경계값(threshold)과 모델을 재현할 수 있다. 그러나 이 결과는 SCD40의 실제 측정 특성이나 CO₂ 안전 경보를 증명하지 않는다. **남은 양.** 필수 큰 관문은 C-C SCD40 검증과 C-E 최종 산출물 고정·통합 준비이며, 그 뒤 공통 I단계가 남아 있다. C-D는 C-C에서 측정 범위, 측정 주기(cadence), 값 누락 또는 환경 차이가 실제로 확인될 때만 수행한다. **바로 다음 작업.** 현재 팀 PR #14의 부분 검증 자료를 출발점으로 센서 전원을 켠 직후 값이 안정되는 시간, 측정 간격, 새 측정 없이 과거 값이 남는 stale 상태, 값 누락과 재연결을 확인해야 한다. CO₂가 시간에 따라 변하는 속도인 `CO2_slope`를 실제 SCD40에서도 같은 방식으로 계산할 수 있는지와 UCI 데이터 대비 값의 분포 차이도 검증해야 한다.
 
-**Thermal — 현재 위치.** T-A0~T-A6 데이터 기반은 끝났지만 새 모델을 비교하는 T-B는 시작 승인을 받지 않았으므로, 세 증거 층 중 데이터 계보 한 층만 마련된 상태이다. **완료의 의미.** 원본 열화상을 섭씨값을 가진 62×80 한 장면(frame)과 추적 가능한 정답 이름(label)·용도별 분할(split)로 다시 만들 수 있다는 것은 증명했다. 그러나 기존 `HUMAN_FALL` 모델이 이 데이터에 맞거나 실제 낙상을 잘 찾는다는 것은 증명하지 않았다. **남은 양.** Thermal은 세 센서 중 가장 많은 센서별 작업이 남아 있으며, T-B0 승인 검토와 T-B 모델 비교, T-C 실제 장치 검증, T-E 최종 산출물 고정·통합 준비를 차례로 통과한 뒤 공통 I단계로 가야 한다. T-D는 앞 단계에서 확인된 데이터 빈틈이 있을 때만 추가한다. **바로 다음 작업.** T-B0에서 표준화된 섭씨 열화상인 canonical frame과, 한 장면 안의 최솟값을 0·최댓값을 1로 바꾸는 기존 min-max 입력의 관계를 먼저 확정해야 한다. TRAIN과 VALIDATION 사이에 거의 같은 열화상인 near-duplicate가 성능을 부풀리지 않도록 통제하는 방법과, 모델 선택에 사용하지 않을 독립 최종평가 데이터의 확보 방법도 정해야 한다.
+**Thermal — 현재 위치.** 중간배포 기준선인 `main`에서는 T-A0~T-A6 데이터 기반이 끝났고 A6의 `t_b_authorized: false`가 유지된다. 별도 개발선과 열린 PR #57에서는 T-B0 모델 비교 프로토콜이 완료되어 그 개발선 안에서만 제한사항을 전제로 T-B1이 허용되지만, 새 모델 학습은 아직 수행하지 않았다. **완료의 의미.** 원본 열화상을 섭씨값을 가진 62×80 한 장면(frame)과 추적 가능한 정답 이름(label)·용도별 분할(split)로 다시 만들 수 있고, 후속 개발선에서는 Celsius 직접 입력·TRAIN 전용 z-score·기존 장면별 min-max를 공정하게 비교할 규칙까지 마련했다. 그러나 기존 `HUMAN_FALL` 모델이 새 데이터에 맞거나 실제 낙상을 잘 찾는다는 것은 증명하지 않았다. **남은 양.** 중간배포를 먼저 고정한 뒤 T-B0 개발선을 최신 기준에서 재검토·병합하고, T-B1 모델 학습과 후속 경량 모델·TFLite/INT8 비교, T-C 실제 장치 검증, T-E 최종 산출물 고정·통합 준비를 차례로 통과해야 한다. T-D는 앞 단계에서 확인된 데이터 빈틈이 있을 때만 추가한다. **바로 다음 작업.** T-B1에서 세 전처리를 같은 조건으로 비교하되 TRAIN↔VALIDATION near-duplicate 한계와 독립 LOCKED_TEST 부재를 그대로 공개하고, 선택된 후보 하나만 실제 촬영 개발 평가 자료에서 확인해야 한다.
 
-세 트랙은 독립 파일과 장비를 사용하는 범위에서 병렬로 진행할 수 있다. 즉 mmWave M-C와 CO₂ C-C를 진행하는 동안 Thermal T-B0/T-B를 진행하고, 공용 계약을 읽기 전용으로 대조하는 I-0도 함께 수행할 수 있다. 다만 같은 센서 안에서는 B보다 C를 먼저 하거나, C에서 차이가 확인되지 않았는데 D 재학습을 시작하거나, 실센서 검증 없이 E와 I의 완료를 선언해서는 안 된다.
+세 트랙은 독립 파일과 장비를 사용하는 범위에서 병렬로 진행할 수 있다. 즉 mmWave M-C와 CO₂ C-C를 진행하는 동안 Thermal T-B0 개발선을 재검토한 뒤 T-B1 이후를 진행하고, 공용 계약을 읽기 전용으로 대조하는 I-0도 함께 수행할 수 있다. 다만 같은 센서 안에서는 B보다 C를 먼저 하거나, C에서 차이가 확인되지 않았는데 D 재학습을 시작하거나, 실센서 검증 없이 E와 I의 완료를 선언해서는 안 된다.
 
 ## 2. 이 중간배포의 목적과 의미
 
@@ -1059,21 +1059,248 @@ C-C에서 물어야 할 질문은 이제:
 
 즉 B-series가 끝난 것은 **모델 개발이 완전히 끝났다는 의미가 아니라, 실제 장치 검증에 가져갈 하나의 offline 후보를 이제야 제대로 고정했다는 의미**라고 이해하면 가장 정확합니다.
 
-### Thermal: 모델 재학습 전에 열화상 데이터의 의미와 물리 단위 확정
+### Thermal: A단계 데이터 기반 확립부터 B단계 모델 재학습 준비까지
 
-Thermal에는 이미 `models/thermal/thermal_fall_int8_v0.1.0.tflite`와 모델을 실행해 결과를 얻는 추론(inference) 코드가 있었다. 그러나 모델이 받는 62×80 숫자 배열이 어떤 원본의 온도 단위와 화면 방향에서 만들어졌는지, 출력 이름 `HUMAN_FALL`이 실제 사람이 넘어지는 사건을 뜻하는지, 학습용 train과 모델 선택용 validation이 서로 독립적인지 충분히 증명되지 않았다. 그래서 T-A0~T-A6의 목표는 곧바로 성능을 높이는 재학습이 아니라, 열화상 한 장의 물리적 의미와 출처를 고정해 잘못된 전처리나 정답 해석으로 학습을 시작하지 않게 하는 것이었다.
+이 문서는 SafeNest의 Thermal, 즉 열화상 AI 트랙에서 기존 실행 모델을 바로 재학습하지 않고 T-A0부터 T-A6까지 데이터 기반을 다시 확립한 이유와, 그 결과를 바탕으로 현재 T-B0까지 어떤 모델 개발 규칙을 확정했는지를 설명한다. 단순히 완료한 파일과 단계 이름을 나열하는 것이 아니라, 기존 상태에서 어떤 문제가 발생할 수 있었고 이를 어떤 방법으로 막았는지, 그 결과 앞으로 어떤 성능을 주장할 수 있고 어떤 것은 아직 주장할 수 없는지를 이해하는 데 목적이 있다.
 
-선택 데이터는 SDT Dataset, DOI `10.5281/zenodo.4124309`이다. 저장소 증거는 Zenodo의 구조화된 설명(metadata)에 적힌 CC BY 4.0과 배포 본문의 비상업 연구 제한이 서로 다르다고 기록한다. 따라서 현재는 더 엄격한 공통 조건인 비상업 연구와 출처 표기를 적용하며, 원본 재배포나 상업적 사용은 별도 조건 검토가 필요하다. 원시 파일 판독기(raw reader)인 `datasets/thermal/raw_reader.py`는 가로 640·세로 480 pixel의 `uint16` 열화상 값을 읽는다. `uint16`은 0부터 65,535까지의 정수를 저장하는 16비트 형식이다. 원본은 절대온도 Kelvin의 100분의 1 단위를 쓰므로 `(raw - 27315) / 100` 계산으로 사람이 익숙한 섭씨온도를 복원한다. 표준 데이터 변환기(canonical converter)인 `datasets/thermal/canonical_converter.py`는 좌우 10 pixel씩 제거한 `[10, 0, 630, 480]` 영역을 62×80으로 축소한다. 이때 bilinear 보간은 출력 pixel 하나를 주변 네 원본 pixel의 거리 비율에 따라 섞어 계산하는 방법이다. `G1_FIXED_ASPECT_CROP_BILINEAR` 규칙은 화면을 돌리거나 뒤집지 않고 섭씨 실수값인 `float32`를 보존한다. A단계에서는 한 장마다 가장 낮은 온도를 0, 가장 높은 온도를 1로 바꾸는 min-max 정규화를 하지 않는다. 정확한 규칙은 `datasets/thermal/manifests/T-A2_geometry_calibration_canonical_frame/selected_geometry_profile.json`에 있다.
+현재 중간배포의 Thermal 기준선은 T-A6까지 완료된 A단계이다. A6 기계 증거의 `t_b_authorized: false`는 이 기준선에서 B단계가 아직 승인·병합되지 않았다는 뜻이다. 한편 별도 개발 브랜치 `feature/thermal-t-b0-offline-model-protocol`과 열린 PR #57에는 T-B0 프로토콜이 완료되어 있으며, 해당 개발선 안에서만 제한사항을 전제로 T-B1이 허용되어 있다. 따라서 현재 `main`은 재현 가능한 데이터 기반을 나타내고, 별도 B개발선은 그 데이터를 이용해 새 모델을 공정하게 재학습하기 위한 후속 연구선으로 구분한다.
 
-T-A6은 배포자가 정한 원래 데이터 구분(source partition)을 그대로 유지해 컴퓨터로 생성한 합성 TRAIN 32,000장, 합성 VALIDATION 8,000장, 실제 촬영 자료를 개발 중 참고 평가에만 쓰는 `REAL_EVAL_DEVELOPMENT` 8,000장, 총 48,000장을 변환했다. 실패·제외·경고는 모두 0이었다. 실제 촬영 test는 이미 개발 과정에서 사람이 확인했으므로 이름만 바꾸어 한 번도 보지 않은 pristine LOCKED_TEST로 되돌릴 수 없다. 또한 원본에는 촬영 대상자(subject), 촬영 회차(session), 연속 장면(sequence), 실제 낙상 사건(event), 촬영 시각(timestamp) 정보가 없다. 따라서 새로운 사람에게도 잘 작동하는지, 시간에 따라 사람이 넘어지는 순간을 찾는지 검증할 수 없으며 파일명과 번호(index)도 시간 순서로 해석해서는 안 된다. 원본 정답은 `LYING`(누움), `SITTING`(앉음), `STANDING`(서 있음), `EMPTY_ROOM`(빈방)이다. 기존 실행 코드와 연결하기 위해 `EMPTY_ROOM→NOT_HUMAN`, `SITTING/STANDING→HUMAN_NORMAL`, `LYING→HUMAN_FALL`로 바꾸지만, `LYING`은 한 장면의 누운 자세를 낙상과 비슷한 상태로 간주한 대리 라벨일 뿐 실제로 넘어지는 사건의 정답이 아니다.
+#### Thermal 트랙의 전체 단계와 현재 위치
 
-48,000장 변환을 요약한 소형 증거 묶음(compact evidence)은 `datasets/thermal/manifests/T-A6_execution_result/`에 있다. 용량이 큰 표준 열화상 배열과 각 행의 출처 기록은 Git에 넣지 않고, 저장 위치를 나타내는 논리적 파일명과 SHA-256만 목록(registry)에 보존한다. 따라서 Git에 큰 배열이 없다는 이유만으로 변환이 수행되지 않았다고 판단하면 안 되며, 별도 저장된 파일의 checksum이 목록과 같은지 확인해야 한다. TRAIN 배열 SHA-256은 `749c847fc9ab50ea5eee8827f0d47b5ebaa48165732a382c59f8b96c565b9d93`, VALIDATION은 `5d16451702c1bccfa945d9188d9b29a26ce11c8b33bf7a0dfbb25bfa86d74610`, 실제 개발 평가는 `cd696e68aeec063cbc8185719b4f4dad3d038cb3d28eec0d3701b8311e4ad8f1`이다. 같은 변환을 다시 실행하는 프로그램은 `scripts/run_thermal_t_a6_colab.py`, 요약 증거 검사는 `scripts/validate_thermal_t_a6_stage2.py`, T-A0부터 T-A6까지 앞 단계 결과가 모두 이어지는지 확인하는 검사는 `scripts/validate_thermal_t_a6.py`이다. `datasets/thermal/processed_thermal_80x62.npz`는 여러 출처가 섞이고 계보가 사라진 과거 파일이므로, 상태명 `LEGACY_NON_AUTHORITATIVE_NOT_USED`가 뜻하듯 새 학습의 공식 근거로 사용하지 않는다.
+Thermal 개발을 A부터 E까지 나눈 이유는 데이터 문제와 모델 문제, 실제 센서 문제를 한꺼번에 해결하려 하면 결과가 좋아지거나 나빠진 원인을 구분하기 어렵기 때문이다. A단계에서는 모델이 학습할 숫자의 출처와 물리적 의미부터 확정하고, B단계에서는 그 고정된 데이터 위에서 전처리와 모델을 비교한다. C단계는 저장된 데이터가 아니라 실제 Thermal 센서에서 같은 입력 의미가 성립하는지를 검증하고, D단계는 그 과정에서 실제 부족한 데이터가 확인됐을 때만 데이터를 추가한다. 마지막 E단계에서는 최종적으로 선택된 모델·전처리·입출력 규칙을 임의로 바꾸지 못하도록 고정하여 시스템 통합에 넘긴다.
 
-TRAIN과 VALIDATION 같은 서로 다른 용도 사이에서 파일 내용이 byte 단위까지 완전히 같은 exact duplicate 열화상은 0개였다. 그러나 모양과 온도가 매우 비슷해 모델이 사실상 같은 장면처럼 볼 수 있는 near-duplicate를 정해진 기준으로 찾자 72,981쌍이 확인되었다. 그중 58,467쌍은 TRAIN 내부이고 14,514쌍은 TRAIN과 VALIDATION 사이였으며, 2,004개 샘플이 서로 유사한 묶음(cluster)에 속했다. 학습용과 모델 선택용에 거의 같은 장면이 함께 있으면 모델이 새로운 장면을 이해한 것처럼 성능이 부풀 수 있다. 이 검사는 5,945,736개 후보쌍을 생성했지만 저장 한도를 넘은 후보 목록 일부가 잘렸고, 검사 규칙도 “항상 같은 방식으로 선별하지만 전체 쌍을 빠짐없이 찾는 검사는 아님”을 뜻하는 `DETERMINISTIC_SCREENING_NOT_EXHAUSTIVE`이다. 따라서 모든 유사쌍을 완전 탐색했다고 주장할 수 없으며, 향후 T-B 성능을 해석할 때 이 중복 구조를 반드시 고려해야 한다.
+| 구분 | 작업한 단계 | 현재 단계 | 지금까지 해결한 문제와 의미 | 앞으로 남은 필수 관문 |
+|---|---|---|---|---|
+| 데이터 기반 구축 | T-A0~T-A6 | **완료 및 중간배포 기준선** | 기존 가공 NPZ와 모델의 불명확한 계보를 대신해 원본 출처, 온도 단위, 62×80 변환, 라벨 의미, 공식 split, provenance, 중복·누수·재현성을 고정했다. 이제 같은 원본으로 같은 학습 데이터를 다시 만들 수 있다. | A단계 자체의 추가 필수 작업은 없다. 이 상태가 이번 중간배포의 Thermal 기준선이다. |
+| 저장 데이터 기반 모델 개발 | 별도 개발선 T-B0 완료 | **T-B1 개발 준비** | 새 canonical 데이터를 어떤 전처리와 평가 규칙으로 재학습할지 먼저 고정했다. 기존 TFLite는 비교용 legacy reference로 남기고, P0/P1/P2 전처리와 두 개의 재학습 가능 CNN 후보를 사전 등록했다. | T-B1에서 같은 조건의 전처리 비교를 시작하고, 사전 등록한 경량 구조·최적화·TFLite/양자화 후보를 순차적으로 비교해 offline 후보를 고정해야 한다. |
+| 실제 센서 환경 검증 | 미개발 | **개발 전** | 아직 SDT 저장 데이터에서의 입력과 모델만 다루었다. | 실제 Thermal 센서가 보내는 원시값의 단위·byte order·화면 방향·invalid pixel·packet 구조와 offline 입력의 일치 여부를 확인하고 실제 장치 실행을 검증해야 한다. |
+| 부족 데이터 보강 | 미개발 | **조건부 단계** | 현재 데이터의 한계는 파악했지만 어떤 추가 수집이 가장 필요한지는 B/C 결과가 더 필요하다. | 실제 낙상 transition, 다양한 사람·환경, sensor-domain gap 등 측정된 부족분이 있을 때만 추가 수집과 재학습을 수행한다. |
+| 최종 artifact 고정 및 통합 준비 | 미개발 | **최종 단계** | 아직 새 최종 모델이 선택되지 않았으므로 고정할 deployment artifact도 없다. | 최종 TFLite, 전처리, class order, checksum, runtime contract를 하나의 세트로 잠그고 Integration 단계에 넘긴다. |
 
-기존 thermal model은 SHA-256 `5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84`, 크기 318,184 bytes인 INT8 자산이다. 입력 모양 `[1, 62, 80, 1]`은 한 번에 62×80 크기의 단일 채널 열화상 한 장을 받는다는 뜻이고, 출력은 세 클래스이다. 그러나 `models/model_manifest.json`은 이 모델이 합성 데이터에서만 확인되었다는 상태 `CONFIRMED_SYNTHETIC_ONLY`를 기록한다. 또 `inference/thermal_interpreter.py`는 0~1 범위 밖의 온도를 받으면 각 장면의 최저·최고 온도로 min-max를 적용한다. 새 canonical 데이터는 장면끼리 비교할 수 있도록 실제 섭씨값을 그대로 유지하므로 두 입력 처리 방식이 자동으로 같지 않다. 이 때문에 현재 기계 증거 `datasets/thermal/manifests/T-A6_execution_result/execution_summary.json`은 “제약을 명시한 상태로 A6 전체 완료”를 뜻하는 `T_A6_FULL_COMPLETE_WITH_LIMITATIONS`이면서, B단계 시작 미승인을 뜻하는 `t_b_authorized: false`이다. 즉 Thermal A단계는 완료되었지만 기존 모델 성능이 새 데이터에서 입증된 것도, T-B 학습을 바로 시작해도 된다는 승인도 아니다. 다음 T-B0 검토에서 섭씨 입력을 어떤 TRAIN 전용 정규화로 모델에 넣을지, 유사 장면과 실제 개발 평가를 어떻게 다룰지, 공정한 별도 평가 자료를 어떻게 확보할지 먼저 확정해야 한다.
+Thermal에서 현재 가장 중요한 구분은 **A단계가 끝났다는 사실과 새 모델 개발이 끝났다는 사실은 전혀 같지 않다**는 점이다. A단계가 끝났다는 것은 학습 데이터와 그 의미를 신뢰할 수 있게 됐다는 뜻이고, 새 모델의 성능은 B단계에서 이제부터 다시 만들어야 한다.
 
-팀의 열린 PR #15는 실제 전체 열화상(full-frame)을 62×80으로 받아 TFLite 모델에 넣고, 잘못된 입력이면 정상값을 만들지 않고 중단하는 fail-closed 절차를 거쳐 UDP 방식으로 전송한 증거를 담는다. UDP는 전달 확인을 기다리지 않아 빠른 대신 일부 묶음이 유실될 수 있는 통신 방식이다. 이전 TCP 방식은 매 전달을 확인하지만 연결 부담이 더 큰 방식이며, 이 경로에서 전원 불안정과 655.3°C 비정상값이 발생해 UDP로 전환한 이력도 보존되어 있다. 반면 열린 PR #12는 약 70% pixel이 고정되거나 무효였던 조건에서 전체 열화상 전송을 끄고 최고 온도 하나인 `thermal_max_c`만 보낸다. 따라서 전체 화면과 단일 최고 온도는 서로 대체할 수 없는 다른 장치 입력 계약이다. 또한 Thermal-90, MI48, Thermal-44라는 센서 명칭이 자료마다 섞여 있다. T-C 전에 실제 센서 모델명, 한 번에 보내는 데이터 묶음, 원시값의 섭씨 변환, 62×80 화면 방향, 센서 오차를 보정하는 calibration, 고장난 pixel 처리 규칙을 하나의 계보로 맞춰야 한다. 통신이 성공했다는 사실만으로 낙상 모델이 새로운 사람과 환경에서도 잘 작동한다고 주장해서는 안 된다.
+#### A단계를 왜 모델 학습보다 먼저 수행했는가
+
+기존 SafeNest에는 이미 `models/thermal/thermal_fall_int8_v0.1.0.tflite`와 이를 실행하는 Thermal inference 코드가 있었다. 따라서 겉으로 보면 기존 모델을 그대로 쓰거나 데이터를 조금 추가해 재학습하면 되는 상태처럼 보일 수 있었다. 그러나 모델 파일이 존재한다는 것과 그 모델이 어떤 원본 데이터, 어떤 전처리, 어떤 학습·평가 분할을 거쳐 만들어졌는지를 다시 설명하고 재현할 수 있다는 것은 다른 문제이다.
+
+기존 가공 데이터인 `datasets/thermal/processed_thermal_80x62.npz` 역시 이미 62×80 형태를 갖추고 있었지만, 새 canonical chain과 비교하면 각 행이 정확히 어떤 원본 source와 공식 partition에서 왔는지, 어떤 물리 단위와 변환을 거쳤는지에 대한 계보가 충분하지 않았다. 이런 상태에서 곧바로 모델을 학습하면 높은 정확도가 나오더라도 그 정확도가 실제 열화상 온도 정보를 학습한 결과인지, 과거 전처리 과정에서 train과 validation이 섞인 결과인지, 또는 비슷한 프레임을 기억한 결과인지 구분하기 어려워진다.
+
+그래서 A단계는 성능을 높이는 작업보다 먼저 **“학습에 들어가는 숫자가 정확히 무엇인가”를 증명하는 작업**으로 설계되었다. T-A0에서 원본의 신원을 정하고, T-A1에서 픽셀의 물리 단위를 확인한 뒤, T-A2에서 모델에 넣을 화면 geometry를 고정했다. 이후 T-A3과 T-A4에서 한 장의 이미지가 가진 시간적·라벨 의미를 과장하지 않도록 제한했고, T-A5에서 데이터 역할을 고정한 뒤 T-A6에서 실제 48,000장을 모두 표준 형태로 변환하고 무결성을 감사했다.
+
+이 과정을 거친 결과 지금은 모델이 잘못됐을 때 “모델 구조가 문제인지, 원본 데이터가 문제인지, 전처리가 문제인지”를 이전보다 훨씬 명확하게 분리해서 조사할 수 있다.
+
+#### T-A0 — 학습의 기준이 될 원본을 먼저 확정
+
+Thermal 작업공간에는 여러 형태의 열화상 자료와 과거 전처리 결과가 존재했기 때문에, 어떤 파일이 새 학습의 원본이고 어떤 것이 과거 실험의 부산물인지 먼저 구분해야 했다. 이미 62×80으로 가공된 NPZ를 편하다는 이유로 기준으로 삼으면 원본 source와 공식 train/validation/test 구성이 사라진 채 학습을 시작할 위험이 있었다.
+
+T-A0에서는 새 Thermal 데이터 기반의 기준으로 **SDT Dataset**을 선택했다. 이 데이터는 synthetic train 32,000장, synthetic validation 8,000장, 실제 촬영 test 8,000장으로 구성되어 있으며, 이후 단계에서는 이 제작자가 정한 원래 구분을 임의로 다시 섞지 않는 것을 원칙으로 삼았다. 데이터 출처 자체의 세부 서비스 구조보다 중요한 것은 **SafeNest가 앞으로 어떤 원본을 공식 기준으로 삼는지가 하나로 고정됐다는 점**이다.
+
+기존 `datasets/thermal/processed_thermal_80x62.npz`는 삭제하지 않았지만 `LEGACY_NON_AUTHORITATIVE` 성격의 과거 자산으로 분리했다. 이는 “파일이 잘못됐다”는 뜻이 아니라, 현재 A단계에서 새로 만든 provenance와 split 계약보다 학습 계보가 약하므로 앞으로의 공식 재학습 기준으로 삼지 않는다는 뜻이다.
+
+이 작업을 하지 않았다면 과거 가공 데이터와 새 원본을 섞어 사용하거나, 데이터 제작자가 분리해 둔 synthetic과 real domain을 다시 랜덤하게 섞는 일이 생길 수 있었다.
+
+#### T-A1 — 열화상 픽셀의 숫자를 실제 온도로 해석할 수 있게 함
+
+일반 이미지에서는 픽셀값이 밝기나 색을 나타내지만, radiometric thermal data에서는 픽셀값으로 실제 온도를 복원할 수 있다. Thermal 모델이 이 둘 중 무엇을 받고 있는지 모른다면, 동일한 `30000`이라는 숫자를 온도 30000도로 착각하거나 단순 grayscale 값처럼 정규화할 수도 있다.
+
+T-A1에서는 SDT real Thermal frame의 원본이 가로 640, 세로 480의 단일 채널 `uint16` 이미지이며, 각 픽셀이 Kelvin 온도의 100분의 1 단위를 나타낸다는 계약을 확인했다. `uint16`은 음수가 없는 16비트 정수 형식이고, 원본 값에서 27315를 뺀 뒤 100으로 나누면 섭씨온도로 변환할 수 있다. 예를 들어 원본 값 30000은 300.00 K이고 약 26.85℃에 해당한다.
+
+이 확인은 이후 모든 Thermal 처리의 기준이 되었다. 이제 모델에 들어가는 숫자를 단순 밝기 배열이 아니라 **물리적인 섭씨온도를 가진 2차원 장면**으로 설명할 수 있다.
+
+또한 reader는 원본 형태나 dtype이 계약과 다를 때 임의로 정상값을 만들어 계속 진행하지 않고 중단하도록 설계했다. 이런 방식을 fail-closed라고 한다. 센서나 데이터가 잘못됐는데도 정상 입력처럼 모델에 들어가는 일을 막기 위한 것이다.
+
+#### T-A2 — 640×480을 62×80으로 줄이되 사람과 온도장의 의미를 가능한 한 유지
+
+기존 모델의 입력은 62×80인데 원본 SDT frame은 480×640이므로 공간 크기를 줄여야 했다. 문제는 단순한 resize도 하나의 모델 설계 결정이라는 점이다. 원본과 목표 화면의 종횡비가 정확히 같지 않기 때문에 전체 화면을 그대로 62×80으로 눌러버리면 사람의 형상이 변형되고, 반대로 과도한 crop은 사람 몸이나 주변 온도 정보를 제거할 수 있다.
+
+T-A2에서는 stretch, crop, padding과 여러 보간법을 후보로 비교한 뒤 `G1_FIXED_ASPECT_CROP_BILINEAR` 규칙을 선택했다. 원본 640×480 화면에서 좌우 10 pixel씩만 제거하여 620×480 영역을 만든 뒤 이를 bilinear 방식으로 62×80으로 줄인다. Bilinear interpolation은 새 pixel 위치 주변의 네 원본 값을 거리 비율에 따라 섞어 계산하는 방법으로, 단순히 가장 가까운 한 pixel만 복사하는 것보다 연속적인 온도장의 형태를 부드럽게 보존할 수 있다.
+
+이 과정에서 중요한 결정은 **canonical 단계에서는 per-frame min-max를 적용하지 않는 것**이었다. 변환 결과는 `float32 Celsius`로 유지한다. `float32`는 소수점이 있는 온도를 표현하기 위한 32비트 실수 형식이다.
+
+기존 방식처럼 한 장마다 가장 차가운 pixel을 0, 가장 뜨거운 pixel을 1로 만들면 5~20℃ 환경과 20~35℃ 환경이 모두 0~1 범위로 바뀌어 절대적인 온도 차이가 사라질 수 있다. A단계에서 이 정보를 없애면 나중에 모델이 절대온도를 이용하는 것이 더 좋은지 다시 확인할 방법이 없다. 따라서 **물리 데이터 표현과 모델용 normalization을 분리**했고, 어떤 normalization이 좋은지는 B단계에서 공정하게 비교하도록 넘겼다.
+
+#### T-A3 — 누워 있는 한 장면을 실제 낙상 사건으로 과장하지 않음
+
+SDT 데이터에는 `LYING`, `SITTING`, `STANDING`, `EMPTY_ROOM` 라벨이 있다. 여기서 `LYING`을 바로 `FALL`이라고 부르면 편하지만, 실제 낙상은 사람이 서 있다가 균형을 잃고 내려가 바닥에 눕는 **시간에 따른 사건(event)**이다. 한 장의 열화상에서 누워 있다는 사실만으로 그 사람이 방금 넘어졌다고 판단할 수는 없다.
+
+원본에는 검증 가능한 timestamp, FPS, sequence ID, event ID, session ID가 없다. 파일 번호가 연속되어 있다는 이유로 번호 100과 101을 시간적으로 연속된 frame이라고 가정해서도 안 된다.
+
+그래서 T-A3에서는 이 데이터가 지원하는 증거 범위를 frame-level로 제한했다. 한 장면에서 사람이 누워 있거나 앉아 있거나 서 있다는 것은 말할 수 있지만, 낙상 transition이나 낙상 전·중·후 구간을 만들지는 않았다.
+
+이 제한을 두지 않았다면 실제로 존재하지 않는 시간 관계를 파일 번호만으로 만들어 모델에게 학습시키고, 나중에 이를 “낙상 동작을 학습했다”고 잘못 설명할 수 있었다.
+
+#### T-A4 — 원본 라벨과 SafeNest용 호환 라벨을 별도 계층으로 유지
+
+SafeNest의 기존 Thermal runtime은 `NOT_HUMAN`, `HUMAN_NORMAL`, `HUMAN_FALL`이라는 세 출력을 사용한다. 반면 SDT 원본 정답은 `EMPTY_ROOM`, `SITTING`, `STANDING`, `LYING`이다. 따라서 기존 실행 구조와 연결하려면 두 체계 사이의 대응이 필요하다.
+
+현재 compatibility mapping은 빈방을 `NOT_HUMAN`, 앉음과 섬을 `HUMAN_NORMAL`, 누움을 `HUMAN_FALL`에 대응시킨다. 그러나 원본 label 자체를 이 세 이름으로 덮어쓰지 않았다.
+
+특히 `LYING → HUMAN_FALL`은 `DERIVED_POSTURE_PROXY`로 분류한다. Proxy는 직접 측정한 정답이 아니라 다른 현상을 대신 표현하기 위해 사용하는 대리 지표를 뜻한다. 즉 여기의 `HUMAN_FALL`은 “실제로 넘어지는 사건을 관측했다”는 뜻이 아니라, 기존 SafeNest class와 호환하기 위해 “누워 있는 자세”를 낙상 유사 상태의 대리값으로 사용한다는 의미이다.
+
+이 구분 때문에 향후 모델의 HUMAN_FALL recall이나 F1이 높더라도 이를 곧바로 실제 낙상 감지 성능이라고 설명해서는 안 된다. 현재 데이터로 직접 평가할 수 있는 것은 **posture-proxy classification**, 즉 자세 대리 라벨 분류 성능이다.
+
+#### T-A5 — 공식 데이터 역할을 유지하고 real test를 가짜 최종시험으로 만들지 않음
+
+모델 개발에서 TRAIN은 가중치를 학습하는 데이터, VALIDATION은 전처리와 모델을 선택하는 데이터, TEST는 모든 선택이 끝난 뒤 최종 성능을 확인하는 데이터이다. 그런데 기존 자료를 모두 합쳐 랜덤하게 다시 나누면 synthetic과 real domain이 각 역할에 섞일 수 있고, 서로 매우 비슷한 frame이 학습과 평가 양쪽으로 들어갈 수도 있다.
+
+그래서 T-A5에서는 SDT가 원래 제공한 partition을 유지했다. Synthetic train 32,000장은 `TRAIN`, synthetic validation 8,000장은 `VALIDATION`으로 사용하고, real test 8,000장은 `REAL_EVAL_DEVELOPMENT`로 정의했다.
+
+Real test를 그대로 `LOCKED_TEST`라고 부르지 않은 이유도 중요하다. A단계에서 geometry 후보를 비교하고 label semantics를 확인하는 과정에서 이 실제 촬영 데이터를 이미 사용했기 때문이다. 한 번 개발 결정에 영향을 준 데이터를 나중에 이름만 바꿔 “한 번도 보지 않은 최종시험”으로 되돌릴 수는 없다.
+
+따라서 현재 Thermal에는 pristine, 즉 개발 과정에서 전혀 열어보지 않은 독립 최종평가 자료가 없다. REAL 데이터는 실제 센서 domain에서 후보가 어떤 특성을 보이는지 확인하는 **개발 평가 자료**로만 사용한다.
+
+#### T-A6 — 앞에서 정한 모든 규칙을 48,000장 전체에 적용
+
+T-A0부터 T-A5까지가 “어떤 규칙으로 만들어야 하는가”를 정한 단계라면, T-A6는 그 규칙을 실제 전체 dataset에 적용한 단계이다.
+
+Synthetic TRAIN 32,000장, synthetic VALIDATION 8,000장, REAL_EVAL_DEVELOPMENT 8,000장, 총 48,000장이 62×80 `little-endian float32 Celsius` 형태로 canonical 변환되었고, 실패·제외·무음 건너뛰기는 없었다. Little-endian은 여러 byte로 이루어진 숫자를 저장하는 순서를 뜻하며, 이를 dtype과 함께 고정한 이유는 나중에 동일한 array가 정확히 같은 byte 표현으로 다시 만들어졌는지 확인하기 위해서이다.
+
+Canonical data는 특정 모델에 맞춘 최종 입력이 아니라 **SafeNest가 앞으로 Thermal 학습의 기준으로 삼는 물리적 표준 표현**이다. 따라서 이후 P0, P1, P2 같은 모델 전처리가 바뀌더라도 원본 canonical Celsius는 수정하지 않는다.
+
+- **Provenance와 재현성**
+
+각 canonical sample은 어느 source partition과 원본 frame에서 왔는지, 원본 label이 무엇인지, 어떤 A단계 규칙을 거쳤고 어떤 역할에 배정됐는지를 추적할 수 있게 했다. 이를 provenance, 즉 데이터 계보라고 한다.
+
+대용량 canonical array와 전체 provenance는 Git에 직접 넣지 않고 외부 저장소에 보존하며, Git에는 그 파일의 논리적 identity와 checksum, 요약 evidence를 남긴다. Checksum은 파일 내용이 달라졌는지 확인하는 지문과 같은 값이다. 긴 SHA-256 문자열 자체를 외울 필요는 없으며, 중요한 것은 TRAIN·VALIDATION·REAL 각각의 기준 파일 identity가 고정되어 있다는 점이다.
+
+또한 같은 변환을 다시 수행했을 때 같은 canonical artifact와 provenance checksum이 만들어지는 것을 확인했다. 이를 determinism이라고 한다. 같은 코드와 같은 원본을 사용했는데 실행할 때마다 다른 학습 데이터가 생성되면 이후 모델 성능 비교에서 무엇이 달라졌는지 알 수 없기 때문이다.
+
+- **Exact duplicate와 near-duplicate 감사**
+
+TRAIN과 VALIDATION에 완전히 같은 frame이 동시에 들어 있으면 모델이 새로운 장면을 일반화한 것이 아니라 학습에서 본 이미지를 다시 맞히는 문제가 생길 수 있다. Byte, decoded frame, canonical frame 수준에서 완전히 동일한 cross-role exact duplicate는 발견되지 않았다.
+
+하지만 온도와 모양이 매우 비슷한 near-duplicate는 존재했다. 특히 TRAIN 내부에서는 58,467 pair, TRAIN과 VALIDATION 사이에서는 14,514 pair가 확인됐다. 이 near-duplicate 검사는 정해진 규칙으로 항상 같은 방식으로 수행되지만 가능한 모든 이미지 쌍을 완전히 탐색한 것은 아니므로 `DETERMINISTIC_SCREENING_NOT_EXHAUSTIVE`라는 제한을 유지한다.
+
+이 결과는 VALIDATION이 쓸 수 없다는 의미가 아니다. 대신 향후 validation 점수가 완전히 독립적인 새로운 장면에 대한 성능이라고 과장해서는 안 된다는 뜻이다. 공식 split을 임의로 다시 만드는 것보다 원본 역할을 유지하고 이 contamination을 평가 제한으로 공개하는 쪽을 선택했다.
+
+- **A단계 최종 의미**
+
+T-A6의 최종 상태는 `T_A6_FULL_COMPLETE_WITH_LIMITATIONS`이다. `WITH_LIMITATIONS`는 변환이 실패했다는 뜻이 아니다. 48,000장은 모두 성공적으로 변환되었다. 제한은 원본 데이터에 subject, session, sequence, event 정보가 없고 pristine LOCKED_TEST가 없으며, LYING이 실제 낙상 event가 아니고 TRAIN과 VALIDATION 사이에 near-duplicate가 존재한다는 데이터 자체의 한계에서 나온다.
+
+따라서 A단계를 마친 뒤에는 “학습할 데이터를 재현할 수 있는가?”에는 그렇다고 답할 수 있지만, “새로운 사람의 실제 낙상을 잘 검출하는가?”에는 아직 답할 수 없다.
+
+#### 현재 Git에 있는 기존 Thermal 모델의 위치
+
+현재 저장소에는 `models/thermal/thermal_fall_int8_v0.1.0.tflite`라는 기존 INT8 모델이 있다. 입력은 62×80 단일 채널이고 출력은 `NOT_HUMAN`, `HUMAN_NORMAL`, `HUMAN_FALL` 세 클래스이다.
+
+그러나 T-B0 검토에서는 이 모델을 `LEGACY_DEPLOYED_REFERENCE`로 분류했다. 기존 시스템에서 실제 실행해 온 reference artifact라는 뜻이지, T-A6 canonical dataset에서 현재 규칙대로 새로 학습된 모델이라는 뜻은 아니다.
+
+가장 큰 이유는 현재 모델 파일까지 이어지는 완전한 training lineage가 검증되지 않았기 때문이다. 정확히 어떤 source dataset을 어떤 split과 preprocessing, optimizer, seed로 학습하고 어떤 checkpoint를 어떤 quantization 설정으로 변환해 현재 TFLite가 됐는지를 A단계 수준의 provenance로 재현할 수 없다.
+
+기존 interpreter의 입력 처리 역시 새 canonical contract와 다르다. `inference/thermal_interpreter.py`에는 각 frame의 최솟값과 최댓값을 기준으로 0~1 범위로 바꾸는 legacy per-frame min-max 동작이 있다. 반면 새 canonical frame은 장면 사이의 절대적인 온도 차이를 보존하기 위해 Celsius 값을 그대로 유지한다.
+
+따라서 기존 TFLite가 있다는 사실은 “새 데이터에서도 이미 최적 모델이 존재한다”는 증거가 아니다. 이 모델은 B단계에서 새 모델의 계보를 다시 구축할 때 비교할 **기존 시스템 reference**로 남긴다.
+
+#### T-B0 — 모델을 학습하기 전에 실험 규칙을 먼저 고정
+
+A단계가 완료된 뒤 바로 여러 모델을 임의로 학습하지 않고 T-B0에서 offline model comparison protocol을 먼저 만들었다. 결과를 본 뒤 평가 기준이나 전처리 방법을 바꾸면 원하는 후보가 유리하도록 실험을 조정할 수 있기 때문이다.
+
+T-B0의 상태는 `T_B0_COMPLETE_WITH_LIMITATIONS`이며 T-B1은 제한사항을 유지하는 조건으로 진행할 수 있는 상태이다. T-B0에서는 새 모델 전체 학습을 수행하지 않았고, 앞으로 무엇을 어떻게 비교할지를 먼저 정했다.
+
+- **전처리 비교**
+
+새 canonical Celsius가 만들어졌지만 기존 runtime은 per-frame min-max를 사용한다. 둘 중 어느 쪽이 실제 모델에 더 적합한지는 아직 실험으로 확인하지 않았다. 그래서 T-B1에서는 세 preprocessing profile을 동일한 모델에서 비교한다.
+
+`P0 — CANONICAL_CELSIUS_DIRECT`는 62×80 Celsius 값을 그대로 사용하여 절대온도를 보존한다.
+
+`P1 — TRAIN_FITTED_GLOBAL_ZSCORE`는 TRAIN에서만 평균과 표준편차를 계산해 값의 중심과 크기를 맞춘다. Validation이나 REAL에서 통계를 계산하면 평가 데이터의 정보가 학습 전처리에 섞이므로 허용하지 않는다.
+
+`P2 — LEGACY_PER_FRAME_MINMAX`는 기존 interpreter의 입력 방식을 재현해 호환성 기준으로 사용한다. 각 장면 자체의 최저·최고값을 기준으로 변환하므로 절대적인 온도 수준은 사라진다.
+
+이 세 가지를 분리해서 비교하는 이유는 모델 구조와 전처리를 동시에 바꾸면 성능 차이가 어디서 발생했는지 알 수 없기 때문이다.
+
+- **통제된 baseline 모델**
+
+첫 preprocessing 비교에서는 `SMALL_CNN_BASELINE_V1` 한 구조를 통제 기준으로 사용한다. 이 모델이 최종적으로 가장 좋다고 판단한 것이 아니라 전처리 차이만 먼저 분리해 보기 위한 기준이다. T-B0에는 이후 경량 구조 비교를 위한 `DEPTHWISE_SEPARABLE_CNN_V1`도 사전 등록되어 있지만 아직 어느 후보도 학습되지 않았다.
+
+P0·P1·P2는 같은 TRAIN, 같은 VALIDATION, 같은 architecture, 같은 초기 가중치, 같은 seed, 같은 optimizer와 학습 budget에서 시작해야 한다. 이렇게 해야 결과 차이를 가능한 한 preprocessing의 영향으로 해석할 수 있다.
+
+- **모델 선택 기준**
+
+Primary metric은 VALIDATION Macro F1으로 고정했다. Macro F1은 각 class의 F1을 같은 비중으로 평균하기 때문에 자료가 많은 한 class만 잘 맞혀서 전체 성능이 좋아 보이는 문제를 줄인다.
+
+Balanced accuracy와 class별 precision·recall·F1, confusion matrix도 함께 본다. `HUMAN_FALL` recall은 특히 확인하지만, 이것 역시 실제 낙상 사건 recall이 아니라 **HUMAN_FALL posture-proxy recall**이다.
+
+Winner는 REAL 결과를 보고 고르지 않는다. 먼저 공식 VALIDATION으로 P0·P1·P2 중 winner를 결정한 다음 그 checkpoint 하나만 `REAL_EVAL_DEVELOPMENT`에서 평가한다. 이렇게 해야 REAL이 또 하나의 validation set으로 변하는 일을 막을 수 있다.
+
+- **Near-duplicate 제한 유지**
+
+TRAIN과 VALIDATION 사이에 확인된 14,514 near-duplicate pair는 B단계에서도 숨기지 않는다. 현재 official VALIDATION 8,000장은 그대로 유지하고 임의의 random/hash resplit을 하지 않는다.
+
+T-B0 compact evidence만으로는 모든 near-duplicate sample을 안전하게 떼어낸 “clean validation subset”을 바로 만드는 것이 충분히 뒷받침되지 않았으므로, 그런 subset을 임의로 만들어 primary metric으로 사용하지 않는다. 이후 sample-level evidence가 충분히 연결되면 sensitivity analysis를 추가할 수 있지만 official split을 바꾸지는 않는다.
+
+#### 현재 Thermal 개발선과 중간배포선은 의도적으로 분리되어 있음
+
+현재 Thermal A단계는 이번 multisensor intermediate release의 기준선이다. 따라서 `main`에는 T-A6까지의 데이터 기반을 유지하고, T-B0는 열린 PR #57에 **중간배포 이후 합치기 위한 별도 개발선**으로 보존한다. 이 구조는 다른 센서가 각자의 중간배포 기준선에 도달할 때까지 Thermal 후속 설계를 멈추지 않으면서도, 이번 중간배포에서 Thermal의 의미를 **A단계 data-foundation complete**로 명확하게 고정한다.
+
+다른 센서가 release 기준선에 도달하면 현재 `main`을 전체 검증하고 tag를 만들어 중간배포 상태를 영구적으로 고정한다. 그 뒤 최신 release baseline 위에서 Thermal B개발 commit을 다시 검토해 가져오고 B단계를 이어간다.
+
+따라서 나중에 main이 B와 C까지 발전하더라도 “중간배포 당시 Thermal은 정확히 어떤 상태였는가?”를 release tag를 통해 다시 복원할 수 있다.
+
+#### T-B1 — 처음으로 새 canonical dataset에서 재학습하게 될 단계
+
+현재까지 A단계에서는 새 모델을 학습하지 않았고, B0에서도 학습 규칙만 정했기 때문에 **T-A6 canonical dataset으로 새로 재현 가능하게 학습한 Thermal 모델은 아직 없다.**
+
+실제 첫 신규 재학습은 T-B1 full experiment에서 시작된다.
+
+T-B1은 먼저 Stage 1에서 P0/P1/P2 preprocessing, `SMALL_CNN_BASELINE_V1`, 동일 초기 가중치, metric 계산, winner selection, training runner와 validator를 구현한다. 이 단계는 full canonical 데이터를 연결하지 않아도 작은 fixture로 코드가 규칙대로 동작하는지 확인할 수 있다.
+
+이후 full experiment에서는 외장 저장장치에 보관한 T-A6 canonical TRAIN 32,000장과 VALIDATION 8,000장을 이용해 동일 CNN을 세 번 학습한다. P0, P1, P2 이외의 조건은 같게 유지한다. VALIDATION에서 preprocessing winner를 먼저 고정한 뒤 선택된 checkpoint만 REAL_EVAL_DEVELOPMENT 8,000장에서 평가한다.
+
+이 단계가 끝나야 처음으로:
+
+> “새 T-A6 데이터 계보를 사용해 같은 조건에서 재학습한 모델 중 어떤 전처리가 더 적합했다.”
+
+라고 말할 수 있다.
+
+아직 이 결과만으로 최종 deployment 모델이 결정되는 것은 아니다. 이후 B단계에서 다른 경량 architecture, 최적화와 TFLite/INT8 변환을 비교해 offline 후보를 고정해야 한다.
+
+#### 왜 B단계 실행 환경을 외장 저장장치 + Mac으로 바꾸려 하는가
+
+T-A6에서는 원본 archive가 매우 커서 Google Drive와 Colab을 사용한 대용량 변환이 필요했다. 그러나 B단계에서는 원본 ZIP을 다시 읽을 이유가 없다. 모델이 사용할 공식 입력은 이미 만들어진 T-A6 canonical TRAIN·VALIDATION·REAL이다.
+
+Canonical tensor 전체는 원본 archive보다 훨씬 작으므로 외장 USB SSD에 보존하고 Mac에서 TensorFlow 학습을 실행하는 방식이 현실적이다. 외장 장치는 데이터와 최종 결과를 보관하고, 반복적인 cache나 임시 checkpoint 쓰기는 가능하면 Mac 내부 저장장치를 사용하면 된다.
+
+USB-C나 USB 3.x로 연결된 SSD면 충분하고, 일반 USB flash memory도 읽기 가능한 canonical 저장소로는 사용할 수 있다. 다만 flash memory는 지속 쓰기 성능과 내구성이 SSD보다 떨어질 수 있으므로 active cache와 checkpoint는 Mac 내부에 두는 편이 낫다.
+
+이 변경은 학습 과학적 규칙을 바꾸는 것이 아니다. Dataset checksum, P0/P1/P2, seed, 초기 가중치, training budget과 metric은 실행 장치가 Mac이든 Colab이든 동일해야 한다. 실행환경은 편의성과 계산 속도의 문제이고, 실험 계약은 별도로 고정한다.
+
+#### 아직 Thermal에서 증명하지 못한 것
+
+- **새 모델 성능**
+
+현재 Git의 기존 TFLite는 legacy reference이다. T-A6 canonical data에서 새로 학습된 모델의 성능은 아직 없다. 따라서 현재 중간배포를 “Thermal model accuracy 개선 release”라고 설명해서는 안 된다.
+
+- **새로운 사람과 촬영 회차에 대한 일반화**
+
+SDT에는 검증 가능한 subject와 session ID가 없다. 따라서 subject-independent 또는 session-independent generalization을 증명할 수 없다.
+
+- **실제 낙상 사건 감지**
+
+`LYING → HUMAN_FALL`은 posture proxy이다. 실제 서 있던 사람이 넘어지는 transition을 시간적으로 검증한 것이 아니므로 temporal fall detection 성능이라고 부를 수 없다.
+
+- **독립 최종시험 성능**
+
+현재 REAL 데이터는 A단계에서 이미 개발에 사용된 `REAL_EVAL_DEVELOPMENT`이다. 완전히 새 `LOCKED_TEST`가 없으므로 unbiased final-test performance도 현재는 존재하지 않는다.
+
+- **실제 Thermal 장치와의 동일성**
+
+SDT의 `uint16 Kelvin-centiunit → Celsius` 계약이 실제 SafeNest Thermal 장치에도 그대로 적용된다고 아직 증명하지 않았다. 실제 sensor model, raw packet, dtype, endianness, orientation, calibration, invalid pixel과 temperature distribution은 T-C에서 검증해야 한다.
+
+#### C단계 이후에 확인해야 할 실제 장치 문제
+
+Offline model이 validation과 REAL development에서 좋아도 실제 장치가 같은 입력을 만들지 못하면 모델을 바로 사용할 수 없다.
+
+Thermal 장치 자료에는 full-frame을 전달하는 경로와 `thermal_max_c`처럼 최고 온도 하나만 전달하는 경로가 함께 존재한다. Full-frame은 사람의 형태와 공간적 온도 분포를 CNN에 전달할 수 있지만 scalar 최고 온도는 화면 geometry를 잃기 때문에 현재 62×80 image model의 직접 대체 입력이 아니다.
+
+따라서 T-C에서는 실제 사용 센서의 정확한 모델명부터 확정하고, raw packet이 어떤 온도 단위를 나타내는지, 62×80 frame의 방향이 canonical과 같은지, 고장난 pixel을 어떻게 표시하는지, 실제 온도 범위와 noise가 SDT와 얼마나 다른지를 확인해야 한다.
+
+여기서 domain gap, 즉 저장 데이터와 실제 센서 환경 사이의 차이가 크게 측정되면 그때 T-D에서 필요한 환경의 데이터를 추가하고 재학습한다. 단순히 “데이터가 많으면 좋다”는 이유로 무작정 D단계부터 시작하지 않는다.
+
+#### 현재 Thermal 상태의 핵심
+
+현재 Thermal은 **중간배포 기준선에서는 T-A6 데이터 기반이 완성되었고, 별도 개발선에서는 T-B0 실험 규칙까지 준비됐지만, 새 canonical 데이터로 재학습한 모델 성능과 실제 Thermal 센서 성능은 아직 없는 상태**다. 따라서 이번 결과는 모델 정확도 개선 완료가 아니라, 같은 원본에서 같은 데이터를 다시 만들고 다음 재학습을 공정하게 비교할 수 있는 기준이 마련됐다는 의미다.
+
 
 ## 5. 센서 간 상태와 현재 모델·산출물 목록
 
@@ -1083,7 +1310,7 @@ TRAIN과 VALIDATION 같은 서로 다른 용도 사이에서 파일 내용이 by
 | --- | --- | --- | --- | --- | --- | --- |
 | mmWave | A0~A6 완료, 사람 단위 77/17/16 분할 고정 | M-B0~M-B12 완료, seed 42의 전체 INT8 후보 선택 | `REAL_DATA_OFFLINE_CANDIDATE`; 최종 Macro F1 0.494836, 완전히 새 시험이 아닌 제한적 재사용 예외 포함 | MR60 미검증, 팀 약 20 rpm 자료는 원인 조사 입력 | 가짜 입력으로 코드 연결만 확인했으며 실제 통합 미검증 | M-C 장치 신호·전처리·실행 검증 |
 | CO₂ | C-A0~C-A6 완료, UCI의 서로 다른 시간 구간과 20,560개 계보 고정 | C-B0~C-B5 완료, 선형 재실 판단 INT8 후보 선택 | `FINAL_OFFLINE_UCI_CANDIDATE_LOCKED`; LOCKED_TEST 1회, Macro F1 0.685658 | SCD40 미검증, 팀 PR #14는 일부만 확인됨 | 재실 확률을 전체 위험 판단에 연결하는 공용 규칙 미검증 | C-C SCD40 측정 주기·결측·변화 속도·분포 검증 |
-| Thermal | T-A0~T-A6 완료, 48,000장 변환과 한계 감사 | 새 T-B 모델 없음; 기존 실행 모델은 합성 데이터만 확인되었고 새 섭씨 전처리와 불일치 | 고정할 새 모델 성능 없음, 완전히 새 LOCKED_TEST 없음, `t_b_authorized: false` | 전체 화면·단일 최고 온도 경로와 센서 명칭 미조정 | 열화상 입력 규칙과 AI에 값을 공급하는 공용 연결 규칙 미조정 | T-B0 학습·평가 절차 승인 검토 후 T-B, 이후 T-C |
+| Thermal | 중간배포 기준 T-A0~T-A6 완료, 48,000장 변환과 한계 감사 | 새 T-B 모델은 없음; 별도 PR #57에서 T-B0 비교 프로토콜 완료, 기존 실행 모델은 새 섭씨 데이터와 계보·전처리가 불일치 | 중간배포 기준에는 `t_b_authorized: false`; 별도 개발선에서만 T-B1 제한부 허용, 완전히 새 LOCKED_TEST 없음 | 전체 화면·단일 최고 온도 경로와 센서 명칭 미조정 | 열화상 입력 규칙과 AI에 값을 공급하는 공용 연결 규칙 미조정 | 중간배포 고정 후 T-B0 개발선 재검토·병합, T-B1 이후 모델 비교와 T-C |
 
 현재 모델 파일의 역할도 구분해야 한다. 새 mmWave와 CO₂ 파일은 저장 데이터 비교가 끝난 선택 후보이지만 아직 `models/model_manifest.json`의 실제 운영 모델 항목으로 승격되지 않았다. Thermal에는 새 A단계에서 만든 모델이 없고 기존 자산만 있다.
 
@@ -1108,8 +1335,8 @@ TRAIN과 VALIDATION 같은 서로 다른 용도 사이에서 파일 내용이 by
 
 ## 7. 다음 개발 절차와 중간배포 준비 판정
 
-세 트랙의 다음 일은 서로 다른 파일과 장비를 사용하는 범위에서 동시에 진행할 수 있지만, 각 센서 안에서는 증거 순서를 건너뛰면 안 된다. mmWave는 M-C에서 MR60의 원시값과 위상값을 고정된 offline 입력에 대응시키고, 일정한 조건의 계획 수집, 공개 데이터와 장치 데이터의 차이 분석, Raspberry Pi 실행을 수행한다. CO₂는 C-C에서 SCD40의 측정 주기, 전원을 켠 뒤 값이 안정되기 전의 warmup, 센서 보정, 값 누락·stale·재연결, 변화 속도 계산과 UCI 값 분포의 차이를 측정한다. Thermal은 바로 재학습하지 않는다. 먼저 T-B0에서 표준 섭씨 데이터와 기존 실행 코드의 0~1 전처리 관계, 유사 장면 통제, 모델 선택에 사용하지 않을 새 평가 자료와 모델 비교 절차(protocol)를 승인한 뒤 T-B를 시작하고, 후보를 고정한 후 실제 장치 T-C로 간다.
+세 트랙의 다음 일은 서로 다른 파일과 장비를 사용하는 범위에서 동시에 진행할 수 있지만, 각 센서 안에서는 증거 순서를 건너뛰면 안 된다. mmWave는 M-C에서 MR60의 원시값과 위상값을 고정된 offline 입력에 대응시키고, 일정한 조건의 계획 수집, 공개 데이터와 장치 데이터의 차이 분석, Raspberry Pi 실행을 수행한다. CO₂는 C-C에서 SCD40의 측정 주기, 전원을 켠 뒤 값이 안정되기 전의 warmup, 센서 보정, 값 누락·stale·재연결, 변화 속도 계산과 UCI 값 분포의 차이를 측정한다. Thermal은 중간배포를 고정한 뒤 별도 PR #57의 T-B0 프로토콜을 최신 기준에서 재검토·병합하고 T-B1을 시작한다. T-B1에서는 표준 섭씨 직접 입력, TRAIN 전용 z-score, 기존 장면별 min-max를 동일 조건에서 비교하고, 후보를 고정한 후 실제 장치 T-C로 간다.
 
 동시에 I-0에서는 standalone에서 AI에 센서값을 공급하는 코드(provider), 팀의 실제 장치 코드 `devices/`, 공용 입력·출력 규칙 `shared/contracts/`, 전송 묶음의 측정 시각(timestamp)과 값의 유효 여부(validity)가 같은 의미인지 읽기 전용으로 대조할 수 있다. 다만 센서별 C단계가 끝나기 전에 전체 위험 판단의 정확도를 주장하거나, 열린 팀 PR의 일부 결과를 기본 작업선 병합 완료 또는 장치 검증 완료로 간주해서는 안 된다. 추가 데이터셋과 재학습은 단순히 데이터가 많으면 좋다는 이유가 아니라, M-C/C-C/T-C에서 확인된 신호 범위, 사람 다양성, 환경, 값 누락, 자세 또는 실제 사건 라벨의 구체적 빈틈을 채우는 방향으로 결정한다.
 
-현재 판정은 다음과 같다. mmWave는 M-B12 저장 데이터 기반 중간배포의 기준점으로 사용할 수 있다. 그러나 제한 없는 B단계 배포 준비를 뜻하는 `Phase_B_release_ready`와 제품 배포 여부는 거짓(false)이며, 공식 버전 표식인 Git tag나 GitHub 배포본(Release)도 없다. CO₂는 B5 UCI offline 후보가 변경되지 않도록 잠겼지만 SCD40·안전·통합 검증 전이다. Thermal A6 데이터 기반은 “전체 감사를 끝냈지만 알려진 제약이 있음”을 뜻하는 `FULL_AUDIT_COMPLETE_WITH_LIMITATIONS`로 완료되었다. 그러나 최신 validator가 명시한 T-B 시작 승인(authorization)은 false이다. 제공된 Thermal 인수인계 문구 중 “제약을 전제로 승인”이라는 `YES_WITH_LIMITATIONS` 표현은 현재 기계 증거와 충돌하므로 채택하지 않았다. 세 트랙을 함께 묶은 이번 산출물은 다른 사람이 같은 과정을 재현할 수 있는 중간 인수인계에는 적합하지만, 실센서 배포, Raspberry Pi 성능, 임상·안전 성능 또는 멀티센서 통합 완료를 선언하는 공식 배포본은 아니다.
+현재 판정은 다음과 같다. mmWave는 M-B12 저장 데이터 기반 중간배포의 기준점으로 사용할 수 있다. 그러나 제한 없는 B단계 배포 준비를 뜻하는 `Phase_B_release_ready`와 제품 배포 여부는 거짓(false)이며, 공식 버전 표식인 Git tag나 GitHub 배포본(Release)도 없다. CO₂는 B5 UCI offline 후보가 변경되지 않도록 잠겼지만 SCD40·안전·통합 검증 전이다. Thermal A6 데이터 기반은 “전체 감사를 끝냈지만 알려진 제약이 있음”을 뜻하는 `FULL_AUDIT_COMPLETE_WITH_LIMITATIONS`로 완료되었고, 중간배포 기준선의 validator는 `t_b_authorized: false`를 유지한다. 이와 별도로 열린 PR #57의 T-B0 개발선은 `T_B0_COMPLETE_WITH_LIMITATIONS`이며 그 개발선 안에서만 T-B1을 `YES_WITH_LIMITATIONS`로 허용한다. 두 상태는 서로 다른 기준선의 판정이므로 하나가 다른 하나를 덮어쓰지 않는다. 세 트랙을 함께 묶은 이번 산출물은 다른 사람이 같은 과정을 재현할 수 있는 중간 인수인계에는 적합하지만, 실센서 배포, Raspberry Pi 성능, 임상·안전 성능 또는 멀티센서 통합 완료를 선언하는 공식 배포본은 아니다.
