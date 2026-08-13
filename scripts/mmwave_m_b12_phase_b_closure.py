@@ -37,6 +37,7 @@ from scripts.mmwave_m_b11_artifact_lock import (  # noqa: E402
     LOCK_DIR_REL as M_B11_DIR_REL,
     LOCK_JSON_FILES as M_B11_JSON_FILES,
     PREPROCESSING_PROFILE_ID,
+    PREPROCESSING_PROFILE_NAME,
     RAW_ARCHIVE_REL,
     RESULT_LIMITATION,
     RUNTIME_MODEL_ID,
@@ -75,9 +76,69 @@ CLOSURE_JSON_FILES = (
     "release_readiness_manifest.json",
     "device_domain_handoff.json",
     "immutable_evidence_registry.json",
+    "phase_b_required_role_registry.json",
+    "final_report_identity.json",
     "phase_b_closure_summary.json",
     "validation_result.json",
 )
+
+# Exact role strings from datasets/mmwave/manifests/M-B11_artifact_lock/immutable_artifact_registry.json
+REQUIRED_M11_REGISTRY_ROLES: tuple[tuple[str, str, str], ...] = (
+    ("raw_source_archive", "A0", "A/source lineage"),
+    ("a0_source_identity", "A0", "A/source lineage"),
+    ("a5_subject_split", "A5", "A5 split"),
+    ("a5_summary", "A5", "A5 split"),
+    ("a5_split_profile", "A5", "A5 split"),
+    ("a6_window_manifest", "A6", "A6 conversion/window manifest"),
+    ("a6_summary", "A6", "A6 conversion/window manifest"),
+    ("canonical_npy", "A6", "A6 conversion/window manifest"),
+    ("b0_summary", "M-B0", "M-B0"),
+    ("b1_selected_profile", "M-B1", "M-B1"),
+    ("b1_summary", "M-B1", "M-B1"),
+    ("b1_executor", "M-B1", "M-B1"),
+    ("b2_selected_strategy", "M-B2", "M-B2"),
+    ("b2_summary", "M-B2", "M-B2"),
+    ("b3_summary", "M-B3", "M-B3"),
+    ("b4_summary", "M-B4", "M-B4"),
+    ("b5_summary", "M-B5", "M-B5"),
+    ("b6_summary", "M-B6", "M-B6"),
+    ("b6_stage_artifact_manifest", "M-B6", "M-B6"),
+    ("selected_tflite", "M-B6", "selected seed42 model artifact"),
+    ("b7_summary", "M-B7", "M-B7"),
+    ("b8_summary", "M-B8", "M-B8"),
+    ("b9_summary", "M-B9", "M-B9"),
+    ("b9_seed42_runtime_manifest", "M-B9", "M-B9"),
+    ("b10a_summary", "M-B10A", "M-B10A"),
+    ("b10b_summary", "M-B10B", "M-B10B summary"),
+    ("b10b_incident_root_cause", "M-B10B", "M-B10B incident/root cause"),
+    ("b10r0_summary", "M-B10R0", "M-B10R0"),
+    ("b10r1a_summary", "M-B10R1-A", "M-B10R1-A"),
+    ("b10r1b_summary", "M-B10R1-B", "M-B10R1-B"),
+    ("b10r1b_registry", "M-B10R1-B", "final recovery registry"),
+    ("b10r1b_ledger", "M-B10R1-B", "final recovery ledger"),
+    ("v0_1_tflite", "historical_baseline", "historical v0.1 baseline artifact"),
+    ("v0_2_tflite", "historical_baseline", "historical v0.2 baseline artifact"),
+    ("b10b_baseline_preprocessing_executor", "M-B10B", "M-B10B"),
+    ("sensor_local_candidate_lock", "M-B11", "M-B11 sensor-local lock"),
+)
+
+REQUIRED_M11_LOCK_FILE_ROLES: tuple[tuple[str, str, str, str], ...] = (
+    (
+        "m_b11_lock_identity",
+        "M-B11",
+        "M-B11 lock identity/summary",
+        "datasets/mmwave/manifests/M-B11_artifact_lock/artifact_lock_identity.json",
+    ),
+    (
+        "m_b11_lock_summary",
+        "M-B11",
+        "M-B11 lock identity/summary",
+        "datasets/mmwave/manifests/M-B11_artifact_lock/artifact_lock_summary.json",
+    ),
+)
+
+MACHINE_FACTS_BEGIN = "<!-- MACHINE_VERIFIED_FINAL_FACTS -->"
+MACHINE_FACTS_END = "<!-- END_MACHINE_VERIFIED_FINAL_FACTS -->"
 
 
 class MB12ClosureError(Exception):
@@ -337,6 +398,7 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
     }
     candidate = {
         "schema_version": SCHEMA,
+        "artifact_status": ARTIFACT_STATUS,
         "candidate_id": SELECTED_CANDIDATE_ID,
         "runtime_model_id": RUNTIME_MODEL_ID,
         "repo_relative_path": SELECTED_TFLITE_REL,
@@ -346,12 +408,15 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
         "architecture_id": ARCHITECTURE_ID,
         "training_strategy_id": TRAINING_STRATEGY_ID,
         "preprocessing_profile_id": PREPROCESSING_PROFILE_ID,
+        "preprocessing_profile_name": PREPROCESSING_PROFILE_NAME,
         "execution_preprocessing_contract_id": EXECUTION_PREPROCESSING_CONTRACT_ID,
         "calibration_profile": CALIBRATION_ID,
         "class_map": CLASS_MAP,
+        "apnea_is_proxy": True,
         "strict_int8": True,
         "flex_ops_present": False,
         "select_tf_ops_present": False,
+        "builtin_op_status": model["builtin_op_status"],
         "input_tensor": model["input_tensor"],
         "output_tensor": model["output_tensor"],
         "copied_or_renamed_during_m_b12": False,
@@ -372,7 +437,10 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
         "cross_model_label_mismatches": registry["cross_model_label_mismatches"],
         "cross_model_subject_mismatches": registry["cross_model_subject_mismatches"],
         "cross_model_recording_mismatches": registry["cross_model_recording_mismatches"],
+        "original_m_b10b_accessor_invocations": history["original_m_b10b_accessor_invocations"],
         "original_m_b10b_payload_releases": history["original_m_b10b_payload_releases"],
+        "original_m_b10b_model_inference": history["original_m_b10b_model_inference"],
+        "m_b10r1b_recovery_accessor_invocations": history["m_b10r1b_recovery_accessor_invocations"],
         "m_b10r1b_recovery_payload_releases": history["m_b10r1b_recovery_payload_releases"],
         "historical_total_payload_releases": history["historical_total_payload_releases"],
         "recovery_model_inference": history["recovery_model_inference"],
@@ -381,6 +449,8 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
         "eligible_evaluated": final_eval["eligible_evaluated"],
         "valid": final_eval["valid"],
         "invalid": final_eval["invalid"],
+        "tflite_invocations_selected": final_eval["tflite_invocations_selected"],
+        "tflite_invocations_all_models": final_eval["tflite_invocations_all_models"],
         "accuracy": metrics["accuracy"],
         "macro_f1": metrics["macro_f1"],
         "macro_precision": metrics["macro_precision"],
@@ -395,8 +465,30 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
         "worst_subject_macro_f1": subjects["worst_subject_macro_f1"],
         "worst_subject_id": subjects["worst_subject_id"],
         "input_saturation_ratio": quant["input_saturation_ratio"],
+        "pre_clamp_out_of_range_count": quant["pre_clamp_out_of_range_count"],
+        "total_quantized_elements": quant["total_quantized_elements"],
+        "samples_with_any_saturation": quant["samples_with_any_saturation"],
+        "worst_sample_saturation_ratio": quant["worst_sample_saturation_ratio"],
         "v0_1_macro_f1": baselines["v0_1"]["macro_f1"],
         "v0_2_macro_f1": baselines["v0_2"]["macro_f1"],
+        "v0_1": {
+            "role": baselines["v0_1"]["role"],
+            "model_id": baselines["v0_1"]["model_id"],
+            "sha256": baselines["v0_1"]["sha256"],
+            "accuracy": baselines["v0_1"]["accuracy"],
+            "macro_f1": baselines["v0_1"]["macro_f1"],
+            "class_collapse": baselines["v0_1"]["class_collapse"],
+            "prediction_distribution": baselines["v0_1"]["prediction_distribution"],
+        },
+        "v0_2": {
+            "role": baselines["v0_2"]["role"],
+            "model_id": baselines["v0_2"]["model_id"],
+            "sha256": baselines["v0_2"]["sha256"],
+            "accuracy": baselines["v0_2"]["accuracy"],
+            "macro_f1": baselines["v0_2"]["macro_f1"],
+            "class_collapse": baselines["v0_2"]["class_collapse"],
+            "prediction_distribution": baselines["v0_2"]["prediction_distribution"],
+        },
         "v0_1_collapsed": True,
         "v0_2_collapsed": True,
         "new_model_selection_event": False,
@@ -573,6 +665,45 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
         "does_not_invoke_tflite": True,
         "does_not_begin_m_c": True,
     }
+    m11_imm = locks["immutable_artifact_registry.json"]
+    m11_by_role = {str(item.get("artifact_role")): item for item in (m11_imm.get("artifacts") or [])}
+    required_roles: list[dict[str, Any]] = []
+    for role, phase, category in REQUIRED_M11_REGISTRY_ROLES:
+        item = m11_by_role.get(role)
+        if not item:
+            _raise(f"M11_REGISTRY_MISSING_REQUIRED_ROLE:{role}")
+        required_roles.append(
+            {
+                "artifact_role": role,
+                "phase": phase,
+                "category": category,
+                "binding": "m_b11_registry",
+                "repo_relative_path": item["repo_relative_path"],
+                "expected_sha256": item["sha256"],
+            }
+        )
+    for role, phase, category, rel in REQUIRED_M11_LOCK_FILE_ROLES:
+        path = root / rel
+        if not path.is_file():
+            _raise(f"M11_LOCK_FILE_MISSING:{role}")
+        required_roles.append(
+            {
+                "artifact_role": role,
+                "phase": phase,
+                "category": category,
+                "binding": "m_b11_lock_file",
+                "repo_relative_path": rel,
+                "expected_sha256": sha256_file(path),
+            }
+        )
+    role_registry = {
+        "schema_version": SCHEMA,
+        "source_m_b11_registry": str(M_B11_DIR_REL / "immutable_artifact_registry.json"),
+        "required_role_count": len(required_roles),
+        "required_m11_registry_role_count": len(REQUIRED_M11_REGISTRY_ROLES),
+        "required_m11_lock_file_role_count": len(REQUIRED_M11_LOCK_FILE_ROLES),
+        "roles": required_roles,
+    }
     payloads = {
         "phase_b_closure_identity.json": closure_identity,
         "predecessor_gate.json": predecessor,
@@ -585,6 +716,7 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
         "release_readiness_manifest.json": readiness,
         "device_domain_handoff.json": handoff,
         "immutable_evidence_registry.json": evidence,
+        "phase_b_required_role_registry.json": role_registry,
         "phase_b_closure_summary.json": summary,
         "validation_result.json": validation_placeholder,
     }
@@ -592,7 +724,6 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
     out.mkdir(parents=True, exist_ok=True)
     for name, payload in payloads.items():
         atomic_write_json(out / name, payload)
-    write_checksums(out)
     report = _render_report(
         identity=closure_identity,
         population=population,
@@ -613,6 +744,19 @@ def generate_m_b12_closure(root: Path | None = None) -> dict[str, Any]:
         baselines=baselines,
     )
     atomic_write_text(root / REPORT_REL, report)
+    report_path = root / REPORT_REL
+    atomic_write_json(
+        out / "final_report_identity.json",
+        {
+            "schema_version": SCHEMA,
+            "repo_relative_path": str(REPORT_REL),
+            "sha256": sha256_file(report_path),
+            "bytes": int(report_path.stat().st_size),
+            "generated_from_machine_evidence": True,
+            "report_schema": SCHEMA,
+        },
+    )
+    write_checksums(out)
     print(f"M-B12 closure written: {CLOSURE_DIR_REL.as_posix()}")
     print(f"Report written: {REPORT_REL.as_posix()}")
     return summary
@@ -807,9 +951,63 @@ M-B12 does not begin M-C. Future M-C must independently investigate:
 - Phase-B offline final report complete: {claims["phase_b_offline_final_report_complete"]}
 - Phase-B offline intermediate release ready after merge: {claims["phase_b_offline_intermediate_release_ready_after_merge"]}
 
+## Machine-Verified Final Facts
+
+| Fact | Value |
+| --- | --- |
+| candidate_status | `{identity["artifact_status"]}` |
+| selected_model_sha | `{candidate["sha256"]}` |
+| result_designation | `{evaluation["result_designation"]}` |
+| result_not_pristine | true |
+| final_accuracy | {evaluation["accuracy"]} |
+| final_macro_f1 | {evaluation["macro_f1"]} |
+| normal_recall | {normal["recall"]} |
+| rapid_recall | {rapid["recall"]} |
+| apnea_recall | {apnea["recall"]} |
+| apnea_fpr | {apnea["fpr"]} |
+| v0_1_macro_f1 | {evaluation["v0_1_macro_f1"]} |
+| v0_2_macro_f1 | {evaluation["v0_2_macro_f1"]} |
+| original_release | {evaluation["original_m_b10b_payload_releases"]} |
+| recovery_release | {evaluation["m_b10r1b_recovery_payload_releases"]} |
+| historical_total_release | {evaluation["historical_total_payload_releases"]} |
+| mr60_validated | false |
+| raspberry_pi_validated | false |
+| deployment_ready | false |
+| clinical_apnea_validated | false |
+| intermediate_release_ready | true |
+| tag_created | false |
+| github_release_created | false |
+| m_c_started | false |
+
 New LOCKED_TEST access = 0
 New recovery access = 0
 New inference = 0
+
+{MACHINE_FACTS_BEGIN}
+candidate_status={identity["artifact_status"]}
+selected_model_sha={candidate["sha256"]}
+result_designation={evaluation["result_designation"]}
+result_not_pristine=true
+final_accuracy={evaluation["accuracy"]}
+final_macro_f1={evaluation["macro_f1"]}
+normal_recall={normal["recall"]}
+rapid_recall={rapid["recall"]}
+apnea_recall={apnea["recall"]}
+apnea_fpr={apnea["fpr"]}
+v0_1_macro_f1={evaluation["v0_1_macro_f1"]}
+v0_2_macro_f1={evaluation["v0_2_macro_f1"]}
+original_release={evaluation["original_m_b10b_payload_releases"]}
+recovery_release={evaluation["m_b10r1b_recovery_payload_releases"]}
+historical_total_release={evaluation["historical_total_payload_releases"]}
+mr60_validated=false
+raspberry_pi_validated=false
+deployment_ready=false
+clinical_apnea_validated=false
+intermediate_release_ready=true
+tag_created=false
+github_release_created=false
+m_c_started=false
+{MACHINE_FACTS_END}
 """
 
 

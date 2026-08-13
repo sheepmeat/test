@@ -1,5 +1,8 @@
 {
+  "apnea_is_proxy": true,
   "architecture_id": "M-B3_CONV1D_GAP_BASELINE",
+  "artifact_status": "REAL_DATA_OFFLINE_CANDIDATE",
+  "builtin_op_status": "BUILTIN_ONLY",
   "bytes": 22080,
   "calibration_profile": "M-B5_CAL_CLASS_BALANCED_120",
   "candidate_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120",
@@ -32,6 +35,7 @@
     "zero_point": -128
   },
   "preprocessing_profile_id": "M-B1_D0_B1_Z1",
+  "preprocessing_profile_name": "BPF_ZSCORE",
   "repo_relative_path": "models/mmwave/experiments/M-B6_stage_equivalence/M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120_int8.tflite",
   "runtime_model_id": "M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8",
   "schema_version": "M-B12_PHASE_B_OFFLINE_FINAL_V1",

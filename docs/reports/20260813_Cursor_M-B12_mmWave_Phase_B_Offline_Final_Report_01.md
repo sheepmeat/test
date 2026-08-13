@@ -164,6 +164,60 @@ M-B12 does not begin M-C. Future M-C must independently investigate:
 - Phase-B offline final report complete: True
 - Phase-B offline intermediate release ready after merge: True
 
+## Machine-Verified Final Facts
+
+| Fact | Value |
+| --- | --- |
+| candidate_status | `REAL_DATA_OFFLINE_CANDIDATE` |
+| selected_model_sha | `6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5` |
+| result_designation | `REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT` |
+| result_not_pristine | true |
+| final_accuracy | 0.56 |
+| final_macro_f1 | 0.494836 |
+| normal_recall | 0.2 |
+| rapid_recall | 0.421053 |
+| apnea_recall | 0.935484 |
+| apnea_fpr | 0.522727 |
+| v0_1_macro_f1 | 0.166667 |
+| v0_2_macro_f1 | 0.391074 |
+| original_release | 1 |
+| recovery_release | 1 |
+| historical_total_release | 2 |
+| mr60_validated | false |
+| raspberry_pi_validated | false |
+| deployment_ready | false |
+| clinical_apnea_validated | false |
+| intermediate_release_ready | true |
+| tag_created | false |
+| github_release_created | false |
+| m_c_started | false |
+
 New LOCKED_TEST access = 0
 New recovery access = 0
 New inference = 0
+
+<!-- MACHINE_VERIFIED_FINAL_FACTS -->
+candidate_status=REAL_DATA_OFFLINE_CANDIDATE
+selected_model_sha=6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5
+result_designation=REUSED_LOCKED_TEST_AFTER_PREINFERENCE_STRUCTURAL_ABORT
+result_not_pristine=true
+final_accuracy=0.56
+final_macro_f1=0.494836
+normal_recall=0.2
+rapid_recall=0.421053
+apnea_recall=0.935484
+apnea_fpr=0.522727
+v0_1_macro_f1=0.166667
+v0_2_macro_f1=0.391074
+original_release=1
+recovery_release=1
+historical_total_release=2
+mr60_validated=false
+raspberry_pi_validated=false
+deployment_ready=false
+clinical_apnea_validated=false
+intermediate_release_ready=true
+tag_created=false
+github_release_created=false
+m_c_started=false
+<!-- END_MACHINE_VERIFIED_FINAL_FACTS -->
