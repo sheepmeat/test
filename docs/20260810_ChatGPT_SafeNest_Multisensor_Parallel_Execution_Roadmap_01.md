@@ -2158,6 +2158,39 @@ C-C0/C-C1/C-C2에서 식별한 mismatch는 재학습을 자동 허가하지 않�
 
 ## T-B. Thermal offline model comparison
 
+### Thermal B-series execution authority reconciliation (2026-08-14)
+
+The bullets in this section are the original roadmap intent. For phases that
+have already run, the phase-specific machine-readable evidence and passing
+standalone validator are authoritative; this note does not rename or rewrite
+historical evidence.
+
+- `T-B0` completed the offline protocol, baseline contract, candidate
+  preregistration, and evaluation-role policy. It did not train a model.
+- `T-B1` completed the preprocessing comparison and selected
+  `P1_TRAIN_FITTED_GLOBAL_ZSCORE` for the frame candidate under the frozen
+  validation-only selection rule.
+- `T-B2` completed a controlled frame-architecture comparison and selected
+  `SMALL_CNN_BASELINE_V1`; it did not execute the original class-imbalance or
+  hard-negative study.
+- The original imbalance/hard-negative question remains unperformed. The
+  selected SDT source exposes `LYING`, `SITTING`, `STANDING`, and `EMPTY_ROOM`
+  only; `BENDING` and `PARTIAL_BODY` are not represented by verified source
+  labels, so those hard-negative slices must not be fabricated.
+- T-A3 evidence is frame-only: source timestamps and FPS are not verifiable,
+  sequence/session/recording/event identifiers are absent, and filename or
+  archive-index order is provenance only. Therefore a temporal T-B3 training
+  comparison is blocked until a separate source/provenance amendment supplies
+  verified ordered recordings and event context.
+- The next eligible work item is a **proposed frame-only multi-seed
+  confirmation** of the frozen candidate (minimum three seeds), subject to
+  owner approval and a follow-up roadmap amendment. It is not authorization to
+  construct pseudo-sequences or to start T-B3 training now.
+- `T-B4` remains the Float→TFLite→INT8 equivalence phase, and `T-B5` remains
+  robustness, latency, and candidate lock. Neither is started by this note;
+  both must inherit the explicitly amended frame-level scope if temporal
+  provenance remains unavailable.
+
 ### T-B0. evaluation protocol·baseline
 
 - frame metric과 event metric을 분리
