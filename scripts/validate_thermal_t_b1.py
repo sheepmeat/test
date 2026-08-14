@@ -452,7 +452,7 @@ def _validate_full_training_contract(documents: Mapping[str, Any], errors: list[
     if real.get("metrics", {}).get("sample_count") != 8000 or real.get("metrics", {}).get("class_order") != list(CLASS_ORDER):
         _error(errors, "REAL_METRICS_INVALID", "real_eval_development.json:metrics", "REAL metric support/class order is invalid.")
     limitations = documents.get("limitations.json", {})
-    if limitations.get("near_duplicate_pairs") != 14514 or limitations.get("sensitivity_subset") != "SENSITIVITY_SUBSET_NOT_MATERIALIZABLE_FROM_CURRENT_COMPACT_EVIDENCE" or limitations.get("locked_test_available") is not False or limitations.get("subject_generalization") != "NOT_VERIFIABLE":
+    if limitations.get("near_duplicate_pairs") != 14514 or limitations.get("sensitivity_subset") != "SENSITIVITY_SUBSET_NOT_MATERIALIZABLE_FROM_CURRENT_COMPACT_EVIDENCE" or limitations.get("locked_test_available") is not False or limitations.get("subject_generalization") != "NOT_VERIFIABLE" or limitations.get("synthetic_real_domain_gap") != "LARGE_SYNTHETIC_TO_REAL_DOMAIN_GAP_OBSERVED_NOT_DEPLOYMENT_VALIDATION":
         _error(errors, "LIMITATIONS_REMOVED", "limitations.json", "T-A6/T-B0 limitations must remain explicit.")
 
 

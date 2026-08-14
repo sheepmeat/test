@@ -347,6 +347,7 @@ def run_full_experiment(*, canonical_root: str | Path, work_root: str | Path, ou
             "posture_proxy": "LYING_TO_HUMAN_FALL_DERIVED_POSTURE_PROXY",
             "thermal44_domain": "THERMAL44_DOMAIN_UNVERIFIED_DEFERRED_TO_T-C",
             "license": "LICENSE_NONCOMMERCIAL_RESTRICTION_MANUAL_REVIEW_REQUIRED_FOR_RELEASE",
+            "synthetic_real_domain_gap": "LARGE_SYNTHETIC_TO_REAL_DOMAIN_GAP_OBSERVED_NOT_DEPLOYMENT_VALIDATION",
             "t_b2_authorized": "YES_WITH_LIMITATIONS",
         }
         result_bundle = {

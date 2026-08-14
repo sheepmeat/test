@@ -72,6 +72,7 @@ The following inherited limitations remain mandatory disclosures:
 - Subject/session/event generalization is not verifiable from the available provenance.
 - REAL_EVAL_DEVELOPMENT is not an untouched `LOCKED_TEST`.
 - `LYING → HUMAN_FALL` is a posture proxy and cannot support temporal fall-event or safety claims.
+- The synthetic-to-real domain gap is large: the selected P1 profile scores 0.9951 Macro F1 on synthetic VALIDATION versus 0.5939 on REAL_EVAL_DEVELOPMENT. This is a development characterization, not deployment validation.
 - Thermal-44 domain equivalence and hardware behavior remain deferred to T-C.
 - T-B0's non-commercial/license release restriction remains subject to manual review.
 

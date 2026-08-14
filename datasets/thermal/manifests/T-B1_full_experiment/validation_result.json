@@ -1,11 +1,17 @@
 {
-  "error_count": 0,
-  "errors": [],
-  "evidence_validation": "PASS",
-  "full_experiment": "FINALIZED",
+  "error_count": 1,
+  "errors": [
+    {
+      "code": "CHECKSUM_MISMATCH",
+      "location": "limitations.json",
+      "message": "Checksum is stale or incorrect."
+    }
+  ],
+  "evidence_validation": "FAIL",
+  "full_experiment": "BLOCKED",
   "full_training_performed": true,
   "new_trained_model_generated": true,
-  "overall_outcome": "T_B1_FULL_COMPLETE_WITH_LIMITATIONS",
+  "overall_outcome": "T_B1_FULL_BLOCKED",
   "performance_winner_selected": true,
   "phase": "T-B1",
   "predecessors": {
@@ -97,7 +103,7 @@
   "real_role": "REAL_EVAL_DEVELOPMENT",
   "schema_version": "1.0",
   "stage": "FULL_EXPERIMENT",
-  "t_b2_authorized": "YES_WITH_LIMITATIONS",
+  "t_b2_authorized": false,
   "warning_count": 3,
   "warnings": [
     {
