@@ -75,6 +75,8 @@ python3 -c 'from integrated_node.run_node import SafeNestIntegratedNode as N; n=
 # SafeNest mmWave Priority 7–18 및 A–E 상세 실행 순서
 
 - 작성일: 2026-08-06
+- Phase C 개정일: 2026-08-14
+- Phase C 개정 근거: 팀 저장소 `main` `fdf34b804f35e5868356f0ed6f804a248aa69131`에서 확인한 기존 MR60 실측 증거. Phase A/B 역사와 locked offline candidate는 변경하지 않는다.
 - 문서 목적: Priority 6 이후 mmWave 데이터·학습·양자화·장치 도메인·멀티모달 융합 작업의 선행관계와 실행 순서를 구체화
 - 대상: Zenodo 60 GHz radar 원본 재가공, SafeNest mmWave 실데이터 모델, MR60BHA2 장치 도메인, 후속 데이터 확장, 멀티모달 융합
 - 내용: 최상단 Section 0에 로컬 디렉터리 맵, 실측 해시, 스크립트 실행 명령 포함. 이하 본문은 실행 순서 및 방법론 기술.
@@ -94,10 +96,17 @@ Priority 6 자산·gap 분석
 → A. Zenodo raw-to-NPZ 복원·무결성 감사
 → B. 실데이터 모델 실험·학습·비교
 → Priority 7–18을 실데이터 기준으로 재구성해 수행
-→ C. MR60BHA2 실측 domain 검증·적응
-→ D. 남은 gap을 보완할 추가 dataset 확장
+→ C0. 기존 팀 MR60 실측 forensic audit
+→ C0A. signal/cadence/offline-contract correspondence gate
+→ C0B. 대응이 방어 가능할 때만 exploratory legacy-device inference
+→ 독립 검토
+→ C1. 프로토콜 기반 신규 MR60 실측
+→ C2. frozen Phase-B candidate의 정식 device-domain 평가
+→ D. 측정된 domain gap이 별도 승인된 경우에만 dataset/model 확장
 → E. 멀티모달 model·risk fusion 개선
 ```
+
+C 단계는 단일 “MR60 수집 후 모델 검증”이 아니다. 기존 비공식 실측, Phase-B 대응 판정, 탐색적 추론, 프로토콜 실측, 정식 장치 평가를 분리한다. C에서 발견한 domain mismatch는 재학습을 자동 허가하지 않으며, 그 작업은 D의 별도 승인 대상이다.
 
 ---
 
@@ -112,7 +121,7 @@ Priority 6 자산·gap 분석
 | Historical v0.1.0 | 기존 외부 실데이터 개발 이력의 역사적 모델 | 사용자 확정 이력은 인정하되 exact raw-file-to-model mapping 부족은 별도 표시 |
 | V6 v0.2.0 candidate | 합성 NPZ 기반 smoke·재현성 모델 | 실세계 성능 근거로 사용 금지 |
 | 신규 real-data offline candidate | Zenodo 110명 계보 복원 이후 학습할 신규 모델 | real-subject offline 성능 대상 |
-| MR60-adapted candidate | MR60BHA2 실측 domain을 반영한 모델 | 실제 deployment candidate. offline candidate와 분리 |
+| MR60-adapted candidate | 측정된 domain gap이 **별도 승인된 M-D**에서만 만들 수 있는 후속 모델 | M-C 산출물이 아니다. offline candidate와 분리. M-C는 frozen Phase-B 후보를 평가할 뿐 이 lineage를 생성·교체하지 않는다 |
 
 ### 2.2 불가역 산출물 분리
 
@@ -133,7 +142,8 @@ Priority 6 자산·gap 분석
 ### 2.4 일반 성능과 배포 성능 분리
 
 - Zenodo offline 성능은 `OFFLINE_REAL_DATA` 또는 `REAL_SUBJECT_GENERALIZATION`으로 표시한다.
-- MR60 실측 전에 `REAL_SENSOR_VALIDATION`을 주장하지 않는다.
+- 팀 저장소에 기존 MR60 실측이 있어도, C2 정식 device-domain 평가 전에는 `REAL_SENSOR_VALIDATION`을 주장하지 않는다.
+- 기존 팀 로그·CSV는 `LEGACY_OR_INFORMAL_DEVICE_EVIDENCE`이며 `FORMAL_DEVICE_VALIDATION_SET`이 아니다.
 - Mac latency를 Raspberry Pi latency 또는 sensor-to-alarm latency로 해석하지 않는다.
 - 임상 apnea와 voluntary breath hold를 동일한 것으로 표현하지 않는다.
 
@@ -554,7 +564,7 @@ class-balanced calibration을 즉시 “개선된 정답”으로 고정하지 �
 
 #### 실행 시점
 
-INT8 finalist에 수행하되, MR60 실측 후 C 단계에서 device-realistic perturbation으로 반복한다.
+INT8 finalist에 수행한다. 이후 M-C2는 **frozen candidate**에 대해 device-realistic perturbation을 재평가할 수 있다. 이 반복은 모델·scaler·preprocessing 변경, fine-tuning, 후보 교체를 허가하지 않는다.
 
 #### 세부 작업
 
@@ -711,50 +721,307 @@ candidate 선정 방법을 최종 test를 보기 전에 고정한다. 다음을 
 7. robustness·latency·Mock E2E
 8. 선정·제외 candidate 이유
 9. `REAL_SUBJECT_GENERALIZATION`, `REAL_SENSOR_VALIDATION`, `BLOCKED_HARDWARE`, `NOT_VERIFIABLE` 범위 분리
-10. C 단계 MR60 인수인계 조건
+10. C 단계 MR60 인수인계 조건: 기존 팀 실측 forensic(C0) → correspondence gate → 선택적 탐색 추론 → 프로토콜 실측(C1) → 정식 평가(C2). 재학습은 D.
 
 #### 완료 판단
 
 - 합성 smoke 성과와 실데이터 성과가 분리된다.
 - 실제 실행·실측한 수치만 포함한다.
 - 외부 검토자가 최종 candidate의 source-to-runtime chain을 확인할 수 있다.
-- C 단계에서 재검증할 항목이 명시된다.
+- C2에서 frozen candidate의 device-domain 재평가 항목이 명시된다. 재학습·adaptation은 D.
 
 ---
 
 ## 5. Phase C — MR60BHA2 실측 device-domain 검증
 
-### C0. 하드웨어 가용성 gate
+Phase C의 질문은 더 이상 “offline radar classifier를 학습할 수 있는가”가 아니다. 질문은 다음과 같다.
 
-- MR60BHA2, data capture 경로, 전원, timestamp 기준, 안정적 recording 환경이 없으면 `BLOCKED_HARDWARE`로 표시한다.
-- hardware가 없다고 Mac 가능 작업을 중단하지 않고 D의 gap-driven dataset 조사·adapter 설계를 병행할 수 있다.
+> 물리 MR60BHA2가 내보내는 신호의 물리·시간 의미가, 고정된 Phase-B 모델이 사용한 신호 domain과 충분히 대응하는가?
 
-### C1. MR60 canonical signal contract 확정
+C 단계는 하드웨어가 새로 도착해야만 시작하는 공백 상태가 아니다. 팀 저장소 `main`에는 이미 timestamped JSONL, 세션 CSV, paced-breathing·거리 조건 실측, 장시간 로그, 진단/delivery manifest가 있다. 이 증거는 2026-08-14에 팀 `main` `fdf34b804f35e5868356f0ed6f804a248aa69131`에서 재확인한 **후속 device-domain 지식**이며, Phase A/B 개발 당시 존재했던 것처럼 A/B 역사를 다시 쓰지 않는다.
 
-1. 장치가 제공하는 total phase, breath phase, heart phase, breath rate, distance, presence 중 실제 사용 가능한 필드를 확인한다.
-2. API update timeout과 실제 sample interval을 동일하게 가정하지 않고 timestamp로 실측한다.
-3. breath phase의 단위, scale, firmware filter, clipping, smoothing, missing value, reset behavior을 확인한다.
-4. Zenodo의 range-bin-derived phase와 MR60 firmware-derived breath phase가 같은 semantics인지 평가한다.
-5. shape·10 Hz·30초가 같아도 semantics가 다르면 source-specific preprocessing/adaptation을 적용한다.
+Phase C는 다음을 하나의 단계로 합치지 않는다.
 
-### C2. 제어된 MR60 수집
+1. 기존 비공식·레거시 실측
+2. Phase-B 입력 대응 판정
+3. 탐색적 레거시 추론
+4. 이후 프로토콜 제어 실측
+5. 정식 device-domain 평가
 
-최소한 다음 변수를 분리할 수 있는 수집 계획을 세운다.
+하드웨어 가용성 gate는 Phase C의 개념적 시작점이 아니다. 신규 프로토콜 수집(C1)의 선행조건이다. 기존 로그가 있으면 C0은 하드웨어 부재로 차단되지 않는다.
 
-- subject/session
-- distance
-- sensor angle·height
-- posture: lying/sitting 등
-- normal breathing·rapid breathing·breath hold
-- body movement·position change·background movement
-- blanket/clothing·environment clutter
-- firmware/device version
+### 5.0 Frozen Phase-B 경계와 과학적 한계
 
-사람 대상 수집은 동의·개인정보·보관 정책을 프로젝트 운영 기준에 맞게 적용한다. voluntary breath hold를 임상 apnea 데이터로 표현하지 않는다.
+C는 Phase B를 재개하지 않는다. 현재 후보는 `REAL_DATA_OFFLINE_CANDIDATE`로 남으며 다음으로 승격하지 않는다.
 
-### C3. domain gap 계량
+- 선택 후보: `M-B3_CONV1D_GAP_BASELINE_seed42_M-B5_CAL_CLASS_BALANCED_120`
+- 엄격 INT8 runtime: `M-B3_CONV1D_GAP_BASELINE_seed42_M-B6_STRICT_INT8`
+- 입력 계약: `int8 [1, 300, 1]`, 명목 10 Hz · 30초 · 300 sample
+- 전처리: `M-B1_D0_B1_Z1` / `BPF_ZSCORE` (약 0.1–0.5 Hz 호흡대역 강조)
+- artifact SHA-256: `6dff6aaa72c79d76715d40cf7e32bb1e6cd9b2c2e3ac78eaf2fda737561430c5`
 
-Zenodo train/validation/test와 MR60 수집 데이터에서 다음을 비교한다.
+300개의 숫자를 `[1,300,1]`로 reshape할 수 있다는 사실만으로 Phase-B 입력이 성립하지 않는다. 신호 의미와 시간 의미가 대응해야 한다.
+
+최종 offline recovery-evaluation 한계는 C가 침묵 속에 수리하는 대상이 아니다.
+
+- Accuracy ≈ 0.560
+- Macro F1 ≈ 0.494836
+- NORMAL recall ≈ 0.20
+- RAPID_OR_ABNORMAL recall ≈ 0.421053
+- APNEA-proxy recall ≈ 0.935484
+- APNEA-proxy FPR ≈ 0.522727
+- initialization-seed 민감성 확인됨
+
+재학습·전처리 변경·seed 재선택·INT8 재교정·class/threshold 변경은 C가 아니라, 측정된 gap이 별도 승인된 뒤의 D다.
+
+팀 저장소의 구버전 `ondevice_ai/`는 이 locked candidate의 검증이 아니다. 역사적 구현·호환 맥락으로만 참조하고, 탐색적 추론을 한다면 standalone M-B11 artifact SHA에 묶는다.
+
+### 5.1 2026-08-14 확인된 기존 팀 증거 상태
+
+아래는 C0 실행 결과가 아니라, 로드맵이 더 이상 “실측 없음/cadence 미지”를 전제하지 않도록 고정한 **후속 증거 상태**다. 정식 검증 완료를 뜻하지 않는다.
+
+| 항목 | 상태 |
+|---|---|
+| 기존 물리 MR60 측정 | `AVAILABLE` |
+| timestamped JSONL | `AVAILABLE` |
+| 측정된 ≈10 Hz cadence | 다수 세션에서 `AVAILABLE` |
+| phase-like 호흡 신호 | MR60이 노출하는 중간/위상형 신호로 `AVAILABLE` |
+| vendor 호흡수 출력 | `AVAILABLE` |
+| paced 12/15/20 rpm 시험 | `AVAILABLE` |
+| 거리 조건 세션 | `AVAILABLE` |
+| 장시간(≈31 min) 세션 | `AVAILABLE` |
+| 독립 호흡 참조(벨트/spirometer 등) | `NOT ESTABLISHED` |
+| 다피험자 정식 검증 집단 | `NOT ESTABLISHED` (delivery 식별자는 `S001`) |
+| true radar ADC/IQ/range-bin raw | `NOT ESTABLISHED` |
+| Phase-B 신호-의미 대응 | `NOT YET ESTABLISHED` |
+| 정식 device validation | `NOT YET PERFORMED` |
+
+대표 경로(팀 저장소, 확인 시점 `main`):
+
+- `devices/mmwave/firmware/`
+- `devices/mmwave/firmware/csv/2026-07-26_han_junwoo_delivery_v2/`
+- `devices/mmwave/firmware/logs/final/`
+- `docs/mmwave/`
+- `docs/operations/PROJECT_PROGRESS.md`
+
+Provenance는 세 층으로 분리한다. 현재 경로 ownership, 원 측정 생성, 이후 재현 분석을 한 사람의 “jinsu data”로 합치지 않는다.
+
+- 원 측정/CSV delivery 적재: `41af82b89ef8b47a15e380583ea0eac37384406e`
+- 경로 재배치(PR #2)와 문서 재배치(PR #7)는 소유권/문서 정리이며 원 측정 생성 사건이 아니다.
+- 이후 재현 분석 예: `3b44e505490811b640ed9200b2fd6ed27846edc3` — schema 1.2 약 31분 로그에서 ESP C++와 Python 호흡 계산 18,276건 비교, gate-decision 불일치 51/18,276 (0.279%), phase dropout 및 `breath_phase` 2소수 양자화 관찰.
+
+### 5.2 신호 rawness 분류와 호흡 개념 분리
+
+필드/아티팩트는 파일명이 아니라 producer-code lineage로 분류한다.
+
+| 분류 | 의미 |
+|---|---|
+| `TRUE_RADAR_RAW_SIGNAL` | ADC / IQ / complex range-bin / raw rFFT |
+| `SENSOR_LOWEST_EXPOSED_PHASE_LIKE_SIGNAL` | 장치가 외부로 내보내는 최저 수준 위상형 신호 |
+| `PHYSICAL_INTERMEDIATE_SIGNAL` | 센서 내부 처리 후의 중간 물리 신호 |
+| `VENDOR_DERIVED_OUTPUT` | 벤더 알고리즘이 만든 파생값 |
+| `TEAM_DERIVED_OUTPUT` | 팀 펌웨어/분석이 계산한 파생값 |
+| `MODEL_READY_OR_PROCESSED` | Phase-B 전처리까지 적용된 입력 |
+| `UNKNOWN` | producer lineage 미확인 |
+
+현재 확인된 해석(C0에서 producer code로 재확인):
+
+- firmware `0x0A13` → `totalPhase` / `breathPhase` / `heartPhase`. JSONL 키 `breath_phase`는 `SENSOR_LOWEST_EXPOSED_PHASE_LIKE_SIGNAL` 또는 `PHYSICAL_INTERMEDIATE_SIGNAL`. true radar raw가 아니다.
+- firmware `0x0A14` → `breathRaw`. JSONL 키 `breath_rate_raw`는 `VENDOR_DERIVED_OUTPUT`.
+- 팀 필터 호흡수는 `TEAM_DERIVED_OUTPUT`.
+
+세 호흡 개념을 혼동하지 않는다.
+
+```text
+물리 흉곽/레이더 상호작용
+→ MR60 내부 레이더 처리
+→ MR60-exposed breath_phase
+→ (선택) 팀 신호처리
+→ 가능한 30 s 모델 입력 구성
+→ frozen Phase-B classifier
+→ NORMAL / RAPID_OR_ABNORMAL / APNEA-proxy
+```
+
+별도 계보:
+
+```text
+MR60 내부 vendor algorithm
+→ breath_rate_raw
+→ vendor 호흡수 추정 (rpm)
+```
+
+후자는 명시적으로 증명되기 전에는 모델 입력이 아니다. vendor 호흡수 스트림을 raw radar data로 취급하지 않는다.
+
+### 5.3 세 종류의 “10 Hz” 주장
+
+| 층 | 의미 | 현재 상태 |
+|---|---|---|
+| A. Model contract | Phase-B 명목 표현 = 10 Hz, 30 s, 300 sample | locked |
+| B. Acquisition intent | 소스코드의 명목/목표 수집 주파수 | 구현 intent일 뿐 C의 증거가 아님 |
+| C. Measured cadence | timestamp에서 구한 유효 sampling frequency | delivery_v2 다수 세션에서 ≈9.99 Hz로 측정됨 |
+
+B를 C의 증명으로 쓰지 않는다. 확인된 예(팀 `devices/mmwave/firmware/csv/2026-07-26_han_junwoo_delivery_v2/manifest.json`, CSV timestamp 재계산과 일치):
+
+- `S001_NORMAL_D06` 9.99496 Hz, `D09` 9.99613 Hz, `D12` 9.99580 Hz, `D15` 9.99837 Hz
+- `S001_BREATH_PACED_12_02` 9.99543 Hz, `15_03` 9.99410 Hz, `20_04` 9.99423 Hz, `20_05` 9.99299 Hz
+- 선택 세션의 최대 샘플 간격 ≈101–103 ms, duplicate/backwards timestamp 없음
+
+이 수치는 일부 세션의 시간 의미가 명목 10 Hz에 가깝다는 C0 자산이다. 그 자체로 Phase-B 입력 대응의 증명이 아니다.
+
+Export producer `devices/mmwave/firmware/export_mmwave_csv.py`는 timestamp와 `breath_phase`를 보존하고, 정규화·평활·재샘플·세션 병합을 하지 않으며, presence 부재 구간에 phase를 합성하지 않는다. 이 CSV는 임의 수작업 CSV보다 가치가 크지만 정식 검증셋이 아니다.
+
+### 5.4 역사적 “~20 rpm” 관측의 현재 해석
+
+“센서가 대략 20 rpm을 출력한다”는 모호한 문장은 폐기한다. 팀 분석(`devices/mmwave/firmware/analysis/breath/2026-07-28_vitals_measured_vs_reference.json`, `docs/operations/PROJECT_PROGRESS.md`)은 다음을 구분한다.
+
+- vendor 호흡수 estimator의 조건 의존 행동
+- phase 파형 주기성
+- AI 분류 출력
+
+확인된 탐색적 수치(paced cue 참조, 독립 생리 센서 아님):
+
+| 참조 | phase 주기 추정 | vendor mean | vendor median | vendor MAE |
+|---|---:|---:|---:|---:|
+| 12 rpm | 12.34 | 14.52 | 14.0 | 2.61 |
+| 15 rpm | 15.01 | 18.80 | 19.0 | 3.80 |
+| 20 rpm | 20.01 | 19.40 | 22.0 | 5.02 |
+
+15 rpm paced 조건에서 vendor 필드는 약 19 rpm, phase-like 주기 추정은 약 15 rpm이었다. 이는 조건 의존 양의 vendor bias를 시사하는 **exploratory evidence**다. 보편 bias 모델이나 고정 보정 offset을 선언하지 않는다.
+
+실패/약세 세션은 삭제하지 않고 device-domain QA 증거로 보존한다.
+
+- `S001_BREATH_PACED_12_01`: 파일명은 12 rpm이나 실제 약 6.06 rpm (한 호흡 약 10초). 12 rpm 정답으로 쓰지 않는다.
+- `S001_NORMAL_D15`: lock-loss. `breath_rate_raw`가 15.0에 고정되고 std=0인 구간이 있다. 전체 distance 표본 std가 0인 것은 아니며, vitals freeze와 긴 동일-거리 streak로 해석한다.
+- `S001_BREATH_PACED_20_04` 얕은 호흡 실패 vs `20_05` deep 성공.
+
+Paced cue는 탐색적 참조일 뿐 정식 생리 ground truth가 아니다. 자연 호흡 기록에는 독립 호흡 참조가 없다.
+
+### C0. 기존 팀 MR60 증거 forensic audit (`M-C0`)
+
+상태 라벨: `EXPLORATORY_EXISTING_TEAM_MEASUREMENT` / `LEGACY_OR_INFORMAL_DEVICE_EVIDENCE`. `FORMAL_DEVICE_VALIDATION_SET`이 아니다.
+
+목적: 신규 수집 전에 이미 있는 물리 증거를 특성화한다.
+
+답해야 할 질문:
+
+- 어떤 측정이 있는가, 무엇이 생성했는가, 필드 의미는 무엇인가
+- 어떤 값이 raw / intermediate / vendor / team-derived인가
+- timing·metadata·누락은 무엇인가
+- 30 s / 300 sample 창을 구성할 수 있는가
+- 신호 의미가 Phase-B와 대응하는가
+- 역사적 ~20 rpm 관측이 실제로 무엇을 가리키는가
+
+C0는 producer-code lineage와 Git 이력을 포함한다. 성공한 C0가 모델 예측을 만들 필요는 없다. 과학적으로 유효한 종료 예:
+
+```text
+USABLE_FOR_DEVICE_DOMAIN_EXPLORATION = true
+FORMAL_MODEL_VALIDATION_READY = false
+```
+
+또는:
+
+```text
+EXPLORATORY_INFERENCE_ALLOWED = false
+CAUSE_UNRESOLVED = true
+```
+
+계획된 machine-readable 산출물(이 로드맵 개정 작업에서 생성하지 않음):
+
+```text
+existing_measurement_inventory.json
+signal_field_inventory.json
+producer_code_lineage.json
+timing_characterization.json
+measurement_metadata_completeness.json
+offline_contract_correspondence.json
+legacy_device_data_quality.json
+twenty_rpm_evidence_inventory.json
+exploratory_inference_eligibility.json
+m_c0_summary.json
+validation_result.json
+checksums.sha256
+```
+
+기존 증거의 한계를 유지한다: 피험자 다양성 부족(`S001`), 독립 호흡 참조 부재, 일부 기하/자세/방향 metadata 불완전, 실패·오라벨 시험, phase dropout, lock-loss, true radar raw 부재, 세션 간 수집 버전 차이.
+
+### C0A. Signal / cadence / offline-contract correspondence gate
+
+frozen-model inference **이전**에 기계 판독 가능한 결정을 요구한다. 배열 shape 호환만으로 추론하지 않는다.
+
+독립 평가 항목과 값(`YES` / `NO` / `UNKNOWN`):
+
+```text
+signal_semantic_correspondence
+cadence_correspondence
+thirty_second_window_correspondence
+bpf_zscore_input_compatibility
+tensor_construction_reproducible
+```
+
+결정:
+
+```text
+AUTHORIZED_FOR_EXPLORATORY_INFERENCE
+또는
+BLOCKED_PENDING_SIGNAL_CORRESPONDENCE
+```
+
+reason code 예: `SIGNAL_SEMANTICS_UNVERIFIED`, `CADENCE_NOT_VERIFIABLE`, `UNIT_SEMANTICS_UNKNOWN`, `SESSION_BOUNDARY_UNCLEAR`, `PHASE_DROPOUT_UNRESOLVED`, `INSUFFICIENT_METADATA`.
+
+거리/자세 메타 부재는 tensor-level blocker가 아니라 제한사항일 수 있다. blocking과 non-blocking limitation을 구분한다. 탐색 추론은 필수가 아니다. 다음도 과학적으로 유효한 M-C0 결과다.
+
+```text
+cadence_correspondence = YES
+signal_semantic_correspondence = UNKNOWN
+exploratory inference = BLOCKED_PENDING_SIGNAL_CORRESPONDENCE
+```
+
+### C0B. Exploratory legacy-device inference (선택)
+
+C0A가 기술적으로 방어 가능할 때만 수행한다. 필수 성공 조건이 아니다. 라벨은 `EXPLORATORY_LEGACY_DEVICE_INFERENCE`.
+
+모든 예측은 다음을 묶는다: source measurement, checksum, session, timestamp/window 경계, signal field, 변환, preprocessing identity, model identity, model SHA, tensor 구성, metadata 한계.
+
+신뢰할 수 있는 독립 라벨이 없으면 정식 accuracy/F1을 계산·홍보하지 않는다. pacing 파일명이나 팀 기억만으로 정식 ground truth가 되지 않는다. 올바른 결과로 `BLOCKED_PENDING_SIGNAL_CORRESPONDENCE`를 허용한다.
+
+독립 검토 후에만 C1으로 진행한다.
+
+### C1. 프로토콜 기반 물리 MR60 측정 캠페인 (`M-C1`)
+
+C1은 레거시 분석과 분리된 **신규** 수집이다. C0에서 발견한 gap이 프로토콜을 정한다.
+
+하드웨어 가용성·capture 경로·전원·timestamp 기준·안정 환경은 **C1의 선행조건**이다. 없으면 C1만 `BLOCKED_HARDWARE`로 표시한다. C0는 기존 로그로 계속할 수 있다. 하드웨어가 없다고 Mac에서 C0/C0A와 D의 gap 조사를 병행할 수 있으나, 그 병행이 C2 정식 평가나 재학습을 허가하지는 않는다.
+
+기술적으로 적용 가능한 최소 메타:
+
+```text
+subject pseudonym, session ID, trial ID, timestamps, effective cadence,
+sensor distance, posture, sensor orientation, presence/motion state,
+raw vs derived signal identity, acquisition code commit/SHA,
+firmware version, sensor/firmware identity, trial duration,
+reference breathing condition, independent respiration reference where needed,
+QA/exclusion criteria, signal-lock status, environmental/context metadata
+```
+
+사람 대상 수집은 동의·개인정보·보관 정책을 따른다. voluntary breath hold를 임상 apnea로 표현하지 않는다. 실패·약세 세션은 삭제하지 않고 QA·exclusion 정책 설계에 쓴다.
+
+### C2. Frozen candidate의 정식 device-domain 평가 (`M-C2`)
+
+정식 metric은 여기에 속한다. C0/C0B가 아니다.
+
+요구:
+
+- 프로토콜 제어 세션
+- 검증된 신호 대응
+- 재현 가능한 tensor 구성
+- frozen Phase-B 모델
+- 불변 평가 정책
+- 신뢰할 수 있는 참조 라벨/상태
+- 명시적 subject/session 분리
+- 최종 평가 전 exclusion 규칙 고정
+- 평가 데이터에 대한 침묵의 모델 튜닝 금지
+
+비교 대상은 Zenodo canonical 입력과, C1에서 구성한 MR60 입력이다.
 
 - sample interval·gap·jitter
 - amplitude·phase range·percentile
@@ -762,11 +1029,41 @@ Zenodo train/validation/test와 MR60 수집 데이터에서 다음을 비교한�
 - SNR·motion artifact·dropout
 - distance·angle·posture별 분포
 - preprocessing 후 scaler range·clipping·INT8 saturation
-- existing candidate의 confidence·class distribution·recall·false alarm
+- frozen candidate의 confidence·class distribution. 정식 recall/F1은 신뢰 가능한 독립 라벨이 있을 때만
 
-### C4. adaptation 전략 선택
+C2는 domain gap을 **식별**할 수 있다. 식별 라벨은 `DEVICE_DOMAIN_GAP_OBSERVED`다. 이는 Phase B 수정을 허가하지 않는다.
 
-가장 작은 변경으로 시작한다.
+```text
+poor device behavior
+!=
+authorization to modify Phase B
+```
+
+다음을 C 안에서 하지 않는다.
+
+```text
+팀 측정을 TRAIN에 병합
+Phase-B 모델 fine-tune
+architecture 재선택
+preprocessing 변경
+selected seed 변경
+INT8 재교정
+class semantics/threshold 변경
+```
+
+`MR60_REAL_SENSOR_VALIDATED`는 **frozen Phase-B candidate**의 정식 C2 평가가 요구를 충족하고 한계를 정직하게 보고한 뒤에만 사용한다. 기존 팀 CSV에 모델을 한 번 돌리거나, M-C 안에서 후보를 교체·adaptation한 것으로 이 상태를 주지 않는다.
+
+확인된 실패 조건만이 D 진입 후보가 된다. D 자체는 별도 승인 없이 시작하지 않는다.
+
+---
+
+## 6. Phase D — gap-driven 추가 dataset 확장
+
+### 시작 조건
+
+A/B의 real-subject 결과와 C2에서 측정된 MR60 domain 결과를 먼저 본다. C0/C0B의 탐색적 관찰만으로 D를 시작하지 않는다. “좋아 보이는 공개 호흡 dataset”이 아니라 확인된 실패 조건을 채우는 dataset만 선정한다.
+
+C에서 발견한 device-domain mismatch는 재학습을 자동 허가하지 않는다. D는 gap-driven dataset/model 확장 트랙이며 별도 승인 후에만 다음을 검토한다. 아래 목록은 **M-D 전용**이며 M-C0/M-C1/M-C2 작업 단위가 아니다.
 
 1. external test only
 2. MR60-specific input adapter
@@ -776,30 +1073,7 @@ Zenodo train/validation/test와 MR60 수집 데이터에서 다음을 비교한�
 6. joint retraining
 7. domain adaptation·multi-stage training
 
-MR60 sample이 적거나 subject diversity가 부족하면 최종 test를 학습에 사용하지 않고 calibration/fine-tuning/evaluation 세트를 분리한다.
-
-### C5. MR60 candidate 재검증·고정
-
-adaptation으로 model·scaler·preprocessor·contract이 바뀌었다면 최소한 다음을 반복한다.
-
-- multi-seed 안정성
-- Float/TFLite/INT8 equivalence
-- representative calibration
-- MR60-realistic robustness
-- target runtime latency
-- Mock/real adapter E2E
-- candidate quality check
-- artifact lock·report
-
-C 종료 전에만 `MR60_REAL_SENSOR_VALIDATED` 또는 해당하는 deployment candidate 상태를 사용한다.
-
----
-
-## 6. Phase D — gap-driven 추가 dataset 확장
-
-### 시작 조건
-
-A/B의 real-subject 결과와 가능하면 C의 MR60 domain 결과를 먼저 본다. “좋아 보이는 공개 호흡 dataset”이 아니라 확인된 실패 조건을 채우는 dataset만 선정한다.
+adaptation으로 model·scaler·preprocessor·contract이 바뀌었다면 최소한 multi-seed, Float/TFLite/INT8 equivalence, representative calibration, device-realistic robustness, runtime latency, E2E, quality check, artifact lock·report를 반복한다. MR60 sample이 적거나 subject diversity가 부족하면 최종 test를 학습에 사용하지 않는다.
 
 ### gap 예시
 
@@ -890,9 +1164,11 @@ A/B의 real-subject 결과와 가능하면 C의 MR60 domain 결과를 먼저 본
 | G1 | pilot rFFT decoding·phase 타당성 | A3–A6 | reader·bin·phase rule 수정 |
 | G2 | full NPZ provenance·split·integrity | B0 | model 탐색 중단, dataset 문제 수정 |
 | G3 | validation 기반 finalist | Priority 12·11·14·15 | preprocessing/loss/architecture 후보 재검토 |
-| G4 | Real-Data Offline Candidate | C | offline 한계를 보고하고 실험 cycle 재정의 |
-| G5 | MR60 domain 실측 | adaptation 또는 D | device contract·capture 수정 |
-| G6 | MR60-adapted candidate | D/E | 실센서 한계 유지 |
+| G4 | Real-Data Offline Candidate | C0 existing-evidence audit | offline 한계를 보고하고 실험 cycle 재정의 |
+| G5a | C0A correspondence gate | C0B exploratory inference 또는 C1 | `BLOCKED_PENDING_SIGNAL_CORRESPONDENCE` |
+| G5b | C1 protocolized capture | C2 formal device-domain eval | device contract·capture 수정 |
+| G5c | C2 frozen-candidate device eval | 측정된 gap이 승인된 경우만 D | 실센서 한계 유지, 자동 재학습 금지 |
+| G6 | M-D 이후 MR60-adapted candidate (있을 때만) | E | 실센서 한계 유지. M-C가 이 후보를 만들지 않음 |
 
 다음은 별도 승인·결정 지점으로 본다.
 
@@ -900,9 +1176,12 @@ A/B의 real-subject 결과와 가능하면 C의 MR60 domain 결과를 먼저 본
 - subject split 고정
 - locked test 최초 평가
 - offline candidate 선정·manifest 등록
-- MR60 사람 대상 수집
+- 기존 팀 MR60 로그의 C0 forensic audit
+- C0A correspondence 판정 후 탐색적 추론 여부
+- MR60 사람 대상 신규 프로토콜 수집
+- C2 결과로 D 진입을 승인할지
 - 추가 외부 dataset 다운로드
-- offline candidate를 deployment candidate로 승격
+- offline candidate를 deployment candidate로 승격할지 (M-C 자동 승격 아님. adapted candidate는 승인된 M-D만)
 - learned multimodal fusion 도입
 
 ---
@@ -931,13 +1210,14 @@ A/B의 real-subject 결과와 가능하면 C의 MR60 domain 결과를 먼저 본
 18. Priority 16 selection
 19. Priority 17 artifact lock
 20. Priority 18 report
-21. C1 MR60 contract·capture design
-22. C2 MR60 capture
-23. C3 domain analysis
-24. C4 adaptation
-25. C5 deployment candidate 재검증
-26. D dataset gap 확장
-27. E fusion baseline·개선
+21. C0 existing team MR60 forensic audit
+22. C0A signal/cadence/offline-contract correspondence gate
+23. C0B exploratory legacy-device inference (optional)
+24. independent review
+25. C1 protocolized MR60 capture
+26. C2 formal device-domain evaluation of frozen candidate
+27. D dataset/model gap 확장 (승인된 측정 gap만)
+28. E fusion baseline·개선
 
 각 작업 프롬프트는 최소한 다음을 포함하도록 구체화한다.
 
@@ -984,19 +1264,20 @@ A/B의 real-subject 결과와 가능하면 C의 MR60 domain 결과를 먼저 본
 
 ### Phase C
 
-- [ ] MR60 hardware gate
-- [ ] MR60 canonical signal contract
-- [ ] controlled MR60 capture
-- [ ] Zenodo↔MR60 domain-gap analysis
-- [ ] adaptation strategy
-- [ ] MR60 candidate rerun·lock·report
+- [ ] C0 existing team MR60 forensic audit
+- [ ] C0A signal/cadence/offline-contract correspondence gate
+- [ ] C0B exploratory legacy inference (optional; correspondence 통과 시에만)
+- [ ] independent review
+- [ ] C1 protocolized MR60 capture (신규 수집 시에만 하드웨어 가용성 gate)
+- [ ] C2 formal device-domain evaluation of frozen Phase-B candidate
+- [ ] measured domain gap registry (D 진입은 별도 승인)
 
 ### Phase D
 
 - [ ] residual gap ranking
 - [ ] gap-driven external dataset selection
 - [ ] approval·acquisition·source audit
-- [ ] external test/adaptation/retraining
+- [ ] external test/adaptation/retraining (승인된 M-D만; M-C 금지)
 
 ### Phase E
 
@@ -1016,7 +1297,7 @@ A/B의 real-subject 결과와 가능하면 C의 MR60 domain 결과를 먼저 본
 2. real-subject locked test에서 v0.1.0, v0.2.0, 신규 model이 동일 계약으로 비교된다.
 3. preprocessing, imbalance, architecture, seed, calibration, conversion 선택의 근거가 validation 실측으로 남아 있다.
 4. 최종 INT8 model의 quantization equivalence, robustness, latency, runtime 연결이 검증된다.
-5. offline candidate와 MR60 deployment candidate가 분리되어 있다.
-6. MR60 실측 결과나 `BLOCKED_HARDWARE`가 정직하게 보고된다.
+5. offline candidate와 가능한 이후 MR60-adapted/deployment candidate가 분리되어 있다. M-C는 frozen offline candidate를 평가하며, 그 안에서 adapted candidate로 교체하지 않는다.
+6. 기존 팀 실측은 legacy/informal evidence로, C1 신규 실측과 C2 정식 평가가 정직하게 구분되어 보고된다. C1 하드웨어 부재는 `BLOCKED_HARDWARE`로 표시하되 C0을 공백 상태로 되돌리지 않는다.
 7. 추가 dataset이 실제 gap을 보완하는 용도로만 통합된다.
 8. multimodal fusion이 개별 sensor 오류를 숨기지 않고 실제 holdout에서 개선을 보인다.
