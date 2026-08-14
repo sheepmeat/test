@@ -4,7 +4,7 @@
 **평가 대상:** 팀 저장소에 이미 존재하는 SCD40 legacy 측정 파일
 **현재 판정:** B5_INFERENCE_BLOCKED_FEATURE_INCOMPLETE
 **문서 성격:** 사람이 읽는 C-C0 평가·인수인계 문서
-**이번 작업 범위:** 문서 작성 및 검증만 수행. 측정, 모델 실행, 코드 수정, commit, push, PR, merge는 수행하지 않음.
+**이번 평가 범위:** 모델 실행, 신규 실측, 모델/런타임/펌웨어 변경, 팀 저장소 수정은 수행하지 않음.
 
 ## 결론부터
 
@@ -271,7 +271,7 @@ B5 결과를 내기 위해 feature vector를 억지로 완성하면, 그것은 l
 3. H150 slope가 새 SCD40 conversion 기반인지.
 4. 현재 raw bytes가 최초 capture bytes와 동일한지.
 5. T/RH semantics가 틀렸는지.
-6. 임상적 apnea, 임상 안전성, 임상 성능이 있는지.
+6. 임상/의학적 안전성 또는 성능 결론이 있는지.
 
 ## 13. 다음 단계로 남은 측정 설계 gap
 
@@ -329,4 +329,4 @@ NEXT_STAGE: C_C1_PROTOCOL_FREEZE_AND_OPERATOR_HANDOFF
 - legacy evidence 축적과 model development를 분리합니다.
 - C-C1, C-C2, C-D 순서는 활성 roadmap을 따릅니다.
 
-이번 문서 작성으로 commit, push, PR, merge, 팀 저장소 수정, 새 raw artifact, 새 model artifact는 발생하지 않았습니다.
+이번 증거 평가는 모델 실행, 신규 실측, 모델/런타임/펌웨어 변경, 팀 저장소 수정을 수행하지 않았습니다.

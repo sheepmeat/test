@@ -47,17 +47,14 @@ This audit covers:
 
 ### 2.2 Explicitly not performed
 
-This audit does not:
+This evidence audit did not perform model inference, new physical measurement, runtime/firmware modification, model modification, or team-repository modification.
 
-- run the B5 model;
+It also did not:
+
 - calculate occupancy F1, AUROC, confusion matrices, or threshold performance;
-- collect new measurements;
 - start C-C1;
 - freeze a final C-C1 protocol;
-- retrain, retune, quantize, or modify the locked B5 candidate;
-- modify the team repository;
-- modify the active roadmap;
-- commit, push, or open a pull request.
+- modify the active roadmap.
 
 ## 3. Reproducibility anchors
 
@@ -309,7 +306,7 @@ It does not support:
 - a claim that CO2_slope is based on fresh SCD40 conversions;
 - a claim that Temperature or Humidity semantics are mismatched;
 - a claim that the current raw bytes are unchanged from the original capture;
-- a clinical apnea, clinical safety, or clinical air-quality conclusion;
+- a clinical/medical safety or performance conclusion;
 - a final C-C1 protocol decision;
 - a C-D authorization.
 
@@ -382,4 +379,4 @@ Future agents should treat this document as a C-C0 evidence boundary:
 - keep legacy evidence accumulation separate from model development;
 - use the active roadmap for the C-C1/C-C2 order and explicit C-D gate.
 
-No commit, push, pull request, merge, team-repository edit, new raw artifact, or model artifact was created as part of this report.
+No model inference, new physical measurement, runtime/firmware modification, model modification, or team-repository modification was performed as part of this report.
