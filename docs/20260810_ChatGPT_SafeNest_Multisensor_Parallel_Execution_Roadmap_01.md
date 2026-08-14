@@ -1906,7 +1906,7 @@ Humidity semantic correspondence
 CO2_slope temporal correspondence
 ```
 
-이번 legacy evidence의 pre-inference outcome은 `CO2=PARTIAL` (same quantity/unit, device-domain behavior unvalidated), `Temperature=NO`, `Humidity=NO`, `CO2_slope=UNKNOWN`이다. `GROUND_TRUTH_ABSENT`이므로 occupancy performance metric은 차단한다. `baseline` 또는 `breath-rise-recovery` filename, CO₂ concentration, CO₂ slope, PIR motion, or a model output을 VACANT/OCCUPIED ground truth로 재해석하지 않는다.
+이번 legacy evidence의 pre-inference outcome은 `CO2=PARTIAL` (same quantity/unit, device-domain behavior unvalidated), `Temperature=UNKNOWN`, `Humidity=UNKNOWN`, `CO2_slope=UNKNOWN`이다. T/RH capture availability는 `NO`지만, payload가 없으므로 semantic correspondence는 `UNKNOWN`/`NOT_ASSESSABLE`로 분리한다. `GROUND_TRUTH_ABSENT`이므로 occupancy performance metric은 차단한다. `baseline` 또는 `breath-rise-recovery` filename, CO₂ concentration, CO₂ slope, PIR motion, or a model output을 VACANT/OCCUPIED ground truth로 재해석하지 않는다.
 
 #### Frozen B5 identity gate
 
@@ -2049,7 +2049,7 @@ C-C2 begins only when all three conditions hold: the C-C1 protocol is frozen, pr
 
 Before any performance metric, C-C2 verifies protocol version, session/source provenance, checksums and raw immutability, all four frozen feature fields, source and sensor timestamps, sensor-freshness semantics, SCD40 configuration state, error/stale/disconnect records, session boundaries, and independently synchronized VACANT/OCCUPIED ground truth. Non-compliant sessions are classified and reported; they are not silently repaired or relabeled.
 
-Only after intake passes may C-C2 evaluate the frozen candidate using the live B5 identity: `CO2`, `Temperature`, `Humidity`, `ENDPOINT_H150` built from sensor-fresh measurement timestamps, the frozen TRAIN-only scaler, frozen feature order, threshold, and full-integer INT8 TFLite artifact. C-C2 does not refit the scaler, change the slope, alter the threshold, retrain, recalibrate, or change quantization. If independent ground truth is absent, outputs remain `MODEL_OUTPUT_OBSERVATION` and formal accuracy/precision/recall/F1/balanced-accuracy/confusion-matrix claims remain blocked.
+Only after intake passes may C-C2 evaluate the frozen candidate using the live B5 identity: `CO2`, `Temperature`, `Humidity`, `ENDPOINT_H150` built from verified fresh-measurement chronology using the C-C1 timestamp/freshness contract, the frozen TRAIN-only scaler, frozen feature order, threshold, and full-integer INT8 TFLite artifact. C-C2 does not refit the scaler, change the slope, alter the threshold, retrain, recalibrate, or change quantization. If independent ground truth is absent, outputs remain `MODEL_OUTPUT_OBSERVATION` and formal accuracy/precision/recall/F1/balanced-accuracy/confusion-matrix claims remain blocked.
 
 C-C2 is the first C-stage point that may support `FORMAL_SCD40_DEVICE_DOMAIN_VALIDATION`, subject to protocol compliance, feature completeness, independent ground truth, and complete failure accounting. B5 output semantics remain `VACANT/OCCUPIED` room occupancy; `P(OCCUPIED)` is not danger probability, and absolute CO₂ safety logic remains separate.
 
