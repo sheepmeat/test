@@ -851,6 +851,30 @@ A4 semantics that matter for later protocol design, from
 - `APNEA`: `DERIVED` from `>= 6.0` s overlap with a voluntary non-breathing
   annotation inside a 30 s window
 
+Provenance of `25.0` bpm: this number is frozen Phase-A public-dataset label
+semantics, not a newly invented MR60 rule. It is
+`rapid_or_abnormal_policy.rapid_min_rr_bpm` in
+`datasets/mmwave/manifests/a4_label_pilot/label_mapping_profile.json`
+(`MMWAVE_LABEL_MAPPING_PROFILE_001`), the default in
+`scripts/mmwave_label_mapper.py`, and the profile loaded by
+`scripts/validate_mmwave_label_pilot.py`. The same policy requires an
+independent respiration-rate reference (`reference_sensor: MOVESENSE_CHEST_ACC`).
+It is a threshold on Movesense chest-accelerometer reference RR in the public
+archive, not on paced metronome cues and not on MR60 `breath_rate_raw`.
+
+```text
+25 bpm is frozen evidence of current Phase-A public-dataset label semantics.
+It is NOT an automatic labeling threshold for future MR60 M-C1 data.
+
+Phase-A RAPID was defined as Movesense reference RR >= 25.0 bpm
+≠
+future MR60: 25 bpm or 20 rpm cue automatically means RAPID
+```
+
+M-C1 must define its own class mapping before formal evaluation or training.
+Copying `25.0` onto team MR60 sessions without that protocol would be a
+category error.
+
 `APNEA` remains an experimental apnea-like / voluntary breath-hold **proxy**.
 It is not clinical sleep-apnea diagnosis. `AGENTS.md` and the A4 profile both
 forbid that claim (`clinical_apnea_claimed: false`).
@@ -999,9 +1023,12 @@ concepts. Phase-B labels came from the source dataset’s experimental semantics
 and Movesense reference rules, not from a newly invented rpm threshold.
 
 Under the frozen A4 profile, Movesense-derived `RAPID_OR_ABNORMAL` begins at
-`>= 25.0` bpm. A 20 rpm paced cue would **not** automatically become
-`RAPID_OR_ABNORMAL` even if the cue were perfectly followed. Future protocol
-must define the class mapping **before** formal evaluation or training.
+`>= 25.0` bpm. That statement explains why a 20 rpm paced cue would **not**
+automatically become `RAPID_OR_ABNORMAL` even if the cue were perfectly
+followed **under the public-dataset A4 contract**. It does **not** authorize
+applying `>= 25.0` bpm as a new automatic RAPID rule to future MR60
+measurements. Future protocol must define the class mapping **before** formal
+evaluation or training.
 
 ### 15.6 A paced cue is not perfect ground truth
 
@@ -1161,6 +1188,6 @@ be ~10 Hz fresh phase observations.
 | D15 distance sample std ~2.94 cm | recomputed from D15 JSONL `distance_cm_raw` after 60 s warmup |
 | Participant `S001` only in delivery CSVs | CSV `subject_id` column; exporter `DEFAULT_SUBJECT` |
 | Phase-B frozen contract | standalone `docs/reports/20260813_Cursor_M-B12_mmWave_Phase_B_Offline_Final_Report_01.md` |
-| A4 class semantics / APNEA proxy | `docs/reports/20260808_Antigravity_A4_Annotation_Label_Mapping_Pilot_01.md`; `datasets/mmwave/manifests/a4_label_pilot/label_mapping_profile.json` |
+| A4 class semantics / APNEA proxy | `docs/reports/20260808_Antigravity_A4_Annotation_Label_Mapping_Pilot_01.md`; `datasets/mmwave/manifests/a4_label_pilot/label_mapping_profile.json` (`rapid_min_rr_bpm: 25.0`, Movesense chest ACC; frozen public-dataset semantics, not an automatic future MR60 threshold) |
 | A5 subject-isolated split | `docs/reports/20260808_Antigravity_A5_Subject_Split_Provenance_01.md` |
 | Korean team-facing companion | `docs/reports/20260814_SafeNest_mmWave_Team_MR60_Data_Evaluation_KR_01.md` |

@@ -249,6 +249,24 @@ A4 라벨 규칙의 핵심 (`MMWAVE_LABEL_MAPPING_PROFILE_001`):
 - `RAPID_OR_ABNORMAL`: 참조 호흡수 25 이상이거나 10 미만 (느린 호흡)
 - `APNEA`: 30초 창 안에서 숨 참기 표시가 6초 이상 겹치면 프록시 라벨
 
+여기 나온 **25 bpm은 공개 데이터 Phase-A 라벨 의미(frozen evidence)** 입니다.
+출처는
+`datasets/mmwave/manifests/a4_label_pilot/label_mapping_profile.json` 의
+`rapid_min_rr_bpm: 25.0` 이고, 매퍼
+(`scripts/mmwave_label_mapper.py`)와 A4 validator
+(`scripts/validate_mmwave_label_pilot.py`)가 같은 profile을 읽습니다.
+이 숫자는 **Movesense 가슴 가속도계로 잰 참조 호흡수**에 대한 임계값이지,
+메트로놈 cue나 MR60 `breath_rate_raw`에 대한 규칙이 아닙니다.
+
+```text
+Phase-A에서 RAPID가 Movesense 참조 RR >= 25 bpm 로 정의돼 있었음
+≠
+향후 MR60에서 25 bpm 이상이면 무조건 RAPID label
+```
+
+25 bpm을 다음 실측의 자동 라벨 임계값으로 복사하면 안 됩니다.
+M-C1 라벨 규칙은 그 측정 규약에서 따로 정해야 합니다.
+
 즉 예전 데이터는:
 
 ```text
@@ -323,8 +341,12 @@ A4 라벨 규칙의 핵심 (`MMWAVE_LABEL_MAPPING_PROFILE_001`):
 예전 라벨은 원본 데이터셋의 실험 의미와 Movesense 참조 규칙에서 왔습니다.
 우리가 새로 정한 rpm 컷이 아닙니다.
 
-실제로 A4 규칙에서 `RAPID_OR_ABNORMAL`은 참조 호흡수 **25 rpm 이상**입니다.
-20 rpm을 잘 따라 쉬었더라도, 그 규칙만 보면 자동으로 RAPID가 되지 않습니다.
+실제로 A4 규칙에서 `RAPID_OR_ABNORMAL`은 **공개 데이터의 Movesense 참조 호흡수**가
+**25 rpm 이상**일 때입니다. 그래서 20 rpm cue를 잘 따라 쉬었더라도, *그 예전
+계약만 놓고 보면* 자동으로 RAPID가 되지 않습니다.
+
+이 25 bpm은 그 점을 설명하기 위한 frozen evidence이지,
+“앞으로 MR60에서 25 이상이면 RAPID”라는 새 규칙이 아닙니다.
 
 더 중요한 예: **12 rpm이라고 적힌 세션이 실제로는 약 6.06 rpm이었습니다.**
 
