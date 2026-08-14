@@ -2,9 +2,11 @@
   "artifact_id": "TFLITE_FP32",
   "builtin_only": true,
   "conversion": {
-    "optimizations": [
-      "DEFAULT"
-    ],
+    "dynamic_range_quantization": false,
+    "float16_enabled": false,
+    "optimizations": [],
+    "quantization_mode": "NONE",
+    "representative_dataset_attached": false,
     "select_tf_ops": false,
     "supported_ops": [
       "TFLITE_BUILTINS"
@@ -26,7 +28,13 @@
     "zero_point": 0,
     "zero_points": []
   },
+  "internal_dtype_counts": {
+    "float32": 17,
+    "int32": 1
+  },
+  "internal_tensor_count": 18,
   "logical_path": "artifacts/SMALL_CNN_BASELINE_V1_P1_float32.tflite",
+  "nonzero_quantization_tensor_count": 0,
   "op_counts": {
     "CONV_2D": 2,
     "DELEGATE": 1,
@@ -60,8 +68,10 @@
     "zero_points": []
   },
   "phase": "T-B4",
+  "quantized_parameter_tensor_count": 0,
+  "quantized_tensor_count": 0,
   "schema_version": "1.0",
   "select_tf_ops_used": false,
-  "sha256": "297de231e26ecf2d4cd4010bd10c08d4df3b6b0a531c69693daea353afb8127d",
-  "size_bytes": 317344
+  "sha256": "fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779",
+  "size_bytes": 1252048
 }

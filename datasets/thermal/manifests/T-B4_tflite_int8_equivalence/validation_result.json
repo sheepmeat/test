@@ -1,4 +1,17 @@
 {
+  "correction": {
+    "former_artifact_id": "TFLITE_DYNAMIC_RANGE",
+    "former_artifact_sha256": "297de231e26ecf2d4cd4010bd10c08d4df3b6b0a531c69693daea353afb8127d",
+    "former_artifact_size_bytes": 317344,
+    "official_equivalence_chain": [
+      "FLOAT_KERAS",
+      "TFLITE_FP32",
+      "FULL_INT8"
+    ],
+    "true_fp32_artifact_id": "TFLITE_FP32",
+    "true_fp32_sha256": "fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779",
+    "true_fp32_size_bytes": 1252048
+  },
   "error_count": 0,
   "errors": [],
   "evidence_validation": "PASS",

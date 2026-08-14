@@ -1,5 +1,5 @@
 {
-  "argmax_agreement": 0.999625,
+  "argmax_agreement": 1.0,
   "confusion_matrix_difference": [
     [
       0,
@@ -13,11 +13,11 @@
     ],
     [
       0,
-      -1,
-      1
+      0,
+      0
     ]
   ],
-  "disagreement_count": 3,
+  "disagreement_count": 0,
   "float_metrics": {
     "accuracy": 0.995125,
     "balanced_accuracy": 0.99575,
@@ -73,14 +73,14 @@
     "sample_count": 8000
   },
   "metric_delta_other_minus_float": {
-    "accuracy": 0.00012499999999993072,
-    "balanced_accuracy": 0.0001666666666666483,
-    "h_fall_posture_proxy_recall": 0.000500000000000056,
-    "macro_f1": 0.0001253556769295061
+    "accuracy": 0.0,
+    "balanced_accuracy": 0.0,
+    "h_fall_posture_proxy_recall": 0.0,
+    "macro_f1": 0.0
   },
   "other_metrics": {
-    "accuracy": 0.99525,
-    "balanced_accuracy": 0.9959166666666667,
+    "accuracy": 0.995125,
+    "balanced_accuracy": 0.99575,
     "class_order": [
       "NOT_HUMAN",
       "HUMAN_NORMAL",
@@ -99,22 +99,22 @@
       ],
       [
         0,
-        11,
-        1989
+        12,
+        1988
       ]
     ],
-    "h_fall_posture_proxy_recall": 0.9945,
-    "macro_f1": 0.995254888930572,
+    "h_fall_posture_proxy_recall": 0.994,
+    "macro_f1": 0.9951295332536425,
     "per_class": {
       "HUMAN_FALL": {
-        "f1": 0.9917726252804787,
-        "precision": 0.9890601690701144,
-        "recall": 0.9945,
+        "f1": 0.9915211970074813,
+        "precision": 0.9890547263681592,
+        "recall": 0.994,
         "support": 2000
       },
       "HUMAN_NORMAL": {
-        "f1": 0.995240480961924,
-        "precision": 0.9972389558232931,
+        "f1": 0.9951158422041327,
+        "precision": 0.9969887076537014,
         "recall": 0.99325,
         "support": 4000
       },
@@ -126,20 +126,20 @@
       }
     },
     "prediction_distribution": {
-      "HUMAN_FALL": 2011,
-      "HUMAN_NORMAL": 3984,
+      "HUMAN_FALL": 2010,
+      "HUMAN_NORMAL": 3985,
       "NOT_HUMAN": 2005
     },
     "sample_count": 8000
   },
   "per_class_probability_mae": {
-    "HUMAN_FALL": 0.0001098799524428003,
-    "HUMAN_NORMAL": 0.00012575046332008547,
-    "NOT_HUMAN": 1.8622684500833983e-05
+    "HUMAN_FALL": 4.673772704809467e-09,
+    "HUMAN_NORMAL": 5.034891042567258e-09,
+    "NOT_HUMAN": 1.5175703400367223e-09
   },
   "phase": "T-B4",
-  "probability_mae": 8.475103342123993e-05,
-  "probability_max_absolute_error": 0.10618537664413452,
+  "probability_mae": 3.7420780291378165e-09,
+  "probability_max_absolute_error": 1.9073486328125e-06,
   "role": "VALIDATION",
   "sample_count": 8000,
   "schema_version": "1.0"

@@ -89,6 +89,23 @@ def test_full_int8_dtype_or_fallback_is_rejected():
     assert any(item["code"] == "FLOAT_FALLBACK_PRESENT" for item in errors)
 
 
+def test_float_io_alone_does_not_classify_dynamic_range_as_fp32():
+    documents = {name: _json(name) for name in validator.FULL_JSON}
+    fp32 = documents["tflite_fp32_artifact.json"]
+    # Keep the valid float32 input/output contract but inject the historical
+    # Optimize.DEFAULT/internal-int8 evidence.  The validator must reject it.
+    fp32["conversion"].update({"optimizations": ["DEFAULT"], "representative_dataset_attached": False, "float16_enabled": False, "dynamic_range_quantization": True, "quantization_mode": "DYNAMIC_RANGE"})
+    fp32["internal_dtype_counts"] = {"float32": 15, "int8": 2, "int32": 1}
+    fp32["quantized_tensor_count"] = 2
+    fp32["quantized_parameter_tensor_count"] = 2
+    fp32["nonzero_quantization_tensor_count"] = 2
+    errors: list[dict[str, str]] = []
+    validator._validate_artifacts(documents, errors)
+    codes = {item["code"] for item in errors}
+    assert "FP32_QUANTIZATION_POLICY_INVALID" in codes
+    assert "FP32_INTERNAL_QUANTIZATION_INVALID" in codes
+
+
 def test_absolute_and_archive_paths_are_rejected():
     import tempfile
 

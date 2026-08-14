@@ -2,9 +2,13 @@
   "artifact_id": "FULL_INT8",
   "builtin_only": true,
   "conversion": {
+    "dynamic_range_quantization": false,
+    "float16_enabled": false,
     "optimizations": [
       "DEFAULT"
     ],
+    "quantization_mode": "FULL_INT8",
+    "representative_dataset_attached": true,
     "representative_policy_checksum": "c5ce8a54898a19d0b9dad156aee89feeafbf85f79a64a6e424d7912b24a95179",
     "select_tf_ops": false,
     "supported_ops": [
@@ -31,7 +35,13 @@
       -125
     ]
   },
+  "internal_dtype_counts": {
+    "int32": 5,
+    "int8": 13
+  },
+  "internal_tensor_count": 18,
   "logical_path": "artifacts/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite",
+  "nonzero_quantization_tensor_count": 17,
   "op_counts": {
     "CONV_2D": 2,
     "DELEGATE": 1,
@@ -69,6 +79,8 @@
     ]
   },
   "phase": "T-B4",
+  "quantized_parameter_tensor_count": 4,
+  "quantized_tensor_count": 13,
   "schema_version": "1.0",
   "select_tf_ops_used": false,
   "sha256": "fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be",

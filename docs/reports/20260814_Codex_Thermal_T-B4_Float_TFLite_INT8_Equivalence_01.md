@@ -9,6 +9,7 @@
 - T-B3 merged on main: `YES` (`c65d2e32e6f14089790a8c576312eb9873e367f7`)
 - Conversion performed: `YES`
 - Retraining performed: `NO`
+- Corrective closure: `TRUE_UNQUANTIZED_FP32_REGENERATED`; former `TFLITE_FP32` reclassified as diagnostic `TFLITE_DYNAMIC_RANGE`
 - Next phase: `T-B5 — robustness · latency · candidate lock`
 - T-B5 authorization: `YES_WITH_LIMITATIONS` (validator result; not executed here)
 
@@ -66,23 +67,30 @@
 - VALIDATION samples used: `0`
 - REAL samples used: `0`
 
-### TFLITE FP32
+### TFLITE FP32 (CORRECTED)
 
 - Artifact: `artifacts/SMALL_CNN_BASELINE_V1_P1_float32.tflite` (external SSD)
-- SHA: `297de231e26ecf2d4cd4010bd10c08d4df3b6b0a531c69693daea353afb8127d`
-- Size: `317344` bytes
-- Input shape: `[1,62,80,1]`
-- Input dtype: `float32`
-- Output shape: `[1,3]`
-- Output dtype: `float32`
+- SHA: `fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779`
+- Size: `1252048` bytes
+- Input shape/dtype: `[1,62,80,1]`, `float32`
+- Output shape/dtype: `[1,3]`, `float32`
+- Converter TensorFlow: `2.20.0`; `optimizations: []`; no representative dataset; no float16; no dynamic-range mode; `quantization_mode: NONE`
+- Internal tensor dtype inventory: `float32: 17`, `int32: 1`; quantized tensors: `0`; quantized parameter tensors: `0`; nonzero quantization tensors: `0`
 - Ops: `CONV_2D ×2`, `MAX_POOL_2D ×2`, `RESHAPE`, `FULLY_CONNECTED ×2`, `SOFTMAX` (delegate shown only by interpreter inspection)
-- SELECT_TF_OPS used: `NO`
+- SELECT_TF_OPS used: `NO`; builtin-only: `YES`
+
+The former `317344`-byte file is retained externally as
+`artifacts/SMALL_CNN_BASELINE_V1_P1_dynamic_range.tflite` with ID
+`TFLITE_DYNAMIC_RANGE` and diagnostic-only status. It had float32 I/O but
+`Optimize.DEFAULT` and two internal int8 pseudo-constants, so it was not a
+true FP32 baseline. Its near-INT8 size was the expected dynamic-range
+quantization size anomaly, not evidence of a smaller FP32 model.
 
 ### FULL INT8
 
 - Artifact: `artifacts/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite` (external SSD)
 - SHA: `fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be`
-- Size: `318280` bytes (`+936` bytes / `+0.295%` versus FP32; this small increase is measured, not hidden)
+- Size: `318280` bytes (`933768` bytes / `74.579249%` smaller than the corrected true FP32 artifact; the former dynamic-range file must not be used as the denominator)
 - Input dtype: `int8`
 - Input scale: `0.31791284680366516`
 - Input zero point: `-125`
@@ -93,17 +101,17 @@
 - Float fallback present: `NO`
 - Representative policy checksum: `c5ce8a54898a19d0b9dad156aee89feeafbf85f79a64a6e424d7912b24a95179`
 
-### VALIDATION FLOAT↔FP32
+### VALIDATION FLOAT↔TRUE FP32
 
-- Argmax agreement: `0.999625` (`7997/8000`)
-- Disagreement count: `3`
-- Probability MAE: `0.00008475103342123993`
-- Max absolute error: `0.10618537664413452`
+- Argmax agreement: `1.0` (`8000/8000`)
+- Disagreement count: `0`
+- Probability MAE: `3.7420780291378165e-09`
+- Max absolute error: `1.9073486328125e-06`
 - Float Macro F1: `0.9951295332536425`
-- FP32 TFLite Macro F1: `0.995254888930572`
-- Macro F1 delta: `+0.0001253556769295061`
-- Balanced accuracy delta: `+0.0001666666666666483`
-- HUMAN_FALL proxy recall delta: `+0.000500000000000056`
+- True FP32 TFLite Macro F1: `0.9951295332536425`
+- Macro F1 delta: `0.0`
+- Balanced accuracy delta: `0.0`
+- HUMAN_FALL proxy recall delta: `0.0`
 
 ### VALIDATION FLOAT↔INT8
 
@@ -118,11 +126,16 @@
 - Balanced accuracy delta: `-0.0017499999999999183`
 - HUMAN_FALL proxy recall delta: `-0.006000000000000005`
 
-### FP32↔INT8
+### TRUE FP32↔INT8
 
-- Argmax agreement: `0.997` (`7976/8000`)
-- Probability MAE: `0.00297715039036497`
-- Macro F1 delta: `-0.0012602382853028615`
+- Argmax agreement: `0.997125` (`7977/8000`)
+- Disagreement count: `23`
+- Probability MAE: `0.0029979794821153086`
+- Max absolute error: `0.8184627573937178`
+- Macro F1 delta: `-0.0011348826083733554`
+- Accuracy delta: `-0.0011250000000000426`
+- Balanced accuracy delta: `-0.0017499999999999183`
+- HUMAN_FALL proxy recall delta: `-0.006000000000000005`
 
 ### SATURATION
 
@@ -148,9 +161,11 @@
 - Diagnostic performed: `YES`, fixed post-artifact parity diagnostic on all `8000` REAL rows
 - Frozen before REAL evaluation: `YES`
 - Float Macro F1: `0.593926523563344`
-- FP32 TFLite Macro F1: `0.5944580227704069` (not used for selection)
+- True FP32 TFLite Macro F1: `0.593926523563344` (not used for selection)
 - INT8 Macro F1: `0.6389937024875953`
-- Float↔INT8 delta: `+0.04506717892425138`
+- Float↔true FP32: argmax agreement `1.0`, disagreements `0`, probability MAE `2.8682436757510464e-08`, Macro F1 delta `0.0`
+- True FP32↔INT8: argmax agreement `0.8565`, disagreements `1148`, probability MAE `0.08870920102212597`, Macro F1 delta `+0.04506717892425138`
+- Float↔INT8: argmax agreement `0.8565`, disagreements `1148`, probability MAE `0.08870920170182328`, Macro F1 delta `+0.04506717892425138`
 - INT8 clipping: `43,614 / 39,680,000 = 0.0010991431451612902`; boundary fraction `0.0068174395161290325`
 - REAL used for recalibration: `NO`
 - Existing synthetic→REAL gap separated from quantization gap: `YES`; the inherited gap is `0.40120300969029854`, and REAL remains `REAL_EVAL_DEVELOPMENT`, not LOCKED_TEST
@@ -171,8 +186,9 @@
 ### ARTIFACTS
 
 - External T-B4 root: `EXTERNAL_SSD_SAFE_NEST_AI_THERMAL_EXPERIMENTS_T_B4/T-B4_execution_result`
-- Float reference: external `artifacts/SMALL_CNN_BASELINE_V1_P1_float32.tflite`
-- FP32 TFLite: external artifact above
+- Float reference: external checkpoint `experiments/T-B1/T-B1_execution_result/checkpoints/P1_TRAIN_FITTED_GLOBAL_ZSCORE.weights.h5`
+- True FP32 TFLite: external `artifacts/SMALL_CNN_BASELINE_V1_P1_float32.tflite`
+- Former dynamic-range artifact: external `artifacts/SMALL_CNN_BASELINE_V1_P1_dynamic_range.tflite` (diagnostic-only)
 - INT8 TFLite: external `artifacts/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite`
 - Representative manifest: compact Git JSON plus external calibration copy
 - Parity evidence: compact JSON plus external checksum-backed `parity/*.npz`
@@ -186,7 +202,7 @@
 - T-B4 validator: `PASS`, `T_B4_COMPLETE_WITH_LIMITATIONS`, `6` warnings, `0` errors
 - Errors: `0`
 - Warnings: `6`
-- Focused tests: `10 passed`, `0 failed`, `0 errors`, `0 skipped`
+- Focused tests: `11 passed`, `0 failed`, `0 errors`, `0 skipped`
 - Thermal regression: `318 passed`, `0 failed`, `0 errors`, `5 skipped` (21 warnings)
 - Contract regression: T-A6, T-B0, T-B1 FULL, T-B2, T-B3 live validators all `PASS`
 - Broader regression: `1037 passed`, `201 failed`, `5 errors`, `6 skipped` (86 warnings); failures/errors are pre-existing archive/CO₂/mmWave dependency or payload-availability issues outside T-B4

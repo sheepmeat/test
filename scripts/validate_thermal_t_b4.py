@@ -42,6 +42,8 @@ TB2_REL = "datasets/thermal/manifests/T-B2_architecture_comparison"
 TB3_REL = "datasets/thermal/manifests/T-B3_frame_multiseed_confirmation"
 TA6_REL = "datasets/thermal/manifests/T-A6_execution_result"
 CHECKSUMS = "checksums.sha256"
+FORMER_DYNAMIC_RANGE_SHA = "297de231e26ecf2d4cd4010bd10c08d4df3b6b0a531c69693daea353afb8127d"
+FORMER_DYNAMIC_RANGE_SIZE = 317344
 
 BASE_JSON = (
     "t_b4_protocol.json", "predecessor_identity.json", "float_candidate_lock.json", "p1_lock.json",
@@ -293,14 +295,31 @@ def _validate_artifacts(documents: Mapping[str, Any], errors: list[dict[str, str
     for name, doc in (("tflite_fp32_artifact.json", fp32), ("tflite_int8_artifact.json", int8)):
         if doc.get("phase") != PHASE_ID or not isinstance(doc.get("sha256"), str) or len(doc.get("sha256", "")) != 64 or int(doc.get("size_bytes", 0)) <= 0 or doc.get("select_tf_ops_used") is not False or doc.get("builtin_only") is not True:
             _error(errors, "TFLITE_ARTIFACT_INVALID", name, "Artifact identity or builtin-only contract invalid.")
-    if int8.get("conversion", {}).get("supported_ops") != ["TFLITE_BUILTINS_INT8"] or int8.get("conversion", {}).get("representative_policy_checksum") != documents.get("representative_calibration_policy.json", {}).get("policy_checksum"):
+    fp32_conversion = fp32.get("conversion", {})
+    if fp32.get("artifact_id") != "TFLITE_FP32":
+        _error(errors, "FP32_ARTIFACT_ID_INVALID", "tflite_fp32_artifact.json:artifact_id", "The official equivalence artifact must be labeled TFLITE_FP32.")
+    if fp32_conversion.get("supported_ops") != ["TFLITE_BUILTINS"]:
+        _error(errors, "FP32_CONVERSION_POLICY_INVALID", "tflite_fp32_artifact.json:conversion.supported_ops", "FP32 candidate must use builtin ops only.")
+    if fp32_conversion.get("optimizations") != []:
+        _error(errors, "FP32_QUANTIZATION_POLICY_INVALID", "tflite_fp32_artifact.json:conversion.optimizations", "True FP32 conversion must not enable Optimize.DEFAULT or another optimization.")
+    for key, expected in (("representative_dataset_attached", False), ("float16_enabled", False), ("dynamic_range_quantization", False), ("quantization_mode", "NONE")):
+        if fp32_conversion.get(key) != expected:
+            _error(errors, "FP32_QUANTIZATION_POLICY_INVALID", f"tflite_fp32_artifact.json:conversion.{key}", f"Expected {expected!r} for an unquantized FP32 artifact.")
+    internal_dtypes = fp32.get("internal_dtype_counts")
+    if not isinstance(internal_dtypes, dict) or any(str(dtype) in internal_dtypes for dtype in ("int8", "uint8", "int16", "uint16")):
+        _error(errors, "FP32_INTERNAL_QUANTIZATION_INVALID", "tflite_fp32_artifact.json:internal_dtype_counts", "Internal tensor dtypes contradict a true unquantized FP32 graph.")
+    for key in ("quantized_tensor_count", "quantized_parameter_tensor_count", "nonzero_quantization_tensor_count"):
+        if fp32.get(key) != 0:
+            _error(errors, "FP32_INTERNAL_QUANTIZATION_INVALID", f"tflite_fp32_artifact.json:{key}", "FP32 artifact contains quantized tensor evidence.")
+    int8_conversion = int8.get("conversion", {})
+    if int8_conversion.get("supported_ops") != ["TFLITE_BUILTINS_INT8"] or int8_conversion.get("representative_policy_checksum") != documents.get("representative_calibration_policy.json", {}).get("policy_checksum") or int8_conversion.get("representative_dataset_attached") is not True or int8_conversion.get("quantization_mode") != "FULL_INT8":
         _error(errors, "FULL_INT8_REQUIREMENT_NOT_MET", "tflite_int8_artifact.json", "INT8 conversion policy/frozen representative checksum invalid.")
-    if fp32.get("conversion", {}).get("supported_ops") != ["TFLITE_BUILTINS"]:
-        _error(errors, "FP32_CONVERSION_POLICY_INVALID", "tflite_fp32_artifact.json", "FP32 candidate must use builtin ops only.")
     quant = documents.get("tensor_quantization_contract.json", {})
     if quant.get("phase") != PHASE_ID or quant.get("full_integer") is not True or quant.get("input", {}).get("dtype") != "int8" or quant.get("output", {}).get("dtype") != "int8" or float(quant.get("input", {}).get("scale", 0.0)) <= 0 or float(quant.get("output", {}).get("scale", 0.0)) <= 0:
         _error(errors, "TENSOR_QUANTIZATION_INVALID", "tensor_quantization_contract.json", "Actual INT8 quantization metadata is invalid.")
     inventory = documents.get("op_inventory.json", {})
+    if not inventory.get("float32", {}).get("builtin_only") or inventory.get("float32", {}).get("quantized_tensor_count") != 0 or any(str(dtype) in inventory.get("float32", {}).get("internal_dtype_counts", {}) for dtype in ("int8", "uint8", "int16", "uint16")):
+        _error(errors, "FP32_INTERNAL_QUANTIZATION_INVALID", "op_inventory.json:float32", "FP32 operation inventory contains quantized internal dtype evidence.")
     if not inventory.get("full_int8", {}).get("builtin_only") or any("FLOAT" in str(op).upper() or "FLEX" in str(op).upper() for op in inventory.get("full_int8", {}).get("ops", [])):
         _error(errors, "FLOAT_FALLBACK_PRESENT", "op_inventory.json:full_int8", "Full INT8 graph contains an unauthorized fallback.")
     registry = documents.get("artifact_registry.json", {})
@@ -309,6 +328,19 @@ def _validate_artifacts(documents: Mapping[str, Any], errors: list[dict[str, str
     for item in registry.get("artifacts", []):
         if item.get("tracked_in_git") is not False or not str(item.get("logical_path", "")).startswith(("artifacts/", "parity/")):
             _error(errors, "BINARY_GIT_SCOPE_INVALID", "artifact_registry.json", "Binary artifacts must remain external.")
+        if item.get("id") in {"TFLITE_FP32", "FULL_INT8"} and item.get("official_equivalence_stage") is not True:
+            _error(errors, "ARTIFACT_STAGE_CLASSIFICATION_INVALID", f"artifact_registry.json:{item.get('id')}", "Official Float/FP32/INT8 equivalence stages must be explicitly marked.")
+    dynamic = next((item for item in registry.get("artifacts", []) if item.get("id") == "TFLITE_DYNAMIC_RANGE"), None)
+    official_fp32 = next((item for item in registry.get("artifacts", []) if item.get("id") == "TFLITE_FP32"), None)
+    if not isinstance(official_fp32, dict) or official_fp32.get("logical_path") != "artifacts/SMALL_CNN_BASELINE_V1_P1_float32.tflite" or official_fp32.get("conversion", {}).get("optimizations") != [] or official_fp32.get("conversion", {}).get("dynamic_range_quantization") is not False or official_fp32.get("quantized_tensor_count") != 0:
+        _error(errors, "FP32_REGISTRY_POLICY_INVALID", "artifact_registry.json:TFLITE_FP32", "Registry metadata must identify the no-optimization, unquantized FP32 artifact.")
+    if not isinstance(dynamic, dict):
+        _error(errors, "DYNAMIC_RANGE_RECLASSIFICATION_MISSING", "artifact_registry.json", "Former FP32 artifact must be retained only as a diagnostic dynamic-range entry.")
+    else:
+        if dynamic.get("logical_path") != "artifacts/SMALL_CNN_BASELINE_V1_P1_dynamic_range.tflite" or dynamic.get("sha256") != FORMER_DYNAMIC_RANGE_SHA or dynamic.get("size_bytes") != FORMER_DYNAMIC_RANGE_SIZE or dynamic.get("official_equivalence_stage") is not False or dynamic.get("diagnostic_only") is not True or dynamic.get("reclassified_from") != "TFLITE_FP32":
+            _error(errors, "DYNAMIC_RANGE_RECLASSIFICATION_INVALID", "artifact_registry.json:TFLITE_DYNAMIC_RANGE", "Former artifact identity/classification is not preserved as diagnostic-only.")
+        if dynamic.get("conversion", {}).get("optimizations") != ["DEFAULT"] or dynamic.get("conversion", {}).get("dynamic_range_quantization") is not True or int(dynamic.get("quantized_parameter_tensor_count", 0)) <= 0:
+            _error(errors, "DYNAMIC_RANGE_EVIDENCE_INVALID", "artifact_registry.json:TFLITE_DYNAMIC_RANGE", "Dynamic-range conversion evidence is incomplete.")
 
 
 def _validate_parity(doc: Mapping[str, Any], location: str, errors: list[dict[str, str]]) -> None:
@@ -356,6 +388,12 @@ def _validate_temperature_error(doc: Mapping[str, Any], policy: Mapping[str, Any
 def _validate_real(doc: Mapping[str, Any], errors: list[dict[str, str]], warnings: list[dict[str, str]]) -> None:
     if doc.get("phase") != PHASE_ID or doc.get("role") != "REAL_EVAL_DEVELOPMENT" or doc.get("diagnostic_performed") is not True or doc.get("frozen_before_real") is not True or doc.get("used_for_calibration") is not False or doc.get("used_for_selection") is not False or doc.get("sample_count") != 8000:
         _error(errors, "REAL_DIAGNOSTIC_INVALID", "real_development_parity.json", "REAL must be a fixed post-artifact development diagnostic.")
+    for key in ("float_vs_tflite_fp32_parity", "fp32_vs_int8_parity", "float_vs_int8_parity"):
+        parity = doc.get(key)
+        if not isinstance(parity, dict) or parity.get("sample_count") != 8000 or not isinstance(parity.get("argmax_agreement"), (int, float)) or not isinstance(parity.get("probability_mae"), (int, float)) or not isinstance(parity.get("probability_max_absolute_error"), (int, float)):
+            _error(errors, "REAL_PARITY_INVALID", f"real_development_parity.json:{key}", "REAL must retain all three fixed Float/true-FP32/INT8 parity comparisons.")
+        elif any(not math.isfinite(float(parity[field])) or float(parity[field]) < 0 for field in ("argmax_agreement", "probability_mae", "probability_max_absolute_error")):
+            _error(errors, "REAL_PARITY_INVALID", f"real_development_parity.json:{key}", "REAL parity statistics must be finite and non-negative.")
     _warning(warnings, "REAL_NOT_LOCKED_TEST", "real_development_parity.json", "REAL_EVAL_DEVELOPMENT is not pristine LOCKED_TEST.")
 
 
@@ -364,6 +402,8 @@ def _validate_limitations(doc: Mapping[str, Any], errors: list[dict[str, str]], 
     for key, value in expected.items():
         if doc.get(key) != value:
             _error(errors, "LIMITATION_LOST", f"limitations.json:{key}", f"Expected {value!r}.")
+    if doc.get("former_fp32_artifact") != "TFLITE_DYNAMIC_RANGE_DIAGNOSTIC_ONLY" or doc.get("former_fp32_size_anomaly") != "OPTIMIZE_DEFAULT_DYNAMIC_RANGE_QUANTIZED_FLOAT_IO" or doc.get("true_fp32_equivalence_stage") != "UNQUANTIZED_NO_OPTIMIZATIONS":
+        _error(errors, "FP32_RECLASSIFICATION_LIMITATION_LOST", "limitations.json", "The former dynamic-range size anomaly and corrected FP32 policy must remain explicit.")
     if not math.isclose(float(doc.get("synthetic_real_gap", float("nan"))), 0.9951295332536425 - 0.593926523563344, abs_tol=1e-12):
         _error(errors, "REAL_GAP_INVALID", "limitations.json:synthetic_real_gap", "Inherited synthetic-REAL gap changed.")
     _warning(warnings, "POSTURE_PROXY", "limitations.json", "HUMAN_FALL remains a Lying-derived posture proxy, not temporal fall ground truth.")
@@ -377,6 +417,8 @@ def _validate_execution(documents: Mapping[str, Any], errors: list[dict[str, str
         _error(errors, "EXECUTION_ENVIRONMENT_INVALID", "execution_environment.json", "Execution environment is invalid.")
     if summary.get("phase") != PHASE_ID or summary.get("status") != "FINALIZED" or summary.get("mode") != FULL_MODE or summary.get("conversion_performed") is not True or summary.get("retraining_performed") is not False or summary.get("calibration_samples") != CALIBRATION_COUNT or summary.get("t_b5_started") is not False or summary.get("t_c_started") is not False or summary.get("candidate_changed") is not False:
         _error(errors, "EXECUTION_SCOPE_INVALID", "execution_summary.json", "Full T-B4 scope/status is invalid.")
+    if summary.get("correction_performed") is not True or summary.get("true_fp32_generated") is not True or summary.get("former_fp32_reclassified") != "TFLITE_DYNAMIC_RANGE" or summary.get("full_int8_preserved") is not True or summary.get("former_fp32_sha256") != FORMER_DYNAMIC_RANGE_SHA or summary.get("former_fp32_size_bytes") != FORMER_DYNAMIC_RANGE_SIZE:
+        _error(errors, "CORRECTION_SCOPE_INVALID", "execution_summary.json", "T-B4 correction identity/preservation evidence is missing.")
 
 
 def validate_evidence(*, repo_root: Path = ROOT, evidence_dir: Path | None = None, mode: str = FULL_MODE, check_checksums: bool = True) -> dict[str, Any]:
@@ -408,7 +450,11 @@ def validate_evidence(*, repo_root: Path = ROOT, evidence_dir: Path | None = Non
         _validate_checksums(evidence, set(names), errors)
     errors.sort(key=lambda item: (item["code"], item["location"], item["message"])); warnings.sort(key=lambda item: (item["code"], item["location"], item["message"]))
     passed = not errors and all(live.get(phase, {}).get("evidence_validation") == "PASS" for phase in ("T-A6", "T-B0", "T-B1", "T-B2", "T-B3"))
-    return {"phase": PHASE_ID, "mode": mode, "schema_version": "1.0", "evidence_validation": "PASS" if passed else "FAIL", "overall_outcome": "T_B4_COMPLETE_WITH_LIMITATIONS" if passed else "T_B4_BLOCKED", "t_b5_authorized": "YES_WITH_LIMITATIONS" if passed else False, "error_count": len(errors), "errors": errors, "warning_count": len(warnings), "warnings": warnings, "predecessors": {phase: {"evidence_validation": item.get("evidence_validation"), "overall_outcome": item.get("overall_outcome")} for phase, item in sorted(live.items())}}
+    correction = {}
+    if full and "tflite_fp32_artifact.json" in documents:
+        fp32 = documents["tflite_fp32_artifact.json"]
+        correction = {"true_fp32_artifact_id": "TFLITE_FP32", "true_fp32_sha256": fp32.get("sha256"), "true_fp32_size_bytes": fp32.get("size_bytes"), "former_artifact_id": "TFLITE_DYNAMIC_RANGE", "former_artifact_sha256": FORMER_DYNAMIC_RANGE_SHA, "former_artifact_size_bytes": FORMER_DYNAMIC_RANGE_SIZE, "official_equivalence_chain": ["FLOAT_KERAS", "TFLITE_FP32", "FULL_INT8"]}
+    return {"phase": PHASE_ID, "mode": mode, "schema_version": "1.0", "evidence_validation": "PASS" if passed else "FAIL", "overall_outcome": "T_B4_COMPLETE_WITH_LIMITATIONS" if passed else "T_B4_BLOCKED", "t_b5_authorized": "YES_WITH_LIMITATIONS" if passed else False, "error_count": len(errors), "errors": errors, "warning_count": len(warnings), "warnings": warnings, "correction": correction, "predecessors": {phase: {"evidence_validation": item.get("evidence_validation"), "overall_outcome": item.get("overall_outcome")} for phase, item in sorted(live.items())}}
 
 
 def _write_result(evidence: Path, result: Mapping[str, Any], required: Iterable[str]) -> None:

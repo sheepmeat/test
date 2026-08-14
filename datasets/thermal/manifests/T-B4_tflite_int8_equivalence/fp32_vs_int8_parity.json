@@ -1,5 +1,5 @@
 {
-  "argmax_agreement": 0.997,
+  "argmax_agreement": 0.997125,
   "confusion_matrix_difference": [
     [
       0,
@@ -13,14 +13,14 @@
     ],
     [
       0,
-      13,
-      -13
+      12,
+      -12
     ]
   ],
-  "disagreement_count": 24,
+  "disagreement_count": 23,
   "float_metrics": {
-    "accuracy": 0.99525,
-    "balanced_accuracy": 0.9959166666666667,
+    "accuracy": 0.995125,
+    "balanced_accuracy": 0.99575,
     "class_order": [
       "NOT_HUMAN",
       "HUMAN_NORMAL",
@@ -39,22 +39,22 @@
       ],
       [
         0,
-        11,
-        1989
+        12,
+        1988
       ]
     ],
-    "h_fall_posture_proxy_recall": 0.9945,
-    "macro_f1": 0.995254888930572,
+    "h_fall_posture_proxy_recall": 0.994,
+    "macro_f1": 0.9951295332536425,
     "per_class": {
       "HUMAN_FALL": {
-        "f1": 0.9917726252804787,
-        "precision": 0.9890601690701144,
-        "recall": 0.9945,
+        "f1": 0.9915211970074813,
+        "precision": 0.9890547263681592,
+        "recall": 0.994,
         "support": 2000
       },
       "HUMAN_NORMAL": {
-        "f1": 0.995240480961924,
-        "precision": 0.9972389558232931,
+        "f1": 0.9951158422041327,
+        "precision": 0.9969887076537014,
         "recall": 0.99325,
         "support": 4000
       },
@@ -66,17 +66,17 @@
       }
     },
     "prediction_distribution": {
-      "HUMAN_FALL": 2011,
-      "HUMAN_NORMAL": 3984,
+      "HUMAN_FALL": 2010,
+      "HUMAN_NORMAL": 3985,
       "NOT_HUMAN": 2005
     },
     "sample_count": 8000
   },
   "metric_delta_other_minus_float": {
-    "accuracy": -0.0012499999999999734,
-    "balanced_accuracy": -0.0019166666666665666,
-    "h_fall_posture_proxy_recall": -0.006500000000000061,
-    "macro_f1": -0.0012602382853028615
+    "accuracy": -0.0011250000000000426,
+    "balanced_accuracy": -0.0017499999999999183,
+    "h_fall_posture_proxy_recall": -0.006000000000000005,
+    "macro_f1": -0.0011348826083733554
   },
   "other_metrics": {
     "accuracy": 0.994,
@@ -133,13 +133,13 @@
     "sample_count": 8000
   },
   "per_class_probability_mae": {
-    "HUMAN_FALL": 0.0031618255800911917,
-    "HUMAN_NORMAL": 0.004452196992781055,
-    "NOT_HUMAN": 0.0013174285982226635
+    "HUMAN_FALL": 0.003182759220850193,
+    "HUMAN_NORMAL": 0.004484225971757803,
+    "NOT_HUMAN": 0.0013269532537379292
   },
   "phase": "T-B4",
-  "probability_mae": 0.00297715039036497,
-  "probability_max_absolute_error": 0.8189233057200909,
+  "probability_mae": 0.0029979794821153086,
+  "probability_max_absolute_error": 0.8184627573937178,
   "role": "VALIDATION",
   "sample_count": 8000,
   "schema_version": "1.0"

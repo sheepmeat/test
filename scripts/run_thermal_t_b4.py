@@ -12,12 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from datasets.thermal.t_b4_runner import FULL_MODE, READINESS_MODE, run  # noqa: E402
+from datasets.thermal.t_b4_runner import CORRECTION_MODE, FULL_MODE, READINESS_MODE, run  # noqa: E402
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Run Thermal T-B4 frozen Float/TFLite/INT8 equivalence audit")
-    parser.add_argument("--mode", choices=(READINESS_MODE, FULL_MODE), default=READINESS_MODE)
+    parser.add_argument("--mode", choices=(READINESS_MODE, FULL_MODE, CORRECTION_MODE), default=READINESS_MODE)
     parser.add_argument("--canonical-root", required=True)
     parser.add_argument("--work-root", required=True)
     parser.add_argument("--output-root", required=True)

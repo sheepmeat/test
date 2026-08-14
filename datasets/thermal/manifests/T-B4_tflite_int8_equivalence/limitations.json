@@ -1,5 +1,7 @@
 {
   "absolute_equivalence_threshold": "NOT_PREEXISTING",
+  "former_fp32_artifact": "TFLITE_DYNAMIC_RANGE_DIAGNOSTIC_ONLY",
+  "former_fp32_size_anomaly": "OPTIMIZE_DEFAULT_DYNAMIC_RANGE_QUANTIZED_FLOAT_IO",
   "human_fall_semantics": "LYING_TO_HUMAN_FALL_DERIVED_POSTURE_PROXY_NOT_TEMPORAL_EVENT_GROUND_TRUTH",
   "locked_test_available": false,
   "near_duplicate_pairs_train_validation": 14514,
@@ -14,5 +16,6 @@
   "t_b5_started": false,
   "t_c_started": false,
   "temporal_event_parity": "NOT_EVALUATED_FRAME_LEVEL_ONLY",
-  "thermal44_validation": "NOT_PERFORMED_DEFERRED_TO_T-C"
+  "thermal44_validation": "NOT_PERFORMED_DEFERRED_TO_T-C",
+  "true_fp32_equivalence_stage": "UNQUANTIZED_NO_OPTIMIZATIONS"
 }
