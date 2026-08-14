@@ -15,7 +15,11 @@ Evidence identity used for this assessment:
 
 - Team repository: `jinsu1011/safenest-embedded-competition`
 - Team `main` SHA: `fdf34b804f35e5868356f0ed6f804a248aa69131`
-- Standalone `main` SHA at report branch creation: `4b31808b31444fa502250e24a42ba9e843964b2f`
+- Standalone `main` SHA at original report branch creation: `4b31808b31444fa502250e24a42ba9e843964b2f`
+- Standalone `main` SHA at the ML-dataset / Korean-guide enhancement: `07f1cdefa0775c6525101bb83546b89acc5e3c13`
+
+A Korean team-facing companion, not a literal translation, is
+`docs/reports/20260814_SafeNest_mmWave_Team_MR60_Data_Evaluation_KR_01.md`.
 
 Paths below are repository-relative POSIX paths in the team tree unless a
 standalone Phase-B path is explicitly marked.
@@ -30,7 +34,9 @@ real timestamps, expose both a phase-like waveform and a vendor respiration-rate
 field, and preserve failed trials instead of deleting them.
 
 They are **not** yet a formal device-domain validation set for the frozen
-standalone mmWave model.
+standalone mmWave model, and they are **not** yet a supervised
+`NORMAL` / `RAPID_OR_ABNORMAL` / `APNEA-proxy` retraining dataset. Section 15
+explains that distinction. The data are still valuable for M-C0.
 
 Current classification, based on live evidence:
 
@@ -49,6 +55,8 @@ Current classification, based on live evidence:
 | Multi-subject validation | INSUFFICIENT |
 | Independent physiological respiration reference | ABSENT |
 | Phase-B signal-semantic correspondence | NOT YET ESTABLISHED |
+| Supervised Phase-B target `y` | NOT YET ESTABLISHED |
+| Immediate supervised retraining | NOT AUTHORIZED |
 | Formal device-domain model validation | NOT YET AUTHORIZED |
 
 The most important technical distinctions in this dataset are:
@@ -775,6 +783,377 @@ these logs into TRAIN.
 
 ---
 
+## 15. Why the Existing Team Data Is Not Yet a Model-Training / Formal Validation Dataset
+
+This section answers a communication gap that the earlier sections leave
+implicit: the legacy MR60 logs are valuable sensor evidence, but they are not
+the same kind of object as the Phase-A/B public development dataset.
+
+```text
+original Phase-A/B data
+= input X + sufficiently defined target y
+→ supervised model training/evaluation possible
+
+current team MR60 legacy data
+= useful input-side evidence X
++ incomplete / not-established Phase-B target y
+→ M-C0 device-domain analysis first
+→ not immediate supervised retraining
+→ not formal Accuracy / F1 / Recall as MR60 model-performance evidence
+```
+
+### 15.1 What the original Phase-A/B dataset had
+
+The standalone public mmWave archive used in Phase A/B was not an unlabeled
+waveform dump. A0 inventoried 110 subjects and 440 recordings. A4 mapped source
+experimental conditions, voluntary non-breathing annotations, and Movesense
+chest-accelerometer reference respiration rates onto SafeNest classes. A5 then
+froze a subject-level split so that every recording and window from one subject
+stays in exactly one of TRAIN / VALIDATION / LOCKED_TEST.
+
+Authoritative standalone paths:
+
+- A4 report: `docs/reports/20260808_Antigravity_A4_Annotation_Label_Mapping_Pilot_01.md`
+- A4 profile: `datasets/mmwave/manifests/a4_label_pilot/label_mapping_profile.json`
+  (`MMWAVE_LABEL_MAPPING_PROFILE_001`)
+- A5 report: `docs/reports/20260808_Antigravity_A5_Subject_Split_Provenance_01.md`
+- A5 split: `datasets/mmwave/splits/mmwave_real_subject_split_v1.json`
+- M-B12 frozen candidate:
+  `docs/reports/20260813_Cursor_M-B12_mmWave_Phase_B_Offline_Final_Report_01.md`
+
+Conceptually each canonical window could be treated as:
+
+```text
+radar-related signal
++
+subject identity / grouping evidence
++
+experimental condition
++
+supervised class semantics
+```
+
+which allowed labels:
+
+```text
+NORMAL
+RAPID_OR_ABNORMAL
+APNEA   (SafeNest proxy only)
+```
+
+A4 semantics that matter for later protocol design, from
+`MMWAVE_LABEL_MAPPING_PROFILE_001`:
+
+- `NORMAL`: rest-condition proxy and/or Movesense chest-ACC reference rate in
+  `[10.0, 25.0)` bpm, with zero non-breathing overlap
+- `RAPID_OR_ABNORMAL`: Movesense reference rate `>= 25.0` bpm, or bradypnea
+  `< 10.0` bpm; the profile requires an independent respiration-rate reference
+- `APNEA`: `DERIVED` from `>= 6.0` s overlap with a voluntary non-breathing
+  annotation inside a 30 s window
+
+Provenance of `25.0` bpm: this number is frozen Phase-A public-dataset label
+semantics, not a newly invented MR60 rule. It is
+`rapid_or_abnormal_policy.rapid_min_rr_bpm` in
+`datasets/mmwave/manifests/a4_label_pilot/label_mapping_profile.json`
+(`MMWAVE_LABEL_MAPPING_PROFILE_001`), the default in
+`scripts/mmwave_label_mapper.py`, and the profile loaded by
+`scripts/validate_mmwave_label_pilot.py`. The same policy requires an
+independent respiration-rate reference (`reference_sensor: MOVESENSE_CHEST_ACC`).
+It is a threshold on Movesense chest-accelerometer reference RR in the public
+archive, not on paced metronome cues and not on MR60 `breath_rate_raw`.
+
+```text
+25 bpm is frozen evidence of current Phase-A public-dataset label semantics.
+It is NOT an automatic labeling threshold for future MR60 M-C1 data.
+
+Phase-A RAPID was defined as Movesense reference RR >= 25.0 bpm
+≠
+future MR60: 25 bpm or 20 rpm cue automatically means RAPID
+```
+
+M-C1 must define its own class mapping before formal evaluation or training.
+Copying `25.0` onto team MR60 sessions without that protocol would be a
+category error.
+
+`APNEA` remains an experimental apnea-like / voluntary breath-hold **proxy**.
+It is not clinical sleep-apnea diagnosis. `AGENTS.md` and the A4 profile both
+forbid that claim (`clinical_apnea_claimed: false`).
+
+A5 split counts: 77 TRAIN / 17 VALIDATION / 16 LOCKED_TEST subjects. Cross-split
+subject, recording, and window overlap is 0. That isolation is why later
+offline scoring could be interpreted as subject-held-out evaluation rather than
+same-person leakage.
+
+So:
+
+```text
+Phase-A/B public development data
+= input X + sufficiently defined target y
+→ supervised training/evaluation was possible
+```
+
+That still does not make the offline model MR60-validated.
+
+### 15.2 What the current team MR60 legacy data has
+
+The team logs contain real device evidence:
+
+```text
+physical MR60 measurements
+timestamps / telemetry timing
+breath_phase
+breath_rate_raw
+paced-breathing cues
+distance sessions
+failed/weak sessions
+long-duration / reproducibility evidence
+```
+
+They do **not** currently establish all of the information needed for a formal
+supervised 3-class evaluation dataset.
+
+```text
+current team data:
+input signal X exists
+
+but trustworthy Phase-B target y is incomplete / not established
+```
+
+Missing or not established for supervised Phase-B use:
+
+- Phase-B class ground truth (`NORMAL` / `RAPID_OR_ABNORMAL` / `APNEA-proxy`)
+- independently identifiable participant diversity beyond delivery `S001`
+- independent physiological respiration reference
+- Phase-B `breath_phase` signal-semantic correspondence
+- fresh `0x0A13` phase-frame cadence correspondence
+
+Therefore formal Accuracy / Macro F1 / Recall **cannot yet be scientifically
+computed as MR60 model-performance evidence**. Offline Phase-B numbers remain
+public-dataset results. They must not be rewritten onto these logs.
+
+### 15.3 Is training impossible with the current raw data?
+
+No. The current MR60 data is not technically unusable for all forms of machine
+learning.
+
+It is currently **inappropriate** to use it directly as a supervised
+`NORMAL` / `RAPID_OR_ABNORMAL` / `APNEA-proxy` retraining dataset.
+
+Reasons:
+
+```text
+Phase-B class ground truth is incomplete
+participant diversity is very limited
+delivery evidence is primarily S001
+independent respiration reference is absent
+Phase-B breath_phase signal correspondence is not yet established
+fresh phase cadence correspondence is not yet established
+```
+
+Correct current use:
+
+```text
+M-C0 device-domain analysis first
+```
+
+not:
+
+```text
+immediate retraining
+```
+
+Unsupervised, self-supervised, or domain-adaptation methods are technically
+possible in general. They are **not authorized and not justified during M-C**,
+because they would mix:
+
+```text
+measuring the device-domain gap
+```
+
+with:
+
+```text
+changing the model to fit that domain
+```
+
+Adaptation, retraining, scaler replacement, and architecture change remain
+**M-D only**, after a measured gap and separate authorization.
+
+### 15.4 What the current raw data CAN still be used for
+
+“Not suitable for formal performance scoring” does **not** mean “useless data.”
+
+Present-tense authorized uses:
+
+1. MR60 field / producer-code lineage analysis (`0x0A13` vs `0x0A14`)
+2. `breath_phase` value-range and waveform characterization
+3. telemetry / log-row cadence analysis
+4. reconstruction of fresh phase-frame cadence from `phase_age_ms` / update
+   times
+5. stale / repeated `breath_phase` detection
+6. phase dropout analysis
+7. distance / lock-loss behavior
+8. paced-breathing periodicity analysis
+9. vendor `breath_rate_raw` behavior / bias characterization
+10. failed-condition QA analysis
+11. comparison against Phase-B input semantics
+12. determination of whether a valid 30 s / 300-sample **model input** can be
+    constructed from fresh phase, not merely from 300 telemetry rows
+13. optional exploratory frozen-model inference, **only after** correspondence
+    is established
+14. identifying which old sessions might later be recoverable as labeled
+    evidence and which should remain forensic-only
+15. designing the future M-C1 measurement protocol
+
+### 15.5 Paced RPM is not automatically a Phase-B label
+
+The team data includes paced 12 / 15 / 20 rpm sessions. Do **not** infer:
+
+```text
+12 rpm → NORMAL
+15 rpm → NORMAL
+20 rpm → RAPID_OR_ABNORMAL
+```
+
+unless a pre-registered Phase-A/B label contract independently establishes that
+mapping.
+
+Paced respiration rate and Phase-B supervised class label are different
+concepts. Phase-B labels came from the source dataset’s experimental semantics
+and Movesense reference rules, not from a newly invented rpm threshold.
+
+Under the frozen A4 profile, Movesense-derived `RAPID_OR_ABNORMAL` begins at
+`>= 25.0` bpm. That statement explains why a 20 rpm paced cue would **not**
+automatically become `RAPID_OR_ABNORMAL` even if the cue were perfectly
+followed **under the public-dataset A4 contract**. It does **not** authorize
+applying `>= 25.0` bpm as a new automatic RAPID rule to future MR60
+measurements. Future protocol must define the class mapping **before** formal
+evaluation or training.
+
+### 15.6 A paced cue is not perfect ground truth
+
+The failed 12 rpm session is the clearest warning.
+
+The file and cue target said 12 rpm. Independent autocorrelation of
+`breath_phase` in
+`devices/mmwave/firmware/analysis_tools/phase_any_session.py` gave **6.06 rpm**.
+The metronome/cue stayed near 12 rpm; the performed chest motion did not.
+
+```text
+instruction / intended condition
+!=
+actual performed physiology
+```
+
+Future measurements must distinguish:
+
+```text
+INTENDED_CONDITION
+ACTUALLY_OBSERVED_REFERENCE
+```
+
+A paced cue is useful experimental metadata. It is not automatically equivalent
+to independently observed physiological ground truth.
+
+### 15.7 What future model-validation data actually needs
+
+This is a principle list, not a frozen M-C1 protocol. Formal protocol design
+remains M-C1 work.
+
+At minimum, a later dataset that could support defensible window labels needs:
+
+```text
+MR60 breath_phase or selected lowest exposed signal
++
+fresh phase timestamp / freshness evidence
++
+subject pseudonym
++
+session ID
++
+trial ID
++
+distance
++
+posture
++
+sensor orientation / placement
++
+presence / motion context where relevant
++
+predefined experimental condition
++
+independent respiration reference where appropriate
++
+actual performed respiration state/rate
++
+signal-lock / dropout / failure status
++
+firmware/acquisition-code identity
++
+trial start/end timestamps
+```
+
+Collection principle:
+
+```text
+signal only
+→ good for sensor analysis
+
+signal + trustworthy answer/ground truth
+→ can support model training/evaluation
+```
+
+Example of the principle, not a final protocol:
+
+```text
+subject S003
+session ...
+distance ...
+posture ...
+
+00:00–02:00  known controlled NORMAL condition
+02:00–04:00  known controlled RAPID_OR_ABNORMAL condition
+04:00–...    predefined breath-hold / APNEA-proxy condition
+
+MR60 signal and independent reference recorded together
+```
+
+Do not invent the exact timings, cues, or safety rules here. APNEA-proxy
+collection, if any, remains a voluntary breath-hold proxy under existing safety
+rules and is still not clinical apnea.
+
+### 15.8 Subject-wise split requirement
+
+If future MR60 data are later used for model development, participant identity
+must be preserved so that subjects can be isolated:
+
+```text
+TRAIN subjects
+VALIDATION subjects
+TEST subjects
+```
+
+Avoid placing windows from the same person into both train and test. That
+leakage can exaggerate generalization. This is the same principle already
+frozen in A5: all recordings and windows from one subject remain in exactly
+one split.
+
+### 15.9 Compact comparison
+
+| Evidence property | Phase-A/B public development data | Current team MR60 legacy data | Future controlled MR60 data |
+| --- | --- | --- | --- |
+| Real radar/device signal | Yes (public radar archive, not team MR60) | Yes (physical MR60) | Yes |
+| Subject identity | Yes (110 subjects) | Limited / delivery `S001` | Required |
+| Controlled condition | Defined by source dataset | Partial (paced cues, distances, failures) | Required |
+| Independent respiration reference | Dataset-defined (Movesense chest ACC; non-breathing annotations) | No independent physiology reference | Required where appropriate |
+| Phase-B class label | Available under `MMWAVE_LABEL_MAPPING_PROFILE_001` | Not reliably established | Must be defined before scoring/training |
+| Formal model scoring | Yes, as offline public-dataset evidence | No | Intended after M-C2 authorization |
+| Supervised training use | Yes, for the frozen offline candidate | Not currently justified | Possible after governance, labels, and subject split |
+| Device-domain / MR60 analysis | Not team-MR60 device data | Yes | Yes |
+
+---
+
 ## Appendix A. Phase-B input contract (standalone, for comparison only)
 
 Frozen offline candidate, from standalone
@@ -809,3 +1188,6 @@ be ~10 Hz fresh phase observations.
 | D15 distance sample std ~2.94 cm | recomputed from D15 JSONL `distance_cm_raw` after 60 s warmup |
 | Participant `S001` only in delivery CSVs | CSV `subject_id` column; exporter `DEFAULT_SUBJECT` |
 | Phase-B frozen contract | standalone `docs/reports/20260813_Cursor_M-B12_mmWave_Phase_B_Offline_Final_Report_01.md` |
+| A4 class semantics / APNEA proxy | `docs/reports/20260808_Antigravity_A4_Annotation_Label_Mapping_Pilot_01.md`; `datasets/mmwave/manifests/a4_label_pilot/label_mapping_profile.json` (`rapid_min_rr_bpm: 25.0`, Movesense chest ACC; frozen public-dataset semantics, not an automatic future MR60 threshold) |
+| A5 subject-isolated split | `docs/reports/20260808_Antigravity_A5_Subject_Split_Provenance_01.md` |
+| Korean team-facing companion | `docs/reports/20260814_SafeNest_mmWave_Team_MR60_Data_Evaluation_KR_01.md` |
