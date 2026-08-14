@@ -1,0 +1,36 @@
+{
+  "artifacts": [
+    {
+      "id": "TFLITE_FP32",
+      "logical_path": "artifacts/SMALL_CNN_BASELINE_V1_P1_float32.tflite",
+      "sha256": "297de231e26ecf2d4cd4010bd10c08d4df3b6b0a531c69693daea353afb8127d",
+      "size_bytes": 317344,
+      "tracked_in_git": false
+    },
+    {
+      "id": "FULL_INT8",
+      "logical_path": "artifacts/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite",
+      "sha256": "fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be",
+      "size_bytes": 318280,
+      "tracked_in_git": false
+    },
+    {
+      "id": "VALIDATION_PARITY_ARRAYS",
+      "logical_path": "parity/validation_probabilities.npz",
+      "sha256": "52b10ce0884aa1406d19ba7c5d279afe29a298c72f77b35e6ffc8e5a87068ed9",
+      "size_bytes": 149882,
+      "tracked_in_git": false
+    },
+    {
+      "id": "REAL_PARITY_ARRAYS",
+      "logical_path": "parity/real_probabilities.npz",
+      "sha256": "4ea902ba44944c64bc7bdd9bbca1648574c21c292df3f16501fa521ae00cefec",
+      "size_bytes": 167785,
+      "tracked_in_git": false
+    }
+  ],
+  "legacy_model_overwrite": false,
+  "phase": "T-B4",
+  "production_manifest_changed": false,
+  "schema_version": "1.0"
+}

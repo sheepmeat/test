@@ -1,0 +1,14 @@
+{
+  "calibration_samples": 512,
+  "candidate_changed": false,
+  "conversion_performed": true,
+  "mode": "FULL_EXPERIMENT",
+  "phase": "T-B4",
+  "real_samples": 8000,
+  "retraining_performed": false,
+  "schema_version": "1.0",
+  "status": "FINALIZED",
+  "t_b5_started": false,
+  "t_c_started": false,
+  "validation_samples": 8000
+}
