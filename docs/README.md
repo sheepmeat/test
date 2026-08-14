@@ -7,6 +7,7 @@
 - [mmWave Phase B 개요](MMWAVE_PHASE_B_OVERVIEW.md)
 - [활성 팀 통합 프롬프트](TEAM_HANDOFF_GUIDE.md)
 - [멀티센서 중간배포 기술 맥락 및 인수인계](reports/20260813_SafeNest_Multisensor_Intermediate_Release_Technical_Context_01.md)
+- [기존 팀 MR60 실측 데이터 평가](reports/20260814_SafeNest_mmWave_Existing_Team_MR60_Data_Evaluation_01.md)
 - [A5 subject split·provenance 결과](reports/20260808_Antigravity_A5_Subject_Split_Provenance_01.md)
 - [A6 full conversion·integrity audit 결과](reports/20260808_Antigravity_A6_Full_Conversion_Integrity_Audit_01.md)
 
