@@ -178,14 +178,12 @@
             "DEVICE_CONTRACT_PILOT",
             "REAL_DEVELOPMENT",
             "FUTURE_TRAIN_CANDIDATE",
-            "REAL_LOCKED_TEST",
-            "TRAIN",
-            "VALIDATION"
+            "REAL_LOCKED_TEST"
           ]
         },
         "model_access_status": {
           "type": "string",
-          "enum": ["UNTOUCHED", "DEVELOPMENT_ALLOWED", "TRAINING_ALLOWED", "UNKNOWN"]
+          "enum": ["UNTOUCHED", "DEVELOPMENT_ALLOWED", "UNKNOWN"]
         },
         "locked_test_status": {
           "type": "string",

@@ -16,6 +16,6 @@ The canonical validator is:
 scripts/validate_thermal_real_capture.py <collection-or-session-directory>
 ```
 
-Paths in manifests are repository-relative to the session directory and use
-POSIX separators. A validator result never authorizes TRAIN, T-C, T-D, or
+Paths in manifests are session-relative POSIX paths resolved from each session
+directory. A validator result never authorizes TRAIN, VALIDATION, T-C, T-D, or
 `REAL_LOCKED_TEST` use.

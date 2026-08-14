@@ -93,12 +93,68 @@ def test_missing_raw_frame_is_rejected(tmp_path: Path) -> None:
     assert result["raw_integrity_status"] == "FAIL"
 
 
+def test_decoded_native_only_does_not_require_raw_packet(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path)
+    session = next(root.rglob("session.json")).parent
+    frames_path = session / "frames.jsonl"
+    records = _read_jsonl(frames_path)
+    for record in records:
+        record["raw_representation"] = "DECODED_NATIVE_ONLY"
+        record["raw_file"] = None
+    _write_jsonl(frames_path, records)
+    for path in (session / "raw").iterdir():
+        if path.is_file():
+            path.unlink()
+    _refresh_checksums(session)
+    result = validate_capture(root)
+    assert "RAW_FRAME_REFERENCE_MISSING" not in _codes(result)
+    assert "DECODED_NATIVE_REFERENCE_MISSING" not in _codes(result)
+    assert result["raw_evidence_classification"] == "FULL_FRAME_RAW"
+    assert result["raw_integrity_status"] != "FAIL"
+
+
+def test_raw_packet_and_native_requires_decoded_native_file(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path)
+    session = next(root.rglob("session.json")).parent
+    frames_path = session / "frames.jsonl"
+    records = _read_jsonl(frames_path)
+    for record in records:
+        record["raw_representation"] = "RAW_PACKET_AND_NATIVE"
+        record["decoded_native_file"] = None
+    _write_jsonl(frames_path, records)
+    for path in (session / "decoded_native").iterdir():
+        if path.is_file():
+            path.unlink()
+    _refresh_checksums(session)
+    result = validate_capture(root)
+    assert "DECODED_NATIVE_REFERENCE_MISSING" in _codes(result)
+
+
 def test_checksum_mismatch_is_rejected(tmp_path: Path) -> None:
     root = _copy_example(tmp_path)
     session = next(root.rglob("session.json")).parent
     (session / "raw/frame_S001_001_000000.bin").write_text("TAMPERED\n", encoding="utf-8")
     result = validate_capture(root)
     assert "CHECKSUM_MISMATCH" in _codes(result)
+
+
+def test_decoded_native_checksum_coverage_is_required(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path)
+    session = next(root.rglob("session.json")).parent
+    checksum_path = session / "checksums.sha256"
+    lines = [line for line in checksum_path.read_text(encoding="utf-8").splitlines() if "decoded_native/" not in line]
+    checksum_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    result = validate_capture(root)
+    assert "CHECKSUM_COVERAGE_MISSING" in _codes(result)
+    assert any(item["path"].startswith("decoded_native/") for item in result["errors"] if item["code"] == "CHECKSUM_COVERAGE_MISSING")
+
+
+def test_extra_unregistered_decoded_file_is_rejected(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path)
+    session = next(root.rglob("session.json")).parent
+    (session / "decoded_native/extra_frame.bin").write_text("EXTRA\n", encoding="utf-8")
+    result = validate_capture(root)
+    assert "EXTRA_UNREGISTERED_DECODED_FILE" in _codes(result)
 
 
 def test_non_monotonic_sequence_is_rejected(tmp_path: Path) -> None:
@@ -170,6 +226,41 @@ def test_bad_event_ordering_is_rejected(tmp_path: Path) -> None:
     _refresh_checksums(next(root.rglob("session.json")).parent)
     result = validate_capture(root)
     assert "EVENT_RANGE_REVERSED" in _codes(result)
+
+
+def test_overlapping_temporal_phase_ranges_are_rejected(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path, TEMPORAL_EXAMPLE)
+    annotations_path = next(root.rglob("annotations.jsonl"))
+    records = _read_jsonl(annotations_path)
+    records[0]["phase_ranges"][0]["end_frame_id"] = "frame_S002_001_000001"
+    _write_jsonl(annotations_path, records)
+    _refresh_checksums(next(root.rglob("session.json")).parent)
+    result = validate_capture(root)
+    assert "EVENT_PHASE_OVERLAP" in _codes(result)
+    assert result["temporal_provenance_status"] != "TEMPORAL_PROVENANCE_VERIFIED"
+
+
+def test_temporal_phase_ranges_must_follow_frame_order(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path, TEMPORAL_EXAMPLE)
+    annotations_path = next(root.rglob("annotations.jsonl"))
+    records = _read_jsonl(annotations_path)
+    records[0]["phase_ranges"][1]["start_frame_id"] = "frame_S002_001_000003"
+    records[0]["phase_ranges"][1]["end_frame_id"] = "frame_S002_001_000003"
+    _write_jsonl(annotations_path, records)
+    _refresh_checksums(next(root.rglob("session.json")).parent)
+    result = validate_capture(root)
+    assert "EVENT_PHASE_ORDER_INVALID" in _codes(result)
+
+
+def test_temporal_phase_range_requires_one_event_id(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path, TEMPORAL_EXAMPLE)
+    frames_path = next(root.rglob("frames.jsonl"))
+    records = _read_jsonl(frames_path)
+    records[1]["event_id"] = "event_other"
+    _write_jsonl(frames_path, records)
+    _refresh_checksums(next(root.rglob("session.json")).parent)
+    result = validate_capture(root)
+    assert "EVENT_RANGE_FRAME_EVENT_MISMATCH" in _codes(result)
 
 
 def test_unsupported_source_label_is_rejected(tmp_path: Path) -> None:
@@ -270,7 +361,45 @@ def test_subject_role_leakage_is_rejected(tmp_path: Path) -> None:
     assert "SUBJECT_ROLE_LEAKAGE" in _codes(result)
 
 
-def test_locked_test_used_as_train_is_rejected(tmp_path: Path) -> None:
+def test_collection_inventory_must_match_discovered_sessions(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path)
+    collection_path = root / "collection.json"
+    collection = json.loads(collection_path.read_text(encoding="utf-8"))
+    collection["subject_ids"].append("S999")
+    collection["session_ids"].append("session_S999_001")
+    _write_json(collection_path, collection)
+    result = validate_capture(root)
+    assert "COLLECTION_SUBJECT_INVENTORY_MISMATCH" in _codes(result)
+    assert "COLLECTION_SESSION_INVENTORY_MISMATCH" in _codes(result)
+
+
+def test_discovered_session_not_declared_in_collection_is_rejected(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path)
+    original_session = next(root.rglob("session.json")).parent
+    second_session = original_session.parent / "session_S001_002"
+    shutil.copytree(original_session, second_session)
+    session_path = second_session / "session.json"
+    session = json.loads(session_path.read_text(encoding="utf-8"))
+    session["session_id"] = "session_S001_002"
+    session["recording_id"] = "recording_S001_002"
+    _write_json(session_path, session)
+    frames_path = second_session / "frames.jsonl"
+    frames = _read_jsonl(frames_path)
+    for record in frames:
+        record["session_id"] = "session_S001_002"
+        record["recording_id"] = "recording_S001_002"
+    _write_jsonl(frames_path, frames)
+    annotations_path = second_session / "annotations.jsonl"
+    annotations = _read_jsonl(annotations_path)
+    for record in annotations:
+        record["session_id"] = "session_S001_002"
+    _write_jsonl(annotations_path, annotations)
+    _refresh_checksums(second_session)
+    result = validate_capture(root)
+    assert "COLLECTION_SESSION_INVENTORY_MISMATCH" in _codes(result)
+
+
+def test_locked_collection_rejects_legacy_training_role(tmp_path: Path) -> None:
     root = _copy_example(tmp_path)
     collection_path = root / "collection.json"
     collection = json.loads(collection_path.read_text(encoding="utf-8"))
@@ -283,7 +412,20 @@ def test_locked_test_used_as_train_is_rejected(tmp_path: Path) -> None:
     _write_json(session_path, session)
     _refresh_checksums(session_path.parent)
     result = validate_capture(root)
-    assert "LOCKED_TEST_USED_AS_TRAIN" in _codes(result)
+    assert "SESSION_ROLE_INVALID" in _codes(result)
+    assert "LOCKED_TEST_ROLE_MISMATCH" in _codes(result)
+
+
+def test_capture_contract_rejects_training_self_authorization(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path)
+    session_path = next(root.rglob("session.json"))
+    session = json.loads(session_path.read_text(encoding="utf-8"))
+    session["role_governance"]["role"] = "REAL_DEVELOPMENT"
+    session["role_governance"]["model_access_status"] = "TRAINING_ALLOWED"
+    _write_json(session_path, session)
+    _refresh_checksums(session_path.parent)
+    result = validate_capture(root)
+    assert "PRE_T_C_MODEL_ACCESS_FORBIDDEN" in _codes(result)
 
 
 def test_filename_order_only_temporal_claim_is_rejected(tmp_path: Path) -> None:
@@ -318,6 +460,34 @@ def test_schema_files_are_valid_json_and_portable() -> None:
         assert parsed["$schema"].startswith("https://json-schema.org/")
         assert "/Users/" not in path.read_text(encoding="utf-8")
         assert "file://" not in path.read_text(encoding="utf-8")
+    session_schema = json.loads((CONTRACT_ROOT / "session.schema.json").read_text(encoding="utf-8"))
+    role_schema = session_schema["properties"]["role_governance"]["properties"]
+    assert set(role_schema["role"]["enum"]) == {
+        "DEVICE_CONTRACT_PILOT",
+        "REAL_DEVELOPMENT",
+        "FUTURE_TRAIN_CANDIDATE",
+        "REAL_LOCKED_TEST",
+    }
+    assert "TRAINING_ALLOWED" not in role_schema["model_access_status"]["enum"]
+    assert "repository-relative" not in (CONTRACT_ROOT / "README.md").read_text(encoding="utf-8")
+    assert "session-relative" in (CONTRACT_ROOT / "README.md").read_text(encoding="utf-8")
+    frame_schema = json.loads((CONTRACT_ROOT / "frame.schema.json").read_text(encoding="utf-8"))
+    matrix = {
+        clause["if"]["properties"]["raw_representation"]["const"]: clause["then"]["properties"]
+        for clause in frame_schema["allOf"]
+    }
+    assert set(matrix) == {
+        "RAW_PACKET_AND_NATIVE",
+        "RAW_PACKET_ONLY",
+        "DECODED_NATIVE_ONLY",
+        "SCALAR_ONLY",
+        "PREPROCESSED_ONLY",
+        "SCREENSHOT_ONLY",
+    }
+    assert matrix["RAW_PACKET_AND_NATIVE"]["raw_file"]["type"] == "string"
+    assert matrix["RAW_PACKET_AND_NATIVE"]["decoded_native_file"]["type"] == "string"
+    assert matrix["DECODED_NATIVE_ONLY"]["raw_file"]["type"] == "null"
+    assert matrix["DECODED_NATIVE_ONLY"]["decoded_native_file"]["type"] == "string"
 
 
 def test_validator_has_no_model_coupling() -> None:

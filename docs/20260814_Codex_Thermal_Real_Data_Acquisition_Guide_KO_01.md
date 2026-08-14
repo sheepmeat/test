@@ -214,6 +214,8 @@ CAPTURE_STRUCTURE_VALID는 데이터가 학습 승인되었다는 뜻이 아닙�
 
 split은 frame 단위로 하지 않습니다. 가능한 강한 순서로 subject → session → event 그룹을 사용하고, 같은 subject/session/event가 여러 role에 들어가지 않게 합니다. split은 모델을 보기 전에 고정합니다.
 
+capture contract v1에서는 DEVICE_CONTRACT_PILOT, REAL_DEVELOPMENT, FUTURE_TRAIN_CANDIDATE, REAL_LOCKED_TEST 네 role만 선언합니다. TRAIN/VALIDATION 승격이나 TRAINING_ALLOWED 권한은 이 validator가 부여하지 않으며, 이후 T-D의 별도 promotion/split evidence에서만 승인합니다.
+
 ## 11. 절대 하지 말 것
 
 - thermal_max_c 또는 max/min scalar만 저장하기

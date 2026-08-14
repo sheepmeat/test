@@ -78,7 +78,7 @@ Each session MUST have a session.json containing the fields represented by datas
 - expected and received frame counts;
 - collection/model role governance.
 
-All persisted paths MUST be repository-relative POSIX paths. Absolute paths, file:// URIs, home-relative paths, backslashes, and parent traversal MUST be rejected.
+All persisted paths MUST be session-relative POSIX paths resolved from the session directory. Absolute paths, file:// URIs, home-relative paths, backslashes, and parent traversal MUST be rejected.
 
 ## 6. Frame record requirements
 
@@ -95,6 +95,13 @@ Each line of frames.jsonl MUST conform to datasets/thermal/manifests/real_captur
 - CRC/packet-loss status;
 - validity status, error code, and exclusion reason;
 - annotation status and per-file hashes when available.
+
+The file-reference matrix is explicit: `RAW_PACKET_AND_NATIVE` requires both
+`raw_file` and `decoded_native_file`; `RAW_PACKET_ONLY` requires only
+`raw_file`; `DECODED_NATIVE_ONLY` requires only `decoded_native_file`; and
+`SCALAR_ONLY`, `PREPROCESSED_ONLY`, and `SCREENSHOT_ONLY` require `raw_file`
+and forbid `decoded_native_file`. A valid `DECODED_NATIVE_ONLY` frame therefore
+MUST NOT be rejected merely because no raw packet file exists.
 
 Invalid, corrupt, late, duplicate, partial, missing, or decode-failed frames MUST remain represented as evidence. The collector MUST NOT silently delete a bad frame or renumber the following sequence.
 
@@ -136,7 +143,7 @@ The semantic layout SHOULD be:
     └── checksums.sha256
 ~~~
 
-After finalization, raw/ MUST be immutable. Corrections MUST be represented as annotation revisions or derived metadata, not by overwriting raw bytes. SHA-256 MUST cover the session manifest, frames manifest, annotations manifest, and every registered raw artifact. Extra unregistered raw files, missing raw files, and checksum mismatches MUST fail validation.
+After finalization, raw/ and decoded_native/ artifacts MUST be immutable. Corrections MUST be represented as annotation revisions or derived metadata, not by overwriting capture bytes. SHA-256 MUST cover the session manifest, frames manifest, annotations manifest, and every registered raw or decoded-native artifact. Extra unregistered files, missing references, and checksum mismatches MUST fail validation.
 
 ## 10. Collection roles and split governance
 
@@ -151,7 +158,7 @@ The contract recognizes these roles:
 
 Frame-random train/test splitting MUST be rejected. Assignment MUST use the strongest available group, preferably subject, then session, then event. The same subject, session, or event MUST NOT appear in conflicting roles. The split MUST be frozen before model inspection.
 
-Pilot data MAY be inspected repeatedly and therefore MUST NOT later be called pristine REAL_LOCKED_TEST.
+Pilot data MAY be inspected repeatedly and therefore MUST NOT later be called pristine REAL_LOCKED_TEST. TRAIN/VALIDATION promotion and training authority MUST be issued only by a later T-D promotion/split artifact, never by this capture contract.
 
 ## 11. Validator result and temporal classification
 

@@ -34,14 +34,21 @@ FULL_FRAME_REPRESENTATIONS = {
 }
 LIMITED_REPRESENTATIONS = {"SCALAR_ONLY"}
 PREPROCESSED_REPRESENTATIONS = {"PREPROCESSED_ONLY", "SCREENSHOT_ONLY"}
+REPRESENTATION_FILE_REQUIREMENTS: dict[str, dict[str, bool | None]] = {
+    "RAW_PACKET_AND_NATIVE": {"raw_file": True, "decoded_native_file": True},
+    "RAW_PACKET_ONLY": {"raw_file": True, "decoded_native_file": False},
+    "DECODED_NATIVE_ONLY": {"raw_file": False, "decoded_native_file": True},
+    "SCALAR_ONLY": {"raw_file": True, "decoded_native_file": False},
+    "PREPROCESSED_ONLY": {"raw_file": True, "decoded_native_file": False},
+    "SCREENSHOT_ONLY": {"raw_file": True, "decoded_native_file": False},
+}
 VALID_ROLES = {
     "DEVICE_CONTRACT_PILOT",
     "REAL_DEVELOPMENT",
     "FUTURE_TRAIN_CANDIDATE",
     "REAL_LOCKED_TEST",
-    "TRAIN",
-    "VALIDATION",
 }
+VALID_MODEL_ACCESS_STATUSES = {"UNTOUCHED", "DEVELOPMENT_ALLOWED", "UNKNOWN"}
 SOURCE_LABELS = {"EMPTY", "STANDING", "SITTING", "LYING", "UNKNOWN", "NOT_ANNOTATED"}
 EVENT_PHASES = {
     "PRE_EVENT",
@@ -188,13 +195,34 @@ def _check_relative_manifest_path(value: Any, field: str, base: Path, path: str,
             errors,
             "NONPORTABLE_PATH",
             f"{path}:{field}",
-            "Manifest paths must be repository-relative POSIX paths without '..', absolute prefixes, or backslashes.",
+            "Manifest paths must be session-relative POSIX paths without '..', absolute prefixes, or backslashes.",
         )
         return None
     resolved = _safe_join(base, value)
     if resolved is None:
         _error(errors, "PATH_ESCAPES_SESSION", f"{path}:{field}", "Manifest path escapes the session directory.")
     return resolved
+
+
+def _validate_representation_file_matrix(
+    representation: Any,
+    raw_file: Any,
+    decoded_native_file: Any,
+    validity_status: Any,
+    path: str,
+    errors: list[dict[str, str]],
+) -> None:
+    requirements = REPRESENTATION_FILE_REQUIREMENTS.get(representation)
+    if requirements is None:
+        return
+    for field, required in requirements.items():
+        value = raw_file if field == "raw_file" else decoded_native_file
+        if required is True and value is None and validity_status == "VALID":
+            code = "RAW_FRAME_REFERENCE_MISSING" if field == "raw_file" else "DECODED_NATIVE_REFERENCE_MISSING"
+            _error(errors, code, f"{path}:{field}", f"{representation} requires {field} for a valid frame.")
+        elif required is False and value is not None:
+            code = "RAW_FILE_NOT_ALLOWED_FOR_REPRESENTATION" if field == "raw_file" else "DECODED_NATIVE_FILE_NOT_ALLOWED_FOR_REPRESENTATION"
+            _error(errors, code, f"{path}:{field}", f"{representation} must not register {field}.")
 
 
 def _validate_collection_manifest(collection: Any, path: str, errors: list[dict[str, str]], warnings: list[dict[str, str]]) -> None:
@@ -427,7 +455,7 @@ def _validate_checksums(
             continue
         digest, relative = match.groups()
         if not _portable_relative_path(relative):
-            _error(errors, "CHECKSUM_PATH_NOT_PORTABLE", f"checksums.sha256:{line_number}", "Checksum paths must be relative POSIX paths.")
+            _error(errors, "CHECKSUM_PATH_NOT_PORTABLE", f"checksums.sha256:{line_number}", "Checksum paths must be session-relative POSIX paths.")
             continue
         if relative <= previous:
             _error(errors, "CHECKSUM_ORDER_NONDETERMINISTIC", f"checksums.sha256:{line_number}", "Checksum entries must be sorted by path.")
@@ -467,15 +495,20 @@ def _raw_classification(representations: list[str]) -> str:
     return "UNKNOWN_OR_EMPTY"
 
 
-def _resolve_frame_order(frame_ids: dict[str, dict[str, Any]], frame_id: Any, path: str, errors: list[dict[str, str]]) -> int | None:
+def _resolve_frame_order(
+    frame_ids: dict[str, dict[str, Any]],
+    frame_positions: dict[str, int],
+    frame_id: Any,
+    path: str,
+    errors: list[dict[str, str]],
+) -> int | None:
     if not _is_nonempty_string(frame_id):
         _error(errors, "EVENT_FRAME_REFERENCE_MISSING", path, "Event range frame IDs must be non-empty strings.")
         return None
     if frame_id not in frame_ids:
         _error(errors, "ANNOTATION_FRAME_REFERENCE_MISSING", path, f"Annotation references unknown frame_id {frame_id!r}.")
         return None
-    value = frame_ids[frame_id].get("sequence_index")
-    return value if isinstance(value, int) and not isinstance(value, bool) else None
+    return frame_positions.get(frame_id)
 
 
 def _validate_annotations(
@@ -487,11 +520,17 @@ def _validate_annotations(
     warnings: list[dict[str, str]],
 ) -> dict[str, Any]:
     frame_map = {frame.get("frame_id"): frame for frame in frames if _is_nonempty_string(frame.get("frame_id"))}
+    frame_positions = {
+        frame_id: index
+        for index, frame_id in enumerate(frame.get("frame_id") for frame in frames)
+        if _is_nonempty_string(frame_id)
+    }
     annotation_ids: set[str] = set()
     event_record_ids: set[str] = set()
     annotated_frame_ids: set[str] = set()
     source_counts: Counter[str] = Counter()
     event_phases: dict[str, set[str]] = defaultdict(set)
+    phase_ranges_by_event: dict[str, list[tuple[int, int, str, str]]] = defaultdict(list)
     for index, annotation in enumerate(annotations):
         item_path = f"{path}:{index}"
         _required_fields(
@@ -589,19 +628,83 @@ def _validate_annotations(
             if phase_order < previous_phase_order:
                 _error(errors, "EVENT_PHASE_ORDER_INVALID", range_path, "Event phase ranges are not ordered.")
             previous_phase_order = max(previous_phase_order, phase_order)
-            start = _resolve_frame_order(frame_map, phase_range.get("start_frame_id"), f"{range_path}:start_frame_id", errors)
-            end = _resolve_frame_order(frame_map, phase_range.get("end_frame_id"), f"{range_path}:end_frame_id", errors)
+            start = _resolve_frame_order(
+                frame_map,
+                frame_positions,
+                phase_range.get("start_frame_id"),
+                f"{range_path}:start_frame_id",
+                errors,
+            )
+            end = _resolve_frame_order(
+                frame_map,
+                frame_positions,
+                phase_range.get("end_frame_id"),
+                f"{range_path}:end_frame_id",
+                errors,
+            )
             if start is not None and end is not None and start > end:
                 _error(errors, "EVENT_RANGE_REVERSED", range_path, "Event phase start must be <= end.")
+            elif start is not None and end is not None and _is_nonempty_string(event_id):
+                range_frames = frames[start : end + 1]
+                mismatched = next(
+                    (
+                        frame
+                        for frame in range_frames
+                        if frame.get("event_id") != event_id
+                    ),
+                    None,
+                )
+                if mismatched is not None:
+                    _error(
+                        errors,
+                        "EVENT_RANGE_FRAME_EVENT_MISMATCH",
+                        range_path,
+                        f"All frames in this phase range must carry event_id {event_id!r}.",
+                    )
+                elif phase_name in EVENT_PHASES:
+                    phase_ranges_by_event[event_id].append((start, end, phase_name, range_path))
             if _is_nonempty_string(event_id) and phase_name in EVENT_PHASES:
                 event_phases[event_id].add(phase_name)
         start_id = annotation.get("frame_start_id")
         end_id = annotation.get("frame_end_id")
         if start_id is not None or end_id is not None:
-            start = _resolve_frame_order(frame_map, start_id, f"{item_path}:frame_start_id", errors)
-            end = _resolve_frame_order(frame_map, end_id, f"{item_path}:frame_end_id", errors)
+            start = _resolve_frame_order(frame_map, frame_positions, start_id, f"{item_path}:frame_start_id", errors)
+            end = _resolve_frame_order(frame_map, frame_positions, end_id, f"{item_path}:frame_end_id", errors)
             if start is not None and end is not None and start > end:
                 _error(errors, "EVENT_RANGE_REVERSED", item_path, "Event frame_start_id must be <= frame_end_id.")
+            elif start is not None and end is not None and _is_nonempty_string(event_id):
+                if any(frame.get("event_id") != event_id for frame in frames[start : end + 1]):
+                    _error(
+                        errors,
+                        "EVENT_RANGE_FRAME_EVENT_MISMATCH",
+                        item_path,
+                        f"All frames in the event envelope must carry event_id {event_id!r}.",
+                    )
+    for event_id, ranges in phase_ranges_by_event.items():
+        ordered_ranges = sorted(ranges, key=lambda item: (item[0], item[1], PHASE_ORDER.get(item[2], 99)))
+        previous: tuple[int, int, str, str] | None = None
+        previous_phase_order: int | None = None
+        for current in ordered_ranges:
+            current_phase_order = PHASE_ORDER.get(current[2], 99)
+            if previous_phase_order is not None and current_phase_order < previous_phase_order:
+                _error(
+                    errors,
+                    "EVENT_PHASE_ORDER_INVALID",
+                    current[3],
+                    f"Phase ranges are not in PRE_EVENT to POST_FALL_LYING order for event {event_id!r}.",
+                )
+            if previous is not None and current[0] <= previous[1]:
+                _error(
+                    errors,
+                    "EVENT_PHASE_OVERLAP",
+                    current[3],
+                    f"Phase range {current[2]!r} overlaps the preceding {previous[2]!r} range for event {event_id!r}.",
+                )
+            previous = current
+            if previous_phase_order is None:
+                previous_phase_order = current_phase_order
+            else:
+                previous_phase_order = max(previous_phase_order, current_phase_order)
     valid_frame_ids = {frame.get("frame_id") for frame in frames if frame.get("validity_status") == "VALID"}
     coverage = len(annotated_frame_ids & valid_frame_ids) / len(valid_frame_ids) if valid_frame_ids else 0.0
     temporal_event_ids = [
@@ -609,6 +712,15 @@ def _validate_annotations(
         for event_id, phases in event_phases.items()
         if {"PRE_EVENT", "FALL_TRANSITION", "POST_FALL_LYING"}.issubset(phases)
     ]
+    range_integrity_error_codes = {
+        "ANNOTATION_FRAME_REFERENCE_MISSING",
+        "EVENT_FRAME_REFERENCE_MISSING",
+        "EVENT_RANGE_REVERSED",
+        "EVENT_PHASE_ORDER_INVALID",
+        "EVENT_PHASE_OVERLAP",
+        "EVENT_RANGE_FRAME_EVENT_MISMATCH",
+    }
+    event_range_integrity_valid = not any(item["code"] in range_integrity_error_codes for item in errors)
     if not annotations:
         _warning(warnings, "ANNOTATIONS_EMPTY", path, "No annotations were supplied; UNKNOWN is preferable to fabricated labels.")
     return {
@@ -620,6 +732,7 @@ def _validate_annotations(
         "source_label_counts": dict(sorted(source_counts.items())),
         "event_ids": sorted(event_phases),
         "complete_temporal_event_ids": sorted(temporal_event_ids),
+        "event_range_integrity_valid": event_range_integrity_valid,
     }
 
 
@@ -732,6 +845,15 @@ def _validate_session(
         else:
             representations.append(representation)
         raw_file = frame.get("raw_file")
+        decoded_file = frame.get("decoded_native_file")
+        _validate_representation_file_matrix(
+            representation,
+            raw_file,
+            decoded_file,
+            frame.get("validity_status"),
+            item_path,
+            errors,
+        )
         if raw_file is not None:
             resolved = _check_relative_manifest_path(raw_file, "raw_file", session_dir, item_path, errors)
             if resolved is not None:
@@ -741,9 +863,6 @@ def _validate_session(
                     _error(errors, "MISSING_RAW_FRAME", f"{item_path}:raw_file", f"Referenced raw artifact does not exist: {raw_file}.")
                 elif frame.get("raw_sha256") and _sha256(resolved) != str(frame["raw_sha256"]).lower():
                     _error(errors, "RAW_FRAME_CHECKSUM_MISMATCH", f"{item_path}:raw_sha256", "Frame raw_sha256 does not match the referenced file.")
-        elif representation in FULL_FRAME_REPRESENTATIONS and frame.get("validity_status") == "VALID":
-            _error(errors, "RAW_FRAME_REFERENCE_MISSING", f"{item_path}:raw_file", "A valid full-frame record must reference its raw artifact.")
-        decoded_file = frame.get("decoded_native_file")
         if decoded_file is not None:
             resolved = _check_relative_manifest_path(decoded_file, "decoded_native_file", session_dir, item_path, errors)
             if resolved is not None:
@@ -753,8 +872,6 @@ def _validate_session(
                     _error(errors, "MISSING_DECODED_NATIVE_FRAME", f"{item_path}:decoded_native_file", f"Referenced decoded native artifact does not exist: {decoded_file}.")
                 elif frame.get("decoded_native_sha256") and _sha256(resolved) != str(frame["decoded_native_sha256"]).lower():
                     _error(errors, "DECODED_FRAME_CHECKSUM_MISMATCH", f"{item_path}:decoded_native_sha256", "Frame decoded_native_sha256 does not match the referenced file.")
-        elif representation == "DECODED_NATIVE_ONLY" and frame.get("validity_status") == "VALID":
-            _error(errors, "DECODED_NATIVE_REFERENCE_MISSING", f"{item_path}:decoded_native_file", "DECODED_NATIVE_ONLY requires decoded_native_file.")
         native_shape = frame.get("native_shape")
         sensor = session.get("sensor") if isinstance(session.get("sensor"), dict) else {}
         expected_shape = [sensor.get("native_height"), sensor.get("native_width")]
@@ -772,6 +889,12 @@ def _validate_session(
         _error(errors, "RAW_ROOT_MISSING", "session.json:storage:raw_root", "The raw root directory does not exist.")
     if decoded_root and not decoded_root.is_dir():
         _warning(warnings, "DECODED_NATIVE_ROOT_MISSING", "session.json:storage:decoded_native_root", "No decoded_native directory is present; this may be valid for packet-only evidence.")
+    elif decoded_root and decoded_root.is_dir():
+        for path in sorted(decoded_root.rglob("*")):
+            if path.is_file():
+                relative = path.relative_to(session_dir.resolve()).as_posix()
+                if relative not in decoded_references:
+                    _error(errors, "EXTRA_UNREGISTERED_DECODED_FILE", relative, "Decoded-native file exists but is not registered in frames.jsonl.")
     quality = session.get("quality") if isinstance(session.get("quality"), dict) else {}
     if quality.get("received_frame_count") != len(frames):
         _error(errors, "FRAME_COUNT_INCONSISTENCY", "session.json:quality:received_frame_count", "received_frame_count does not equal the number of frames.jsonl records.")
@@ -812,7 +935,14 @@ def _validate_session(
     no_sequence_gaps = sequence_summary["gap_count"] == 0 and counter_summary["gap_count"] == 0
     continuous_session = (session.get("timing") or {}).get("continuous_session") is True
     complete_event = bool(annotation_summary["complete_temporal_event_ids"])
-    if complete_event and (sequence_verified or counter_verified) and timestamp_verified and continuous_session and no_sequence_gaps:
+    if (
+        complete_event
+        and annotation_summary.get("event_range_integrity_valid", False)
+        and (sequence_verified or counter_verified)
+        and timestamp_verified
+        and continuous_session
+        and no_sequence_gaps
+    ):
         temporal_status = "TEMPORAL_PROVENANCE_VERIFIED"
     elif order_only:
         temporal_status = "TEMPORAL_ORDER_ONLY"
@@ -826,19 +956,29 @@ def _validate_session(
         _error(errors, "TEMPORAL_CLAIM_NOT_SUPPORTED", "session.json:temporal_evidence_claim:claimed_status", "Claimed temporal provenance is not supported by actual frame evidence.")
     if temporal_status != "TEMPORAL_PROVENANCE_VERIFIED":
         _warning(warnings, "TEMPORAL_LIMITATION", "temporal_provenance_status", f"Session classified as {temporal_status}; do not construct a temporal event from filenames or posture alone.")
-    if raw_root and raw_root.is_dir():
-        session_root = session_dir.resolve()
-        required_checksum_paths = {
-            "session.json",
-            frames_path.relative_to(session_root).as_posix() if frames_path else "frames.jsonl",
-            annotations_path.relative_to(session_root).as_posix() if annotations_path else "annotations.jsonl",
-            *raw_references,
-        }
-        required_checksum_paths.discard("")
-    else:
-        required_checksum_paths = {"session.json", "frames.jsonl", "annotations.jsonl"}
+    session_root = session_dir.resolve()
+    required_checksum_paths = {
+        "session.json",
+        frames_path.relative_to(session_root).as_posix() if frames_path else "frames.jsonl",
+        annotations_path.relative_to(session_root).as_posix() if annotations_path else "annotations.jsonl",
+        *raw_references,
+        *decoded_references,
+    }
+    required_checksum_paths.discard("")
     checksum_status = _validate_checksums(session_dir, checksums_path, required_checksum_paths, errors)
-    raw_errors = {"MISSING_RAW_FRAME", "RAW_FRAME_REFERENCE_MISSING", "EXTRA_UNREGISTERED_RAW_FILE", "RAW_ROOT_MISSING", "RAW_FRAME_CHECKSUM_MISMATCH", "MISSING_DECODED_NATIVE_FRAME", "DECODED_NATIVE_REFERENCE_MISSING", "DECODED_FRAME_CHECKSUM_MISMATCH"}
+    raw_errors = {
+        "MISSING_RAW_FRAME",
+        "RAW_FRAME_REFERENCE_MISSING",
+        "RAW_FILE_NOT_ALLOWED_FOR_REPRESENTATION",
+        "EXTRA_UNREGISTERED_RAW_FILE",
+        "RAW_ROOT_MISSING",
+        "RAW_FRAME_CHECKSUM_MISMATCH",
+        "MISSING_DECODED_NATIVE_FRAME",
+        "DECODED_NATIVE_REFERENCE_MISSING",
+        "DECODED_NATIVE_FILE_NOT_ALLOWED_FOR_REPRESENTATION",
+        "EXTRA_UNREGISTERED_DECODED_FILE",
+        "DECODED_FRAME_CHECKSUM_MISMATCH",
+    }
     raw_integrity_status = "FAIL" if any(item["code"] in raw_errors for item in errors) else "PASS_WITH_LIMITATIONS" if warnings else "PASS"
     raw_class = _raw_classification(representations)
     if raw_class == "PREPROCESSED_ONLY_INSUFFICIENT":
@@ -848,13 +988,19 @@ def _validate_session(
     elif raw_class == "UNKNOWN_OR_EMPTY":
         _error(errors, "RAW_EVIDENCE_UNCLASSIFIED", "frames.jsonl:raw_representation", "No full-frame raw representation was classified.")
     role_block = session.get("role_governance") if isinstance(session.get("role_governance"), dict) else {}
+    model_access_status = role_block.get("model_access_status")
+    if model_access_status == "TRAINING_ALLOWED":
+        _error(
+            errors,
+            "PRE_T_C_MODEL_ACCESS_FORBIDDEN",
+            "session.json:role_governance:model_access_status",
+            "Capture-contract v1 cannot grant training authority; use a later T-D promotion artifact.",
+        )
+    elif model_access_status not in VALID_MODEL_ACCESS_STATUSES:
+        _error(errors, "MODEL_ACCESS_STATUS_INVALID", "session.json:role_governance:model_access_status", "Unknown model access status.")
     if role == "REAL_LOCKED_TEST":
         if role_block.get("model_access_status") != "UNTOUCHED" or role_block.get("locked_test_status") != "LOCKED_TEST_UNTOUCHED":
             _error(errors, "LOCKED_TEST_ACCESS_VIOLATION", "session.json:role_governance", "REAL_LOCKED_TEST must remain untouched by fitting, tuning, calibration, and debugging.")
-    if role == "TRAIN" and collection and collection.get("collection_role") == "REAL_LOCKED_TEST":
-        _error(errors, "LOCKED_TEST_USED_AS_TRAIN", "session.json:role_governance:role", "A REAL_LOCKED_TEST collection cannot be assigned TRAIN.")
-    if role in {"TRAIN", "VALIDATION"} and collection and collection.get("collection_role") == "DEVICE_CONTRACT_PILOT":
-        _warning(warnings, "PILOT_PROMOTION_NOT_AUTHORIZATION", "session.json:role_governance:role", "Pilot data promotion requires a later authorized phase and provenance review.")
     if collection and collection.get("collection_role") == "REAL_LOCKED_TEST" and role != "REAL_LOCKED_TEST":
         _error(errors, "LOCKED_TEST_ROLE_MISMATCH", "session.json:role_governance:role", "Session role must remain REAL_LOCKED_TEST inside a locked-test collection.")
     limitations: list[str] = []
@@ -991,6 +1137,10 @@ def validate_capture(capture_path: str | Path) -> dict[str, Any]:
             session_paths = [root / "session.json"]
         else:
             session_paths = []
+    single_session_input = (
+        (target.is_file() and target.name == "session.json")
+        or (target.is_dir() and (target / "session.json").is_file() and not (target / "collection.json").is_file())
+    )
     errors: list[dict[str, str]] = []
     warnings: list[dict[str, str]] = []
     collection: dict[str, Any] | None = None
@@ -1020,6 +1170,37 @@ def validate_capture(capture_path: str | Path) -> dict[str, Any]:
             session_result["errors"].extend(session_errors)
             session_result["capture_status"] = "CAPTURE_INVALID"
         session_results.append(session_result)
+    if collection is not None and not single_session_input:
+        declared_subject_values = collection.get("subject_ids", [])
+        declared_session_values = collection.get("session_ids", [])
+        declared_subject_ids = {
+            value for value in declared_subject_values if _is_nonempty_string(value)
+        } if isinstance(declared_subject_values, list) else set()
+        declared_session_ids = {
+            value for value in declared_session_values if _is_nonempty_string(value)
+        } if isinstance(declared_session_values, list) else set()
+        actual_subject_ids = {
+            manifest.get("subject_id") for manifest in session_manifests if _is_nonempty_string(manifest.get("subject_id"))
+        }
+        actual_session_ids = {
+            manifest.get("session_id") for manifest in session_manifests if _is_nonempty_string(manifest.get("session_id"))
+        }
+        if len(actual_session_ids) != len(session_manifests):
+            _error(errors, "DUPLICATE_DISCOVERED_SESSION_ID", "session.json:session_id", "Discovered session.json files contain duplicate or missing session IDs.")
+        if declared_subject_ids != actual_subject_ids:
+            _error(
+                errors,
+                "COLLECTION_SUBJECT_INVENTORY_MISMATCH",
+                "collection.json:subject_ids",
+                f"Declared subject_ids do not exactly match discovered session manifests (declared={sorted(declared_subject_ids)}, actual={sorted(actual_subject_ids)}).",
+            )
+        if declared_session_ids != actual_session_ids:
+            _error(
+                errors,
+                "COLLECTION_SESSION_INVENTORY_MISMATCH",
+                "collection.json:session_ids",
+                f"Declared session_ids do not exactly match discovered session manifests (declared={sorted(declared_session_ids)}, actual={sorted(actual_session_ids)}).",
+            )
     _role_leakage(session_results, session_manifests, errors)
     if not session_results:
         raw_class = "UNKNOWN_OR_EMPTY"

@@ -97,5 +97,61 @@
     "scalar_thermal_max_c": { "type": ["number", "null"] },
     "capture_error_code": { "type": ["string", "null"] },
     "notes": { "type": "string" }
-  }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "raw_representation": { "const": "RAW_PACKET_AND_NATIVE" } } },
+      "then": {
+        "properties": {
+          "raw_file": { "type": "string", "minLength": 1 },
+          "decoded_native_file": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "raw_representation": { "const": "RAW_PACKET_ONLY" } } },
+      "then": {
+        "properties": {
+          "raw_file": { "type": "string", "minLength": 1 },
+          "decoded_native_file": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "raw_representation": { "const": "DECODED_NATIVE_ONLY" } } },
+      "then": {
+        "properties": {
+          "raw_file": { "type": "null" },
+          "decoded_native_file": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "raw_representation": { "const": "SCALAR_ONLY" } } },
+      "then": {
+        "properties": {
+          "raw_file": { "type": "string", "minLength": 1 },
+          "decoded_native_file": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "raw_representation": { "const": "PREPROCESSED_ONLY" } } },
+      "then": {
+        "properties": {
+          "raw_file": { "type": "string", "minLength": 1 },
+          "decoded_native_file": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "raw_representation": { "const": "SCREENSHOT_ONLY" } } },
+      "then": {
+        "properties": {
+          "raw_file": { "type": "string", "minLength": 1 },
+          "decoded_native_file": { "type": "null" }
+        }
+      }
+    }
+  ]
 }

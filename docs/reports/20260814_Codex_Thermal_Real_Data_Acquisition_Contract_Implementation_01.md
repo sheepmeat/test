@@ -44,11 +44,11 @@ Source posture and derived SafeNest compatibility labels are separate. LYING can
 
 ### Roles and leakage
 
-Pilot, development, future-train-candidate, and locked-test roles are separate. The validator rejects frame-random split metadata, subject/session/event role leakage, locked-test use as TRAIN, and locked-test access violations. A passing capture result never grants model-use authorization.
+Pilot, development, future-train-candidate, and locked-test roles are separate. The v1 capture validator rejects TRAIN/VALIDATION self-promotion and TRAINING_ALLOWED model access; later T-D promotion/split evidence must grant those roles explicitly. It also rejects frame-random split metadata, subject/session/event role leakage, and locked-test access violations. A passing capture result never grants model-use authorization.
 
 ### Integrity
 
-The validator checks JSON/JSONL structure, identity, frame counts, raw file registration, extra raw files, SHA-256 coverage/mismatch, timing reversals and gaps, packet/decode status, annotation references/ranges, and scalar-only or preprocessed-only classification.
+The validator checks JSON/JSONL structure, identity, declared-vs-discovered collection inventory, frame representation requirements, raw/decoded file registration, extra files, SHA-256 coverage/mismatch, timing reversals and gaps, packet/decode status, annotation references/ranges, temporal range non-overlap and event-ID integrity, and scalar-only or preprocessed-only classification.
 
 ## Synthetic smoke evidence
 
