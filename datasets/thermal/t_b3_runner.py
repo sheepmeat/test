@@ -513,7 +513,12 @@ def run_full(*, canonical_root: str | Path, work_root: str | Path, output_root: 
     work = Path(work_root).expanduser()
     output = Path(output_root).expanduser()
     work.mkdir(parents=True, exist_ok=True)
-    contract = _freeze_documents(root, canonical_path, work, output)
+    contract = _freeze_documents(
+        repo_root=root,
+        canonical_root=canonical_path,
+        work_root=work,
+        output_root=output,
+    )
     evidence = root / EVIDENCE_REL
     required_readiness = evidence / "readiness_result.json"
     if not required_readiness.is_file() or _read_json(required_readiness).get("status") != "T_B3_MULTI_SEED_RUN_READY":
@@ -558,6 +563,8 @@ def run_full(*, canonical_root: str | Path, work_root: str | Path, output_root: 
             persistent = checkpoints / temporary_checkpoint.name
             _atomic_copy(temporary_checkpoint, persistent)
             result["checkpoint"] = {"logical_path": f"checkpoints/{persistent.name}", "materialization": "PERSISTENT_EXTERNAL_OUTPUT", "sha256": sha256_file(persistent), "size_bytes": int(persistent.stat().st_size)}
+            result["schema_version"] = "1.0"
+            result["phase"] = PHASE_ID
             result["source"] = "NEW_TRAINING"
             result["finalized"] = True
             result["real_evaluated"] = False

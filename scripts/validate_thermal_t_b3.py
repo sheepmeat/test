@@ -389,6 +389,18 @@ def _validate_execution(documents: Mapping[str, Any], errors: list[dict[str, str
             _error(errors, "SCOPE_ESCALATION", f"execution_summary.json:{key}", "Later phase/candidate changes are prohibited.")
 
 
+def _validate_self_report(path: Path, errors: list[dict[str, str]]) -> None:
+    if not path.is_file():
+        return
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        _error(errors, "VALIDATION_RESULT_INVALID", "validation_result.json", str(exc))
+        return
+    if document.get("phase") != PHASE or document.get("evidence_validation") != "PASS" or document.get("overall_outcome") != "T_B3_COMPLETE_WITH_LIMITATIONS" or document.get("error_count") != 0 or document.get("full_experiment") != "FINALIZED":
+        _error(errors, "VALIDATION_RESULT_INVALID", "validation_result.json", "Self-report is not a passing finalized T-B3 result.")
+
+
 def _validate_candidate_policy(doc: Mapping[str, Any], errors: list[dict[str, str]]) -> None:
     if doc.get("phase") != PHASE or doc.get("reference_candidate_id") != BASELINE_ID or doc.get("reference_seed") != 20260813 or doc.get("best_seed_cherry_picking") != "PROHIBITED":
         _error(errors, "CHECKPOINT_POLICY_INVALID", "candidate_checkpoint_policy.json", "Reference candidate/checkpoint policy is invalid.")
@@ -405,6 +417,9 @@ def validate_evidence(*, repo_root: Path = ROOT, evidence_dir: Path | None = Non
     names = FULL_JSON if full else BASE_JSON
     documents = _read_documents(evidence, names, errors)
     live = _validate_predecessors(repo_root, errors)
+    for phase in ("T-A6", "T-B0", "T-B1", "T-B2"):
+        if live.get(phase, {}).get("evidence_validation") != "PASS":
+            _error(errors, "PREDECESSOR_LIVE_INVALID", phase, "Live predecessor validator is not PASS.")
     _validate_roadmap(repo_root, errors)
     if all(name in documents for name in BASE_JSON):
         _validate_protocol(documents["t_b3_protocol.json"], errors)
@@ -428,6 +443,7 @@ def validate_evidence(*, repo_root: Path = ROOT, evidence_dir: Path | None = Non
         # validation_result.json is produced after the first successful pass and is
         # accepted as an optional self-report; every other compact artifact is mandatory.
         _validate_checksums(evidence, set(names), errors)
+    _validate_self_report(evidence / "validation_result.json", errors)
     errors.sort(key=lambda item: (item["code"], item["location"], item["message"]))
     warnings.sort(key=lambda item: (item["code"], item["location"], item["message"]))
     passed = not errors and all(live.get(phase, {}).get("evidence_validation") == "PASS" for phase in ("T-A6", "T-B0", "T-B1", "T-B2"))
