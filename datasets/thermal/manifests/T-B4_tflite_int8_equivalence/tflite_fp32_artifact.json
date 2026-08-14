@@ -2,7 +2,9 @@
   "artifact_id": "TFLITE_FP32",
   "builtin_only": true,
   "conversion": {
-    "optimizations": [],
+    "optimizations": [
+      "DEFAULT"
+    ],
     "select_tf_ops": false,
     "supported_ops": [
       "TFLITE_BUILTINS"
