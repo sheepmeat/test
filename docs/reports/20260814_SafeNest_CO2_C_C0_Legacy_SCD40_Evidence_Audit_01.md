@@ -65,7 +65,7 @@ The following references were checked before writing this document:
 
 | Reference | Revision or path | Role |
 |---|---|---|
-| Standalone SafeNest repository | origin/main at 22f745ac2f730e3a6c73d0a335c3e12644b03913 | Active roadmap, B5 lock, model and dataset manifests |
+| Standalone SafeNest repository | origin/main at c65d2e32e6f14089790a8c576312eb9873e367f7 | Active roadmap, B5 lock, model and dataset manifests |
 | Team repository | origin/main at 5947334d3d0f6c6f7d6100c7ea6af219e5b4c5d5 | Current legacy firmware, telemetry, raw logs, and verification evidence |
 | Active master roadmap | [docs/20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md](../20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md) | C-C0/C-C1/C-C2 ordering and decision gate |
 | B5 final lock | [datasets/co2/manifests/c_b5_robustness_final_lock/final_candidate_lock.json](../../datasets/co2/manifests/c_b5_robustness_final_lock/final_candidate_lock.json) | Locked candidate and closure state |
@@ -337,7 +337,7 @@ The following block is intentionally plain text so validators and future agents 
 ~~~text
 AUDIT_ID: SAFE_NEST_CO2_C_C0_LEGACY_SCD40_20260814_01
 AUDIT_DATE: 2026-08-14
-STANDALONE_ORIGIN_MAIN_SHA: 22f745ac2f730e3a6c73d0a335c3e12644b03913
+STANDALONE_ORIGIN_MAIN_SHA: c65d2e32e6f14089790a8c576312eb9873e367f7
 TEAM_ORIGIN_MAIN_SHA: 5947334d3d0f6c6f7d6100c7ea6af219e5b4c5d5
 REAL_DEVICE_SOURCE: VERIFIED
 SCD40_MODEL_IDENTITY: VERIFIED

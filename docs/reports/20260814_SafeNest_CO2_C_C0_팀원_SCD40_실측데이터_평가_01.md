@@ -26,7 +26,7 @@ CO2 + Temperature + Humidity + CO2_slope
 
 | 구분 | 기준 |
 |---|---|
-| standalone 저장소 최신 main | 22f745ac2f730e3a6c73d0a335c3e12644b03913 |
+| standalone 저장소 최신 main | c65d2e32e6f14089790a8c576312eb9873e367f7 |
 | team 저장소 최신 main | 5947334d3d0f6c6f7d6100c7ea6af219e5b4c5d5 |
 | 활성 master roadmap | [docs/20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md](../20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md) |
 | B5 lock | [datasets/co2/manifests/c_b5_robustness_final_lock/final_candidate_lock.json](../../datasets/co2/manifests/c_b5_robustness_final_lock/final_candidate_lock.json) |
