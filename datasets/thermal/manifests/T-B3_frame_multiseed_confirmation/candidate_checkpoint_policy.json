@@ -1,0 +1,15 @@
+{
+  "best_seed_cherry_picking": "PROHIBITED",
+  "candidate_replacement_allowed": false,
+  "phase": "T-B3",
+  "reference_candidate_id": "SMALL_CNN_BASELINE_V1",
+  "reference_checkpoint": {
+    "logical_path": "checkpoints/P1_TRAIN_FITTED_GLOBAL_ZSCORE.weights.h5",
+    "materialization": "PERSISTENT_EXTERNAL_OUTPUT",
+    "sha256": "7aba32fe8d0e241546429bdc3e8cd059b10d4d8f548e9e12c4085abeba308a75",
+    "size_bytes": 3777416
+  },
+  "reference_seed": 20260813,
+  "schema_version": "1.0",
+  "source": "INHERITED_T_B1_VALIDATED_REFERENCE"
+}
