@@ -38,7 +38,11 @@ Current classification, based on live evidence:
 | --- | --- |
 | Existing team MR60 data | VALUABLE |
 | Usable for device-domain exploration | YES |
-| Timestamp / cadence evidence | STRONG for multiple sessions |
+| Telemetry / log-row cadence | VERIFIED ≈ 9.99 Hz for multiple sessions |
+| Fresh MR60 phase-frame cadence | NOT YET ESTABLISHED / PARTIAL |
+| 30 s / 300 telemetry-row construction | YES |
+| 30 s / 300 fresh `breath_phase` sample correspondence | NOT YET ESTABLISHED |
+| Phase-B temporal correspondence | NOT YET ESTABLISHED |
 | Signal-field lineage | GOOD |
 | Vendor respiration-rate characterization | USEFUL |
 | Failure-case evidence | USEFUL |
@@ -47,11 +51,15 @@ Current classification, based on live evidence:
 | Phase-B signal-semantic correspondence | NOT YET ESTABLISHED |
 | Formal device-domain model validation | NOT YET AUTHORIZED |
 
-The most important technical distinction in this dataset is:
+The most important technical distinctions in this dataset are:
 
 ```text
 breath_phase     ≠  breath_rate_raw
 waveform-like    ≠  vendor respiration-rate number
+
+JSONL/CSV row cadence ≈ 10 Hz
+≠
+fresh 0x0A13 breath_phase update cadence ≈ 10 Hz
 ```
 
 The historical “about 20 rpm” observation is currently associated with the
@@ -64,6 +72,8 @@ Recommended next use of this data:
 existing team measurements
         ↓
 M-C0 forensic / correspondence audit
+        ↓
+separate telemetry cadence vs fresh 0x0A13 cadence vs stale/repeated breath_phase
         ↓
 decide whether breath_phase can defensibly build the frozen Phase-B input
         ↓
@@ -150,7 +160,9 @@ These strengths are supported by files, not by courtesy.
 
 **Real timestamps were preserved.** JSONL records store `ts_monotonic_ms`. CSV
 exports rebase that clock to session start as `timestamp_s` without inventing a
-uniform grid. Cadence can therefore be measured instead of assumed.
+uniform grid. Telemetry/log-row cadence can therefore be measured instead of
+assumed. That row cadence is not, by itself, a fresh `0x0A13` phase-frame
+cadence.
 
 **Both signal families were retained.** The logs keep `breath_phase` and
 `breath_rate_raw` side by side. That is what makes the later vendor-vs-phase
@@ -231,7 +243,8 @@ Firmware itself marks `breath_rate_raw_trusted: false` in schema 1.2 telemetry.
 | `human_detected_raw` | vendor presence flag; not a respiration waveform |
 | `heart_rate_raw` / `heart_phase` | not a validated heart-rate or respiration reference |
 | `total_phase` | companion phase channel from `0x0A13`; not the AI input contract |
-| `ts_monotonic_ms` | ESP monotonic timestamp used for cadence |
+| `ts_monotonic_ms` | ESP monotonic timestamp of the telemetry row, not proof that `breath_phase` was freshly updated in that row |
+| `phase_age_ms` | age of the last `0x0A13` phase-frame update relative to the telemetry emit time |
 
 Apple Watch logs exist for exploratory heart-rate comparison. They are not an
 independent respiration belt, spirometer, or chest-belt reference.
@@ -242,12 +255,47 @@ states `heart_reference: null` and `breath_reference: "paced cue target"`.
 
 ## 5. Actual Timing / Sampling Quality
 
-Cadence was recomputed from exported CSV `timestamp_s` as
+Two clocks must be kept apart.
+
+Firmware emits JSON telemetry on a timer, not on every radar phase frame.
+`devices/mmwave/firmware/include/mmwave_config.h` sets
+`kTelemetryIntervalMs = 100`. `devices/mmwave/firmware/src/main.cpp` `loop()`
+calls `emitTelemetry()` when that interval elapses. `emitTelemetry()` writes
+the **last stored** `breathPhase`. A fresh `0x0A13` frame is the only path that
+updates `breathPhase` and `phasesUpdatedMs`. `phase_age_ms` exists specifically
+to record how old that last phase-frame update is.
+
+```text
+TELEMETRY / LOG ROW CADENCE:
+VERIFIED ≈ 9.99 Hz for multiple sessions
+
+FRESH MR60 PHASE-FRAME CADENCE:
+NOT YET ESTABLISHED / PARTIAL
+
+30 s / 300 TELEMETRY ROW CONSTRUCTION:
+YES
+
+30 s / 300 FRESH breath_phase SAMPLE CORRESPONDENCE:
+NOT YET ESTABLISHED
+
+Phase-B temporal correspondence:
+NOT YET ESTABLISHED
+```
+
+```text
+JSONL/CSV row cadence ≈ 10 Hz
+≠
+fresh 0x0A13 breath_phase update cadence ≈ 10 Hz
+```
+
+### 5.1 Telemetry / log-row cadence (verified)
+
+Row cadence was recomputed from exported CSV `timestamp_s` as
 `1 / mean(diff(timestamp_s))`. The values match
 `devices/mmwave/firmware/csv/2026-07-26_han_junwoo_delivery_v2/manifest.json`
 diagnostics.
 
-| Session | Records | Duration (s) | Effective cadence (Hz) | Max gap (ms) |
+| Session | Records | Duration (s) | Telemetry row cadence (Hz) | Max row gap (ms) |
 | --- | ---: | ---: | ---: | ---: |
 | `S001_NORMAL_D06` | 2998 | 299.851 | 9.994964 | 102 |
 | `S001_NORMAL_D09` | 2998 | 299.816 | 9.996131 | 101 |
@@ -260,21 +308,41 @@ diagnostics.
 
 No timestamp duplicates or backwards steps were found in those exported
 windows. Original JSONL copies of the same sessions also sit near 9.99 Hz, with
-selected maximum gaps of 101–103 ms.
+selected maximum **row** gaps of 101–103 ms.
 
-This is strong evidence that several existing recordings are temporally
-consistent with the standalone Phase-B **nominal 10 Hz** representation.
+The logging/telemetry stream is close to 10 Hz for multiple sessions. This
+establishes row-level timing quality, but does not yet prove that each row
+contains a fresh MR60 phase measurement or that the fresh `breath_phase`
+cadence matches the Phase-B 10 Hz signal contract.
 
-It does **not** prove that the sample values have the same physical meaning as
-the Phase-B respiration-sensitive series:
+### 5.2 Fresh `0x0A13` phase-frame cadence (not yet established)
+
+A 30-second window containing approximately 300 telemetry rows can be cut from
+these logs; whether those rows represent 300 fresh phase observations remains
+an M-C0 correspondence question.
+
+The same report already contains a direct counter-example. The schema-1.2
+occupied log in §9 has telemetry cadence 9.986 Hz and max row gap 103 ms, while
+`phase_age_ms` reaches 288,530 ms and 2,585 packets have `phase_age_ms > 30 s`.
+The log can keep printing at ~10 Hz while `breath_phase` is a repeated stale
+value.
+
+M-C0 must therefore measure, separately:
 
 ```text
-matching cadence  ≠  matching signal semantics
+telemetry cadence
+vs
+fresh 0x0A13 phase-frame cadence
+vs
+stale/repeated breath_phase behavior
 ```
 
-A 30-second, 300-sample window can be cut from these logs. That only proves
-shape compatibility with `[300, 1]`. It does not by itself authorize model
-input.
+Row-cadence match is also not signal-semantic match:
+
+```text
+matching telemetry cadence  ≠  matching Phase-B signal semantics
+matching telemetry cadence  ≠  fresh breath_phase sampling
+```
 
 ---
 
@@ -501,8 +569,10 @@ amplitude. Team notes used this contrast as evidence for an amplitude gate
 the lesson is:
 
 - detectability depends on breathing effort / chest displacement
-- future protocol must forbid “breathe shallow” instructions
-- low-amplitude sessions are exclusion/QA material, not success references
+- shallow breathing must not be treated as a clean reference/success condition
+  unless it is explicitly pre-registered as a robustness condition with
+  separate QA criteria
+- low-amplitude sessions remain useful failure/QA evidence when labeled as such
 
 ---
 
@@ -521,11 +591,16 @@ Independent counts from the live file:
 | --- | --- |
 | Schema | 1.2 for all 18,574 sensor records |
 | Duration | 1,859.84 s ≈ 31.00 min |
-| Effective cadence | 9.986 Hz |
-| Max timestamp gap | 103 ms |
+| Telemetry / log-row cadence | 9.986 Hz |
+| Max timestamp row gap | 103 ms |
 | Firmware string | `safenest-mr60-esp/1.2.0` |
 | `phase_age_ms` maximum | 288,530 ms |
 | Packets with `phase_age_ms` > 30 s | 2,585 |
+
+This is the same telemetry-versus-fresh-phase distinction as §5. The log keeps
+emitting rows near 10 Hz, but `breath_phase` can remain a repeated last value
+for minutes. `phase_age_ms` is the field that records that staleness. Row
+cadence here must not be read as a 10 Hz stream of fresh `0x0A13` samples.
 
 Final-validation manifest assessment:
 `PRESENCE_PASS_BREATH_CONTINUITY_FAIL`
@@ -573,15 +648,19 @@ are recorded, and median `distance_cm_raw` can be computed, but a frozen M-C
 protocol with posture, orientation, clothing, and operator notes was not the
 collection contract for these legacy captures.
 
-**True radar ADC / IQ / range-bin raw is unavailable.** The lowest exposed
-respiration-related channel is still an MR60-exported phase-like intermediate
-signal.
+**True radar ADC/IQ/range-bin raw is not present or established in the
+inspected team evidence.** Inspected JSONL keys contain no ADC, IQ, or
+range-bin arrays. The lowest currently exposed respiration-related channel in
+those logs is still an MR60-exported phase-like intermediate signal. That is a
+statement about this evidence set, not a claim that the MR60 hardware can never
+expose a lower-level radar representation.
 
 **Vendor RPM cannot substitute for the AI waveform.** Using `breath_rate_raw` as
 if it were Phase-B input would be a category error.
 
-**Phase-B signal semantics are not yet proven.** Cadence match is not
-correspondence.
+**Phase-B temporal and signal-semantic correspondence are not yet proven.**
+Verified ~9.99 Hz telemetry/log-row cadence is not fresh `0x0A13` sampling and
+is not correspondence with the Phase-B 10 Hz respiration-series contract.
 
 **Legacy measurements were not collected under a pre-frozen M-C protocol.**
 They are forensic inputs, not a pre-registered `FORMAL_DEVICE_VALIDATION_SET`.
@@ -597,11 +676,12 @@ quietly rescale and retrain.
 
 Appropriate uses:
 
-- M-C0 forensic inventory of fields, timestamps, cadence, and quality
+- M-C0 forensic inventory of fields, timestamps, telemetry cadence, `phase_age_ms`, and quality
 - distinguishing `breath_phase` from `breath_rate_raw`
+- distinguishing telemetry-row cadence from fresh `0x0A13` phase-frame cadence
 - characterizing vendor rate behavior under paced cues
 - documenting lock-loss, stale phase, low-amplitude, and protocol-failure modes
-- checking whether 30-second windows are temporally constructable at ~10 Hz
+- checking whether 30-second windows of ~300 telemetry rows are constructable
 - planning M-C1 protocol so the next capture does not repeat known failure modes
 
 The data are valuable **because** they are real, timestamped, and annotated with
@@ -617,8 +697,9 @@ Do not claim any of the following from the current evidence:
 - the frozen Phase-B model is validated on the team sensor
 - deployment-ready or Raspberry Pi performance from these logs
 - clinical apnea detection
-- `breath_phase` is true radar ADC/IQ/rFFT
-- 300 MR60 samples are automatically a valid Phase-B input
+- `breath_phase` is proven true radar ADC/IQ/rFFT
+- 300 telemetry rows are automatically 300 fresh phase observations or a valid Phase-B input
+- a ~9.99 Hz log-row cadence is already Phase-B temporal correspondence
 - a universal vendor rpm offset exists
 - D15 proves “distance std ≈ 0”
 - the invalid 12 rpm file is a 12 rpm reference
@@ -644,7 +725,9 @@ that capture.
 - explicit recording of intended vs actually performed breathing rate
 - keep failed sessions, but separate them from success references before any
   evaluation
-- do not instruct shallow breathing as a “success” condition
+- shallow breathing must not be treated as a clean reference/success condition
+  unless it is explicitly pre-registered as a robustness condition with
+  separate QA criteria
 - continue storing raw `breath_phase` without smoothing or synthetic fill
 - continue storing vendor `breath_rate_raw` for comparison, without using it as
   the AI waveform
@@ -663,6 +746,8 @@ Existing team measurements
         ↓
 M-C0 forensic / device-domain correspondence audit
         ↓
+separate telemetry cadence vs fresh 0x0A13 cadence vs stale/repeated breath_phase
+        ↓
 determine whether breath_phase can defensibly construct the frozen Phase-B input
         ↓
 optional exploratory legacy inference if correspondence is established
@@ -678,9 +763,10 @@ If correspondence cannot be established, a scientifically valid M-C0 result is
 still:
 
 ```text
-cadence = YES
-signal  = UNKNOWN
-inference BLOCKED
+telemetry cadence              = YES for multiple sessions
+fresh 0x0A13 phase cadence     = UNKNOWN / PARTIAL
+signal semantics               = UNKNOWN
+inference                      BLOCKED
 ```
 
 That outcome would document a measured device-domain gap. It would not by itself
@@ -702,14 +788,16 @@ Frozen offline candidate, from standalone
 - not MR60-validated, not deployment-ready, APNEA remains a proxy
 
 Existing team data looks promising for **starting** correspondence work because
-timestamps, ~10 Hz cadence, and `breath_phase` exist. It does not finish that
-work.
+timestamps, ~10 Hz telemetry-row cadence, and a `breath_phase` field exist. It
+does not finish that work. In particular, ~10 Hz log rows are not yet shown to
+be ~10 Hz fresh phase observations.
 
 ## Appendix B. Traceability index
 
 | Claim | Source |
 | --- | --- |
 | `0x0A13` / `0x0A14` field mapping | `devices/mmwave/firmware/src/main.cpp` |
+| Telemetry emit interval 100 ms vs phase-frame update | `include/mmwave_config.h` `kTelemetryIntervalMs`; `src/main.cpp` `loop()` / `handleValidFrame()` / `phase_age_ms` |
 | Export does not normalize/resample | `devices/mmwave/firmware/export_mmwave_csv.py` |
 | Delivery session list and SHA-256 | `devices/mmwave/firmware/csv/2026-07-26_han_junwoo_delivery_v2/manifest.json` |
 | Failed 12 rpm label | same manifest; `DELIVERY_NOTES.md`; `analysis_tools/phase_any_session.py` → 6.06 rpm |
@@ -717,7 +805,7 @@ work.
 | No independent heart/respiration sensor | `analysis/breath/2026-07-28_vitals_measured_vs_reference.json` |
 | ~31 min schema 1.2 log | `logs/final/2026-08-01_occupied_d09_v120_31min_attempt02.jsonl` |
 | 51 / 18,276 = 0.279% gate mismatch | commit `3b44e505…`; `docs/operations/PROJECT_PROGRESS.md` |
-| Cadence table | recomputed from delivery CSVs; matches manifest `diagnostics` |
+| Telemetry row-cadence table | recomputed from delivery CSVs; matches manifest `diagnostics`; this is log-row cadence, not proven fresh `0x0A13` cadence |
 | D15 distance sample std ~2.94 cm | recomputed from D15 JSONL `distance_cm_raw` after 60 s warmup |
 | Participant `S001` only in delivery CSVs | CSV `subject_id` column; exporter `DEFAULT_SUBJECT` |
 | Phase-B frozen contract | standalone `docs/reports/20260813_Cursor_M-B12_mmWave_Phase_B_Offline_Final_Report_01.md` |
