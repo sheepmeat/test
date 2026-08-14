@@ -125,7 +125,7 @@ EMPTY, STANDING, SITTING, LYING, UNKNOWN, NOT_ANNOTATED
 
 LYING MUST mean an observed lying posture only. It MUST NOT be represented as a verified temporal fall event. A derived HUMAN_FALL label, if ever used, MUST be marked as an explicitly qualified DERIVED_POSTURE_PROXY and MUST NOT be called event ground truth.
 
-For a genuinely authorized, safe transition capture, the annotation MUST preserve event_id, ordered frame or timestamp ranges, and phase evidence such as PRE_EVENT, FALL_TRANSITION, POST_FALL_LYING, and RECOVERY. Uncontrolled or unprotected free-fall experiments MUST NOT be improvised or required.
+For a genuinely authorized, safe transition capture, the annotation MUST preserve event_id, ordered frame or timestamp ranges, and phase evidence such as PRE_EVENT, FALL_TRANSITION, POST_FALL_LYING, and RECOVERY. To emit TEMPORAL_PROVENANCE_VERIFIED, the validator requires validated, non-overlapping phase_ranges for the same event_id; frame-scoped event_phase labels alone are insufficient. Uncontrolled or unprotected free-fall experiments MUST NOT be improvised or required.
 
 ## 9. Storage and immutability
 

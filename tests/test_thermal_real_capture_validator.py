@@ -74,6 +74,17 @@ def test_valid_temporal_capable_session() -> None:
     assert result["errors"] == []
 
 
+def test_event_phase_labels_without_ordered_ranges_cannot_verify_temporal_provenance(tmp_path: Path) -> None:
+    root = _copy_example(tmp_path, TEMPORAL_EXAMPLE)
+    annotations_path = next(root.rglob("annotations.jsonl"))
+    records = _read_jsonl(annotations_path)
+    records[0]["phase_ranges"] = []
+    _write_jsonl(annotations_path, records)
+    _refresh_checksums(next(root.rglob("session.json")).parent)
+    result = validate_capture(root)
+    assert result["temporal_provenance_status"] != "TEMPORAL_PROVENANCE_VERIFIED"
+
+
 def test_duplicate_frame_id_is_rejected(tmp_path: Path) -> None:
     root = _copy_example(tmp_path)
     frames_path = next(root.rglob("frames.jsonl"))

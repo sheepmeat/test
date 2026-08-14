@@ -216,6 +216,8 @@ split은 frame 단위로 하지 않습니다. 가능한 강한 순서로 subject
 
 capture contract v1에서는 DEVICE_CONTRACT_PILOT, REAL_DEVELOPMENT, FUTURE_TRAIN_CANDIDATE, REAL_LOCKED_TEST 네 role만 선언합니다. TRAIN/VALIDATION 승격이나 TRAINING_ALLOWED 권한은 이 validator가 부여하지 않으며, 이후 T-D의 별도 promotion/split evidence에서만 승인합니다.
 
+temporal provenance를 검증하려면 같은 event_id에 대해 PRE_EVENT → FALL_TRANSITION → POST_FALL_LYING의 검증된 비중첩 phase_ranges가 있어야 합니다. frame annotation의 event_phase만 붙인 경우에는 temporal provenance 검증으로 승격되지 않습니다.
+
 ## 11. 절대 하지 말 것
 
 - thermal_max_c 또는 max/min scalar만 저장하기

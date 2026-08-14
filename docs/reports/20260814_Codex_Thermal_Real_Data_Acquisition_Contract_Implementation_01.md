@@ -48,7 +48,7 @@ Pilot, development, future-train-candidate, and locked-test roles are separate. 
 
 ### Integrity
 
-The validator checks JSON/JSONL structure, identity, declared-vs-discovered collection inventory, frame representation requirements, raw/decoded file registration, extra files, SHA-256 coverage/mismatch, timing reversals and gaps, packet/decode status, annotation references/ranges, temporal range non-overlap and event-ID integrity, and scalar-only or preprocessed-only classification.
+The validator checks JSON/JSONL structure, identity, declared-vs-discovered collection inventory, frame representation requirements, raw/decoded file registration, extra files, SHA-256 coverage/mismatch, timing reversals and gaps, packet/decode status, annotation references/ranges, temporal range non-overlap and event-ID integrity, and scalar-only or preprocessed-only classification. TEMPORAL_PROVENANCE_VERIFIED additionally requires the same event_id to have validated PRE_EVENT, FALL_TRANSITION, and POST_FALL_LYING phase_ranges; frame-scoped event_phase labels alone cannot satisfy that gate.
 
 ## Synthetic smoke evidence
 

@@ -707,9 +707,13 @@ def _validate_annotations(
                 previous_phase_order = max(previous_phase_order, current_phase_order)
     valid_frame_ids = {frame.get("frame_id") for frame in frames if frame.get("validity_status") == "VALID"}
     coverage = len(annotated_frame_ids & valid_frame_ids) / len(valid_frame_ids) if valid_frame_ids else 0.0
+    phase_range_phases_by_event = {
+        event_id: {phase_name for _, _, phase_name, _ in ranges}
+        for event_id, ranges in phase_ranges_by_event.items()
+    }
     temporal_event_ids = [
         event_id
-        for event_id, phases in event_phases.items()
+        for event_id, phases in phase_range_phases_by_event.items()
         if {"PRE_EVENT", "FALL_TRANSITION", "POST_FALL_LYING"}.issubset(phases)
     ]
     range_integrity_error_codes = {
