@@ -205,7 +205,7 @@ quantization size anomaly, not evidence of a smaller FP32 model.
 - Focused tests: `11 passed`, `0 failed`, `0 errors`, `0 skipped`
 - Thermal regression: `318 passed`, `0 failed`, `0 errors`, `5 skipped` (21 warnings)
 - Contract regression: T-A6, T-B0, T-B1 FULL, T-B2, T-B3 live validators all `PASS`
-- Broader regression: `1037 passed`, `201 failed`, `5 errors`, `6 skipped` (86 warnings); failures/errors are pre-existing archive/CO₂/mmWave dependency or payload-availability issues outside T-B4
+- Broader regression: `1038 passed`, `201 failed`, `5 errors`, `6 skipped` (86 warnings); failures/errors are pre-existing archive/CO₂/mmWave dependency or payload-availability issues outside T-B4; no Thermal T-B4 failures
 - Compile/import: `python3 -m py_compile` passed for T-B4 runner, validator, and focused tests
 - git diff --check: passed before staging
 - New T-B4 failures: none
