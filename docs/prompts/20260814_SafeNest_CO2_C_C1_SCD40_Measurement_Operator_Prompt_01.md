@@ -1,14 +1,34 @@
 # SafeNest CO₂ C-C1 SCD40 Measurement Operator Prompt
 
+- Document Version: `02`
+- Author: `Codex` (CO₂ Measurement Protocol Agent)
+- Execution Date: `2026-08-15`
+- Phase: `C-C1 — Historical Four-Feature Measurement Protocol and Operator Handoff`
+- Status: `HISTORICAL_PROMPT_WITH_CURRENT_HOLD`
+
 **Protocol ID:** CO2_C_C1_MEASUREMENT_PROTOCOL_001
 **Protocol version:** 1.0.0
 **Protocol status:** FROZEN_FOR_EXTERNAL_ACQUISITION_WITH_PRECOLLECTION_COMPLIANCE_GATE
 **Audience:** physical SCD40 measurement owner
 **Execution mode:** use this document without relying on the AI development chat
 
+## Final pre-acquisition decision status (2026-08-15)
+
+~~~text
+FINAL_INPUT_DECISION: ADOPT_REDUCED_FEATURE_DIRECTION
+FUTURE_MODEL_INPUT_DIRECTION: CO2 + CO2_slope
+PHYSICAL_ACQUISITION_STATUS: HOLD_PENDING_REDUCED_FEATURE_CANDIDATE_LOCK
+OPERATOR_GUIDE_HANDOFF: HOLD
+CURRENT_B5: HISTORICAL_FROZEN_FOUR_FEATURE_CONTRACT
+B5_MODIFIED: NO
+C-C2_STARTED: NO
+~~~
+
+This four-feature guide is retained as historical C-C1 evidence only. Do not distribute or use it for physical collection under the current decision. Do not remove Temperature or Humidity from B5. A revised operator guide may be created only after the separately authorized `C-B6` CO₂ + `CO2_slope` candidate has been trained, validated, and locked.
+
 ## 0. Important boundary
 
-This prompt is the handoff for a future physical measurement owner. The C-C1 protocol-design phase itself performs no measurement and creates no new raw payload.
+This prompt was the historical handoff for a future physical measurement owner. The C-C1 protocol-design phase itself performed no measurement and created no new raw payload. The current handoff status is HOLD; no physical session may start from this guide.
 
 Do not:
 
@@ -20,7 +40,7 @@ Do not:
 
 If any precollection requirement below cannot be demonstrated, stop and return a blocked preflight record. Do not improvise a replacement field.
 
-## 1. Objective
+## 1. Objective (historical four-feature contract; collection HOLD)
 
 Collect protocol-controlled SCD40 sessions that preserve:
 
@@ -33,7 +53,9 @@ Collect protocol-controlled SCD40 sessions that preserve:
 
 The future C-C2 intake must be able to classify every session before any B5 metric is considered.
 
-## 2. Frozen contract you must not change
+Under the current final decision, the requirements in this section are historical contract evidence only. Do not execute a physical session until a revised operator guide is issued after the reduced-feature candidate lock.
+
+## 2. Historical frozen contract you must not change
 
 The B5 candidate remains:
 
