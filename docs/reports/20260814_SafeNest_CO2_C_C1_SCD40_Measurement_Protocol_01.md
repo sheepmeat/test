@@ -1,5 +1,11 @@
 # SafeNest CO₂ C-C1 SCD40 Measurement Protocol
 
+- Document Version: `02`
+- Author: `Codex` (CO₂ Measurement Protocol Agent)
+- Execution Date: `2026-08-15`
+- Phase: `C-C1 — Historical Four-Feature Measurement Protocol and Operator Handoff`
+- Status: `HISTORICAL_PROTOCOL_WITH_CURRENT_HOLD`
+
 **Protocol ID:** CO2_C_C1_MEASUREMENT_PROTOCOL_001
 **Protocol version:** 1.0.0
 **Protocol status:** FROZEN_FOR_EXTERNAL_ACQUISITION_WITH_PRECOLLECTION_COMPLIANCE_GATE
@@ -15,6 +21,27 @@ The machine-readable contract is the authority for field-level types and validat
 The independent operator handoff is:
 
 [docs/prompts/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Operator_Prompt_01.md](../prompts/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Operator_Prompt_01.md)
+
+## 0.1 Final pre-acquisition input decision (2026-08-15)
+
+The subsequent pre-acquisition model-input decision audit is recorded at:
+
+- [decision result](../../datasets/co2/manifests/c_c1_model_input_decision/model_input_decision_result.json)
+- [decision audit report](20260815_SafeNest_CO2_Pre_Acquisition_Model_Input_Decision_Audit_01.md)
+
+Its final decision is:
+
+~~~text
+FINAL_INPUT_DECISION: ADOPT_REDUCED_FEATURE_DIRECTION
+FUTURE_MODEL_INPUT_DIRECTION: CO2 + CO2_slope
+PHYSICAL_ACQUISITION_STATUS: HOLD_PENDING_REDUCED_FEATURE_CANDIDATE_LOCK
+OPERATOR_GUIDE_HANDOFF: HOLD
+CURRENT_B5: HISTORICAL_FROZEN_FOUR_FEATURE_CONTRACT
+B5_MODIFIED: NO
+C-C2_STARTED: NO
+~~~
+
+The four-feature protocol, protocol ID, version, required fields, and frozen B5 identity remain unchanged as historical C-C1 evidence. This status does not remove Temperature or Humidity from B5 and does not authorize collection with this guide. A revised protocol and operator prompt may be created only after the separately authorized `C-B6` CO₂ + `CO2_slope` candidate has been trained, validated, and locked.
 
 ## 1. Purpose and stop boundary
 
@@ -36,10 +63,10 @@ protocol frozen
 + machine-readable contract frozen
 + operator prompt independently executable
 + focused validator passes
-= C-C1 complete and ready for external handoff
+= historical C-C1 artifact complete
 ~~~
 
-The measurement owner collects data only after this handoff, outside the C-C1 implementation phase. The AI development loop must not inspect B5 performance and adapt the collection while those sessions accumulate.
+The original C-C1 contract described a future external handoff, but the later final input decision places that handoff on `HOLD`. No measurement owner may collect data from this four-feature guide until a reduced-feature candidate is separately trained, validated, locked, and given a revised protocol. Once a revised protocol is authorized, the AI development loop must not inspect model performance and adapt the collection while sessions accumulate.
 
 ## 2. Entry evidence and predecessor gate
 
@@ -468,15 +495,16 @@ Noncompliant data is preserved and classified; it is not silently discarded.
 
 C-C2 may start only when:
 
-1. this C-C1 protocol is frozen;
-2. protocol-controlled measurements have actually accumulated;
-3. the user explicitly authorizes C-C2.
+1. the final reduced-feature candidate and revised C-C1 protocol are locked;
+2. protocol-controlled measurements have actually accumulated under that revised protocol;
+3. the intake passes the pre-metric compliance gate;
+4. the user explicitly authorizes C-C2.
 
-C-C2 must audit compliance before running any B5 evaluation. C-C1 does not authorize formal metrics.
+C-C2 must audit compliance before evaluating the finally locked candidate. C-C1 does not authorize formal metrics.
 
-## 17. External accumulation boundary
+## 17. External accumulation boundary (currently HOLD)
 
-After handoff, the measurement owner follows this protocol without repeatedly inspecting B5 performance:
+The following boundary is retained as the historical C-C1 contract. Under the final input decision above, no measurement owner may begin external accumulation with this four-feature guide:
 
 ~~~text
 collect according to frozen protocol
@@ -487,13 +515,13 @@ collect according to frozen protocol
 
 The owner must not adapt session selection, duration, conditions, class balance, threshold, feature definition, or stopping rules based on B5 output. Any unavoidable deviation is logged with a reason, timestamp, affected session, and compliance consequence.
 
-## 18. Operator handoff
+## 18. Operator handoff (currently HOLD)
 
 The standalone operational prompt is:
 
 [docs/prompts/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Operator_Prompt_01.md](../prompts/20260814_SafeNest_CO2_C_C1_SCD40_Measurement_Operator_Prompt_01.md)
 
-It can be handed to the physical measurement owner without this chat. It includes:
+It is retained for provenance and must not currently be handed to a physical measurement owner for collection. It includes:
 
 - precollection adapter compliance gate;
 - hardware and revision fields;
@@ -547,3 +575,5 @@ These items do not authorize collection before resolution. They make the handoff
 ## 21. Scientific boundary
 
 C-C1 freezes the measurement process, not the model. The locked B5 candidate remains untouched. No physical measurement, new raw payload, B5 inference, formal occupancy metric, model retraining, scaler refit, threshold change, C-C2 intake, or C-D work is authorized by this document.
+
+The later decision audit adds a stricter current boundary: physical acquisition and operator distribution remain `HOLD_PENDING_REDUCED_FEATURE_CANDIDATE_LOCK` until a new reduced-feature candidate and a revised protocol are separately authorized and locked.

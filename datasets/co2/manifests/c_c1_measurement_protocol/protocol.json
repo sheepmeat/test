@@ -16,6 +16,26 @@
     "c_c2_started": false,
     "c_d_authorized": false
   },
+  "post_c_c1_model_input_decision": {
+    "decision_audit_path": "datasets/co2/manifests/c_c1_model_input_decision/model_input_decision_result.json",
+    "decision": "ADOPT_REDUCED_FEATURE_DIRECTION",
+    "future_model_input_direction": [
+      "CO2",
+      "CO2_slope"
+    ],
+    "current_protocol_semantics": "HISTORICAL_FOUR_FEATURE_B5_COMPATIBILITY_CONTRACT",
+    "physical_acquisition_status": "HOLD_PENDING_REDUCED_FEATURE_CANDIDATE_LOCK",
+    "operator_handoff_status": "HOLD",
+    "revised_protocol_creation": "DEFERRED_UNTIL_REDUCED_FEATURE_CANDIDATE_LOCK",
+    "next_model_phase": {
+      "phase_id": "C-B6",
+      "title": "Reduced-Feature Candidate Development and Lock",
+      "authorization_required": true
+    },
+    "b5_threshold_0_58_inheritance_to_reduced_model": "FORBIDDEN",
+    "b5_modified": false,
+    "c_c2_started": false
+  },
   "predecessor_c_c0_evidence": {
     "status": "MERGED_ON_CURRENT_ORIGIN_MAIN",
     "standalone_origin_main_sha": "0625603f319b18cd6ad86b33dcca5ce2147ac2af",
