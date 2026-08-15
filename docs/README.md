@@ -7,6 +7,7 @@
 - [mmWave Phase B 개요](MMWAVE_PHASE_B_OVERVIEW.md)
 - [활성 팀 통합 프롬프트](TEAM_HANDOFF_GUIDE.md)
 - [멀티센서 중간배포 기술 맥락 및 인수인계](reports/20260813_SafeNest_Multisensor_Intermediate_Release_Technical_Context_01.md)
+- [Thermal AI 실시간 활용·Temporal Fall 인수인계](20260815_Codex_Thermal_Runtime_Temporal_Handoff_KO_01.md)
 - [기존 팀 MR60 실측 데이터 평가 (영문 기술/증거 보고서)](reports/20260814_SafeNest_mmWave_Existing_Team_MR60_Data_Evaluation_01.md)
 - [팀 MR60 실측 평가 및 향후 수집 가이드 (한글, 사람용 설명)](reports/20260814_SafeNest_mmWave_Team_MR60_Data_Evaluation_KR_01.md)
 - [A5 subject split·provenance 결과](reports/20260808_Antigravity_A5_Subject_Split_Provenance_01.md)
