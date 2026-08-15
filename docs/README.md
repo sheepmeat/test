@@ -5,7 +5,7 @@
 - [멀티센서 병렬 A–E master roadmap](20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md)
 - [기존 mmWave A–E 상세 실행 순서](20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md)
 - [mmWave Phase B 개요](MMWAVE_PHASE_B_OVERVIEW.md)
-- [mmWave 기술 인수인계 (사람용 설명 + 현재 상태·M-C0 경계)](20260815_SafeNest_mmWave_Technical_Handoff_01.md)
+- [mmWave 기술 인수인계 (사람 우선 서술 + 현재 상태·M-C0 경계)](20260815_SafeNest_mmWave_Technical_Handoff_01.md)
 - [mmWave 실측 안내서 (PRE-M-C1, 현장 측정자가 왜·어떻게 찍는지)](20260815_SafeNest_mmWave_Real_Data_Measurement_Guide_KO_01.md)
 - [활성 팀 통합 프롬프트](TEAM_HANDOFF_GUIDE.md)
 - [멀티센서 중간배포 기술 맥락 및 인수인계](reports/20260813_SafeNest_Multisensor_Intermediate_Release_Technical_Context_01.md)
