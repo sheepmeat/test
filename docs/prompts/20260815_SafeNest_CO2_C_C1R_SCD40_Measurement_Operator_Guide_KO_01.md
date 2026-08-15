@@ -4,12 +4,12 @@
 - 작성 에이전트: `Codex` (CO₂ C-C1T Acquisition Tooling Readiness Agent)
 - 작성일: `2026-08-15`
 - 단계: `C-C1R → C-C1T — Acquisition Tooling Readiness and Pre-Collection Compliance Gate`
-- 문서 상태: `HOLD_PENDING_TEAM_PRODUCER_OBSERVABILITY_PR_DEPLOYMENT`
+- 문서 상태: `FORMAL_PROTOCOL_APPENDIX_HOLD_EXPLORATORY_HANDOFF_READY`
 - C-C1R predecessor machine status: `HOLD_PENDING_ACQUISITION_TOOLING_CORRECTION`
 - 프로토콜 ID: `CO2_C_C1R_REDUCED_MEASUREMENT_PROTOCOL_001`
 - 프로토콜 버전: `1.0.0`
 
-> **현재는 실측을 시작하지 마세요.** C-C1T에서 standalone capture/검증 도구와 dry-run은 준비됐지만, 팀 producer 관측성 변경은 팀 PR [#19](https://github.com/jinsu1011/safenest-embedded-competition/pull/19)에서 아직 `OPEN`이며 team `main`에 merge/deploy되지 않았습니다. 이 안내서와 실측은 해당 변경이 반영되고 재검증될 때까지 보류합니다.
+> 이 문서는 C-C1R의 **정식 protocol-controlled measurement appendix**입니다. 정식 실측은 producer fresh-event 배포와 live C-C1T 검증 전까지 보류합니다. 지금 가능한 1차 exploratory 실측은 [두 단계 통합 안내서](20260815_SafeNest_CO2_SCD40_Physical_Measurement_Guide_KO_01.md)의 Mode 1을 따르십시오. Exploratory evidence는 보존하지만 자동으로 C-C2 formal evidence가 되지 않습니다.
 
 ## 1. 이번 실측에서 필요한 AI 입력
 
@@ -33,7 +33,7 @@ SCD40 / ESP32
   → Pi에서 ENDPOINT_H150 방식으로 CO2_slope 계산
 ```
 
-## 2. 지금 바로 측정하지 않는 이유
+## 2. 정식 protocol-controlled 측정을 지금 시작하지 않는 이유
 
 현재 팀의 `devices/co2/firmware/capture_scd40.py`는 Pi `/health`를 주기적으로 읽어 CO₂ 값, transport 상태, host 시간, raw 응답을 저장합니다. 하지만 다음을 현재 경로만으로는 증명할 수 없습니다.
 
@@ -44,7 +44,9 @@ SCD40 / ESP32
 - 독립적인 VACANT/OCCUPIED 시간표시 ground truth인지;
 - 세션별 raw checksum bundle인지.
 
-따라서 다음 조건이 충족되기 전까지는 `PHYSICAL_ACQUISITION = HOLD`입니다.
+따라서 다음 조건이 충족되기 전까지는 **정식 protocol-controlled 측정**의
+`PHYSICAL_ACQUISITION = HOLD`입니다. 이것은 pre-deployment exploratory
+real-device collection까지 금지한다는 뜻은 아닙니다.
 
 1. fresh CO₂ 이벤트 marker와 그 이벤트의 chronology를 제공하는 capture adapter가 준비될 것.
 2. 프로토콜/세션/후보 ID와 실패·누락 상태를 저장할 것.
@@ -53,14 +55,16 @@ SCD40 / ESP32
 
 이번 C-C1T에서는 팀 저장소의 AI/model/runtime를 변경하지 않고, SCD40 성공 읽기 event 관측성만 별도 팀 PR로 제안했습니다. 팀 PR은 이 작업에서 merge하지 않았습니다. PR #19가 검토·merge·배포되고 나면 동일한 capture contract와 precollection validator를 다시 실행해야 합니다.
 
-standalone 도구의 dry-run은 실제 센서 검증이 아닙니다. 현재 precollection 결과는 다음과 같습니다.
+standalone 도구의 dry-run은 실제 센서 검증이 아닙니다. 현재 formal
+precollection 결과는 다음과 같습니다.
 
 ```text
 C_C1T: BLOCKED
 DRY_RUN_VALIDATION: PASS
 TEAM_PRODUCER_OBSERVABILITY: IMPLEMENTED_ON_FEATURE_BRANCH_ONLY
 TEAM_PR: #19 OPEN
-PHYSICAL_ACQUISITION: HOLD
+FORMAL_PHYSICAL_ACQUISITION: HOLD
+EXPLORATORY_PHYSICAL_ACQUISITION: ALLOWED
 ```
 
 ## 3. 연결과 시작 전 확인
@@ -81,9 +85,11 @@ PHYSICAL_ACQUISITION: HOLD
 
 하나라도 확인할 수 없으면 실측을 시작하지 말고 `OPERATOR_HANDOFF_BLOCKED_BY_ACQUISITION_TOOLING`으로 보고합니다.
 
-### 3.1 승인된 capture 도구와 사전검증 명령
+### 3.1 정식 Mode 2 capture 도구와 사전검증 명령
 
-팀 PR #19가 team `main`에 반영·배포되고, 아래 validator가 다시 통과하기 전에는 명령을 실행해도 실측 bundle을 수집하지 않습니다.
+팀 PR #19가 team `main`에 반영·배포되고, 아래 validator가 다시 통과하기
+전에는 이 명령으로 **정식 bundle**을 수집하지 않습니다. 지금 가능한
+exploratory 명령은 새 통합 안내서의 Mode 1에 있습니다.
 
 ```bash
 python3 scripts/capture_co2_c_c1t_session.py \
@@ -242,9 +248,13 @@ KNOWN_NONBLOCKING_LIMITATION_FOR_DEVICE_DOMAIN_OBSERVATION
 ```text
 프로토콜: FROZEN
 운영자 handoff: HOLD_PENDING_TEAM_PRODUCER_OBSERVABILITY_PR_DEPLOYMENT
-실측 시작: NO
+정식 실측 시작: NO
+1차 exploratory 실측: ALLOWED
 C-C2: NOT_STARTED
 팀 producer 관측성 PR: #19 OPEN / merge·deploy 안 됨
 ```
 
-팀 producer 변경의 merge/deploy와 C-C1T precollection validator PASS가 확인된 뒤에만 이 안내서를 실제 운영자에게 배포합니다. 그때도 별도 승인 없이 C-C2를 시작하지 않습니다.
+팀 producer 변경의 merge/deploy와 C-C1T precollection validator PASS가
+확인된 뒤에만 이 appendix를 정식 운영자에게 배포합니다. 현재 exploratory
+운영자에게는 새 통합 안내서를 공유합니다. 그때도 별도 승인 없이 C-C2를
+시작하지 않습니다.

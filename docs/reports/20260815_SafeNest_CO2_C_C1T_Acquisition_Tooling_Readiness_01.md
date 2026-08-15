@@ -16,6 +16,15 @@ new physical data, run model inference, alter the C-B6 candidate, recompute a
 scaler, change a threshold, change TFLite artifacts, start C-C2, or authorize
 C-D.
 
+The `C_C1T_BLOCKED` result in this report is the **formal
+protocol-controlled acquisition gate**. It does not prohibit a separate
+pre-deployment exploratory real-device collection. Exploratory sessions may
+record real CO₂ range, qualitative VACANT/OCCUPIED behavior, transport and
+failure modes, and capture workflow evidence under the explicit class
+`PRE_DEPLOYMENT_EXPLORATORY_REAL_DEVICE_EVIDENCE`. Such evidence is retained
+but is not automatically eligible for C-C2 formal performance evaluation when
+fresh sensor-event identity is unverified.
+
 The effective model-input/export contract remains 60 seconds. The capture
 logger may poll the Pi more frequently to observe producer events; that logger
 interval is not a claim about the native SCD40 cadence and does not authorize

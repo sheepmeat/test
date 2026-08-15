@@ -9,7 +9,7 @@
 - 상태: `ACTIVE_MASTER_ROADMAP`
 - 2026-08-14 개정: mmWave `M-C`를 기존 팀 MR60 forensic audit → correspondence gate → 선택적 탐색 추론 → 프로토콜 실측 → 정식 평가로 세분. Phase A/B 역사는 유지한다.
 - 2026-08-14 CO₂ 개정: `C-C`를 기존 팀 SCD40 legacy audit(`C-C0`) → measurement protocol freeze/operator handoff(`C-C1`) → 외부 protocol-controlled acquisition → later controlled intake/formal validation(`C-C2`)로 분리한다. logger/transport/sensor freshness, frozen feature-vector completeness, unit과 feature semantics, calibration 필드를 분리한다. Phase A/B 역사와 frozen C-B5는 변경하지 않는다.
-- 2026-08-15 CO₂ 개정: PR #78의 T/RH feature-necessity 결과(`T_RH_FEATURE_DEPENDENCE_INCONCLUSIVE`)를 후속 5-seed·paired-bootstrap pre-acquisition decision audit로 재평가했다. 네 feature arm의 modest/repeatable predictive benefit은 관측됐지만 reduced-feature predictive superiority는 확립되지 않았다. 시스템 contract burden of proof가 충족되지 않아 최종 방향은 `ADOPT_REDUCED_FEATURE_DIRECTION`이며, `C-B6` reduced-feature candidate development/lock을 별도 model phase로 둔다. 현재 four-feature C-C1 protocol/B5는 historical evidence로 보존하고 physical acquisition과 operator handoff를 C-B6 lock 전까지 `HOLD`한다. B5와 LOCKED_TEST는 변경하지 않는다.
+- 2026-08-15 CO₂ 개정: PR #78의 T/RH feature-necessity 결과(`T_RH_FEATURE_DEPENDENCE_INCONCLUSIVE`)를 후속 5-seed·paired-bootstrap pre-acquisition decision audit로 재평가했다. 네 feature arm의 modest/repeatable predictive benefit은 관측됐지만 reduced-feature predictive superiority는 확립되지 않았다. 시스템 contract burden of proof가 충족되지 않아 최종 방향은 `ADOPT_REDUCED_FEATURE_DIRECTION`이며, `C-B6` reduced-feature candidate development/lock을 별도 model phase로 둔다. 현재 four-feature C-C1 protocol/B5는 historical evidence로 보존하고 formal protocol-controlled physical acquisition과 formal operator handoff를 C-B6 lock 전까지 `HOLD`한다. exploratory real-device observation은 별도 evidence class로 관리한다. B5와 LOCKED_TEST는 변경하지 않는다.
 - 2026-08-15 C-B6 실행: `C_B6_REDUCED_CO2_SLOPE_CANDIDATE_001`을 새 TRAIN-only scaler, TRAIN-internal-only threshold policy, Float/TFLite/full-integer INT8 artifact, validation evidence, checksum, lock으로 생성했다. 최종 threshold는 `0.43`이며 B5 `0.58`은 상속하지 않았다. C-B6 focused validator와 INT8 equivalence gate는 PASS지만 CO2_slope INT8 input saturation이 관측되어 phase 상태는 `C_B6_PASS_WITH_LIMITATIONS`다. 다음은 limitation review를 포함한 `C-C1R` protocol revision/hand-off authorization이며 physical acquisition은 계속 `HOLD`한다.
 - 2026-08-15 C-C1R 실행: `CO2_C_C1R_REDUCED_MEASUREMENT_PROTOCOL_001`을 C-B6 lock에 결속해 동결했다. `CO2 + Pi-derived CO2_slope`, nominal 60초 effective model-input/export cadence, transport/sensor freshness 분리, `ENDPOINT_H150` 150초·90초 초과 gap reset, 독립 VACANT/OCCUPIED GT, raw JSONL/session/checksum 계약을 정의했다. 다만 team main `3d86bf2a...`의 현재 capture path는 fresh SCD40 event marker/chronology와 protocol/session/candidate manifest를 제공하지 않아 `OPERATOR_HANDOFF_BLOCKED_BY_ACQUISITION_TOOLING`이다. 따라서 `C_C1R_BLOCKED`, protocol은 `FROZEN`, physical acquisition은 `HOLD`, C-C2는 `NOT_STARTED`다.
 
@@ -232,7 +232,7 @@ refactor/integration-provider-contract
 - domain gap, missingness, latency, warming-up, stale 정책을 측정한다
 - mmWave `breath_phase`와 `breath_rate_raw`를 동일 신호로 취급하지 않는다
 - 기존 팀 실측을 정식 validation set으로 승격하지 않는다
-- C-C0/C-C1의 gap과 final model-input decision은 측정 protocol·candidate lock을 설계하는 근거이지 C-B5 재튜닝이나 자동 C-D 허가가 아니다. 현재 reduced 방향은 four-feature predictive superiority를 뜻하지 않으며, C-B6가 `C_B6_PASS_WITH_LIMITATIONS`로 닫혔고 C-C1R protocol이 동결됐어도 현재 team acquisition tooling correction과 precollection validator PASS 전까지 physical acquisition을 HOLD한다. C-C2 formal validation 결과와 별도 decision gate 뒤에만 측정·승인된 gap에 한해 M/C/T-D 진입한다. mmWave `DEVICE_DOMAIN_GAP_OBSERVED`도 Phase-B 수정이나 자동 M-D를 허가하지 않는다
+- C-C0/C-C1의 gap과 final model-input decision은 측정 protocol·candidate lock을 설계하는 근거이지 C-B5 재튜닝이나 자동 C-D 허가가 아니다. 현재 reduced 방향은 four-feature predictive superiority를 뜻하지 않으며, C-B6가 `C_B6_PASS_WITH_LIMITATIONS`로 닫혔고 C-C1R protocol이 동결됐어도 team acquisition tooling correction과 precollection validator PASS 전까지 formal protocol-controlled physical acquisition을 HOLD한다. Exploratory pre-deployment real-device observation은 별도 evidence class로 허용할 수 있지만 자동으로 C-C2 evidence가 되지 않는다. C-C2 formal validation 결과와 별도 decision gate 뒤에만 측정·승인된 gap에 한해 M/C/T-D 진입한다. mmWave `DEVICE_DOMAIN_GAP_OBSERVED`도 Phase-B 수정이나 자동 M-D를 허가하지 않는다
 
 ### Gate P4 — integration readiness
 
@@ -2251,9 +2251,72 @@ Opening the team PR does not authorize physical acquisition. After explicit
 review and merge/deploy of the team producer change, C-C1T must be rerun
 against the deployed path before the operator guide can become `READY`.
 
+#### C-C1T human handoff: two evidence levels
+
+The formal C-C1T gate remains blocked on deployed producer fresh-event
+observability, but this must not be interpreted as a ban on every real-device
+observation. The current handoff has two separate statuses:
+
+```text
+EXPLORATORY_OPERATOR_HANDOFF: READY_FOR_HANDOFF
+EXPLORATORY_PHYSICAL_COLLECTION: ALLOWED
+EXPLORATORY_EVIDENCE_CLASS: PRE_DEPLOYMENT_EXPLORATORY_REAL_DEVICE_EVIDENCE
+EXPLORATORY_AUTOMATIC_C_C2_ELIGIBILITY: NO
+
+FORMAL_PROTOCOL_OPERATOR_HANDOFF: HOLD
+FORMAL_PROTOCOL_COLLECTION: HOLD_PENDING_PRODUCER_DEPLOYMENT_AND_LIVE_C_C1T_VERIFICATION
+FORMAL_EVIDENCE_CLASS_AFTER_RELEASE: PROTOCOL_CONTROLLED_REAL_DEVICE_EVIDENCE
+```
+
+Pre-deployment exploratory evidence may characterize real CO₂ range, stable
+VACANT/OCCUPIED qualitative behavior, rise/recovery, transport stability,
+stale/missing/error modes, capture workflow, and future protocol needs. It is
+retained evidence, not discarded data. If a fresh physical measurement event
+identity is not available, it must be labelled
+`fresh_sensor_event_identity=UNVERIFIED` and cannot automatically support a
+formal `ENDPOINT_H150` chronology claim, C-C2 performance metrics, or
+candidate accuracy/F1 claims.
+
+The human-facing documents are:
+
+```text
+docs/handoff/20260815_SafeNest_CO2_AI_and_Measurement_Handoff_KO_01.md
+docs/prompts/20260815_SafeNest_CO2_SCD40_Physical_Measurement_Guide_KO_01.md
+datasets/co2/manifests/c_c1t_acquisition_tooling/human_handoff_status.json
+```
+
+The practical flow is:
+
+```text
+C-C1T tooling prepared
+        ↓
+exploratory collection allowed now
+        ↓                         ↘
+pre-deployment real-device evidence  team producer fresh-event review/deploy
+                                      ↓
+                               live C-C1T verification
+                                      ↓
+                               formal acquisition release
+                                      ↓
+                           protocol-controlled accumulation
+                                      ↓
+                                explicit C-C2 authorization
+```
+
 ### External protocol-controlled data accumulation (currently HOLD)
 
-The historical C-C1 contract describes how a future measurement owner would accumulate sessions, but the current measurement status is `HOLD_PENDING_TEAM_PRODUCER_OBSERVABILITY_PR_DEPLOYMENT`. No external session may start from the four-feature prompt or the C-C1R draft while the deployed acquisition adapter lacks the required fresh-event evidence. After the team change is deployed and the C-C1T precollection validator PASS is rerun, accumulation remains outside C-C2 and outside model development: the operator does not repeatedly inspect model performance to alter scenario balance, stopping rules, thresholds, features, or collection conditions. Any deviation receives a reason, timestamp, affected session, and compliance classification. Raw payloads remain immutable and the future validation set is not used as an adaptive tuning set.
+The historical C-C1 contract describes formal protocol-controlled accumulation.
+That formal path remains `HOLD_PENDING_TEAM_PRODUCER_OBSERVABILITY_PR_DEPLOYMENT`.
+No formal session may start from the C-C1R contract while the deployed
+acquisition adapter lacks the required fresh-event evidence. Exploratory
+pre-deployment sessions may run under the separate evidence class above and
+must not be silently promoted to C-C2 inputs. After the team change is deployed
+and the C-C1T live validator PASS is rerun, formal accumulation remains outside
+C-C2 and outside model development: the operator does not repeatedly inspect
+model performance to alter scenario balance, stopping rules, thresholds,
+features, or collection conditions. Any deviation receives a reason, timestamp,
+affected session, and compliance classification. Raw payloads remain immutable
+and the future validation set is not used as an adaptive tuning set.
 
 ### C-C2. Controlled evidence intake & formal device-domain validation
 

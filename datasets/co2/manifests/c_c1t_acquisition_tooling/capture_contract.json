@@ -70,7 +70,8 @@
     "pr_url": "https://github.com/jinsu1011/safenest-embedded-competition/pull/19",
     "deployed_to_team_main": false,
     "merge_authorized_by_user": false,
-    "physical_collection_before_deployment": "FORBIDDEN"
+    "formal_protocol_collection_before_deployment": "FORBIDDEN",
+    "exploratory_collection_before_deployment": "ALLOWED_WITH_UNVERIFIED_EVENT_LIMITATION"
   },
   "required_dry_run_cases": [
     "fresh_event",
@@ -88,7 +89,19 @@
   ],
   "readiness_policy": {
     "dry_run_pass_is_not_real_sensor_validation": true,
-    "team_pr_must_be_merged_and_deployed_before_physical_collection": true,
+    "pre_deployment_exploratory_collection": {
+      "allowed": true,
+      "evidence_class": "PRE_DEPLOYMENT_EXPLORATORY_REAL_DEVICE_EVIDENCE",
+      "fresh_sensor_event_identity": "UNVERIFIED_ALLOWED_AS_LIMITATION",
+      "formal_c_c2_eligibility_by_default": false,
+      "formal_endpoint_h150_claim": "BLOCKED_UNLESS_FRESH_EVENT_CHRONOLOGY_IS_VERIFIED"
+    },
+    "formal_protocol_controlled_collection": {
+      "allowed_before_team_producer_deployment": false,
+      "evidence_class_after_release": "PROTOCOL_CONTROLLED_REAL_DEVICE_EVIDENCE",
+      "team_pr_must_be_merged_and_deployed": true,
+      "live_c_c1t_readiness_must_pass": true
+    },
     "operator_handoff_ready_only_after_precollection_pass": true,
     "c_c2_started": false,
     "c_d_authorized": false
