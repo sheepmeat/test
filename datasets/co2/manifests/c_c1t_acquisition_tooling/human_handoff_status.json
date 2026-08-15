@@ -3,7 +3,7 @@
   "phase": "C-C1T-HUMAN-HANDOFF",
   "date": "2026-08-15",
   "agent": "Codex (Final CO2 Human Handoff Documentation Agent)",
-  "standalone_main_sha": "43221f34b2c346892ef5effd4cfef2774283ba58",
+  "standalone_main_sha": "5000354536cf3fd2bdaea10a5db3ce2c6fe1f219",
   "handoff_status": "CO2_HANDOFF_PACKAGE_READY",
   "handoff_document_version": "02",
   "handoff_document": "docs/handoff/20260815_SafeNest_CO2_AI_and_Measurement_Handoff_KO_01.md",
