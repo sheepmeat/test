@@ -2194,9 +2194,66 @@ Therefore the protocol is frozen but `OPERATOR_GUIDE_HANDOFF` and
 `OPERATOR_HANDOFF_BLOCKED_BY_ACQUISITION_TOOLING`. C-C1R did not modify team
 code, C-B6 artifacts, or start C-C2.
 
+### C-C1T. Acquisition tooling readiness and pre-collection compliance gate (2026-08-15)
+
+`C-C1T` inspected the actual ESP32 SCD40 producer and the Raspberry Pi
+pass-through before any physical collection. The producer calls
+`getDataReadyStatus()` and only accepts a value after successful
+`readMeasurement()`, but the former telemetry contract exposed only packet
+`seq`, `co2Valid`, and the cached CO₂ value. Packet sequence and Pi receipt
+freshness therefore could not prove a new SCD40 measurement event.
+
+The minimum producer-side observability correction is isolated in team PR #19:
+
+```text
+repository: jinsu1011/safenest-embedded-competition
+team main base: 3d86bf2a7a4e527d7aba2dfabcb087201ffeb46e
+feature branch: feature/C-C1T-co2-fresh-event-observability
+feature commit: a7db03e6d7c65e91c52839e7b337c0886fa3431a
+PR: #19 OPEN
+```
+
+The change exposes `co2_measurement_event_id`,
+`co2_measurement_monotonic_ms`, and `co2_measurement_event_valid` only after
+an accepted SCD40 read, and passes them through the Pi state. It does not
+modify the AI model, scaler, threshold, feature order, or runtime decision
+logic. The PR has not been merged or deployed in this task.
+
+Standalone C-C1T tooling is recorded in
+`datasets/co2/manifests/c_c1t_acquisition_tooling/capture_contract.json` and
+implemented by `scripts/capture_co2_c_c1t_session.py`. It preserves raw
+payloads before preprocessing, distinguishes `FRESH_EVENT` from
+`CACHED_RETRANSMISSION`, records missing/transport failures, writes
+independent ground-truth events, and finalizes a per-session SHA-256 bundle.
+The precollection validator is
+`scripts/validate_co2_c_c1t_precollection.py`; its deterministic fixture
+contains two fresh events and one retransmission and passes the bundle
+validator. The 60-second effective model-input/export cadence remains
+explicitly declared and separate from logger polling and native SCD40
+cadence.
+
+The current C-C1T result is:
+
+```text
+C_C1T: C_C1T_BLOCKED
+TOOLING_CONTRACT: PASS
+DRY_RUN_BUNDLE: PASS
+TEAM_PRODUCER_CHANGE: IMPLEMENTED_ON_FEATURE_BRANCH_ONLY
+TEAM_PR: #19 OPEN
+TEAM_MAIN_DEPLOYMENT: NO
+OPERATOR_GUIDE_HANDOFF: HOLD_PENDING_TEAM_PRODUCER_PR_MERGE_AND_DEPLOYMENT
+PHYSICAL_ACQUISITION: HOLD
+C-C2: NOT_STARTED
+C-D: NOT_AUTHORIZED
+```
+
+Opening the team PR does not authorize physical acquisition. After explicit
+review and merge/deploy of the team producer change, C-C1T must be rerun
+against the deployed path before the operator guide can become `READY`.
+
 ### External protocol-controlled data accumulation (currently HOLD)
 
-The historical C-C1 contract describes how a future measurement owner would accumulate sessions, but the current measurement status is `HOLD_PENDING_ACQUISITION_TOOLING_CORRECTION`. No external session may start from the four-feature prompt or the C-C1R draft while the acquisition adapter lacks the required fresh-event evidence. After the tooling correction and precollection validator PASS, accumulation remains outside C-C2 and outside model development: the operator does not repeatedly inspect model performance to alter scenario balance, stopping rules, thresholds, features, or collection conditions. Any deviation receives a reason, timestamp, affected session, and compliance classification. Raw payloads remain immutable and the future validation set is not used as an adaptive tuning set.
+The historical C-C1 contract describes how a future measurement owner would accumulate sessions, but the current measurement status is `HOLD_PENDING_TEAM_PRODUCER_OBSERVABILITY_PR_DEPLOYMENT`. No external session may start from the four-feature prompt or the C-C1R draft while the deployed acquisition adapter lacks the required fresh-event evidence. After the team change is deployed and the C-C1T precollection validator PASS is rerun, accumulation remains outside C-C2 and outside model development: the operator does not repeatedly inspect model performance to alter scenario balance, stopping rules, thresholds, features, or collection conditions. Any deviation receives a reason, timestamp, affected session, and compliance classification. Raw payloads remain immutable and the future validation set is not used as an adaptive tuning set.
 
 ### C-C2. Controlled evidence intake & formal device-domain validation
 

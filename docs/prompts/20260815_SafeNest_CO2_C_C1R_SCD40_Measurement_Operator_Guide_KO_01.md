@@ -1,14 +1,15 @@
 # SafeNest CO₂ C-C1R SCD40 실측 운영 안내서
 
-- 문서 버전: `01`
-- 작성 에이전트: `Codex` (CO₂ C-C1R Protocol and Operator Handoff Agent)
+- 문서 버전: `02`
+- 작성 에이전트: `Codex` (CO₂ C-C1T Acquisition Tooling Readiness Agent)
 - 작성일: `2026-08-15`
-- 단계: `C-C1R — Reduced-Feature Measurement Protocol Revision and Operator Handoff`
-- 문서 상태: `HOLD_PENDING_ACQUISITION_TOOLING_CORRECTION`
+- 단계: `C-C1R → C-C1T — Acquisition Tooling Readiness and Pre-Collection Compliance Gate`
+- 문서 상태: `HOLD_PENDING_TEAM_PRODUCER_OBSERVABILITY_PR_DEPLOYMENT`
+- C-C1R predecessor machine status: `HOLD_PENDING_ACQUISITION_TOOLING_CORRECTION`
 - 프로토콜 ID: `CO2_C_C1R_REDUCED_MEASUREMENT_PROTOCOL_001`
 - 프로토콜 버전: `1.0.0`
 
-> **현재는 실측을 시작하지 마세요.** 이 안내서는 C-C1R 계약을 설명하는 팀원용 초안입니다. 현재 팀 capture 도구가 새 SCD40 측정 이벤트를 증명할 수 없어, 도구 보정과 사전 검증이 끝날 때까지 배포·실측을 보류합니다.
+> **현재는 실측을 시작하지 마세요.** C-C1T에서 standalone capture/검증 도구와 dry-run은 준비됐지만, 팀 producer 관측성 변경은 팀 PR [#19](https://github.com/jinsu1011/safenest-embedded-competition/pull/19)에서 아직 `OPEN`이며 team `main`에 merge/deploy되지 않았습니다. 이 안내서와 실측은 해당 변경이 반영되고 재검증될 때까지 보류합니다.
 
 ## 1. 이번 실측에서 필요한 AI 입력
 
@@ -50,7 +51,17 @@ SCD40 / ESP32
 3. 독립 ground-truth 이벤트 파일과 최종 SHA-256 파일을 만들 수 있을 것.
 4. C-C1R 사전검증기가 실제 배포 경로에 대해 PASS할 것.
 
-팀 firmware/telemetry 수정은 이 문서 단계에서 수행하지 않습니다.
+이번 C-C1T에서는 팀 저장소의 AI/model/runtime를 변경하지 않고, SCD40 성공 읽기 event 관측성만 별도 팀 PR로 제안했습니다. 팀 PR은 이 작업에서 merge하지 않았습니다. PR #19가 검토·merge·배포되고 나면 동일한 capture contract와 precollection validator를 다시 실행해야 합니다.
+
+standalone 도구의 dry-run은 실제 센서 검증이 아닙니다. 현재 precollection 결과는 다음과 같습니다.
+
+```text
+C_C1T: BLOCKED
+DRY_RUN_VALIDATION: PASS
+TEAM_PRODUCER_OBSERVABILITY: IMPLEMENTED_ON_FEATURE_BRANCH_ONLY
+TEAM_PR: #19 OPEN
+PHYSICAL_ACQUISITION: HOLD
+```
 
 ## 3. 연결과 시작 전 확인
 
@@ -70,9 +81,39 @@ SCD40 / ESP32
 
 하나라도 확인할 수 없으면 실측을 시작하지 말고 `OPERATOR_HANDOFF_BLOCKED_BY_ACQUISITION_TOOLING`으로 보고합니다.
 
+### 3.1 승인된 capture 도구와 사전검증 명령
+
+팀 PR #19가 team `main`에 반영·배포되고, 아래 validator가 다시 통과하기 전에는 명령을 실행해도 실측 bundle을 수집하지 않습니다.
+
+```bash
+python3 scripts/capture_co2_c_c1t_session.py \
+  --output-root <session-output-root> \
+  --operator-id <operator-id> \
+  --location-id <location-id> \
+  --scenario-id VACANT_STABLE \
+  --ground-truth VACANT \
+  --ground-truth-source CONTROLLED_EMPTY_ROOM \
+  --source-url http://<pi-host>:8080/health \
+  --duration-sec 300 \
+  --interval-sec 1
+```
+
+이 도구가 생성하는 session ID와 bundle 파일은 수동으로 만들지 않습니다. `raw_measurements.jsonl`에는 원본 `/health` payload, packet sequence, Pi transport 상태, producer event ID/monotonic 시각을 함께 보존합니다. 동일한 producer event ID는 새 측정이 아니라 `CACHED_RETRANSMISSION`으로 분류됩니다.
+
+사전검증은 dry-run bundle을 포함해 다음처럼 실행합니다.
+
+```bash
+python3 scripts/validate_co2_c_c1t_precollection.py \
+  --bundle-dir datasets/co2/manifests/c_c1t_acquisition_tooling/fixtures/CO2C1R-20260815-CODEX-S001
+```
+
+현재 기대 결과는 `C_C1T_BLOCKED`와 `DRY_RUN_VALIDATION: PASS`입니다. 팀 PR merge/deploy 이후에만 `C_C1T_ACQUISITION_TOOLING_READY`로 바뀔 수 있습니다.
+
 ## 4. 60초 기록 규칙
 
 정상적인 SafeNest 모델 입력/CO₂ export 기회는 **약 60초 간격**을 기준으로 합니다. 이것은 SCD40 native 측정 간격이 60초라는 뜻이 아닙니다.
+
+계약상의 `effective_model_input_interval_sec`와 `normal_co2_export_interval_sec`는 `60`초로 고정되어 있습니다. capture 도구의 실제 polling interval은 raw event 관측을 위한 logger 설정이며, native SCD40 cadence나 60초 model-input/export 계약을 대체하지 않습니다.
 
 각 60초 기회에:
 
@@ -200,9 +241,10 @@ KNOWN_NONBLOCKING_LIMITATION_FOR_DEVICE_DOMAIN_OBSERVATION
 
 ```text
 프로토콜: FROZEN
-운영자 handoff: HOLD
+운영자 handoff: HOLD_PENDING_TEAM_PRODUCER_OBSERVABILITY_PR_DEPLOYMENT
 실측 시작: NO
 C-C2: NOT_STARTED
+팀 producer 관측성 PR: #19 OPEN / merge·deploy 안 됨
 ```
 
-도구 보정과 C-C1R 사전검증 PASS가 확인된 뒤에만 이 안내서를 실제 운영자에게 배포합니다. 그때도 별도 승인 없이 C-C2를 시작하지 않습니다.
+팀 producer 변경의 merge/deploy와 C-C1T precollection validator PASS가 확인된 뒤에만 이 안내서를 실제 운영자에게 배포합니다. 그때도 별도 승인 없이 C-C2를 시작하지 않습니다.
