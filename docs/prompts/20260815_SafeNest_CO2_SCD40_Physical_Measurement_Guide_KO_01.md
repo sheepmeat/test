@@ -6,6 +6,11 @@
 - 작성 에이전트: `Codex (CO2 Human Handoff and Two-Stage Measurement Documentation Agent)`
 - 문서 상태: `EXPLORATORY_READY_FORMAL_HOLD`
 
+AI 후보의 역할·사용 규칙·실측 evidence의 해석·향후 모델 교체 절차는
+다음 전체 인수인계 문서를 먼저 확인합니다.
+
+`docs/handoff/20260815_SafeNest_CO2_AI_and_Measurement_Handoff_KO_01.md`
+
 > 이 문서는 두 가지 측정 모드를 지원합니다.
 >
 > **[1차 실측] Exploratory Mode — 지금 수행 가능**
