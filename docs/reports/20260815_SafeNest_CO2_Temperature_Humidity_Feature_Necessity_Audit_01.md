@@ -32,7 +32,7 @@ Feature selection uses TRAIN and VALIDATION only. `LOCKED_TEST` is sealed and wa
 | Item | Evidence |
 |---|---|
 | Audit branch | `feature/co2-trh-feature-necessity-audit` |
-| Standalone base / `origin/main` | `7d30ec3` |
+| Audit execution base | `7d30ec3` |
 | Team repository `main` (read-only review) | `3d86bf2a7a4e527d7aba2dfabcb087201ffeb46e` |
 | TRAIN | 8,140 rows; ID fingerprint `492ca1f67e44b4a2018b743ec0fc3d20b418f7823d5f2643d8c90b0d39de8fab` |
 | VALIDATION | 2,662 rows; ID fingerprint `19321e57fe72f6482b3c7b5d3714d21e9c13b753173ceb56ea694524ac6529ef` |
@@ -67,6 +67,8 @@ macro_f1              +0.009094519832
 ```
 
 The A/B result is not directionally dominant on the three primary feature-dependence metrics (`macro_f1`, occupied precision, occupied recall). That is the basis for `INCONCLUSIVE`, without an effect-size or equivalence threshold.
+
+The `MATERIAL` and `LOW` labels in this audit are directional decision classifications only. They are not statistical-significance claims or predefined practical-equivalence findings. No approved effect-size or equivalence margin existed for this audit.
 
 The A reference-probe validation result reproduces the existing C-B2 reference-threshold result at threshold `0.58`. Its scaler fingerprint is unchanged at:
 
@@ -122,7 +124,7 @@ B5 metadata/model/scaler edit: NO
 Team repository edit:          NO (read-only)
 ```
 
-This audit branch is uncommitted and unpushed. No pull request was opened and no merge was performed.
+This audit performed no production model modification, physical measurement, runtime/firmware modification, or team-repository modification.
 
 ## Reproduction and changed files
 
@@ -138,7 +140,7 @@ The result JSON was generated twice with the same output SHA-256:
 ef7053adb38328feb5080e8845d39fd3b73e6ff4138ddc4af9439d490c8d9d08
 ```
 
-Files added on this branch:
+Files included in this audit change:
 
 ```text
 docs/reports/20260815_SafeNest_CO2_Temperature_Humidity_Feature_Necessity_Audit_01.md
@@ -146,8 +148,3 @@ datasets/co2/manifests/c_c1_trh_feature_necessity_audit/feature_necessity_result
 datasets/co2/manifests/c_c1_trh_feature_necessity_audit/checksums.sha256
 scripts/audit_co2_trh_feature_necessity.py
 ```
-
-Commit: NO
-Push: NO
-PR: NO
-Merge: NO
