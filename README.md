@@ -39,6 +39,11 @@ integrated_node/run_node.py
 
 `integrated_node/safenest_risk_engine.py`는 기존 테스트·데모용 legacy compatibility 모듈이다. 신규 센서 연동과 production 융합에 사용하지 않는다.
 
+과거 가상 센서 스트리머와 GUI 시연기는
+`archive/project_history/legacy_simulator_20260816/`에 보관한다. 이 archive는
+현재 runtime에서 import하거나 fallback으로 사용하지 않는다. legacy compatibility
+engine의 별도 archive 여부는 역사 테스트·학습 문서의 소유권을 정리한 뒤 결정한다.
+
 ## 실행
 
 Mock end-to-end:

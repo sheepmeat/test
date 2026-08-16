@@ -19,6 +19,7 @@
 | `version_snapshots/` | V4, V5, 구 V6 및 기존 version archive 전체 스냅샷 | 최상위를 유일한 활성 개발본으로 단일화 |
 | `project_history/legacy_active_tests_20260808/` | V4 config/V5 release 전용 테스트 | 현재 최상위 회귀 대상에서 분리 |
 | `project_history/legacy_release_tooling_20260808/` | V4/V5 archive builder·legacy V4-named validator·V5 snapshot verifier | 과거 wrapper 폴더 전용 tooling 분리 |
+| `project_history/legacy_simulator_20260816/` | 가상 센서 스트리머와 4분할 GUI 시연기 | 현재 AI 실행·Pi 통합 경로가 아닌 과거 simulator |
 
 ## 복원 원칙
 
