@@ -1,0 +1,360 @@
+{
+  "phase": "M-N9",
+  "artifact_id": "MMWAVE_M_N9_FULL_INT8_V1",
+  "source_selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+  "source_float_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+  "FLOAT_ARTIFACT_SHA_MATCH": true,
+  "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1",
+  "INT8_CALIBRATION_SOURCE": "PUBLIC_TRAIN_ONLY",
+  "representative_windows_used": 337,
+  "train_subjects": 77,
+  "train_windows": 337,
+  "val_subjects": 17,
+  "val_windows": 70,
+  "NEW_MODEL_HELDOUT_TEST_INFERENCE_M_N9": 0,
+  "FULL_INT8_ONLY": true,
+  "float_fallback_ops": false,
+  "opcodes": [
+    "RESHAPE",
+    "CONV_2D",
+    "MEAN",
+    "FULLY_CONNECTED",
+    "SOFTMAX"
+  ],
+  "artifact_path": "models/mmwave/m_n9/MMWAVE_M_N9_FULL_INT8_V1.tflite",
+  "artifact_sha256": "3b008af4be0facc4037c2afd3fe39292fb794208eb4370dbe6916b2d15aa38a4",
+  "artifact_size_bytes": 11816,
+  "input_contract": {
+    "name": "serving_default_canonical_r2:0",
+    "dtype": "int8",
+    "shape": [
+      1,
+      240,
+      1
+    ],
+    "scale": 0.5623255372047424,
+    "zero_point": 4,
+    "quantization_formula": "q = clip(round(x / scale + zero_point), -128, 127)"
+  },
+  "output_contract": {
+    "name": "StatefulPartitionedCall_1:0",
+    "dtype": "int8",
+    "shape": [
+      1,
+      3
+    ],
+    "scale": 0.00390625,
+    "zero_point": -128,
+    "dequantization_formula": "x_float = (q - zero_point) * scale"
+  },
+  "val_float": {
+    "accuracy": 0.771429,
+    "macro_f1": 0.723358,
+    "balanced_accuracy": 0.74213,
+    "per_class_recall": {
+      "NORMAL": 0.888889,
+      "RAPID_OR_ABNORMAL": 0.4,
+      "APNEA": 0.9375
+    },
+    "confusion_matrix": [
+      [
+        16,
+        1,
+        1
+      ],
+      [
+        11,
+        8,
+        1
+      ],
+      [
+        2,
+        0,
+        30
+      ]
+    ]
+  },
+  "val_int8": {
+    "accuracy": 0.785714,
+    "macro_f1": 0.739087,
+    "balanced_accuracy": 0.760648,
+    "per_class_recall": {
+      "NORMAL": 0.944444,
+      "RAPID_OR_ABNORMAL": 0.4,
+      "APNEA": 0.9375
+    },
+    "confusion_matrix": [
+      [
+        17,
+        0,
+        1
+      ],
+      [
+        11,
+        8,
+        1
+      ],
+      [
+        2,
+        0,
+        30
+      ]
+    ],
+    "probability_row_sum_ok": false
+  },
+  "val_parity": {
+    "top1_agreement": 0.985714,
+    "accuracy_delta": 0.014285,
+    "macro_f1_delta": 0.015729,
+    "macro_f1_degradation": -0.015729,
+    "per_class_recall_delta": {
+      "NORMAL": 0.055555,
+      "RAPID_OR_ABNORMAL": 0.0,
+      "APNEA": 0.0
+    },
+    "parity_gate": "PASS",
+    "parity_fail_reasons": [],
+    "thresholds": {
+      "top1_agreement_min": 0.95,
+      "macro_f1_max_degradation": 0.03,
+      "class_recall_max_degradation": 0.1
+    }
+  },
+  "zero_no_person": {
+    "float_probabilities": {
+      "NORMAL": 0.001068,
+      "RAPID_OR_ABNORMAL": 0.001371,
+      "APNEA": 0.997562
+    },
+    "int8_probabilities": {
+      "NORMAL": 0.0,
+      "RAPID_OR_ABNORMAL": 0.0,
+      "APNEA": 0.996094
+    },
+    "float_predicted_class": "APNEA",
+    "int8_predicted_class": "APNEA",
+    "float_confidence": 0.997562,
+    "int8_confidence": 0.996094,
+    "top1_agreement": true,
+    "abs_prob_max_delta": 0.001468,
+    "inherited_apnea_proxy_on_zero": true,
+    "presence_gate_required": true,
+    "expected_inherited_behavior": true
+  },
+  "presence_gate": {
+    "PRESENCE_GATE_REQUIRED": true,
+    "not_a_neural_network_class": true,
+    "fourth_neural_class_added": false,
+    "model_not_retrained_to_fix_empty_room": true,
+    "semantic": "if valid_person_presence == false: respiratory_classification = SUPPRESSED",
+    "suppressed_states": [
+      "NO_VALID_PERSON",
+      "RESPIRATORY_INFERENCE_SUPPRESSED"
+    ],
+    "must_not_expose_when_no_valid_person": [
+      "NORMAL",
+      "RAPID_OR_ABNORMAL",
+      "APNEA"
+    ],
+    "existing_mr60_presence_field": "human_detected_raw",
+    "threshold_invented_in_m_n9": false,
+    "exact_runtime_implementation": "DEFERRED_TO_INTEGRATION",
+    "source": "M-N7 NO_PERSON_INFERENCE_GATING_HAZARD on empty-room zero canonical input"
+  },
+  "optional_mr60_parity": {
+    "performed": true,
+    "purpose": "QUANTIZATION_PARITY_ONLY",
+    "label": "M_N7_EVIDENCE_REUSED_FOR_QUANTIZATION_PARITY_ONLY",
+    "n_windows": 13,
+    "top1_agreement": 1.0,
+    "mean_abs_prob_max_delta": 0.003425,
+    "windows": [
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 0,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 1,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 2,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 3,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 4,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 5,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 6,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 7,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 8,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 9,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+        "window_index": 10,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.997562,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.001468,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-25_occupied_d09_60s",
+        "window_index": 0,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.834877,
+        "int8_confidence": 0.859375,
+        "abs_prob_max_delta": 0.024498,
+        "agreement": true,
+        "supervised_label": null
+      },
+      {
+        "session_id": "LEGACY_2026-07-25_occupied_front_d06_60s",
+        "window_index": 0,
+        "float_predicted_class": "APNEA",
+        "int8_predicted_class": "APNEA",
+        "float_confidence": 0.999976,
+        "int8_confidence": 0.996094,
+        "abs_prob_max_delta": 0.003883,
+        "agreement": true,
+        "supervised_label": null
+      }
+    ],
+    "mr60_accuracy_computed": false,
+    "used_for_calibration": false,
+    "used_for_conversion_tuning": false
+  },
+  "raspberry_pi": {
+    "PI_ARTIFACT_READY": true,
+    "actual_pi_access_available": false,
+    "PI_DEVICE_SMOKE": "NOT_PERFORMED_ENVIRONMENT_UNAVAILABLE",
+    "PI_ISOLATED_LOAD": "NOT_PERFORMED",
+    "PI_ISOLATED_INVOKE": "NOT_PERFORMED",
+    "PI_ISOLATED_EXECUTION_VERIFIED": false,
+    "live_mr60_sensor_required": false,
+    "new_sensor_capture_performed": false,
+    "note": "No authorized Raspberry Pi target is configured in this environment. Artifact is locked for later isolated smoke."
+  },
+  "M_N8_STATUS": "SKIPPED_NOT_JUSTIFIED",
+  "DEVICE_VALIDATED": false,
+  "lock_path": "config/mmwave/m_n9_full_int8_artifact_lock.json",
+  "tensorflow_version": "2.20.0",
+  "tflite_litert_version": "2.20.0",
+  "conversion_git_sha": "bee5fd6f1611036d1a5cade29712586bdca4b6bf",
+  "evaluation_timestamp": "2026-08-17T19:28:57Z",
+  "focused_validation": {
+    "float_identity": "PASS",
+    "full_int8_conversion": "PASS",
+    "artifact_reload": "PASS",
+    "input_output_dtype": "PASS",
+    "input_output_shape": "PASS",
+    "val_parity": "PASS",
+    "zero_input_invoke": "PASS",
+    "pi_smoke": "NOT_PERFORMED"
+  },
+  "gate": "PASS_WITH_LIMITATIONS",
+  "FULL_INT8_ARTIFACT_LOCKED": true,
+  "PI_ARTIFACT_READY": true,
+  "PI_ISOLATED_EXECUTION_VERIFIED": false,
+  "M_N10_authorized": true,
+  "NEXT_RECOMMENDED_PHASE": "M-N10",
+  "model_retrained": false,
+  "m_n8_adaptation": false,
+  "threshold_tuned": false,
+  "alternative_model_evaluated": false,
+  "train_plus_val_retraining": false,
+  "public_heldout_rerun": false
+}
