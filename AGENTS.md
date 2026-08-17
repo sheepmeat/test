@@ -23,8 +23,8 @@
 
 ## Multisensor phase workflow
 
-- Follow `docs/20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md` as the active master roadmap.
-- Use `docs/20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md` and `docs/MMWAVE_PHASE_B_OVERVIEW.md` for inherited mmWave details.
+- Follow `docs/20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md` as the active master roadmap for CO₂, Thermal, and integration sequencing.
+- For mmWave **future** model development after the 2026-08-17 signal-contract mismatch, follow `docs/20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md`. Historical `M-A`/`M-B` remain as documented in `docs/20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md` and `docs/MMWAVE_PHASE_B_OVERVIEW.md`. The previous mmWave future path (frozen-B live correspondence → `M-C2` → optional `M-D`) is paused/superseded for future execution; do not reopen the historical B live gate.
 - Run mmWave M-B, CO₂ C-A, Thermal T-A, and integration contract inventory I-0 in parallel when their files and evidence are independent; preserve the required phase order inside each sensor track.
 - For each sensor track, complete and validate its A0 through A6 before starting that sensor's Phase B model selection.
 - A4 voluntary breath-hold labels are derived SafeNest APNEA proxies and must never be described as clinical apnea.
