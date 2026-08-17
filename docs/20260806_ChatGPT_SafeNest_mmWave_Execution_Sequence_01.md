@@ -1,7 +1,13 @@
 # 0. 외부 에이전트 참조용 로컬 작업 공간 현황 및 디렉터리 맵 (Local Workspace & File Structure Overview)
 
+> **2026-08-17 미래 실행 상태: PAUSED / SUPERSEDED FOR FUTURE EXECUTION**
+>
+> 이 문서의 **완료된 Phase A/B 역사·산출물·계약은 유효**하다. 지우거나 다시 쓰지 않는다.
+> 다만 frozen Phase-B 후보를 live MR60 `0x0A13 breath_phase`에 대응시킨 뒤 `M-C2`로 평가하고, 측정된 gap이 있을 때만 `M-D`로 적응하는 **미래 C/D 실행 방향은 정지한다.** 이유는 `SIGNAL_CONTRACT_MISMATCH`이며, 기존 B live gate는 `CLOSED`다.
+> 이후 mmWave 모델 개발은 [2026-08-17 MR60 호환 모델 개발 로드맵](20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md)을 따른다. 이 배너는 완료된 연대기를 개정하지 않는다.
+
 > **[CAUTION] 작업 에이전트를 위한 안내**:
-> 본 문서는 SafeNest 활성 작업 공간의 디렉터리 구조, 실측 아티팩트 해시, 모델 계보 및 실행 순서를 정의합니다. 모든 작업은 먼저 최상위 `AGENTS.md`를 읽고 이 문서의 canonical-root 규칙을 따라야 합니다.
+> 본 문서는 SafeNest 활성 작업 공간의 디렉터리 구조, 실측 아티팩트 해시, 모델 계보 및 **역사적** 실행 순서를 정의합니다. 모든 작업은 먼저 최상위 `AGENTS.md`를 읽고 이 문서의 canonical-root 규칙을 따라야 합니다. mmWave의 **이후 실행**은 2026-08-17 로드맵을 우선한다.
 
 ---
 

@@ -6,7 +6,8 @@
 - canonical component root: 이 문서의 상위 저장소에서 `AGENTS.md`가 위치한 디렉터리
 - 적용 대상: mmWave, CO₂, Thermal 온디바이스 AI 데이터·모델·runtime 검증
 - 후속 통합 대상: PIR 보조 신호 및 멀티센서 risk fusion
-- 상태: `ACTIVE_MASTER_ROADMAP`
+- 상태: `ACTIVE_MASTER_ROADMAP` (CO₂ / Thermal / Integration; mmWave **미래 모델 경로**는 2026-08-17 문서로 이관)
+- 2026-08-17 mmWave 개정: 기존 B 모델과 live MR60 `breath_phase` 사이 `SIGNAL_CONTRACT_MISMATCH`가 확인됐다. frozen B live gate는 `CLOSED`다. 완료된 `M-A`/`M-B`는 유지한다. 이 문서의 mmWave 미래 `M-C0`→`M-C2`→선택 `M-D` 실행 방향은 `PAUSED / SUPERSEDED`다. 이후 mmWave 실행은 `docs/20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md`를 따른다. CO₂/Thermal/통합 순서는 이 문서를 유지한다.
 - 2026-08-14 개정: mmWave `M-C`를 기존 팀 MR60 forensic audit → correspondence gate → 선택적 탐색 추론 → 프로토콜 실측 → 정식 평가로 세분. Phase A/B 역사는 유지한다.
 - 2026-08-14 CO₂ 개정: `C-C`를 기존 팀 SCD40 legacy audit(`C-C0`) → measurement protocol freeze/operator handoff(`C-C1`) → 외부 protocol-controlled acquisition → later controlled intake/formal validation(`C-C2`)로 분리한다. logger/transport/sensor freshness, frozen feature-vector completeness, unit과 feature semantics, calibration 필드를 분리한다. Phase A/B 역사와 frozen C-B5는 변경하지 않는다.
 - 2026-08-15 CO₂ 개정: PR #78의 T/RH feature-necessity 결과(`T_RH_FEATURE_DEPENDENCE_INCONCLUSIVE`)를 후속 5-seed·paired-bootstrap pre-acquisition decision audit로 재평가했다. 네 feature arm의 modest/repeatable predictive benefit은 관측됐지만 reduced-feature predictive superiority는 확립되지 않았다. 시스템 contract burden of proof가 충족되지 않아 최종 방향은 `ADOPT_REDUCED_FEATURE_DIRECTION`이며, `C-B6` reduced-feature candidate development/lock을 별도 model phase로 둔다. 현재 four-feature C-C1 protocol/B5는 historical evidence로 보존하고 formal protocol-controlled physical acquisition과 formal operator handoff를 C-B6 lock 전까지 `HOLD`한다. exploratory real-device observation은 별도 evidence class로 관리한다. B5와 LOCKED_TEST는 변경하지 않는다.
