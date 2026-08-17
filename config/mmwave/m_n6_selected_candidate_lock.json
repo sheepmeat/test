@@ -1,0 +1,149 @@
+{
+  "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+  "phase": "M-N6_STAGE_A",
+  "status": "LOCKED_BEFORE_HELDOUT",
+  "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1",
+  "candidate_id": "M-N5_DILATED_CONV1D_GAP_TINY",
+  "architecture_family": "DILATED_CONV1D_GAP",
+  "seed": 2026,
+  "source_m_n5_manifest": "datasets/mmwave/manifests/m_n5_candidate_runs.json",
+  "source_artifact_path": "tmp/mmwave_m_n5/models/M-N5_DILATED_CONV1D_GAP_TINY_seed2026.keras",
+  "locked_artifact_path": "models/mmwave/m_n6/MMWAVE_M_N6_SELECTED_FLOAT_V1.keras",
+  "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+  "artifact_size": 96309,
+  "parameter_count": 5019,
+  "val_metrics": {
+    "accuracy": 0.771429,
+    "macro_f1": 0.723358,
+    "loss": 0.492441,
+    "balanced_accuracy": 0.74213,
+    "per_class": {
+      "NORMAL": {
+        "precision": 0.551724,
+        "recall": 0.888889,
+        "f1": 0.680851,
+        "support": 18
+      },
+      "RAPID_OR_ABNORMAL": {
+        "precision": 0.888889,
+        "recall": 0.4,
+        "f1": 0.551724,
+        "support": 20
+      },
+      "APNEA": {
+        "precision": 0.9375,
+        "recall": 0.9375,
+        "f1": 0.9375,
+        "support": 32
+      }
+    },
+    "per_class_recall": {
+      "NORMAL": 0.888889,
+      "RAPID_OR_ABNORMAL": 0.4,
+      "APNEA": 0.9375
+    },
+    "confusion_matrix": [
+      [
+        16,
+        1,
+        1
+      ],
+      [
+        11,
+        8,
+        1
+      ],
+      [
+        2,
+        0,
+        30
+      ]
+    ],
+    "predicted_class_counts": {
+      "NORMAL": 29,
+      "RAPID_OR_ABNORMAL": 9,
+      "APNEA": 32
+    }
+  },
+  "family_ranking": [
+    {
+      "candidate_id": "M-N5_DILATED_CONV1D_GAP_TINY",
+      "architecture_family": "DILATED_CONV1D_GAP",
+      "n_nondegenerate_seeds": 2,
+      "mean_val_macro_f1": 0.696978,
+      "seed_macro_f1": {
+        "42": 0.670599,
+        "2026": 0.723358
+      },
+      "seed_f1_abs_delta": 0.052759,
+      "mean_rapid_recall": 0.35,
+      "min_rapid_recall": 0.3,
+      "parameter_count": 5019
+    },
+    {
+      "candidate_id": "M-N5_CONV1D_GAP_TINY",
+      "architecture_family": "CONV1D_GAP",
+      "n_nondegenerate_seeds": 2,
+      "mean_val_macro_f1": 0.662841,
+      "seed_macro_f1": {
+        "42": 0.649612,
+        "2026": 0.676071
+      },
+      "seed_f1_abs_delta": 0.026459,
+      "mean_rapid_recall": 0.35,
+      "min_rapid_recall": 0.35,
+      "parameter_count": 5051
+    },
+    {
+      "candidate_id": "M-N5_SMALL_MLP_BASELINE",
+      "architecture_family": "SMALL_MLP",
+      "n_nondegenerate_seeds": 2,
+      "mean_val_macro_f1": 0.3428,
+      "seed_macro_f1": {
+        "42": 0.381837,
+        "2026": 0.303763
+      },
+      "seed_f1_abs_delta": 0.078074,
+      "mean_rapid_recall": 0.2,
+      "min_rapid_recall": 0.2,
+      "parameter_count": 7811
+    }
+  ],
+  "selection_rule": {
+    "family": "MEAN_VAL_MACRO_F1_ACROSS_FIXED_SEEDS",
+    "exact_run": "HIGHEST_VAL_MACRO_F1_WITHIN_SELECTED_FAMILY",
+    "family_tie_break": [
+      "less_severe_RAPID_OR_ABNORMAL_weakness",
+      "less_seed_instability",
+      "smaller_parameter_count"
+    ],
+    "run_tie_break": [
+      "higher_RAPID_OR_ABNORMAL_recall",
+      "higher_minimum_class_recall",
+      "lower_parameter_count"
+    ]
+  },
+  "selection_reason": "M-N5_DILATED_CONV1D_GAP_TINY had the highest mean VAL Macro F1 across seeds 42/2026 (0.696978); seed 2026 had the highest VAL Macro F1 inside that family (0.723358) and the highest RAPID_OR_ABNORMAL recall of the two fixed seeds.",
+  "heldout_inference_before_lock": 0,
+  "heldout_tensors_materialized_before_lock": 0,
+  "heldout_status": "FROZEN_UNACCESSED",
+  "architecture_change_allowed_after_lock": false,
+  "seed_change_allowed_after_lock": false,
+  "artifact_change_allowed_after_lock": false,
+  "train_plus_val_retraining": false,
+  "threshold_tuning": false,
+  "team_mr60_evaluated": false,
+  "production_final_model": false,
+  "selection_timestamp": "2026-08-17T18:21:04Z",
+  "source_git_sha": "aca26450729362e09aced39acee557dbdb6dc00e",
+  "tensorflow_version": "2.20.0",
+  "focused_validation": {
+    "input_shape": "PASS",
+    "output_shape": "PASS",
+    "reload": "PASS",
+    "dummy_probability_sanity": "PASS"
+  },
+  "selected_artifact_sha_match": true,
+  "binary_storage": "GIT_TRACKED",
+  "binary_storage_note": "selected float keras copied under models/mmwave/m_n6/; other M-N5 candidate binaries remain local/gitignored"
+}
