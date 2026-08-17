@@ -1,0 +1,702 @@
+{
+  "phase": "M-N7",
+  "check_type": "EXISTING_MR60_DEVICE_DOMAIN_CHECK",
+  "evidence_class": "SAME_SUBJECT_LIMITED_DEVICE_REFERENCE",
+  "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+  "candidate_id": "M-N5_DILATED_CONV1D_GAP_TINY",
+  "architecture_family": "DILATED_CONV1D_GAP",
+  "seed": 2026,
+  "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+  "artifact_sha_match": true,
+  "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1",
+  "input_shape": [
+    1,
+    240,
+    1
+  ],
+  "physical_subject_count": 1,
+  "subject_provenance": "OWNER_CONFIRMED_SINGLE_SUBJECT",
+  "independent_respiratory_ground_truth": "ABSENT",
+  "reserved_recordings_requested": [
+    "LEGACY_2026-07-28_empty_v2_360s",
+    "LEGACY_2026-07-25_occupied_d09_60s",
+    "LEGACY_2026-07-25_occupied_front_d06_60s"
+  ],
+  "development_recordings_used_for_primary_decision": false,
+  "public_heldout_rerun": false,
+  "alternative_candidate_tested": false,
+  "alternative_seed_tested": false,
+  "model_retrained": false,
+  "model_fine_tuned": false,
+  "threshold_tuned": false,
+  "m_n4_preprocessing_modified": false,
+  "mr60_accuracy_computed": false,
+  "mr60_macro_f1_computed": false,
+  "mr60_recall_computed": false,
+  "occupied_treated_as_normal_gt": false,
+  "empty_treated_as_apnea_gt": false,
+  "paced_cue_used_as_gt": false,
+  "breath_rate_raw_used_as_gt": false,
+  "unseen_person_generalization_claimed": false,
+  "evaluation_windowing": "M_N7_EVALUATION_WINDOWING_ONLY",
+  "production_stride_frozen": false,
+  "focused_validation": {
+    "selected_artifact_identity": "PASS",
+    "model_reload": "PASS",
+    "input_output_shape": "PASS",
+    "canonical_preprocessing": "PASS",
+    "finite_probabilities": "PASS",
+    "gap_boot_handling": "PASS"
+  },
+  "recordings": [
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "occupied": false,
+      "source": {
+        "located": true,
+        "path": "tmp/mmwave_m_n7/sources/2026-07-28_empty_v2_360s.jsonl",
+        "git_blob_sha": "2d0eaf105bba3545fb5f29dbb6e6bc812b19481e",
+        "git_blob_sha_match": true,
+        "size_bytes": 1785798,
+        "inventory_historical_path": "devices/mmwave/firmware/logs/baseline/2026-07-28_empty_v2_360s.jsonl",
+        "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/baseline/2026-07-28_empty_v2_360s.jsonl"
+      },
+      "canonical_timing_status": "CANONICAL_TIMING_ELIGIBLE",
+      "timing_meta": {
+        "n_flat_rows": 3599,
+        "n_with_breath_phase": 3599,
+        "n_with_ts_monotonic_ms": 3599,
+        "n_with_phase_age_ms": 3599
+      },
+      "phase_event_meta": {
+        "n_events": 3092,
+        "n_republications": 507,
+        "notes": [
+          "PHASE_UPDATE_ESTIMATE_TS_MINUS_AGE"
+        ]
+      },
+      "recording_span_s": 359.924,
+      "candidate_windows": 11,
+      "valid_windows": 11,
+      "rejected_windows": 0,
+      "rejection_reasons": {},
+      "predicted_class_distribution": {
+        "NORMAL": 0,
+        "RAPID_OR_ABNORMAL": 0,
+        "APNEA": 11
+      }
+    },
+    {
+      "session_id": "LEGACY_2026-07-25_occupied_d09_60s",
+      "role": "OCCUPIED_D09",
+      "occupied": true,
+      "source": {
+        "located": true,
+        "path": "hardware/3dprint/competition/safenest-embedded-competition/firmware/esp_wroom32_mr60_monitor/logs/diagnostics/2026-07-25_occupied_d09_60s.jsonl",
+        "git_blob_sha": "959817ffec8884f89cdd3e0f09cf899e8cf48bee",
+        "git_blob_sha_match": true,
+        "size_bytes": 299056,
+        "inventory_historical_path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_occupied_d09_60s.jsonl",
+        "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/diagnostics/2026-07-25_occupied_d09_60s.jsonl"
+      },
+      "canonical_timing_status": "CANONICAL_TIMING_ELIGIBLE",
+      "timing_meta": {
+        "n_flat_rows": 600,
+        "n_with_breath_phase": 600,
+        "n_with_ts_monotonic_ms": 600,
+        "n_with_phase_age_ms": 600
+      },
+      "phase_event_meta": {
+        "n_events": 600,
+        "n_republications": 0,
+        "notes": [
+          "PHASE_UPDATE_ESTIMATE_TS_MINUS_AGE"
+        ]
+      },
+      "recording_span_s": 59.925,
+      "candidate_windows": 1,
+      "valid_windows": 1,
+      "rejected_windows": 0,
+      "rejection_reasons": {},
+      "predicted_class_distribution": {
+        "NORMAL": 0,
+        "RAPID_OR_ABNORMAL": 0,
+        "APNEA": 1
+      }
+    },
+    {
+      "session_id": "LEGACY_2026-07-25_occupied_front_d06_60s",
+      "role": "OCCUPIED_FRONT_D06",
+      "occupied": true,
+      "source": {
+        "located": true,
+        "path": "hardware/3dprint/competition/safenest-embedded-competition/firmware/esp_wroom32_mr60_monitor/logs/diagnostics/2026-07-25_occupied_front_d06_60s.jsonl",
+        "git_blob_sha": "eaac565dff8258d000f56341bf1618d684b58cad",
+        "git_blob_sha_match": true,
+        "size_bytes": 296178,
+        "inventory_historical_path": "devices/mmwave/firmware/logs/diagnostics/2026-07-25_occupied_front_d06_60s.jsonl",
+        "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/diagnostics/2026-07-25_occupied_front_d06_60s.jsonl"
+      },
+      "canonical_timing_status": "CANONICAL_TIMING_ELIGIBLE",
+      "timing_meta": {
+        "n_flat_rows": 599,
+        "n_with_breath_phase": 599,
+        "n_with_ts_monotonic_ms": 599,
+        "n_with_phase_age_ms": 599
+      },
+      "phase_event_meta": {
+        "n_events": 597,
+        "n_republications": 2,
+        "notes": [
+          "PHASE_UPDATE_ESTIMATE_TS_MINUS_AGE"
+        ]
+      },
+      "recording_span_s": 59.822,
+      "candidate_windows": 1,
+      "valid_windows": 1,
+      "rejected_windows": 0,
+      "rejection_reasons": {},
+      "predicted_class_distribution": {
+        "NORMAL": 0,
+        "RAPID_OR_ABNORMAL": 0,
+        "APNEA": 1
+      }
+    }
+  ],
+  "window_counts": {
+    "candidate": 13,
+    "canonical_valid": 13,
+    "rejected": 0,
+    "valid_occupied": 2,
+    "valid_empty": 11
+  },
+  "invalid_window_reasons": {},
+  "windows": [
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 0,
+      "t_start_s": 3013.298,
+      "t_end_s": 3043.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 1,
+      "t_start_s": 3043.298,
+      "t_end_s": 3073.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 2,
+      "t_start_s": 3073.298,
+      "t_end_s": 3103.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 3,
+      "t_start_s": 3103.298,
+      "t_end_s": 3133.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 4,
+      "t_start_s": 3133.298,
+      "t_end_s": 3163.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 5,
+      "t_start_s": 3163.298,
+      "t_end_s": 3193.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 6,
+      "t_start_s": 3193.298,
+      "t_end_s": 3223.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 7,
+      "t_start_s": 3223.298,
+      "t_end_s": 3253.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 8,
+      "t_start_s": 3253.298,
+      "t_end_s": 3283.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 9,
+      "t_start_s": 3283.298,
+      "t_end_s": 3313.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-28_empty_v2_360s",
+      "role": "EMPTY_NO_PERSON",
+      "window_index": 10,
+      "t_start_s": 3313.298,
+      "t_end_s": 3343.298,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.0,
+      "mad_collapsed": true,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": 0.0,
+        "std": 0.0,
+        "min": 0.0,
+        "max": 0.0,
+        "abs_max": 0.0
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.001068,
+        "RAPID_OR_ABNORMAL": 0.001371,
+        "APNEA": 0.997562
+      },
+      "confidence": 0.997562,
+      "entropy": 0.018776,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-25_occupied_d09_60s",
+      "role": "OCCUPIED_D09",
+      "window_index": 0,
+      "t_start_s": 2797.844,
+      "t_end_s": 2827.844,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.342593,
+      "mad_collapsed": false,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": -0.044473,
+        "std": 0.62421,
+        "min": -2.283492,
+        "max": 1.716392,
+        "abs_max": 2.283492
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 0.033668,
+        "RAPID_OR_ABNORMAL": 0.131455,
+        "APNEA": 0.834877
+      },
+      "confidence": 0.834877,
+      "entropy": 0.53158,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    },
+    {
+      "session_id": "LEGACY_2026-07-25_occupied_front_d06_60s",
+      "role": "OCCUPIED_FRONT_D06",
+      "window_index": 0,
+      "t_start_s": 744.412,
+      "t_end_s": 774.412,
+      "canonical_input_status": "VALID",
+      "reject_reason": null,
+      "mad": 0.016797,
+      "mad_collapsed": false,
+      "normalized_finite_fraction": 1.0,
+      "pre_normalization_r2": {
+        "n": 240,
+        "finite_fraction": 1.0,
+        "mean": -0.00129,
+        "std": 0.073336,
+        "min": -0.238475,
+        "max": 0.414595,
+        "abs_max": 0.414595
+      },
+      "predicted_class": "APNEA",
+      "probabilities": {
+        "NORMAL": 1e-06,
+        "RAPID_OR_ABNORMAL": 2.3e-05,
+        "APNEA": 0.999976
+      },
+      "confidence": 0.999976,
+      "entropy": 0.000279,
+      "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+      "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+      "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1"
+    }
+  ],
+  "occupied_device_domain": {
+    "recordings_evaluated": [
+      "LEGACY_2026-07-25_occupied_d09_60s",
+      "LEGACY_2026-07-25_occupied_front_d06_60s"
+    ],
+    "valid_windows": 2,
+    "canonical_input_finite": true,
+    "zero_tensor_occupied_windows": 0,
+    "predicted_class_distribution": {
+      "NORMAL": 0,
+      "RAPID_OR_ABNORMAL": 0,
+      "APNEA": 2
+    },
+    "prediction_summaries": [
+      {
+        "session_id": "LEGACY_2026-07-25_occupied_d09_60s",
+        "mad": 0.342593,
+        "pre_normalization_r2_std": 0.62421,
+        "predicted_class": "APNEA",
+        "probabilities": {
+          "NORMAL": 0.033668,
+          "RAPID_OR_ABNORMAL": 0.131455,
+          "APNEA": 0.834877
+        },
+        "confidence": 0.834877,
+        "entropy": 0.53158
+      },
+      {
+        "session_id": "LEGACY_2026-07-25_occupied_front_d06_60s",
+        "mad": 0.016797,
+        "pre_normalization_r2_std": 0.073336,
+        "predicted_class": "APNEA",
+        "probabilities": {
+          "NORMAL": 1e-06,
+          "RAPID_OR_ABNORMAL": 2.3e-05,
+          "APNEA": 0.999976
+        },
+        "confidence": 0.999976,
+        "entropy": 0.000279
+      }
+    ],
+    "within_session": {
+      "LEGACY_2026-07-25_occupied_d09_60s": {
+        "n_valid": 1,
+        "same_predicted_class": null,
+        "max_confidence_delta": null
+      },
+      "LEGACY_2026-07-25_occupied_front_d06_60s": {
+        "n_valid": 1,
+        "same_predicted_class": null,
+        "max_confidence_delta": null
+      }
+    },
+    "across_condition": {
+      "d09_predicted_class_distribution": {
+        "NORMAL": 0,
+        "RAPID_OR_ABNORMAL": 0,
+        "APNEA": 1
+      },
+      "front_d06_predicted_class_distribution": {
+        "NORMAL": 0,
+        "RAPID_OR_ABNORMAL": 0,
+        "APNEA": 1
+      },
+      "catastrophic_condition_flip": false,
+      "called_generalization": false,
+      "note": "One-person D09 vs front/D06 comparison. Not unseen-person generalization."
+    },
+    "DEVICE_DOMAIN_MODEL_COLLAPSE": false,
+    "reason": "NOT_OBSERVED"
+  },
+  "empty_no_person": {
+    "recording_evaluated": "LEGACY_2026-07-28_empty_v2_360s",
+    "valid_windows": 11,
+    "NO_PERSON_INFERENCE_GATING_HAZARD": true,
+    "canonical_input_behavior": "ZERO",
+    "n_valid": 11,
+    "n_near_zero": 11,
+    "n_hazard_windows": 11,
+    "predicted_class_distribution": {
+      "NORMAL": 0,
+      "RAPID_OR_ABNORMAL": 0,
+      "APNEA": 11
+    },
+    "confidence_min": 0.997562,
+    "confidence_max": 0.997562,
+    "mean_entropy": 0.018776,
+    "empty_treated_as_apnea_gt": false,
+    "interpretation": "Empty-room windows are no-person device baseline, not APNEA ground truth. A high-confidence respiratory-risk class on zero/near-zero canonical input is an operational gating hazard, not a labeled error."
+  },
+  "DEVICE_DOMAIN_GAP": "LIMITED",
+  "M_N8_REQUIRED": "NO",
+  "NEXT_RECOMMENDED_PHASE": "M-N9",
+  "gate": "PASS_WITH_LIMITATIONS",
+  "decision_reason": "Canonical MR60 preprocessing produced valid occupied tensors and non-collapsed softmax outputs. Remaining issues are evidence limits and/or no-person gating, not a measured material public\u2192MR60 incompatibility that justifies M-N8 adaptation.",
+  "limitations": [
+    "ONE_PHYSICAL_SUBJECT",
+    "NO_INDEPENDENT_RESPIRATORY_GT",
+    "SAME_SUBJECT_LIMITED_DEVICE_REFERENCE",
+    "NO_PERSON_INFERENCE_GATING_HAZARD"
+  ],
+  "predictions_path": "datasets/mmwave/manifests/m_n7_mr60_predictions.jsonl",
+  "evaluation_timestamp": "2026-08-17T18:47:04Z",
+  "source_git_sha": "ac1d8fea2cba239ca22bea9415d6f994668465e2",
+  "existing_mr60_device_domain_operation_credible": true,
+  "m_n8_adaptation_justified": false,
+  "m_n9_directly_reachable": true,
+  "production_final_model": false,
+  "formal_real_device_validation": false
+}
