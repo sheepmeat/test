@@ -1,0 +1,155 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5Q1",
+  "source_role": "TRAIN",
+  "historical_selector": {
+    "policy_id": "T-B4_TRAIN_ONLY_STRATIFIED_CALIBRATION_512",
+    "policy_checksum": "c5ce8a54898a19d0b9dad156aee89feeafbf85f79a64a6e424d7912b24a95179",
+    "manifest_checksum": "51bbced6b40ab14d547e3c80afd99b92a24c016c1853e66c634b69d1dc4b30a4",
+    "selector_implementation": "datasets/thermal/t_b4_runner.py:_freeze_calibration",
+    "selection_algorithm": "4_source_labels_x_8_TRAIN_mean_quantile_bands_up_to_16_evenly_spaced_indices_then_global_index_backfill",
+    "sample_count": 512,
+    "selection_seed": null,
+    "label_order": [
+      "EMPTY_ROOM",
+      "SITTING",
+      "STANDING",
+      "LYING"
+    ],
+    "selected_label_counts": {
+      "EMPTY_ROOM": 133,
+      "SITTING": 133,
+      "STANDING": 120,
+      "LYING": 126
+    },
+    "temperature_bands": 8,
+    "nominal_per_stratum": 16,
+    "backfill_count": 20,
+    "backfill_indices": [
+      1,
+      1687,
+      3369,
+      5049,
+      6734,
+      8427,
+      10117,
+      11797,
+      13476,
+      15160,
+      16845,
+      18529,
+      20210,
+      21887,
+      23571,
+      25252,
+      26923,
+      28602,
+      30305,
+      31996
+    ],
+    "selected_indices_sha256_json": "7a5de14aede74418c50104b5d543aeefe60764767b444ac02dca576de7f2bd5b",
+    "selection_reproduced": true,
+    "validation_samples_used": 0,
+    "real_samples_used": 0,
+    "locked_test_used": false
+  },
+  "converter_policy": {
+    "optimizations": [
+      "DEFAULT"
+    ],
+    "representative_dataset_attached": true,
+    "supported_ops": [
+      "TFLITE_BUILTINS_INT8"
+    ],
+    "inference_input_type": "int8",
+    "inference_output_type": "int8",
+    "float16_enabled": false,
+    "dynamic_range_quantization": false,
+    "quantization_mode": "FULL_INT8",
+    "strict_full_int8": true,
+    "p1_input_contract": "P1_FLOAT32_NHWC_SINGLE_SAMPLE_GENERATOR"
+  },
+  "historical_input_quantizer": {
+    "scale": 0.31791284680366516,
+    "zero_point": -125,
+    "lower_representable_p1": -0.9537385404109955,
+    "upper_representable_p1": 80.47095452432632
+  },
+  "pixel_distribution_p1": {
+    "min": -0.827001036248923,
+    "p0.1": -0.390994573932391,
+    "p1": -0.3412038684685841,
+    "p5": -0.3091530966461888,
+    "median": -0.261217573717692,
+    "p95": 1.512633160798446,
+    "p99": 5.328658856084308,
+    "p99.9": 9.517574578617559,
+    "max": 80.24077403595213,
+    "fraction_below_historical_lower_range": 0.0,
+    "pixels_below_historical_lower_range": 0,
+    "pixel_count": 2539520
+  },
+  "pixel_distribution_celsius": {
+    "min": 20.397077560424805,
+    "p0.1": 21.647741317749023,
+    "p1": 21.790563583374023,
+    "p5": 21.88249969482422,
+    "median": 22.020000457763672,
+    "p95": 27.1082067489624,
+    "p99": 38.05429458618164,
+    "p99.9": 50.06999969482422,
+    "max": 252.93612670898438
+  },
+  "per_frame_p1": {
+    "frame_min": {
+      "min": -0.827001036248923,
+      "p0.1": -0.738542943395201,
+      "p1": -0.5142062626884213,
+      "p5": -0.4719158740316796,
+      "median": -0.4157210319101838,
+      "p95": -0.3518588666570462,
+      "p99": -0.34742476096746266,
+      "p99.9": -0.3440710417729262,
+      "max": -0.34357903406576246
+    },
+    "frame_p1_percentile": {
+      "min": -0.3562758767398258,
+      "p0.1": -0.355936248712465,
+      "p1": -0.35197163814982385,
+      "p5": -0.3504104578278519,
+      "median": -0.3427797063949348,
+      "p95": -0.3158131091888253,
+      "p99": -0.31173532175939905,
+      "p99.9": -0.3103366101517573,
+      "max": -0.3098255371459409,
+      "percentile": 1
+    },
+    "frame_median": {
+      "min": -0.2673290370445863,
+      "p0.1": -0.26713519008537573,
+      "p1": -0.26648183037072826,
+      "p5": -0.26560968512303984,
+      "median": -0.261217573717692,
+      "p95": -0.2422326563341927,
+      "p99": -0.22986994932317809,
+      "p99.9": -0.20658829786225513,
+      "max": -0.2064787174164262
+    },
+    "frame_mean": {
+      "min": -0.2674794656379901,
+      "p0.1": -0.26491963689781184,
+      "p1": -0.25207509986714904,
+      "p5": -0.22627180224447266,
+      "median": -0.10786366188026891,
+      "p95": 0.5855078002431713,
+      "p99": 0.7743012246964885,
+      "p99.9": 0.9584761263297333,
+      "max": 0.9914260471231777
+    }
+  },
+  "distribution_method": "float64 P1 arithmetic over float32 canonical Celsius values; numpy.percentile linear equivalent for aggregate pixel statistics",
+  "new_selector": {
+    "created": false,
+    "reason": "TRAIN_DOMAIN_RANGE_GAP was established before candidate-generation authorization."
+  }
+}

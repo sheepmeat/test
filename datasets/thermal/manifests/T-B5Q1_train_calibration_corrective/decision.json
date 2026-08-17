@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5Q1",
+  "review_id": "THERMAL_T_B5Q1_TRAIN_DOMAIN_INT8_CALIBRATION_CORRECTIVE_001",
+  "status": "FINALIZED_WITH_LIMITATIONS",
+  "analysis_complete": true,
+  "root_cause": "TRAIN_DOMAIN_RANGE_GAP",
+  "root_cause_justification": "The complete legitimate TRAIN contains only 32 pixels below the historical INT8 lower representable P1 value, while 40.5579702555509% of the fixed O2.6 real MI48 pixels fall below the full TRAIN minimum. The historical 512 subset misses the 32 TRAIN lower-tail pixels, but replacing the subset cannot legitimately span the much colder real-device domain.",
+  "historical_calibration_coverage_defect": false,
+  "converter_configuration_defect": false,
+  "device_domain_data_gap": true,
+  "candidate_generation": {
+    "authorized": false,
+    "created": false,
+    "reason": "A calibration-only candidate would be field-domain fitting because TRAIN itself lacks the real MI48 cold/background range.",
+    "new_artifact_identity": null,
+    "strict_full_int8_verified": null,
+    "canonical_equivalence_run": false,
+    "o2_6_one_shot_run": false
+  },
+  "frozen_contracts": {
+    "float_weights_changed": false,
+    "p1_changed": false,
+    "geometry_changed": false,
+    "class_mapping_changed": false,
+    "thresholds_changed": false,
+    "training_performed": false,
+    "float_retraining_required": "UNRESOLVED",
+    "real_mi48_used_for_calibration": false,
+    "validation_used_for_calibration": false,
+    "locked_test_used": false,
+    "field_evidence_used_for_tuning": false
+  },
+  "historical_preservation": {
+    "float_tflite_sha256": "fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779",
+    "historical_full_int8_sha256": "fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be",
+    "historical_full_int8_modified": false,
+    "production_model_selection_modified": false
+  },
+  "limitations": {
+    "ground_truth_available": false,
+    "accuracy_claim": false,
+    "device_domain_performance_validated": false,
+    "thermal44_validated": false,
+    "t_c_validated": false,
+    "temporal_fall_validated": false,
+    "human_fall_semantics": "LYING_DERIVED_POSTURE_PROXY_NOT_TEMPORAL_EVENT_GROUND_TRUTH"
+  },
+  "gates": {
+    "thermal_t_b5q1_train_calibration_corrective": "PASS_WITH_LIMITATIONS",
+    "new_int8_candidate_eligible_for_integration_review": false,
+    "pi_o3_authorized": false,
+    "production_activation": false,
+    "next_recommended_phase": "THERMAL_DEVICE_DOMAIN_DATA_ACQUISITION_OR_CONSENTED_MI48_CAPTURE",
+    "next_phase_started": false
+  },
+  "delivery_scope": {
+    "integration_repository_modified": false,
+    "pi_snapshot_modified": false,
+    "raw_field_data_committed": false,
+    "ssd_modified": false,
+    "auto_merged": false
+  }
+}

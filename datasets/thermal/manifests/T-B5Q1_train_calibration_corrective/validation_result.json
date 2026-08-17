@@ -1,0 +1,13 @@
+{
+  "candidate_created": false,
+  "error_count": 0,
+  "errors": [],
+  "evidence_validation": "PASS",
+  "new_int8_candidate_eligible_for_integration_review": false,
+  "overall_outcome": "PASS_WITH_LIMITATIONS",
+  "phase": "T-B5Q1",
+  "review_id": "THERMAL_T_B5Q1_TRAIN_DOMAIN_INT8_CALIBRATION_CORRECTIVE_001",
+  "root_cause": "TRAIN_DOMAIN_RANGE_GAP",
+  "schema_version": "1.0",
+  "t_c_authorized": false
+}

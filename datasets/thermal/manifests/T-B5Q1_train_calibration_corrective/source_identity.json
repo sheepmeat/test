@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5Q1",
+  "review_id": "THERMAL_T_B5Q1_TRAIN_DOMAIN_INT8_CALIBRATION_CORRECTIVE_001",
+  "predecessor": {
+    "pull_request": 98,
+    "commit": "ef25ecec958e66c1ffaf2467bdc94e5279c08d1a",
+    "branch": "fix/thermal-tb5-mi48-int8-calibration"
+  },
+  "storage": {
+    "volume_name": "SafeNestssd",
+    "mount_path": "EXTERNAL_SSD_MOUNT_POINT",
+    "filesystem": "exFAT",
+    "transport": "USB",
+    "volume_uuid": "04E1EBA5-A0D2-3409-A24B-167C795A54E8",
+    "media_read_only": false,
+    "used_read_only": true,
+    "ssd_modified": false,
+    "raw_payload_committed": false
+  },
+  "canonical_train": {
+    "logical_path": "canonical/TRAIN/train_canonical.npy",
+    "provenance_logical_path": "canonical/TRAIN/train_provenance.jsonl",
+    "role": "TRAIN",
+    "split": "TRAIN",
+    "source_domain": "SYNTHETIC",
+    "sha256": "749c847fc9ab50ea5eee8827f0d47b5ebaa48165732a382c59f8b96c565b9d93",
+    "size_bytes": 634880128,
+    "shape": [
+      32000,
+      62,
+      80
+    ],
+    "dtype": "float32_little_endian",
+    "unit": "CELSIUS",
+    "sample_count": 32000,
+    "provenance_sha256": "b4ec8228e35703bac3319ca218a69fdef43013ea44b23376da4929b274d24888",
+    "provenance_size_bytes": 77767837,
+    "conversion_ledger_sha256": "9f0147f50a8222e4dd22d1c640ee5ac3eeef419b0ee969ef81d1d52810bf44a5",
+    "conversion_status": "FINALIZED",
+    "geometry_profile_id": "G1_FIXED_ASPECT_CROP_BILINEAR",
+    "full_hash_verified": true
+  },
+  "frozen_float_source": {
+    "candidate_id": "SMALL_CNN_BASELINE_V1_P1",
+    "checkpoint_logical_path": "experiments/T-B1/T-B1_execution_result/checkpoints/P1_TRAIN_FITTED_GLOBAL_ZSCORE.weights.h5",
+    "checkpoint_sha256": "7aba32fe8d0e241546429bdc3e8cd059b10d4d8f548e9e12c4085abeba308a75",
+    "checkpoint_size_bytes": 3777416,
+    "architecture_fingerprint": "937fceb88900a779d67a8e407cebc3362cc21346721f92cea5ae8de1413aba2a",
+    "parameter_count": 312131,
+    "seed": 20260813,
+    "selected_profile": "P1_TRAIN_FITTED_GLOBAL_ZSCORE",
+    "same_selected_weights_proven": true,
+    "checkpoint_loaded_into_frozen_architecture": true,
+    "loaded_weight_tensor_sha256": "19eec68045e801acd7d33d0ad10776b8cb0eb1f8514a268b9cd4bb3159ada170",
+    "winner_registry_sha256": "69bad4c237c193b081cafd3addee5cd64b15a8634736b00851b769d4d5b42a00"
+  },
+  "known_tflite_lineage": {
+    "float_tflite_sha256": "fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779",
+    "float_tflite_size_bytes": 1252048,
+    "historical_full_int8_sha256": "fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be",
+    "historical_full_int8_size_bytes": 318280,
+    "historical_dynamic_range_sha256": "297de231e26ecf2d4cd4010bd10c08d4df3b6b0a531c69693daea353afb8127d",
+    "historical_dynamic_range_size_bytes": 317344,
+    "historical_full_int8_modified": false
+  },
+  "p1_contract": {
+    "profile_id": "P1_TRAIN_FITTED_GLOBAL_ZSCORE",
+    "mean": 22.769290618485442,
+    "std": 2.8684523405441222,
+    "statistics_checksum": "10b5da044ef33f26715544c3d4bf56e9d999d6c65139e931f6997583b3f5b816",
+    "fit_role": "TRAIN",
+    "fit_sample_count": 32000,
+    "fit_pixel_count": 158720000,
+    "refit": false,
+    "physical_conversion": "physical_C = raw_uint16 / 10.0 - 273.15"
+  },
+  "target_contract": {
+    "class_order": [
+      "NOT_HUMAN",
+      "HUMAN_NORMAL",
+      "HUMAN_FALL"
+    ],
+    "mapping": {
+      "EMPTY_ROOM": "NOT_HUMAN",
+      "SITTING": "HUMAN_NORMAL",
+      "STANDING": "HUMAN_NORMAL",
+      "LYING": "HUMAN_FALL"
+    },
+    "human_fall_semantics": "LYING_DERIVED_POSTURE_PROXY_NOT_TEMPORAL_EVENT_GROUND_TRUTH"
+  }
+}
