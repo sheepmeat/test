@@ -1,0 +1,87 @@
+{
+  "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1",
+  "public_subjects": 110,
+  "public_recordings": 440,
+  "public_windows": 530,
+  "window_strategy": "A6_30S_NONOVERLAP_BOUNDARIES_REUSED_SIGNAL_RECOMPUTED",
+  "subject_counts": {
+    "TRAIN": 77,
+    "VAL": 17,
+    "NEW_MODEL_HELDOUT_TEST": 16
+  },
+  "recording_counts": {
+    "TRAIN": 308,
+    "VAL": 68,
+    "NEW_MODEL_HELDOUT_TEST": 64
+  },
+  "window_counts": {
+    "TRAIN": 370,
+    "VAL": 76,
+    "NEW_MODEL_HELDOUT_TEST": 84
+  },
+  "label_counts_including_ambiguous": {
+    "TRAIN": {
+      "RAPID_OR_ABNORMAL": 82,
+      "APNEA": 149,
+      "NORMAL": 106,
+      "AMBIGUOUS": 33
+    },
+    "VAL": {
+      "RAPID_OR_ABNORMAL": 20,
+      "APNEA": 32,
+      "NORMAL": 18,
+      "AMBIGUOUS": 6
+    },
+    "NEW_MODEL_HELDOUT_TEST": {
+      "RAPID_OR_ABNORMAL": 17,
+      "APNEA": 32,
+      "AMBIGUOUS": 10,
+      "NORMAL": 25
+    }
+  },
+  "supervised_eligible_window_counts": {
+    "TRAIN": {
+      "RAPID_OR_ABNORMAL": 82,
+      "APNEA": 149,
+      "NORMAL": 106
+    },
+    "VAL": {
+      "RAPID_OR_ABNORMAL": 20,
+      "APNEA": 32,
+      "NORMAL": 18
+    },
+    "NEW_MODEL_HELDOUT_TEST": {
+      "RAPID_OR_ABNORMAL": 17,
+      "APNEA": 32,
+      "NORMAL": 25
+    }
+  },
+  "supervised_eligible_totals": {
+    "TRAIN": 337,
+    "VAL": 70,
+    "NEW_MODEL_HELDOUT_TEST": 74
+  },
+  "subject_overlap": 0,
+  "heldout_performance_inspected": false,
+  "team_mr60_supervised_training": "DISALLOWED",
+  "mr60_heldout_reference": [
+    "LEGACY_2026-07-28_empty_v2_360s",
+    "LEGACY_2026-07-25_occupied_d09_60s",
+    "LEGACY_2026-07-25_occupied_front_d06_60s"
+  ],
+  "mr60_heldout_meaning": "SAME_SUBJECT_LIMITED_DEVICE_REFERENCE",
+  "mr60_mn2_mn3_development_reference": [
+    "LEGACY_2026-07-25_occupied_d06_v1_360s",
+    "LEGACY_2026-07-25_occupied_d09_v1_360s",
+    "LEGACY_2026-07-28_occupied_d09_v2_360s",
+    "LEGACY_2026-08-01_occupied_d09_v120_31min",
+    "LEGACY_2026-08-01_empty_v120_30min",
+    "LEGACY_2026-07-25_empty_gate_v1_360s",
+    "M-C0-PILOT-DESKWORK-001",
+    "LEGACY_2026-07-26_breath_paced_15rpm",
+    "LEGACY_2026-07-28_breath_paced_12rpm_explicit_v2_attempt03",
+    "LEGACY_2026-07-26_breath_paced_20rpm_deep"
+  ],
+  "split_path": "datasets/mmwave/splits/mmwave_mr60_compat_subject_split_v1.json",
+  "index_path": "datasets/mmwave/manifests/m_n4_canonical/window_index.jsonl"
+}
