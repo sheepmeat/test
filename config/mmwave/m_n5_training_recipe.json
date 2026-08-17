@@ -1,0 +1,44 @@
+{
+  "phase": "M-N5",
+  "status": "CANDIDATE_TRAINING_ONLY",
+  "final_model_selection": false,
+  "input_contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1",
+  "input_contract_path": "config/mmwave/m_n4_canonical_input_dataset_contract.json",
+  "window_index": "datasets/mmwave/manifests/m_n4_canonical/window_index.jsonl",
+  "split_file": "datasets/mmwave/splits/mmwave_mr60_compat_subject_split_v1.json",
+  "input_shape_per_sample": [240, 1],
+  "batch_input_shape": [null, 240, 1],
+  "inference_shape": [1, 240, 1],
+  "n_classes": 3,
+  "class_mapping": {
+    "0": "NORMAL",
+    "1": "RAPID_OR_ABNORMAL",
+    "2": "APNEA"
+  },
+  "apnea_semantics": "voluntary breath-hold/reference-derived APNEA proxy; not clinical apnea diagnosis",
+  "optimizer": "Adam",
+  "learning_rate": 0.001,
+  "loss": "SparseCategoricalCrossentropy",
+  "class_weighting": "UNWEIGHTED",
+  "batch_size": 32,
+  "maximum_epochs": 120,
+  "early_stopping": {
+    "monitor": "val_loss",
+    "patience": 15,
+    "restore_best_weights": true
+  },
+  "seeds": [42, 2026],
+  "primary_candidates": [
+    "M-N5_SMALL_MLP_BASELINE",
+    "M-N5_CONV1D_GAP_TINY",
+    "M-N5_DILATED_CONV1D_GAP_TINY"
+  ],
+  "optional_diagnostic": "M-N5_LINEAR_DIAGNOSTIC",
+  "parameter_budget_max": 50000,
+  "heldout_policy": "NO_M_N5_INFERENCE",
+  "new_model_heldout_test_inference": 0,
+  "team_mr60_supervised": false,
+  "threshold_tuning": false,
+  "quantization": false,
+  "tflite_conversion": false
+}
