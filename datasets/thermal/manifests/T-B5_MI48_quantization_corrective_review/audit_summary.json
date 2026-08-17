@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5",
+  "review_id": "THERMAL_T_B5_REAL_MI48_INT8_QUANTIZATION_CORRECTIVE_001",
+  "review_scope": "OFFLINE_MODEL_QUANTIZATION_CALIBRATION_CORRECTIVE_INVESTIGATION",
+  "status": "PASS_WITH_LIMITATIONS",
+  "overall_gate": "THERMAL_T_B5_REAL_MI48_QUANTIZATION_CORRECTIVE=PASS_WITH_LIMITATIONS",
+  "analysis_complete": false,
+  "analysis_completion_reason": "Canonical TRAIN tensor payload and frozen Float checkpoint are not materialized in the current AI worktree; the required TRAIN-versus-real range decision and a same-weight corrective conversion cannot be performed without them.",
+  "root_cause_classification": "INCONCLUSIVE",
+  "corrective_result_classification": "INCONCLUSIVE",
+  "float_retraining_required": "UNRESOLVED",
+  "new_int8_candidate_created": false,
+  "new_int8_candidate_eligible_for_integration_review": false,
+  "historical_artifact_preserved": true,
+  "historical_artifact_modified": false,
+  "production_model_changed": false,
+  "production_activation": false,
+  "t_c_validated": false,
+  "device_domain_accuracy_validated": false,
+  "temporal_fall_validated": false,
+  "ground_truth_available": false,
+  "real_mi48_used_for_calibration": false,
+  "locked_test_used": false,
+  "integration_repository_modified": false,
+  "pi_snapshot_modified": false,
+  "real_field_data_committed": false,
+  "blocking_items": [
+    "MISSING_CANONICAL_TRAIN_TENSOR_PAYLOAD",
+    "MISSING_FROZEN_FLOAT_CHECKPOINT",
+    "EXTERNAL_SSD_NOT_MOUNTED"
+  ],
+  "required_next_action": "Materialize the owner-authorized canonical TRAIN arrays and Float checkpoint in a dedicated read-only experiment worktree, then rerun the bounded TRAIN-only lineage/range comparison and at most one corrected conversion.",
+  "evidence_categories": {
+    "historical_lineage": "REPOSITORY_CODE_VERIFIED",
+    "historical_manifest": "REPOSITORY_CODE_VERIFIED",
+    "real_field_summary": "OFFLINE_EXTERNAL_LOCAL_EVIDENCE_VERIFIED",
+    "train_distribution": "UNKNOWN",
+    "corrective_candidate": "NOT_CREATED"
+  }
+}

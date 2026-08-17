@@ -1,0 +1,11 @@
+{
+  "error_count": 0,
+  "errors": [],
+  "evidence_validation": "PASS",
+  "new_candidate_created": false,
+  "overall_outcome": "PASS_WITH_LIMITATIONS",
+  "phase": "T-B5",
+  "review_id": "THERMAL_T_B5_REAL_MI48_INT8_QUANTIZATION_CORRECTIVE_001",
+  "schema_version": "1.0",
+  "t_c_authorized": false
+}

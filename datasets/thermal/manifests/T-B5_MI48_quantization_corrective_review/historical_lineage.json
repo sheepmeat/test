@@ -1,0 +1,118 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5",
+  "artifact": {
+    "candidate_id": "FULL_INT8",
+    "logical_path": "models/thermal/candidates/t_b5/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite",
+    "sha256": "fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be",
+    "size_bytes": 318280,
+    "input_dtype": "int8",
+    "output_dtype": "int8",
+    "input_shape": [
+      1,
+      62,
+      80,
+      1
+    ],
+    "output_shape": [
+      1,
+      3
+    ],
+    "input_scale": 0.31791284680366516,
+    "input_zero_point": -125,
+    "historical_locked": true,
+    "modified": false
+  },
+  "float_lineage": {
+    "candidate_id": "TFLITE_FP32",
+    "logical_path": "models/thermal/candidates/t_b5/SMALL_CNN_BASELINE_V1_P1_float32.tflite",
+    "sha256": "fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779",
+    "same_lineage": true,
+    "weights_frozen": true,
+    "checkpoint_available_in_current_worktree": false
+  },
+  "representative_source": {
+    "role": "TRAIN",
+    "split": "TRAIN",
+    "sample_count": 512,
+    "selection_seed": null,
+    "selection_algorithm": "4_source_labels_x_8_TRAIN_mean_quantile_bands_up_to_16_evenly_spaced_indices_then_global_index_backfill",
+    "policy_id": "T-B4_TRAIN_ONLY_STRATIFIED_CALIBRATION_512",
+    "policy_checksum": "c5ce8a54898a19d0b9dad156aee89feeafbf85f79a64a6e424d7912b24a95179",
+    "manifest_checksum": "51bbced6b40ab14d547e3c80afd99b92a24c016c1853e66c634b69d1dc4b30a4",
+    "class_composition": {
+      "selection_strata": "EMPTY_ROOM,SITTING,STANDING,LYING",
+      "temperature_bands": 8,
+      "nominal_per_stratum": 16,
+      "backfill_count": 20,
+      "validation_samples_used": 0,
+      "real_samples_used": 0,
+      "locked_test_used": false
+    },
+    "determinism": {
+      "random_seed": null,
+      "selection_is_deterministic": true,
+      "unique_indices": 512
+    }
+  },
+  "p1_contract": {
+    "profile": "P1_TRAIN_FITTED_GLOBAL_ZSCORE",
+    "mean": 22.769290618485442,
+    "std": 2.8684523405441222,
+    "physical_conversion": "physical_C = raw_uint16 / 10.0 - 273.15",
+    "orientation": "CANONICAL_62x80",
+    "class_map": {
+      "NOT_HUMAN": 0,
+      "HUMAN_NORMAL": 1,
+      "HUMAN_FALL": 2
+    }
+  },
+  "representative_observed_frame_mean": {
+    "note": "Only frame means are retained in compact repository evidence; these are not pixel-level P1 quantiles.",
+    "frame_mean_celsius": {
+      "min": 22.00203851922866,
+      "p1": 22.046225208278624,
+      "p5": 22.120240737738147,
+      "median": 22.459888845105326,
+      "p95": 24.448791838499808,
+      "p99": 24.990336778752265,
+      "max": 25.61314898383233
+    },
+    "frame_mean_p1": {
+      "min": -0.2674794656379899,
+      "p1": -0.2520750998671488,
+      "p5": -0.22627180224447305,
+      "median": -0.10786366188026872,
+      "p95": 0.5855078002431716,
+      "p99": 0.7743012246964887,
+      "max": 0.9914260471231776
+    }
+  },
+  "pixel_level_distribution": {
+    "historical_calibration_p1": "NOT_MEASURABLE_WITHOUT_TRAIN_TENSOR_PAYLOAD",
+    "train_p1": "NOT_MEASURABLE_WITHOUT_TRAIN_TENSOR_PAYLOAD",
+    "historical_calibration_celsius": "NOT_MEASURABLE_WITHOUT_TRAIN_TENSOR_PAYLOAD",
+    "train_celsius": "NOT_MEASURABLE_WITHOUT_TRAIN_TENSOR_PAYLOAD",
+    "reason": "The canonical TRAIN .npy and frozen Float checkpoint are not present in the current AI worktree. Compact manifests retain selection metadata and frame means only; no pixel-level values are reconstructed by assumption."
+  },
+  "converter": {
+    "optimizations": [
+      "DEFAULT"
+    ],
+    "representative_dataset_attached": true,
+    "representative_input_contract": "P1_FLOAT32_NHWC_SINGLE_SAMPLE_GENERATOR",
+    "supported_ops": [
+      "TFLITE_BUILTINS_INT8"
+    ],
+    "inference_input_type": "int8",
+    "inference_output_type": "int8",
+    "float16_enabled": false,
+    "dynamic_range_only": false,
+    "strict_full_int8": true,
+    "configuration_source": "datasets/thermal/t_b4_runner.py:_convert"
+  },
+  "historical_quantizer_lower_representable_p1": -0.9537385404109955,
+  "historical_quantizer_upper_representable_p1": 80.47095452432632,
+  "historical_quantizer_lower_range_definition": "(-128 - input_zero_point) * input_scale",
+  "root_cause_status": "INCONCLUSIVE_MISSING_PIXEL_LEVEL_TRAIN_EVIDENCE"
+}
