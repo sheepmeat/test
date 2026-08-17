@@ -14,6 +14,7 @@
 - [M-N0 기존 팀 MR60 실측 전수조사 (CURRENT mmWave inventory)](mmwave/20260817_SafeNest_mmWave_M-N0_Team_MR60_Physical_Inventory_01.md)
 - [M-N1 팀 MR60 학습 가능 여부·라벨 provenance 분류 (CURRENT)](mmwave/20260817_SafeNest_mmWave_M-N1_Training_Eligibility_01.md)
 - [M-N2 공개↔MR60 공통 호흡 표현 연구 (CURRENT, local pending canonical publication)](mmwave/20260818_SafeNest_mmWave_M-N2_Common_Representation_01.md)
+- [M-N3 타이밍·윈도우·전처리 계약 선택 (CURRENT, local pending canonical publication)](mmwave/20260818_SafeNest_mmWave_M-N3_Timing_Window_Preprocessing_01.md)
 - [PUBLIC-P0 110명 공개 데이터셋 재사용 준비](reports/20260817_SafeNest_mmWave_110_Subject_Public_Dataset_Reuse_Readiness_01.md)
 - [기존 팀 MR60 실측 데이터 평가 (영문 기술/증거 보고서)](reports/20260814_SafeNest_mmWave_Existing_Team_MR60_Data_Evaluation_01.md)
 - [팀 MR60 실측 평가 (한글, 이미 찍힌 데이터의 의미)](reports/20260814_SafeNest_mmWave_Team_MR60_Data_Evaluation_KR_01.md)
