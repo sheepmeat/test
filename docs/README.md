@@ -2,7 +2,7 @@
 
 현재 개발·팀 연동은 아래 문서를 기준으로 합니다.
 
-- [mmWave MR60 호환 모델 개발 로드맵 (2026-08-17, 활성 미래 실행)](20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md)
+- [mmWave MR60 호환 모델 개발 로드맵 (2026-08-17, CURRENT ACTIVE)](20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md)
 - [멀티센서 병렬 A–E master roadmap](20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md)
 - [기존 mmWave A–E 상세 실행 순서 (A/B 역사 유효, 미래 C/D는 PAUSED/SUPERSEDED)](20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md)
 - [mmWave Phase B 개요](MMWAVE_PHASE_B_OVERVIEW.md)
