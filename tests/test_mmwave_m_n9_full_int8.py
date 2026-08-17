@@ -59,6 +59,12 @@ class TestMmwaveMN9FullInt8(unittest.TestCase):
         self.assertFalse(lock["calibration"]["public_heldout_used"])
         self.assertFalse(lock["calibration"]["mr60_used_for_calibration"])
         self.assertEqual(lock["NEW_MODEL_HELDOUT_TEST_INFERENCE_M_N9"], 0)
+        self.assertNotIn("conversion_git_sha", lock)
+        self.assertEqual(lock["conversion_base_sha"], "bee5fd6f1611036d1a5cade29712586bdca4b6bf")
+        self.assertEqual(
+            lock["artifact_introducing_commit"],
+            "a475d06623dd91298a8563924fafaa5fc6d3532b",
+        )
 
     def test_result_parity_and_boundaries(self) -> None:
         if not RESULT.is_file():

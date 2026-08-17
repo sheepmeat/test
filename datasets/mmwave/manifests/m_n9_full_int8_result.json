@@ -333,7 +333,9 @@
   "lock_path": "config/mmwave/m_n9_full_int8_artifact_lock.json",
   "tensorflow_version": "2.20.0",
   "tflite_litert_version": "2.20.0",
-  "conversion_git_sha": "bee5fd6f1611036d1a5cade29712586bdca4b6bf",
+  "conversion_base_sha": "bee5fd6f1611036d1a5cade29712586bdca4b6bf",
+  "conversion_base_sha_meaning": "HEAD at conversion time (canonical main / M-N7 merge). Not the M-N9 documentation commit.",
+  "artifact_introducing_commit": "a475d06623dd91298a8563924fafaa5fc6d3532b",
   "evaluation_timestamp": "2026-08-17T19:28:57Z",
   "focused_validation": {
     "float_identity": "PASS",

@@ -99,6 +99,15 @@ SHA-256  3b008af4be0facc4037c2afd3fe39292fb794208eb4370dbe6916b2d15aa38a4
 size     11816 bytes
 ```
 
+Provenance (no reconversion):
+
+```text
+conversion_base_sha:          bee5fd6f1611036d1a5cade29712586bdca4b6bf
+  meaning: HEAD at conversion time (canonical main / M-N7 merge)
+artifact_introducing_commit:  a475d06623dd91298a8563924fafaa5fc6d3532b
+  meaning: first M-N9 commit that added the locked TFLite binary
+```
+
 ---
 
 ## 6. VAL FLOAT → INT8 parity

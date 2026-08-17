@@ -58,6 +58,7 @@ def sha256_file(path: Path) -> str:
 
 
 def git_sha() -> str:
+    """HEAD at conversion time. This is the branch base, not the later lock commit."""
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
 
 
@@ -554,7 +555,8 @@ def main() -> int:
         "presence_gate": presence,
         "tensorflow_version": tf_version,
         "tflite_litert_version": tflite_version,
-        "conversion_git_sha": conversion_sha,
+        "conversion_base_sha": conversion_sha,
+        "conversion_base_sha_meaning": "HEAD at conversion time (canonical main). Not the later M-N9 documentation commit.",
         "NEW_MODEL_HELDOUT_TEST_INFERENCE_M_N9": 0,
         "M_N8_STATUS": "SKIPPED_NOT_JUSTIFIED",
         "DEVICE_VALIDATED": False,
@@ -623,7 +625,8 @@ def main() -> int:
         "lock_path": LOCK_PATH.relative_to(ROOT).as_posix(),
         "tensorflow_version": tf_version,
         "tflite_litert_version": tflite_version,
-        "conversion_git_sha": conversion_sha,
+        "conversion_base_sha": conversion_sha,
+        "conversion_base_sha_meaning": "HEAD at conversion time (canonical main). Not the later M-N9 documentation commit.",
         "evaluation_timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "focused_validation": {
             "float_identity": "PASS",
