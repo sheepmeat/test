@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5",
+  "checked_at": "2026-08-18",
+  "current_ai_worktree": {
+    "base": "origin/main",
+    "base_sha": "2574fbc4abba7988565dd1fd013b1698fe4ecf49",
+    "branch": "fix/thermal-tb5-mi48-int8-calibration",
+    "working_tree_clean_before_review": true
+  },
+  "required_inputs": [
+    {
+      "logical_path": "TRAIN/train_canonical.npy",
+      "role": "TRAIN",
+      "status": "NOT_MATERIALIZED_IN_CURRENT_AI_WORKTREE",
+      "expected_shape": [
+        32000,
+        62,
+        80
+      ],
+      "expected_dtype": "float32_little_endian",
+      "expected_sha256": "749c847fc9ab50ea5eee8827f0d47b5ebaa48165732a382c59f8b96c565b9d93",
+      "used": false
+    },
+    {
+      "logical_path": "TRAIN/train_provenance.jsonl",
+      "role": "TRAIN",
+      "status": "NOT_MATERIALIZED_IN_CURRENT_AI_WORKTREE",
+      "expected_sha256": "b4ec8228e35703bac3319ca218a69fdef43013ea44b23376da4929b274d24888",
+      "used": false
+    },
+    {
+      "logical_path": "models/thermal/checkpoints/SMALL_CNN_BASELINE_V1_P1_float32.keras",
+      "role": "FROZEN_FLOAT_CHECKPOINT",
+      "status": "NOT_MATERIALIZED_IN_CURRENT_AI_WORKTREE",
+      "expected_sha256": "7aba32fe8d0e241546429bdc3e8cd059b10d4d8f548e9e12c4085abeba308a75",
+      "expected_size_bytes": 3777416,
+      "used": false
+    },
+    {
+      "logical_path": "models/thermal/candidates/t_b5/SMALL_CNN_BASELINE_V1_P1_float32.tflite",
+      "role": "FROZEN_FLOAT_TFLITE_REFERENCE",
+      "status": "AVAILABLE_ONLY_ON_UNMERGED_POLICY_BRANCH",
+      "branch": "origin/policy/git-track-locked-b-binaries",
+      "sha256": "fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779",
+      "used_for_conversion": false
+    },
+    {
+      "logical_path": "RP-X0_O2.6_MI48_FIELD_SNAPSHOT",
+      "role": "REAL_EVAL_DEVELOPMENT",
+      "status": "READ_ONLY_EXTERNAL_LOCAL_EVIDENCE_AVAILABLE",
+      "source_commit": "4879fbb",
+      "used_for_calibration": false,
+      "used_for_selection": false
+    }
+  ],
+  "external_storage": {
+    "expected_device_label": "SafeNestssd",
+    "status": "NOT_MOUNTED",
+    "large_download_or_hydration_requested": false,
+    "authorization_required": true
+  },
+  "candidate_generation": {
+    "performed": false,
+    "reason": "A strict same-weight conversion cannot be reproduced without the frozen Float checkpoint and TRAIN tensors; no artifact was fabricated from field data or from a TFLite binary alone."
+  }
+}

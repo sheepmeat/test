@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5",
+  "source": {
+    "role": "REAL_EVAL_DEVELOPMENT",
+    "source_id": "RP-X0_O2.6_MI48_FIELD_SNAPSHOT",
+    "source_commit": "4879fbb",
+    "source_report_logical_path": "docs/20260818_RP-X0_Thermal_Real_Field_FLOAT_INT8_Equivalence_Audit_01.md",
+    "source_report_sha256": "d70e5aa5e1f4e9e6d66ecc45187ea4f787a9198d9fbea309c6a546052fe4bd7b",
+    "read_only": true,
+    "used_for_calibration": false,
+    "used_for_selection": false,
+    "locked_test": false,
+    "ground_truth_available": false
+  },
+  "capture_inventory": {
+    "npz_files_listed": 1979,
+    "readable_npz_files": 1964,
+    "corrupt_npz_files": 15,
+    "readable_frames": 23788,
+    "corrupt_classification": "FIELD_CAPTURE_ARTIFACT",
+    "selected_frame_count": 154,
+    "selection_algorithm": "24_equal_time_bins_x_10_evenly_spaced",
+    "selection_identities_frozen_before_inference": true,
+    "raw_dtype": "uint16",
+    "raw_shape": [
+      62,
+      80
+    ],
+    "physical_conversion": "physical_C = raw_uint16 / 10.0 - 273.15"
+  },
+  "p1_distribution_over_selected_pixels": {
+    "min": -30.441255510601113,
+    "p1": -8.791950370596547,
+    "p5": -5.061715829565169,
+    "median": -0.8782752228010011,
+    "p95": 3.1308553586813264,
+    "p99": 5.327161677232518,
+    "max": 13.55459487053539,
+    "fraction_below_historical_int8_lower_range": 0.4816636992040218,
+    "lower_range_p1": -0.9537385404109955,
+    "distribution_scope": "154 frozen O2.6 frames, all pixels"
+  },
+  "celsius_distribution_over_selected_pixels": {
+    "min": -64.54999999999998,
+    "p1": -2.4499999999999886,
+    "p5": 8.25,
+    "median": 20.25,
+    "p95": 31.75,
+    "p99": 38.05000000000001,
+    "max": 61.650000000000034
+  },
+  "historical_float_int8_equivalence": {
+    "top1_agreement": 0.9025974025974026,
+    "top1_agree": 139,
+    "top1_disagree": 15,
+    "ranking_agreement": 0.9025974025974026,
+    "mae_median": 0.0013020833333333333,
+    "mae_p90": 0.07700778937402783,
+    "mae_p95": 0.6628249587746748,
+    "mae_max": 0.6653645833333334,
+    "low_side_saturation_median": 0.4344758064516129,
+    "low_side_saturation_p95": 0.8314516129032258,
+    "high_side_saturation_max": 0.0,
+    "saturation_relationship": "STRONG_ASSOCIATION_OBSERVED",
+    "transition_matrix": {
+      "NOT_HUMAN": {
+        "NOT_HUMAN": 0,
+        "HUMAN_NORMAL": 1,
+        "HUMAN_FALL": 0
+      },
+      "HUMAN_NORMAL": {
+        "NOT_HUMAN": 1,
+        "HUMAN_NORMAL": 17,
+        "HUMAN_FALL": 3
+      },
+      "HUMAN_FALL": {
+        "NOT_HUMAN": 2,
+        "HUMAN_NORMAL": 8,
+        "HUMAN_FALL": 122
+      }
+    }
+  },
+  "interpretation": {
+    "causal_claim": false,
+    "accuracy_claim": false,
+    "field_agreement_is_tuning_target": false,
+    "current_gate": "INT8_QUANTIZATION_REVIEW_REQUIRED"
+  }
+}
