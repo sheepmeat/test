@@ -1,0 +1,29 @@
+{
+  "schema_version": "safenest.thermal.mi48.legacy_snapshot_dry_run.v1",
+  "used": "READ_ONLY_DRY_RUN",
+  "exists": true,
+  "modified": false,
+  "compatibility": "PARTIAL",
+  "capture_contract_detected": false,
+  "thermal_related_file_count": 2151,
+  "sample_observed_paths": [
+    "data/thermal/.gitkeep",
+    "data/thermal/20260817_065524_939278_0000007852-0000007864.npz",
+    "data/thermal/20260817_065526_986577_0000007865-0000007876.npz",
+    "data/thermal/20260817_065528_978505_0000007877-0000007889.npz",
+    "data/thermal/20260817_065530_962858_0000007890-0000007902.npz",
+    "data/thermal/20260817_065533_024556_0000007903-0000007915.npz",
+    "data/thermal/20260817_065535_063468_0000007916-0000007928.npz",
+    "data/thermal/20260817_065537_153672_0000007929-0000007941.npz",
+    "data/thermal/20260817_065539_183410_0000007942-0000007953.npz",
+    "data/thermal/20260817_065541_130187_0000007954-0000007963.npz",
+    "data/thermal/20260817_065543_084789_0000007964-0000007978.npz"
+  ],
+  "observation_truncated": true,
+  "reason": "Legacy Pi snapshot lacks the new collection/session/sample contract; it is infrastructure evidence only.",
+  "new_data_collected": false,
+  "synthetic_labels_assigned": false,
+  "used_as_training": false,
+  "model_evaluation_performed": false,
+  "model_outputs_used_as_labels": false
+}

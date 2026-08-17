@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://safenest.local/schemas/thermal-mi48/label-record-v1.json",
+  "title": "SafeNest Thermal MI48 independent label record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "collection_id",
+    "session_id",
+    "frame_id",
+    "presence_label",
+    "posture_label",
+    "event_phase",
+    "source",
+    "model_target",
+    "is_temporal_fall_ground_truth"
+  ],
+  "properties": {
+    "schema_version": {"const": "safenest.thermal.mi48.label.v1"},
+    "collection_id": {"type": "string", "minLength": 1},
+    "session_id": {"type": "string", "minLength": 1},
+    "frame_id": {"type": "string", "minLength": 1},
+    "presence_label": {"enum": ["ABSENT", "PRESENT", "UNKNOWN"]},
+    "posture_label": {"enum": ["NONE", "STANDING", "SITTING", "CROUCHING", "LYING", "OTHER_CONTROLLED", "UNKNOWN"]},
+    "event_phase": {"enum": ["PRE_EVENT", "FALL_TRANSITION", "POST_FALL_LYING", "RECOVERY", "NORMAL_ACTIVITY", "NOT_APPLICABLE", "UNKNOWN"]},
+    "source": {"enum": ["SCENARIO_MANIFEST", "SYNCHRONIZED_EXPERIMENT_LOG", "INDEPENDENT_ANNOTATOR", "UNKNOWN"]},
+    "model_target": {"enum": ["NOT_HUMAN", "HUMAN_NORMAL", "HUMAN_FALL", "NOT_ASSIGNED"]},
+    "is_temporal_fall_ground_truth": {"const": false},
+    "annotation_id": {"type": ["string", "null"]},
+    "annotator_code": {"type": ["string", "null"]},
+    "revision": {"type": "integer", "minimum": 1}
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://safenest.local/schemas/thermal-mi48/sample-v1.json",
+  "title": "SafeNest Thermal MI48 canonical sample record",
+  "type": "object",
+  "required": ["schema_version", "sample_id", "collection_id", "subject_id", "session_id", "frame_id", "source_label", "model_target", "split", "raw_lineage"],
+  "properties": {
+    "schema_version": {"const": "safenest.thermal.mi48.sample.v1"},
+    "sample_id": {"type": "string", "pattern": "^MI48S1_[0-9a-f]{64}$"},
+    "source_label": {"enum": ["EMPTY", "STANDING", "SITTING", "CROUCHING", "LYING"]},
+    "model_target": {"enum": ["NOT_HUMAN", "HUMAN_NORMAL", "HUMAN_FALL"]},
+    "split": {"enum": ["TRAIN", "VALIDATION", "LOCKED_TEST", "REAL_EVAL_DEVELOPMENT", "UNASSIGNED"]}
+  }
+}

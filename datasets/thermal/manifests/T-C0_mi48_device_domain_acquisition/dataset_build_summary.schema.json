@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://safenest.local/schemas/thermal-mi48/dataset-build-v1.json",
+  "title": "SafeNest Thermal MI48 derived dataset build summary",
+  "type": "object",
+  "required": ["schema_version", "collection_id", "sample_count", "source_capture_read_only", "source_capture_modified", "raw_to_canonical_lineage_complete"],
+  "properties": {
+    "schema_version": {"const": "safenest.thermal.mi48.dataset.v1"},
+    "source_capture_read_only": {"const": true},
+    "source_capture_modified": {"const": false},
+    "raw_to_canonical_lineage_complete": {"const": true},
+    "sample_count": {"type": "integer", "minimum": 0}
+  }
+}
