@@ -11,6 +11,7 @@
       "candidate_id": "TFLITE_FP32",
       "eligible": true,
       "logical_path": "T-B4/artifacts/SMALL_CNN_BASELINE_V1_P1_float32.tflite",
+      "git_path": "models/thermal/candidates/t_b5/SMALL_CNN_BASELINE_V1_P1_float32.tflite",
       "sha256": "fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779",
       "size_bytes": 1252048
     },
@@ -18,6 +19,7 @@
       "candidate_id": "FULL_INT8",
       "eligible": true,
       "logical_path": "T-B4/artifacts/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite",
+      "git_path": "models/thermal/candidates/t_b5/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite",
       "sha256": "fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be",
       "size_bytes": 318280
     },
@@ -30,8 +32,10 @@
       "size_bytes": 317344
     }
   ],
-  "binaries_tracked_in_git": false,
-  "binary_storage": "EXTERNAL_SSD_ONLY",
+  "binaries_tracked_in_git": true,
+  "binary_storage": "GIT_AND_EXTERNAL_SSD",
+  "binary_storage_historical": "EXTERNAL_SSD_ONLY",
+  "policy_amendment": "docs/20260817_Locked_B_Binaries_Git_Tracking_Policy_01.md",
   "phase": "T-B5",
   "schema_version": "1.0"
 }

@@ -1,0 +1,13 @@
+---
+description: Locked B-stage model binaries live in Git; never substitute v0.1.0 thermal for T-B5 FULL_INT8.
+alwaysApply: true
+---
+
+# Locked B binaries
+
+- Thermal T-B5 selected file is Git-tracked at `models/thermal/candidates/t_b5/SMALL_CNN_BASELINE_V1_P1_full_int8.tflite`.
+- Identity is SHA-256 `fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be` (318280 bytes).
+- Do not tell teammates the file is SSD-only. SSD is backup.
+- Do not use `models/thermal/thermal_fall_int8_v0.1.0.tflite` as T-B5.
+- Do not switch production `models/model_manifest.json` to T-B5 unless explicitly authorized.
+- CO2 C-B6 and mmWave B INT8 are already under `models/`. Verify SHA before claiming a candidate is present.
