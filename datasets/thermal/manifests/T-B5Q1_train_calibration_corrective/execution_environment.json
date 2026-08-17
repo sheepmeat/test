@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5Q1",
+  "review_id": "THERMAL_T_B5Q1_TRAIN_DOMAIN_INT8_CALIBRATION_CORRECTIVE_001",
+  "repo_base": "origin/main",
+  "repo_base_sha256": "2574fbc4abba7988565dd1fd013b1698fe4ecf49",
+  "predecessor_commit": "ef25ecec958e66c1ffaf2467bdc94e5279c08d1a",
+  "branch": "fix/thermal-tb5q1-train-calibration-corrective",
+  "worktree_isolated": true,
+  "python": "3.9",
+  "numpy": "available",
+  "tensorflow": "available_for_contract_checks; no conversion performed",
+  "ssd": {
+    "volume_name": "SafeNestssd",
+    "filesystem": "exFAT",
+    "transport": "USB",
+    "used_read_only": true,
+    "media_read_only": false,
+    "modified": false
+  },
+  "payload_policy": {
+    "train_payload_read": true,
+    "checkpoint_read": true,
+    "real_field_payload_read": false,
+    "raw_payload_committed": false,
+    "temporary_tensor_materialization_committed": false
+  },
+  "analysis": {
+    "historical_selector_reproduced": true,
+    "full_train_distribution_measured": true,
+    "real_o2_6_distribution_reused": true,
+    "new_representative_selector_created": false,
+    "tflite_conversion_performed": false,
+    "retraining_performed": false
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "schema_version": "1.0",
+  "phase": "T-B5Q1",
+  "comparison_id": "THERMAL_T_B5Q1_P1_DOMAIN_RANGE_COMPARISON_001",
+  "p1_contract": {
+    "profile_id": "P1_TRAIN_FITTED_GLOBAL_ZSCORE",
+    "mean": 22.769290618485442,
+    "std": 2.8684523405441222,
+    "refit": false,
+    "physical_conversion": "physical_C = raw_uint16 / 10.0 - 273.15"
+  },
+  "historical_int8_range": {
+    "input_scale": 0.31791284680366516,
+    "input_zero_point": -125,
+    "lower_representable_p1": -0.9537385404109955,
+    "upper_representable_p1": 80.47095452432632
+  },
+  "distributions_p1": {
+    "historical_512": {
+      "min": -0.827001036248923,
+      "p0.1": -0.390994573932391,
+      "p1": -0.3412038684685841,
+      "p5": -0.3091530966461888,
+      "median": -0.261217573717692,
+      "p95": 1.512633160798446,
+      "p99": 5.328658856084308,
+      "p99.9": 9.517574578617559,
+      "max": 80.24077403595213
+    },
+    "full_train": {
+      "min": -1.3676012270382902,
+      "p0.1": -0.3903828291537224,
+      "p1": -0.34097180441667607,
+      "p5": -0.3089137182545359,
+      "median": -0.261217573717692,
+      "p95": 1.52004092461014,
+      "p99": 5.324779596259577,
+      "p99.9": 9.517574578617559,
+      "max": 80.5176444032577
+    },
+    "real_mi48_o2_6": {
+      "min": -30.441251254985268,
+      "p0.1": -18.727620747757488,
+      "p1": -8.791943987172775,
+      "p5": -5.061715829565169,
+      "median": -0.8782752228010011,
+      "p95": 3.1308553586813264,
+      "p99": 5.327168060656292,
+      "p99.9": 8.011536066572855,
+      "max": 13.554592742727452
+    }
+  },
+  "distributions_celsius": {
+    "historical_512": {
+      "min": 20.397077560424805,
+      "p0.1": 21.647741317749023,
+      "p1": 21.790563583374023,
+      "p5": 21.88249969482422,
+      "median": 22.020000457763672,
+      "p95": 27.1082067489624,
+      "p99": 38.05429458618164,
+      "p99.9": 50.06999969482422,
+      "max": 252.93612670898438
+    },
+    "full_train": {
+      "min": 18.846391677856445,
+      "p0.1": 21.64949607849121,
+      "p1": 21.791229248046875,
+      "p5": 21.88318634033203,
+      "median": 22.020000457763672,
+      "p95": 27.12945556640625,
+      "p99": 38.04316711425781,
+      "p99.9": 50.06999969482422,
+      "max": 253.73031616210938
+    },
+    "real_mi48_o2_6": {
+      "min": -64.54998779296875,
+      "p0.1": -30.949996948242188,
+      "p1": -2.449981689453125,
+      "p5": 8.25,
+      "median": 20.25,
+      "p95": 31.75,
+      "p99": 38.050018310546875,
+      "p99.9": 45.75,
+      "max": 61.649993896484375
+    }
+  },
+  "range_metrics": {
+    "historical_512_pixels_below_historical_lower": 0.0,
+    "historical_512_pixels_below_historical_lower_count": 0,
+    "full_train_pixels_below_historical_lower": 2.0161290322580645e-07,
+    "full_train_pixels_below_historical_lower_count": 32,
+    "full_train_pixel_count": 158720000,
+    "real_mi48_pixels_below_historical_lower": 0.4816636992040218,
+    "real_mi48_pixels_below_historical_lower_count": 367914,
+    "real_mi48_pixel_count": 763840,
+    "real_mi48_pixels_below_full_train_min": 0.405579702555509,
+    "real_mi48_pixels_below_full_train_min_count": 309798,
+    "real_mi48_pixels_above_full_train_max": 0.0,
+    "real_mi48_pixels_outside_full_train_range": 0.405579702555509,
+    "real_mi48_pixels_outside_full_train_range_count": 309798,
+    "full_train_frames_with_pixel_below_historical_lower": 32,
+    "historical_512_frames_with_pixel_below_historical_lower": 0
+  },
+  "real_evaluation_boundary": {
+    "source_id": "RP-X0_O2.6_MI48_FIELD_SNAPSHOT",
+    "source_commit": "4879fbb",
+    "source_report_logical_path": "docs/20260818_RP-X0_Thermal_Real_Field_FLOAT_INT8_Equivalence_Audit_01.md",
+    "source_report_sha256": "d70e5aa5e1f4e9e6d66ecc45187ea4f787a9198d9fbea309c6a546052fe4bd7b",
+    "frame_count": 154,
+    "readable_frame_count": 23788,
+    "selection_algorithm": "24_equal_time_bins_x_10_evenly_spaced",
+    "same_frozen_o2_6_identities": true,
+    "used_for_calibration": false,
+    "used_for_selector_design": false,
+    "ground_truth_available": false
+  },
+  "historical_o2_6_equivalence": {
+    "top1_agreement": 0.9025974025974026,
+    "top1_agree": 139,
+    "top1_disagree": 15,
+    "ranking_agreement": 0.9025974025974026,
+    "mae_median": 0.0013020833333333333,
+    "mae_p95": 0.6628249587746748,
+    "mae_max": 0.6653645833333334,
+    "low_side_saturation_median": 0.4344758064516129,
+    "low_side_saturation_p95": 0.8314516129032258,
+    "high_side_saturation_max": 0.0,
+    "association": "STRONG_ASSOCIATION_OBSERVED",
+    "accuracy_claim": false
+  },
+  "canonical_historical_equivalence": {
+    "source_logical_path": "datasets/thermal/manifests/T-B5_robustness_latency_candidate_lock/parity_summary.json",
+    "source_sha256": "18246ee6f34a64bfaefdacf5ee6429853dcf80887da476ebaa984acf12bc5261",
+    "role": "VALIDATION",
+    "sample_count": 512,
+    "locked_test_used": false,
+    "real_used_for_selection": false,
+    "new_candidate_compared": false,
+    "ranking_agreement": "NOT_RECORDED_BY_INHERITED_T_B5_SCHEMA",
+    "pairs": {
+      "FLOAT_KERAS__TFLITE_FP32": {
+        "argmax_agreement": 1.0,
+        "disagreement_count": 0,
+        "confusion_matrix_difference": [[0, 0, 0], [0, 0, 0], [0, 0, 0]],
+        "probability_mae": 5.011796603787694e-09,
+        "probability_max_absolute_error": 7.152557373046875e-07
+      },
+      "TFLITE_FP32__FULL_INT8": {
+        "argmax_agreement": 0.99609375,
+        "disagreement_count": 2,
+        "confusion_matrix_difference": [[0, 0, 0], [0, 0, 0], [0, 2, -2]],
+        "probability_mae": 0.0033456996413038435,
+        "probability_max_absolute_error": 0.5893600583076477
+      },
+      "FLOAT_KERAS__FULL_INT8": {
+        "argmax_agreement": 0.99609375,
+        "disagreement_count": 2,
+        "confusion_matrix_difference": [[0, 0, 0], [0, 0, 0], [0, 2, -2]],
+        "probability_mae": 0.0033457006260881245,
+        "probability_max_absolute_error": 0.5893602967262268
+      }
+    },
+    "evidence_status": "INHERITED_IMMUTABLE_T_B5_EVIDENCE_NO_NEW_CANDIDATE"
+  },
+  "interpretation": {
+    "train_contains_any_historical_lower_tail": true,
+    "train_contains_material_real_cold_background_coverage": false,
+    "historical_subset_undercoverage_is_sufficient_explanation": false,
+    "root_cause_supported": "TRAIN_DOMAIN_RANGE_GAP",
+    "device_domain_data_gap": true,
+    "candidate_generation_authorized": false
+  },
+  "distribution_method": "float64 P1 arithmetic over float32 canonical Celsius values; real MI48 uses frozen O2.6 uint16-to-float32 Celsius conversion then float64 P1"
+}
