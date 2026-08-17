@@ -2,6 +2,7 @@
 
 - Study ID: `M-N2_COMMON_REPRESENTATION_001`
 - Date: 2026-08-18
+- Revision: bounded semantics/robustness correction (not a redesign; M-N3 not started)
 - Phase: **M-N2 only**. No training. No M-N3 timing freeze.
 - Script: `scripts/mmwave_m_n2_common_representation.py`
 - Experimental cache (gitignored): `tmp/mmwave_m_n2/`
@@ -32,7 +33,8 @@ The question this artifact answers:
 | Historical B scaler | **not used** |
 | Split | historical TRAIN subjects only |
 | LOCKED_TEST / NEW_MODEL_HELDOUT_TEST | **not accessed** |
-| Recordings | 12 Post-exercise recordings from 8 TRAIN subjects (sitting + lying) |
+| Original exploratory recordings | 12 Post-exercise recordings from 8 TRAIN subjects (sitting + lying) |
+| Bounded robustness sample | 28 TRAIN-only recordings / 10 subjects (see §3.1) |
 
 30-second slices used for public RR comparison are **`EXPLORATORY_ONLY`**. They match A6 `W0000` duration for a like-for-like ACC RR check. They are not the M-N3 window.
 
@@ -63,25 +65,37 @@ Paced sessions used **only** as periodicity diagnostics, not labels:
 - `LEGACY_2026-07-28_breath_paced_12rpm_explicit_v2_attempt03` (cue 12)
 - `LEGACY_2026-07-26_breath_paced_20rpm_deep` (cue 20)
 
-Stale samples (`phase_age_ms > 2000`) were dropped. Occupied/empty/desk-work dropped **0** stale rows. Timing used `ts_monotonic_ms` (not a pretended uniform grid). Empirical median dt was ~0.100 s on every loaded Team file; that is an observation, not a frozen contract.
+Stale samples (`phase_age_ms > 2000`) were dropped as an **M-N2 exploratory obvious-stale exclusion only**. This is not an ML acceptance threshold, a firmware validity rule, or the M-N3 freshness contract. Occupied/empty/desk-work dropped **0** such rows, so this rule did **not** determine the primary representation. Timing used `ts_monotonic_ms` (not a pretended uniform grid). Empirical median dt was ~0.100 s on every loaded Team file; that is an observation, not a frozen contract.
 
 ---
 
 ## 2. Candidates
 
-No candidate multiplies MR60 by a public/MR60 std ratio. No old B scaler. Per-recording MAD, where used, is a local scale-free transform, not a global statistic fitted on held-out or MR60-as-TRAIN data.
+No candidate multiplies MR60 by a public/MR60 std ratio. No old B scaler.
 
-| ID | Definition | Scale handling | Complexity |
+| ID | Definition | What it does to `y = a·x + b` | Complexity |
 |---|---|---|---|
-| **R1** | Linear detrend vs elapsed time: `x(t) − (at+b)` | Keeps native units | Trivial |
-| **R2** | Time-aware first derivative: `(x[i]−x[i−1]) / Δt` | Offset and absolute unit drop out | Trivial |
-| **R3** | New 0.10–0.70 Hz order-2 bandpass, then per-recording MAD | Local MAD only | Filter + MAD |
+| **R1** | Linear detrend vs elapsed time: `x(t) − (at+b)` | Removes a fitted additive baseline; keeps native units | Trivial |
+| **R2** | Time-aware first derivative: `(x[i]−x[i−1]) / Δt` | Removes additive offset `b`. Leaves multiplicative scale `a`: `dy/dt = a·dx/dt` | Trivial |
+| **R3** | New 0.10–0.70 Hz order-2 bandpass, then per-recording MAD | Exploratory local MAD; **not** a frozen runtime contract | Filter + MAD |
 
 R3 band is the **A4 ACC search band** (public RR 6–42 bpm). It is **not** historical B `0.1–0.5 Hz / order 4 / BPF_ZSCORE`.
 
 R3 filter on non-uniform samples is marked `R3_EXPLORATORY_FILTER_ON_NATIVE_SAMPLES` when dt irregularity is large. It is not an M-N3 resampler.
 
 **R4** was not added. R1–R3 already separated information retention from scale/unit behavior.
+
+R2 advantages: removes additive offset/baseline; reduces baseline dependence; preserves temporal rate-of-change structure; supports scale-insensitive spectral/periodicity analysis.
+
+R2 limitation: multiplicative public↔MR60 amplitude scaling remains unresolved.
+
+```text
+R2_AMPLITUDE_SCALE_CONTRACT = UNRESOLVED
+```
+
+M-N2 does **not** invent a scale correction and does **not** use public/MR60 std matching. M-N3 owns amplitude.
+
+R3 per-recording MAD is exploratory. A long recording MAD uses information a live window may not have. M-N2 does **not** freeze this contract. M-N3 must replace or refine it into a runtime-compatible rule (input-window local robust scaling, TRAIN-derived scaling, or another justified causal transform). That choice is not made here.
 
 Per-window z-score was **not** used. It would make domains look similar by erasing amplitude and could hide empty-vs-occupied collapse.
 
@@ -111,9 +125,36 @@ NORMAL-range ACC RR (10–25 bpm) is where the public domain is most informative
 | p004 lying post-ex | 22 | 12.0 | **24.0** | 12.0 |
 | p008 lying post-ex | 22 | 8.0 | **24.0** | 23.9 |
 
-RAPID ACC RR (≥25 bpm) is **under-estimated by all three** (often ~14–16 bpm). 42 bpm sits on the 0.70 Hz band edge. M-N2 does not claim a high-rate public match.
+RAPID ACC RR (≥25 bpm) is **under-estimated by all three** on this 12-file set (often ~14–16 bpm). 42 bpm sits on the 0.70 Hz band edge. M-N2 does not claim a high-rate public match. The bounded check in §3.1 shows the same limitation.
 
 A1 alignment for these recordings: `EXACT_ALIGNMENT`. Finite fraction: 1.0.
+
+### 3.1 Bounded TRAIN-only public robustness check
+
+The original 12 recordings were all Post-exercise. Before freezing the family, R2 and R3 were re-scored on 28 TRAIN-only development recordings. R1 was not reopened. LOCKED_TEST and NEW_MODEL_HELDOUT_TEST were not used.
+
+| Stratum | Count |
+|---|---:|
+| Subjects | 10 |
+| Recordings | 28 |
+| Rest / Post-exercise | 12 / 16 |
+| Sitting / Lying | 16 / 12 |
+| ACC RR &lt; 25 / ≥ 25 bpm | 13 / 15 |
+| Source non-breathing on W0000 | 12 (all Rest W0000 in TRAIN have a non-breathing interval) |
+
+| Slice | R2 median \|Δbpm\| | R2 within 4 bpm | R3 median \|Δbpm\| | R3 within 4 bpm |
+|---|---:|---:|---:|---:|
+| All 28 | 10.0 | 0.43 | 12.1 | 0.36 |
+| ACC RR &lt; 25 bpm | **2.0** | **0.85** | 2.0 | 0.69 |
+| ACC RR ≥ 25 bpm | 20.0 | 0.07 | 20.1 | 0.07 |
+| Post-exercise | 2.0 | 0.56 | 10.0 | 0.44 |
+| Rest | 12.0 | 0.25 | 17.1 | 0.25 |
+
+R2’s NORMAL-range advantage is **not** an artifact of the original Post-exercise 12. On the 13 recordings with ACC RR &lt; 25 bpm, R2 median error stays 2.0 bpm and 11/13 are within 4 bpm. R3 is similar at the median but weaker within 4 bpm.
+
+Rest looks worse in aggregate because every TRAIN Rest `W0000` overlaps a source non-breathing interval; ACC RR on those windows is not a clean breathing-rate target. That does not overturn R2 as a representation family.
+
+R2 remains primary. R3 remains fallback. R1 stays rejected.
 
 ---
 
@@ -131,7 +172,7 @@ No Accuracy / Macro-F1 / recall was computed. Filename, paced cue, and `breath_r
 | empty 360 s | **0.00** | — | — | — | 0 / 0 / 0 |
 | empty 30 min | **0.00** | — | — | — | 0 / 0 / 0 |
 
-Occupied/desk-work values stay finite. No explosion. Native `|breath_phase|` is O(1), unlike public unwrapped radians. Derivative (R2) and MAD (R3) both remove that unit mismatch without a hand-tuned gain.
+Occupied/desk-work values stay finite. No explosion. Native `|breath_phase|` is O(1), unlike public unwrapped radians. R2 removes additive offset so spectral/periodicity comparison is possible, but **does not** equalize multiplicative public↔MR60 amplitude. R3 MAD is an exploratory local scale, not a frozen amplitude contract. No public/MR60 std matching was applied.
 
 Empty-room `breath_phase` is a constant 0 on these files. That is **device/no-person collapse**, not an APNEA label.
 
@@ -146,12 +187,12 @@ Cross-session occupied structure is visible on one person across dates/distances
 | Representation | Public respiratory information | MR60 stability/periodicity | Scale/unit robustness | Runtime complexity | Main weakness | Decision |
 |---|---|---|---|---|---|---|
 | R1 centered/detrended | Weak outside a few NORMAL files; often harmonic-halves | Occupied periodic; empty collapses | Poor (keeps native units) | Lowest | Public RR poorly retained | **REJECT** |
-| **R2 Δx/Δt** | Best NORMAL-range ACC agreement (median \|Δbpm\| = 2.0) | Occupied 18–26 bpm, high band fraction; empty collapses | Strong (offset/unit removed) | Lowest | Amplifies high-frequency noise; RAPID public RR still weak | **SELECT_PRIMARY** |
-| R3 band + MAD | Similar to R1 on several files; tautological band fraction | Occupied 14–24 bpm; empty collapses | Strong (local MAD) | Filter + MAD; exploratory on irregular dt | More moving parts; not better than R2 on public NORMAL | **RETAIN_FALLBACK** |
+| **R2 Δx/Δt** | Best NORMAL-range ACC agreement; holds on 28-file TRAIN check (RR&lt;25 median \|Δbpm\| = 2.0) | Occupied 18–26 bpm, high band fraction; empty collapses | Removes additive offset; **multiplicative scale unresolved** | Lowest | High-frequency noise; RAPID public RR still weak | **SELECT_PRIMARY** |
+| R3 band + MAD | Weaker than R2 on NORMAL-range and on the 28-file check | Occupied 14–24 bpm; empty collapses | Exploratory local MAD only; not a runtime contract | Filter + MAD | More moving parts; MAD not live-safe as written | **RETAIN_FALLBACK** |
 
 **Primary: R2 — time-aware first derivative of native unwrapped phase (public) / `breath_phase` (MR60).**
 
-Why: simplest representation that actually keeps public NORMAL-range respiratory rate information **and** yields stable occupied-vs-empty structure on real MR60 without arbitrary domain scaling.
+Why: simplest representation that keeps public NORMAL-range respiratory rate information, including outside the original Post-exercise 12, **and** yields stable occupied-vs-empty structure on real MR60 without inventing a domain gain.
 
 **Fallback: R3.** Keep if M-N3 finds derivative noise unacceptable. Do not silently revert to historical BPF_ZSCORE.
 
@@ -165,7 +206,9 @@ Why: simplest representation that actually keeps public NORMAL-range respiratory
 
 **Limitation B — subject generalization.** All Team MR60 files are one person. Beautiful cross-session MR60 plots are not multi-person evidence.
 
-**Public RAPID RR.** High ACC rates are not recovered well in this 30 s in-band peak test. Do not freeze a class map here.
+**Public RAPID RR.** High ACC rates (≥25 bpm) remain under-estimated on the 28-file TRAIN check (R2: 15 high-RR windows; 1 match within 4 bpm, 5 likely subharmonic, 2 band-edge/42–40 bpm, 7 other underestimates). Likely contributors deferred to M-N3: exploratory 30 s slice, subharmonic/harmonic peak selection, R2 high-frequency spectral weighting, and the current 0.10–0.70 Hz diagnostic band (42 bpm sits on 0.70 Hz). **Do not freeze a new respiratory band in M-N2.**
+
+**R2 amplitude.** `R2_AMPLITUDE_SCALE_CONTRACT = UNRESOLVED`.
 
 **Empty ≠ APNEA.** Constant-zero empty-room phase is a device contrast only.
 
@@ -180,15 +223,18 @@ Carry forward:
 1. Public source = A2 native unwrap with existing A6 bin/channel (do not reopen range-bin search unless R2/R3 both fail later).
 2. MR60 source = `breath_phase` with `ts_monotonic_ms`, drop stale `phase_age_ms`.
 3. Primary representation = R2 time-aware derivative.
-4. Fallback = R3 0.10–0.70 Hz + per-recording MAD.
-5. Compare a few window/timing options on public TRAIN + this same MR60 development subset only.
-6. Do not inherit 30 s / 300 / 10 Hz / BPF_ZSCORE as the new contract.
+4. Fallback = R3 0.10–0.70 Hz + a **runtime-compatible** robust scale (do not inherit per-recording MAD).
+5. `R2_AMPLITUDE_SCALE_CONTRACT = UNRESOLVED`. Do not use public/MR60 std matching.
+6. High-RR / band / peak-picking / 30 s slice effects remain open; do not freeze a new respiratory band here.
+7. `phase_age_ms > 2000` was M-N2 exploratory only; choose the real freshness contract here.
+8. Compare a few window/timing options on public TRAIN + this same MR60 development subset only.
+9. Do not inherit 30 s / 300 / 10 Hz / BPF_ZSCORE as the new contract.
 
 ---
 
 ## 8. Focused validation
 
-- Public A1 decode: `EXACT_ALIGNMENT` on the 12 development recordings.
+- Public A1 decode: `EXACT_ALIGNMENT` on the original 12 and the 28-file TRAIN robustness sample.
 - Representation outputs finite on occupied/desk-work/paced files.
 - Empty files finite but collapsed (max abs 0).
 - Timestamp order: MR60 sorted by `ts_monotonic_ms`; longest contiguous run used if gaps exist.
@@ -208,7 +254,7 @@ Production model trained = NO
 MR60 adaptation = NO
 ```
 
-PASS_WITH_LIMITATIONS because R2 is a credible cross-domain bridge on public NORMAL-range RR and on single-subject MR60 occupied/empty structure, while RAPID public RR and unseen-person MR60 claims remain out of reach.
+PASS_WITH_LIMITATIONS because R2 remains a defensible primary family after the 28-file TRAIN check (NORMAL-range RR retained), while multiplicative amplitude scaling and high-RR behavior stay M-N3 problems. The expanded sample did not show that R2 fails at the representation-family level.
 
 ---
 
@@ -220,7 +266,7 @@ Do **not** open one PR from `work/mmwave-m-n2-premerge`.
 2. Merge PUBLIC-P0 (`docs/mmwave-public-p0-dataset-readiness` / commit `d944e10`).
 3. Refit M-N1 from then-current main (PR #97 currently stacked on M-N0).
 4. `git switch -c feature/mmwave-m-n2-common-representation origin/main`
-5. Cherry-pick **only** the M-N2 commit from this provisional branch.
+5. Cherry-pick **only** the M-N2-specific commit(s) from this provisional branch.
 6. Confirm `git diff origin/main...HEAD --name-only` is M-N2-specific.
 
 This study must not be re-run unless that transplant changes the code or numbers.

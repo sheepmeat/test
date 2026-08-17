@@ -30,12 +30,48 @@ WINDOWS = ROOT / "datasets/mmwave/manifests/a6_full_conversion/full_window_manif
 SPLIT = ROOT / "datasets/mmwave/splits/mmwave_real_subject_split_v1.json"
 MR60_DIR = ROOT / "tmp/mmwave_m_n2/mr60"
 OUT_DIR = ROOT / "tmp/mmwave_m_n2"
+# M-N2 exploratory obvious-stale exclusion only. Not an ML acceptance
+# threshold, firmware validity rule, or the M-N3 freshness contract.
 STALE_PHASE_AGE_MS = 2000.0
 GAP_FACTOR = 2.5
 NEW_RESP_BAND_HZ = (0.10, 0.70)  # A4 ACC search band 0.1–0.7 Hz / 6–42 bpm. Not historical B 0.1–0.5.
 TOTAL_BAND_HZ = (0.05, 2.0)
 MAD_FLOOR = 1e-9
 EXPLORATORY_SLICE_S = 30.0  # EXPLORATORY_ONLY; not the M-N3 window.
+
+PUBLIC_ROBUSTNESS_RECORDING_IDS = [
+    # Original 12 Post-exercise exploratory set.
+    "dataset-10_5281_zenodo_18599983-p001-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p002-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p004-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p005-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p007-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p008-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p010-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p011-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p001-lying-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p004-lying-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p007-lying-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p008-lying-post_exercise",
+    # Added Post-exercise coverage (still TRAIN only).
+    "dataset-10_5281_zenodo_18599983-p003-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p021-sitting-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p005-lying-post_exercise",
+    "dataset-10_5281_zenodo_18599983-p011-lying-post_exercise",
+    # Rest coverage. Every TRAIN Rest W0000 has a source non-breathing interval.
+    "dataset-10_5281_zenodo_18599983-p001-sitting-rest",
+    "dataset-10_5281_zenodo_18599983-p002-sitting-rest",
+    "dataset-10_5281_zenodo_18599983-p003-sitting-rest",
+    "dataset-10_5281_zenodo_18599983-p004-sitting-rest",
+    "dataset-10_5281_zenodo_18599983-p005-sitting-rest",
+    "dataset-10_5281_zenodo_18599983-p007-sitting-rest",
+    "dataset-10_5281_zenodo_18599983-p001-lying-rest",
+    "dataset-10_5281_zenodo_18599983-p002-lying-rest",
+    "dataset-10_5281_zenodo_18599983-p003-lying-rest",
+    "dataset-10_5281_zenodo_18599983-p004-lying-rest",
+    "dataset-10_5281_zenodo_18599983-p005-lying-rest",
+    "dataset-10_5281_zenodo_18599983-p007-lying-rest",
+]
 
 PUBLIC_RECORDING_IDS = [
     "dataset-10_5281_zenodo_18599983-p001-sitting-post_exercise",
@@ -227,6 +263,7 @@ def r3_band_scale_robust(series: Series, values: np.ndarray | None = None) -> tu
         notes.append("R3_MAD_TOO_SMALL_UNSCALED")
         return filtered, notes
     notes.append("R3_PER_RECORDING_MAD_SCALE")
+    notes.append("R3_MAD_CONTRACT_NOT_FROZEN")
     return filtered / mad, notes
 
 
@@ -342,6 +379,74 @@ def _summarize_errors(rows: list[dict[str, Any]], key: str) -> dict[str, Any]:
     }
 
 
+def _high_rr_class(ref: float | None, pred: float | None) -> str | None:
+    if ref is None or pred is None or ref < 25.0:
+        return None
+    # Diagnostic only. Do not retune peak picking here.
+    if abs(pred - ref) <= 4.0:
+        return "MATCH_WITHIN_4BPM"
+    if abs(pred - 0.5 * ref) <= 4.0:
+        return "LIKELY_SUBHARMONIC"
+    if abs(pred - 2.0 * ref) <= 4.0:
+        return "LIKELY_HARMONIC"
+    if ref >= 40.0:
+        return "BAND_EDGE_OR_UNDERESTIMATE"
+    return "UNDERESTIMATE"
+
+
+def evaluate_public_recordings(
+    rec_ids: list[str],
+    *,
+    provenance: dict[str, dict[str, Any]],
+    windows: dict[str, dict[str, Any]],
+    train: set[str],
+    locked: set[str],
+    keys: tuple[str, ...] = ("R2", "R3"),
+) -> list[dict[str, Any]]:
+    rows = []
+    for rec_id in rec_ids:
+        prow = provenance[rec_id]
+        if prow["split"] != "TRAIN" or prow["subject_id"] not in train:
+            raise RuntimeError(f"non-TRAIN recording slipped in: {rec_id} split={prow['split']}")
+        if prow["subject_id"] in locked:
+            raise RuntimeError(f"LOCKED_TEST accessed: {rec_id}")
+        series = load_public_series(rec_id, prow)
+        win = windows[prow["window_id"]]
+        metrics = apply_all(series)
+        ref = win.get("movesense_reference_rr", {}).get("rr_bpm")
+        compact = {
+            "recording_id": rec_id,
+            "subject_id": prow["subject_id"],
+            "split": prow["split"],
+            "posture": win.get("posture"),
+            "condition": win.get("source_test_condition"),
+            "source_radar_member": prow["source_radar_member"],
+            "selected_range_bin_index": prow["selected_range_bin_index"],
+            "selected_virtual_channel": prow["selected_virtual_channel"],
+            "ref_rr_bpm": ref,
+            "safenest_label": win.get("safenest_label"),
+            "non_breathing": (
+                float(win.get("annotation_overlap_seconds") or 0) > 0
+                or win.get("original_annotation_type") == "VOLUNTARY_NON_BREATHING"
+            ),
+            "metrics": {key: metrics[key] for key in keys},
+            "median_dt": metrics["median_dt"],
+            "notes": metrics["notes"],
+        }
+        for key in keys:
+            compact[f"{key}_bpm"] = metrics[key].get("dominant_bpm")
+            compact[f"{key}_high_rr_class"] = _high_rr_class(ref, metrics[key].get("dominant_bpm"))
+        rows.append(compact)
+    return rows
+
+
+def _subset_summary(rows: list[dict[str, Any]], key: str, pred) -> dict[str, Any]:
+    return _summarize_errors(
+        [{"ref_rr_bpm": r["ref_rr_bpm"], "metrics": {key: r["metrics"][key]}} for r in rows if pred(r)],
+        key,
+    )
+
+
 def main() -> int:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
     split = json.loads(SPLIT.read_text())
@@ -414,6 +519,41 @@ def main() -> int:
         })
 
     public_summary = {key: _summarize_errors(public_rows, key) for key in ("R1", "R2", "R3")}
+
+    robustness_rows = evaluate_public_recordings(
+        PUBLIC_ROBUSTNESS_RECORDING_IDS,
+        provenance=provenance,
+        windows=windows,
+        train=train,
+        locked=locked,
+        keys=("R2", "R3"),
+    )
+    robustness_summary = {key: _summarize_errors(robustness_rows, key) for key in ("R2", "R3")}
+    robustness_strata = {
+        "n_recordings": len(robustness_rows),
+        "n_subjects": len({r["subject_id"] for r in robustness_rows}),
+        "rest": sum(r["condition"] == "Rest" for r in robustness_rows),
+        "post_exercise": sum(r["condition"] == "Post-exercise" for r in robustness_rows),
+        "sitting": sum(r["posture"] == "Sitting" for r in robustness_rows),
+        "lying": sum(r["posture"] == "Lying" for r in robustness_rows),
+        "rr_lt_25": sum(r["ref_rr_bpm"] is not None and r["ref_rr_bpm"] < 25 for r in robustness_rows),
+        "rr_ge_25": sum(r["ref_rr_bpm"] is not None and r["ref_rr_bpm"] >= 25 for r in robustness_rows),
+        "non_breathing": sum(bool(r["non_breathing"]) for r in robustness_rows),
+        "locked_test_accessed": False,
+        "new_model_heldout_accessed": False,
+    }
+    high_rr_counts = {}
+    for key in ("R2", "R3"):
+        classes = [r[f"{key}_high_rr_class"] for r in robustness_rows if r[f"{key}_high_rr_class"]]
+        high_rr_counts[key] = {
+            "n_high_rr": len(classes),
+            "counts": {label: classes.count(label) for label in sorted(set(classes))},
+        }
+    robustness_normal = {key: _subset_summary(robustness_rows, key, lambda r: r["ref_rr_bpm"] is not None and r["ref_rr_bpm"] < 25) for key in ("R2", "R3")}
+    robustness_high = {key: _subset_summary(robustness_rows, key, lambda r: r["ref_rr_bpm"] is not None and r["ref_rr_bpm"] >= 25) for key in ("R2", "R3")}
+    robustness_rest = {key: _subset_summary(robustness_rows, key, lambda r: r["condition"] == "Rest") for key in ("R2", "R3")}
+    robustness_post = {key: _subset_summary(robustness_rows, key, lambda r: r["condition"] == "Post-exercise") for key in ("R2", "R3")}
+
     occupied = [r for r in mr60_rows if r["role"] == "DEVICE_DOMAIN"]
     empty = [r for r in mr60_rows if r["role"] == "DEVICE_DOMAIN_EMPTY"]
     paced = [r for r in mr60_rows if r["role"] == "WEAK_PACED"]
@@ -461,6 +601,9 @@ def main() -> int:
         "locked_test_accessed": False,
         "new_model_heldout_accessed": False,
         "public_entry": "A2_NATIVE_UNWRAPPED_PHASE",
+        "r2_amplitude_scale_contract": "UNRESOLVED",
+        "stale_phase_age_ms_rule": "M-N2_EXPLORATORY_OBVIOUS_STALE_EXCLUSION_ONLY",
+        "r3_mad_contract_frozen": False,
         "public_summary": public_summary,
         "public_rows": [
             {
@@ -499,10 +642,48 @@ def main() -> int:
             }
             for r in mr60_rows
         ],
+        "public_robustness": {
+            "strata": robustness_strata,
+            "summary": robustness_summary,
+            "summary_rr_lt_25": robustness_normal,
+            "summary_rr_ge_25": robustness_high,
+            "summary_rest": robustness_rest,
+            "summary_post_exercise": robustness_post,
+            "high_rr_classes": high_rr_counts,
+            "rows": [
+                {
+                    "recording_id": r["recording_id"],
+                    "subject_id": r["subject_id"],
+                    "posture": r["posture"],
+                    "condition": r["condition"],
+                    "ref_rr_bpm": r["ref_rr_bpm"],
+                    "label": r["safenest_label"],
+                    "non_breathing": r["non_breathing"],
+                    "R2_bpm": r["R2_bpm"],
+                    "R3_bpm": r["R3_bpm"],
+                    "R2_high_rr_class": r["R2_high_rr_class"],
+                    "R3_high_rr_class": r["R3_high_rr_class"],
+                }
+                for r in robustness_rows
+            ],
+        },
     }
     out = OUT_DIR / "m_n2_summary.json"
     out.write_text(json.dumps(payload, indent=2))
-    print(json.dumps({"wrote": str(out.relative_to(ROOT)), "public_summary": public_summary, "occupied": pack_group(occupied), "empty": pack_group(empty), "paced": paced_err}, indent=2, default=str))
+    robust_out = OUT_DIR / "m_n2_robustness.json"
+    robust_out.write_text(json.dumps(payload["public_robustness"], indent=2))
+    print(json.dumps({
+        "wrote": str(out.relative_to(ROOT)),
+        "public_summary": public_summary,
+        "robustness_strata": robustness_strata,
+        "robustness_summary": robustness_summary,
+        "robustness_rr_lt_25": robustness_normal,
+        "robustness_rr_ge_25": robustness_high,
+        "high_rr_classes": high_rr_counts,
+        "occupied": pack_group(occupied),
+        "empty": pack_group(empty),
+        "paced": paced_err,
+    }, indent=2, default=str))
     return 0
 
 
