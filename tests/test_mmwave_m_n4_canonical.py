@@ -42,8 +42,18 @@ class TestMmwaveMN4Canonical(unittest.TestCase):
         self.assertEqual(doc["resampling"]["input_shape"], [1, 240, 1])
         self.assertEqual(doc["scale"]["mad_epsilon"], MAD_EPSILON)
         self.assertEqual(doc["scale"]["normalization_formula"], "r / MAD")
+        self.assertTrue(doc["scale"]["divide_only_no_centering"])
+        self.assertTrue(doc["scale"]["not_r_minus_median_over_mad"])
+        self.assertEqual(doc["scale"]["centering_rule"], "NONE")
+        self.assertEqual(doc["scale"]["mad_epsilon_meaning"], "NUMERICAL_GUARD_NOT_OCCUPANCY_THRESHOLD")
         self.assertEqual(doc["timing"]["update_advancement_tolerance_ms"], 8.0)
+        self.assertEqual(doc["timing"]["update_advancement_compared_against"], "LAST_ACCEPTED_UPDATE_ESTIMATE")
         self.assertFalse(doc["timing"]["eight_ms_is_sensor_period"])
+        self.assertTrue(doc["derivative"]["predecessor_phase_event_for_derivative_context"])
+        self.assertEqual(
+            doc["derivative"]["one_predecessor_phase_event_before_window_start"],
+            "YES_IF_PRESENT_IN_0.250S_LOOKBACK",
+        )
         self.assertEqual(doc["public_split"]["seed"], SPLIT_SEED)
         self.assertEqual(doc["target"]["class_mapping"], {"0": "NORMAL", "1": "RAPID_OR_ABNORMAL", "2": "APNEA"})
         self.assertEqual(doc["team_mr60"]["supervised_training"], "DISALLOWED")
@@ -65,11 +75,25 @@ class TestMmwaveMN4Canonical(unittest.TestCase):
         self.assertEqual(out.dtype, np.float32)
 
     def test_mad_divides_without_centering(self) -> None:
-        y = np.linspace(-2.0, 2.0, 240)
+        y = np.linspace(1.0, 5.0, 240)
         out, mad, collapsed = apply_s1(y)
         self.assertFalse(collapsed)
         expected = (y / mad).astype(np.float32)
+        centered = ((y - np.median(y)) / mad).astype(np.float32)
         np.testing.assert_allclose(out, expected, rtol=0, atol=1e-6)
+        self.assertFalse(np.allclose(out, centered, rtol=0, atol=1e-6))
+
+    def test_update_advancement_uses_last_accepted_not_last_row(self) -> None:
+        # 0 accepted; 5 rejected as republication; 12 is > last accepted (0+8)
+        # but would be rejected if compared to the last row (5+8=13).
+        t_ms = np.array([0.0, 5.0, 12.0, 120.0, 240.0])
+        x = np.array([0.0, 1.0, 2.0, 3.0, 4.0])
+        t_s, x_keep, meta = accept_phase_events(
+            t_ms, x, None, production=False, timestamps_are_seconds=False
+        )
+        np.testing.assert_allclose(t_s * 1000.0, [0.0, 12.0, 120.0, 240.0])
+        np.testing.assert_allclose(x_keep, [0.0, 2.0, 3.0, 4.0])
+        self.assertEqual(meta["n_republications"], 1)
 
     def test_split_isolation(self) -> None:
         doc = json.loads(SPLIT.read_text())

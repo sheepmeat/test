@@ -96,7 +96,11 @@ def window_mad(values: np.ndarray) -> float:
 
 
 def apply_s1(values: np.ndarray) -> tuple[np.ndarray, float, bool]:
-    """Window-local MAD: r / MAD if MAD >= 1e-6 else zeros. No mean-centering."""
+    """Window-local MAD: divide-only, no centering.
+
+    normalized = r / MAD. Not (r - median(r)) / MAD.
+    MAD < 1e-6 is a numerical guard against divide-by-near-zero, not an occupancy threshold.
+    """
     y = np.asarray(values, dtype=np.float64)
     mad = window_mad(y)
     if mad < MAD_EPSILON:
@@ -145,17 +149,21 @@ def accept_phase_events(
 
     keep_t: list[float] = []
     keep_x: list[float] = []
-    last_ms: float | None = None
+    last_accepted_update_estimate_ms: float | None = None
     n_repub = 0
     for i in range(t_ms.size):
         if not math.isfinite(t_ms[i]) or not math.isfinite(x[i]):
             continue
-        if last_ms is not None and t_ms[i] <= last_ms + UPDATE_ADVANCE_TOLERANCE_MS:
+        # 8 ms is compared to the last accepted update estimate, not the previous row.
+        if (
+            last_accepted_update_estimate_ms is not None
+            and t_ms[i] <= last_accepted_update_estimate_ms + UPDATE_ADVANCE_TOLERANCE_MS
+        ):
             n_repub += 1
             continue
         keep_t.append(float(t_ms[i]) / 1000.0)
         keep_x.append(float(x[i]))
-        last_ms = float(t_ms[i])
+        last_accepted_update_estimate_ms = float(t_ms[i])
     t = np.asarray(keep_t, dtype=np.float64)
     p = np.asarray(keep_x, dtype=np.float64)
     if t.size >= 2:
@@ -207,6 +215,8 @@ def form_canonical_window(
         if len({str(b) for b in boots[in_win]}) > 1:
             raise CanonicalContractError("BOOT_BOUNDARY_CROSSED")
 
+    # Keep accepted events in [t_start - 0.250 s, t_start) as derivative left-hand
+    # context so the first in-window event can form R2. Not an extra tensor channel.
     in_span = (t >= t_start_s - EDGE_HOLD_MAX_SECONDS) & (t <= t_end + EDGE_HOLD_MAX_SECONDS)
     t_seg, x_seg = t[in_span], x[in_span]
     if t_seg.size < MIN_INTERVALS_FOR_MEDIAN + 1:

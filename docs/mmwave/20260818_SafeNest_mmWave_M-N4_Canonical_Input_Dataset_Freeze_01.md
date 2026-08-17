@@ -34,6 +34,10 @@ ts_monotonic_ms - phase_age_ms
 
 UPDATE_ADVANCE_TOLERANCE_MS:
 8
+compared against: LAST_ACCEPTED_UPDATE_ESTIMATE
+accept i only if t_update_ms[i] > last_accepted_update_estimate_ms + 8
+last_accepted is updated only when the event is kept
+not compared to the previous telemetry row or a rejected republication
 
 REPRESENTATION:
 TIME_AWARE_FIRST_DERIVATIVE
@@ -44,6 +48,10 @@ r2[i] = (x[i] - x[i-1]) / dt_s
 timestamp(r2[i]) = t_update[i]
 first event in a segment: no sample
 no derivative across a gap/reset
+PREDECESSOR_PHASE_EVENT_FOR_DERIVATIVE_CONTEXT: YES
+one immediately preceding accepted event in [t_start - 0.250 s, t_start), if present, is left-hand context (x[i-1], t[i-1])
+not an extra tensor channel
+lookback is not a guarantee of exactly one event; if absent, first event still has no R2
 
 GAP_RULE:
 reject window if any accepted interval in the completed 30 s window
@@ -72,15 +80,21 @@ EDGE_HOLD_MAX_SECONDS:
 
 SCALE:
 WINDOW_LOCAL_MAD
+DIVIDE_ONLY_NO_CENTERING
 
 MAD_FORMULA:
 m = median(r)
 MAD = median(abs(r - m))
 normalized = r / MAD
+not (r - m) / MAD
+centering_rule: NONE
 
 MAD_EPSILON:
 1e-6
 comparison: MAD < 1e-6
+meaning: NUMERICAL_GUARD_NOT_OCCUPANCY_THRESHOLD
+not an occupancy / presence / empty-room classifier
+empty collapse is a consequence of MAD ≈ 0, not a labeled occupancy threshold
 
 MAD_NEAR_ZERO_BEHAVIOR:
 ZERO_TENSOR
@@ -109,7 +123,7 @@ TEAM_MR60_SUPERVISED_TRAINING:
 DISALLOWED
 ```
 
-8 ms is an update-estimate jitter tolerance. It is not an MR60 frame period.
+8 ms is an update-estimate jitter tolerance against the last accepted update estimate. It is not an MR60 frame period, and it is not compared to the previous telemetry row.
 
 Equal numeric `breath_phase` is not automatic republication.
 
@@ -123,8 +137,10 @@ M-N3 30 s × 10 Hz = 300 is `M_N3_FALLBACK_NOT_ACTIVE`. One active shape: `[1,24
 
 | Item | M-N3 | M-N4 freeze |
 |---|---|---|
-| MAD | `median(abs(r-median(r)))` then `r/MAD` | same; not `(r-m)/MAD` |
-| epsilon | `MAD < 1e-6` → zeros | same |
+| MAD | `median(abs(r-median(r)))` then `r/MAD` | same; divide-only, no centering; not `(r-m)/MAD` |
+| epsilon | `MAD < 1e-6` → zeros | same; numerical guard, not occupancy threshold |
+| update advancement | 8 ms jitter | same; vs last accepted update estimate, not last row |
+| predecessor context | 0.250 s lookback before `t_start` | same; one immediately preceding accepted event, if present, is derivative left-hand context |
 | order | R2 → resample → S1 | same |
 | gap median | whole-recording in the study script | **corrected** to completed-window intervals only |
 | grid | `n = round(30*8)` | `t[k]=t_start+k/8`, k=0..239 |
@@ -132,6 +148,8 @@ M-N3 30 s × 10 Hz = 300 is `M_N3_FALLBACK_NOT_ACTIVE`. One active shape: `[1,24
 | missing freshness | not production-frozen | WINDOW_UNAVAILABLE |
 
 The M-N3 study script remains historical evidence. M-N5 must import `scripts/mmwave_m_n4_canonical.py`, not re-derive gap medians from a full recording.
+
+These four items were already the executable rules. This amendment records them in the contract and freeze report. Canonical tensors were not regenerated.
 
 ---
 
