@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://safenest.local/schemas/thermal-mi48/capture-v1.json",
+  "title": "SafeNest Thermal MI48 acquisition contract",
+  "type": "object",
+  "required": ["schema_version", "phase", "contract_id", "raw_acquisition_contract", "session_contract", "label_contract", "split_policy", "lineage_contract"],
+  "properties": {
+    "schema_version": {"const": "safenest.thermal.mi48.capture.v1"},
+    "phase": {"const": "T-C0"},
+    "contract_id": {"const": "safenest.thermal.mi48.capture.v1"},
+    "hardware_available": {"type": "boolean"},
+    "new_data_collected": {"const": false}
+  }
+}

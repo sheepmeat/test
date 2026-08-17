@@ -1,0 +1,154 @@
+{
+  "schema_version": "safenest.thermal.mi48.capture.v1",
+  "phase": "T-C0",
+  "contract_id": "safenest.thermal.mi48.capture.v1",
+  "status": "FROZEN_OFFLINE_READINESS",
+  "hardware_available": false,
+  "new_data_collected": false,
+  "raw_acquisition_contract": {
+    "native_shape": [62, 80],
+    "native_dtype": "uint16",
+    "native_unit": "0.1_K",
+    "physical_conversion": "celsius = raw_uint16 / 10.0 - 273.15",
+    "raw_values_must_be_preserved": true,
+    "raw_packet_preserve_when_available": true,
+    "native_byte_order": "T-C_MUST_VERIFY_FROM_DEVICE_EVIDENCE",
+    "orientation": "T-C_MUST_VERIFY_FROM_DEVICE_EVIDENCE",
+    "invalid_pixel_policy": "retain_frame_record; mark_invalid_or_exclude_reason; never_silently_repair",
+    "required_frame_fields": [
+      "session_id",
+      "capture_event_id_or_frame_id",
+      "frame_index",
+      "wall_timestamp",
+      "monotonic_timestamp",
+      "sensor_identity",
+      "frame_width",
+      "frame_height",
+      "raw_dtype",
+      "raw_unit",
+      "raw_frame_payload_or_reference",
+      "validity_status"
+    ],
+    "sole_scalar_or_screenshot_is_insufficient": true
+  },
+  "session_contract": {
+    "required_fields": [
+      "schema_version",
+      "session_id",
+      "subject_id_or_NONE",
+      "scenario_id",
+      "posture_label",
+      "human_presence_label",
+      "capture_start_time",
+      "capture_end_time",
+      "sensor_identity",
+      "sensor_orientation_or_UNKNOWN",
+      "distance_or_UNKNOWN",
+      "subject_location_or_UNKNOWN",
+      "environment_id_or_UNKNOWN",
+      "environment_notes",
+      "software_provenance",
+      "session_validity",
+      "operator_notes"
+    ],
+    "subject_identity": "stable pseudonymous SUBJ-### across sessions; no names, student IDs, or contact data",
+    "empty_room_subject_id": "NONE",
+    "session_identity": "stable pseudonymous SESSION-### unique within collection",
+    "event_identity": "EVENT-### when a controlled transition or scenario event is explicitly recorded"
+  },
+  "label_contract": {
+    "presence_labels": ["ABSENT", "PRESENT", "UNKNOWN"],
+    "posture_labels": ["NONE", "STANDING", "SITTING", "CROUCHING", "LYING", "OTHER_CONTROLLED", "UNKNOWN"],
+    "event_phases": ["PRE_EVENT", "FALL_TRANSITION", "POST_FALL_LYING", "RECOVERY", "NORMAL_ACTIVITY", "NOT_APPLICABLE", "UNKNOWN"],
+    "model_class_order": ["NOT_HUMAN", "HUMAN_NORMAL", "HUMAN_FALL"],
+    "model_target_mapping": {
+      "ABSENT": "NOT_HUMAN",
+      "PRESENT_STANDING": "HUMAN_NORMAL",
+      "PRESENT_SITTING": "HUMAN_NORMAL",
+      "PRESENT_CROUCHING": "HUMAN_NORMAL",
+      "PRESENT_LYING": "HUMAN_FALL"
+    },
+    "human_fall_semantics": "LYING_DERIVED_POSTURE_PROXY_NOT_TEMPORAL_EVENT_GROUND_TRUTH",
+    "ambiguous_or_unknown_policy": "retain provenance; exclude from pure-class evaluation unless separately authorized",
+    "independent_ground_truth_required": true,
+    "model_output_must_not_be_label_source": true
+  },
+  "scenario_and_environment_policy": {
+    "planned_variation_axes": ["presence", "posture", "distance", "image_position", "subject_orientation", "session", "room", "background_temperature", "time_of_day"],
+    "natural_environment_variation_only": true,
+    "arbitrary_temperature_manipulation_for_quantizer": false,
+    "uncontrolled_fall_experiments": false,
+    "controlled_transition_requires_separate_safety_authorization": true
+  },
+  "sampling_policy": {
+    "raw_capture_retention": "retain_all_received_frames_when_storage_allows",
+    "canonical_sampling": "deterministic_session_aware_subsampling_declared_before_evaluation",
+    "implemented_method": "SEQUENCE_INDEX_MODULO",
+    "default_sample_stride": 1,
+    "adjacent_frame_random_sampling": false,
+    "sampling_seed": "NOT_APPLICABLE_IF_DETERMINISTIC_INTERVAL_POLICY_IS_USED",
+    "sampling_must_preserve_source_frame_id": true
+  },
+  "split_policy": {
+    "split_roles": ["TRAIN", "VALIDATION", "LOCKED_TEST", "REAL_EVAL_DEVELOPMENT"],
+    "assignment_unit": "SUBJECT_PREFERRED_SESSION_FALLBACK",
+    "subject_isolation_preferred": true,
+    "session_leakage_blocked": true,
+    "event_leakage_blocked": true,
+    "frame_random_split_allowed": false,
+    "frame_hash_split_allowed": false,
+    "split_frozen_before_model_evaluation": true,
+    "output_dependent_allocation": false,
+    "same_group_cross_role": false,
+    "locked_test_prerequisites": "new untouched subject/session/event after contract freeze; no fitting, tuning, calibration, or repeated debugging"
+  },
+  "lineage_contract": {
+    "chain": ["MI48_NATIVE_UINT16", "RAW_CAPTURE_ARTIFACT", "SESSION_MANIFEST", "INDEPENDENT_LABEL", "CELSIUS_CONVERSION", "CANONICAL_SAMPLE_ID", "GROUP_SPLIT", "FROZEN_P1", "EXISTING_FLOAT_EVALUATION", "RETRAINING_DECISION"],
+    "sample_id_formula": "SHA256(safenest.thermal.mi48.sample.v1|collection_id|session_id|frame_id)",
+    "array_index_is_not_identity": true,
+    "raw_to_canonical_traceability_required": true,
+    "raw_artifacts_immutable_after_finalization": true,
+    "derived_outputs_must_be_separate": true
+  },
+  "tooling_contract": {
+    "capture_validator": "scripts/validate_thermal_real_capture.py",
+    "dataset_builder": "scripts/build_thermal_mi48_dataset.py",
+    "built_dataset_validator": "scripts/thermal_mi48_device_domain.py validate",
+    "domain_comparator": "scripts/compare_thermal_mi48_domain.py",
+    "float_evaluation_harness": "scripts/evaluate_thermal_mi48_float.py",
+    "legacy_snapshot_dry_run": "scripts/dry_run_thermal_mi48_legacy_snapshot.py",
+    "all_tools_fail_closed_on_missing_or_unverified_evidence": true
+  },
+  "frozen_float_evaluation_contract": {
+    "artifact_logical_path": "models/thermal/candidates/SMALL_CNN_BASELINE_V1_P1_float32.tflite",
+    "artifact_sha256": "fbe891520f07e0534b1a7074dc819d8ed44bca58b27e35c78916c3ddae73a779",
+    "input_shape": [1, 62, 80, 1],
+    "output_shape": [1, 3],
+    "input_dtype": "float32",
+    "output_dtype": "float32",
+    "input_unit": "CELSIUS",
+    "p1_profile_id": "P1_TRAIN_FITTED_GLOBAL_ZSCORE",
+    "p1_mean": 22.769290618485442,
+    "p1_std": 2.8684523405441222,
+    "p1_refit": false,
+    "selection_or_calibration_on_device_data": false
+  },
+  "future_acceptance_policy": {
+    "predefined_absolute_accuracy_threshold_found": false,
+    "threshold_status": "NO_CANONICAL_ABSOLUTE_DEVICE_DOMAIN_THRESHOLD",
+    "required_metrics": ["confusion_matrix", "per_class_precision", "per_class_recall", "per_class_f1", "macro_f1", "balanced_accuracy", "class_support", "session_breakdown", "subject_breakdown"],
+    "confidence_intervals_when_sample_size_justifies": true,
+    "final_acceptance_requires_separate_engineering_gate": true,
+    "no_accuracy_claim_without_independent_labels": true
+  },
+  "scope_exclusions": {
+    "new_sensor_data": false,
+    "float_retraining": false,
+    "new_int8_generation": false,
+    "pi_snapshot_modified": false,
+    "integration_modified": false,
+    "pi_o3_authorized": false,
+    "production_activation": false,
+    "raw_payload_committed": false
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "schema_version": "safenest.thermal.mi48.retraining_gate.v1",
+  "phase": "T-C0",
+  "status": "FROZEN_FOR_FUTURE_LABELED_EVALUATION",
+  "decision_question": "Does the existing frozen FLOAT model perform adequately on an independently labelled MI48 device-domain dataset?",
+  "outcomes": {
+    "EXISTING_FLOAT_DEVICE_DOMAIN_ACCEPTABLE": {
+      "definition": "Protocol-valid, group-isolated labelled MI48 evidence meets the separately authorized engineering acceptance gate.",
+      "float_retraining_required": "NO",
+      "next_action": "device-domain-aware quantization calibration may be considered under a separate authorization"
+    },
+    "EXISTING_FLOAT_DEVICE_DOMAIN_INADEQUATE": {
+      "definition": "Protocol-valid, group-isolated labelled MI48 evidence materially fails the separately authorized engineering gate.",
+      "float_retraining_required": "YES",
+      "next_action": "start a separate authorized device-domain retraining phase"
+    },
+    "INCONCLUSIVE_DEVICE_DOMAIN_EVIDENCE": {
+      "definition": "Evidence is too small, imbalanced, contaminated, semantically ambiguous, or otherwise insufficient.",
+      "float_retraining_required": "UNRESOLVED",
+      "next_action": "acquire or annotate more controlled evidence"
+    }
+  },
+  "required_evidence": ["independent_labels", "subject_or_session_grouping", "frozen_split", "confusion_matrix", "per_class_metrics", "macro_f1", "balanced_accuracy", "support", "session_breakdown", "subject_breakdown", "quality_and_lineage_report"],
+  "threshold_policy": {
+    "canonical_absolute_threshold_exists": false,
+    "do_not_invent_universal_safety_threshold": true,
+    "engineering_acceptance_gate_must_be_authorized_later": true
+  },
+  "current_result": {
+    "float_retraining_required": "UNRESOLVED",
+    "reason": "No suitable labelled real MI48 device-domain dataset exists yet.",
+    "new_data_collected": false
+  }
+}

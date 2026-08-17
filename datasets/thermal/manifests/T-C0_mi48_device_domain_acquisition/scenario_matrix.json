@@ -1,0 +1,33 @@
+{
+  "schema_version": "safenest.thermal.mi48.scenario_matrix.v1",
+  "phase": "T-C0",
+  "status": "PLANNED_NOT_YET_COLLECTED",
+  "collection_status": "NO_SESSIONS_COLLECTED",
+  "count_policy": {
+    "minimum_independent_subjects": 3,
+    "minimum_sessions_per_subject": 2,
+    "minimum_empty_room_sessions": 2,
+    "minimum_sessions_per_core_posture_cell": 1,
+    "rationale": "Smallest practical matrix that separates subject/session variation from posture and environment; exact sample counts remain a later protocol decision after device availability and safety review.",
+    "frame_count_target": "NOT_PREDECLARED; avoid pseudo-replication from adjacent frames"
+  },
+  "dimensions": {
+    "distance": ["NEAR", "MEDIUM", "FAR"],
+    "image_position": ["LEFT", "CENTER", "RIGHT"],
+    "orientation": ["FRONTAL", "SIDE", "BACK_OR_UNKNOWN_IF_NOT_VISIBLE"],
+    "environment": ["ROOM_A_BACKGROUND_1", "ROOM_A_BACKGROUND_2", "ROOM_B_BACKGROUND_1", "NATURAL_VARIATION_TO_RECORD"],
+    "status_values": ["PLANNED_NOT_YET_COLLECTED"]
+  },
+  "planned_cells": [
+    {"scenario_id": "EMPTY_ROOM_CONTROL", "presence": "ABSENT", "posture": "NONE", "distance": ["NEAR", "MEDIUM", "FAR"], "image_position": ["CENTER"], "subjects": ["NONE"], "status": "PLANNED_NOT_YET_COLLECTED"},
+    {"scenario_id": "HUMAN_STANDING", "presence": "PRESENT", "posture": "STANDING", "distance": ["NEAR", "MEDIUM", "FAR"], "image_position": ["LEFT", "CENTER", "RIGHT"], "subjects": ["SUBJ-001", "SUBJ-002", "SUBJ-003"], "status": "PLANNED_NOT_YET_COLLECTED"},
+    {"scenario_id": "HUMAN_SITTING", "presence": "PRESENT", "posture": "SITTING", "distance": ["NEAR", "MEDIUM", "FAR"], "image_position": ["LEFT", "CENTER", "RIGHT"], "subjects": ["SUBJ-001", "SUBJ-002", "SUBJ-003"], "status": "PLANNED_NOT_YET_COLLECTED"},
+    {"scenario_id": "HUMAN_CROUCHING", "presence": "PRESENT", "posture": "CROUCHING", "distance": ["NEAR", "MEDIUM", "FAR"], "image_position": ["LEFT", "CENTER", "RIGHT"], "subjects": ["SUBJ-001", "SUBJ-002", "SUBJ-003"], "status": "PLANNED_NOT_YET_COLLECTED"},
+    {"scenario_id": "HUMAN_LYING_POSTURE_PROXY", "presence": "PRESENT", "posture": "LYING", "distance": ["NEAR", "MEDIUM", "FAR"], "image_position": ["LEFT", "CENTER", "RIGHT"], "subjects": ["SUBJ-001", "SUBJ-002", "SUBJ-003"], "status": "PLANNED_NOT_YET_COLLECTED", "semantic_limit": "posture proxy, not temporal fall ground truth"},
+    {"scenario_id": "PARTIAL_VISIBILITY_HARD_CONDITION", "presence": "PRESENT_OR_UNKNOWN", "posture": "OTHER_CONTROLLED", "distance": ["MEDIUM", "FAR"], "image_position": ["LEFT", "RIGHT"], "subjects": ["SUBJ-001", "SUBJ-002"], "status": "PLANNED_NOT_YET_COLLECTED"},
+    {"scenario_id": "NATURAL_BACKGROUND_VARIATION", "presence": "ABSENT_OR_PRESENT", "posture": "AS_ABOVE", "distance": ["AS_ABOVE"], "image_position": ["AS_ABOVE"], "subjects": ["NONE_OR_SUBJ-001_TO_003"], "status": "PLANNED_NOT_YET_COLLECTED", "record_environment_metadata": true},
+    {"scenario_id": "CONTROLLED_TRANSITION_OPTIONAL", "presence": "PRESENT", "posture": "EVENT_PHASE_REQUIRED", "distance": ["AS_ABOVE"], "image_position": ["AS_ABOVE"], "subjects": ["SUBJ-###"], "status": "PLANNED_NOT_YET_COLLECTED", "requires_separate_safety_authorization": true, "never_label_lying_as_fall_event_without_phase_evidence": true}
+  ],
+  "not_collected": true,
+  "not_a_completed_dataset": true
+}

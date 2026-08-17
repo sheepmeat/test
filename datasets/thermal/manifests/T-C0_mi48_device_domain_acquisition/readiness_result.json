@@ -1,0 +1,18 @@
+{
+  "error_count": 0,
+  "errors": [],
+  "evidence_validation": "PASS",
+  "existing_t_b5_modified": false,
+  "float_retraining_required": "UNRESOLVED",
+  "new_float_model_created": false,
+  "new_int8_model_created": false,
+  "new_mi48_data_collected": false,
+  "overall_outcome": "PASS_WITH_LIMITATIONS",
+  "phase": "T-C0",
+  "pi_o3_authorized": false,
+  "readiness_gate": "THERMAL_MI48_DEVICE_DOMAIN_ACQUISITION_READINESS",
+  "readiness_status": "PASS_WITH_LIMITATIONS",
+  "real_sensor_required_for_next_phase": true,
+  "schema_version": "safenest.thermal.mi48.readiness_result.v1",
+  "thermal_production_activation": false
+}
