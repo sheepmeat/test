@@ -629,7 +629,7 @@ def build_pages() -> list[TheoryPage]:
 
     pages.append(page(
         "01", "전체 시스템을 먼저 본다", "세부 모델을 보기 전에 신호가 어디에서 생기고 어디에서 의미가 바뀌는지 고정한다.",
-        "학습 안내", "SYSTEM MAP", "integrated_node/virtual_sensor_streamer.py:171-199; integrated_node/safenest_risk_engine.py:120-415",
+        "학습 안내", "SYSTEM MAP", "archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py:171-199; integrated_node/safenest_risk_engine.py:120-415",
         ("body", "SafeNest의 입력은 Thermal frame, CO₂ 농도와 습도, mmWave 호흡 정보, PIR motion이다. 이 값들은 곧바로 위험도가 아니다. 먼저 입력 계약을 통과하고, 필요한 경우 window·정규화·양자화를 거친 뒤 AI 또는 규칙 기반 부분 판단이 된다. 부분 판단은 위험 융합과 상태기계를 거쳐 사용자에게 전달된다."),
         ("diagram", "layers", {"labels": [("물리계", "사람·공간·환기·움직임"), ("센서 관측", "thermal·CO₂·mmWave·PIR"), ("신호 표현", "frame·ppm·phase·motion"), ("추론과 규칙", "TFLite class·부분 위험도"), ("융합과 상태", "risk·health·reason"), ("출력", "경보·UI·telemetry")]}, 76 * mm, "위쪽은 현실 세계이고 아래쪽으로 갈수록 소프트웨어가 부여한 해석이 강해진다."),
         ("body", "시스템을 설명할 때는 항상 위에서 아래로 내려가야 한다. 예를 들어 ‘mmWave AI가 무호흡을 감지한다’고 바로 말하면 phase의 물리 의미, 10 Hz sampling, 300-sample window, 모델 class와 2초 확인 규칙이 모두 생략된다. 정확한 설명은 이 연결을 복원하는 일이다."),
@@ -746,7 +746,7 @@ def build_pages() -> list[TheoryPage]:
 
     pages.append(page(
         "P2", "PART II · 센서와 물리적 측정", "센서는 사람의 상태를 직접 읽지 않고 특정 물리 현상을 제한된 방식으로 관측한다.",
-        "PART II · 센서와 물리", "PART OPENER", "thermal_prep.py; integrated_node/virtual_sensor_streamer.py; mr60/sensor_receiver.py",
+        "PART II · 센서와 물리", "PART OPENER", "thermal_prep.py; archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py; mr60/sensor_receiver.py",
         ("body", "센서 데이터의 의미를 이해하려면 먼저 ‘무엇을 직접 측정하는가’를 물어야 한다. Thermal은 적외선 복사 분포, CO₂ sensor는 공간의 기체 농도, PIR은 적외선 flux의 시간 변화, mmWave radar는 송수신파의 주파수·위상 관계를 관측한다. 사람의 자세·재실·호흡은 이 관측을 해석한 결과다."),
         ("diagram", "flow", {"labels": [("물리 현상", "radiation·gas·motion"), ("센서 변환", "전기 신호"), ("보정", "offset·gain"), ("표현", "frame·ppm·phase"), ("추론", "상태 의미")]}, 40 * mm, "센서는 해석의 출발점이지 정답 자체가 아니다."),
         ("h2", "센서 이론에서 반드시 구분할 것"),
@@ -794,7 +794,7 @@ def build_pages() -> list[TheoryPage]:
 
     pages.append(page(
         "15", "PIR은 절대 위치보다 변화를 감지한다", "Pyroelectric element는 적외선 flux의 시간 변화에 반응한다.",
-        "PART II · 센서와 물리", "UNIT 07 · 1/2", "integrated_node/virtual_sensor_streamer.py:117-159; risk/risk_rules.py:213-256",
+        "PART II · 센서와 물리", "UNIT 07 · 1/2", "archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py:117-159; risk/risk_rules.py:213-256",
         ("body", "PIR(passive infrared) sensor는 스스로 빛을 내지 않고 주변에서 들어오는 적외선 복사의 변화를 감지한다. 사람과 배경의 복사 차이가 Fresnel lens의 여러 zone을 지나며 pyroelectric element에 시간 변화로 나타난다. 따라서 움직이지 않는 사람은 신호가 작아질 수 있다."),
         ("equation", r"v_{\mathrm{PIR}}(t)\propto \frac{d\Phi_{\mathrm{IR}}(t)}{dt}", "2.5", "Φ_IR은 sensor에 들어오는 적외선 flux다. PIR 출력은 절대 복사량보다 변화율에 민감하다는 개념을 나타낸다."),
         ("diagram", "flow", {"labels": [("사람 이동", "IR contrast"), ("Fresnel zone", "공간 변조"), ("dual element", "차동 응답"), ("증폭·필터", "pulse"), ("motion", "0/1 event")]}, 38 * mm, "PIR의 motion=0은 ‘사람 없음’이 아니라 최근 검출 가능한 변화가 없다는 뜻에 가깝다."),
@@ -1141,7 +1141,7 @@ def build_pages() -> list[TheoryPage]:
 
     pages.append(page(
         "P6", "PART VI · 확장 가능한 시스템 구조", "센서가 늘어나도 identity·time·meaning·state의 경계가 흐려지지 않게 한다.",
-        "PART VI · 확장 구조", "PART OPENER", "integrated_node/virtual_sensor_streamer.py; integrated_node/safenest_risk_engine.py; models/model_manifest.json",
+        "PART VI · 확장 구조", "PART OPENER", "archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py; integrated_node/safenest_risk_engine.py; models/model_manifest.json",
         ("body", "시스템 확장의 어려움은 component 개수가 아니라 <b>관계의 가지 수</b>가 빠르게 늘어난다는 데 있다. Sensor마다 다른 payload·clock·fault 규칙을 fusion code가 직접 알면 새 sensor 하나가 기존 모든 경로와 결합된다. 확장 가능성은 이 결합을 명시적 계약과 state owner로 바꾸는 성질이다."),
         ("diagram", "layers", {"labels": [("Identity", "device·sensor·session"), ("Schema", "value·unit·semantic"), ("Clock", "measured·received·age"), ("State store", "keyed history·timer"), ("Fault model", "status·reason"), ("Observability", "trace·version·metric")]}, 76 * mm, "확장 지점은 코드 파일이 아니라 의미와 상태의 소유권을 보존하는 계약 경계여야 한다."),
         ("h2", "이 장의 중심 질문"),
@@ -1151,7 +1151,7 @@ def build_pages() -> list[TheoryPage]:
 
     pages.append(page(
         "47", "Canonical schema는 정보의 공통 평면을 만든다", "생산자별 payload 차이를 흡수하되 의미 차이를 지우지 않는다.",
-        "PART VI · 확장 구조", "UNIT 21 · 1/2", "integrated_node/virtual_sensor_streamer.py:171-199; integrated_node/safenest_risk_engine.py:120-229",
+        "PART VI · 확장 구조", "UNIT 21 · 1/2", "archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py:171-199; integrated_node/safenest_risk_engine.py:120-229",
         ("body", "<b>Canonical schema</b>는 여러 생산자가 공통으로 전달해야 하는 정보의 최소 구조다. 모든 sensor를 같은 숫자 형식으로 압축하는 것이 아니라, 값에 붙어 있는 identity·time·unit·semantic·health를 동일한 위치에 두는 방식이다."),
         ("diagram", "schema", {}, 56 * mm, "Envelope은 payload 자체와 그 payload를 해석하는 metadata를 하나의 versioned contract로 묶는다."),
         ("body", "Identity는 이 값이 누구의 어떤 session에서 나왔는지를, Time은 언제 측정되고 언제 도착했는지를, Meaning은 단위와 보정·preprocessing semantic을, Health는 그 값을 어느 정도 신뢰할 수 있는지를 설명한다. Optional field는 없음의 의미와 fallback 규칙까지 정의해야 한다."),
@@ -1181,7 +1181,7 @@ def build_pages() -> list[TheoryPage]:
 
     pages.append(page(
         "50", "동시성은 update order와 결정성의 문제다", "병렬 입력이 공유 state를 바꾸면 순서 규칙이 시스템 의미가 된다.",
-        "PART VI · 확장 구조", "UNIT 22 · 2/2", "integrated_node/safenest_risk_engine.py:237-415; integrated_node/virtual_sensor_streamer.py",
+        "PART VI · 확장 구조", "UNIT 22 · 2/2", "integrated_node/safenest_risk_engine.py:237-415; archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py",
         ("body", "여러 sensor packet이 동시에 도착하면 scheduler에 따라 update 순서가 바뀐다. 공유 buffer와 timer가 있는 코드에서 순서가 명시되지 않으면 동일한 input set으로도 서로 다른 output이 나올 수 있다. 이를 <b>race condition</b>이라 하며, 결과가 timing에 의존해 재현이 어렵다."),
         ("diagram", "fan_in", {"sources": ["Device A packet", "Device B packet", "Model callback", "Timer event"], "center": "Keyed event loop", "output": "Ordered state"}, 51 * mm, "Key별 serial update는 같은 state의 순서를 고정하고 다른 key는 병렬로 유지할 수 있다."),
         ("equation", r"F\!\left(F(s,m),m\right)=F(s,m)", "6.3", "중복 message m이 재전송되어도 상태가 한 번만 반영되는 idempotency의 이상적 조건이다."),

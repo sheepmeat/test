@@ -837,7 +837,7 @@ def build_guide(output: Path = OUTPUT) -> None:
         "AS-IS 전체 구조",
         "현재 주 실행 경로는 하나의 Python process 안에서 순차 호출되는 동기 구조다.",
         "PART I · 구조와 계약",
-        "integrated_node/virtual_sensor_streamer.py:71-200; integrated_node/safenest_integrated_plotter.py:119-274",
+        "archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py:71-200; archive/project_history/legacy_simulator_20260816/integrated_node/safenest_integrated_plotter.py:119-274",
     )
     w.pipeline(
         [
@@ -964,7 +964,7 @@ def build_guide(output: Path = OUTPUT) -> None:
         "공통 sensor packet 계약",
         "현재 계약은 schema 파일이 아니라 생산자와 evaluate_risk 내부 접근 코드에 암묵적으로 존재한다.",
         "PART I · 구조와 계약",
-        "integrated_node/virtual_sensor_streamer.py:177-199; integrated_node/safenest_risk_engine.py:98-118,195-315",
+        "archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py:177-199; integrated_node/safenest_risk_engine.py:98-118,195-315",
     )
     w.table(
         ["경로", "의미·단위", "현재 사용·제약"],
@@ -2204,7 +2204,7 @@ def build_guide(output: Path = OUTPUT) -> None:
         "현재 출력 계약과 관측성",
         "확장 가능한 시스템은 결과뿐 아니라 시간·출처·품질·상태 전이를 설명해야 한다.",
         "PART IV · 위험 융합과 상태",
-        "integrated_node/safenest_risk_engine.py:360-415; integrated_node/safenest_integrated_plotter.py:119-258",
+        "integrated_node/safenest_risk_engine.py:360-415; archive/project_history/legacy_simulator_20260816/integrated_node/safenest_integrated_plotter.py:119-258",
     )
     w.table(
         ["현재 field", "내용", "관측 가치"],
@@ -2916,7 +2916,7 @@ def build_guide(output: Path = OUTPUT) -> None:
         "제안 canonical schema와 호환성 규칙",
         "현재 dict를 그대로 굳히지 말고 optional·null·version·error 의미를 기계 검증 가능한 계약으로 만든다.",
         "부록 · DESIGN TARGET / NOT IMPLEMENTED",
-        "integrated_node/virtual_sensor_streamer.py:177-199; integrated_node/safenest_risk_engine.py:120-169,360-415",
+        "archive/project_history/legacy_simulator_20260816/integrated_node/virtual_sensor_streamer.py:177-199; integrated_node/safenest_risk_engine.py:120-169,360-415",
     )
     w.code(
         [
