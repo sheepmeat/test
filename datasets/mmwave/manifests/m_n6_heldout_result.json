@@ -1,0 +1,122 @@
+{
+  "phase": "M-N6_STAGE_B",
+  "selection_id": "MMWAVE_M_N6_SELECTED_FLOAT_V1",
+  "selection_lock_path": "config/mmwave/m_n6_selected_candidate_lock.json",
+  "selection_lock_commit": "32840159e6a1ad90eda664117f7fea648cb369c8",
+  "contract_id": "MMWAVE_MR60_COMPAT_INPUT_DATASET_V1",
+  "candidate_id": "M-N5_DILATED_CONV1D_GAP_TINY",
+  "architecture_family": "DILATED_CONV1D_GAP",
+  "seed": 2026,
+  "artifact_sha256": "9de3818c0f4854f8512c9d390d290938b6e562d590e0775cb1dab885cc72e2ab",
+  "artifact_sha_unchanged": true,
+  "candidate_identities_evaluated": 1,
+  "heldout_split": "NEW_MODEL_HELDOUT_TEST",
+  "heldout_subject_count": 16,
+  "heldout_window_count": 74,
+  "heldout_class_counts": {
+    "NORMAL": 25,
+    "RAPID_OR_ABNORMAL": 17,
+    "APNEA": 32
+  },
+  "heldout_access_state": "CONSUMED_ONCE_FOR_M_N6_FINAL_EVALUATION",
+  "heldout_may_be_reused_for_future_model_selection": false,
+  "runner_up_evaluated": false,
+  "alternative_seed_evaluated": false,
+  "threshold_tuned": false,
+  "preprocessing_modified": false,
+  "train_plus_val_retraining": false,
+  "team_mr60_evaluated": false,
+  "metrics": {
+    "loss": 0.569541,
+    "accuracy": 0.756757,
+    "macro_f1": 0.70838,
+    "balanced_accuracy": 0.706005,
+    "per_class": {
+      "NORMAL": {
+        "precision": 0.606061,
+        "recall": 0.8,
+        "f1": 0.689655,
+        "support": 25
+      },
+      "RAPID_OR_ABNORMAL": {
+        "precision": 0.636364,
+        "recall": 0.411765,
+        "f1": 0.5,
+        "support": 17
+      },
+      "APNEA": {
+        "precision": 0.966667,
+        "recall": 0.90625,
+        "f1": 0.935484,
+        "support": 32
+      }
+    },
+    "per_class_recall": {
+      "NORMAL": 0.8,
+      "RAPID_OR_ABNORMAL": 0.411765,
+      "APNEA": 0.90625
+    },
+    "confusion_matrix": [
+      [
+        20,
+        4,
+        1
+      ],
+      [
+        10,
+        7,
+        0
+      ],
+      [
+        3,
+        0,
+        29
+      ]
+    ],
+    "predicted_class_counts": {
+      "NORMAL": 33,
+      "RAPID_OR_ABNORMAL": 11,
+      "APNEA": 30
+    },
+    "collapse_status": "NON_DEGENERATE",
+    "probability_finite": true,
+    "probability_row_sum_ok": true
+  },
+  "subject_summary": {
+    "n_heldout_subjects": 16,
+    "n_subjects_with_at_least_one_correct": 16,
+    "median_per_subject_accuracy": 0.75,
+    "minimum_per_subject_accuracy": 0.5,
+    "maximum_per_subject_accuracy": 1.0,
+    "per_subject_macro_f1_invented": false
+  },
+  "val_vs_heldout": {
+    "val_accuracy": 0.771429,
+    "heldout_accuracy": 0.756757,
+    "accuracy_gap": -0.014672,
+    "val_macro_f1": 0.723358,
+    "heldout_macro_f1": 0.70838,
+    "macro_f1_gap": -0.014978,
+    "normal_recall": {
+      "val": 0.888889,
+      "heldout": 0.8
+    },
+    "rapid_recall": {
+      "val": 0.4,
+      "heldout": 0.411765
+    },
+    "apnea_proxy_recall": {
+      "val": 0.9375,
+      "heldout": 0.90625
+    }
+  },
+  "predictions_path": "datasets/mmwave/manifests/m_n6_heldout_predictions.jsonl",
+  "evaluation_timestamp": "2026-08-17T18:22:54Z",
+  "source_git_sha": "32840159e6a1ad90eda664117f7fea648cb369c8",
+  "gate": "PASS_WITH_LIMITATIONS",
+  "selected_float_candidate_remains_credible": true,
+  "m_n7_authorized": true,
+  "production_final_model": false,
+  "device_validated": false,
+  "status": "M_N6_SELECTED_FLOAT_CANDIDATE"
+}
