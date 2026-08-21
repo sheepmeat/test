@@ -1,0 +1,12 @@
+{
+  "B6R_1_MI48_DATASET_STATUS": "INCONCLUSIVE",
+  "accounting": {
+    "EXCLUDED_WITH_EXPLICIT_REASON": 6
+  },
+  "artifact_id": "B6R-1_mi48_inventory",
+  "errors": [],
+  "frame_count": 0,
+  "source_immutability": "PASS",
+  "status": "PASS",
+  "total_discovered": 6
+}

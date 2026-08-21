@@ -1,0 +1,1 @@
+frame_id,relative_path,array_key,frame_index,source_shape,frame_shape,dtype,pixel_count,finite_count,nonfinite_count,min,max,p2,p98,p98_minus_p2,exact_zero_count,exact_65535_count,dtype_min_count,dtype_max_count,nan_count,negative_inf_count,positive_inf_count
