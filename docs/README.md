@@ -2,6 +2,7 @@
 
 현재 개발·팀 연동은 아래 문서를 기준으로 합니다.
 
+- [Thermal B6-R robust-relative FP32 병렬 개발 로드맵 (2026-08-22, EXECUTION PENDING)](20260822_Codex_Thermal_B6R_Robust_Relative_FP32_Parallel_Roadmap_KO_01.md)
 - [mmWave MR60 호환 모델 개발 로드맵 (2026-08-17, CURRENT ACTIVE)](20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md)
 - [mmWave 공개 멀티도메인 V2 개발 로드맵 (2026-08-22, ACTIVE CHILD)](20260822_SafeNest_mmWave_Public_Multidomain_V2_Development_Roadmap_01.md)
 - [M-PV0 공개 멀티도메인 범위·V1 기준선·source 역할 동결 (CURRENT)](mmwave/20260822_SafeNest_mmWave_M-PV0_Public_Multidomain_Scope_Baseline_Source_Role_Freeze_01.md)
