@@ -1,0 +1,38 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "R1-A_NATIVE_CENTERED_RELATIVE_MOTION",
+      "quality": "validity mask and source flags retained",
+      "scale": "native scale preserved separately; no waveform division",
+      "status": "IMPLEMENTED_BOUNDED_BASELINE",
+      "waveform": "10 Hz candidate trace with full-recording median centering"
+    },
+    {
+      "candidate_id": "R1-B_DESCRIPTOR_AWARE_SCALE_ROBUST_VIEW",
+      "quality": "native trace remains available for later comparison",
+      "scale": "no scale policy frozen; no per-window MAD-only transform materialized",
+      "status": "DESCRIBED_NOT_SELECTED",
+      "waveform": "future scale-robust view may be derived only with preserved native descriptors"
+    },
+    {
+      "candidate_id": "R1-C_TRACE_PLUS_QUALITY_PROVENANCE",
+      "quality": "validity mask, resampling, gap, and provenance flags required",
+      "scale": "native descriptors and source semantics separate from waveform",
+      "status": "IMPLEMENTED_AS_OUTPUT_CONTRACT",
+      "waveform": "R1-A trace"
+    }
+  ],
+  "explicitly_not_implemented": [
+    "power_spectrum_features",
+    "autocorrelation_features",
+    "periodicity_score",
+    "spectral_entropy",
+    "breathing_evidence_score",
+    "RR_predictor",
+    "temporal_hold_logic",
+    "quality_classifier"
+  ],
+  "schema_version": "R1.1",
+  "selected_candidate": null,
+  "selection_allowed_in_R1": false
+}

@@ -1,0 +1,69 @@
+{
+  "contract_id": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+  "downstream_boundary": {
+    "abstention_thresholds_selected": false,
+    "feature_family_selected": false,
+    "model_training": false,
+    "next_gate": "R2/M-PV1",
+    "targets_selected": false
+  },
+  "filtering": {
+    "anti_aliasing": "REQUIRED_ONLY_FOR_DOWNSAMPLING",
+    "method": "deterministic scipy resample_poly with Kaiser window beta 8.6",
+    "physiological_bandpass": "NONE_AT_R1"
+  },
+  "input_domains": [
+    "D0",
+    "D1"
+  ],
+  "quality_and_provenance": {
+    "no_gain_matching": true,
+    "no_window_local_MAD_only_normalization": true,
+    "required_provenance": [
+      "source_id",
+      "dataset_id",
+      "subject_id",
+      "recording_id",
+      "condition",
+      "original_sampling_rate_hz",
+      "adapter_identity",
+      "r1_profile_identity",
+      "time_range_s",
+      "native_trace_unit",
+      "common_trace_semantics",
+      "validity_gap_flags"
+    ],
+    "source_scale_descriptors": [
+      "median",
+      "MAD_about_median",
+      "robust_RMS_about_median",
+      "robust_peak_to_peak_p05_p95",
+      "peak_to_peak"
+    ],
+    "validity_mask": "finite samples and valid monotonic timing only"
+  },
+  "schema_version": "R1.1",
+  "status": "BOUNDED_CANDIDATE_FOR_M_PV1_NOT_FINAL_COMMON_REPRESENTATION",
+  "time_axis": {
+    "8_Hz_240_sample_forcing": false,
+    "D0_rule": "consume existing exact 10 Hz canonical timing",
+    "D1_rule": "anti-alias resample 500/2000 Hz native phase to 10 Hz candidate",
+    "candidate_rate_hz": 10.0,
+    "edge_behavior": "line padding within deterministic polyphase resampler",
+    "final_rate_frozen": false,
+    "large_gap_behavior": "fail closed; no large-region interpolation",
+    "timestamp_rule": "source_start_time_s + output_index / 10 Hz",
+    "variable_length": true
+  },
+  "waveform": {
+    "absolute_displacement_equivalence_claimed": false,
+    "detrend_rule": "none beyond median centering",
+    "name": "respiratory_motion_trace",
+    "native_scale_metadata_required": true,
+    "native_trace_required": true,
+    "offset_rule": "subtract full-recording median",
+    "semantics": "offset-centered native phase-like relative motion",
+    "sign": "preserved; source sign alignment remains unverified",
+    "units": "phase_like_radian"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "D0_success": 318,
+  "D1_success": 265,
+  "common_fields_observed": [
+    "common_trace_descriptors",
+    "condition",
+    "dataset_id",
+    "native_scale_descriptors",
+    "native_scale_preserved",
+    "native_trace_semantics",
+    "native_trace_unit",
+    "output_sample_count",
+    "output_sampling_rate_hz",
+    "provenance",
+    "quality_flags",
+    "recording_id",
+    "resampling",
+    "scale_normalization_applied",
+    "sensor_gain_matching_applied",
+    "sign_inversion_applied",
+    "source_id",
+    "source_sampling_rate_hz",
+    "status",
+    "subject_id",
+    "time_metadata",
+    "time_range_s",
+    "trace_name",
+    "trace_semantics",
+    "trace_units",
+    "validity"
+  ],
+  "common_trace": {
+    "name": "respiratory_motion_trace",
+    "offset": "full-recording median removed",
+    "scale": "native amplitude descriptors retained; no cross-sensor gain fit",
+    "semantics": "OFFSET_CENTERED_NATIVE_PHASE_LIKE_RELATIVE_MOTION",
+    "sign": "source sign preserved; cross-domain sign alignment unverified",
+    "units": "phase_like_radian; absolute displacement equivalence not claimed"
+  },
+  "common_trace_generated_D0": true,
+  "common_trace_generated_D1": true,
+  "domain_semantic_differences_preserved": {
+    "D0": {
+      "native_rate_hz": 10.0,
+      "native_timestamp_basis": "source ISO8601 timestamps represented on exact 10 Hz canonical grid",
+      "native_trace": "A6 UNFILTERED_UNNORMALIZED_PHASE",
+      "secondary_displacement": "not claimed"
+    },
+    "D1": {
+      "native_rates_hz": [
+        500.0,
+        2000.0
+      ],
+      "native_timestamp_basis": "sample index divided by source Fs; t0=0",
+      "native_trace": "D1_NATIVE_UNWRAPPED_PHASE_RAD",
+      "secondary_displacement": "relative_displacement_m retained in source metadata, not used as common waveform"
+    }
+  },
+  "reference_diagnostics": {
+    "D0": "Movesense reference metadata remains provenance only; no reference-tuned R1 parameter",
+    "D1": "respiration channel alignment is inherited from D1 adapter; no correlation-tuned R1 parameter",
+    "used_for_gain_matching": false,
+    "used_for_representation_selection": false
+  },
+  "safety_checks": {
+    "D0_SUBJECT_HELDOUT_used": false,
+    "D0_VAL_used_for_selection": false,
+    "D2_used": false,
+    "MR60_supervised_use": false,
+    "M_N6_excluded_heldout_used": false,
+    "arbitrary_sensor_gain_matching": false,
+    "feature_family_selected": false,
+    "model_training": false,
+    "original_amplitude_information_preserved": true,
+    "same_generic_R1_code_path": true,
+    "source_pool_concatenated_for_training": false,
+    "window_local_MAD_only_normalization": false
+  },
+  "semantic_contract_explicit": true
+}
