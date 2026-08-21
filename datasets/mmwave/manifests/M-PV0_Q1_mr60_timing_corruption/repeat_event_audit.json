@@ -1,0 +1,52 @@
+{
+  "ambiguous_repeat": {
+    "count": 0,
+    "note": "Sessions lacking phase_age were excluded from high-confidence repeat classification."
+  },
+  "confirmed_exact_duplicate": {
+    "affected_sessions": 0,
+    "count": 0,
+    "fraction": 0.0,
+    "status": "NOT_EMPIRICALLY_OBSERVED"
+  },
+  "confirmed_source_republication": {
+    "core_affected_sessions": 24,
+    "core_event_count": 5098,
+    "core_max_run": 1,
+    "core_run_length_note": "Every core republication run length is 1. Longer runs are Q2_HANDOFF_EVIDENCE.",
+    "observed_max_run_including_q2_handoff": 3598,
+    "q2_handoff_event_count": 13934,
+    "seq_always_increments": true,
+    "seq_increment_count": 19032,
+    "seq_unchanged_count": 0
+  },
+  "m_n7_crosscheck_not_a_parameter_source": {
+    "empty_republications_m_n7": 507,
+    "occupied_d06_m_n7": 2,
+    "occupied_d09_m_n7": 0
+  },
+  "numeric_plateau_only": {
+    "core_accepted_equal_phase_fraction": {
+      "mad": 0.088143,
+      "max": 0.999935,
+      "mean": 0.315773,
+      "median": 0.155913,
+      "min": 0.03,
+      "n": 62,
+      "p01": 0.030185,
+      "p05": 0.050167,
+      "p25": 0.077977,
+      "p50": 0.155913,
+      "p75": 0.375909,
+      "p95": 0.997967,
+      "p99": 0.999778,
+      "std": 0.342912
+    },
+    "not_imported_into_synthetic_profile": true,
+    "not_treated_as_freeze": true,
+    "not_treated_as_transport_duplicate": true
+  },
+  "phase": "Q1",
+  "schema_version": "Q1.1",
+  "taxonomy_applied": true
+}

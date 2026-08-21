@@ -1,0 +1,174 @@
+{
+  "architecture_deferred_to_m_pv1": [
+    "neural vs rule vs hybrid quality head",
+    "final feature schema",
+    "final 30 s tensor contract",
+    "breathing-evidence / RR / temporal-hold implementation"
+  ],
+  "audit_date": "2026-08-22",
+  "availability_states": [
+    "PRESENCE_SUPPRESSED",
+    "INPUT_UNAVAILABLE",
+    "PHYSIOLOGY_ELIGIBLE"
+  ],
+  "contract_id": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+  "d2_used": false,
+  "flat_signal": {
+    "exact_flat_rule": "window unique finite values == 1, or any non-finite value, or a contiguous exact-equal span lasting >= 400 ms while source events continue to advance",
+    "low_amplitude_alone_invalid": false,
+    "mad_cutoff_frozen": false,
+    "near_flat_rule": "DEFERRED_TO_R2_R3_M_PV1",
+    "numeric_plateau_of_two_samples_is_not_flat": true,
+    "provenance": {
+      "category": "DETERMINISTIC_ENGINEERING_INVARIANT",
+      "evidence_path": "datasets/mmwave/manifests/M-PV0_public_multidomain_registry/v1_failure_baseline.json",
+      "reason": "V1 local-MAD amplification of tiny windows must not be replaced by an arbitrary MAD<eps unavailability cutoff. Only machine-degenerate exact flatness is frozen; subtle near-flat quality is deferred.",
+      "time_domain": "candidate window values, with equal-span duration compared to 400 ms source time",
+      "unit": null,
+      "value": "exact equality / non-finite / unique-count==1"
+    }
+  },
+  "interpolation_forbidden": true,
+  "large_gap": {
+    "definition": "any accepted source-update interval in the candidate window exceeds max(400 ms, 4 * window median source-update interval)",
+    "floor_ms": 400.0,
+    "initialization_if_fewer_intervals": "INPUT_UNAVAILABLE reason INSUFFICIENT_INTERVAL_HISTORY",
+    "interpolation_allowed": false,
+    "median_multiplier": 4.0,
+    "minimum_intervals": 8,
+    "provenance": {
+      "category": "INHERITED_FROZEN_RUNTIME_CONTRACT",
+      "evidence_path": "config/mmwave/m_n4_canonical_input_dataset_contract.json",
+      "reason": "M-N4 already rejects a completed window when any accepted interval exceeds max(0.40 s, 4 * median_update_dt); V2 does not supersede that fail-closed bound. Roadmap 0.5 s is the synthetic example duration, not a looser detector.",
+      "time_domain": "source-update interval",
+      "unit": "ms",
+      "value": 400.0
+    },
+    "recovery_requires_new_continuous_segment": true,
+    "timestamp_domain": "source-update estimate when available, otherwise native strictly-increasing sample time",
+    "window_containing_large_gap": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+  },
+  "model_output_tuning": false,
+  "mr60_supervised_use": false,
+  "phase": "Q2",
+  "physiological_classes_not_used_as_quality_targets": [
+    "NORMAL",
+    "RAPID_OR_ABNORMAL",
+    "APNEA"
+  ],
+  "precedence": {
+    "invalid_quality_precedes_physiology": true,
+    "majority_vote_of_valid_seconds": false,
+    "multiple_faults_preserve_all_reasons": true,
+    "order": [
+      "presence gate",
+      "input quality / availability gate",
+      "breathing evidence / RR / temporal-hold reasoning"
+    ],
+    "presence_false": "PRESENCE_SUPPRESSED",
+    "presence_field": "human_detected_raw",
+    "presence_inferred_from_amplitude": false,
+    "presence_null_or_unknown": "PRESENCE_SUPPRESSED",
+    "presence_true_and_quality_invalid": "INPUT_UNAVAILABLE",
+    "presence_true_and_quality_valid": "PHYSIOLOGY_ELIGIBLE",
+    "reason_precedence": [
+      "PRESENCE_NOT_CONFIRMED",
+      "TIMESTAMP_NON_MONOTONIC",
+      "TIMESTAMP_UNRESOLVED",
+      "INSUFFICIENT_INTERVAL_HISTORY",
+      "LARGE_GAP",
+      "SOURCE_FREEZE",
+      "SOURCE_STALE",
+      "SIGNAL_FLAT_EXACT",
+      "RECOVERY_WARMUP"
+    ]
+  },
+  "q1_dependency": {
+    "commit": "b643bbfa48c07897406fa168f959b2037ad9adae",
+    "manifest": "datasets/mmwave/manifests/M-PV0_Q1_mr60_timing_corruption/",
+    "profile_id": "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1",
+    "rewrite_q1_history": false
+  },
+  "q1_vs_q2": {
+    "isolated_q1_source_republication_not_automatic_freeze": true,
+    "q1_typical_jitter_potentially_valid": true,
+    "q2_invalid_modes_target": "INPUT_UNAVAILABLE"
+  },
+  "q3_work": false,
+  "quality_targets": {
+    "invalid": "INPUT_UNAVAILABLE",
+    "presence_suppressed": "PRESENCE_SUPPRESSED",
+    "valid": "QUALITY_VALID"
+  },
+  "recovery": {
+    "after_fault": "RECOVERY_WARMUP until the next advancing source event after the fault span ends",
+    "do_not_freeze_30s_model_window_here": true,
+    "model_ready_history_seconds": "DEFERRED_TO_M_PV1",
+    "requires_fresh_source_advancement": true,
+    "requires_monotonic_timing": true,
+    "requires_no_active_large_gap": true,
+    "window_with_any_severe_fault": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+  },
+  "schema_version": "Q2.1",
+  "source_freeze": {
+    "advance_tolerance_ms": 8.0,
+    "definition": "transport/receive time continues while the underlying source-update estimate does not advance by more than 8 ms for at least 400 ms",
+    "hold_ms": 400.0,
+    "isolated_q1_republication_is_not_freeze": true,
+    "not_defined_as": "breath_phase[i] == breath_phase[i-1]",
+    "provenance": {
+      "category": "INHERITED_FROZEN_RUNTIME_CONTRACT",
+      "evidence_path": [
+        "config/mmwave/m_n4_canonical_input_dataset_contract.json",
+        "datasets/mmwave/manifests/M-PV0_Q1_mr60_timing_corruption/repeat_event_audit.json"
+      ],
+      "reason": "A held source sample spanning the same 400 ms integrity floor as a large gap is unusable. Q1 core republication runs never exceeded 1 (~100 ms), so this bound does not convert ordinary Q1 republication into freeze. Handoff runs 95-3598 are validation evidence, not the threshold.",
+      "time_domain": "elapsed receive/publish time while source event does not advance",
+      "unit": "ms",
+      "value": 400.0
+    },
+    "q1_core_max_run": 1,
+    "source_identity_evidence": [
+      "source-update estimate ts_monotonic_ms - phase_age_ms",
+      "source-event lineage / original_sample_index",
+      "seq may continue while the source event remains unrefreshed"
+    ]
+  },
+  "stale_source": {
+    "definition": "authoritative freshness (phase_age_ms) shows the published source sample is at least as old as the large-gap floor",
+    "fresh_transport_packet_is_not_fresh_source": true,
+    "freshness_field": "phase_age_ms",
+    "m_n3_phase_age_gt_2000_inherited": false,
+    "new_seq_does_not_refresh_stale_source": true,
+    "not_inferred_from_amplitude": true,
+    "production_mr60_if_freshness_unavailable": "INPUT_UNAVAILABLE",
+    "provenance": {
+      "category": "INHERITED_FROZEN_RUNTIME_CONTRACT",
+      "evidence_path": "config/mmwave/m_n4_canonical_input_dataset_contract.json",
+      "reason": "M-N4 requires freshness in production and maps missing freshness to WINDOW_UNAVAILABLE. Age at or above the 400 ms integrity floor means the published sample is older than a permitted gap. M-N3 2000 ms was explicitly not inherited.",
+      "time_domain": "phase_age_ms freshness",
+      "unit": "ms",
+      "value": 400.0
+    },
+    "public_native_if_freshness_absent": "NOT_APPLICABLE",
+    "threshold_ms": 400.0
+  },
+  "synthetic_apnea_forbidden": true,
+  "timestamp_invalid": {
+    "definition": "non-monotonic source/receive time, non-positive interval, or unresolvable timestamp collision",
+    "missing_required_production_freshness": "handled as SOURCE_STALE",
+    "provenance": {
+      "category": "DETERMINISTIC_ENGINEERING_INVARIANT",
+      "evidence_path": "datasets/mmwave/manifests/M-PV0_Q1_mr60_timing_corruption/exception_registry.json",
+      "reason": "Q1 handed off a receive-median 0 ms collision session. Ordering that cannot be resolved cannot support physiological inference.",
+      "time_domain": "evaluated timestamp series",
+      "unit": "ms",
+      "value": "dt <= 0 or non-finite timestamps"
+    }
+  },
+  "window_states": [
+    "PRESENCE_SUPPRESSED_WINDOW",
+    "INVALID_WINDOW_INPUT_UNAVAILABLE",
+    "VALID_WINDOW"
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "handoff_validation": {
+    "gap_158380_ms": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "LARGE_GAP",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "LARGE_GAP"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "gap_42637_ms": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "LARGE_GAP",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "LARGE_GAP"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_1582": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_2884": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_3598": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_425": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_598": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_683": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_95": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "timestamp_collision": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "TIMESTAMP_UNRESOLVED",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "TIMESTAMP_UNRESOLVED"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    }
+  },
+  "inherited_facts": {
+    "core_max_republication_run": 1,
+    "core_source_interval_median_ms": 101.0,
+    "core_source_interval_p95_ms": 128.0,
+    "core_source_interval_p99_ms": 197.0,
+    "exact_transport_duplicates": 0,
+    "nominal_receive_ms": 100.0,
+    "q1_modes_remain_potentially_valid": [
+      "CLEAN",
+      "CADENCE_JITTER",
+      "SOURCE_REPUBLICATION",
+      "JITTER_PLUS_SOURCE_REPUBLICATION"
+    ],
+    "source_advance_tolerance_ms": 8.0
+  },
+  "phase": "Q2",
+  "physiology_interpreted": false,
+  "q1_commit": "b643bbfa48c07897406fa168f959b2037ad9adae",
+  "q1_profile_id": "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1"
+}

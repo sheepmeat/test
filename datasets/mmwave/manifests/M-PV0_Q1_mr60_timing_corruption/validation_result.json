@@ -1,0 +1,34 @@
+{
+  "audit_date": "2026-08-22",
+  "checks": {
+    "CADENCE_CHARACTERIZED": "YES",
+    "CORRUPTION_ENGINE_DETERMINISTIC": "YES",
+    "D2_USED": "NO",
+    "DUPLICATE_REPUBLICATION_SEMANTICS_DEFENSIBLE": "YES",
+    "JITTER_DEFINED_AND_CHARACTERIZED": "YES",
+    "MODEL_OUTPUTS_USED_FOR_PARAMETER_SELECTION": "NO",
+    "MR60_LABELS_USED": "NO",
+    "MR60_PHYSIOLOGY_USED_FOR_TRAINING": "NO",
+    "MR60_TIMING_EVIDENCE_INVENTORIED": "YES",
+    "PARALLEL_TRACK_BRANCH_CONTAMINATION": "NO",
+    "Q2_THRESHOLD_DECISIONS_MADE": "NO",
+    "SAMPLE_LINEAGE_PRESERVED": "YES",
+    "SYNTHETIC_PROFILE_VERSIONED": "YES",
+    "TIMING_DOMAINS_DISAMBIGUATED": "YES"
+  },
+  "counts": {
+    "discovered_physical": 74,
+    "eligible_core": 62,
+    "excluded": 11,
+    "q2_handoff": 7
+  },
+  "d2_used": "NO",
+  "errors": [],
+  "gate": "PASS_WITH_LIMITATIONS",
+  "mr60_supervised_use": "NO",
+  "ok": true,
+  "phase": "Q1",
+  "profile_id": "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1",
+  "q2_thresholds_selected": "NO",
+  "schema_version": "Q1.1"
+}

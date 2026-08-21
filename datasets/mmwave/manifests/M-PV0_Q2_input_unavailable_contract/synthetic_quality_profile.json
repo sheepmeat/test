@@ -1,0 +1,40 @@
+{
+  "builds_on": "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1",
+  "class_balance_not_frozen": true,
+  "d2_used": false,
+  "interpolation": false,
+  "invalid_target": "INPUT_UNAVAILABLE",
+  "mode_notes": {
+    "CLEAN_VALID": "identity; Q2 quality remains QUALITY_VALID",
+    "FLAT_EXACT": "overwrite a mid-window advancing segment with an exact constant; marked synthetic",
+    "JITTER_PLUS_LARGE_GAP": "Q1 TYPICAL CADENCE_JITTER then LARGE_GAP",
+    "LARGE_GAP": "delay later samples to create a 500 ms source hole; no interpolation",
+    "REPUBLICATION_TO_FREEZE": "one isolated republication then extend the hold across the freeze bound",
+    "SOURCE_FREEZE": "republish one existing source sample for 1000 ms of receive time",
+    "STALE_SOURCE": "attach phase_age_ms=500 on a mid-window segment"
+  },
+  "model_outputs_used": false,
+  "mr60_labels_used": false,
+  "phase": "Q2",
+  "physiology_labels_modified": false,
+  "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+  "schema_version": "Q2.1",
+  "supported_modes": [
+    "CLEAN_VALID",
+    "LARGE_GAP",
+    "SOURCE_FREEZE",
+    "STALE_SOURCE",
+    "FLAT_EXACT",
+    "JITTER_PLUS_LARGE_GAP",
+    "REPUBLICATION_TO_FREEZE"
+  ],
+  "synthetic_apnea_created": false,
+  "synthetic_gap_ms": {
+    "category": "ROADMAP_EXPLICIT_POLICY",
+    "evidence_path": "docs/20260822_SafeNest_mmWave_Public_Multidomain_V2_Development_Roadmap_01.md",
+    "reason": "Roadmap names synthetic gaps on the order of 0.5 s. Detection remains the inherited 400 ms M-N4 floor.",
+    "time_domain": "source interval",
+    "unit": "ms",
+    "value": 500.0
+  }
+}
