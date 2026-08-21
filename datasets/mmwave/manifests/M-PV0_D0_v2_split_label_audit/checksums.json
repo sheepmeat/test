@@ -1,0 +1,18 @@
+{
+  "algorithm": "SHA-256",
+  "encoding": "utf-8 JSON indent=2 sort_keys=True trailing newline",
+  "files": {
+    "eligibility_summary.json": "0bd3d40ce63873d6286210db355a935ecfe296b5fbc5f3bc073e4229a70dd63c",
+    "exception_registry.json": "6af48a7cfae11a0d00ae996b5e13ea19b309a7ba8229771ff42542429199f2b1",
+    "label_reference_audit.json": "63b350c8d2b3fd7adc95c0f4b24039f8e7f8cbf470c3bc0e32e7bc39b215c4bd",
+    "source_population_audit.json": "35f2c4fe0c8c739480c102c89c3fb032226f54121cfc0f50283732f22769c20d",
+    "split_balance_summary.json": "fd6011d953a3a0a91aa133334bcd63df89dd0da5079de592b899a81a75bfb391",
+    "v2_subject_split.json": "04fcf6d7e05af1375b5ec54ffce3588d1d845dfda901ef524a20e29bc5ad149e"
+  },
+  "phase": "D0",
+  "schema_version": "D0.1",
+  "split_file": {
+    "path": "datasets/mmwave/splits/mmwave_v2_d0_subject_split_v1.json",
+    "sha256": "04fcf6d7e05af1375b5ec54ffce3588d1d845dfda901ef524a20e29bc5ad149e"
+  }
+}

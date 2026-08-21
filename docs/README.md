@@ -5,6 +5,7 @@
 - [mmWave MR60 호환 모델 개발 로드맵 (2026-08-17, CURRENT ACTIVE)](20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md)
 - [mmWave 공개 멀티도메인 V2 개발 로드맵 (2026-08-22, ACTIVE CHILD)](20260822_SafeNest_mmWave_Public_Multidomain_V2_Development_Roadmap_01.md)
 - [M-PV0 공개 멀티도메인 범위·V1 기준선·source 역할 동결 (CURRENT)](mmwave/20260822_SafeNest_mmWave_M-PV0_Public_Multidomain_Scope_Baseline_Source_Role_Freeze_01.md)
+- [D0 V2 subject split·label eligibility audit (CURRENT)](mmwave/20260822_SafeNest_mmWave_D0_V2_Subject_Split_Label_Eligibility_Audit_01.md)
 - [멀티센서 병렬 A–E master roadmap](20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md)
 - [기존 mmWave A–E 상세 실행 순서 (A/B 역사 유효, 미래 C/D는 PAUSED/SUPERSEDED)](20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md)
 - [mmWave Phase B 개요](MMWAVE_PHASE_B_OVERVIEW.md)
