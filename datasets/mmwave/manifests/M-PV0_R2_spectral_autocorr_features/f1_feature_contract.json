@@ -1,0 +1,77 @@
+{
+  "absolute_scale_features": {
+    "feature_names": [
+      "native_mad_about_median",
+      "native_robust_rms_about_median",
+      "native_robust_range_p05_p95",
+      "native_peak_to_peak",
+      "common_trace_mad_about_median",
+      "common_trace_robust_rms_about_median",
+      "total_signal_energy",
+      "total_signal_mean_square",
+      "log_total_signal_energy",
+      "respiratory_band_power",
+      "respiratory_band_energy",
+      "log_respiratory_band_energy"
+    ],
+    "log_rule": "natural log only for strictly positive energy; zero remains unavailable",
+    "normalization": "none; native and R1 common-trace descriptors remain in source units"
+  },
+  "candidate_id": "F1_NORMALIZED_SPECTRAL",
+  "input_contract": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+  "input_profile": "R1-A_NATIVE_CENTERED_RELATIVE_MOTION_10HZ_V1",
+  "input_sampling_rate_rule": "consume R1 output_sampling_rate_hz; current R1 candidate is 10 Hz",
+  "input_units": "phase_like_radian; absolute displacement equivalence not claimed",
+  "input_waveform": "respiratory_motion_trace",
+  "no_apnea_feature_label": true,
+  "no_d0_or_mr60_scaler": true,
+  "no_model": true,
+  "normalized_shape": {
+    "bin_edges_hz": [
+      0.1,
+      0.25,
+      0.4,
+      0.55,
+      0.7
+    ],
+    "feature_names": [
+      "spectral_shape_fraction_0p10_0p25_hz",
+      "spectral_shape_fraction_0p25_0p40_hz",
+      "spectral_shape_fraction_0p40_0p55_hz",
+      "spectral_shape_fraction_0p55_0p70_hz",
+      "spectral_shape_centroid_hz",
+      "spectral_shape_peak_frequency_hz",
+      "spectral_shape_peak_fraction",
+      "spectral_shape_entropy_normalized"
+    ],
+    "normalization": "band PSD bin power divided by total positive respiratory-band power",
+    "zero_band_power": "typed unavailable; no epsilon fake vector"
+  },
+  "reference_rule": "reference channels are engineering diagnostics only and cannot tune this candidate",
+  "respiratory_band": {
+    "cycles_per_minute_equivalent": [
+      6.0,
+      42.0
+    ],
+    "interpretation": "bounded engineering candidate; not a clinical cutoff and not validation-tuned",
+    "lower_hz": 0.1,
+    "upper_hz": 0.7
+  },
+  "schema_id": "MMWAVE_V2_R2_F1_NORMALIZED_SPECTRAL_V1",
+  "schema_version": "R2.1",
+  "sign_rule": "preserve source sign; no sign flip; spectral power/autocorrelation descriptors are sign-invariant",
+  "status": "BOUNDED_CANDIDATE_FOR_M_PV1_NOT_SELECTED",
+  "variable_length": true,
+  "welch_method": {
+    "band_integration_rule": "sum(PSD bins in band) * frequency resolution",
+    "detrend": "constant",
+    "frequency_grid_rule": "rfftfreq(nperseg, 1 / sampling_rate_hz)",
+    "implementation": "scipy.signal.welch",
+    "nfft_rule": "nperseg; no zero padding",
+    "noverlap_rule": "floor(0.5 * nperseg)",
+    "nperseg_rule": "min(256, trace_sample_count)",
+    "scaling": "density",
+    "short_trace_rule": "trace length < 64 samples is typed unavailable; no padding or interpolation",
+    "window": "hann"
+  }
+}

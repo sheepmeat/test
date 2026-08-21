@@ -1,0 +1,10 @@
+{
+  "blocker_count": 0,
+  "fail_open_behavior": false,
+  "large_gap_interpolated": false,
+  "missing_signal_replaced_with_zero": false,
+  "record_exceptions": [],
+  "schema_version": "R2.1",
+  "typed_feature_unavailability_counts": {},
+  "warning_count": 0
+}

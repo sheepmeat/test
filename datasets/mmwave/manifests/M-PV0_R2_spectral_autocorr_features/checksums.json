@@ -1,0 +1,67 @@
+{
+  "code": {
+    "adapters/mmwave_r2_representation_features.py": "834a566d5a69176baf5ef8f4e5a56710cca110fc5092035738fc9ead8f983625",
+    "scripts/run_mmwave_r2_spectral_autocorr_features.py": "5bfcf5806573e01faf50ec8d3f53d0fe445eae14d4e61d9063f59b04706a7c10",
+    "scripts/validate_mmwave_r2_spectral_autocorr_features.py": "1ff608c077a30f4eab31e38f4985d407f89ebb95e73b1370e15ea9a0949df828",
+    "tests/test_mmwave_r2_spectral_autocorr_features.py": "c1ae19512ead9fd156feb314c9e9d6120f8d84e4bfc34f5350ca951c78c04da0"
+  },
+  "derived_waveforms_committed": false,
+  "evidence": {
+    "cross_domain_sanity.json": "a7396fb55d23a6306cdde3e43dfd6bac3730ed23595993585c67ac102063f698",
+    "d0_feature_audit.json": "de037c5b7213cbf67e97768e6afab556fae4714228d0af59ad344a89a2f46e5a",
+    "d1_feature_audit.json": "88616aadb9005293a200fe86557cc30522fab6f330147181338754312c0eb7cf",
+    "exception_registry.json": "a264a0f3cf64262fd98d0a233d46ab9023c5b77dc297ac8ebedade02e5c93cf2",
+    "f1_feature_contract.json": "1f2f260abd1b621538899eb5191286eb26ae91a83acdbb514de0cffa23957496",
+    "f2_feature_contract.json": "aceecac988c78ef3a0a695e708e8f87fb51c301971b8c81597e842354e0f70a8",
+    "f3_descriptor_contract.json": "b17d3c940da55524b82beec64059572181821c190a0c79e54da38cfb6144e080",
+    "feature_candidate_set.json": "6b3dbd10bb0c9909f2f6b551672e460d4fdba0cf95d64e4edc355f545e883e5a",
+    "scale_preservation_audit.json": "e3c42f88861d025005263246481f8f6443161412ac5cf51b495deac6885665cd",
+    "validation_result.json": "0480d1c0da40a399ace3f0ec39032882254ccc5126b189be69ef65dc0f57ade1"
+  },
+  "input_lineage": {
+    "D0": {
+      "canonical": {
+        "path": "datasets/mmwave/processed/mmwave_canonical_real_v1.npy",
+        "sha256": "c2e2cd1615c7af0f0e21700f291ee12ac0347a9f7fc6ccc9f337433c16868f0e"
+      },
+      "processing_profile": {
+        "path": "datasets/mmwave/manifests/a6_full_conversion/processing_profile.json",
+        "sha256": "c533fc590093f4b6ba765347181becd959f4d576d26a02ab2dc14e983811a2a2"
+      },
+      "provenance": {
+        "path": "datasets/mmwave/manifests/a6_full_conversion/full_provenance_manifest.jsonl",
+        "sha256": "7b94b73fea7ed51be2813e1014a1760fa22325c9399490b855c9ea59093a6dc2"
+      },
+      "split": {
+        "path": "datasets/mmwave/splits/mmwave_v2_d0_subject_split_v1.json",
+        "sha256": "04fcf6d7e05af1375b5ec54ffce3588d1d845dfda901ef524a20e29bc5ad149e"
+      },
+      "window_manifest": {
+        "path": "datasets/mmwave/manifests/a6_full_conversion/full_window_manifest.jsonl",
+        "sha256": "1d1728eafdc3d4786e34fc663329a12a311322a698bdbf2fd01e6bce95c50acf"
+      }
+    },
+    "D1": {
+      "adapter_contract": {
+        "path": "datasets/mmwave/manifests/M-PV0_D1_2417ghz_adapter/adapter_contract.json",
+        "sha256": "5b8cc1db634d57589d4aa54718fce9d749f3f1b36bc4772d97382c4c8044ca9c"
+      },
+      "recording_inventory": {
+        "path": "datasets/mmwave/manifests/M-PV0_D1_2417ghz_adapter/recording_inventory.json",
+        "sha256": "4137c8f0225470c8115707aed5e554a0d50d8006e17e7c8fe2fec18a51a2ff0b"
+      }
+    },
+    "R1": {
+      "common_trace_contract": {
+        "path": "datasets/mmwave/manifests/M-PV0_R1_sensor_independent_trace/common_trace_contract.json",
+        "sha256": "84bad2c6937177e69cc28a8ab6d1847cb228653645e3db93063bb3ff2e2f1198"
+      },
+      "validation_result": {
+        "path": "datasets/mmwave/manifests/M-PV0_R1_sensor_independent_trace/validation_result.json",
+        "sha256": "3bf4670e78cc90560f97adf16748fa7e4b801e67bbde1e1fd95f4446c00812cf"
+      }
+    }
+  },
+  "raw_waveforms_committed": false,
+  "schema_version": "R2.1"
+}

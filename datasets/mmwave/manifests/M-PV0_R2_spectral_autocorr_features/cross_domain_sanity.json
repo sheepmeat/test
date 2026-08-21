@@ -1,0 +1,98 @@
+{
+  "D0_success": 318,
+  "D1_success": 265,
+  "common_candidate_contract": {
+    "feature_families": [
+      "MMWAVE_V2_R2_F1_NORMALIZED_SPECTRAL_V1",
+      "MMWAVE_V2_R2_F2_SPECTRAL_AUTOCORR_V1",
+      "MMWAVE_V2_R2_F3_TRACE_PLUS_QUALITY_DESCRIPTOR_V1"
+    ],
+    "input": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+    "observed_f1_feature_names": [
+      "common_trace_mad_about_median",
+      "common_trace_robust_rms_about_median",
+      "log_respiratory_band_energy",
+      "log_total_signal_energy",
+      "native_mad_about_median",
+      "native_peak_to_peak",
+      "native_robust_range_p05_p95",
+      "native_robust_rms_about_median",
+      "respiratory_band_energy",
+      "respiratory_band_power",
+      "spectral_shape_centroid_hz",
+      "spectral_shape_entropy_normalized",
+      "spectral_shape_fraction_0p10_0p25_hz",
+      "spectral_shape_fraction_0p25_0p40_hz",
+      "spectral_shape_fraction_0p40_0p55_hz",
+      "spectral_shape_fraction_0p55_0p70_hz",
+      "spectral_shape_peak_fraction",
+      "spectral_shape_peak_frequency_hz",
+      "total_signal_energy",
+      "total_signal_mean_square"
+    ],
+    "observed_f2_feature_names": [
+      "autocorr_abs_entropy_normalized",
+      "autocorr_periodicity_lag_mean",
+      "autocorr_periodicity_peak_frequency_hz",
+      "autocorr_periodicity_peak_lag_s",
+      "autocorr_periodicity_peak_strength",
+      "common_trace_mad_about_median",
+      "common_trace_robust_rms_about_median",
+      "log_respiratory_band_energy",
+      "log_total_signal_energy",
+      "native_mad_about_median",
+      "native_peak_to_peak",
+      "native_robust_range_p05_p95",
+      "native_robust_rms_about_median",
+      "respiratory_band_energy",
+      "respiratory_band_power",
+      "spectral_shape_centroid_hz",
+      "spectral_shape_entropy_normalized",
+      "spectral_shape_fraction_0p10_0p25_hz",
+      "spectral_shape_fraction_0p25_0p40_hz",
+      "spectral_shape_fraction_0p40_0p55_hz",
+      "spectral_shape_fraction_0p55_0p70_hz",
+      "spectral_shape_peak_fraction",
+      "spectral_shape_peak_frequency_hz",
+      "total_signal_energy",
+      "total_signal_mean_square"
+    ],
+    "output_candidate_sampling_rate_hz": "inherited from R1; current R1 candidate 10 Hz",
+    "variable_length": true
+  },
+  "domain_metadata_preserved": {
+    "condition": true,
+    "r1_profile": true,
+    "recording_or_window": true,
+    "source_file_or_window_provenance": true,
+    "source_sampling_rate": true,
+    "subject": true
+  },
+  "domain_scopes": {
+    "D0": "frozen MMWAVE_V2_D0_SUBJECT_SPLIT_V1 TRAIN subjects/windows only",
+    "D1": "full 265-recording development pool; no oversampling"
+  },
+  "reference_diagnostics": {
+    "D0_reference_identity": "Movesense/reference provenance inherited from D0 audit; not a tuning signal",
+    "D1_reference_identity": "respiration; passive temperature-based airflow sensor; units unverified, inherited from D1 manifest",
+    "used_for_feature_selection": false,
+    "used_for_gain_matching": false,
+    "used_for_threshold_selection": false
+  },
+  "safety_checks": {
+    "D0_SUBJECT_HELDOUT_used": false,
+    "D0_VAL_used": false,
+    "D2_used": false,
+    "D3_used": false,
+    "MR60_supervised_use": false,
+    "M_N6_excluded_subjects_used": false,
+    "candidate_selected": false,
+    "cross_domain_scaler_fit": false,
+    "model_training": false,
+    "sign_flip": false,
+    "source_adapter_reimplemented": false,
+    "window_local_normalization": false
+  },
+  "schema_version": "R2.1",
+  "selection_warning": "domain ranges are descriptive engineering evidence only; no pooled ranking or winner decision is made"
+}
