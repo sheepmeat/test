@@ -1,0 +1,78 @@
+{
+  "authoritative_implementation_reference": "https://gitlab.com/kilinshi/scidata_vsmdb",
+  "authoritative_metadata": {
+    "dataset_title": "A dataset of radar-recorded heart sounds and vital signs including synchronised reference sensor signals",
+    "duration_claim_s": 13376,
+    "radar_frequency": "24.17 GHz",
+    "radar_hardware": "Six-Port continuous-wave radar",
+    "reference_channels": [
+      "respiration",
+      "ecg_lead2",
+      "ecg_lead3",
+      "pcg_audio"
+    ],
+    "subject_count": 11
+  },
+  "canonical_payload_article_doi": "10.6084/m9.figshare.9691544.v1",
+  "canonical_payload_article_id": 9691544,
+  "canonical_payload_article_version": "v1",
+  "collection_api_url": "https://api.figshare.com/v2/collections/4633958",
+  "collection_doi": "10.6084/m9.figshare.c.4633958.v1",
+  "collection_version": "v1",
+  "expected": {
+    "byte_size": 583572264,
+    "md5": "801c13ae6daef54584ee4ba8fbabed19",
+    "source_registry_md5_claim": "801c13ae6daef54584ee4ba8fbabed19"
+  },
+  "figshare_api_url": "https://api.figshare.com/v2/articles/9691544",
+  "frozen_identity_check": {
+    "article_doi_matches_m_pv0": true,
+    "collection_doi_matches_m_pv0": true,
+    "payload_filename_matches_m_pv0": true,
+    "payload_md5_matches_m_pv0": true,
+    "payload_size_matches_m_pv0": true,
+    "publication_doi_matches_m_pv0": true
+  },
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "local_payload": {
+    "extracted_repository_relative_path": "datasets/raw_archives/external_datasets/d1_2417ghz/extracted",
+    "git_tracked": false,
+    "raw_payload_committed": false,
+    "repository_relative_path": "datasets/raw_archives/external_datasets/d1_2417ghz/datasets_scidata_vsmdb.zip"
+  },
+  "observed": {
+    "byte_size": 583572264,
+    "md5": "801c13ae6daef54584ee4ba8fbabed19",
+    "md5_matches": true,
+    "sha256": "3869fb70a3dda0d810d97594399789e76d9c9e59627515c20170b83e3d915836",
+    "size_matches": true,
+    "zip_member_count": 737
+  },
+  "payload_download_url": "https://ndownloader.figshare.com/files/17357702",
+  "payload_file_id": 17357702,
+  "payload_filename": "datasets_scidata_vsmdb.zip",
+  "phase": "M-PV0_D1_2417GHZ_ADAPTER",
+  "public_metadata_discrepancies": [
+    {
+      "code": "FIGSHARE_API_MD5_NULL",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Figshare article API returned file md5=null; the frozen M-PV0 md5 was independently recomputed from the downloaded payload."
+    },
+    {
+      "code": "PUBLICATION_VS_PAYLOAD_SAMPLING_RATE",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "The publication describes 2000 Hz ADS1298 acquisition, while the inspected MAT Fs field contains both 500 Hz and 2000 Hz; the adapter preserves each file's Fs and performs no resampling."
+    }
+  ],
+  "publication_doi": "10.1038/s41597-020-0390-1",
+  "publication_url": "https://www.nature.com/articles/s41597-020-0390-1",
+  "publication_version": "version of record 2020-02-13",
+  "source_id": "D1",
+  "verification": {
+    "figshare_api_md5_field": null,
+    "md5_interpretation": "computed locally from the authoritative Figshare payload; API file md5 was null",
+    "observed_on": "2026-08-22",
+    "status": "PASS"
+  }
+}

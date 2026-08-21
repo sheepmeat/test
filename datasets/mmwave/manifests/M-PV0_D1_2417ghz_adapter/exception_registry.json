@@ -1,0 +1,180 @@
+{
+  "exceptions": [
+    {
+      "blocking": false,
+      "code": "D1_PUBLICATION_VS_PAYLOAD_FS_DISCREPANCY",
+      "evidence": {
+        "adapter_behavior": "preserve per-file Fs; no resampling or forced 8 Hz/240 samples",
+        "payload_field_values_hz": [
+          500.0,
+          2000.0
+        ],
+        "publication_acquisition_rate_hz": 2000.0
+      },
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Publication describes 2000 Hz acquisition, but payload Fs contains 500 Hz and 2000 Hz; per-file Fs is preserved without resampling."
+    },
+    {
+      "blocking": false,
+      "code": "D1_RADAR_NATIVE_UNITS_UNVERIFIED",
+      "evidence": {
+        "ecg_and_pcg": "UNVERIFIED_NATIVE_PAYLOAD_UNITS",
+        "native_unwrapped_phase": "radian",
+        "radar_I": "UNVERIFIED_NATIVE_DIGITIZER_UNITS",
+        "radar_Q": "UNVERIFIED_NATIVE_DIGITIZER_UNITS",
+        "relative_displacement": "metre_relative, source-defined lambda/2 conversion; absolute offset unknown",
+        "respiration": "UNVERIFIED_NATIVE_SENSOR_UNITS; publication describes a qualitative temperature-based airflow curve"
+      },
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Payload does not publish a physical unit for radar_I/radar_Q ADC values; adapter preserves native scale and labels phase/displacement units explicitly."
+    },
+    {
+      "blocking": false,
+      "code": "D1_RESPIRATION_NATIVE_UNITS_UNVERIFIED",
+      "evidence": "UNVERIFIED_NATIVE_SENSOR_UNITS; publication describes a qualitative temperature-based airflow curve",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Publication describes a qualitative temperature-based airflow curve but does not establish a persisted physical unit for the respiration array."
+    },
+    {
+      "blocking": false,
+      "code": "D1_NO_PER_SAMPLE_TIMESTAMPS",
+      "evidence": {
+        "no_alignment_interpolation_or_lag_fit": true,
+        "pcg_alignment": "publication says PCG was manually synchronized to radar/ECG/respiration; PCG is optional here",
+        "per_sample_timestamps_in_payload": false,
+        "radar_reference_alignment": "radar_I, radar_Q, and respiration arrays share sample count and Fs in all inspected recordings; publication describes simultaneous ADS1298 acquisition",
+        "recording_timestamp_source": "measurement_info[0] and DATASET filename/Peak filename",
+        "sample_time_generation": "numpy.arange(sample_count)/Fs; t0=0"
+      },
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "MAT payload provides recording identity and Fs, not a per-sample timestamp vector; timestamps are reconstructed from sample index/Fs."
+    },
+    {
+      "blocking": false,
+      "code": "D1_PUBLISHED_ELLIPSE_IMPLEMENTATION_PCODE",
+      "evidence": {
+        "adapter_id": "D1_NATIVE_SIXPORT_PHASE_DISPLACEMENT_V1",
+        "published_code": "https://gitlab.com/kilinshi/scidata_vsmdb"
+      },
+      "severity": "INFORMATIONAL_LIMITATION",
+      "summary": "The published MATLAB ellipseReconstruction implementation is P-code; the adapter uses a transparent deterministic algebraic fit justified by the publication's ellipse-correction requirement."
+    },
+    {
+      "blocking": false,
+      "code": "D1_OPTIONAL_REFERENCE_LENGTH_MISMATCH",
+      "evidence": [
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_11-49-00"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_11-55-32"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_11-59-04"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_12-01-25"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_12-05-27"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_12-07-18"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_12-25-17"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_13-39-55"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_13-43-03"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_13-44-24"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_13-49-09"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_13-52-11"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_01-2016-12-20_13-55-07"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_04-2017-01-20_11-28-15"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_07-2017-02-27_11-51-49"
+        },
+        {
+          "channels": [
+            "pcg_audio"
+          ],
+          "recording_id": "D1_PERSON_07-2017-02-27_11-14-35"
+        }
+      ],
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Some optional ECG/PCG arrays do not have the radar/respiration sample count; native radar plus respiration adaptation remains separately valid and the mismatch is retained per recording."
+    },
+    {
+      "blocking": false,
+      "code": "D1_DEFAULT_SCENARIO_EMPTY_WORKBOOK_CELL",
+      "evidence": {
+        "record_count": 139
+      },
+      "severity": "INFORMATIONAL",
+      "summary": "Blank Scenario cells are retained as DEFAULT_FREE_BREATHING only when no more specific path protocol token is present."
+    }
+  ],
+  "phase": "M-PV0_D1_2417GHZ_ADAPTER",
+  "schema_version": "D1.1",
+  "total_blockers": 0,
+  "total_warnings": 7
+}

@@ -1,0 +1,49 @@
+{
+  "answer": "YES_WITH_LIMITATIONS",
+  "evidence_scope": {
+    "adapted_recording_count": 265,
+    "archive_mat_recording_count": 265,
+    "blocked_recording_count": 0,
+    "exception_blocker_count": 0,
+    "optional_reference_length_mismatch_count": 16,
+    "payload_checksum_verified": true,
+    "recording_inventory_count": 265,
+    "required_channel_length_mismatch_count": 0,
+    "synchronized_respiration_reference_count": 265
+  },
+  "exception_blockers": 0,
+  "exceptions_total": 7,
+  "gate": "PASS_WITH_LIMITATIONS",
+  "limitations": [
+    "mixed Fs values are preserved per recording (500 and 2000 Hz); no common rate is selected in D1",
+    "radar_I/radar_Q and respiration physical units remain unverified native payload units",
+    "per-sample timestamps are reconstructed from sample index/Fs",
+    "ellipseReconstruction source code is MATLAB P-code; adapter fit is transparent and deterministic but not asserted byte-identical to the P-code",
+    "source breath-hold/apnea protocol labels remain metadata only; no SafeNest label is generated"
+  ],
+  "native_adapter_behavior": {
+    "D0_or_MR60_normalization_used": false,
+    "D2_semantics_touched": false,
+    "feature_selection_performed": false,
+    "model_training_performed": false,
+    "native_displacement_output": "relative_displacement_m",
+    "native_phase_output": "native_unwrapped_phase_rad",
+    "raw_waveforms_committed": false,
+    "reference_output": "respiration",
+    "window_local_normalization_used": false
+  },
+  "not_done": [
+    "model_training",
+    "V2_feature_selection",
+    "D2_semantics",
+    "SafeNest_APNEA_label_generation"
+  ],
+  "ok": true,
+  "phase": "M-PV0_D1_2417GHZ_ADAPTER",
+  "question": "Can D1 native radar channels and synchronized respiration reference be reproducibly converted into a provenance-preserving native radar phase/displacement trace without D0/MR60/model-specific normalization?",
+  "ready_for": [
+    "R1",
+    "M-PV1"
+  ],
+  "schema_version": "D1.1"
+}

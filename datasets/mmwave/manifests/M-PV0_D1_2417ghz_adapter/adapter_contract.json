@@ -1,0 +1,121 @@
+{
+  "adapter_id": "D1_NATIVE_SIXPORT_PHASE_DISPLACEMENT_V1",
+  "baseband_channel_decoding": {
+    "actual_payload_observation": "radar_I/radar_Q present; B3-B6 individual fields not present",
+    "alternative_explicit_fields": {
+      "I": "B5 - B6",
+      "Q": "B3 - B4"
+    },
+    "array_order_inference": "FORBIDDEN",
+    "preferred_payload_fields": {
+      "I": "radar_I",
+      "Q": "radar_Q"
+    }
+  },
+  "contract_schema_version": "D1.1",
+  "displacement_rule": "relative_displacement_m = native_unwrapped_phase_rad / (2*pi) * wavelength_m / 2",
+  "forbidden_processing": [
+    "window-local MAD normalization",
+    "D0-derived or MR60-derived scaler",
+    "R2 derivative",
+    "spectral features",
+    "autocorrelation features",
+    "breathing-evidence score",
+    "RR target encoding",
+    "temporal hold logic",
+    "neural preprocessing",
+    "SafeNest APNEA label construction"
+  ],
+  "input_file_pattern": "datasets/measurement_data_person*/**/DATASET_*.mat",
+  "missing_data_behavior": {
+    "invalid_or_unsupported_Fs": "BLOCK_RECORD",
+    "large_missing_region": "never interpolate; BLOCK_RECORD",
+    "nonfinite_required_sample": "BLOCK_RECORD",
+    "optional_ecg_pcg_failure": "warning only; native radar/respiration adapter remains separately auditable",
+    "partial_six_port_set": "BLOCK_RECORD",
+    "required_channel_absent": "BLOCK_RECORD",
+    "required_length_mismatch": "BLOCK_RECORD"
+  },
+  "optional_channels": [
+    "ecg_lead2",
+    "ecg_lead3",
+    "pcg_audio"
+  ],
+  "output_sampling_rate": "same as source file Fs; no resampling in D1",
+  "output_signals": [
+    {
+      "meaning": "unwrapped native Six-Port radar phase",
+      "name": "native_unwrapped_phase_rad",
+      "unit": "radian"
+    },
+    {
+      "meaning": "source-defined relative distance change; absolute offset unknown",
+      "name": "relative_displacement_m",
+      "unit": "metre_relative"
+    },
+    {
+      "meaning": "synchronized raw temperature-based airflow reference",
+      "name": "respiration",
+      "unit": "UNVERIFIED_NATIVE_SENSOR_UNITS"
+    }
+  ],
+  "phase": "M-PV0_D1_2417GHZ_ADAPTER",
+  "provenance_fields": [
+    "source_id",
+    "subject_id",
+    "session_id",
+    "recording_id",
+    "condition_metadata",
+    "source_file",
+    "reference_csv",
+    "source_sampling_rate_hz",
+    "sample_count",
+    "time_s_start_end",
+    "adapter_id",
+    "ellipse_fit_diagnostics",
+    "quality_flags"
+  ],
+  "quality_flags": [
+    "required_channels_finite",
+    "required_channel_lengths_equal",
+    "timestamps_valid",
+    "native_amplitude_preserved",
+    "source_intrinsic_ellipse_correction_applied",
+    "large_missing_region_interpolated=false",
+    "optional_reference_channel_warning"
+  ],
+  "radar_frequency_hz": 24170000000.0,
+  "reference_channel": {
+    "name": "respiration",
+    "sample_alignment": "same source sample index and Fs as radar channels",
+    "semantic_identity": "passive temperature-based airflow respiration sensor",
+    "units": "UNVERIFIED_NATIVE_SENSOR_UNITS"
+  },
+  "required_channels": [
+    "radar_I",
+    "radar_Q",
+    "respiration",
+    "Fs",
+    "measurement_info"
+  ],
+  "source_id": "D1",
+  "source_intrinsic_corrections": {
+    "dc_removal": "no separate high-pass/DC-removal stage",
+    "ellipse_correction": "required by publication before demodulation; deterministic full-recording algebraic ellipse fit",
+    "offset_correction": "ellipse-fit center correction only, retained as fit metadata",
+    "published_code_audit_limit": "ellipseReconstruction implementation is MATLAB P-code; transparent adapter fit is documented and tested here",
+    "published_implementation_reference": "https://gitlab.com/kilinshi/scidata_vsmdb"
+  },
+  "source_sampling_rate": {
+    "contract_rule": "use per-recording Fs; reject unsupported/nonfinite values; never infer from array length",
+    "mat_field": "Fs",
+    "observed_values_hz": [
+      500.0,
+      2000.0
+    ],
+    "publication_acquisition_claim_hz": 2000.0
+  },
+  "timestamp_generation_rule": "time_s[i] = i / Fs, i=0..N-1; recording timestamp remains provenance metadata; no per-sample timestamp exists",
+  "unwrap_rule": "atan2(corrected_Q, corrected_I) followed by adjacent-sample 2*pi phase unwrapping",
+  "wavelength_m": 0.012403494331816301
+}
