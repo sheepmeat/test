@@ -1,0 +1,43 @@
+{
+  "D0": {
+    "excluded": 0,
+    "success": 318,
+    "windows_considered": 318
+  },
+  "D1": {
+    "excluded": 0,
+    "recordings_considered": 265,
+    "success": 265
+  },
+  "checks": {
+    "COMMON_TRACE_GENERATED_D0": true,
+    "COMMON_TRACE_GENERATED_D1": true,
+    "D0_D1_SEMANTIC_CONTRACT_EXPLICIT": true,
+    "D0_SUBJECT_HELDOUT_USED_FOR_SELECTION": false,
+    "D2_USED": false,
+    "DETERMINISTIC_GENERIC_CODE_PATH": true,
+    "FEATURE_FAMILY_SELECTED": false,
+    "FINITE_OUTPUT": true,
+    "MODEL_TRAINING": false,
+    "MONOTONIC_TIMESTAMPS": true,
+    "MR60_SUPERVISED_USE": false,
+    "M_N6_EXCLUDED_HELDOUT_USED": false,
+    "NO_SILENT_ZERO_FILL": true,
+    "ORIGINAL_AMPLITUDE_INFORMATION_PRESERVED": true,
+    "PARALLEL_TRACK_BRANCH_CONTAMINATION": false,
+    "PROVENANCE_COMPLETE": true,
+    "SOURCE_SPECIFIC_GAIN_MATCHING": false,
+    "SUBJECT_SPLIT_POLICY_PRESERVED": true,
+    "WINDOW_LOCAL_MAD_ONLY_NORMALIZATION": false
+  },
+  "gate": "PASS_WITH_LIMITATIONS",
+  "hard_failures": [],
+  "limitations": [
+    "10 Hz remains a bounded M-PV1 candidate rather than a final common-rate freeze.",
+    "D0 and D1 absolute native amplitude scales are not sensor-gain matched.",
+    "Cross-domain sign alignment remains unverified and source signs are preserved.",
+    "No R1 feature family, target, or abstention policy was selected."
+  ],
+  "ok": true,
+  "schema_version": "R1.1"
+}

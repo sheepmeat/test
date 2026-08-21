@@ -1,0 +1,36 @@
+{
+  "D0_SUBJECT_HELDOUT_used": false,
+  "D0_VAL_used": false,
+  "M_N6_excluded_heldout_used": false,
+  "blocker_count": 0,
+  "exceptions": [
+    {
+      "code": "R1_D0_TRAIN_ONLY_SCOPE",
+      "message": "D0 R1 audit consumed TRAIN subject rows only; VAL and D0_SUBJECT_HELDOUT were not used.",
+      "severity": "INFO"
+    },
+    {
+      "code": "R1_TARGET_RATE_NOT_FINAL",
+      "message": "10 Hz is a bounded common-rate candidate for M-PV1, not a final V2 freeze.",
+      "severity": "WARNING"
+    },
+    {
+      "code": "R1_ABSOLUTE_SCALE_NOT_EQUIVALENT",
+      "message": "D0 phase-like trace and D1 optional metre-relative displacement are not claimed to share absolute physical scale.",
+      "severity": "WARNING"
+    },
+    {
+      "code": "R1_SIGN_ALIGNMENT_UNVERIFIED",
+      "message": "Source signs are preserved; no cross-domain sign inversion was applied.",
+      "severity": "WARNING"
+    },
+    {
+      "code": "R1_D1_NATIVE_UNITS_UNVERIFIED",
+      "message": "D1 radar and respiration native units remain source-unverified as recorded by D1.",
+      "severity": "WARNING"
+    }
+  ],
+  "info_count": 1,
+  "schema_version": "R1.1",
+  "warning_count": 4
+}
