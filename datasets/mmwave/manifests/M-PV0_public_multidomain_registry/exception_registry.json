@@ -1,0 +1,69 @@
+{
+  "CONSUMED_SUBJECT_SET_UNRESOLVED": false,
+  "exceptions": [
+    {
+      "blocking": false,
+      "code": "D0_ZENODO_VERSION_POINTER_DISCREPANCY",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "V2 roadmap cites Zenodo record 16760684 (v1.0). Repository A0/M-N identity is 10.5281/zenodo.18599983 (v1.1). Same concept 16760683; official db_records.zip md5 matches."
+    },
+    {
+      "blocking": false,
+      "code": "D0_LOCAL_PAYLOAD_ABSENT_IN_THIS_WORKTREE",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "gitignored local db_records.zip is not present in the M-PV0 worktree. A0 previously inventoried a local repackaged archive. D0 role remains unambiguous."
+    },
+    {
+      "blocking": false,
+      "code": "D0_OFFICIAL_VS_LOCAL_REPACKAGING",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "A0 relationship_status is LIKELY_REPACKAGED_NOT_FULLY_VERIFIED. Inherited historical limitation, not an M-PV0 role failure."
+    },
+    {
+      "blocking": false,
+      "code": "D2_IEEE_DATAPORT_LOGIN_REQUIRED",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Later D2 acquisition/checksum lane must use an IEEE DataPort login. M-PV0 did not acquire the zip."
+    },
+    {
+      "blocking": false,
+      "code": "D2_ANNOUNCED_SIZE_DISCREPANCY",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "IEEE DataPort lists 28.69 MB; GitHub README says about 31 MB. No published SHA-256 on audited pages."
+    },
+    {
+      "blocking": false,
+      "code": "D2_PAYLOAD_CHECKSUM_NOT_PUBLISHED",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "D2 lock is established on role/policy. Payload checksum verification belongs to the later acquisition lane."
+    },
+    {
+      "blocking": false,
+      "code": "D3_PARTICIPANT_RECORDING_COUNT_CONFLICT",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "BreathSense public card reports 108/432, 90/360, and 108-participant file-structure counts. Unresolved. Non-blocking."
+    },
+    {
+      "blocking": false,
+      "code": "D3_LICENSE_UNVERIFIED",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "BreathSense license field was not retrievable (Hugging Face API 403 / card auth failure). Non-blocking."
+    },
+    {
+      "blocking": false,
+      "code": "V1_NO_INPUT_UNAVAILABLE_NEURAL_CLASS",
+      "severity": "POLICY_REQUIREMENT",
+      "summary": "V1 has a required presence gate and rejects large-gap windows, but no INPUT_UNAVAILABLE neural class. Later V2 stages must preserve abstention/fail-closed."
+    },
+    {
+      "blocking": false,
+      "code": "ROOT_MODEL_MANIFEST_DOES_NOT_LIST_M_N9_V1",
+      "severity": "INFORMATIONAL",
+      "summary": "models/model_manifest.json still describes historical mmwave_resp_int8 artifacts. Authoritative V1 identity is the M-N9 lock/result."
+    }
+  ],
+  "phase": "M-PV0",
+  "schema_version": "M-PV0.1",
+  "total_blockers": 0,
+  "total_warnings": 8
+}

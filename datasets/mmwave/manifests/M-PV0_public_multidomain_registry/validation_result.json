@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "D0_ROLE_UNAMBIGUOUS": "YES",
+    "D1_ROLE_UNAMBIGUOUS": "YES",
+    "D2_MODEL_INFERENCE_COUNT": 0,
+    "D2_PRELOCK_ACCESS_AUDIT_EXISTS": "YES",
+    "D2_ROLE_LOCKED": "YES",
+    "D3_NON_BLOCKING": "YES",
+    "MR60_SUPERVISED_USE_FORBIDDEN": "YES",
+    "OLD_HELDOUT_SELECTION_REUSE_FORBIDDEN": "YES",
+    "PARALLEL_TRACK_BRANCH_CONTAMINATION": "NO"
+  },
+  "errors": [],
+  "gate": "PASS_WITH_LIMITATIONS",
+  "heldout_subject_count": 16,
+  "ok": true,
+  "phase": "M-PV0",
+  "schema_version": "M-PV0.1",
+  "v1_artifact_id": "MMWAVE_M_N9_FULL_INT8_V1",
+  "v1_sha256": "3b008af4be0facc4037c2afd3fe39292fb794208eb4370dbe6916b2d15aa38a4"
+}

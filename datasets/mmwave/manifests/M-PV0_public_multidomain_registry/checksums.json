@@ -1,0 +1,13 @@
+{
+  "algorithm": "SHA-256",
+  "encoding": "utf-8 JSON indent=2 sort_keys=True trailing newline",
+  "files": {
+    "exception_registry.json": "b6a75099203f1fb60ba8e1135b30f7bc6cda5ca7ee9e4e50fca2697997dd034c",
+    "license_access_audit.json": "2c6ea1f3180d03633ae5af352b40c34c9025d678d7fdc761c5e1aa63088072e6",
+    "role_lock_policy.json": "5645f95196028613332c9bf612fb2d4cfc8ada3b0bbec739904529c749f6a399",
+    "source_registry.json": "b2597a25fd351d3487dc4520640d5cf603384cebc1043a5eb9f03102743305a2",
+    "v1_failure_baseline.json": "c69878e2229ff642075c37c3661af65a0bcd07ebad42c80dae496839b168699a"
+  },
+  "phase": "M-PV0",
+  "schema_version": "M-PV0.1"
+}

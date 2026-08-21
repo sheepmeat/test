@@ -1,0 +1,53 @@
+{
+  "audit_date": "2026-08-22",
+  "d2_access_audit": {
+    "FEATURE_EXTRACTION": "NO",
+    "MODEL_INFERENCE": "NO",
+    "MODEL_INFERENCE_COUNT": 0,
+    "PAYLOAD_ACQUISITION": "NO",
+    "PAYLOAD_SEMANTIC_INSPECTION": "NO",
+    "PUBLIC_METADATA_ACCESS": "YES"
+  },
+  "phase": "M-PV0",
+  "schema_version": "M-PV0.1",
+  "sources": {
+    "D0": {
+      "access_mode": "OPEN_PUBLIC_DOWNLOAD",
+      "license": "CC-BY-4.0",
+      "limitations": [
+        "Canonical identity is Zenodo v1.1 record 18599983, not the roadmap v1.0 record 16760684.",
+        "A0 local archive is a likely repackaged zip; official member-level identity is not fully verified."
+      ]
+    },
+    "D1": {
+      "access_mode": "OPEN_PUBLIC_DOWNLOAD",
+      "license": "CC BY 4.0",
+      "limitations": [],
+      "payload_filename": "datasets_scidata_vsmdb.zip",
+      "payload_md5": "801c13ae6daef54584ee4ba8fbabed19"
+    },
+    "D2": {
+      "checksum_source": "NOT_PUBLISHED_ON_AUDITED_LANDING_PAGES",
+      "github_code_license": "MIT",
+      "ieee_dataport_access": "IEEE_DATAPORT_OPEN_ACCESS_LOGIN_REQUIRED",
+      "ieee_dataport_full_terms": "UNVERIFIED",
+      "limitations": [
+        "IEEE DataPort zip download requires a free IEEE account login.",
+        "No payload SHA-256 was published on the audited landing pages.",
+        "Announced size differs between IEEE DataPort (28.69 MB) and GitHub README (~31 MB)."
+      ],
+      "publication_license": "CC-BY-4.0"
+    },
+    "D3": {
+      "license": null,
+      "license_reason": "Hugging Face dataset API returned HTTP 403 and the dataset card license field was not retrievable during M-PV0. D3 remains non-blocking.",
+      "license_status": "UNVERIFIED",
+      "limitations": [
+        "Participant/recording counts conflict across the public card.",
+        "License UNVERIFIED. Non-blocking for D0+D1."
+      ],
+      "processed_phase_downloaded": false,
+      "raw_adc_downloaded": false
+    }
+  }
+}
