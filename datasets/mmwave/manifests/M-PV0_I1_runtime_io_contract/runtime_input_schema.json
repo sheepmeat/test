@@ -1,0 +1,401 @@
+{
+  "additionalProperties": false,
+  "audit_date": "2026-08-22",
+  "contract_id": "MMWAVE_V2_I1_RUNTIME_INPUT_CONTRACT_V1",
+  "description": "Generic V2 runtime input envelope. Not a final tensor specification.",
+  "field_applicability": {
+    "breath_phase": "OPTIONAL_MR60_TELEMETRY_NOT_V2_RR_TRUTH",
+    "breath_rate_raw": "AUXILIARY_TELEMETRY_NOT_V2_SUPERVISED_RR_TRUTH",
+    "human_detected_raw": {
+      "PRODUCTION_MR60": "REQUIRED_FOR_PRODUCTION_MR60",
+      "PUBLIC_OFFLINE": "NOT_APPLICABLE_TO_PUBLIC_OFFLINE_DOMAIN"
+    },
+    "phase_age_ms": {
+      "PRODUCTION_MR60": "REQUIRED_FOR_PRODUCTION_MR60",
+      "PUBLIC_OFFLINE": "NOT_APPLICABLE_TO_PUBLIC_OFFLINE_DOMAIN"
+    },
+    "seq": {
+      "PRODUCTION_MR60": "REQUIRED_FOR_PRODUCTION_MR60",
+      "PUBLIC_OFFLINE": "NOT_APPLICABLE_TO_PUBLIC_OFFLINE_DOMAIN"
+    },
+    "ts_monotonic_ms": {
+      "PRODUCTION_MR60": "REQUIRED_FOR_PRODUCTION_MR60_AS_RECEIVE_OR_PUBLISH_CLOCK",
+      "PUBLIC_OFFLINE": "NOT_APPLICABLE_TO_PUBLIC_OFFLINE_DOMAIN",
+      "not_physical_radar_acquisition_time": true
+    }
+  },
+  "phase": "I1",
+  "properties": {
+    "adapter": {
+      "type": "object"
+    },
+    "event": {
+      "type": "object"
+    },
+    "freshness": {
+      "type": "object"
+    },
+    "model_input_boundary": {
+      "type": "object"
+    },
+    "mr60_telemetry": {
+      "type": "object"
+    },
+    "presence": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "quality": {
+      "type": "object"
+    },
+    "schema_id": {
+      "const": "MMWAVE_V2_I1_RUNTIME_INPUT_CONTRACT_V1"
+    },
+    "schema_version": {
+      "const": "I1.1"
+    },
+    "session": {
+      "type": "object"
+    },
+    "signal": {
+      "type": "object"
+    },
+    "source": {
+      "type": "object"
+    },
+    "timestamps": {
+      "additionalProperties": false,
+      "properties": {
+        "model_evaluation_time": {
+          "additionalProperties": false,
+          "properties": {
+            "authoritative": {
+              "type": "boolean"
+            },
+            "clock_domain": {
+              "type": "string"
+            },
+            "monotonic_or_wall": {
+              "enum": [
+                "monotonic",
+                "wall",
+                "index_reconstructed",
+                "unspecified"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reconstructed": {
+              "type": "boolean"
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "ns",
+                "index"
+              ]
+            },
+            "value": {}
+          },
+          "required": [
+            "clock_domain",
+            "unit",
+            "monotonic_or_wall",
+            "reconstructed",
+            "authoritative"
+          ],
+          "type": "object"
+        },
+        "runtime_receive_time": {
+          "additionalProperties": false,
+          "properties": {
+            "authoritative": {
+              "type": "boolean"
+            },
+            "clock_domain": {
+              "type": "string"
+            },
+            "monotonic_or_wall": {
+              "enum": [
+                "monotonic",
+                "wall",
+                "index_reconstructed",
+                "unspecified"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reconstructed": {
+              "type": "boolean"
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "ns",
+                "index"
+              ]
+            },
+            "value": {}
+          },
+          "required": [
+            "clock_domain",
+            "unit",
+            "monotonic_or_wall",
+            "reconstructed",
+            "authoritative"
+          ],
+          "type": "object"
+        },
+        "source_native_sample_time": {
+          "additionalProperties": false,
+          "properties": {
+            "authoritative": {
+              "type": "boolean"
+            },
+            "clock_domain": {
+              "type": "string"
+            },
+            "monotonic_or_wall": {
+              "enum": [
+                "monotonic",
+                "wall",
+                "index_reconstructed",
+                "unspecified"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reconstructed": {
+              "type": "boolean"
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "ns",
+                "index"
+              ]
+            },
+            "value": {}
+          },
+          "required": [
+            "clock_domain",
+            "unit",
+            "monotonic_or_wall",
+            "reconstructed",
+            "authoritative"
+          ],
+          "type": "object"
+        },
+        "source_update_estimate": {
+          "additionalProperties": false,
+          "properties": {
+            "authoritative": {
+              "type": "boolean"
+            },
+            "clock_domain": {
+              "type": "string"
+            },
+            "monotonic_or_wall": {
+              "enum": [
+                "monotonic",
+                "wall",
+                "index_reconstructed",
+                "unspecified"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reconstructed": {
+              "type": "boolean"
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "ns",
+                "index"
+              ]
+            },
+            "value": {}
+          },
+          "required": [
+            "clock_domain",
+            "unit",
+            "monotonic_or_wall",
+            "reconstructed",
+            "authoritative"
+          ],
+          "type": "object"
+        },
+        "transport_publish_time": {
+          "additionalProperties": false,
+          "properties": {
+            "authoritative": {
+              "type": "boolean"
+            },
+            "clock_domain": {
+              "type": "string"
+            },
+            "monotonic_or_wall": {
+              "enum": [
+                "monotonic",
+                "wall",
+                "index_reconstructed",
+                "unspecified"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reconstructed": {
+              "type": "boolean"
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "ns",
+                "index"
+              ]
+            },
+            "value": {}
+          },
+          "required": [
+            "clock_domain",
+            "unit",
+            "monotonic_or_wall",
+            "reconstructed",
+            "authoritative"
+          ],
+          "type": "object"
+        },
+        "window_end": {
+          "additionalProperties": false,
+          "properties": {
+            "authoritative": {
+              "type": "boolean"
+            },
+            "clock_domain": {
+              "type": "string"
+            },
+            "monotonic_or_wall": {
+              "enum": [
+                "monotonic",
+                "wall",
+                "index_reconstructed",
+                "unspecified"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reconstructed": {
+              "type": "boolean"
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "ns",
+                "index"
+              ]
+            },
+            "value": {}
+          },
+          "required": [
+            "clock_domain",
+            "unit",
+            "monotonic_or_wall",
+            "reconstructed",
+            "authoritative"
+          ],
+          "type": "object"
+        },
+        "window_start": {
+          "additionalProperties": false,
+          "properties": {
+            "authoritative": {
+              "type": "boolean"
+            },
+            "clock_domain": {
+              "type": "string"
+            },
+            "monotonic_or_wall": {
+              "enum": [
+                "monotonic",
+                "wall",
+                "index_reconstructed",
+                "unspecified"
+              ]
+            },
+            "notes": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "reconstructed": {
+              "type": "boolean"
+            },
+            "unit": {
+              "enum": [
+                "ms",
+                "s",
+                "ns",
+                "index"
+              ]
+            },
+            "value": {}
+          },
+          "required": [
+            "clock_domain",
+            "unit",
+            "monotonic_or_wall",
+            "reconstructed",
+            "authoritative"
+          ],
+          "type": "object"
+        }
+      },
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_id",
+    "schema_version",
+    "source",
+    "presence",
+    "quality",
+    "provenance"
+  ],
+  "schema_version": "I1.1",
+  "title": "MMWAVE_V2_I1_RUNTIME_INPUT_CONTRACT_V1",
+  "type": "object"
+}

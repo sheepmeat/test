@@ -1,0 +1,105 @@
+{
+  "audit_date": "2026-08-22",
+  "availability_states": [
+    "PRESENCE_SUPPRESSED",
+    "INPUT_UNAVAILABLE",
+    "PHYSIOLOGY_ELIGIBLE"
+  ],
+  "base_sha": "03b0f4c3b5bcff3f066eaf3f29a43d4889ad24b9",
+  "carryable_reason_codes": [
+    "PRESENCE_NOT_CONFIRMED",
+    "LARGE_GAP",
+    "SOURCE_FREEZE",
+    "SOURCE_STALE",
+    "SIGNAL_FLAT_EXACT",
+    "TIMESTAMP_INVALID",
+    "TIMESTAMP_NON_MONOTONIC",
+    "TIMESTAMP_UNRESOLVED",
+    "INSUFFICIENT_INTERVAL_HISTORY",
+    "RECOVERY_WARMUP",
+    "EXTERNAL_QUALITY_POLICY",
+    "NOT_IMPLEMENTED_MODEL_BOUNDARY"
+  ],
+  "contract_id": "MMWAVE_V2_I1_RUNTIME_SEMANTIC_CONTRACT_V1",
+  "d2_used": false,
+  "deferred_bindings": {
+    "final_feature_schema": "DEFERRED_TO_R1_R2_R3",
+    "final_model_architecture": "DEFERRED_TO_M_PV1",
+    "final_tensor_shape": "DEFERRED_TO_M_PV1",
+    "int8_quantization": "DEFERRED_TO_M_PV2",
+    "near_flat_threshold": "DEFERRED_TO_R2_R3_M_PV1",
+    "probability_calibration": "DEFERRED_TO_M_PV1",
+    "q2_detection_implementation": "OUTSIDE_I1",
+    "r1_representation": "DEFERRED_TO_R1_R2_R3",
+    "r2_features": "DEFERRED_TO_R1_R2_R3",
+    "r3_breathing_rr_temporal_hold": "DEFERRED_TO_R3",
+    "runtime_history_duration": "DEFERRED_TO_M_PV1",
+    "temporal_hold_algorithm": "DEFERRED_TO_R3_M_PV1"
+  },
+  "fail_closed": {
+    "high_class_confidence_cannot_override_invalid_availability": true,
+    "invalid_input_fallback_apnea": false,
+    "invalid_input_fallback_normal": false,
+    "no_person_is_not_apnea": true,
+    "unavailable_input_suppresses_physiology": true
+  },
+  "i2_full_replay_implemented": false,
+  "i3_regression_work_performed": false,
+  "identities": {
+    "input": "MMWAVE_V2_I1_RUNTIME_INPUT_CONTRACT_V1",
+    "output": "MMWAVE_V2_I1_RUNTIME_OUTPUT_CONTRACT_V1",
+    "provenance": "MMWAVE_V2_I1_PROVENANCE_CONTRACT_V1",
+    "replay_interface": "MMWAVE_V2_I1_REPLAY_INTERFACE_SKELETON_V1",
+    "semantic": "MMWAVE_V2_I1_RUNTIME_SEMANTIC_CONTRACT_V1",
+    "v1_identity_forbidden": "MMWAVE_M_N9_FULL_INT8_V1"
+  },
+  "model_inference": false,
+  "model_training": false,
+  "mr60_supervised_use": false,
+  "phase": "I1",
+  "precedence": {
+    "order": [
+      "presence gate",
+      "input quality / availability gate",
+      "physiological inference",
+      "application state"
+    ],
+    "presence_false": "PRESENCE_SUPPRESSED",
+    "presence_field": "human_detected_raw",
+    "presence_inferred_from_amplitude": false,
+    "presence_null_or_unknown": "PRESENCE_SUPPRESSED",
+    "presence_true_and_quality_invalid": "INPUT_UNAVAILABLE",
+    "presence_true_and_quality_valid": "PHYSIOLOGY_ELIGIBLE",
+    "quality_before_physiology": true
+  },
+  "q2_relationship": {
+    "contract_id": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+    "detection_implemented_in_i1": false,
+    "integration": "EXTERNAL_POLICY_BOUND",
+    "merged_on_main": true,
+    "numerical_thresholds_copied_into_i1": false,
+    "status": "Q2_CONTRACT_INTEGRATION_EXTERNAL_POLICY_BOUND"
+  },
+  "r1_relationship": {
+    "assumed_trace_kind": "NONE",
+    "common_rate_hz": "DEFERRED_TO_R1_M_PV1",
+    "integration": "DEFERRED_BINDING",
+    "payload_fields": [
+      "representation_profile_id",
+      "representation_payload",
+      "time_coverage",
+      "quality_metadata",
+      "native_scale_descriptors"
+    ]
+  },
+  "r3_relationship": {
+    "breathing_evidence": "SEMANTIC_SLOT_ONLY",
+    "integration": "DEFERRED_BINDING",
+    "rr": "SEMANTIC_SLOT_ONLY",
+    "temporal_hold": "SEMANTIC_SLOT_ONLY"
+  },
+  "reason_codes_are_not_physiological_labels": true,
+  "schema_version": "I1.1",
+  "v1_artifact_modified": false,
+  "v1_observe_only": true
+}

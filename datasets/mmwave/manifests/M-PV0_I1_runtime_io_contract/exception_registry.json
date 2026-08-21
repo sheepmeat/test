@@ -1,0 +1,14 @@
+{
+  "entries": [],
+  "final_feature_schema": "DEFERRED_TO_R1_R2_R3",
+  "final_model_architecture": "DEFERRED_TO_M_PV1",
+  "final_tensor_shape": "DEFERRED_TO_M_PV1",
+  "i2_full_replay": "NOT_IN_I1",
+  "i3_regression": "NOT_IN_I1",
+  "near_flat_threshold": "DEFERRED_TO_R2_R3_M_PV1",
+  "phase": "I1",
+  "q2_detection_implementation": "OUTSIDE_I1",
+  "r3_temporal_hold_algorithm": "DEFERRED_TO_R3_M_PV1",
+  "runtime_history_duration": "DEFERRED_TO_M_PV1",
+  "schema_version": "I1.1"
+}
