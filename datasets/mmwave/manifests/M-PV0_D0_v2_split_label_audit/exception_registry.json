@@ -1,0 +1,50 @@
+{
+  "audit_date": "2026-08-22",
+  "exceptions": [
+    {
+      "blocking": false,
+      "code": "D0_LOCAL_PAYLOAD_ABSENT_IN_THIS_WORKTREE",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "gitignored db_records.zip is not present. D0 uses A0/A6 derived lineage, which is sufficient for split and label eligibility."
+    },
+    {
+      "blocking": false,
+      "code": "D0_OFFICIAL_VS_LOCAL_REPACKAGING",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Inherited A0 relationship_status LIKELY_REPACKAGED_NOT_FULLY_VERIFIED. Canonical identity remains Zenodo v1.1."
+    },
+    {
+      "blocking": false,
+      "code": "D0_DEMOGRAPHIC_METADATA_NOT_IN_LOCAL_A0",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "ParticipantsInfo.xlsx is listed on Zenodo v1.1 but is not in the local A0 recording inventory. Split does not claim demographic stratification."
+    },
+    {
+      "blocking": false,
+      "code": "D0_THREE_SUBJECTS_TRANSITION_ONLY_HOLD",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Eligible subjects p026, p034, and p040 have voluntary non-breathing source timestamps but no assigned APNEA-proxy 30 s window (overlap below 6 s or hold outside the canonical window). Hash assignment placed all three in TRAIN. VAL and D0_SUBJECT_HELDOUT retain assigned APNEA-proxy coverage."
+    },
+    {
+      "blocking": false,
+      "code": "D0_INCOMPLETE_TAIL_DROPPED",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "A6 dropped incomplete tails after full 30 s windows on 350 recordings. Some annotated hold seconds can fall outside canonical windows."
+    },
+    {
+      "blocking": false,
+      "code": "D0_ECG_PRESENT_NOT_USED_FOR_A4_RR",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "Movesense ECG files exist on all 440 recordings. A4/A6 RR labels use Movesense chest ACC, not ECG."
+    },
+    {
+      "blocking": false,
+      "code": "D0_V1_FEATURE_CONTRACT_NOT_FROZEN",
+      "severity": "INFORMATIONAL",
+      "summary": "D0 does not freeze R1 representation, MAD alternatives, RR model structure, or abstention thresholds."
+    }
+  ],
+  "phase": "D0",
+  "schema_version": "D0.1",
+  "total_blockers": 0
+}

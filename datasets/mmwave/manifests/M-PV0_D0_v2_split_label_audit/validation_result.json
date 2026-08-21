@@ -1,0 +1,35 @@
+{
+  "audit_date": "2026-08-22",
+  "checks": {
+    "D0_CANONICAL_IDENTITY_VERIFIED": "YES",
+    "D0_SUBJECT_HELDOUT_HAS_USABLE_TARGET_COVERAGE": "YES",
+    "D2_ACCESSED": "NO",
+    "ELIGIBLE_D0_SUBJECT_ACCOUNTING_COMPLETE": "YES",
+    "LABEL_PROVENANCE_AUDITED": "YES",
+    "MR60_SUPERVISED_USE": "NO",
+    "M_N6_HELDOUT_EXCLUDED": "YES",
+    "PARALLEL_TRACK_BRANCH_CONTAMINATION": "NO",
+    "SPLIT_DETERMINISTIC": "YES",
+    "SUBJECT_SPLIT_DISJOINT": "YES"
+  },
+  "counts": {
+    "D0_SUBJECT_HELDOUT": 14,
+    "TRAIN": 66,
+    "VAL": 14
+  },
+  "d2_accessed": "NO",
+  "eligible_subject_count": 94,
+  "errors": [],
+  "excluded_subject_count": 16,
+  "gate": "PASS_WITH_LIMITATIONS",
+  "heldout_coverage": {
+    "assigned_apnea_proxy_windows": 28,
+    "rr_supervised_windows": 34,
+    "usable": true
+  },
+  "mr60_supervised_use": "NO",
+  "ok": true,
+  "phase": "D0",
+  "schema_version": "D0.1",
+  "split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1"
+}

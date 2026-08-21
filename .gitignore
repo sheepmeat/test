@@ -12,6 +12,9 @@ tmp/
 /datasets/thermal/
 /datasets/mmwave/raw/
 
+# D2 LOCKED_PUBLIC_CROSS_DEVICE_TEST payload. Opaque blob only; never Git-track.
+VITALSENSE_120_DATASET.zip
+
 # Team-owned hardware bundles may contain nested repositories and raw captures.
 /hardware/
 

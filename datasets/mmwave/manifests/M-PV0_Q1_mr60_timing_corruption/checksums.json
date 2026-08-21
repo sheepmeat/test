@@ -1,0 +1,13 @@
+{
+  "algorithm": "SHA-256",
+  "encoding": "utf-8 JSON indent=2 sort_keys=True trailing newline",
+  "files": {
+    "evidence_inventory.json": "2f34b482417850aabfcac65e8c27989dd7cc45c1c021ea727c2b27f699acf3c1",
+    "exception_registry.json": "7c95844f815f3d9536424e9da72400d497eeee7aca9c567c75be5478a3e5d217",
+    "repeat_event_audit.json": "e9d503da19eb08a630e246f0463efd484bfbba8b2f18b7370ff0c0b938011d2c",
+    "synthetic_corruption_profile.json": "d2d5dac009a01d4eb0acb44af211d701cdc4d24f4be00213355f3d8297d0c2c6",
+    "timing_statistics.json": "075480df06c3eafd3c386fffc48d225e7c654d034075d713ab039d2f6af1d061"
+  },
+  "phase": "Q1",
+  "schema_version": "Q1.1"
+}

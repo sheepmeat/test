@@ -1,0 +1,32 @@
+{
+  "audit_date": "2026-08-22",
+  "exceptions": [
+    {
+      "blocking": true,
+      "code": "D2_PAYLOAD_ACQUISITION_BLOCKED_AUTH_REQUIRED",
+      "severity": "BLOCKING",
+      "summary": "IEEE DataPort presents VITALSENSE_120_DATASET.zip behind LOGIN TO ACCESS DATASET FILES. This environment had no authorized IEEE session. No mirror was substituted."
+    },
+    {
+      "blocking": false,
+      "code": "D2_PAYLOAD_CHECKSUM_NOT_PUBLISHED",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "IEEE DataPort landing page still publishes no SHA-256 or MD5. SafeNest local SHA-256 is the custody digest if/when acquired."
+    },
+    {
+      "blocking": false,
+      "code": "D2_ANNOUNCED_SIZE_DISCREPANCY",
+      "severity": "NON_BLOCKING_WARNING",
+      "summary": "IEEE DataPort lists 28.69 MB; M-PV0 recorded GitHub README about 31 MB. No exact-byte publisher claim exists. Local exact bytes remain null until acquisition."
+    },
+    {
+      "blocking": false,
+      "code": "D2_LOCK_REMAINS_AFTER_THIS_LANE",
+      "severity": "POLICY_REQUIREMENT",
+      "summary": "Acquisition, even if later successful, does not authorize representation, family, threshold, calibration, augmentation, or candidate inference from D2."
+    }
+  ],
+  "phase": "D2",
+  "schema_version": "D2.1",
+  "total_blockers": 1
+}

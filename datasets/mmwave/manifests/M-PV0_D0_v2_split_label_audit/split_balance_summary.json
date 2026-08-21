@@ -1,0 +1,144 @@
+{
+  "allocation_inspected_before_freeze": true,
+  "audit_date": "2026-08-22",
+  "by_split": {
+    "D0_SUBJECT_HELDOUT": {
+      "assigned_apnea_proxy_windows": 28,
+      "conditions": {
+        "Post-exercise": 28,
+        "Rest": 28
+      },
+      "labels": {
+        "AMBIGUOUS": 6,
+        "APNEA": 28,
+        "NORMAL": 16,
+        "RAPID_OR_ABNORMAL": 18
+      },
+      "postures": {
+        "Lying": 28,
+        "Sitting": 28
+      },
+      "radar_hardware": {
+        "NodeNs IWR6843ISK": 28,
+        "Texas Instruments IWR6843ISK-ODS": 28
+      },
+      "recordings": 56,
+      "rr_windows": 34,
+      "subjects": 14,
+      "subjects_with_assigned_apnea_proxy": 14,
+      "transition_windows": 6,
+      "windows": 68
+    },
+    "TRAIN": {
+      "assigned_apnea_proxy_windows": 126,
+      "conditions": {
+        "Post-exercise": 132,
+        "Rest": 132
+      },
+      "labels": {
+        "AMBIGUOUS": 30,
+        "APNEA": 126,
+        "NORMAL": 92,
+        "RAPID_OR_ABNORMAL": 70
+      },
+      "postures": {
+        "Lying": 132,
+        "Sitting": 132
+      },
+      "radar_hardware": {
+        "NodeNs IWR6843ISK": 132,
+        "Texas Instruments IWR6843ISK-ODS": 132
+      },
+      "recordings": 264,
+      "rr_windows": 162,
+      "subjects": 66,
+      "subjects_with_assigned_apnea_proxy": 63,
+      "transition_windows": 30,
+      "windows": 318
+    },
+    "VAL": {
+      "assigned_apnea_proxy_windows": 27,
+      "conditions": {
+        "Post-exercise": 28,
+        "Rest": 28
+      },
+      "labels": {
+        "AMBIGUOUS": 3,
+        "APNEA": 27,
+        "NORMAL": 16,
+        "RAPID_OR_ABNORMAL": 14
+      },
+      "postures": {
+        "Lying": 28,
+        "Sitting": 28
+      },
+      "radar_hardware": {
+        "NodeNs IWR6843ISK": 28,
+        "Texas Instruments IWR6843ISK-ODS": 28
+      },
+      "recordings": 56,
+      "rr_windows": 30,
+      "subjects": 14,
+      "subjects_with_assigned_apnea_proxy": 14,
+      "transition_windows": 3,
+      "windows": 60
+    }
+  },
+  "counts": {
+    "D0_SUBJECT_HELDOUT": 14,
+    "TRAIN": 66,
+    "VAL": 14
+  },
+  "d2_accessed": "NO",
+  "heldout_coverage": {
+    "assigned_apnea_proxy_windows": 28,
+    "heldout_subject_count": 14,
+    "heldout_window_count": 68,
+    "lying_windows": 34,
+    "post_exercise_windows": 34,
+    "rest_windows": 34,
+    "rr_supervised_windows": 34,
+    "sitting_windows": 34,
+    "subjects_with_assigned_apnea_proxy": [
+      "dataset-10_5281_zenodo_18599983-p004",
+      "dataset-10_5281_zenodo_18599983-p005",
+      "dataset-10_5281_zenodo_18599983-p006",
+      "dataset-10_5281_zenodo_18599983-p021",
+      "dataset-10_5281_zenodo_18599983-p032",
+      "dataset-10_5281_zenodo_18599983-p036",
+      "dataset-10_5281_zenodo_18599983-p062",
+      "dataset-10_5281_zenodo_18599983-p065",
+      "dataset-10_5281_zenodo_18599983-p082",
+      "dataset-10_5281_zenodo_18599983-p085",
+      "dataset-10_5281_zenodo_18599983-p088",
+      "dataset-10_5281_zenodo_18599983-p090",
+      "dataset-10_5281_zenodo_18599983-p093",
+      "dataset-10_5281_zenodo_18599983-p101"
+    ],
+    "usable": true
+  },
+  "leakage": {
+    "ALL_V2_D0_intersect_M_N6_HELDOUT": [],
+    "TRAIN_intersect_D0_SUBJECT_HELDOUT": [],
+    "TRAIN_intersect_VAL": [],
+    "VAL_intersect_D0_SUBJECT_HELDOUT": [],
+    "duplicate_recording_ids_across_v2_splits": [],
+    "duplicate_recording_leakage": 0,
+    "excluded_heldout_reuse": 0,
+    "subject_overlap": 0
+  },
+  "mr60_supervised_use": "NO",
+  "phase": "D0",
+  "schema_version": "D0.1",
+  "split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+  "subjects_moved_after_assignment": false,
+  "transition_only_hold_subjects_by_split": {
+    "D0_SUBJECT_HELDOUT": [],
+    "TRAIN": [
+      "dataset-10_5281_zenodo_18599983-p026",
+      "dataset-10_5281_zenodo_18599983-p034",
+      "dataset-10_5281_zenodo_18599983-p040"
+    ],
+    "VAL": []
+  }
+}

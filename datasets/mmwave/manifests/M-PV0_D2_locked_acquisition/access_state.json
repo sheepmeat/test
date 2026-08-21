@@ -1,0 +1,52 @@
+{
+  "ARCHIVE_MEMBER_LISTING": "NO",
+  "D2_DEVELOPMENT_DEPENDENCY_FOUND": "NO",
+  "FEATURE_EXTRACTION": "NO",
+  "MODEL_INFERENCE": "NO",
+  "MODEL_INFERENCE_COUNT": 0,
+  "PARALLEL_TRACK_BRANCH_CONTAMINATION": "NO",
+  "PAYLOAD_ACQUISITION": "BLOCKED_AUTH_REQUIRED",
+  "PAYLOAD_SEMANTIC_INSPECTION": "NO",
+  "PUBLIC_METADATA_ACCESS": "YES",
+  "audit_date": "2026-08-22",
+  "candidate_inference_count": 0,
+  "d2_derived_data": {
+    "extracted_samples": 0,
+    "features": 0,
+    "labels_derived_from_payload": 0,
+    "model_outputs": 0,
+    "physiological_arrays": 0,
+    "plots": 0,
+    "windows": 0
+  },
+  "disallowed_development_hits": [],
+  "downloading_does_not_unlock": true,
+  "final_evaluation_authorized": false,
+  "final_evaluation_requires": [
+    "M-PV3 selected FLOAT identity frozen",
+    "model SHA frozen",
+    "feature contract frozen",
+    "preprocessing frozen",
+    "thresholds frozen",
+    "calibration frozen",
+    "D2 access authorization explicitly opened"
+  ],
+  "forbidden_loader_tokens_in_d2_scripts": [],
+  "lock_state": "LOCKED_BEFORE_SEMANTIC_USE",
+  "payload_git_tracked": false,
+  "phase": "D2",
+  "role": "LOCKED_PUBLIC_CROSS_DEVICE_TEST",
+  "schema_version": "D2.1",
+  "selection_policy": {
+    "augmentation_selection": "FORBIDDEN",
+    "calibration_selection": "FORBIDDEN",
+    "candidate_inference": "FORBIDDEN",
+    "feature_selection": "FORBIDDEN",
+    "model_family_selection": "FORBIDDEN",
+    "representation_selection": "FORBIDDEN",
+    "seed_selection": "FORBIDDEN",
+    "threshold_selection": "FORBIDDEN"
+  },
+  "source_id": "D2",
+  "stray_payload_paths_in_worktree": []
+}

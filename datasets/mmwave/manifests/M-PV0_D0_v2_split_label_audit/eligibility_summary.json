@@ -1,0 +1,53 @@
+{
+  "audit_date": "2026-08-22",
+  "clinical_apnea_claimed": false,
+  "coexistence_rules": {
+    "APNEA_proxy_and_RR_present": "Assigned APNEA-proxy windows also have ACC RR computed, but RR is not the supervision target during annotated hold overlap.",
+    "RR_and_not_APNEA_proxy": "Post-exercise and non-overlapping rest windows with Movesense ACC RR can supervise RR without APNEA-proxy labels.",
+    "TRANSITION_not_pure_class": "Non-zero hold overlap below 6 s is TRANSITION_OR_AMBIGUOUS; excluded from pure-class APNEA-proxy supervision."
+  },
+  "derivation": "source evidence from A0/A4/A6; never from model predictions",
+  "eligible_subjects_transition_only_hold": [
+    "dataset-10_5281_zenodo_18599983-p026",
+    "dataset-10_5281_zenodo_18599983-p034",
+    "dataset-10_5281_zenodo_18599983-p040"
+  ],
+  "eligible_subjects_with_apnea_proxy_window": 91,
+  "eligible_subjects_with_voluntary_non_breathing_source": 94,
+  "phase": "D0",
+  "primary_precedence": [
+    "SOURCE_RECORDING_INVALID",
+    "ANNOTATION_INVALID",
+    "TRANSITION_OR_AMBIGUOUS",
+    "VOLUNTARY_BREATH_HOLD_PROXY_ELIGIBLE",
+    "RR_REFERENCE_ELIGIBLE",
+    "REFERENCE_UNAVAILABLE",
+    "BREATHING_EVIDENCE_ELIGIBLE"
+  ],
+  "schema_version": "D0.1",
+  "taxonomy": [
+    "BREATHING_EVIDENCE_ELIGIBLE",
+    "RR_REFERENCE_ELIGIBLE",
+    "VOLUNTARY_BREATH_HOLD_PROXY_ELIGIBLE",
+    "TRANSITION_OR_AMBIGUOUS",
+    "REFERENCE_UNAVAILABLE",
+    "ANNOTATION_INVALID",
+    "SOURCE_RECORDING_INVALID"
+  ],
+  "window_flag_true_counts_all": {
+    "BREATHING_EVIDENCE_ELIGIBLE": 530,
+    "RR_REFERENCE_ELIGIBLE": 530,
+    "TRANSITION_OR_AMBIGUOUS": 49,
+    "VOLUNTARY_BREATH_HOLD_PROXY_ELIGIBLE": 213
+  },
+  "window_primary_counts_all": {
+    "RR_REFERENCE_ELIGIBLE": 268,
+    "TRANSITION_OR_AMBIGUOUS": 49,
+    "VOLUNTARY_BREATH_HOLD_PROXY_ELIGIBLE": 213
+  },
+  "window_primary_counts_eligible_pool": {
+    "RR_REFERENCE_ELIGIBLE": 226,
+    "TRANSITION_OR_AMBIGUOUS": 39,
+    "VOLUNTARY_BREATH_HOLD_PROXY_ELIGIBLE": 181
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "audit_date": "2026-08-22",
+  "canonical_download_identity": "VITALSENSE_120_DATASET.zip",
+  "canonical_landing_page": "https://ieee-dataport.org/open-access/new-dataset-millimeter-wave-radar-vital-sensing-reference-signals",
+  "canonical_name": "A dataset of 120 GHz millimeter-wave radar vital signals with synchronized reference recordings",
+  "clinical_apnea_claimed": false,
+  "dataset_doi": "10.21227/wq68-sv85",
+  "do_not_substitute": true,
+  "github_companion_not_used_as_payload_source": true,
+  "parent_m_pv0_lock": {
+    "commit": "18e4a4e86d6bf95795d6749a91ce303ad3f1c417",
+    "prior_lock_state": "LOCKED_BEFORE_SEMANTIC_USE",
+    "prior_payload_acquisition": "NO",
+    "role_lock_policy": "datasets/mmwave/manifests/M-PV0_public_multidomain_registry/role_lock_policy.json",
+    "source_registry": "datasets/mmwave/manifests/M-PV0_public_multidomain_registry/source_registry.json"
+  },
+  "phase": "D2",
+  "protocol": [
+    "resting",
+    "normal to instructed breath-hold to normal"
+  ],
+  "publication_doi": "10.1038/s41597-026-07016-6",
+  "publication_venue": "Scientific Data",
+  "publisher": "IEEE DataPort",
+  "reference": "synchronized respiration reference (Mindray ePM10)",
+  "role": "LOCKED_PUBLIC_CROSS_DEVICE_TEST",
+  "safenest_apnea_meaning": "instructed inhale-and-hold is a source protocol term; SafeNest maps it to APNEA-proxy, not clinical apnea",
+  "schema_version": "D2.1",
+  "sensor": "120 GHz mmWave radar",
+  "source_id": "D2",
+  "subjects": 24
+}
