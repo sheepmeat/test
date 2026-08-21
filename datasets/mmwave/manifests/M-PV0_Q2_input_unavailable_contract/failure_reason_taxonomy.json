@@ -1,0 +1,39 @@
+{
+  "distinctions": {
+    "FLAT_SIGNAL": "machine-degenerate exact constancy over the window or a >= 400 ms advancing exact-equal span",
+    "LARGE_GAP": "source-update interval exceeds the inherited M-N4 bound",
+    "NUMERIC_PLATEAU": "accepted advancing source samples happen to share equal numeric values; not freeze by itself",
+    "SOURCE_FREEZE": "source event fails to advance for >= 400 ms while transport continues",
+    "SOURCE_REPUBLICATION": "short Q1 reuse of a previous source sample; core max run 1; not automatically unavailable",
+    "STALE_SOURCE": "phase_age_ms at or above 400 ms, or production freshness missing"
+  },
+  "not_reason_codes": [
+    "NORMAL",
+    "RAPID_OR_ABNORMAL",
+    "APNEA"
+  ],
+  "phase": "Q2",
+  "reason_codes": [
+    "PRESENCE_NOT_CONFIRMED",
+    "TIMESTAMP_NON_MONOTONIC",
+    "TIMESTAMP_UNRESOLVED",
+    "INSUFFICIENT_INTERVAL_HISTORY",
+    "LARGE_GAP",
+    "SOURCE_FREEZE",
+    "SOURCE_STALE",
+    "SIGNAL_FLAT_EXACT",
+    "RECOVERY_WARMUP"
+  ],
+  "reason_precedence": [
+    "PRESENCE_NOT_CONFIRMED",
+    "TIMESTAMP_NON_MONOTONIC",
+    "TIMESTAMP_UNRESOLVED",
+    "INSUFFICIENT_INTERVAL_HISTORY",
+    "LARGE_GAP",
+    "SOURCE_FREEZE",
+    "SOURCE_STALE",
+    "SIGNAL_FLAT_EXACT",
+    "RECOVERY_WARMUP"
+  ],
+  "schema_version": "Q2.1"
+}

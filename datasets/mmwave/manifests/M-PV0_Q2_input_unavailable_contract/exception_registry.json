@@ -1,0 +1,10 @@
+{
+  "entries": [],
+  "exact_transport_duplicate_mode": "NOT_EMPIRICALLY_OBSERVED_IN_Q1",
+  "near_flat_threshold": "DEFERRED_TO_R2_R3_M_PV1",
+  "phase": "Q2",
+  "pi_host_timestamp_residual": "UNAVAILABLE_Q1_LIMITATION",
+  "q3_apnea_false_positive_gate": "NOT_IN_Q2",
+  "recovery_model_history_seconds": "DEFERRED_TO_M_PV1",
+  "schema_version": "Q2.1"
+}

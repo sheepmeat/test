@@ -1,0 +1,540 @@
+{
+  "audit_date": "2026-08-22",
+  "base_sha": "e74e54736d5cde1773d530b8398a630486270785",
+  "d2_used": false,
+  "determinism_contract": {
+    "clean_ignores_seed": true,
+    "same_input_profile_seed_mode_severity": "byte-identical outputs"
+  },
+  "duplicate_statistics": {
+    "confirmed_exact_transport_duplicate_count": 0,
+    "confirmed_exact_transport_duplicate_fraction": 0.0,
+    "transport_duplicate_status": "NOT_EMPIRICALLY_OBSERVED"
+  },
+  "duplicate_taxonomy": {
+    "AMBIGUOUS_REPEAT": "repeat without seq and phase_age identity",
+    "CONFIRMED_EXACT_DUPLICATE": "same seq and same ts_monotonic_ms",
+    "CONFIRMED_SOURCE_REPUBLICATION": "new seq, source update estimate advances by <= 8 ms versus last accepted",
+    "NUMERIC_PLATEAU_ONLY": "accepted source event with equal breath_phase versus previous accepted event",
+    "equal_breath_phase_numeric_value_is_not_republication": true
+  },
+  "empirical_interval_statistics": {
+    "receive_all_eligible_ms": {
+      "mad": 0.0,
+      "max": 300.0,
+      "mean": 99.648087,
+      "median": 100.0,
+      "min": 0.0,
+      "n": 159298,
+      "p01": 100.0,
+      "p05": 100.0,
+      "p25": 100.0,
+      "p50": 100.0,
+      "p75": 100.0,
+      "p95": 100.0,
+      "p99": 102.0,
+      "std": 6.587329
+    },
+    "receive_core_ms": {
+      "mad": 0.0,
+      "max": 300.0,
+      "mean": 100.052447,
+      "median": 100.0,
+      "min": 100.0,
+      "n": 121075,
+      "p01": 100.0,
+      "p05": 100.0,
+      "p25": 100.0,
+      "p50": 100.0,
+      "p75": 100.0,
+      "p95": 100.0,
+      "p99": 101.0,
+      "std": 0.751157
+    },
+    "source_core_ms": {
+      "mad": 14.0,
+      "max": 292.0,
+      "mean": 104.450141,
+      "median": 101.0,
+      "min": 44.0,
+      "n": 115977,
+      "p01": 47.0,
+      "p05": 59.0,
+      "p25": 98.0,
+      "p50": 101.0,
+      "p75": 120.0,
+      "p95": 128.0,
+      "p99": 197.0,
+      "std": 24.974223
+    }
+  },
+  "jitter_definition": {
+    "notes": [
+      "Receive jitter is essentially zero at 10 Hz except rare 101-300 ms rows.",
+      "Source-update jitter is the MR60-like non-uniform cadence applied to public traces."
+    ],
+    "receive_jitter_ms": "receive_interval_i - 100",
+    "source_jitter_ms": "source_update_interval_i - 100",
+    "source_jitter_vs_nominal_ms_quantiles": [
+      [
+        0,
+        -56.0
+      ],
+      [
+        1,
+        -53.0
+      ],
+      [
+        5,
+        -41.0
+      ],
+      [
+        25,
+        -2.0
+      ],
+      [
+        50,
+        1.0
+      ],
+      [
+        75,
+        20.0
+      ],
+      [
+        95,
+        28.0
+      ],
+      [
+        99,
+        97.0
+      ],
+      [
+        100,
+        192.0
+      ]
+    ],
+    "synthetic_jitter_uses": "source_jitter_ms",
+    "synthetic_min_interval_ms": 44.0
+  },
+  "jitter_statistics": {
+    "receive_vs_100_ms_core": {
+      "mad": 0.0,
+      "max": 200.0,
+      "mean": 0.052447,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 121075,
+      "p01": 0.0,
+      "p05": 0.0,
+      "p25": 0.0,
+      "p50": 0.0,
+      "p75": 0.0,
+      "p95": 0.0,
+      "p99": 1.0,
+      "std": 0.751157
+    },
+    "source_vs_100_ms_core": {
+      "mad": 14.0,
+      "max": 192.0,
+      "mean": 4.450141,
+      "median": 1.0,
+      "min": -56.0,
+      "n": 115977,
+      "p01": -53.0,
+      "p05": -41.0,
+      "p25": -2.0,
+      "p50": 1.0,
+      "p75": 20.0,
+      "p95": 28.0,
+      "p99": 97.0,
+      "std": 24.974223
+    }
+  },
+  "known_limitations": [
+    "Recent Pi runtime JSONL is not in this standalone repository and was not re-parsed.",
+    "PR18 Pilot and 2026-08-08 live raw JSONL blobs are not in this repository.",
+    "Most schema 1.0 sessions have firmware_version null; they are stratified as schema_1.0_firmware_null.",
+    "ESP JSONL has no Pi capture timestamp; ts_monotonic_ms is ESP row time, not Pi receive time.",
+    "Exact transport duplicates were not observed; TRANSPORT_DUPLICATE is not a supported Q1 mode.",
+    "Core max source-republication run is 1; longer runs exist only in Q2_HANDOFF_EVIDENCE sessions."
+  ],
+  "model_outputs_used": false,
+  "mr60_labels_used": false,
+  "nominal_cadence_definition": {
+    "definition": "empirical median ESP row interval across eligible core sessions",
+    "eight_ms_is_sensor_period": false,
+    "receive_publish_hz": 10.0,
+    "receive_publish_interval_ms": 100.0,
+    "source_update_interval_ms_core_median": 101.0
+  },
+  "phase": "Q1",
+  "physiological_values_imported_from_mr60": false,
+  "profile_id": "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1",
+  "q2_deferred_items": [
+    "large gap semantics and rejection thresholds",
+    "freeze / flat / stale INPUT_UNAVAILABLE policy",
+    "whether long republication runs make a window unusable",
+    "Pi host-versus-ESP timestamp residual once Pi JSONL is in-repo"
+  ],
+  "random_seed_policy": {
+    "default_seed": 20260822,
+    "formula": "sha256(seed|stream|severity|index)[:8] / 2^64",
+    "streams": [
+      "jitter",
+      "repub"
+    ]
+  },
+  "represented_runtime_versions": {
+    "safenest-mr60-esp/1.1.0": {
+      "packet_count": 10870,
+      "receive_interval_ms": {
+        "mad": 0.0,
+        "max": 103.0,
+        "mean": 100.060751,
+        "median": 100.0,
+        "min": 100.0,
+        "n": 10864,
+        "p01": 100.0,
+        "p05": 100.0,
+        "p25": 100.0,
+        "p50": 100.0,
+        "p75": 100.0,
+        "p95": 100.0,
+        "p99": 102.0,
+        "std": 0.298484
+      },
+      "republication_fraction": {
+        "mad": 0.005516,
+        "max": 0.14094,
+        "mean": 0.027645,
+        "median": 0.006949,
+        "min": 0.0,
+        "n": 6,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p25": 0.00139,
+        "p50": 0.006949,
+        "p75": 0.010359,
+        "p95": 0.108463,
+        "p99": 0.134445,
+        "std": 0.050828
+      },
+      "session_count": 6,
+      "source_interval_ms": {
+        "mad": 19.0,
+        "max": 195.0,
+        "mean": 100.875928,
+        "median": 101.0,
+        "min": 66.0,
+        "n": 10776,
+        "p01": 68.0,
+        "p05": 72.0,
+        "p25": 81.0,
+        "p50": 101.0,
+        "p75": 119.0,
+        "p95": 124.0,
+        "p99": 128.0,
+        "std": 19.735179
+      },
+      "source_session_median_ms": {
+        "mad": 0.0,
+        "max": 102.0,
+        "mean": 101.166667,
+        "median": 101.0,
+        "min": 101.0,
+        "n": 6,
+        "p01": 101.0,
+        "p05": 101.0,
+        "p25": 101.0,
+        "p50": 101.0,
+        "p75": 101.0,
+        "p95": 101.75,
+        "p99": 101.95,
+        "std": 0.372678
+      }
+    },
+    "safenest-mr60-esp/1.2.0": {
+      "packet_count": 51176,
+      "receive_interval_ms": {
+        "mad": 0.0,
+        "max": 200.0,
+        "mean": 100.06053,
+        "median": 100.0,
+        "min": 100.0,
+        "n": 51165,
+        "p01": 100.0,
+        "p05": 100.0,
+        "p25": 100.0,
+        "p50": 100.0,
+        "p75": 100.0,
+        "p95": 100.0,
+        "p99": 102.0,
+        "std": 0.695949
+      },
+      "republication_fraction": {
+        "mad": 0.0,
+        "max": 0.139261,
+        "mean": 0.030759,
+        "median": 0.0,
+        "min": 0.0,
+        "n": 11,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p25": 0.0,
+        "p50": 0.0,
+        "p75": 0.023705,
+        "p95": 0.138797,
+        "p99": 0.139168,
+        "std": 0.051735
+      },
+      "session_count": 11,
+      "source_interval_ms": {
+        "mad": 2.0,
+        "max": 202.0,
+        "mean": 106.573891,
+        "median": 100.0,
+        "min": 87.0,
+        "n": 48037,
+        "p01": 87.0,
+        "p05": 91.0,
+        "p25": 100.0,
+        "p50": 100.0,
+        "p75": 103.0,
+        "p95": 190.0,
+        "p99": 198.0,
+        "std": 23.583758
+      },
+      "source_session_median_ms": {
+        "mad": 0.0,
+        "max": 101.0,
+        "mean": 100.090909,
+        "median": 100.0,
+        "min": 100.0,
+        "n": 11,
+        "p01": 100.0,
+        "p05": 100.0,
+        "p25": 100.0,
+        "p50": 100.0,
+        "p75": 100.0,
+        "p95": 100.5,
+        "p99": 100.9,
+        "std": 0.28748
+      }
+    },
+    "schema_1.0_firmware_null": {
+      "packet_count": 59091,
+      "receive_interval_ms": {
+        "mad": 0.0,
+        "max": 300.0,
+        "mean": 100.043915,
+        "median": 100.0,
+        "min": 100.0,
+        "n": 59046,
+        "p01": 100.0,
+        "p05": 100.0,
+        "p25": 100.0,
+        "p50": 100.0,
+        "p75": 100.0,
+        "p95": 100.0,
+        "p99": 101.0,
+        "std": 0.848967
+      },
+      "republication_fraction": {
+        "mad": 0.0,
+        "max": 0.143813,
+        "mean": 0.024382,
+        "median": 0.0,
+        "min": 0.0,
+        "n": 45,
+        "p01": 0.0,
+        "p05": 0.0,
+        "p25": 0.0,
+        "p50": 0.0,
+        "p75": 0.003339,
+        "p95": 0.14,
+        "p99": 0.142519,
+        "std": 0.049827
+      },
+      "session_count": 45,
+      "source_interval_ms": {
+        "mad": 9.0,
+        "max": 292.0,
+        "mean": 103.339252,
+        "median": 116.0,
+        "min": 44.0,
+        "n": 57164,
+        "p01": 46.0,
+        "p05": 51.0,
+        "p25": 77.0,
+        "p50": 116.0,
+        "p75": 123.0,
+        "p95": 128.0,
+        "p99": 155.0,
+        "std": 26.780085
+      },
+      "source_session_median_ms": {
+        "mad": 1.0,
+        "max": 121.0,
+        "mean": 117.077778,
+        "median": 117.0,
+        "min": 112.0,
+        "n": 45,
+        "p01": 113.32,
+        "p05": 115.0,
+        "p25": 116.0,
+        "p50": 117.0,
+        "p75": 118.0,
+        "p95": 119.0,
+        "p99": 120.12,
+        "std": 1.468013
+      }
+    }
+  },
+  "republication_statistics": {
+    "core_max_run": 1,
+    "core_session_fraction": {
+      "mad": 0.0,
+      "max": 0.143813,
+      "mean": 0.025829,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 62,
+      "p01": 0.0,
+      "p05": 0.0,
+      "p25": 0.0,
+      "p50": 0.0,
+      "p75": 0.012764,
+      "p95": 0.14,
+      "p99": 0.14206,
+      "std": 0.050329
+    },
+    "empty_core_fraction": {
+      "mad": 0.001826,
+      "max": 0.143813,
+      "mean": 0.122204,
+      "median": 0.139046,
+      "min": 0.0,
+      "n": 9,
+      "p01": 0.009741,
+      "p05": 0.048707,
+      "p25": 0.136743,
+      "p50": 0.139046,
+      "p75": 0.14,
+      "p95": 0.142637,
+      "p99": 0.143578,
+      "std": 0.043605
+    },
+    "occupied_or_paced_core_fraction": {
+      "mad": 0.0,
+      "max": 0.026589,
+      "mean": 0.003883,
+      "median": 0.0,
+      "min": 0.0,
+      "n": 29,
+      "p01": 0.0,
+      "p05": 0.0,
+      "p25": 0.0,
+      "p50": 0.0,
+      "p75": 0.003339,
+      "p95": 0.021502,
+      "p99": 0.025292,
+      "std": 0.007426
+    },
+    "rule": "M-N4 8 ms last-accepted update-estimate guard"
+  },
+  "sample_lineage_contract": {
+    "every_output_sample_maps_to_an_input_index": true,
+    "no_interpolated_unseen_physiology": true,
+    "republication_reuses_prior_kept_source_index": true,
+    "window_labels_are_not_changed_by_timing_corruption": true
+  },
+  "schema_version": "Q1.1",
+  "severity_level_ids": [
+    "NOMINAL",
+    "TYPICAL",
+    "STRESSED"
+  ],
+  "severity_levels": {
+    "NOMINAL": {
+      "cadence_jitter": {
+        "enabled": false,
+        "unit_interval_max": 0.0,
+        "unit_interval_min": 0.0
+      },
+      "rationale": "occupied-like core median: 10 Hz receive, zero source republication, no added jitter",
+      "source_republication": {
+        "probability": 0.0,
+        "provenance": "occupied/paced core session median republication fraction"
+      }
+    },
+    "STRESSED": {
+      "cadence_jitter": {
+        "enabled": true,
+        "unit_interval_max": 0.99,
+        "unit_interval_min": 0.01
+      },
+      "rationale": "observed upper-tail still inside core empty-room republication and p01-p99 source jitter; freeze-length runs are not used",
+      "source_republication": {
+        "probability": 0.139046,
+        "provenance": "core empty-room session median republication fraction"
+      }
+    },
+    "TYPICAL": {
+      "cadence_jitter": {
+        "enabled": true,
+        "unit_interval_max": 0.95,
+        "unit_interval_min": 0.05
+      },
+      "rationale": "central pooled-core source jitter plus core session p75 republication fraction",
+      "source_republication": {
+        "probability": 0.012764,
+        "provenance": "core session republication-fraction p75"
+      }
+    }
+  },
+  "source_evidence": {
+    "access_method": "git cat-file of M-N0 git_blob_sha_at_raw_index",
+    "core_session_count": 62,
+    "evidence_family_used": "PRE_PR18_LEGACY_ESP_JSONL",
+    "inventory_id": "M-N0_TEAM_MR60_PHYSICAL_INVENTORY_001",
+    "m_n4_contract": "config/mmwave/m_n4_canonical_input_dataset_contract.json",
+    "m_n4_republication_rule": "accept source event i only if phase_update_estimate_ms[i] > last_accepted + 8 ms",
+    "m_n7_result_referenced_not_retuned": "datasets/mmwave/manifests/m_n7_device_domain_result.json",
+    "physiological_values_imported_from_mr60": false,
+    "raw_payload_copied_into_q1": false
+  },
+  "supported_corruption_modes": [
+    "CLEAN",
+    "CADENCE_JITTER",
+    "SOURCE_REPUBLICATION",
+    "JITTER_PLUS_SOURCE_REPUBLICATION"
+  ],
+  "timing_domains": {
+    "phase_age": {
+      "authority": "FRESHNESS_FOR_SOURCE_UPDATE_ESTIMATE",
+      "field": "phase_age_ms"
+    },
+    "receive_timestamp": {
+      "authority": "ESP_TELEMETRY_ROW_PUBLISH_CADENCE",
+      "field": "ts_monotonic_ms",
+      "pi_host_capture_timestamp": "ABSENT_IN_THIS_EVIDENCE"
+    },
+    "sequence": {
+      "authority": "TRANSPORT_PACKET_IDENTITY",
+      "field": "seq"
+    },
+    "source_timestamp": {
+      "authority": "SOURCE_UPDATE_CADENCE_AND_SOURCE_JITTER",
+      "field": "phase_update_estimate_ms",
+      "formula": "ts_monotonic_ms - phase_age_ms",
+      "physical_radar_acquisition_time_claimed": false
+    }
+  },
+  "unsupported_corruption_modes": {
+    "FLAT_SIGNAL": "DEFERRED_TO_Q2",
+    "FREEZE": "DEFERRED_TO_Q2",
+    "LARGE_GAP": "DEFERRED_TO_Q2",
+    "STALE_SIGNAL": "DEFERRED_TO_Q2",
+    "TRANSPORT_DUPLICATE": "NOT_EMPIRICALLY_OBSERVED"
+  }
+}
