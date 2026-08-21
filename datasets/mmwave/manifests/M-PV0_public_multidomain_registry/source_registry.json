@@ -1,0 +1,443 @@
+{
+  "apnea_policy": {
+    "external_source_term_apnea": "preserve as source metadata only; map explicitly to APNEA-proxy / voluntary breath-hold",
+    "safenest_apnea": "voluntary breath-hold based APNEA proxy, not clinical apnea diagnosis"
+  },
+  "audit_date": "2026-08-22",
+  "consumed_evidence": {
+    "CONSUMED_SUBJECT_SET_UNRESOLVED": false,
+    "historical_b_locked_test": {
+      "note": "Historical B LOCKED_TEST is a different lineage. Do not reopen the B live gate or copy B scores into V2. Overlap with M-N6 heldout is already forbidden via the heldout set.",
+      "overlap_with_m_n6_heldout": [
+        "dataset-10_5281_zenodo_18599983-p017",
+        "dataset-10_5281_zenodo_18599983-p033",
+        "dataset-10_5281_zenodo_18599983-p063"
+      ],
+      "profile_id": "MMWAVE_SUBJECT_SPLIT_PROFILE_001",
+      "provenance": [
+        "datasets/mmwave/splits/mmwave_real_subject_split_v1.json"
+      ],
+      "split_name": "LOCKED_TEST",
+      "subject_count": 16,
+      "subject_ids": [
+        "dataset-10_5281_zenodo_18599983-p017",
+        "dataset-10_5281_zenodo_18599983-p019",
+        "dataset-10_5281_zenodo_18599983-p023",
+        "dataset-10_5281_zenodo_18599983-p029",
+        "dataset-10_5281_zenodo_18599983-p033",
+        "dataset-10_5281_zenodo_18599983-p039",
+        "dataset-10_5281_zenodo_18599983-p044",
+        "dataset-10_5281_zenodo_18599983-p046",
+        "dataset-10_5281_zenodo_18599983-p055",
+        "dataset-10_5281_zenodo_18599983-p059",
+        "dataset-10_5281_zenodo_18599983-p063",
+        "dataset-10_5281_zenodo_18599983-p067",
+        "dataset-10_5281_zenodo_18599983-p079",
+        "dataset-10_5281_zenodo_18599983-p086",
+        "dataset-10_5281_zenodo_18599983-p091",
+        "dataset-10_5281_zenodo_18599983-p101"
+      ],
+      "v2_selection_reuse": "NOT_THE_M_PV0_CORE_EXCLUSION"
+    },
+    "m_n6_new_model_heldout_test": {
+      "V2_SELECTION_REUSE": "FORBIDDEN",
+      "heldout_access_state": "CONSUMED_ONCE_FOR_M_N6_FINAL_EVALUATION",
+      "heldout_may_be_reused_for_future_model_selection": false,
+      "provenance": [
+        "datasets/mmwave/splits/mmwave_mr60_compat_subject_split_v1.json",
+        "datasets/mmwave/manifests/m_n6_heldout_result.json",
+        "datasets/mmwave/manifests/m_n4_canonical/split_structural_summary.json"
+      ],
+      "split_name": "NEW_MODEL_HELDOUT_TEST",
+      "subject_count": 16,
+      "subject_ids": [
+        "dataset-10_5281_zenodo_18599983-p002",
+        "dataset-10_5281_zenodo_18599983-p010",
+        "dataset-10_5281_zenodo_18599983-p012",
+        "dataset-10_5281_zenodo_18599983-p017",
+        "dataset-10_5281_zenodo_18599983-p018",
+        "dataset-10_5281_zenodo_18599983-p022",
+        "dataset-10_5281_zenodo_18599983-p024",
+        "dataset-10_5281_zenodo_18599983-p033",
+        "dataset-10_5281_zenodo_18599983-p045",
+        "dataset-10_5281_zenodo_18599983-p053",
+        "dataset-10_5281_zenodo_18599983-p058",
+        "dataset-10_5281_zenodo_18599983-p063",
+        "dataset-10_5281_zenodo_18599983-p072",
+        "dataset-10_5281_zenodo_18599983-p095",
+        "dataset-10_5281_zenodo_18599983-p096",
+        "dataset-10_5281_zenodo_18599983-p107"
+      ],
+      "v2_selection_reuse": "FORBIDDEN",
+      "v2_train_reuse": "FORBIDDEN",
+      "v2_val_reuse": "FORBIDDEN",
+      "window_count_supervised": 74
+    },
+    "m_n6_train_consumed": {
+      "note": "Subject IDs omitted here to keep the exclusion set explicit; full TRAIN list remains in the M-N4 split file.",
+      "provenance": [
+        "datasets/mmwave/splits/mmwave_mr60_compat_subject_split_v1.json"
+      ],
+      "split_name": "TRAIN",
+      "subject_count": 77,
+      "v2_train_reuse": "ALLOWED_UNDER_NEW_V2_SPLIT_IDENTITY"
+    },
+    "m_n6_val_selection_consumed": {
+      "note": "Roadmap exclusion is M-N6 heldout. V2 D0 may re-split the remaining 94-subject pool. Do not create that split in M-PV0.",
+      "provenance": [
+        "datasets/mmwave/splits/mmwave_mr60_compat_subject_split_v1.json",
+        "config/mmwave/m_n6_selected_candidate_lock.json"
+      ],
+      "role": "V1 family/seed selection only; not the M-PV0 heldout exclusion set",
+      "split_name": "VAL",
+      "subject_count": 17,
+      "subject_ids": [
+        "dataset-10_5281_zenodo_18599983-p001",
+        "dataset-10_5281_zenodo_18599983-p006",
+        "dataset-10_5281_zenodo_18599983-p015",
+        "dataset-10_5281_zenodo_18599983-p027",
+        "dataset-10_5281_zenodo_18599983-p030",
+        "dataset-10_5281_zenodo_18599983-p035",
+        "dataset-10_5281_zenodo_18599983-p041",
+        "dataset-10_5281_zenodo_18599983-p044",
+        "dataset-10_5281_zenodo_18599983-p056",
+        "dataset-10_5281_zenodo_18599983-p073",
+        "dataset-10_5281_zenodo_18599983-p077",
+        "dataset-10_5281_zenodo_18599983-p078",
+        "dataset-10_5281_zenodo_18599983-p082",
+        "dataset-10_5281_zenodo_18599983-p084",
+        "dataset-10_5281_zenodo_18599983-p093",
+        "dataset-10_5281_zenodo_18599983-p100",
+        "dataset-10_5281_zenodo_18599983-p105"
+      ],
+      "v2_selection_reuse": "NOT_AUTO_EXCLUDED_BY_M_PV0_HELDOUT_RULE",
+      "v2_train_reuse": "ALLOWED_UNDER_NEW_V2_SPLIT_IDENTITY"
+    },
+    "m_n9_public_test": {
+      "NEW_MODEL_HELDOUT_TEST_INFERENCE_M_N9": 0,
+      "additional_subject_ids": [],
+      "distinct_from_m_n6_heldout": false,
+      "provenance": [
+        "datasets/mmwave/manifests/m_n9_full_int8_result.json",
+        "config/mmwave/m_n9_full_int8_artifact_lock.json"
+      ],
+      "public_heldout_rerun": false,
+      "v2_selection_reuse": "FORBIDDEN_INHERITED_FROM_M_N6_HELDOUT"
+    },
+    "remaining_d0_pool_for_future_v2_split": {
+      "count": 94,
+      "formula": "110 public subjects minus 16 M-N6 NEW_MODEL_HELDOUT_TEST subjects",
+      "v2_split_created_in_m_pv0": false
+    }
+  },
+  "phase": "M-PV0",
+  "registry_id": "MMWAVE_M_PV0_PUBLIC_MULTIDOMAIN_REGISTRY_V1",
+  "schema_version": "M-PV0.1",
+  "sources": {
+    "D0": {
+      "access_mode": "OPEN_PUBLIC_DOWNLOAD",
+      "allowed_uses": [
+        "V2 subject-diverse development after excluding M-N6 heldout subjects",
+        "breathing-evidence / RR / APNEA-proxy supervision from public labels"
+      ],
+      "breath_hold_ground_truth_available": true,
+      "canonical_name": "Extensive Age-Balanced and Subject-Varied mmWave Radar Dataset of Referenced Records for Vital Signs",
+      "checksum_source": "Zenodo official db_records.zip md5; A0 local SHA-256 of a repackaged archive",
+      "conditions": [
+        "lying/sitting",
+        "rest",
+        "post-exercise",
+        "voluntary non-breathing"
+      ],
+      "dataset_doi_or_record_id": "10.5281/zenodo.18599983",
+      "dataset_version": "1.1",
+      "expected_download_size": 245284102,
+      "forbidden_uses": [
+        "Reusing M-N6 NEW_MODEL_HELDOUT_TEST subjects in V2 TRAIN/VAL/selection",
+        "Claiming clinical apnea"
+      ],
+      "intended_role": "REQUIRED_PRIMARY_DEVELOPMENT_DOMAIN",
+      "known_ambiguities": [
+        "Roadmap cites zenodo.org/records/16760684 (v1.0). Repository A0/M-N lineage is locked to 10.5281/zenodo.18599983 (v1.1). Both share concept 16760683 and the same official db_records.zip md5.",
+        "LIKELY_REPACKAGED_NOT_FULLY_VERIFIED"
+      ],
+      "license": "CC-BY-4.0",
+      "local_payload_present": false,
+      "lock_state": "UNLOCKED_DEVELOPMENT_DOMAIN",
+      "processed_signal_type": "A2 native unwrapped phase then M-N4 R2 + window-local MAD",
+      "provenance_evidence": [
+        "datasets/mmwave/manifests/a0_raw_inventory/source_identity.json",
+        "datasets/MANIFEST.json",
+        "config/mmwave/m_n4_canonical_input_dataset_contract.json",
+        "https://zenodo.org/api/records/18599983",
+        "https://zenodo.org/api/records/16760684",
+        "https://zenodo.org/records/18599983",
+        "https://zenodo.org/records/16760684"
+      ],
+      "public_url": "https://zenodo.org/records/18599983",
+      "publication_doi": null,
+      "publication_doi_status": "UNVERIFIED_IN_M_PV0_SEPARATE_FROM_DATASET_DOI",
+      "publisher_or_host": "Zenodo",
+      "radar_frequency": "60 GHz-class FMCW",
+      "radar_hardware": [
+        "NodeNs IWR6843ISK (lying)",
+        "Texas Instruments IWR6843ISK-ODS (sitting)"
+      ],
+      "raw_signal_type": "radar_rFFTs.zlib range-FFT arrays",
+      "recording_count_claims": {
+        "conflict": false,
+        "public_metadata": 440,
+        "repository": 440
+      },
+      "reference_modality": "Movesense ECG and chest ACC; USB-button non-breathing timestamps",
+      "release_or_update_date": "2026-02-10",
+      "roadmap_cited_record": {
+        "doi": "10.5281/zenodo.16760684",
+        "same_concept_as_canonical": true,
+        "url": "https://zenodo.org/records/16760684",
+        "version": "1.0"
+      },
+      "source_id": "D0",
+      "subject_count_claims": {
+        "conflict": false,
+        "public_metadata": 110,
+        "repository": 110
+      }
+    },
+    "D1": {
+      "access_mode": "OPEN_PUBLIC_DOWNLOAD",
+      "adapter_implemented_in_m_pv0": false,
+      "allowed_uses": [
+        "Cross-frequency feature/model-family comparison after I/Q adapter",
+        "distance/angle/speech robustness"
+      ],
+      "breath_hold_ground_truth_available": true,
+      "canonical_name": "A dataset of radar-recorded heart sounds and vital signs including synchronised reference sensor signals",
+      "checksum_source": "figshare article 9691544 file datasets_scidata_vsmdb.zip computed_md5",
+      "conditions": [
+        "default",
+        "breath-hold/apnea",
+        "post-exercise",
+        "distance variation",
+        "angle variation",
+        "speech",
+        "carotid",
+        "back"
+      ],
+      "dataset_doi_or_record_id": "10.6084/m9.figshare.9691544.v1",
+      "dataset_version": "figshare article v1 / collection v1",
+      "expected_download_size": 583572264,
+      "forbidden_uses": [
+        "Implementing the I/Q adapter in M-PV0",
+        "Oversampling all 11 subjects to match D0 110-subject weight",
+        "APNEA clinical diagnosis claims"
+      ],
+      "intended_role": "REQUIRED_AUXILIARY_DEVELOPMENT_DOMAIN",
+      "known_ambiguities": [],
+      "license": "CC BY 4.0",
+      "local_payload_present": false,
+      "lock_state": "UNLOCKED_DEVELOPMENT_DOMAIN_METADATA_ONLY_IN_M_PV0",
+      "payload_md5": "801c13ae6daef54584ee4ba8fbabed19",
+      "processed_signal_type": "phase/displacement reconstructable from I/Q; not pre-adapted in M-PV0",
+      "provenance_evidence": [
+        "https://www.nature.com/articles/s41597-020-0390-1",
+        "https://doi.org/10.1038/s41597-020-0390-1",
+        "https://api.figshare.com/v2/collections/4633958",
+        "https://api.figshare.com/v2/articles/9691544"
+      ],
+      "public_url": "https://doi.org/10.6084/m9.figshare.c.4633958.v1",
+      "publication_doi": "10.1038/s41597-020-0390-1",
+      "publisher_or_host": "figshare / Scientific Data",
+      "radar_frequency": "24.17 GHz",
+      "radar_hardware": "Six-Port continuous-wave radar",
+      "raw_signal_type": "Six-Port I/Q baseband (B3-B6) digitized at 2000 Hz",
+      "recording_count_claims": {
+        "exact_file_count": null,
+        "public_metadata": "13376 s / ~223 minutes",
+        "reason_if_null": "Landing-page metadata reports duration, not a single authoritative recording-count integer."
+      },
+      "reference_modality": "ECG, PCG, temperature-based airflow respiration sensor",
+      "release_or_update_date": "2019-08-20",
+      "source_id": "D1",
+      "subject_count_claims": {
+        "conflict": false,
+        "public_metadata": 11
+      }
+    },
+    "D2": {
+      "access_mode": "IEEE_DATAPORT_OPEN_ACCESS_LOGIN_REQUIRED",
+      "allowed_uses": [
+        "PUBLIC_METADATA_ACCESS in M-PV0",
+        "later dedicated acquisition/checksum lane under this lock",
+        "one authorized final cross-device evaluation after M-PV3 lock"
+      ],
+      "breath_hold_ground_truth_available": true,
+      "canonical_name": "A dataset of 120 GHz millimeter-wave radar vital signals with synchronized reference recordings",
+      "checksum_source": "NOT_PUBLISHED_ON_AUDITED_LANDING_PAGES",
+      "conditions": [
+        "Resting",
+        "Apnea (instructed inhale-and-hold transitions)"
+      ],
+      "dataset_doi_or_record_id": "10.21227/wq68-sv85",
+      "dataset_version": null,
+      "dataset_version_status": "UNVERIFIED_NO_NUMERIC_VERSION_ON_AUDITED_PAGES",
+      "expected_download_size": {
+        "conflict": true,
+        "github_readme": "about 31 MB",
+        "ieee_dataport": "28.69 MB"
+      },
+      "forbidden_uses": [
+        "representation_selection",
+        "feature_selection",
+        "model_family_selection",
+        "seed_selection",
+        "threshold_selection",
+        "calibration_selection",
+        "augmentation_selection",
+        "candidate_inference before authorized D2 evaluation",
+        "loading .mat arrays or plotting/deriving labels beyond public protocol metadata in M-PV0"
+      ],
+      "intended_role": "LOCKED_PUBLIC_CROSS_DEVICE_TEST",
+      "known_ambiguities": [
+        "IEEE DataPort lists 28.69 MB; GitHub README says about 31 MB. No payload SHA-256 was published on the audited landing pages.",
+        "IEEE DataPort requires login even for the open-access zip."
+      ],
+      "license": {
+        "github_code": "MIT",
+        "ieee_dataport": "OPEN_ACCESS_LOGIN_REQUIRED",
+        "ieee_dataport_full_terms": "UNVERIFIED",
+        "publication": "CC-BY-4.0"
+      },
+      "local_payload_present": false,
+      "lock_state": "LOCKED_BEFORE_SEMANTIC_USE",
+      "prelock_access": {
+        "FEATURE_EXTRACTION": "NO",
+        "MODEL_INFERENCE": "NO",
+        "MODEL_INFERENCE_COUNT": 0,
+        "PAYLOAD_ACQUISITION": "NO",
+        "PAYLOAD_SEMANTIC_INSPECTION": "NO",
+        "PUBLIC_METADATA_ACCESS": "YES",
+        "roadmap_citation_only_before_m_pv0": true,
+        "text_hits_before_m_pv0": [
+          {
+            "needle": "wq68-sv85",
+            "path": "docs/20260822_SafeNest_mmWave_Public_Multidomain_V2_Development_Roadmap_01.md"
+          },
+          {
+            "needle": "s41597-026-07016",
+            "path": "docs/20260822_SafeNest_mmWave_Public_Multidomain_V2_Development_Roadmap_01.md"
+          }
+        ]
+      },
+      "processed_signal_type": "radar displacement / vital signal in VS##_Resting.mat and VS##_Apnea.mat",
+      "provenance_evidence": [
+        "https://doi.org/10.1038/s41597-026-07016-6",
+        "https://www.nature.com/articles/s41597-026-07016-6",
+        "https://doi.org/10.21227/wq68-sv85",
+        "https://ieee-dataport.org/open-access/new-dataset-millimeter-wave-radar-vital-sensing-reference-signals",
+        "https://github.com/Rc-W024/VS_DATASET"
+      ],
+      "public_url": "https://ieee-dataport.org/open-access/new-dataset-millimeter-wave-radar-vital-sensing-reference-signals",
+      "publication_doi": "10.1038/s41597-026-07016-6",
+      "publisher_or_host": "IEEE DataPort / Scientific Data; GitHub companion Rc-W024/VS_DATASET",
+      "radar_frequency": "120 GHz (122-123 GHz ISM; paper also notes 3 GHz bandwidth used)",
+      "radar_hardware": "CommSensLab-UPC custom 120 GHz FMCW RSoC (Indie transceiver)",
+      "raw_signal_type": "processed radar displacement in .mat (VitalSig, millimetres); raw ADC not the published payload",
+      "recording_count_claims": {
+        "public_metadata": "48 radar files + 48 Mindray reference files (4 files x 24 subjects)"
+      },
+      "reference_modality": "Mindray ePM10 ECG, impedance respiration, PPG, sphygmomanometer",
+      "release_or_update_date": "IEEE DataPort created 2025-10-27; page last updated 2026-05-07; Scientific Data article 2026",
+      "source_id": "D2",
+      "source_term_apnea": "publication uses 'apnea' for instructed inhale-and-hold; SafeNest maps this to APNEA-proxy / voluntary breath-hold",
+      "subject_count_claims": {
+        "conflict": false,
+        "public_metadata": 24
+      }
+    },
+    "D3": {
+      "access_mode": "HUGGINGFACE_PUBLIC_DATASET_CARD",
+      "allowed_uses": [
+        "motion contamination",
+        "quality estimation",
+        "abstention development",
+        "respiratory-waveform / RR reconstruction when contents and rights are verified"
+      ],
+      "breath_hold_ground_truth_available": false,
+      "canonical_name": "BreathSense",
+      "checksum_source": null,
+      "conditions": [
+        "rest",
+        "walk",
+        "run",
+        "stairs"
+      ],
+      "dataset_doi_or_record_id": null,
+      "dataset_version": null,
+      "dataset_version_status": "UNVERIFIED",
+      "expected_download_size": null,
+      "expected_download_size_status": "UNVERIFIED_RAW_ADC_ANNOUNCED_AS_VERY_LARGE",
+      "forbidden_uses": [
+        "Converting no-breath-hold conditions into APNEA-proxy supervision",
+        "Blocking D0+D1 if D3 license/count/raw-ADC audit is incomplete",
+        "Bulk raw ADC download during M-PV0"
+      ],
+      "intended_role": "OPTIONAL_NON_BLOCKING_QUALITY_RR_DEVELOPMENT_DOMAIN",
+      "known_ambiguities": [
+        "SOURCE_METADATA_DISCREPANCY: 108/432 vs 90/360 vs 108-participant file-structure counts remain unresolved",
+        "License field UNVERIFIED"
+      ],
+      "license": null,
+      "license_status": "UNVERIFIED",
+      "local_payload_present": false,
+      "lock_state": "OPTIONAL_NON_BLOCKING",
+      "processed_phase_local_payload_present": false,
+      "processed_signal_type": "DR-MUSIC processed phase (*_drmusic.csv) plus chest-belt waveform (.csv)",
+      "provenance_evidence": [
+        "https://huggingface.co/datasets/BreathSense/BreathSense"
+      ],
+      "public_url": "https://huggingface.co/datasets/BreathSense/BreathSense",
+      "publication_doi": null,
+      "publication_doi_status": "UNVERIFIED",
+      "publisher_or_host": "Hugging Face",
+      "radar_frequency": "77 GHz",
+      "radar_hardware": "Texas Instruments IWR1843BOOST + DCA1000",
+      "raw_adc_local_payload_present": false,
+      "raw_signal_type": "raw complex-valued radar ADC frames (.npy)",
+      "recording_count_claims": {
+        "claims": [
+          "432 paired recordings",
+          "360 recordings (90 x 4)",
+          "108 participants x 4 activities implied by file structure"
+        ],
+        "conflict": true,
+        "resolved": false
+      },
+      "reference_modality": "calibrated chest respiratory belt waveform",
+      "release_or_update_date": null,
+      "source_id": "D3",
+      "subject_count_claims": {
+        "claims": [
+          {
+            "claim": "108 participants / 432 paired recordings",
+            "location": "Hugging Face dataset card opening description"
+          },
+          {
+            "claim": "Participants 108 (p1-p108) in a property table, with Total recordings 360 (90 x 4) in the same table",
+            "location": "Hugging Face dataset card statistics table"
+          },
+          {
+            "claim": "90 participants spanning ages 22-40; 4 recordings per participant",
+            "location": "Hugging Face dataset card participant section"
+          },
+          {
+            "claim": "Each activity directory contains exactly 324 files = 108 participants x 3 file types",
+            "location": "Hugging Face dataset card file-structure description"
+          }
+        ],
+        "conflict": true,
+        "resolved": false
+      }
+    }
+  }
+}
