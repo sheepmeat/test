@@ -1,0 +1,200 @@
+{
+  "d0_subject_heldout_used": false,
+  "d2_used": false,
+  "isolated_republication_state": "PHYSIOLOGY_ELIGIBLE",
+  "low_amplitude_dynamic_state": "PHYSIOLOGY_ELIGIBLE",
+  "m_n6_excluded_heldout_used": false,
+  "mode_results": {
+    "CLEAN_VALID": {
+      "availability_state": "PHYSIOLOGY_ELIGIBLE",
+      "output_count": 256,
+      "physiology_labels_unique": [
+        "NORMAL"
+      ],
+      "primary_reason": null,
+      "quality_target": "QUALITY_VALID",
+      "reasons": []
+    },
+    "FLAT_EXACT": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "output_count": 256,
+      "physiology_labels_unique": [
+        "NORMAL"
+      ],
+      "primary_reason": "SIGNAL_FLAT_EXACT",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SIGNAL_FLAT_EXACT"
+      ]
+    },
+    "JITTER_PLUS_LARGE_GAP": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "output_count": 256,
+      "physiology_labels_unique": [
+        "NORMAL"
+      ],
+      "primary_reason": "LARGE_GAP",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "LARGE_GAP"
+      ]
+    },
+    "LARGE_GAP": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "output_count": 256,
+      "physiology_labels_unique": [
+        "NORMAL"
+      ],
+      "primary_reason": "LARGE_GAP",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "LARGE_GAP"
+      ]
+    },
+    "REPUBLICATION_TO_FREEZE": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "output_count": 266,
+      "physiology_labels_unique": [
+        "NORMAL"
+      ],
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ]
+    },
+    "SOURCE_FREEZE": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "output_count": 266,
+      "physiology_labels_unique": [
+        "NORMAL"
+      ],
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ]
+    },
+    "STALE_SOURCE": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "output_count": 256,
+      "physiology_labels_unique": [
+        "NORMAL"
+      ],
+      "primary_reason": "SOURCE_STALE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_STALE"
+      ]
+    }
+  },
+  "model_output_tuning": false,
+  "mr60_supervised_use": false,
+  "no_interpolation": true,
+  "no_synthetic_apnea": true,
+  "phase": "Q2",
+  "q1_handoff": {
+    "gap_158380_ms": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "LARGE_GAP",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "LARGE_GAP"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "gap_42637_ms": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "LARGE_GAP",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "LARGE_GAP"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_1582": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_2884": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_3598": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_425": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_598": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_683": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "run_95": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    },
+    "timestamp_collision": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "physiology_interpreted": false,
+      "primary_reason": "TIMESTAMP_UNRESOLVED",
+      "quality_target": "INPUT_UNAVAILABLE",
+      "reasons": [
+        "TIMESTAMP_UNRESOLVED"
+      ],
+      "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+    }
+  },
+  "q1_typical_jitter_state": "PHYSIOLOGY_ELIGIBLE",
+  "q3_work": false
+}
