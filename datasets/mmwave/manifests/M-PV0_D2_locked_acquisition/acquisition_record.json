@@ -1,0 +1,69 @@
+{
+  "D2_PAYLOAD_ACQUISITION": "BLOCKED_AUTH_REQUIRED",
+  "absolute_path_persisted": false,
+  "access_mode": "IEEE_DATAPORT_OPEN_ACCESS_LOGIN_REQUIRED",
+  "acquisition_source": null,
+  "alternative_sources": {
+    "github_companion": "https://github.com/Rc-W024/VS_DATASET",
+    "reason": "DO_NOT_SUBSTITUTE; binary equivalence with the IEEE DataPort object is not established without the canonical download",
+    "used": false
+  },
+  "announced_payload_filename": "VITALSENSE_120_DATASET.zip",
+  "archive_member_listing_performed": "NO",
+  "audit_date": "2026-08-22",
+  "authentication_required": true,
+  "base_sha": "e74e54736d5cde1773d530b8398a630486270785",
+  "canonical_download_identity": "VITALSENSE_120_DATASET.zip",
+  "dataset_doi_probe": {
+    "final_http_status": 200,
+    "http_status": 302,
+    "redirect_location": "https://ieee-dataport.org/open-access/new-dataset-millimeter-wave-radar-vital-sensing-reference-signals",
+    "url": "https://doi.org/10.21227/wq68-sv85"
+  },
+  "feature_extraction_performed": "NO",
+  "ieee_account_session_present_in_environment": false,
+  "known_limitations": [
+    "IEEE DataPort open-access zip requires a logged-in IEEE account.",
+    "This environment had no IEEE DataPort session, cookies, or tokens.",
+    "No payload SHA-256 is published on the audited IEEE DataPort landing page.",
+    "Public size claims remain 28.69 MB vs about 31 MB until an exact local byte count exists."
+  ],
+  "landing_page_probe": {
+    "announced_filename": "VITALSENSE_120_DATASET.zip",
+    "announced_size": "28.69 MB",
+    "http_status": 200,
+    "login_to_access_dataset_files": true,
+    "md5_mentions": 0,
+    "sha256_mentions": 0,
+    "url": "https://ieee-dataport.org/open-access/new-dataset-millimeter-wave-radar-vital-sensing-reference-signals"
+  },
+  "lock_state": "LOCKED_BEFORE_SEMANTIC_USE",
+  "model_inference_count": 0,
+  "model_inference_performed": "NO",
+  "observed_size": null,
+  "parent_m_pv0_lock": "18e4a4e86d6bf95795d6749a91ce303ad3f1c417",
+  "payload_acquired": false,
+  "payload_byte_size": null,
+  "payload_filename": null,
+  "payload_git_ignore_covers_logical_path": true,
+  "payload_git_tracked": false,
+  "payload_logical_path": "datasets/raw_archives/external_datasets/VITALSENSE_120_DATASET.zip",
+  "payload_storage_role": "GITIGNORED_RAW_ARCHIVE_OPAQUE_BLOB",
+  "phase": "D2",
+  "publication_data_availability": {
+    "dataset_doi": "10.21227/wq68-sv85",
+    "dataset_host": "IEEE DataPort",
+    "nature_hosted_payload_used": false,
+    "url": "https://www.nature.com/articles/s41597-026-07016-6"
+  },
+  "published_size_claims": {
+    "authoritative_exact_byte_source": null,
+    "github_readme_inherited_from_m_pv0": "about 31 MB",
+    "ieee_dataport": "28.69 MB"
+  },
+  "retrieval_date": "2026-08-22",
+  "role": "LOCKED_PUBLIC_CROSS_DEVICE_TEST",
+  "schema_version": "D2.1",
+  "semantic_inspection_performed": "NO",
+  "source_id": "D2"
+}
