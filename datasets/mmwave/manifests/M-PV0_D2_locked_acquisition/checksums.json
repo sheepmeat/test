@@ -1,0 +1,13 @@
+{
+  "algorithm": "SHA-256",
+  "encoding": "utf-8 JSON indent=2 sort_keys=True trailing newline",
+  "files": {
+    "access_state.json": "39058f69b97aa26d226b61e58a962e7f78c7d4433b6d58d3a6c3a5329eb07de4",
+    "acquisition_record.json": "8875b5f32988534478de7feb38419d787c1c85fdff6722e00d18509fa552433b",
+    "exception_registry.json": "9dac0c8a9347840b55d7e0541d633acc402238b1f1033b60cde6096203f18ba6",
+    "payload_digest_lock.json": "3aa2a6d984fe77cb4d17438c8c8d099ebbc4a7047a5aa4dcbfc0f16cf2f24f01",
+    "source_identity.json": "36b0ab96e62607c7a096a516601467579ffbf391c3232165d77149b0064e16a4"
+  },
+  "phase": "D2",
+  "schema_version": "D2.1"
+}

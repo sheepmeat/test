@@ -1,0 +1,33 @@
+{
+  "LOCAL_COMPUTED_SHA256": null,
+  "audit_date": "2026-08-22",
+  "checks": {
+    "ARCHIVE_MEMBER_LISTING": "NO",
+    "BYTE_SIZE_PRESENT": "NO",
+    "D2_DEVELOPMENT_DEPENDENCY_FOUND": "NO",
+    "D2_PAYLOAD_ACQUISITION": "BLOCKED_AUTH_REQUIRED",
+    "D2_ROLE": "LOCKED_PUBLIC_CROSS_DEVICE_TEST",
+    "FEATURE_EXTRACTION": "NO",
+    "HASH_STABLE": "NA",
+    "MODEL_INFERENCE": "NO",
+    "MODEL_INFERENCE_COUNT": 0,
+    "MODEL_SELECTION_FROM_D2": "FORBIDDEN",
+    "M_PV0_PARENT_LOCK_PRESENT": "YES",
+    "PARALLEL_TRACK_BRANCH_CONTAMINATION": "NO",
+    "PAYLOAD_GIT_TRACKED": "NO",
+    "PAYLOAD_SEMANTIC_INSPECTION": "NO",
+    "REPRESENTATION_SELECTION_FROM_D2": "FORBIDDEN",
+    "SHA256_PRESENT": "NO",
+    "THRESHOLD_SELECTION_FROM_D2": "FORBIDDEN"
+  },
+  "d2_remains_locked": true,
+  "errors": [],
+  "gate": "BLOCKED",
+  "lock_state": "LOCKED_BEFORE_SEMANTIC_USE",
+  "ok": true,
+  "payload_acquired": false,
+  "payload_byte_size": null,
+  "phase": "D2",
+  "published_checksum_available": false,
+  "schema_version": "D2.1"
+}
