@@ -1,0 +1,18 @@
+{
+  "algorithm": "SHA-256",
+  "config_file": {
+    "path": "config/mmwave/q2_input_availability_contract.json",
+    "sha256": "dba25a75c2ef04f10007c57b3fdcb98a987ec82672a8d31257d2fdd9e4b7d1f3"
+  },
+  "encoding": "utf-8 JSON indent=2 sort_keys=True trailing newline",
+  "files": {
+    "corruption_validation_summary.json": "162e8fb77cda73729809858bac30af2e8a8a6956e8692ab077a22758dc96d70d",
+    "exception_registry.json": "a06ca52a398989648ad1642808bc978b77688fa9814ee0930b408d3acea91a72",
+    "failure_reason_taxonomy.json": "af37b7a165bd1b0f117bd518c459ea0ca68b208f42915513aa819f26ffc3f97e",
+    "input_availability_contract.json": "dba25a75c2ef04f10007c57b3fdcb98a987ec82672a8d31257d2fdd9e4b7d1f3",
+    "q1_handoff_audit.json": "978bf708091ab948bebf0cae8f8f0e4c740ff7a070daa7ec3fa518671bb83368",
+    "synthetic_quality_profile.json": "669e031698ade400d2694fc63fb860807bba9e621a275786dc33b3850cf7fab6"
+  },
+  "phase": "Q2",
+  "schema_version": "Q2.1"
+}
