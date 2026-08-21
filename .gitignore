@@ -10,6 +10,7 @@ tmp/
 # checksums in tracked manifests; do not commit the source payloads.
 /datasets/raw_archives/
 /datasets/thermal/
+/datasets/mmwave/raw/
 
 # Team-owned hardware bundles may contain nested repositories and raw captures.
 /hardware/

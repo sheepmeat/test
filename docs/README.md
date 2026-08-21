@@ -20,6 +20,7 @@
 - [M-N6 VAL 선정 잠금·heldout 평가 (CURRENT)](mmwave/20260818_SafeNest_mmWave_M-N6_Selection_Heldout_Evaluation_01.md)
 - [M-N7 기존 MR60 device-domain 점검 (CURRENT)](mmwave/20260818_SafeNest_mmWave_M-N7_Existing_MR60_Device_Domain_Check_01.md)
 - [M-N9 FULL_INT8 변환·Pi inference 준비 (CURRENT)](mmwave/20260818_SafeNest_mmWave_M-N9_FULL_INT8_Pi_Readiness_01.md)
+- [M-N10 실기기 다인 캡처 프로토콜 잠금 (CURRENT, capture not yet performed)](mmwave/20260818_SafeNest_mmWave_M-N10_Targeted_Real_Device_Capture_01.md)
 - [PUBLIC-P0 110명 공개 데이터셋 재사용 준비](reports/20260817_SafeNest_mmWave_110_Subject_Public_Dataset_Reuse_Readiness_01.md)
 - [기존 팀 MR60 실측 데이터 평가 (영문 기술/증거 보고서)](reports/20260814_SafeNest_mmWave_Existing_Team_MR60_Data_Evaluation_01.md)
 - [팀 MR60 실측 평가 (한글, 이미 찍힌 데이터의 의미)](reports/20260814_SafeNest_mmWave_Team_MR60_Data_Evaluation_KR_01.md)
