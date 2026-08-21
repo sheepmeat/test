@@ -1,0 +1,26 @@
+{
+  "code": {
+    "files": {
+      "adapters/mmwave_d1_2417ghz_adapter.py": "76993243ecba2490cd892af40045fb1d3ad1f1ffc475889f3e37ad2fe94a3010",
+      "scripts/run_mmwave_d1_2417ghz_adapter.py": "950d4f96167ee712a7fd09edbd4a687ee39ffd777f45586795157491a6d9af9f",
+      "scripts/validate_mmwave_d1_2417ghz_adapter.py": "86393c533ef5789e2674faa8149cd79aeabce34fc1ec26b5c581d291b0e8f278"
+    }
+  },
+  "files": {
+    "adapter_contract.json": "5b8cc1db634d57589d4aa54718fce9d749f3f1b36bc4772d97382c4c8044ca9c",
+    "exception_registry.json": "1edeb9a25fdc696e217d30587c6b6e444a882a9f287075387131c85decc81eea",
+    "payload_inventory.json": "fcc14bda1a36b7c87f23c0d024ee7b8228fa051f304b54d2013e2ef780ef3b92",
+    "recording_inventory.json": "4137c8f0225470c8115707aed5e554a0d50d8006e17e7c8fe2fec18a51a2ff0b",
+    "schema_audit.json": "e26c0951dcae6d1a2a228235afc5983c536b1c14fb45db4aa7867a5fa8819e76",
+    "source_acquisition.json": "98ecc9784562647935bb8504fa087a5b7e0b8a23ca3bd8fc9b71f44ce6cce7cf",
+    "validation_result.json": "7c425331c216f5d00b4d70766ea5027254aabf241fb098f976479e771c6f9a1d"
+  },
+  "payload": {
+    "byte_size": 583572264,
+    "md5": "801c13ae6daef54584ee4ba8fbabed19",
+    "path": "datasets/raw_archives/external_datasets/d1_2417ghz/datasets_scidata_vsmdb.zip",
+    "sha256": "3869fb70a3dda0d810d97594399789e76d9c9e59627515c20170b83e3d915836"
+  },
+  "phase": "M-PV0_D1_2417GHZ_ADAPTER",
+  "schema_version": "D1.1"
+}

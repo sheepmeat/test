@@ -1,0 +1,5195 @@
+{
+  "archive_member_count": 737,
+  "archive_member_listing_sha256": "b06bc1d1f82577f9ab3b71c19fe1edc48c3b44c5d46b0e3600d80f74c854b821",
+  "file_extension_counts": {
+    ".csv": 265,
+    ".mat": 265,
+    ".xlsx": 1,
+    "<directory>": 206
+  },
+  "mat_recording_member_count": 265,
+  "members": [
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_back/apnea_after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 524521,
+      "crc32_hex": "b21ec9d6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_back/apnea_after_sport/DATASET_2016-12-20_14-44-53_Person 1.mat",
+      "uncompressed_size": 525576
+    },
+    {
+      "compressed_size": 358,
+      "crc32_hex": "cf3924c4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_back/apnea_after_sport/Peak_2016-12-20_14-44-53.csv",
+      "uncompressed_size": 713
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 667371,
+      "crc32_hex": "bc11be96",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_11-25-55_Person 1.mat",
+      "uncompressed_size": 668079
+    },
+    {
+      "compressed_size": 588256,
+      "crc32_hex": "c234c2e1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_11-30-47_Person 1.mat",
+      "uncompressed_size": 589308
+    },
+    {
+      "compressed_size": 657401,
+      "crc32_hex": "31f3677c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_11-36-19_Person 1.mat",
+      "uncompressed_size": 658064
+    },
+    {
+      "compressed_size": 627846,
+      "crc32_hex": "f3a38d08",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_11-46-09_Person 1.mat",
+      "uncompressed_size": 628445
+    },
+    {
+      "compressed_size": 319021,
+      "crc32_hex": "a893e5d7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_11-49-00_Person 1.mat",
+      "uncompressed_size": 319754
+    },
+    {
+      "compressed_size": 349595,
+      "crc32_hex": "0bc9850c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_11-55-32_Person 1.mat",
+      "uncompressed_size": 350079
+    },
+    {
+      "compressed_size": 314214,
+      "crc32_hex": "07cc67cd",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_11-59-04_Person 1.mat",
+      "uncompressed_size": 314778
+    },
+    {
+      "compressed_size": 360682,
+      "crc32_hex": "f392093f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_12-01-25_Person 1.mat",
+      "uncompressed_size": 361165
+    },
+    {
+      "compressed_size": 347434,
+      "crc32_hex": "48ce5632",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_12-03-18_Person 1.mat",
+      "uncompressed_size": 347810
+    },
+    {
+      "compressed_size": 349031,
+      "crc32_hex": "f6b483a0",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_12-05-27_Person 1.mat",
+      "uncompressed_size": 349363
+    },
+    {
+      "compressed_size": 356447,
+      "crc32_hex": "05e201fc",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_12-07-18_Person 1.mat",
+      "uncompressed_size": 356943
+    },
+    {
+      "compressed_size": 737074,
+      "crc32_hex": "4809535a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2016-12-20_12-09-43_Person 1.mat",
+      "uncompressed_size": 737719
+    },
+    {
+      "compressed_size": 324,
+      "crc32_hex": "ce89f40b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_11-25-55.csv",
+      "uncompressed_size": 642
+    },
+    {
+      "compressed_size": 313,
+      "crc32_hex": "9ce0940c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_11-30-47.csv",
+      "uncompressed_size": 629
+    },
+    {
+      "compressed_size": 329,
+      "crc32_hex": "f2e85ee2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_11-36-19.csv",
+      "uncompressed_size": 650
+    },
+    {
+      "compressed_size": 314,
+      "crc32_hex": "6a4ccc08",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_11-46-09.csv",
+      "uncompressed_size": 622
+    },
+    {
+      "compressed_size": 186,
+      "crc32_hex": "38eadde7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_11-49-00.csv",
+      "uncompressed_size": 335
+    },
+    {
+      "compressed_size": 171,
+      "crc32_hex": "e7a2ce83",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_11-55-32.csv",
+      "uncompressed_size": 313
+    },
+    {
+      "compressed_size": 187,
+      "crc32_hex": "e65c212c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_11-59-04.csv",
+      "uncompressed_size": 341
+    },
+    {
+      "compressed_size": 189,
+      "crc32_hex": "7011acd1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_12-01-25.csv",
+      "uncompressed_size": 355
+    },
+    {
+      "compressed_size": 184,
+      "crc32_hex": "238f561d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_12-03-18.csv",
+      "uncompressed_size": 338
+    },
+    {
+      "compressed_size": 188,
+      "crc32_hex": "fa9c24f2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_12-05-27.csv",
+      "uncompressed_size": 344
+    },
+    {
+      "compressed_size": 180,
+      "crc32_hex": "2884925f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_12-07-18.csv",
+      "uncompressed_size": 329
+    },
+    {
+      "compressed_size": 365,
+      "crc32_hex": "667b94e5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2016-12-20_12-09-43.csv",
+      "uncompressed_size": 730
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 729152,
+      "crc32_hex": "600fd4a9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_12-14-12_Person 1.mat",
+      "uncompressed_size": 730027
+    },
+    {
+      "compressed_size": 448775,
+      "crc32_hex": "2eff210e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_12-18-32_Person 1.mat",
+      "uncompressed_size": 449441
+    },
+    {
+      "compressed_size": 418990,
+      "crc32_hex": "393d246c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_12-22-46_Person 1.mat",
+      "uncompressed_size": 419820
+    },
+    {
+      "compressed_size": 361843,
+      "crc32_hex": "96cf26c9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_12-25-17_Person 1.mat",
+      "uncompressed_size": 362836
+    },
+    {
+      "compressed_size": 1142173,
+      "crc32_hex": "30ceee67",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_13-39-55_Person 1.mat",
+      "uncompressed_size": 1144856
+    },
+    {
+      "compressed_size": 1129608,
+      "crc32_hex": "7961f6e5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_13-43-03_Person 1.mat",
+      "uncompressed_size": 1132139
+    },
+    {
+      "compressed_size": 1205451,
+      "crc32_hex": "53d075ad",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_13-44-24_Person 1.mat",
+      "uncompressed_size": 1208517
+    },
+    {
+      "compressed_size": 1200341,
+      "crc32_hex": "96c264c3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_13-47-09_Person 1.mat",
+      "uncompressed_size": 1202839
+    },
+    {
+      "compressed_size": 1205395,
+      "crc32_hex": "75e679e8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_13-49-09_Person 1.mat",
+      "uncompressed_size": 1208075
+    },
+    {
+      "compressed_size": 1230143,
+      "crc32_hex": "675a14ea",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_13-52-11_Person 1.mat",
+      "uncompressed_size": 1233443
+    },
+    {
+      "compressed_size": 1192124,
+      "crc32_hex": "9c9e6a62",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2016-12-20_13-55-07_Person 1.mat",
+      "uncompressed_size": 1194900
+    },
+    {
+      "compressed_size": 398,
+      "crc32_hex": "bf0c1bab",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_12-14-12.csv",
+      "uncompressed_size": 812
+    },
+    {
+      "compressed_size": 243,
+      "crc32_hex": "251b26bd",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_12-18-32.csv",
+      "uncompressed_size": 468
+    },
+    {
+      "compressed_size": 258,
+      "crc32_hex": "ba1a4218",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_12-22-46.csv",
+      "uncompressed_size": 511
+    },
+    {
+      "compressed_size": 243,
+      "crc32_hex": "a375b7ad",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_12-25-17.csv",
+      "uncompressed_size": 469
+    },
+    {
+      "compressed_size": 177,
+      "crc32_hex": "91b31bd9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_13-39-55.csv",
+      "uncompressed_size": 320
+    },
+    {
+      "compressed_size": 189,
+      "crc32_hex": "28d52bf8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_13-43-03.csv",
+      "uncompressed_size": 343
+    },
+    {
+      "compressed_size": 204,
+      "crc32_hex": "519797e6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_13-44-24.csv",
+      "uncompressed_size": 372
+    },
+    {
+      "compressed_size": 201,
+      "crc32_hex": "1f4bf5e3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_13-47-09.csv",
+      "uncompressed_size": 365
+    },
+    {
+      "compressed_size": 204,
+      "crc32_hex": "1b349825",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_13-49-09.csv",
+      "uncompressed_size": 373
+    },
+    {
+      "compressed_size": 222,
+      "crc32_hex": "7764fcd1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_13-52-11.csv",
+      "uncompressed_size": 407
+    },
+    {
+      "compressed_size": 190,
+      "crc32_hex": "65336fd9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2016-12-20_13-55-07.csv",
+      "uncompressed_size": 343
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/apnea_after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2897217,
+      "crc32_hex": "f761288a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/apnea_after_sport/DATASET_2016-12-20_14-00-47_Person 1.mat",
+      "uncompressed_size": 2899176
+    },
+    {
+      "compressed_size": 687943,
+      "crc32_hex": "e8acab88",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/apnea_after_sport/DATASET_2016-12-20_14-05-02_Person 1.mat",
+      "uncompressed_size": 689328
+    },
+    {
+      "compressed_size": 705752,
+      "crc32_hex": "948ffc04",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/apnea_after_sport/DATASET_2016-12-20_14-12-25_Person 1.mat",
+      "uncompressed_size": 706758
+    },
+    {
+      "compressed_size": 428,
+      "crc32_hex": "f8c0d537",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/apnea_after_sport/Peak_2016-12-20_14-00-47.csv",
+      "uncompressed_size": 855
+    },
+    {
+      "compressed_size": 441,
+      "crc32_hex": "16227ffa",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/apnea_after_sport/Peak_2016-12-20_14-05-02.csv",
+      "uncompressed_size": 908
+    },
+    {
+      "compressed_size": 464,
+      "crc32_hex": "f7f0057b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_front_radar_front/radar_4L_PCG_2L/apnea_after_sport/Peak_2016-12-20_14-12-25.csv",
+      "uncompressed_size": 961
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_front/PCG_carotid_L_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_front/PCG_carotid_L_radar_2L/apnea_after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 711042,
+      "crc32_hex": "4b527e4a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_front/PCG_carotid_L_radar_2L/apnea_after_sport/DATASET_2016-12-20_14-36-52_Person 1.mat",
+      "uncompressed_size": 712104
+    },
+    {
+      "compressed_size": 425,
+      "crc32_hex": "68337a1b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_front/PCG_carotid_L_radar_2L/apnea_after_sport/Peak_2016-12-20_14-36-52.csv",
+      "uncompressed_size": 907
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 637636,
+      "crc32_hex": "c021cc99",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/apnea/DATASET_2016-12-20_14-18-36_Person 1.mat",
+      "uncompressed_size": 638832
+    },
+    {
+      "compressed_size": 701733,
+      "crc32_hex": "ee38f621",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/apnea/DATASET_2016-12-20_14-23-53_Person 1.mat",
+      "uncompressed_size": 703101
+    },
+    {
+      "compressed_size": 592757,
+      "crc32_hex": "87b44768",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/apnea/DATASET_2016-12-20_14-28-02_Person 1.mat",
+      "uncompressed_size": 593458
+    },
+    {
+      "compressed_size": 405,
+      "crc32_hex": "53d433ac",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/apnea/Peak_2016-12-20_14-18-36.csv",
+      "uncompressed_size": 853
+    },
+    {
+      "compressed_size": 415,
+      "crc32_hex": "f4e55bb9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/apnea/Peak_2016-12-20_14-23-53.csv",
+      "uncompressed_size": 845
+    },
+    {
+      "compressed_size": 340,
+      "crc32_hex": "ac1b394c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person1/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/apnea/Peak_2016-12-20_14-28-02.csv",
+      "uncompressed_size": 686
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_back/PCG_2LL_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2577506,
+      "crc32_hex": "b29d3a39",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_back/PCG_2LL_radar_back/DATASET_2017-02-16_09-57-58_Person 10.mat",
+      "uncompressed_size": 2582787
+    },
+    {
+      "compressed_size": 552,
+      "crc32_hex": "ceff309d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_back/PCG_2LL_radar_back/Peak_2017-02-16_09-57-58.csv",
+      "uncompressed_size": 1126
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_back/PCG_2LL_radar_back/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2613091,
+      "crc32_hex": "4b8ea3c5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_back/PCG_2LL_radar_back/after_sport/DATASET_2017-02-16_10-04-04_Person 10.mat",
+      "uncompressed_size": 2618441
+    },
+    {
+      "compressed_size": 603,
+      "crc32_hex": "8e54f4b6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_back/PCG_2LL_radar_back/after_sport/Peak_2017-02-16_10-04-04.csv",
+      "uncompressed_size": 1235
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2617507,
+      "crc32_hex": "c075a6a9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/DATASET_2017-02-16_09-19-26_Person 10.mat",
+      "uncompressed_size": 2623138
+    },
+    {
+      "compressed_size": 2595144,
+      "crc32_hex": "3f10b1c7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/DATASET_2017-02-16_09-21-35_Person 10.mat",
+      "uncompressed_size": 2600280
+    },
+    {
+      "compressed_size": 2594737,
+      "crc32_hex": "7b701fa4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/DATASET_2017-02-16_09-29-20_Person 10.mat",
+      "uncompressed_size": 2600394
+    },
+    {
+      "compressed_size": 541,
+      "crc32_hex": "caa9d6ea",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/Peak_2017-02-16_09-19-26.csv",
+      "uncompressed_size": 1093
+    },
+    {
+      "compressed_size": 531,
+      "crc32_hex": "455b0e19",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/Peak_2017-02-16_09-21-35.csv",
+      "uncompressed_size": 1080
+    },
+    {
+      "compressed_size": 548,
+      "crc32_hex": "6c564264",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/Peak_2017-02-16_09-29-20.csv",
+      "uncompressed_size": 1110
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2636102,
+      "crc32_hex": "47b6fd1f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/after_sport/DATASET_2017-02-16_09-53-17_Person 10.mat",
+      "uncompressed_size": 2642390
+    },
+    {
+      "compressed_size": 593,
+      "crc32_hex": "9be2fdae",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/after_sport/Peak_2017-02-16_09-53-17.csv",
+      "uncompressed_size": 1215
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/30_degree_left/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2548960,
+      "crc32_hex": "ea423eff",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/30_degree_left/DATASET_2017-02-16_09-34-37_Person 10.mat",
+      "uncompressed_size": 2554375
+    },
+    {
+      "compressed_size": 2610461,
+      "crc32_hex": "cae94841",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/30_degree_left/DATASET_2017-02-16_09-38-46_Person 10.mat",
+      "uncompressed_size": 2616437
+    },
+    {
+      "compressed_size": 533,
+      "crc32_hex": "4a8842bb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/30_degree_left/Peak_2017-02-16_09-34-37.csv",
+      "uncompressed_size": 1078
+    },
+    {
+      "compressed_size": 568,
+      "crc32_hex": "09d0fcc0",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/30_degree_left/Peak_2017-02-16_09-38-46.csv",
+      "uncompressed_size": 1150
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/30_degree_right/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2514956,
+      "crc32_hex": "33d08085",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/30_degree_right/DATASET_2017-02-16_09-40-56_Person 10.mat",
+      "uncompressed_size": 2521290
+    },
+    {
+      "compressed_size": 536,
+      "crc32_hex": "01d61f89",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/angle_variation/30_degree_right/Peak_2017-02-16_09-40-56.csv",
+      "uncompressed_size": 1073
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/apnea/exhaled/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2638515,
+      "crc32_hex": "416a7c7c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/apnea/exhaled/DATASET_2017-02-16_09-26-27_Person 10.mat",
+      "uncompressed_size": 2644357
+    },
+    {
+      "compressed_size": 563,
+      "crc32_hex": "ddd6087a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/apnea/exhaled/Peak_2017-02-16_09-26-27.csv",
+      "uncompressed_size": 1140
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/apnea/inhaled/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2631218,
+      "crc32_hex": "57d53dd4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/apnea/inhaled/DATASET_2017-02-16_09-24-14_Person 10.mat",
+      "uncompressed_size": 2637355
+    },
+    {
+      "compressed_size": 540,
+      "crc32_hex": "75a68513",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/apnea/inhaled/Peak_2017-02-16_09-24-14.csv",
+      "uncompressed_size": 1097
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/artefact_speech/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2609740,
+      "crc32_hex": "2a6f9aac",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/artefact_speech/DATASET_2017-02-16_09-31-56_Person 10.mat",
+      "uncompressed_size": 2615755
+    },
+    {
+      "compressed_size": 601,
+      "crc32_hex": "1bdcd41a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/artefact_speech/Peak_2017-02-16_09-31-56.csv",
+      "uncompressed_size": 1210
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/distance_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2515405,
+      "crc32_hex": "3d01ac0c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/distance_variation/DATASET_2017-02-16_09-43-26_Person 10.mat",
+      "uncompressed_size": 2523011
+    },
+    {
+      "compressed_size": 2170421,
+      "crc32_hex": "96510b0d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/distance_variation/DATASET_2017-02-16_09-46-40_Person 10.mat",
+      "uncompressed_size": 2174620
+    },
+    {
+      "compressed_size": 528,
+      "crc32_hex": "6d522069",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/distance_variation/Peak_2017-02-16_09-43-26.csv",
+      "uncompressed_size": 1067
+    },
+    {
+      "compressed_size": 435,
+      "crc32_hex": "14d2f15c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/distance_variation/Peak_2017-02-16_09-46-40.csv",
+      "uncompressed_size": 839
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2660580,
+      "crc32_hex": "ca89a1b2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/standing/DATASET_2017-02-16_10-07-43_Person 10.mat",
+      "uncompressed_size": 2665548
+    },
+    {
+      "compressed_size": 2676058,
+      "crc32_hex": "af435d73",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/standing/DATASET_2017-02-16_10-10-06_Person 10.mat",
+      "uncompressed_size": 2681380
+    },
+    {
+      "compressed_size": 680,
+      "crc32_hex": "3f89442f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/standing/Peak_2017-02-16_10-07-43.csv",
+      "uncompressed_size": 1396
+    },
+    {
+      "compressed_size": 684,
+      "crc32_hex": "acbba344",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2LL_radar_2L/standing/Peak_2017-02-16_10-10-06.csv",
+      "uncompressed_size": 1425
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2L_radar_5L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2632087,
+      "crc32_hex": "c843c300",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2L_radar_5L/DATASET_2017-02-16_09-13-16_Person 10.mat",
+      "uncompressed_size": 2637652
+    },
+    {
+      "compressed_size": 2606090,
+      "crc32_hex": "d06b376e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2L_radar_5L/DATASET_2017-02-16_09-16-25_Person 10.mat",
+      "uncompressed_size": 2612246
+    },
+    {
+      "compressed_size": 532,
+      "crc32_hex": "f6a2836f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2L_radar_5L/Peak_2017-02-16_09-13-16.csv",
+      "uncompressed_size": 1090
+    },
+    {
+      "compressed_size": 566,
+      "crc32_hex": "974a3b4f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_2L_radar_5L/Peak_2017-02-16_09-16-25.csv",
+      "uncompressed_size": 1145
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_5L_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2526788,
+      "crc32_hex": "6d1edbc1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_5L_radar_2L/DATASET_2017-02-16_09-04-48_Person 10.mat",
+      "uncompressed_size": 2534178
+    },
+    {
+      "compressed_size": 2596728,
+      "crc32_hex": "f4036db5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_5L_radar_2L/DATASET_2017-02-16_09-09-19_Person 10.mat",
+      "uncompressed_size": 2603734
+    },
+    {
+      "compressed_size": 555,
+      "crc32_hex": "291242f8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_5L_radar_2L/Peak_2017-02-16_09-04-48.csv",
+      "uncompressed_size": 1123
+    },
+    {
+      "compressed_size": 567,
+      "crc32_hex": "215b2f98",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_front_radar_front/PCG_5L_radar_2L/Peak_2017-02-16_09-09-19.csv",
+      "uncompressed_size": 1151
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2630722,
+      "crc32_hex": "d5102ba8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-16_10-14-56_Person 10.mat",
+      "uncompressed_size": 2639318
+    },
+    {
+      "compressed_size": 552,
+      "crc32_hex": "0b61f3d1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-16_10-14-56.csv",
+      "uncompressed_size": 1122
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person10/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2600158,
+      "crc32_hex": "059f8418",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-16_10-19-44_Person 10.mat",
+      "uncompressed_size": 2607903
+    },
+    {
+      "compressed_size": 550,
+      "crc32_hex": "2ec6ac06",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person10/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-02-16_10-19-44.csv",
+      "uncompressed_size": 1119
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_back/PCG_2L_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_back/PCG_2L_radar_back/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2548938,
+      "crc32_hex": "8239b8eb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_back/PCG_2L_radar_back/after_sport/DATASET_2017-02-16_11-53-10_Person 11.mat",
+      "uncompressed_size": 2552788
+    },
+    {
+      "compressed_size": 396,
+      "crc32_hex": "87694549",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_back/PCG_2L_radar_back/after_sport/Peak_2017-02-16_11-53-10.csv",
+      "uncompressed_size": 777
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2616317,
+      "crc32_hex": "5a9db310",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/DATASET_2017-02-16_10-53-42_Person 11.mat",
+      "uncompressed_size": 2621272
+    },
+    {
+      "compressed_size": 2591522,
+      "crc32_hex": "1aebdf60",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/DATASET_2017-02-16_11-02-10_Person 11.mat",
+      "uncompressed_size": 2597150
+    },
+    {
+      "compressed_size": 408,
+      "crc32_hex": "04e7d7be",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/Peak_2017-02-16_10-53-42.csv",
+      "uncompressed_size": 811
+    },
+    {
+      "compressed_size": 439,
+      "crc32_hex": "3ffab0d3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/Peak_2017-02-16_11-02-10.csv",
+      "uncompressed_size": 889
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2584508,
+      "crc32_hex": "af1a82f1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/after_sport/DATASET_2017-02-16_11-50-00_Person 11.mat",
+      "uncompressed_size": 2589911
+    },
+    {
+      "compressed_size": 374,
+      "crc32_hex": "94b078aa",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/after_sport/Peak_2017-02-16_11-50-00.csv",
+      "uncompressed_size": 740
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/30_degree_left/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2452793,
+      "crc32_hex": "634fe94d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/30_degree_left/DATASET_2017-02-16_11-16-21_Person 11.mat",
+      "uncompressed_size": 2457732
+    },
+    {
+      "compressed_size": 2498087,
+      "crc32_hex": "a04af92a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/30_degree_left/DATASET_2017-02-16_11-20-16_Person 11.mat",
+      "uncompressed_size": 2502782
+    },
+    {
+      "compressed_size": 404,
+      "crc32_hex": "eb818ab6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/30_degree_left/Peak_2017-02-16_11-16-21.csv",
+      "uncompressed_size": 788
+    },
+    {
+      "compressed_size": 385,
+      "crc32_hex": "9de022a7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/30_degree_left/Peak_2017-02-16_11-20-16.csv",
+      "uncompressed_size": 755
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/30_degree_right/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2447285,
+      "crc32_hex": "2798ad23",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/30_degree_right/DATASET_2017-02-16_11-26-02_Person 11.mat",
+      "uncompressed_size": 2452679
+    },
+    {
+      "compressed_size": 402,
+      "crc32_hex": "5af34580",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/angle_variation/30_degree_right/Peak_2017-02-16_11-26-02.csv",
+      "uncompressed_size": 791
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/apnea/exhaled/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2573098,
+      "crc32_hex": "2f55333f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/apnea/exhaled/DATASET_2017-02-16_11-05-06_Person 11.mat",
+      "uncompressed_size": 2579297
+    },
+    {
+      "compressed_size": 420,
+      "crc32_hex": "ddde1b33",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/apnea/exhaled/Peak_2017-02-16_11-05-06.csv",
+      "uncompressed_size": 833
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/apnea/inhaled/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2612104,
+      "crc32_hex": "09cf68c3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/apnea/inhaled/DATASET_2017-02-16_10-56-05_Person 11.mat",
+      "uncompressed_size": 2618201
+    },
+    {
+      "compressed_size": 413,
+      "crc32_hex": "03561f9b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/apnea/inhaled/Peak_2017-02-16_10-56-05.csv",
+      "uncompressed_size": 809
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/distance_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2507788,
+      "crc32_hex": "47264f96",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/distance_variation/DATASET_2017-02-16_11-30-21_Person 11.mat",
+      "uncompressed_size": 2514040
+    },
+    {
+      "compressed_size": 399,
+      "crc32_hex": "8ff084be",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/distance_variation/Peak_2017-02-16_11-30-21.csv",
+      "uncompressed_size": 777
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2561366,
+      "crc32_hex": "92784d4c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-02-16_11-46-41_Person 11.mat",
+      "uncompressed_size": 2567472
+    },
+    {
+      "compressed_size": 415,
+      "crc32_hex": "8fb72ad2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-02-16_11-46-41.csv",
+      "uncompressed_size": 826
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_xiphoid/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2610755,
+      "crc32_hex": "79e07b0a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_xiphoid/DATASET_2017-02-16_10-50-44_Person 11.mat",
+      "uncompressed_size": 2615873
+    },
+    {
+      "compressed_size": 411,
+      "crc32_hex": "1e4ece1f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_front_radar_front/PCG_2L_radar_xiphoid/Peak_2017-02-16_10-50-44.csv",
+      "uncompressed_size": 820
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person11/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2368672,
+      "crc32_hex": "f219cef2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-16_11-37-59_Person 11.mat",
+      "uncompressed_size": 2374735
+    },
+    {
+      "compressed_size": 2463598,
+      "crc32_hex": "e2239681",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-16_11-42-13_Person 11.mat",
+      "uncompressed_size": 2469841
+    },
+    {
+      "compressed_size": 387,
+      "crc32_hex": "ccc12829",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-02-16_11-37-59.csv",
+      "uncompressed_size": 767
+    },
+    {
+      "compressed_size": 410,
+      "crc32_hex": "a248fe55",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person11/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-02-16_11-42-13.csv",
+      "uncompressed_size": 808
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_2R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2808637,
+      "crc32_hex": "da45f88c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_2R/DATASET_2017-02-27_10-28-36_Person 2.mat",
+      "uncompressed_size": 2812626
+    },
+    {
+      "compressed_size": 412,
+      "crc32_hex": "f2c9f9f9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_2R/Peak_2017-02-27_10-28-36.csv",
+      "uncompressed_size": 812
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2823079,
+      "crc32_hex": "8ba269e6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2017-02-27_09-55-24_Person 2.mat",
+      "uncompressed_size": 2826270
+    },
+    {
+      "compressed_size": 2454408,
+      "crc32_hex": "6043b524",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2017-02-27_10-04-44_Person 2.mat",
+      "uncompressed_size": 2459561
+    },
+    {
+      "compressed_size": 2459677,
+      "crc32_hex": "70c64eb1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2017-02-27_10-06-53_Person 2.mat",
+      "uncompressed_size": 2464522
+    },
+    {
+      "compressed_size": 2552584,
+      "crc32_hex": "e5c075bf",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2017-02-27_10-08-59_Person 2.mat",
+      "uncompressed_size": 2556002
+    },
+    {
+      "compressed_size": 2691894,
+      "crc32_hex": "fe497c95",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2017-02-27_10-10-49_Person 2.mat",
+      "uncompressed_size": 2695846
+    },
+    {
+      "compressed_size": 409,
+      "crc32_hex": "d4b98a35",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2017-02-27_09-55-24.csv",
+      "uncompressed_size": 809
+    },
+    {
+      "compressed_size": 400,
+      "crc32_hex": "1a3f7841",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2017-02-27_10-04-44.csv",
+      "uncompressed_size": 782
+    },
+    {
+      "compressed_size": 408,
+      "crc32_hex": "c68ea967",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2017-02-27_10-06-53.csv",
+      "uncompressed_size": 789
+    },
+    {
+      "compressed_size": 412,
+      "crc32_hex": "d9cc088f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2017-02-27_10-08-59.csv",
+      "uncompressed_size": 786
+    },
+    {
+      "compressed_size": 415,
+      "crc32_hex": "cabaa824",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2017-02-27_10-10-49.csv",
+      "uncompressed_size": 806
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 646930,
+      "crc32_hex": "0f710dd0",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/after_sport/DATASET_2016-12-21_11-53-23_Person 2.mat",
+      "uncompressed_size": 648242
+    },
+    {
+      "compressed_size": 309,
+      "crc32_hex": "23961444",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/after_sport/Peak_2016-12-21_11-53-23.csv",
+      "uncompressed_size": 610
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/angle_variation/30_degree_left/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2674193,
+      "crc32_hex": "947d8210",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/angle_variation/30_degree_left/DATASET_2017-02-27_10-20-39_Person 2.mat",
+      "uncompressed_size": 2677138
+    },
+    {
+      "compressed_size": 403,
+      "crc32_hex": "1cc80d42",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/angle_variation/30_degree_left/Peak_2017-02-27_10-20-39.csv",
+      "uncompressed_size": 772
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/angle_variation/30_degree_right/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2382625,
+      "crc32_hex": "c903dd68",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/angle_variation/30_degree_right/DATASET_2017-02-27_10-18-52_Person 2.mat",
+      "uncompressed_size": 2388225
+    },
+    {
+      "compressed_size": 378,
+      "crc32_hex": "b2cf5775",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/angle_variation/30_degree_right/Peak_2017-02-27_10-18-52.csv",
+      "uncompressed_size": 724
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/exhaled/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2552767,
+      "crc32_hex": "8190bcf8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/exhaled/DATASET_2017-02-27_10-15-48_Person 2.mat",
+      "uncompressed_size": 2557939
+    },
+    {
+      "compressed_size": 401,
+      "crc32_hex": "02297cdb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/exhaled/Peak_2017-02-27_10-15-48.csv",
+      "uncompressed_size": 784
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/inhaled/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 647801,
+      "crc32_hex": "965f87e3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/inhaled/DATASET_2016-12-21_11-15-34_Person 2.mat",
+      "uncompressed_size": 649351
+    },
+    {
+      "compressed_size": 2778308,
+      "crc32_hex": "917f193e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/inhaled/DATASET_2017-02-27_10-13-10_Person 2.mat",
+      "uncompressed_size": 2782292
+    },
+    {
+      "compressed_size": 351,
+      "crc32_hex": "a96af0a7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/inhaled/Peak_2016-12-21_11-15-34.csv",
+      "uncompressed_size": 712
+    },
+    {
+      "compressed_size": 389,
+      "crc32_hex": "db85a1d6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea/inhaled/Peak_2017-02-27_10-13-10.csv",
+      "uncompressed_size": 767
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea_after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 727268,
+      "crc32_hex": "f7611ea4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea_after_sport/DATASET_2016-12-21_11-59-37_Person 2.mat",
+      "uncompressed_size": 728134
+    },
+    {
+      "compressed_size": 326,
+      "crc32_hex": "fb127820",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/apnea_after_sport/Peak_2016-12-21_11-59-37.csv",
+      "uncompressed_size": 646
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/artefact_movement/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2846063,
+      "crc32_hex": "af095ceb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/artefact_movement/DATASET_2017-02-27_10-23-58_Person 2.mat",
+      "uncompressed_size": 2849064
+    },
+    {
+      "compressed_size": 410,
+      "crc32_hex": "e0255a98",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/artefact_movement/Peak_2017-02-27_10-23-58.csv",
+      "uncompressed_size": 808
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2720854,
+      "crc32_hex": "8d538a58",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/DATASET_2017-02-17_09-53-27_Person 2.mat",
+      "uncompressed_size": 2724428
+    },
+    {
+      "compressed_size": 2475908,
+      "crc32_hex": "cca43e9f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/DATASET_2017-02-17_10-02-33_Person 2.mat",
+      "uncompressed_size": 2479049
+    },
+    {
+      "compressed_size": 2100285,
+      "crc32_hex": "6838a2e6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/DATASET_2017-02-17_10-07-23_Person 2.mat",
+      "uncompressed_size": 2104523
+    },
+    {
+      "compressed_size": 2080805,
+      "crc32_hex": "07e92220",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/DATASET_2017-02-17_10-10-52_Person 2.mat",
+      "uncompressed_size": 2085488
+    },
+    {
+      "compressed_size": 435,
+      "crc32_hex": "1a457555",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/Peak_2017-02-17_09-53-27.csv",
+      "uncompressed_size": 842
+    },
+    {
+      "compressed_size": 390,
+      "crc32_hex": "09bb5527",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/Peak_2017-02-17_10-02-33.csv",
+      "uncompressed_size": 748
+    },
+    {
+      "compressed_size": 330,
+      "crc32_hex": "e763d0cd",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/Peak_2017-02-17_10-07-23.csv",
+      "uncompressed_size": 630
+    },
+    {
+      "compressed_size": 301,
+      "crc32_hex": "984abcdf",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_4L/lying/Peak_2017-02-17_10-10-52.csv",
+      "uncompressed_size": 569
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_xiphoid/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_xiphoid/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 748381,
+      "crc32_hex": "90b32ecd",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_xiphoid/apnea/DATASET_2016-12-21_10-55-01_Person 2.mat",
+      "uncompressed_size": 749031
+    },
+    {
+      "compressed_size": 358,
+      "crc32_hex": "a40a6581",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2L_PCG_xiphoid/apnea/Peak_2016-12-21_10-55-01.csv",
+      "uncompressed_size": 713
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2R_PCG_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2625104,
+      "crc32_hex": "706ec023",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2R_PCG_2L/DATASET_2017-02-27_10-31-18_Person 2.mat",
+      "uncompressed_size": 2629955
+    },
+    {
+      "compressed_size": 2379729,
+      "crc32_hex": "c5dc9093",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2R_PCG_2L/DATASET_2017-02-27_10-33-30_Person 2.mat",
+      "uncompressed_size": 2384707
+    },
+    {
+      "compressed_size": 406,
+      "crc32_hex": "55ae7963",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2R_PCG_2L/Peak_2017-02-27_10-31-18.csv",
+      "uncompressed_size": 788
+    },
+    {
+      "compressed_size": 410,
+      "crc32_hex": "19997d05",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_2R_PCG_2L/Peak_2017-02-27_10-33-30.csv",
+      "uncompressed_size": 812
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2497460,
+      "crc32_hex": "ef5c3390",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-02-27_10-36-48_Person 2.mat",
+      "uncompressed_size": 2502110
+    },
+    {
+      "compressed_size": 2760472,
+      "crc32_hex": "77d8f319",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-02-27_10-38-25_Person 2.mat",
+      "uncompressed_size": 2763460
+    },
+    {
+      "compressed_size": 2524907,
+      "crc32_hex": "bb90add1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-02-27_10-40-06_Person 2.mat",
+      "uncompressed_size": 2530642
+    },
+    {
+      "compressed_size": 2539875,
+      "crc32_hex": "93d7b8c9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-02-27_10-41-45_Person 2.mat",
+      "uncompressed_size": 2544653
+    },
+    {
+      "compressed_size": 2670312,
+      "crc32_hex": "ea91b1ea",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-02-27_10-43-46_Person 2.mat",
+      "uncompressed_size": 2673073
+    },
+    {
+      "compressed_size": 415,
+      "crc32_hex": "fb30b544",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-02-27_10-36-48.csv",
+      "uncompressed_size": 808
+    },
+    {
+      "compressed_size": 440,
+      "crc32_hex": "9bde0675",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-02-27_10-38-25.csv",
+      "uncompressed_size": 877
+    },
+    {
+      "compressed_size": 418,
+      "crc32_hex": "ca7957c1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-02-27_10-40-06.csv",
+      "uncompressed_size": 836
+    },
+    {
+      "compressed_size": 444,
+      "crc32_hex": "59f57fdc",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-02-27_10-41-45.csv",
+      "uncompressed_size": 893
+    },
+    {
+      "compressed_size": 429,
+      "crc32_hex": "e6a0855e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-02-27_10-43-46.csv",
+      "uncompressed_size": 839
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 719238,
+      "crc32_hex": "9e4479ca",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/after_sport/DATASET_2016-12-21_12-07-06_Person 2.mat",
+      "uncompressed_size": 719618
+    },
+    {
+      "compressed_size": 330,
+      "crc32_hex": "efb7d7df",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_4L_PCG_2L/after_sport/Peak_2016-12-21_12-07-06.csv",
+      "uncompressed_size": 662
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 164164,
+      "crc32_hex": "373a0fa9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/DATASET_2016-12-21_10-13-18_Person 2.mat",
+      "uncompressed_size": 164424
+    },
+    {
+      "compressed_size": 728595,
+      "crc32_hex": "5d219556",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/DATASET_2016-12-21_10-16-43_Person 2.mat",
+      "uncompressed_size": 729063
+    },
+    {
+      "compressed_size": 729408,
+      "crc32_hex": "1b4e9991",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/DATASET_2016-12-21_10-21-20_Person 2.mat",
+      "uncompressed_size": 730044
+    },
+    {
+      "compressed_size": 89,
+      "crc32_hex": "6d570904",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/Peak_2016-12-21_10-13-18.csv",
+      "uncompressed_size": 134
+    },
+    {
+      "compressed_size": 336,
+      "crc32_hex": "60cf25d3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/Peak_2016-12-21_10-16-43.csv",
+      "uncompressed_size": 688
+    },
+    {
+      "compressed_size": 335,
+      "crc32_hex": "b6612508",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/Peak_2016-12-21_10-21-20.csv",
+      "uncompressed_size": 667
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 704819,
+      "crc32_hex": "5f2fa3ac",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/apnea/DATASET_2016-12-21_10-37-37_Person 2.mat",
+      "uncompressed_size": 705365
+    },
+    {
+      "compressed_size": 649887,
+      "crc32_hex": "0612b4d4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/apnea/DATASET_2016-12-21_10-43-30_Person 2.mat",
+      "uncompressed_size": 651091
+    },
+    {
+      "compressed_size": 337,
+      "crc32_hex": "e1cdc10f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/apnea/Peak_2016-12-21_10-37-37.csv",
+      "uncompressed_size": 680
+    },
+    {
+      "compressed_size": 344,
+      "crc32_hex": "5d9f25bb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/apnea/Peak_2016-12-21_10-43-30.csv",
+      "uncompressed_size": 700
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/apnea_after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 725238,
+      "crc32_hex": "c0916e69",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/apnea_after_sport/DATASET_2016-12-21_10-48-50_Person 2.mat",
+      "uncompressed_size": 725914
+    },
+    {
+      "compressed_size": 325,
+      "crc32_hex": "6b538ce3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_front_radar_front/radar_xiphoid_PCG_4L/apnea_after_sport/Peak_2016-12-21_10-48-50.csv",
+      "uncompressed_size": 642
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person2/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 636420,
+      "crc32_hex": "15f1314c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2016-12-21_11-24-32_Person 2.mat",
+      "uncompressed_size": 637777
+    },
+    {
+      "compressed_size": 632707,
+      "crc32_hex": "34c8cefa",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2016-12-21_11-29-38_Person 2.mat",
+      "uncompressed_size": 633532
+    },
+    {
+      "compressed_size": 346,
+      "crc32_hex": "21b207c0",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2016-12-21_11-24-32.csv",
+      "uncompressed_size": 690
+    },
+    {
+      "compressed_size": 335,
+      "crc32_hex": "58dedd8a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person2/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2016-12-21_11-29-38.csv",
+      "uncompressed_size": 668
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_2L_PCG_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2702863,
+      "crc32_hex": "3bd35565",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_2L_PCG_4L/DATASET_2017-01-17_18-23-25_Person 3.mat",
+      "uncompressed_size": 2707093
+    },
+    {
+      "compressed_size": 522,
+      "crc32_hex": "ce9566d3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_2L_PCG_4L/Peak_2017-01-17_18-23-25.csv",
+      "uncompressed_size": 999
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2562887,
+      "crc32_hex": "13f6886b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-01-17_17-48-53_Person 3.mat",
+      "uncompressed_size": 2568454
+    },
+    {
+      "compressed_size": 2404013,
+      "crc32_hex": "1d912919",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-01-17_17-55-53_Person 3.mat",
+      "uncompressed_size": 2409598
+    },
+    {
+      "compressed_size": 2744856,
+      "crc32_hex": "7574a230",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-01-17_17-59-08_Person 3.mat",
+      "uncompressed_size": 2747818
+    },
+    {
+      "compressed_size": 2848952,
+      "crc32_hex": "cd932a02",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/DATASET_2017-01-17_18-04-18_Person 3.mat",
+      "uncompressed_size": 2853534
+    },
+    {
+      "compressed_size": 555,
+      "crc32_hex": "cf34de44",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-01-17_17-48-53.csv",
+      "uncompressed_size": 1079
+    },
+    {
+      "compressed_size": 514,
+      "crc32_hex": "2e31520d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-01-17_17-55-53.csv",
+      "uncompressed_size": 998
+    },
+    {
+      "compressed_size": 559,
+      "crc32_hex": "09b62db8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-01-17_17-59-08.csv",
+      "uncompressed_size": 1107
+    },
+    {
+      "compressed_size": 549,
+      "crc32_hex": "cca12a4a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/Peak_2017-01-17_18-04-18.csv",
+      "uncompressed_size": 1060
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2887744,
+      "crc32_hex": "112dfc02",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/apnea/DATASET_2017-01-17_18-09-55_Person 3.mat",
+      "uncompressed_size": 2891030
+    },
+    {
+      "compressed_size": 2883548,
+      "crc32_hex": "4ccb24c8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/apnea/DATASET_2017-01-17_18-14-30_Person 3.mat",
+      "uncompressed_size": 2887074
+    },
+    {
+      "compressed_size": 577,
+      "crc32_hex": "a7559909",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/apnea/Peak_2017-01-17_18-09-55.csv",
+      "uncompressed_size": 1169
+    },
+    {
+      "compressed_size": 557,
+      "crc32_hex": "6ae47376",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/apnea/Peak_2017-01-17_18-14-30.csv",
+      "uncompressed_size": 1092
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2883864,
+      "crc32_hex": "045d185f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/DATASET_2017-01-17_18-27-42_Person 3.mat",
+      "uncompressed_size": 2888582
+    },
+    {
+      "compressed_size": 2968542,
+      "crc32_hex": "733ec883",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/DATASET_2017-01-17_18-32-11_Person 3.mat",
+      "uncompressed_size": 2973723
+    },
+    {
+      "compressed_size": 2828706,
+      "crc32_hex": "ae8f6741",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/DATASET_2017-01-17_19-03-06_Person 3.mat",
+      "uncompressed_size": 2832578
+    },
+    {
+      "compressed_size": 555,
+      "crc32_hex": "ae5fa8ca",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/Peak_2017-01-17_18-27-42.csv",
+      "uncompressed_size": 1087
+    },
+    {
+      "compressed_size": 537,
+      "crc32_hex": "b95b0e06",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/Peak_2017-01-17_18-32-11.csv",
+      "uncompressed_size": 1065
+    },
+    {
+      "compressed_size": 545,
+      "crc32_hex": "7c33de25",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/Peak_2017-01-17_19-03-06.csv",
+      "uncompressed_size": 1067
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 3011387,
+      "crc32_hex": "b4357b51",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/after_sport/DATASET_2017-01-17_18-38-06_Person 3.mat",
+      "uncompressed_size": 3015528
+    },
+    {
+      "compressed_size": 577,
+      "crc32_hex": "44279ce7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/after_sport/Peak_2017-01-17_18-38-06.csv",
+      "uncompressed_size": 1160
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/angle_variation/30_degree_left/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2857260,
+      "crc32_hex": "a4e61922",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/angle_variation/30_degree_left/DATASET_2017-01-17_18-55-44_Person 3.mat",
+      "uncompressed_size": 2860515
+    },
+    {
+      "compressed_size": 559,
+      "crc32_hex": "4dcc572a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/angle_variation/30_degree_left/Peak_2017-01-17_18-55-44.csv",
+      "uncompressed_size": 1116
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/angle_variation/30_degree_right/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2766921,
+      "crc32_hex": "6ac8f3c8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/angle_variation/30_degree_right/DATASET_2017-01-17_19-00-08_Person 3.mat",
+      "uncompressed_size": 2771135
+    },
+    {
+      "compressed_size": 530,
+      "crc32_hex": "414b3a8b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/angle_variation/30_degree_right/Peak_2017-01-17_19-00-08.csv",
+      "uncompressed_size": 1045
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/artefact_speech/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2596464,
+      "crc32_hex": "754bf6e8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/artefact_speech/DATASET_2017-01-17_19-33-29_Person 3.mat",
+      "uncompressed_size": 2601713
+    },
+    {
+      "compressed_size": 598,
+      "crc32_hex": "62f8a8b9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/artefact_speech/Peak_2017-01-17_19-33-29.csv",
+      "uncompressed_size": 1200
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/distance_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2122991,
+      "crc32_hex": "e8daba79",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/distance_variation/DATASET_2017-01-17_19-23-43_Person 3.mat",
+      "uncompressed_size": 2128667
+    },
+    {
+      "compressed_size": 1987708,
+      "crc32_hex": "9974d052",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/distance_variation/DATASET_2017-01-17_19-28-14_Person 3.mat",
+      "uncompressed_size": 1993065
+    },
+    {
+      "compressed_size": 441,
+      "crc32_hex": "39bc85f7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/distance_variation/Peak_2017-01-17_19-23-43.csv",
+      "uncompressed_size": 852
+    },
+    {
+      "compressed_size": 410,
+      "crc32_hex": "1f911de7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/distance_variation/Peak_2017-01-17_19-28-14.csv",
+      "uncompressed_size": 792
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2581608,
+      "crc32_hex": "1d24e325",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/standing/DATASET_2017-01-17_19-38-24_Person 3.mat",
+      "uncompressed_size": 2586331
+    },
+    {
+      "compressed_size": 2549491,
+      "crc32_hex": "2858daa3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/standing/DATASET_2017-01-17_19-43-04_Person 3.mat",
+      "uncompressed_size": 2554745
+    },
+    {
+      "compressed_size": 554,
+      "crc32_hex": "12519020",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/standing/Peak_2017-01-17_19-38-24.csv",
+      "uncompressed_size": 1120
+    },
+    {
+      "compressed_size": 557,
+      "crc32_hex": "adca73c2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_4R/standing/Peak_2017-01-17_19-43-04.csv",
+      "uncompressed_size": 1094
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_xiphoid_PCG_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2808410,
+      "crc32_hex": "7ec2120b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_xiphoid_PCG_2L/DATASET_2017-01-17_17-41-07_Person 3.mat",
+      "uncompressed_size": 2812553
+    },
+    {
+      "compressed_size": 538,
+      "crc32_hex": "9b0eb583",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_front_radar_front/radar_xiphoid_PCG_2L/Peak_2017-01-17_17-41-07.csv",
+      "uncompressed_size": 1053
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person3/PCG_neck_radar_neck/radar_carotid_L_PCG_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2373043,
+      "crc32_hex": "9da41cff",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_neck_radar_neck/radar_carotid_L_PCG_carotid_R/DATASET_2017-01-17_19-09-33_Person 3.mat",
+      "uncompressed_size": 2378622
+    },
+    {
+      "compressed_size": 1074835,
+      "crc32_hex": "39738858",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_neck_radar_neck/radar_carotid_L_PCG_carotid_R/DATASET_2017-01-17_19-12-55_Person 3.mat",
+      "uncompressed_size": 1077479
+    },
+    {
+      "compressed_size": 523,
+      "crc32_hex": "86d6d6de",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_neck_radar_neck/radar_carotid_L_PCG_carotid_R/Peak_2017-01-17_19-09-33.csv",
+      "uncompressed_size": 1001
+    },
+    {
+      "compressed_size": 224,
+      "crc32_hex": "31f0143d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person3/PCG_neck_radar_neck/radar_carotid_L_PCG_carotid_R/Peak_2017-01-17_19-12-55.csv",
+      "uncompressed_size": 410
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_back/PCG_4L_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2654151,
+      "crc32_hex": "7d96bcea",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_back/PCG_4L_radar_back/DATASET_2017-01-20_11-39-39_Person 4.mat",
+      "uncompressed_size": 2657028
+    },
+    {
+      "compressed_size": 515,
+      "crc32_hex": "60ea3653",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_back/PCG_4L_radar_back/Peak_2017-01-20_11-39-39.csv",
+      "uncompressed_size": 1002
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2558820,
+      "crc32_hex": "178bbc3f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-01-20_11-16-04_Person 4.mat",
+      "uncompressed_size": 2563760
+    },
+    {
+      "compressed_size": 2522171,
+      "crc32_hex": "43477d3b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-01-20_11-18-52_Person 4.mat",
+      "uncompressed_size": 2526696
+    },
+    {
+      "compressed_size": 2594889,
+      "crc32_hex": "27f9e48b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-01-20_11-22-57_Person 4.mat",
+      "uncompressed_size": 2598774
+    },
+    {
+      "compressed_size": 2582606,
+      "crc32_hex": "590b8a13",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-01-20_11-25-36_Person 4.mat",
+      "uncompressed_size": 2587319
+    },
+    {
+      "compressed_size": 2649252,
+      "crc32_hex": "71f08bb2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-01-20_11-31-04_Person 4.mat",
+      "uncompressed_size": 2653603
+    },
+    {
+      "compressed_size": 2379644,
+      "crc32_hex": "6d80c1a9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-01-20_11-35-29_Person 4.mat",
+      "uncompressed_size": 2384295
+    },
+    {
+      "compressed_size": 500,
+      "crc32_hex": "32a6f1d1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-01-20_11-16-04.csv",
+      "uncompressed_size": 989
+    },
+    {
+      "compressed_size": 501,
+      "crc32_hex": "85f08e36",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-01-20_11-18-52.csv",
+      "uncompressed_size": 996
+    },
+    {
+      "compressed_size": 532,
+      "crc32_hex": "f3e5d499",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-01-20_11-22-57.csv",
+      "uncompressed_size": 1070
+    },
+    {
+      "compressed_size": 490,
+      "crc32_hex": "b55e473c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-01-20_11-25-36.csv",
+      "uncompressed_size": 993
+    },
+    {
+      "compressed_size": 498,
+      "crc32_hex": "1ee895eb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-01-20_11-31-04.csv",
+      "uncompressed_size": 984
+    },
+    {
+      "compressed_size": 497,
+      "crc32_hex": "13408c6c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-01-20_11-35-29.csv",
+      "uncompressed_size": 958
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2054667,
+      "crc32_hex": "ce8e3767",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/DATASET_2017-01-20_10-55-02_Person 4.mat",
+      "uncompressed_size": 2057917
+    },
+    {
+      "compressed_size": 2609526,
+      "crc32_hex": "e9fad47e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/DATASET_2017-01-20_10-59-22_Person 4.mat",
+      "uncompressed_size": 2614000
+    },
+    {
+      "compressed_size": 1723843,
+      "crc32_hex": "f8ee9d0b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/DATASET_2017-01-20_11-10-53_Person 4.mat",
+      "uncompressed_size": 1727414
+    },
+    {
+      "compressed_size": 2788679,
+      "crc32_hex": "771d6187",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/DATASET_2017-01-20_11-28-15_Person 4.mat",
+      "uncompressed_size": 2791789
+    },
+    {
+      "compressed_size": 369,
+      "crc32_hex": "10fa1156",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/Peak_2017-01-20_10-55-02.csv",
+      "uncompressed_size": 711
+    },
+    {
+      "compressed_size": 501,
+      "crc32_hex": "dd03e171",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/Peak_2017-01-20_10-59-22.csv",
+      "uncompressed_size": 1001
+    },
+    {
+      "compressed_size": 324,
+      "crc32_hex": "a8a058ac",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/Peak_2017-01-20_11-10-53.csv",
+      "uncompressed_size": 615
+    },
+    {
+      "compressed_size": 506,
+      "crc32_hex": "4c89b62c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_4LL/standing/Peak_2017-01-20_11-28-15.csv",
+      "uncompressed_size": 1006
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_xiphoid/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2525137,
+      "crc32_hex": "8143f94e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_xiphoid/DATASET_2017-01-20_10-41-20_Person 4.mat",
+      "uncompressed_size": 2529845
+    },
+    {
+      "compressed_size": 426,
+      "crc32_hex": "9ff96e3d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_4L_radar_xiphoid/Peak_2017-01-20_10-41-20.csv",
+      "uncompressed_size": 824
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_5L_radar_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2501375,
+      "crc32_hex": "991c35f6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-01-20_10-46-38_Person 4.mat",
+      "uncompressed_size": 2506239
+    },
+    {
+      "compressed_size": 436,
+      "crc32_hex": "faa27fa4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-01-20_10-46-38.csv",
+      "uncompressed_size": 859
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_5L_radar_4L/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2551121,
+      "crc32_hex": "9016b1b6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_5L_radar_4L/standing/DATASET_2017-01-20_11-07-59_Person 4.mat",
+      "uncompressed_size": 2555450
+    },
+    {
+      "compressed_size": 486,
+      "crc32_hex": "993a85a3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_front_radar_front/PCG_5L_radar_4L/standing/Peak_2017-01-20_11-07-59.csv",
+      "uncompressed_size": 949
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2629159,
+      "crc32_hex": "9db6471e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-01-20_11-52-43_Person 4.mat",
+      "uncompressed_size": 2634657
+    },
+    {
+      "compressed_size": 2604278,
+      "crc32_hex": "8a66a57b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-01-20_11-55-42_Person 4.mat",
+      "uncompressed_size": 2606593
+    },
+    {
+      "compressed_size": 463,
+      "crc32_hex": "ee5e07f2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-01-20_11-52-43.csv",
+      "uncompressed_size": 920
+    },
+    {
+      "compressed_size": 433,
+      "crc32_hex": "f49bb1cc",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-01-20_11-55-42.csv",
+      "uncompressed_size": 848
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2309301,
+      "crc32_hex": "f1f505f6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-01-20_12-00-18_Person 4.mat",
+      "uncompressed_size": 2314575
+    },
+    {
+      "compressed_size": 404,
+      "crc32_hex": "f04f4c20",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person4/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-01-20_12-00-18.csv",
+      "uncompressed_size": 784
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_back/PCG_5L_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2648994,
+      "crc32_hex": "75d93f62",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_back/PCG_5L_radar_back/DATASET_2017-02-01_10-57-03_Person 5.mat",
+      "uncompressed_size": 2653202
+    },
+    {
+      "compressed_size": 362,
+      "crc32_hex": "831da2bb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_back/PCG_5L_radar_back/Peak_2017-02-01_10-57-03.csv",
+      "uncompressed_size": 708
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_back/PCG_5L_radar_back/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2621911,
+      "crc32_hex": "9c9b958f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_back/PCG_5L_radar_back/after_sport/DATASET_2017-02-01_11-00-37_Person 5.mat",
+      "uncompressed_size": 2626166
+    },
+    {
+      "compressed_size": 420,
+      "crc32_hex": "56199ac8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_back/PCG_5L_radar_back/after_sport/Peak_2017-02-01_11-00-37.csv",
+      "uncompressed_size": 840
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2716149,
+      "crc32_hex": "86aafcc5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/DATASET_2017-02-01_09-43-19_Person 5.mat",
+      "uncompressed_size": 2722138
+    },
+    {
+      "compressed_size": 2666154,
+      "crc32_hex": "a2c39a96",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/DATASET_2017-02-01_09-48-25_Person 5.mat",
+      "uncompressed_size": 2672077
+    },
+    {
+      "compressed_size": 2493239,
+      "crc32_hex": "87a1c328",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/DATASET_2017-02-01_10-05-11_Person 5.mat",
+      "uncompressed_size": 2499077
+    },
+    {
+      "compressed_size": 1987021,
+      "crc32_hex": "5e3a541d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/DATASET_2017-02-01_10-08-51_Person 5.mat",
+      "uncompressed_size": 1991385
+    },
+    {
+      "compressed_size": 2468808,
+      "crc32_hex": "d9bea57f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/DATASET_2017-02-01_10-11-48_Person 5.mat",
+      "uncompressed_size": 2473813
+    },
+    {
+      "compressed_size": 393,
+      "crc32_hex": "7acad6bc",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/Peak_2017-02-01_09-43-19.csv",
+      "uncompressed_size": 808
+    },
+    {
+      "compressed_size": 389,
+      "crc32_hex": "cb702eea",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/Peak_2017-02-01_09-48-25.csv",
+      "uncompressed_size": 783
+    },
+    {
+      "compressed_size": 362,
+      "crc32_hex": "e907b049",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/Peak_2017-02-01_10-05-11.csv",
+      "uncompressed_size": 709
+    },
+    {
+      "compressed_size": 286,
+      "crc32_hex": "ebb6a604",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/Peak_2017-02-01_10-08-51.csv",
+      "uncompressed_size": 538
+    },
+    {
+      "compressed_size": 393,
+      "crc32_hex": "ae60c8a4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/Peak_2017-02-01_10-11-48.csv",
+      "uncompressed_size": 763
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2549169,
+      "crc32_hex": "f6608a01",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/after_sport/DATASET_2017-02-01_10-50-16_Person 5.mat",
+      "uncompressed_size": 2555821
+    },
+    {
+      "compressed_size": 2534611,
+      "crc32_hex": "8ec4091d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/after_sport/DATASET_2017-02-01_10-52-32_Person 5.mat",
+      "uncompressed_size": 2540119
+    },
+    {
+      "compressed_size": 440,
+      "crc32_hex": "a1ecc60d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/after_sport/Peak_2017-02-01_10-50-16.csv",
+      "uncompressed_size": 863
+    },
+    {
+      "compressed_size": 356,
+      "crc32_hex": "e67a60b6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/after_sport/Peak_2017-02-01_10-52-32.csv",
+      "uncompressed_size": 701
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_left/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_left/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2492033,
+      "crc32_hex": "8c543cd3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_left/apnea/DATASET_2017-02-01_10-19-46_Person 5.mat",
+      "uncompressed_size": 2498523
+    },
+    {
+      "compressed_size": 376,
+      "crc32_hex": "78ef6606",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_left/apnea/Peak_2017-02-01_10-19-46.csv",
+      "uncompressed_size": 734
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_right/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_right/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2410008,
+      "crc32_hex": "39ab8932",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_right/apnea/DATASET_2017-02-01_10-23-12_Person 5.mat",
+      "uncompressed_size": 2416965
+    },
+    {
+      "compressed_size": 1060286,
+      "crc32_hex": "d3448104",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_right/apnea/DATASET_2017-02-01_10-26-22_Person 5.mat",
+      "uncompressed_size": 1062984
+    },
+    {
+      "compressed_size": 373,
+      "crc32_hex": "b97e950b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_right/apnea/Peak_2017-02-01_10-23-12.csv",
+      "uncompressed_size": 732
+    },
+    {
+      "compressed_size": 169,
+      "crc32_hex": "8e81a60b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/angle_variation/30_degree_right/apnea/Peak_2017-02-01_10-26-22.csv",
+      "uncompressed_size": 305
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2517003,
+      "crc32_hex": "139a4923",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/apnea/DATASET_2017-02-01_10-14-48_Person 5.mat",
+      "uncompressed_size": 2522255
+    },
+    {
+      "compressed_size": 421,
+      "crc32_hex": "1e3e6d66",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/apnea/Peak_2017-02-01_10-14-48.csv",
+      "uncompressed_size": 840
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/artefact_speech/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2536751,
+      "crc32_hex": "c4549bc0",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/artefact_speech/DATASET_2017-02-01_10-31-16_Person 5.mat",
+      "uncompressed_size": 2542057
+    },
+    {
+      "compressed_size": 395,
+      "crc32_hex": "6ac6b96c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/artefact_speech/Peak_2017-02-01_10-31-16.csv",
+      "uncompressed_size": 787
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/distance_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/distance_variation/start_at_15cm/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2550265,
+      "crc32_hex": "4ea82b5f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/distance_variation/start_at_15cm/DATASET_2017-02-01_10-36-00_Person 5.mat",
+      "uncompressed_size": 2555230
+    },
+    {
+      "compressed_size": 366,
+      "crc32_hex": "71d480fa",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/distance_variation/start_at_15cm/Peak_2017-02-01_10-36-00.csv",
+      "uncompressed_size": 719
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/distance_variation/start_at_30cm/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2488661,
+      "crc32_hex": "64b8e080",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/distance_variation/start_at_30cm/DATASET_2017-02-01_10-41-21_Person 5.mat",
+      "uncompressed_size": 2495639
+    },
+    {
+      "compressed_size": 375,
+      "crc32_hex": "dd97bf4e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_front/PCG_5L_radar_xiphoid/distance_variation/start_at_30cm/Peak_2017-02-01_10-41-21.csv",
+      "uncompressed_size": 738
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_neck/PCG_5L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2475275,
+      "crc32_hex": "47e990d4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_neck/PCG_5L_radar_carotid_R/DATASET_2017-02-01_11-48-22_Person 5.mat",
+      "uncompressed_size": 2481072
+    },
+    {
+      "compressed_size": 2594307,
+      "crc32_hex": "ac33bceb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_neck/PCG_5L_radar_carotid_R/DATASET_2017-02-01_11-51-19_Person 5.mat",
+      "uncompressed_size": 2599392
+    },
+    {
+      "compressed_size": 356,
+      "crc32_hex": "4f4d8a54",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_neck/PCG_5L_radar_carotid_R/Peak_2017-02-01_11-48-22.csv",
+      "uncompressed_size": 687
+    },
+    {
+      "compressed_size": 354,
+      "crc32_hex": "5e224329",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_front_radar_neck/PCG_5L_radar_carotid_R/Peak_2017-02-01_11-51-19.csv",
+      "uncompressed_size": 689
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person5/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2468769,
+      "crc32_hex": "d35b7c7c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-01_11-09-40_Person 5.mat",
+      "uncompressed_size": 2477073
+    },
+    {
+      "compressed_size": 2453726,
+      "crc32_hex": "54f8b070",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-01_11-15-38_Person 5.mat",
+      "uncompressed_size": 2459992
+    },
+    {
+      "compressed_size": 378,
+      "crc32_hex": "befc9277",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-01_11-09-40.csv",
+      "uncompressed_size": 747
+    },
+    {
+      "compressed_size": 386,
+      "crc32_hex": "8411eb66",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person5/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-01_11-15-38.csv",
+      "uncompressed_size": 758
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_back/PCG_2L_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_back/PCG_2L_radar_back/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2559121,
+      "crc32_hex": "4620f092",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_back/PCG_2L_radar_back/after_sport/DATASET_2017-02-06_10-48-48_Person 6.mat",
+      "uncompressed_size": 2564607
+    },
+    {
+      "compressed_size": 497,
+      "crc32_hex": "5edb76e9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_back/PCG_2L_radar_back/after_sport/Peak_2017-02-06_10-48-48.csv",
+      "uncompressed_size": 990
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2219812,
+      "crc32_hex": "76920b47",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/DATASET_2017-02-06_09-01-56_Person 6.mat",
+      "uncompressed_size": 2221483
+    },
+    {
+      "compressed_size": 2456466,
+      "crc32_hex": "87c3f894",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/DATASET_2017-02-06_09-05-11_Person 6.mat",
+      "uncompressed_size": 2463977
+    },
+    {
+      "compressed_size": 2564538,
+      "crc32_hex": "e3069af7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/DATASET_2017-02-06_09-57-58_Person 6.mat",
+      "uncompressed_size": 2570649
+    },
+    {
+      "compressed_size": 322,
+      "crc32_hex": "e0be3686",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/Peak_2017-02-06_09-01-56.csv",
+      "uncompressed_size": 618
+    },
+    {
+      "compressed_size": 448,
+      "crc32_hex": "a90234bb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/Peak_2017-02-06_09-05-11.csv",
+      "uncompressed_size": 863
+    },
+    {
+      "compressed_size": 455,
+      "crc32_hex": "55be549c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/Peak_2017-02-06_09-57-58.csv",
+      "uncompressed_size": 912
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2594426,
+      "crc32_hex": "605c5102",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/after_sport/DATASET_2017-02-06_10-17-23_Person 6.mat",
+      "uncompressed_size": 2598929
+    },
+    {
+      "compressed_size": 1794912,
+      "crc32_hex": "e3f11a05",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/after_sport/DATASET_2017-02-06_10-21-05_Person 6.mat",
+      "uncompressed_size": 1798743
+    },
+    {
+      "compressed_size": 427,
+      "crc32_hex": "554d3d4e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/after_sport/Peak_2017-02-06_10-17-23.csv",
+      "uncompressed_size": 828
+    },
+    {
+      "compressed_size": 297,
+      "crc32_hex": "9cf00d14",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/after_sport/Peak_2017-02-06_10-21-05.csv",
+      "uncompressed_size": 559
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/distance_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2578512,
+      "crc32_hex": "83f2c1df",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/distance_variation/DATASET_2017-02-06_10-28-30_Person 6.mat",
+      "uncompressed_size": 2584107
+    },
+    {
+      "compressed_size": 2614473,
+      "crc32_hex": "2b0a5ff7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/distance_variation/DATASET_2017-02-06_10-35-01_Person 6.mat",
+      "uncompressed_size": 2621150
+    },
+    {
+      "compressed_size": 445,
+      "crc32_hex": "934c7226",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/distance_variation/Peak_2017-02-06_10-28-30.csv",
+      "uncompressed_size": 894
+    },
+    {
+      "compressed_size": 474,
+      "crc32_hex": "94339c1e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_2L_radar_5L/distance_variation/Peak_2017-02-06_10-35-01.csv",
+      "uncompressed_size": 952
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2519142,
+      "crc32_hex": "6b147cbe",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/DATASET_2017-02-06_09-10-20_Person 6.mat",
+      "uncompressed_size": 2524686
+    },
+    {
+      "compressed_size": 2400023,
+      "crc32_hex": "75cc1689",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/DATASET_2017-02-06_09-14-32_Person 6.mat",
+      "uncompressed_size": 2405857
+    },
+    {
+      "compressed_size": 2498064,
+      "crc32_hex": "ef695688",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/DATASET_2017-02-06_09-19-08_Person 6.mat",
+      "uncompressed_size": 2504629
+    },
+    {
+      "compressed_size": 2568021,
+      "crc32_hex": "ea49f2a3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/DATASET_2017-02-06_09-23-58_Person 6.mat",
+      "uncompressed_size": 2573694
+    },
+    {
+      "compressed_size": 470,
+      "crc32_hex": "f18df4be",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/Peak_2017-02-06_09-10-20.csv",
+      "uncompressed_size": 933
+    },
+    {
+      "compressed_size": 422,
+      "crc32_hex": "0d2e17da",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/Peak_2017-02-06_09-14-32.csv",
+      "uncompressed_size": 814
+    },
+    {
+      "compressed_size": 430,
+      "crc32_hex": "44782dbf",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/Peak_2017-02-06_09-19-08.csv",
+      "uncompressed_size": 855
+    },
+    {
+      "compressed_size": 484,
+      "crc32_hex": "15a9c93e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/Peak_2017-02-06_09-23-58.csv",
+      "uncompressed_size": 972
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/30_degree_left/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2484007,
+      "crc32_hex": "29b79f14",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/30_degree_left/DATASET_2017-02-06_09-44-15_Person 6.mat",
+      "uncompressed_size": 2490356
+    },
+    {
+      "compressed_size": 2447095,
+      "crc32_hex": "85b467c1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/30_degree_left/DATASET_2017-02-06_09-47-46_Person 6.mat",
+      "uncompressed_size": 2453027
+    },
+    {
+      "compressed_size": 425,
+      "crc32_hex": "d6536742",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/30_degree_left/Peak_2017-02-06_09-44-15.csv",
+      "uncompressed_size": 842
+    },
+    {
+      "compressed_size": 486,
+      "crc32_hex": "7a803613",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/30_degree_left/Peak_2017-02-06_09-47-46.csv",
+      "uncompressed_size": 976
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/30_degree_right/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2499775,
+      "crc32_hex": "253e5d46",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/30_degree_right/DATASET_2017-02-06_09-41-24_Person 6.mat",
+      "uncompressed_size": 2505953
+    },
+    {
+      "compressed_size": 481,
+      "crc32_hex": "13396a06",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/angle_variation/30_degree_right/Peak_2017-02-06_09-41-24.csv",
+      "uncompressed_size": 965
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2564616,
+      "crc32_hex": "52000fc5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/apnea/DATASET_2017-02-06_09-27-58_Person 6.mat",
+      "uncompressed_size": 2570252
+    },
+    {
+      "compressed_size": 2592836,
+      "crc32_hex": "0c24b0a4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/apnea/DATASET_2017-02-06_09-35-35_Person 6.mat",
+      "uncompressed_size": 2599289
+    },
+    {
+      "compressed_size": 486,
+      "crc32_hex": "1fe8196a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/apnea/Peak_2017-02-06_09-27-58.csv",
+      "uncompressed_size": 965
+    },
+    {
+      "compressed_size": 489,
+      "crc32_hex": "7011c812",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_2L/apnea/Peak_2017-02-06_09-35-35.csv",
+      "uncompressed_size": 981
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_5L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2546259,
+      "crc32_hex": "70ff91d3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_5L/DATASET_2017-02-06_10-01-44_Person 6.mat",
+      "uncompressed_size": 2552224
+    },
+    {
+      "compressed_size": 490,
+      "crc32_hex": "15acf519",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_front_radar_front/PCG_5L_radar_5L/Peak_2017-02-06_10-01-44.csv",
+      "uncompressed_size": 978
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person6/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2543090,
+      "crc32_hex": "d080057f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-06_10-54-37_Person 6.mat",
+      "uncompressed_size": 2549166
+    },
+    {
+      "compressed_size": 2550299,
+      "crc32_hex": "90b17521",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-06_10-57-05_Person 6.mat",
+      "uncompressed_size": 2556381
+    },
+    {
+      "compressed_size": 463,
+      "crc32_hex": "8565962a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-06_10-54-37.csv",
+      "uncompressed_size": 921
+    },
+    {
+      "compressed_size": 422,
+      "crc32_hex": "08117cb9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person6/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-06_10-57-05.csv",
+      "uncompressed_size": 849
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_back_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2533653,
+      "crc32_hex": "046a3a3b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_back_radar_back/DATASET_2017-02-27_12-30-30_Person 7.mat",
+      "uncompressed_size": 2540122
+    },
+    {
+      "compressed_size": 321,
+      "crc32_hex": "122dbf99",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_back_radar_back/Peak_2017-02-27_12-30-30.csv",
+      "uncompressed_size": 612
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_back/PCG_4L_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2460081,
+      "crc32_hex": "f3a2b096",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_back/PCG_4L_radar_back/DATASET_2017-02-08_09-58-01_Person 7.mat",
+      "uncompressed_size": 2463422
+    },
+    {
+      "compressed_size": 444,
+      "crc32_hex": "0271eec3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_back/PCG_4L_radar_back/Peak_2017-02-08_09-58-01.csv",
+      "uncompressed_size": 883
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_back/PCG_4L_radar_back/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2541865,
+      "crc32_hex": "111f234a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_back/PCG_4L_radar_back/after_sport/DATASET_2017-02-08_10-01-20_Person 7.mat",
+      "uncompressed_size": 2546352
+    },
+    {
+      "compressed_size": 404,
+      "crc32_hex": "429451e9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_back/PCG_4L_radar_back/after_sport/Peak_2017-02-08_10-01-20.csv",
+      "uncompressed_size": 805
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2538260,
+      "crc32_hex": "805e72be",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2L/DATASET_2017-02-27_12-09-10_Person 7.mat",
+      "uncompressed_size": 2543907
+    },
+    {
+      "compressed_size": 2549127,
+      "crc32_hex": "491095ef",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2L/DATASET_2017-02-27_12-12-16_Person 7.mat",
+      "uncompressed_size": 2555351
+    },
+    {
+      "compressed_size": 383,
+      "crc32_hex": "3c6c483e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2L/Peak_2017-02-27_12-09-10.csv",
+      "uncompressed_size": 760
+    },
+    {
+      "compressed_size": 369,
+      "crc32_hex": "fb60bca4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2L/Peak_2017-02-27_12-12-16.csv",
+      "uncompressed_size": 731
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2684370,
+      "crc32_hex": "df4c0e48",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2R/DATASET_2017-02-27_11-51-49_Person 7.mat",
+      "uncompressed_size": 2690885
+    },
+    {
+      "compressed_size": 2570361,
+      "crc32_hex": "4a796ffa",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2R/DATASET_2017-02-27_11-56-35_Person 7.mat",
+      "uncompressed_size": 2576331
+    },
+    {
+      "compressed_size": 2545433,
+      "crc32_hex": "84216938",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2R/DATASET_2017-02-27_11-59-16_Person 7.mat",
+      "uncompressed_size": 2552150
+    },
+    {
+      "compressed_size": 359,
+      "crc32_hex": "a26b9172",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2R/Peak_2017-02-27_11-51-49.csv",
+      "uncompressed_size": 728
+    },
+    {
+      "compressed_size": 365,
+      "crc32_hex": "fa1bd9f5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2R/Peak_2017-02-27_11-56-35.csv",
+      "uncompressed_size": 730
+    },
+    {
+      "compressed_size": 334,
+      "crc32_hex": "1605b258",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_2R/Peak_2017-02-27_11-59-16.csv",
+      "uncompressed_size": 671
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2574960,
+      "crc32_hex": "a7891159",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_4L/DATASET_2017-02-27_12-15-30_Person 7.mat",
+      "uncompressed_size": 2581436
+    },
+    {
+      "compressed_size": 377,
+      "crc32_hex": "284e1389",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2L_radar_4L/Peak_2017-02-27_12-15-30.csv",
+      "uncompressed_size": 738
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2R_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2567778,
+      "crc32_hex": "2aeb61f9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2R_radar_2L/DATASET_2017-02-27_11-14-35_Person 7.mat",
+      "uncompressed_size": 2573466
+    },
+    {
+      "compressed_size": 368,
+      "crc32_hex": "f7f3f738",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_2R_radar_2L/Peak_2017-02-27_11-14-35.csv",
+      "uncompressed_size": 734
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2327678,
+      "crc32_hex": "ee8757d4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_2L/DATASET_2017-02-08_09-19-48_Person 7.mat",
+      "uncompressed_size": 2332230
+    },
+    {
+      "compressed_size": 387,
+      "crc32_hex": "2bc262cd",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_2L/Peak_2017-02-08_09-19-48.csv",
+      "uncompressed_size": 742
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2386362,
+      "crc32_hex": "af6f32fa",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-02-08_09-04-15_Person 7.mat",
+      "uncompressed_size": 2390687
+    },
+    {
+      "compressed_size": 2383255,
+      "crc32_hex": "92e5e4d7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-02-08_09-07-15_Person 7.mat",
+      "uncompressed_size": 2388287
+    },
+    {
+      "compressed_size": 2391451,
+      "crc32_hex": "76e77b37",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-02-08_10-07-34_Person 7.mat",
+      "uncompressed_size": 2395191
+    },
+    {
+      "compressed_size": 2393416,
+      "crc32_hex": "86de4c95",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-02-08_10-09-12_Person 7.mat",
+      "uncompressed_size": 2397126
+    },
+    {
+      "compressed_size": 2563950,
+      "crc32_hex": "88bd4533",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-02-27_12-02-11_Person 7.mat",
+      "uncompressed_size": 2568512
+    },
+    {
+      "compressed_size": 2775406,
+      "crc32_hex": "a270c10f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-02-27_12-19-07_Person 7.mat",
+      "uncompressed_size": 2779516
+    },
+    {
+      "compressed_size": 2669906,
+      "crc32_hex": "9bfcd3fa",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-02-27_12-21-02_Person 7.mat",
+      "uncompressed_size": 2674695
+    },
+    {
+      "compressed_size": 2511061,
+      "crc32_hex": "c1959332",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/DATASET_2017-02-27_12-23-01_Person 7.mat",
+      "uncompressed_size": 2517494
+    },
+    {
+      "compressed_size": 372,
+      "crc32_hex": "e52ccde7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-02-08_09-04-15.csv",
+      "uncompressed_size": 732
+    },
+    {
+      "compressed_size": 401,
+      "crc32_hex": "6d597ac6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-02-08_09-07-15.csv",
+      "uncompressed_size": 782
+    },
+    {
+      "compressed_size": 405,
+      "crc32_hex": "0165043e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-02-08_10-07-34.csv",
+      "uncompressed_size": 791
+    },
+    {
+      "compressed_size": 425,
+      "crc32_hex": "a003773f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-02-08_10-09-12.csv",
+      "uncompressed_size": 845
+    },
+    {
+      "compressed_size": 369,
+      "crc32_hex": "296014f9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-02-27_12-02-11.csv",
+      "uncompressed_size": 710
+    },
+    {
+      "compressed_size": 399,
+      "crc32_hex": "69648b59",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-02-27_12-19-07.csv",
+      "uncompressed_size": 796
+    },
+    {
+      "compressed_size": 377,
+      "crc32_hex": "d1c0d372",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-02-27_12-21-02.csv",
+      "uncompressed_size": 752
+    },
+    {
+      "compressed_size": 371,
+      "crc32_hex": "f38598d9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/Peak_2017-02-27_12-23-01.csv",
+      "uncompressed_size": 711
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2491561,
+      "crc32_hex": "7ba8daca",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/after_sport/DATASET_2017-02-08_09-45-26_Person 7.mat",
+      "uncompressed_size": 2496144
+    },
+    {
+      "compressed_size": 2450743,
+      "crc32_hex": "9c8a63b9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/after_sport/DATASET_2017-02-08_09-48-50_Person 7.mat",
+      "uncompressed_size": 2455230
+    },
+    {
+      "compressed_size": 371,
+      "crc32_hex": "08634354",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/after_sport/Peak_2017-02-08_09-45-26.csv",
+      "uncompressed_size": 740
+    },
+    {
+      "compressed_size": 406,
+      "crc32_hex": "ddc7b625",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/after_sport/Peak_2017-02-08_09-48-50.csv",
+      "uncompressed_size": 813
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/angle_variation/30_Grad_links/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2414097,
+      "crc32_hex": "06dcc467",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/angle_variation/30_Grad_links/DATASET_2017-02-08_09-22-36_Person 7.mat",
+      "uncompressed_size": 2418772
+    },
+    {
+      "compressed_size": 392,
+      "crc32_hex": "9d0ece91",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/angle_variation/30_Grad_links/Peak_2017-02-08_09-22-36.csv",
+      "uncompressed_size": 781
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/angle_variation/30_Grad_rechts/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2426599,
+      "crc32_hex": "db9f3d46",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/angle_variation/30_Grad_rechts/DATASET_2017-02-08_09-29-46_Person 7.mat",
+      "uncompressed_size": 2431500
+    },
+    {
+      "compressed_size": 409,
+      "crc32_hex": "4516ce2b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/angle_variation/30_Grad_rechts/Peak_2017-02-08_09-29-46.csv",
+      "uncompressed_size": 789
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2411941,
+      "crc32_hex": "ce3ba851",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/apnea/DATASET_2017-02-08_09-10-12_Person 7.mat",
+      "uncompressed_size": 2417946
+    },
+    {
+      "compressed_size": 2457390,
+      "crc32_hex": "3fbfb857",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/apnea/DATASET_2017-02-08_09-13-27_Person 7.mat",
+      "uncompressed_size": 2462787
+    },
+    {
+      "compressed_size": 427,
+      "crc32_hex": "8d91532d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/apnea/Peak_2017-02-08_09-10-12.csv",
+      "uncompressed_size": 839
+    },
+    {
+      "compressed_size": 474,
+      "crc32_hex": "8b0e3e3a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/apnea/Peak_2017-02-08_09-13-27.csv",
+      "uncompressed_size": 940
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/artefact_movement/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 1776349,
+      "crc32_hex": "8d155c6d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/artefact_movement/DATASET_2017-02-27_12-42-14_Person 7.mat",
+      "uncompressed_size": 1779567
+    },
+    {
+      "compressed_size": 1288745,
+      "crc32_hex": "7f47dab5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/artefact_movement/DATASET_2017-02-27_12-48-11_Person 7.mat",
+      "uncompressed_size": 1291856
+    },
+    {
+      "compressed_size": 255,
+      "crc32_hex": "0452c18c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/artefact_movement/Peak_2017-02-27_12-42-14.csv",
+      "uncompressed_size": 476
+    },
+    {
+      "compressed_size": 205,
+      "crc32_hex": "f06cd281",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/artefact_movement/Peak_2017-02-27_12-48-11.csv",
+      "uncompressed_size": 375
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/artefact_speech/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2240712,
+      "crc32_hex": "d80f26aa",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/artefact_speech/DATASET_2017-02-08_09-17-07_Person 7.mat",
+      "uncompressed_size": 2245082
+    },
+    {
+      "compressed_size": 447,
+      "crc32_hex": "06847be5",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/artefact_speech/Peak_2017-02-08_09-17-07.csv",
+      "uncompressed_size": 868
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/distance_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2516150,
+      "crc32_hex": "50dbea22",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/distance_variation/DATASET_2017-02-08_09-34-20_Person 7.mat",
+      "uncompressed_size": 2521591
+    },
+    {
+      "compressed_size": 2215040,
+      "crc32_hex": "537ba2eb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/distance_variation/DATASET_2017-02-08_09-39-49_Person 7.mat",
+      "uncompressed_size": 2220348
+    },
+    {
+      "compressed_size": 383,
+      "crc32_hex": "dbca9a18",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/distance_variation/Peak_2017-02-08_09-34-20.csv",
+      "uncompressed_size": 762
+    },
+    {
+      "compressed_size": 324,
+      "crc32_hex": "1b19be24",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/distance_variation/Peak_2017-02-08_09-39-49.csv",
+      "uncompressed_size": 616
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2471526,
+      "crc32_hex": "0123d9e9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/standing/DATASET_2017-02-08_10-28-09_Person 7.mat",
+      "uncompressed_size": 2476319
+    },
+    {
+      "compressed_size": 2509003,
+      "crc32_hex": "9c3384f1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/standing/DATASET_2017-02-08_10-31-32_Person 7.mat",
+      "uncompressed_size": 2513491
+    },
+    {
+      "compressed_size": 474,
+      "crc32_hex": "6e95d317",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/standing/Peak_2017-02-08_10-28-09.csv",
+      "uncompressed_size": 951
+    },
+    {
+      "compressed_size": 461,
+      "crc32_hex": "db4b5a40",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_4L/standing/Peak_2017-02-08_10-31-32.csv",
+      "uncompressed_size": 939
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_xiphoid/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2710623,
+      "crc32_hex": "b28347b4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_xiphoid/DATASET_2017-02-08_08-58-07_Person 7.mat",
+      "uncompressed_size": 2712621
+    },
+    {
+      "compressed_size": 2544222,
+      "crc32_hex": "53c778f9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_xiphoid/DATASET_2017-02-08_09-01-07_Person 7.mat",
+      "uncompressed_size": 2547666
+    },
+    {
+      "compressed_size": 365,
+      "crc32_hex": "f7f37dd6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_xiphoid/Peak_2017-02-08_08-58-07.csv",
+      "uncompressed_size": 718
+    },
+    {
+      "compressed_size": 382,
+      "crc32_hex": "1c8a39a8",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_front_radar_front/PCG_5L_radar_xiphoid/Peak_2017-02-08_09-01-07.csv",
+      "uncompressed_size": 745
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2397664,
+      "crc32_hex": "111177b7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-08_10-12-00_Person 7.mat",
+      "uncompressed_size": 2401024
+    },
+    {
+      "compressed_size": 2525282,
+      "crc32_hex": "f16e3677",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-08_10-15-28_Person 7.mat",
+      "uncompressed_size": 2529033
+    },
+    {
+      "compressed_size": 403,
+      "crc32_hex": "4e9f8650",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-08_10-12-00.csv",
+      "uncompressed_size": 792
+    },
+    {
+      "compressed_size": 407,
+      "crc32_hex": "d558b3c0",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-08_10-15-28.csv",
+      "uncompressed_size": 799
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2578383,
+      "crc32_hex": "48f06dba",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-08_10-18-47_Person 7.mat",
+      "uncompressed_size": 2583703
+    },
+    {
+      "compressed_size": 2514872,
+      "crc32_hex": "dd761522",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-08_10-21-44_Person 7.mat",
+      "uncompressed_size": 2518881
+    },
+    {
+      "compressed_size": 2573553,
+      "crc32_hex": "3678c5dd",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-08_10-24-21_Person 7.mat",
+      "uncompressed_size": 2578611
+    },
+    {
+      "compressed_size": 386,
+      "crc32_hex": "a561e445",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-02-08_10-18-47.csv",
+      "uncompressed_size": 753
+    },
+    {
+      "compressed_size": 404,
+      "crc32_hex": "01436e58",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-02-08_10-21-44.csv",
+      "uncompressed_size": 782
+    },
+    {
+      "compressed_size": 412,
+      "crc32_hex": "faeb86b2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person7/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-02-08_10-24-21.csv",
+      "uncompressed_size": 819
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2625861,
+      "crc32_hex": "7c099034",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/DATASET_2017-02-10_09-32-09_Person 8.mat",
+      "uncompressed_size": 2630270
+    },
+    {
+      "compressed_size": 388,
+      "crc32_hex": "e8a37481",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/Peak_2017-02-10_09-32-09.csv",
+      "uncompressed_size": 765
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/artefact_speech/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/distance_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2547791,
+      "crc32_hex": "13110fac",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/distance_variation/DATASET_2017-02-10_09-45-28_Person 8.mat",
+      "uncompressed_size": 2552428
+    },
+    {
+      "compressed_size": 381,
+      "crc32_hex": "23105b58",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/distance_variation/Peak_2017-02-10_09-45-28.csv",
+      "uncompressed_size": 764
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2582712,
+      "crc32_hex": "9f3a802a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-02-10_09-49-27_Person 8.mat",
+      "uncompressed_size": 2587253
+    },
+    {
+      "compressed_size": 2618294,
+      "crc32_hex": "2ffe5c3b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/standing/DATASET_2017-02-10_09-52-36_Person 8.mat",
+      "uncompressed_size": 2622259
+    },
+    {
+      "compressed_size": 448,
+      "crc32_hex": "1ee617b3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-02-10_09-49-27.csv",
+      "uncompressed_size": 899
+    },
+    {
+      "compressed_size": 449,
+      "crc32_hex": "0141803e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2L_radar_4L/standing/Peak_2017-02-10_09-52-36.csv",
+      "uncompressed_size": 905
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2593160,
+      "crc32_hex": "f92c0529",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_2L/DATASET_2017-02-10_09-14-02_Person 8.mat",
+      "uncompressed_size": 2598021
+    },
+    {
+      "compressed_size": 402,
+      "crc32_hex": "85f7a511",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_2L/Peak_2017-02-10_09-14-02.csv",
+      "uncompressed_size": 802
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2648888,
+      "crc32_hex": "4c6ad300",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/DATASET_2017-02-10_09-18-32_Person 8.mat",
+      "uncompressed_size": 2653928
+    },
+    {
+      "compressed_size": 407,
+      "crc32_hex": "6857def1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/Peak_2017-02-10_09-18-32.csv",
+      "uncompressed_size": 808
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/30_degree_left/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2628612,
+      "crc32_hex": "75a5839c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/30_degree_left/DATASET_2017-02-10_09-22-17_Person 8.mat",
+      "uncompressed_size": 2633529
+    },
+    {
+      "compressed_size": 388,
+      "crc32_hex": "f92f7308",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/30_degree_left/Peak_2017-02-10_09-22-17.csv",
+      "uncompressed_size": 765
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/30_degree_right/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2638330,
+      "crc32_hex": "a905504f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/30_degree_right/DATASET_2017-02-10_09-25-26_Person 8.mat",
+      "uncompressed_size": 2644298
+    },
+    {
+      "compressed_size": 2665665,
+      "crc32_hex": "6ae3a9c9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/30_degree_right/DATASET_2017-02-10_09-28-04_Person 8.mat",
+      "uncompressed_size": 2670474
+    },
+    {
+      "compressed_size": 395,
+      "crc32_hex": "4eaab4f1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/30_degree_right/Peak_2017-02-10_09-25-26.csv",
+      "uncompressed_size": 790
+    },
+    {
+      "compressed_size": 389,
+      "crc32_hex": "f5e6e553",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_2R_radar_4L/angle_variation/30_degree_right/Peak_2017-02-10_09-28-04.csv",
+      "uncompressed_size": 777
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2692960,
+      "crc32_hex": "645632d4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/DATASET_2017-02-10_08-51-11_Person 8.mat",
+      "uncompressed_size": 2699495
+    },
+    {
+      "compressed_size": 2576601,
+      "crc32_hex": "40092090",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/DATASET_2017-02-10_08-56-20_Person 8.mat",
+      "uncompressed_size": 2582179
+    },
+    {
+      "compressed_size": 2180293,
+      "crc32_hex": "eda11ec4",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/DATASET_2017-02-10_09-02-41_Person 8.mat",
+      "uncompressed_size": 2184503
+    },
+    {
+      "compressed_size": 2026279,
+      "crc32_hex": "c59394d0",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/DATASET_2017-02-10_09-04-54_Person 8.mat",
+      "uncompressed_size": 2030040
+    },
+    {
+      "compressed_size": 425,
+      "crc32_hex": "33f3117f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/Peak_2017-02-10_08-51-11.csv",
+      "uncompressed_size": 874
+    },
+    {
+      "compressed_size": 396,
+      "crc32_hex": "b8079d86",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/Peak_2017-02-10_08-56-20.csv",
+      "uncompressed_size": 764
+    },
+    {
+      "compressed_size": 334,
+      "crc32_hex": "452a27e1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/Peak_2017-02-10_09-02-41.csv",
+      "uncompressed_size": 639
+    },
+    {
+      "compressed_size": 321,
+      "crc32_hex": "9a90c42c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/Peak_2017-02-10_09-04-54.csv",
+      "uncompressed_size": 608
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 794104,
+      "crc32_hex": "ee55af28",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/apnea/DATASET_2017-02-10_09-00-14_Person 8.mat",
+      "uncompressed_size": 795828
+    },
+    {
+      "compressed_size": 2620890,
+      "crc32_hex": "9967ef9e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/apnea/DATASET_2017-02-10_09-06-34_Person 8.mat",
+      "uncompressed_size": 2626636
+    },
+    {
+      "compressed_size": 2640516,
+      "crc32_hex": "49ba2294",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/apnea/DATASET_2017-02-10_09-09-18_Person 8.mat",
+      "uncompressed_size": 2646112
+    },
+    {
+      "compressed_size": 145,
+      "crc32_hex": "88186fd7",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/apnea/Peak_2017-02-10_09-00-14.csv",
+      "uncompressed_size": 255
+    },
+    {
+      "compressed_size": 427,
+      "crc32_hex": "d92f5d91",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/apnea/Peak_2017-02-10_09-06-34.csv",
+      "uncompressed_size": 864
+    },
+    {
+      "compressed_size": 446,
+      "crc32_hex": "ad35144e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_front_radar_front/PCG_4L_radar_xiphoid/apnea/Peak_2017-02-10_09-09-18.csv",
+      "uncompressed_size": 894
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2599387,
+      "crc32_hex": "6d933a7f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-10_10-00-49_Person 8.mat",
+      "uncompressed_size": 2606037
+    },
+    {
+      "compressed_size": 2480357,
+      "crc32_hex": "6e6aa18c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-10_10-03-30_Person 8.mat",
+      "uncompressed_size": 2486635
+    },
+    {
+      "compressed_size": 394,
+      "crc32_hex": "b553e2a1",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-10_10-00-49.csv",
+      "uncompressed_size": 787
+    },
+    {
+      "compressed_size": 372,
+      "crc32_hex": "c26ae093",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-10_10-03-30.csv",
+      "uncompressed_size": 724
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2626684,
+      "crc32_hex": "2b14005e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-10_10-06-46_Person 8.mat",
+      "uncompressed_size": 2631522
+    },
+    {
+      "compressed_size": 387,
+      "crc32_hex": "6ef21722",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person8/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-02-10_10-06-46.csv",
+      "uncompressed_size": 775
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_back/PCG_4L_radar_back/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2435901,
+      "crc32_hex": "7bdc4dfb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_back/PCG_4L_radar_back/DATASET_2017-02-13_10-35-49_Person 9.mat",
+      "uncompressed_size": 2441951
+    },
+    {
+      "compressed_size": 337,
+      "crc32_hex": "b1eaf3c3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_back/PCG_4L_radar_back/Peak_2017-02-13_10-35-49.csv",
+      "uncompressed_size": 647
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_2L_radar_4L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 964119,
+      "crc32_hex": "46b8ff08",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_2L_radar_4L/DATASET_2017-02-13_09-12-49_Person 9.mat",
+      "uncompressed_size": 966841
+    },
+    {
+      "compressed_size": 2567094,
+      "crc32_hex": "6c1f272d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_2L_radar_4L/DATASET_2017-02-13_09-15-35_Person 9.mat",
+      "uncompressed_size": 2572116
+    },
+    {
+      "compressed_size": 156,
+      "crc32_hex": "e5ad58b3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_2L_radar_4L/Peak_2017-02-13_09-12-49.csv",
+      "uncompressed_size": 272
+    },
+    {
+      "compressed_size": 384,
+      "crc32_hex": "c0f03cbe",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_2L_radar_4L/Peak_2017-02-13_09-15-35.csv",
+      "uncompressed_size": 753
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_2L_radar_5L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2548149,
+      "crc32_hex": "589e2565",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_2L_radar_5L/DATASET_2017-02-13_09-31-52_Person 9.mat",
+      "uncompressed_size": 2554010
+    },
+    {
+      "compressed_size": 406,
+      "crc32_hex": "d0de7caf",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_2L_radar_5L/Peak_2017-02-13_09-31-52.csv",
+      "uncompressed_size": 813
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2538511,
+      "crc32_hex": "52ac8292",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/DATASET_2017-02-13_09-17-47_Person 9.mat",
+      "uncompressed_size": 2543266
+    },
+    {
+      "compressed_size": 2557594,
+      "crc32_hex": "d4026cc2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/DATASET_2017-02-13_09-20-17_Person 9.mat",
+      "uncompressed_size": 2562956
+    },
+    {
+      "compressed_size": 2557954,
+      "crc32_hex": "d17aa299",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/DATASET_2017-02-13_09-23-17_Person 9.mat",
+      "uncompressed_size": 2563503
+    },
+    {
+      "compressed_size": 2477345,
+      "crc32_hex": "dd893cfe",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/DATASET_2017-02-13_09-25-36_Person 9.mat",
+      "uncompressed_size": 2483135
+    },
+    {
+      "compressed_size": 2541942,
+      "crc32_hex": "42672982",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/DATASET_2017-02-13_09-53-10_Person 9.mat",
+      "uncompressed_size": 2549129
+    },
+    {
+      "compressed_size": 2554277,
+      "crc32_hex": "11e83a70",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/DATASET_2017-02-13_10-00-42_Person 9.mat",
+      "uncompressed_size": 2560757
+    },
+    {
+      "compressed_size": 395,
+      "crc32_hex": "5ee22ea2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/Peak_2017-02-13_09-17-47.csv",
+      "uncompressed_size": 774
+    },
+    {
+      "compressed_size": 402,
+      "crc32_hex": "2119969b",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/Peak_2017-02-13_09-20-17.csv",
+      "uncompressed_size": 789
+    },
+    {
+      "compressed_size": 430,
+      "crc32_hex": "b3fabd05",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/Peak_2017-02-13_09-23-17.csv",
+      "uncompressed_size": 853
+    },
+    {
+      "compressed_size": 380,
+      "crc32_hex": "017969d2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/Peak_2017-02-13_09-25-36.csv",
+      "uncompressed_size": 762
+    },
+    {
+      "compressed_size": 368,
+      "crc32_hex": "b0509e7c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/Peak_2017-02-13_09-53-10.csv",
+      "uncompressed_size": 740
+    },
+    {
+      "compressed_size": 389,
+      "crc32_hex": "fcafd297",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/Peak_2017-02-13_10-00-42.csv",
+      "uncompressed_size": 772
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/after_sport/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 848427,
+      "crc32_hex": "3e30aa8d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/after_sport/DATASET_2017-02-13_10-26-46_Person 9.mat",
+      "uncompressed_size": 850246
+    },
+    {
+      "compressed_size": 2603685,
+      "crc32_hex": "ac77eaff",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/after_sport/DATASET_2017-02-13_10-31-55_Person 9.mat",
+      "uncompressed_size": 2609469
+    },
+    {
+      "compressed_size": 142,
+      "crc32_hex": "b581b1eb",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/after_sport/Peak_2017-02-13_10-26-46.csv",
+      "uncompressed_size": 247
+    },
+    {
+      "compressed_size": 399,
+      "crc32_hex": "c71a2000",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/after_sport/Peak_2017-02-13_10-31-55.csv",
+      "uncompressed_size": 790
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/30_degree_left/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2447487,
+      "crc32_hex": "0d5b5e2e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/30_degree_left/DATASET_2017-02-13_09-35-16_Person 9.mat",
+      "uncompressed_size": 2452718
+    },
+    {
+      "compressed_size": 2516150,
+      "crc32_hex": "de7abb34",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/30_degree_left/DATASET_2017-02-13_09-37-35_Person 9.mat",
+      "uncompressed_size": 2521691
+    },
+    {
+      "compressed_size": 374,
+      "crc32_hex": "8351e292",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/30_degree_left/Peak_2017-02-13_09-35-16.csv",
+      "uncompressed_size": 743
+    },
+    {
+      "compressed_size": 382,
+      "crc32_hex": "547be654",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/30_degree_left/Peak_2017-02-13_09-37-35.csv",
+      "uncompressed_size": 749
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/30_degree_right/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2563039,
+      "crc32_hex": "6a0d32d9",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/30_degree_right/DATASET_2017-02-13_09-44-00_Person 9.mat",
+      "uncompressed_size": 2569522
+    },
+    {
+      "compressed_size": 370,
+      "crc32_hex": "e579a48e",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/angle_variation/30_degree_right/Peak_2017-02-13_09-44-00.csv",
+      "uncompressed_size": 735
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/apnea/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/apnea/exhaled/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2508312,
+      "crc32_hex": "fcf3e5d6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/apnea/exhaled/DATASET_2017-02-13_09-58-49_Person 9.mat",
+      "uncompressed_size": 2515341
+    },
+    {
+      "compressed_size": 359,
+      "crc32_hex": "64b119ed",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/apnea/exhaled/Peak_2017-02-13_09-58-49.csv",
+      "uncompressed_size": 706
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/apnea/inhaled/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2529703,
+      "crc32_hex": "6e540ab6",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/apnea/inhaled/DATASET_2017-02-13_09-55-46_Person 9.mat",
+      "uncompressed_size": 2537235
+    },
+    {
+      "compressed_size": 346,
+      "crc32_hex": "ebcce1ff",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/apnea/inhaled/Peak_2017-02-13_09-55-46.csv",
+      "uncompressed_size": 677
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/artefact_movement/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2628369,
+      "crc32_hex": "0d0fad43",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/artefact_movement/DATASET_2017-02-13_10-12-04_Person 9.mat",
+      "uncompressed_size": 2634466
+    },
+    {
+      "compressed_size": 403,
+      "crc32_hex": "34d27d8c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/artefact_movement/Peak_2017-02-13_10-12-04.csv",
+      "uncompressed_size": 818
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/artefact_speech/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2516997,
+      "crc32_hex": "5ef7611f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/artefact_speech/DATASET_2017-02-13_09-47-05_Person 9.mat",
+      "uncompressed_size": 2523751
+    },
+    {
+      "compressed_size": 2575947,
+      "crc32_hex": "44c7f930",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/artefact_speech/DATASET_2017-02-13_09-50-08_Person 9.mat",
+      "uncompressed_size": 2583307
+    },
+    {
+      "compressed_size": 411,
+      "crc32_hex": "31b2e4f2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/artefact_speech/Peak_2017-02-13_09-47-05.csv",
+      "uncompressed_size": 808
+    },
+    {
+      "compressed_size": 409,
+      "crc32_hex": "e9f613f2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/artefact_speech/Peak_2017-02-13_09-50-08.csv",
+      "uncompressed_size": 820
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/standing/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2618614,
+      "crc32_hex": "21609fed",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/standing/DATASET_2017-02-13_10-17-08_Person 9.mat",
+      "uncompressed_size": 2623320
+    },
+    {
+      "compressed_size": 2567646,
+      "crc32_hex": "fe45f52d",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/standing/DATASET_2017-02-13_10-20-00_Person 9.mat",
+      "uncompressed_size": 2572928
+    },
+    {
+      "compressed_size": 2649209,
+      "crc32_hex": "494d2fbc",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/standing/DATASET_2017-02-13_10-22-39_Person 9.mat",
+      "uncompressed_size": 2653229
+    },
+    {
+      "compressed_size": 482,
+      "crc32_hex": "0173f7c3",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/standing/Peak_2017-02-13_10-17-08.csv",
+      "uncompressed_size": 981
+    },
+    {
+      "compressed_size": 477,
+      "crc32_hex": "704a3b4a",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/standing/Peak_2017-02-13_10-20-00.csv",
+      "uncompressed_size": 970
+    },
+    {
+      "compressed_size": 475,
+      "crc32_hex": "b433fc17",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_2L/standing/Peak_2017-02-13_10-22-39.csv",
+      "uncompressed_size": 960
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_xiphoid/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2572245,
+      "crc32_hex": "1fb818de",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_xiphoid/DATASET_2017-02-13_09-29-31_Person 9.mat",
+      "uncompressed_size": 2577259
+    },
+    {
+      "compressed_size": 397,
+      "crc32_hex": "de5ac405",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_front_radar_front/PCG_4L_radar_xiphoid/Peak_2017-02-13_09-29-31.csv",
+      "uncompressed_size": 789
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2469618,
+      "crc32_hex": "f82f893c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-13_10-39-05_Person 9.mat",
+      "uncompressed_size": 2475503
+    },
+    {
+      "compressed_size": 2533314,
+      "crc32_hex": "d7ffb92f",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/DATASET_2017-02-13_10-41-22_Person 9.mat",
+      "uncompressed_size": 2538848
+    },
+    {
+      "compressed_size": 385,
+      "crc32_hex": "49f83da2",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-13_10-39-05.csv",
+      "uncompressed_size": 759
+    },
+    {
+      "compressed_size": 407,
+      "crc32_hex": "2a4c106c",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_L_radar_carotid_R/Peak_2017-02-13_10-41-22.csv",
+      "uncompressed_size": 819
+    },
+    {
+      "compressed_size": 0,
+      "crc32_hex": "00000000",
+      "is_directory": true,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/",
+      "uncompressed_size": 0
+    },
+    {
+      "compressed_size": 2514323,
+      "crc32_hex": "e7b65caf",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-13_10-43-37_Person 9.mat",
+      "uncompressed_size": 2520714
+    },
+    {
+      "compressed_size": 414,
+      "crc32_hex": "442089ae",
+      "is_directory": false,
+      "path": "datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/Peak_2017-02-13_10-43-37.csv",
+      "uncompressed_size": 828
+    },
+    {
+      "compressed_size": 40762,
+      "crc32_hex": "ffc27580",
+      "is_directory": false,
+      "path": "overview_and_rating.xlsx",
+      "uncompressed_size": 45169
+    }
+  ],
+  "payload_path": "datasets/raw_archives/external_datasets/d1_2417ghz/datasets_scidata_vsmdb.zip",
+  "phase": "M-PV0_D1_2417GHZ_ADAPTER",
+  "protocol_workbook_member_count": 1,
+  "raw_payload_policy": {
+    "policy_boundary": "datasets/raw_archives/",
+    "repository_relative_local_path_only": true,
+    "tracked": false
+  },
+  "reference_csv_member_count": 265,
+  "subject_count": 11,
+  "subject_directory_numbers": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11"
+  ]
+}
