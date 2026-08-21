@@ -1,0 +1,202 @@
+{
+  "entries": [
+    {
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "reason": "RECEIVE_MEDIAN_ZERO_MS",
+      "session_id": "LEGACY_2026-07-13_empty_desk_collector_v1_30s"
+    },
+    {
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "q1_status": "RECEIVE_CADENCE_ONLY",
+      "reason": "PHASE_AGE_ABSENT_REPUBLICATION_UNIDENTIFIABLE",
+      "session_id": "LEGACY_2026-07-13_empty_desk_prechange_30s"
+    },
+    {
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "session_id": "LEGACY_2026-07-25_empty_gate_attempt03_15s"
+    },
+    {
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "session_id": "LEGACY_2026-07-25_empty_gate_attempt03_60s"
+    },
+    {
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "session_id": "LEGACY_2026-08-01_occupied_d09_v120_31min_attempt02"
+    },
+    {
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "session_id": "LEGACY_2026-07-26_heartrate_ref_applewatch_300s"
+    },
+    {
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "session_id": "LEGACY_2026-07-28_entry_exit_20_v2"
+    },
+    {
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "session_id": "LEGACY_2026-07-25_occupied_d15_v1_360s"
+    },
+    {
+      "evidence_family": "PR18_PILOT_CAPTURE",
+      "q1_status": "EXCLUDED",
+      "reason": "NO_GIT_BLOB_IN_MN0_INVENTORY",
+      "session_id": "M-C0-PILOT-DESKWORK-001"
+    },
+    {
+      "evidence_family": "PR18_PILOT_CAPTURE",
+      "q1_status": "EXCLUDED",
+      "reason": "NO_GIT_BLOB_IN_MN0_INVENTORY",
+      "session_id": "M-C0-PILOT-STATIONARY-001"
+    },
+    {
+      "evidence_family": "AUG08_LIVE_RAW_JSONL",
+      "q1_status": "EXCLUDED",
+      "reason": "NO_GIT_BLOB_IN_MN0_INVENTORY",
+      "session_id": "AUG08_IDENTITY_RAW_20S"
+    },
+    {
+      "evidence_family": "AUG08_LIVE_RAW_JSONL",
+      "q1_status": "EXCLUDED",
+      "reason": "NO_GIT_BLOB_IN_MN0_INVENTORY",
+      "session_id": "AUG08_NO_PERSON_RAW_10S"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "q1_status": "EXCLUDED",
+      "reason": "PI_RUNTIME_JSONL_NOT_IN_STANDALONE_REPO",
+      "session_id": "PI_20260816_13"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "q1_status": "EXCLUDED",
+      "reason": "PI_RUNTIME_JSONL_NOT_IN_STANDALONE_REPO",
+      "session_id": "PI_20260816_14"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "q1_status": "EXCLUDED",
+      "reason": "PI_RUNTIME_JSONL_NOT_IN_STANDALONE_REPO",
+      "session_id": "PI_20260816_15"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "q1_status": "EXCLUDED",
+      "reason": "PI_RUNTIME_JSONL_NOT_IN_STANDALONE_REPO",
+      "session_id": "PI_20260817_06"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "q1_status": "EXCLUDED",
+      "reason": "PI_RUNTIME_JSONL_NOT_IN_STANDALONE_REPO",
+      "session_id": "PI_20260817_07"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "q1_status": "EXCLUDED",
+      "reason": "PI_RUNTIME_JSONL_NOT_IN_STANDALONE_REPO",
+      "session_id": "PI_20260817_08"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "q1_status": "EXCLUDED",
+      "reason": "PI_RUNTIME_JSONL_NOT_IN_STANDALONE_REPO",
+      "session_id": "PI_20260817_09"
+    }
+  ],
+  "parse_warnings": [
+    {
+      "parse_failures": 1,
+      "session_id": "LEGACY_2026-07-13_empty_desk_collector_v1_30s",
+      "usable_rows": 684
+    },
+    {
+      "parse_failures": 1,
+      "session_id": "LEGACY_2026-08-01_occupied_d09_v120_31min",
+      "usable_rows": 18588
+    },
+    {
+      "parse_failures": 1,
+      "session_id": "LEGACY_2026-08-01_heartrate_watch_s2_recovery_v120_480s",
+      "usable_rows": 4814
+    }
+  ],
+  "phase": "Q1",
+  "q2_handoff_observations": [
+    {
+      "max_republication_run": 683,
+      "q1_does_not_set_rejection_threshold": true,
+      "reason": "RECEIVE_MEDIAN_ZERO_MS",
+      "receive_zero_dt_count": 683,
+      "session_id": "LEGACY_2026-07-13_empty_desk_collector_v1_30s",
+      "source_interval_max_ms": null,
+      "source_republication_fraction": 0.998538
+    },
+    {
+      "max_republication_run": 95,
+      "q1_does_not_set_rejection_threshold": true,
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "receive_zero_dt_count": 0,
+      "session_id": "LEGACY_2026-07-25_empty_gate_attempt03_15s",
+      "source_interval_max_ms": 157.0,
+      "source_republication_fraction": 0.637584
+    },
+    {
+      "max_republication_run": 598,
+      "q1_does_not_set_rejection_threshold": true,
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "receive_zero_dt_count": 0,
+      "session_id": "LEGACY_2026-07-25_empty_gate_attempt03_60s",
+      "source_interval_max_ms": null,
+      "source_republication_fraction": 0.998331
+    },
+    {
+      "max_republication_run": 2884,
+      "q1_does_not_set_rejection_threshold": true,
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "receive_zero_dt_count": 0,
+      "session_id": "LEGACY_2026-08-01_occupied_d09_v120_31min_attempt02",
+      "source_interval_max_ms": 199.0,
+      "source_republication_fraction": 0.15694
+    },
+    {
+      "max_republication_run": 1582,
+      "q1_does_not_set_rejection_threshold": true,
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "receive_zero_dt_count": 0,
+      "session_id": "LEGACY_2026-07-26_heartrate_ref_applewatch_300s",
+      "source_interval_max_ms": 158380.0,
+      "source_republication_fraction": 0.527685
+    },
+    {
+      "max_republication_run": 425,
+      "q1_does_not_set_rejection_threshold": true,
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "receive_zero_dt_count": 0,
+      "session_id": "LEGACY_2026-07-28_entry_exit_20_v2",
+      "source_interval_max_ms": 42637.0,
+      "source_republication_fraction": 0.393077
+    },
+    {
+      "max_republication_run": 3598,
+      "q1_does_not_set_rejection_threshold": true,
+      "reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "receive_zero_dt_count": 0,
+      "session_id": "LEGACY_2026-07-25_occupied_d15_v1_360s",
+      "source_interval_max_ms": null,
+      "source_republication_fraction": 0.999722
+    }
+  ],
+  "schema_version": "Q1.1"
+}
