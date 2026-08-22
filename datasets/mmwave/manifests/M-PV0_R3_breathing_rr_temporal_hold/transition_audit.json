@@ -1,0 +1,27 @@
+{
+  "d0_train": {
+    "baseline_not_established_rows": 0,
+    "event_state_counts": {
+      "HOLD_ACTIVE_AT_WINDOW_START_AND_RECOVERY": 25,
+      "HOLD_ONSET_AND_RECOVERY_WITHIN_WINDOW": 8,
+      "HOLD_ONSET_WITHOUT_RECOVERY_IN_WINDOW": 123,
+      "NO_HOLD_EVENT_IN_WINDOW": 162
+    },
+    "full_window_event_rows": 0,
+    "overlap_seconds_bins": {
+      "PARTIAL_6_TO_WINDOW_DURATION": 126,
+      "POSITIVE_BELOW_A4_PURE_PROXY_OVERLAP": 30,
+      "ZERO": 162
+    },
+    "partial_event_rows_are_not_whole_window_apnea": true,
+    "recovery_detected_rows": 33,
+    "window_count": 318
+  },
+  "d1": {
+    "defensible_onset_offset_rows": 0,
+    "recording_count": 265,
+    "source_apnea_protocol_auto_mapped": false,
+    "source_apnea_protocol_rows": 35
+  },
+  "schema_version": "R3.1"
+}

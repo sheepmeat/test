@@ -1,0 +1,53 @@
+{
+  "category_target": "NOT_PRIMARY; NORMAL/RAPID CATEGORIES ARE NOT R3 TARGETS",
+  "contract_id": "MMWAVE_V2_R3_RR_TARGET_V1",
+  "d0_authoritative_method": {
+    "ambiguity_handling": "hold/transition overlap is RR_TARGET_UNAVAILABLE",
+    "analysis_duration": "inherited A4 30 s canonical window",
+    "edge_handling": "inherit A4 finite-window interpolation/mask behavior",
+    "frequency_constraints_hz": [
+      0.1,
+      0.7
+    ],
+    "minimum_cycles": "not separately tuned in R3; inherit A4 method evidence",
+    "peak_period_method": "existing deterministic spectral peak extraction from A4 label mapper",
+    "reference_channel": "MOVESENSE_CHEST_ACC"
+  },
+  "d1_method_boundary": {
+    "ambiguity_handling": "TARGET_UNAVAILABLE; do not infer from source condition",
+    "analysis_duration": "DEFERRED_UNTIL_REFERENCE_WAVEFORM_ACCESS",
+    "edge_handling": "DEFERRED",
+    "frequency_constraints_hz": [
+      0.1,
+      0.7
+    ],
+    "minimum_cycles": "DEFERRED",
+    "peak_period_method": "DEFERRED_UNTIL_REFERENCE_WAVEFORM_ACCESS",
+    "reference_channel": "respiration"
+  },
+  "forbidden_reference_substitutions": [
+    "MR60 vendor breath_rate_raw",
+    "MR60 live telemetry",
+    "radar amplitude or R2 feature score",
+    "source condition string alone"
+  ],
+  "primary_field": "rr_bpm",
+  "schema_version": "R3.1",
+  "target_kind": "CONTINUOUS_REFERENCE_RESPIRATORY_RATE",
+  "target_type": "continuous_float_bpm",
+  "unavailable_encoding": {
+    "nan_is_not_serialized": true,
+    "rr_bpm": null,
+    "target_status": "TARGET_UNAVAILABLE",
+    "unavailable_reason_required": true,
+    "zero_is_not_unavailable": true
+  },
+  "validity_requirements": [
+    "reference_signal_available",
+    "reference_timing_aligned",
+    "sufficient_reference_duration",
+    "breathing_evidence_appropriate",
+    "reference_quality_acceptable",
+    "radar_input_available_for_model_supervision"
+  ]
+}

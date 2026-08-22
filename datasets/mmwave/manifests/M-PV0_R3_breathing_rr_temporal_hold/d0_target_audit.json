@@ -1,0 +1,132 @@
+{
+  "audit_date": "2026-08-23",
+  "condition_coverage": {
+    "Post-exercise": 159,
+    "Rest": 159
+  },
+  "counts": {
+    "breathing_reference_state": {
+      "BREATHING_REFERENCE_AMBIGUOUS": 156,
+      "BREATHING_REFERENCE_PRESENT": 162
+    },
+    "breathing_target_status": {
+      "AMBIGUOUS": 156,
+      "AVAILABLE": 162
+    },
+    "model_supervision_eligible": 318,
+    "pure_class_training_eligible": 162,
+    "rr_target_status": {
+      "AVAILABLE": 162,
+      "TARGET_UNAVAILABLE": 156
+    },
+    "temporal_event_state": {
+      "HOLD_ACTIVE_AT_WINDOW_START_AND_RECOVERY": 25,
+      "HOLD_ONSET_AND_RECOVERY_WITHIN_WINDOW": 8,
+      "HOLD_ONSET_WITHOUT_RECOVERY_IN_WINDOW": 123,
+      "NO_HOLD_EVENT_IN_WINDOW": 162
+    },
+    "transition_rows": 156
+  },
+  "d0_subject_heldout_used": false,
+  "d0_train_only": true,
+  "d0_val_used_for_target_tuning": false,
+  "forbidden_or_not_used": {
+    "d2_used": false,
+    "direct_three_class_primary_target": false,
+    "mr60_supervised_use": false,
+    "radar_amplitude_used_as_reference_label": false
+  },
+  "m_n6_excluded_heldout_used": false,
+  "phase": "R3",
+  "posture_coverage": {
+    "Lying": 160,
+    "Sitting": 158
+  },
+  "recording_count": 264,
+  "reference": {
+    "reference_rr_during_transition_retained_only_for_audit": 156,
+    "reference_rr_present_in_authoritative_a6_rows": 162,
+    "reference_rr_used_as_r3_target": 162,
+    "source": "MOVESENSE_CHEST_ACC"
+  },
+  "schema_version": "R3.1",
+  "selection_scope": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1 -> TRAIN ONLY",
+  "source_id": "D0",
+  "source_label_counts_for_provenance_only": {
+    "APNEA": 126,
+    "NORMAL": 92,
+    "None": 30,
+    "RAPID_OR_ABNORMAL": 70
+  },
+  "split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+  "subject_count": 66,
+  "subjects": [
+    "dataset-10_5281_zenodo_18599983-p001",
+    "dataset-10_5281_zenodo_18599983-p003",
+    "dataset-10_5281_zenodo_18599983-p007",
+    "dataset-10_5281_zenodo_18599983-p008",
+    "dataset-10_5281_zenodo_18599983-p009",
+    "dataset-10_5281_zenodo_18599983-p013",
+    "dataset-10_5281_zenodo_18599983-p014",
+    "dataset-10_5281_zenodo_18599983-p016",
+    "dataset-10_5281_zenodo_18599983-p019",
+    "dataset-10_5281_zenodo_18599983-p020",
+    "dataset-10_5281_zenodo_18599983-p023",
+    "dataset-10_5281_zenodo_18599983-p025",
+    "dataset-10_5281_zenodo_18599983-p026",
+    "dataset-10_5281_zenodo_18599983-p027",
+    "dataset-10_5281_zenodo_18599983-p028",
+    "dataset-10_5281_zenodo_18599983-p029",
+    "dataset-10_5281_zenodo_18599983-p030",
+    "dataset-10_5281_zenodo_18599983-p031",
+    "dataset-10_5281_zenodo_18599983-p034",
+    "dataset-10_5281_zenodo_18599983-p035",
+    "dataset-10_5281_zenodo_18599983-p037",
+    "dataset-10_5281_zenodo_18599983-p038",
+    "dataset-10_5281_zenodo_18599983-p040",
+    "dataset-10_5281_zenodo_18599983-p042",
+    "dataset-10_5281_zenodo_18599983-p043",
+    "dataset-10_5281_zenodo_18599983-p044",
+    "dataset-10_5281_zenodo_18599983-p046",
+    "dataset-10_5281_zenodo_18599983-p048",
+    "dataset-10_5281_zenodo_18599983-p049",
+    "dataset-10_5281_zenodo_18599983-p050",
+    "dataset-10_5281_zenodo_18599983-p051",
+    "dataset-10_5281_zenodo_18599983-p052",
+    "dataset-10_5281_zenodo_18599983-p054",
+    "dataset-10_5281_zenodo_18599983-p055",
+    "dataset-10_5281_zenodo_18599983-p056",
+    "dataset-10_5281_zenodo_18599983-p057",
+    "dataset-10_5281_zenodo_18599983-p059",
+    "dataset-10_5281_zenodo_18599983-p060",
+    "dataset-10_5281_zenodo_18599983-p061",
+    "dataset-10_5281_zenodo_18599983-p064",
+    "dataset-10_5281_zenodo_18599983-p066",
+    "dataset-10_5281_zenodo_18599983-p067",
+    "dataset-10_5281_zenodo_18599983-p068",
+    "dataset-10_5281_zenodo_18599983-p070",
+    "dataset-10_5281_zenodo_18599983-p071",
+    "dataset-10_5281_zenodo_18599983-p073",
+    "dataset-10_5281_zenodo_18599983-p075",
+    "dataset-10_5281_zenodo_18599983-p076",
+    "dataset-10_5281_zenodo_18599983-p077",
+    "dataset-10_5281_zenodo_18599983-p078",
+    "dataset-10_5281_zenodo_18599983-p079",
+    "dataset-10_5281_zenodo_18599983-p080",
+    "dataset-10_5281_zenodo_18599983-p081",
+    "dataset-10_5281_zenodo_18599983-p084",
+    "dataset-10_5281_zenodo_18599983-p087",
+    "dataset-10_5281_zenodo_18599983-p089",
+    "dataset-10_5281_zenodo_18599983-p091",
+    "dataset-10_5281_zenodo_18599983-p092",
+    "dataset-10_5281_zenodo_18599983-p094",
+    "dataset-10_5281_zenodo_18599983-p097",
+    "dataset-10_5281_zenodo_18599983-p099",
+    "dataset-10_5281_zenodo_18599983-p100",
+    "dataset-10_5281_zenodo_18599983-p105",
+    "dataset-10_5281_zenodo_18599983-p108",
+    "dataset-10_5281_zenodo_18599983-p109",
+    "dataset-10_5281_zenodo_18599983-p110"
+  ],
+  "window_count": 318
+}

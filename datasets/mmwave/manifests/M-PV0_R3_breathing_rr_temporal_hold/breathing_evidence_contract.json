@@ -1,0 +1,51 @@
+{
+  "contract_id": "MMWAVE_V2_R3_BREATHING_EVIDENCE_TARGET_V1",
+  "d0_binding": {
+    "method": "inherit authoritative A4/A6 reference eligibility and event overlap; no radar-derived relabeling",
+    "reference_source": "MOVESENSE_CHEST_ACC plus audited voluntary non-breathing timing",
+    "training_split": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1 -> TRAIN only"
+  },
+  "d1_binding": {
+    "current_status": "TARGET_UNAVAILABLE_LOCALLY_WHEN_REFERENCE_WAVEFORM_IS_NOT_MATERIALIZED",
+    "reference_source": "synchronized respiration channel declared by D1 adapter",
+    "source_condition_apnea_is_provenance_only": true
+  },
+  "definition": "Trustworthy periodic respiratory activity is present in the synchronized reference during the evaluation interval.",
+  "numeric_encoding": {
+    "BREATHING_REFERENCE_ABSENT": 0,
+    "BREATHING_REFERENCE_AMBIGUOUS": "NOT_ENCODED_AS_PURE_CLASS",
+    "BREATHING_REFERENCE_PRESENT": 1,
+    "TARGET_UNAVAILABLE": "NOT_ENCODED"
+  },
+  "provenance_required": [
+    "source_dataset",
+    "subject_id",
+    "recording_id",
+    "window_id_or_null",
+    "reference_time_range_s",
+    "reference_source",
+    "extraction_profile",
+    "split_or_domain_role"
+  ],
+  "reference_policy": {
+    "ambiguous_transition_not_forced_to_present_or_absent": true,
+    "low_radar_amplitude_is_not_absence": true,
+    "radar_trace_is_not_reference_label": true,
+    "reference_waveform_required": true,
+    "rr_category_is_not_breathing_evidence": true,
+    "source_event_timing_is_preserved": true
+  },
+  "schema_version": "R3.1",
+  "states": [
+    "BREATHING_REFERENCE_PRESENT",
+    "BREATHING_REFERENCE_ABSENT",
+    "BREATHING_REFERENCE_AMBIGUOUS",
+    "TARGET_UNAVAILABLE"
+  ],
+  "target_kind": "REFERENCE_SUPERVISED_BREATHING_EVIDENCE",
+  "target_status_values": [
+    "AVAILABLE",
+    "AMBIGUOUS",
+    "TARGET_UNAVAILABLE"
+  ]
+}

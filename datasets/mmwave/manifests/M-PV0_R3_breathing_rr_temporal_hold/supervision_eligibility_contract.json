@@ -1,0 +1,22 @@
+{
+  "contract_id": "MMWAVE_V2_R3_MODEL_SUPERVISION_ELIGIBILITY_V1",
+  "d0_rule": "TRAIN rows only; subject identity is inherited from MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+  "d1_rule": "auxiliary domain is not model-supervision eligible until reference waveform and split role are bound",
+  "fields": {
+    "model_supervision_eligible": "radar input valid and at least one selected target semantics available",
+    "radar_input_available": "Q2-compatible input availability gate",
+    "reference_target_available": "reference evidence exists, even when retained as transition semantics",
+    "retained_for_transition_analysis": "ambiguous rows are retained but not pure-class rows",
+    "subject_split_allowed": "frozen D0 subject role permits the row for the current scope",
+    "transition_ambiguous": "event boundary or reference ambiguity is explicit"
+  },
+  "invalid_radar_input_model_supervision_eligible": false,
+  "precedence": [
+    "presence gate",
+    "input quality / availability gate",
+    "breathing evidence / RR / temporal-hold reasoning"
+  ],
+  "public_offline_presence": "NOT_APPLICABLE_TO_D0_A6_COMPACT_AUDIT",
+  "q2_contract_id": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+  "schema_version": "R3.1"
+}

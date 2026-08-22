@@ -1,0 +1,92 @@
+{
+  "audit_date": "2026-08-23",
+  "bounded_candidates": [
+    {
+      "architecture_selected": false,
+      "candidate_id": "T1_REFERENCE_SEPARATED",
+      "semantics": "separate breathing evidence, continuous RR, and temporal event targets",
+      "status": "BOUNDED_CANDIDATE_FOR_M_PV1",
+      "targets": [
+        "MMWAVE_V2_R3_BREATHING_EVIDENCE_TARGET_V1",
+        "MMWAVE_V2_R3_RR_TARGET_V1",
+        "MMWAVE_V2_R3_TEMPORAL_HOLD_TARGET_V1"
+      ]
+    },
+    {
+      "architecture_selected": false,
+      "candidate_id": "T2_BREATHING_RR_WITH_RULE_COMPOSED_HOLD",
+      "persistence_threshold": "DEFERRED_TO_M_PV1",
+      "semantics": "supervised breathing/RR with later deterministic sequential hold composition",
+      "status": "BOUNDED_CANDIDATE_FOR_M_PV1",
+      "targets": [
+        "MMWAVE_V2_R3_BREATHING_EVIDENCE_TARGET_V1",
+        "MMWAVE_V2_R3_RR_TARGET_V1",
+        "MMWAVE_V2_R3_TEMPORAL_HOLD_TARGET_V1"
+      ]
+    },
+    {
+      "architecture_selected": false,
+      "candidate_id": "T3_OPTIONAL_MULTIHEAD_SEMANTICS",
+      "model_trained": false,
+      "semantics": "future separate output heads without architecture or training selection",
+      "status": "SEMANTIC_INTERFACE_ONLY",
+      "targets": [
+        "MMWAVE_V2_R3_BREATHING_EVIDENCE_TARGET_V1",
+        "MMWAVE_V2_R3_RR_TARGET_V1",
+        "MMWAVE_V2_R3_TEMPORAL_HOLD_TARGET_V1",
+        "MMWAVE_V2_R3_MODEL_SUPERVISION_ELIGIBILITY_V1"
+      ]
+    }
+  ],
+  "contract_set_id": "MMWAVE_V2_R3_TARGET_CONTRACT_SET_V1",
+  "m_pv1_boundary": {
+    "calibration_and_threshold_strategy": "DEFERRED_TO_M_PV1",
+    "common_representation_profile": "DEFERRED_TO_M_PV1",
+    "exact_input_window_history": "DEFERRED_TO_M_PV1",
+    "exact_target_binding": "DEFERRED_TO_M_PV1",
+    "model_family": "DEFERRED_TO_M_PV1",
+    "temporal_hold_composition": "DEFERRED_TO_M_PV1"
+  },
+  "phase": "R3",
+  "r2_contract_inherited": "YES",
+  "r2_handoff": {
+    "candidate_schema_ids": [
+      "MMWAVE_V2_R2_F1_NORMALIZED_SPECTRAL_V1",
+      "MMWAVE_V2_R2_F2_SPECTRAL_AUTOCORR_V1",
+      "MMWAVE_V2_R2_F3_TRACE_PLUS_QUALITY_DESCRIPTOR_V1"
+    ],
+    "candidate_set_id": "MMWAVE_V2_R2_REPRESENTATION_CANDIDATE_SET_V1",
+    "head": "37ea18d43780393b3f5c28deed655343ade59cd9",
+    "selected_candidate": null,
+    "selection_performed": false
+  },
+  "safety_boundaries": {
+    "apnea_persistence_threshold_finalized": false,
+    "clinical_apnea_claimed": false,
+    "d2_used": false,
+    "direct_three_class_primary_target": false,
+    "low_radar_amplitude_defines_apnea": false,
+    "model_architecture_selected": false,
+    "model_training": false,
+    "mr60_supervised_use": false,
+    "probability_threshold_selected": false,
+    "q2_thresholds_redefined": false,
+    "radar_amplitude_used_as_reference_label": false,
+    "voluntary_breath_hold_proxy_language_required": true,
+    "whole_window_apnea_default": false
+  },
+  "schema_version": "R3.1",
+  "selection": {
+    "f1_f2_f3_winner_selected": false,
+    "selected_candidate": null,
+    "selection_performed": false,
+    "target_definition_depends_on_model_score": false
+  },
+  "status": "BOUNDED_TARGET_SEMANTICS_READY_FOR_M_PV1",
+  "upstream_contracts": {
+    "d0_label_mapping": "MMWAVE_LABEL_MAPPING_PROFILE_001",
+    "d0_split": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+    "q2": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+    "r1": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1"
+  }
+}
