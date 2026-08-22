@@ -1,0 +1,36 @@
+{
+  "artificial_symmetry_forced": false,
+  "compatibility": {
+    "A_breathing_evidence": {
+      "answer": "YES_WITH_SOURCE_REFERENCE_MATERIALIZATION_LIMITATION",
+      "d0_status": "GENERATED_FROM_AUTHORITATIVE_A6_REFERENCE_AND_EVENT_AUDIT",
+      "d1_status": "REFERENCE_CHANNEL_DECLARED_BUT_TARGET_NOT_REGENERATED_LOCALLY",
+      "shared_semantics": true
+    },
+    "B_rr": {
+      "answer": "YES_WITH_SOURCE_REFERENCE_METHOD_METADATA",
+      "d0_status": "CONTINUOUS_RR_FROM_INHERITED_MOVESENSE_REFERENCE_METHOD",
+      "d1_status": "TARGET_UNAVAILABLE_UNTIL_RESPIRATION_WAVEFORM_ACCESS",
+      "shared_semantics": true
+    },
+    "C_temporal_hold": {
+      "answer": "D0_ONLY_PARTIAL",
+      "d0_status": "EVENT_RELATIVE_VOLUNTARY_BREATH_HOLD_PROXY",
+      "d1_status": "SOURCE_APNEA_PROTOCOL_PROVENANCE_ONLY; NO_DEFENSIBLE_BOUNDARIES",
+      "shared_semantics": true
+    }
+  },
+  "contract_set_id": "MMWAVE_V2_R3_TARGET_CONTRACT_SET_V1",
+  "domains": {
+    "D0": {
+      "role": "primary_supervised_development_domain; TRAIN only",
+      "rows": 318
+    },
+    "D1": {
+      "role": "auxiliary_cross_domain_target_compatibility_audit",
+      "rows": 265
+    }
+  },
+  "model_score_used_to_define_targets": false,
+  "schema_version": "R3.1"
+}

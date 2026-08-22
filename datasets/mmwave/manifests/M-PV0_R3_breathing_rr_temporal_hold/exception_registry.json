@@ -1,0 +1,37 @@
+{
+  "d0_train_window_count": 318,
+  "d1_recording_count": 265,
+  "entries": [
+    {
+      "detail": "D1 adapter evidence records synchronized respiration-channel presence and statistics, but no respiration waveform is materialized for deterministic R3 target extraction.",
+      "id": "R3-D1-REFERENCE-WAVEFORM-NOT-MATERIALIZED",
+      "scope": "D1",
+      "severity": "LIMITATION",
+      "status": "OPEN_FOR_M_PV1_INPUT_MATERIALIZATION"
+    },
+    {
+      "detail": "D1 source condition 'apnea' and related protocol strings are retained as provenance; no onset/offset is guessed.",
+      "id": "R3-D1-SOURCE-APNEA-BOUNDARY-UNAVAILABLE",
+      "scope": "D1",
+      "severity": "LIMITATION",
+      "status": "OPEN"
+    },
+    {
+      "detail": "R3 does not finalize an X-second persistence threshold or model history length.",
+      "id": "R3-D0-FINAL-PERSISTENCE-DEFERRED",
+      "scope": "D0/M-PV1",
+      "severity": "LIMITATION",
+      "status": "DEFERRED"
+    },
+    {
+      "detail": "The D0 TRAIN compact window audit contains partial hold overlaps but no full-window event; ABSENT remains a supported contract state and is not fabricated.",
+      "id": "R3-D0-NO-FULL-HOLD-COVERAGE-IN-TRAIN",
+      "scope": "D0 TRAIN",
+      "severity": "LIMITATION",
+      "status": "OBSERVED"
+    }
+  ],
+  "phase": "R3",
+  "schema_version": "R3.1",
+  "total_blockers": 0
+}

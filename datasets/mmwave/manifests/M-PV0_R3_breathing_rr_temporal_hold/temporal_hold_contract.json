@@ -1,0 +1,54 @@
+{
+  "baseline_policy": {
+    "baseline_not_established_state": "BASELINE_NOT_ESTABLISHED",
+    "recording_session_boundary_resets_state": true,
+    "required_before_hold_candidate": true,
+    "unknown_start_is_not_hold": true
+  },
+  "clinical_apnea_claimed": false,
+  "contract_id": "MMWAVE_V2_R3_TEMPORAL_HOLD_TARGET_V1",
+  "d1_protocol_policy": {
+    "onset_offset_required_for_temporal_target": true,
+    "source_string_apnea_auto_mapping": false,
+    "unavailable_state_when_boundary_not_defensible": true
+  },
+  "event_states": [
+    "NO_HOLD_EVENT_IN_WINDOW",
+    "HOLD_ONSET_AND_RECOVERY_WITHIN_WINDOW",
+    "HOLD_ONSET_WITHOUT_RECOVERY_IN_WINDOW",
+    "HOLD_ACTIVE_AT_WINDOW_START_AND_RECOVERY",
+    "SUSTAINED_HOLD_COVERS_WINDOW",
+    "SOURCE_HOLD_PROTOCOL_WITHOUT_DEFENSIBLE_INTERVAL",
+    "UNAVAILABLE_REFERENCE"
+  ],
+  "persistence_policy": {
+    "bounded_candidate_for_m_pv1": true,
+    "final_duration": "DEFERRED_TO_M_PV1",
+    "persistent_loss_required_conceptually": true
+  },
+  "recovery_policy": {
+    "no_hidden_carry_over_across_recordings": true,
+    "recovery_explicit": true,
+    "returning_breathing_terminates_event": true
+  },
+  "required_fields": [
+    "baseline_state",
+    "has_previous_valid_breathing",
+    "event_state",
+    "event_id",
+    "event_onset_s",
+    "event_offset_s",
+    "elapsed_hold_s",
+    "recovery_state",
+    "transition_ambiguity"
+  ],
+  "safe_nest_language": "VOLUNTARY_BREATH_HOLD_PROXY",
+  "schema_version": "R3.1",
+  "target_kind": "EVENT_RELATIVE_VOLUNTARY_BREATH_HOLD_PROXY",
+  "transition_policy": {
+    "ambiguous_transition_retained_for_analysis": true,
+    "partial_onset_or_recovery_is_event_relative": true,
+    "source_event_boundaries_not_sharpened": true,
+    "whole_window_apnea_default": false
+  }
+}

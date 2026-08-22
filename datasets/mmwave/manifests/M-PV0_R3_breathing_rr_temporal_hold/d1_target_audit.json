@@ -1,0 +1,56 @@
+{
+  "audit_date": "2026-08-23",
+  "counts": {
+    "breathing_target_status": {
+      "TARGET_UNAVAILABLE": 265
+    },
+    "model_supervision_eligible": 0,
+    "radar_input_available": 265,
+    "rr_target_status": {
+      "TARGET_UNAVAILABLE": 265
+    },
+    "temporal_target_status": {
+      "TARGET_UNAVAILABLE": 265
+    }
+  },
+  "forbidden_or_not_used": {
+    "d2_used": false,
+    "feature_winner_selected": false,
+    "model_training": false,
+    "mr60_supervised_use": false
+  },
+  "limitations": [
+    "D1 compact inventory preserves synchronized respiration-channel presence and statistics, not waveform samples.",
+    "R3 therefore does not claim a D1 periodicity target or onset/offset target.",
+    "D1 source condition strings remain protocol provenance only."
+  ],
+  "phase": "R3",
+  "recording_count": 265,
+  "reference_audit": {
+    "breathing_reference_target_available": 0,
+    "reference_channel": "respiration",
+    "reference_channel_declared_and_stats_present": 265,
+    "reference_waveform_materialized_in_compact_evidence": false,
+    "rr_target_available": 0
+  },
+  "schema_version": "R3.1",
+  "selection_scope": "FULL_AUXILIARY_DEVELOPMENT_POOL_FOR_TARGET_COMPATIBILITY_AUDIT",
+  "source_apnea_metadata_auto_mapped_to_safenest_apnea": false,
+  "source_apnea_metadata_count": 35,
+  "source_apnea_metadata_defensible_temporal_boundaries": 0,
+  "source_condition_coverage": {
+    "after_sport": 18,
+    "angle_variation": 24,
+    "apnea": 25,
+    "apnea_after_sport": 7,
+    "artefact_movement": 4,
+    "artefact_speech": 6,
+    "default": 139,
+    "distance_variation": 12,
+    "lying": 4,
+    "sitting": 3,
+    "standing": 23
+  },
+  "source_id": "D1",
+  "subject_count": 11
+}
