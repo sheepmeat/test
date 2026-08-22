@@ -1,0 +1,333 @@
+{
+  "audit_date": "2026-08-23",
+  "phase": "I2",
+  "physical_representative": [
+    {
+      "compact_result_sha256": "524ec82f3bbf2fe5eac25aea7b1eb996bc31614a69826c90ab48fa4f0455845f",
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "firmware_version": "safenest-mr60-esp/1.2.0",
+      "first_replay_event_id": "replay_event:60bf78ec4b2e57c10a2250142061d426625ff647c6ef1c8789c36e5af757d4a3",
+      "full_session_replayed": true,
+      "git_blob_sha": "42e34d783f8f45379964770d46c8b9b13b5ccf26",
+      "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/diagnostics/2026-08-01_heartrate_watch_s1_preflight_v120_15s.jsonl",
+      "last_replay_event_id": "replay_event:0ba52b4ecf4a41c7ea9ff64204e9c7c5677eefe1b0d6f0322452e6bbf873adb2",
+      "max_republication_run": 0,
+      "mode": "FAST",
+      "note": null,
+      "packet_count_inventory": 150,
+      "parsed": 150,
+      "phase_age_available": true,
+      "q1_status": "ELIGIBLE_CORE",
+      "q2_handoff_reason": null,
+      "rejected_count": 0,
+      "rejected_reasons": [],
+      "replayed_count": 150,
+      "role": "modern_schema_1_2",
+      "schema_version": "1.2",
+      "seq_audit_counts": {
+        "GAP": 0,
+        "INCREMENT": 150,
+        "REPEAT": 0,
+        "RESET": 0
+      },
+      "session_id": "LEGACY_2026-08-01_heartrate_watch_s1_preflight_v120_15s",
+      "source_class": "PHYSICAL_MR60_JSONL",
+      "status": "REPLAYED",
+      "warning_counts": {},
+      "warnings": 0
+    },
+    {
+      "compact_result_sha256": "4f8498a4b0754cde98307fb446b1b3a44ed6596c72b15114257c0b1955eac638",
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "firmware_version": null,
+      "first_replay_event_id": "replay_event:801386926dbd386a53e4d9c4b5904522d62763f5c95fdfea39618db19c66c98b",
+      "full_session_replayed": true,
+      "git_blob_sha": "156c1433db7dc97ce2eb3540bcafa83ad01cd783",
+      "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/diagnostics/2026-07-28_breath15_full_preflight_10s.jsonl",
+      "last_replay_event_id": "replay_event:b32f858bbde42188a34b23fb074be48048dfefbd9ed7c0b9f9a73974638cee0d",
+      "max_republication_run": 0,
+      "mode": "FAST",
+      "note": null,
+      "packet_count_inventory": 99,
+      "parsed": 99,
+      "phase_age_available": true,
+      "q1_status": "ELIGIBLE_CORE",
+      "q2_handoff_reason": null,
+      "rejected_count": 0,
+      "rejected_reasons": [],
+      "replayed_count": 99,
+      "role": "legacy_schema_1_0",
+      "schema_version": "1.0",
+      "seq_audit_counts": {
+        "GAP": 0,
+        "INCREMENT": 99,
+        "REPEAT": 0,
+        "RESET": 0
+      },
+      "session_id": "LEGACY_2026-07-28_breath15_full_preflight_10s",
+      "source_class": "PHYSICAL_MR60_JSONL",
+      "status": "REPLAYED",
+      "warning_counts": {},
+      "warnings": 0
+    },
+    {
+      "compact_result_sha256": "e7862d5a960732ce145d81942b1a2db865fcf3db306f1c284fa3a7c0694d051d",
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "firmware_version": null,
+      "first_replay_event_id": "replay_event:869a4cebc354d2a31b199664b0f2fb2de4b893bdff0ffc4f479d1cbf753bbda0",
+      "full_session_replayed": true,
+      "git_blob_sha": "12ea6a08337edd9a152a4942f969f8daecd04db7",
+      "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/baseline/2026-07-13_empty_desk_collector_v2_30s.jsonl",
+      "last_replay_event_id": "replay_event:db895c58f85b7b9338acdd9a047633dcb4e7b3573cf3993ebe758d828d746e7b",
+      "max_republication_run": 1,
+      "mode": "FAST",
+      "note": null,
+      "packet_count_inventory": 299,
+      "parsed": 299,
+      "phase_age_available": true,
+      "q1_status": "ELIGIBLE_CORE",
+      "q2_handoff_reason": null,
+      "rejected_count": 0,
+      "rejected_reasons": [],
+      "replayed_count": 299,
+      "role": "source_republication",
+      "schema_version": "1.0",
+      "seq_audit_counts": {
+        "GAP": 0,
+        "INCREMENT": 299,
+        "REPEAT": 0,
+        "RESET": 0
+      },
+      "session_id": "LEGACY_2026-07-13_empty_desk_collector_v2_30s",
+      "source_class": "PHYSICAL_MR60_JSONL",
+      "status": "REPLAYED",
+      "warning_counts": {},
+      "warnings": 0
+    },
+    {
+      "compact_result_sha256": "4ab52a2b26c4201ed6e1d087f060694bdaad3385f7cd5be37b0c168b7a7064ae",
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "firmware_version": null,
+      "first_replay_event_id": "replay_event:9a950c02cb7d55b9d16af15e6c4005a38d3ef8cfb1ca7f49a53fa41f8d49a3f4",
+      "full_session_replayed": true,
+      "git_blob_sha": "2ed043543b745f431136aa3d88718085c2dddbc6",
+      "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/diagnostics/2026-07-25_empty_gate_attempt03_15s.jsonl",
+      "last_replay_event_id": "replay_event:70314c03828fea0e2d658eb783312a27787b181aac7461f8e10cd03233004ed8",
+      "max_republication_run": 95,
+      "mode": "FAST",
+      "note": null,
+      "packet_count_inventory": 149,
+      "parsed": 149,
+      "phase_age_available": true,
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "q2_handoff_reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "rejected_count": 0,
+      "rejected_reasons": [],
+      "replayed_count": 149,
+      "role": "q2_handoff_freeze_like_95_run",
+      "schema_version": "1.0",
+      "seq_audit_counts": {
+        "GAP": 0,
+        "INCREMENT": 149,
+        "REPEAT": 0,
+        "RESET": 0
+      },
+      "session_id": "LEGACY_2026-07-25_empty_gate_attempt03_15s",
+      "source_class": "PHYSICAL_MR60_JSONL",
+      "status": "REPLAYED",
+      "warning_counts": {},
+      "warnings": 0
+    },
+    {
+      "compact_result_sha256": "ac2281f2ea025420391c5638592a4a40cc9fd866e9f84b12fb637cb6f4d69108",
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "firmware_version": null,
+      "first_replay_event_id": "replay_event:97daaca03c8b70c555570ec999aa3b0482e9e8a64933778ef3e58dd7a1830049",
+      "full_session_replayed": false,
+      "git_blob_sha": "ea274bd183fa676da6c355eb2949b11b3963b9fd",
+      "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/matrix/2026-07-25_occupied_d15_v1_360s.jsonl",
+      "last_replay_event_id": "replay_event:a8829bcf800029efec933677e58fe867af8488723696e71859758b93f40d4d42",
+      "max_republication_run": 3598,
+      "mode": "FAST",
+      "note": "3598-run evidence is replayable; committed summary uses a 64-row prefix",
+      "packet_count_inventory": 3599,
+      "parsed": 64,
+      "phase_age_available": true,
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "q2_handoff_reason": "LONG_SOURCE_REPUBLICATION_RUN",
+      "rejected_count": 0,
+      "rejected_reasons": [],
+      "replayed_count": 64,
+      "role": "q2_handoff_freeze_like_3598_run",
+      "schema_version": "1.0",
+      "seq_audit_counts": {
+        "GAP": 0,
+        "INCREMENT": 64,
+        "REPEAT": 0,
+        "RESET": 0
+      },
+      "session_id": "LEGACY_2026-07-25_occupied_d15_v1_360s",
+      "source_class": "PHYSICAL_MR60_JSONL",
+      "status": "REPLAYED",
+      "warning_counts": {},
+      "warnings": 0
+    },
+    {
+      "compact_result_sha256": "1342e06587b16422a0b424c61cefe6898a86c7d2af26f909bec1c02946307f69",
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "firmware_version": null,
+      "first_replay_event_id": "replay_event:a0fd13c5575ddb37f644cfd85e3abd1faebdccc1bb395d10cfcc29d4625245d4",
+      "full_session_replayed": true,
+      "git_blob_sha": "f444c4c8c8d4e5b93e700cf57dcc255c8fa52c47",
+      "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/baseline/2026-07-13_empty_desk_collector_v1_30s.jsonl",
+      "last_replay_event_id": "replay_event:8d4b2cb8394036e70ef4ea563f2b160a77276b0d2d0ffebe66b1a057ea070995",
+      "max_republication_run": 683,
+      "mode": "FAST",
+      "note": null,
+      "packet_count_inventory": 684,
+      "parsed": 685,
+      "phase_age_available": true,
+      "q1_status": "Q2_HANDOFF_EVIDENCE",
+      "q2_handoff_reason": "RECEIVE_MEDIAN_ZERO_MS",
+      "rejected_count": 1,
+      "rejected_reasons": [
+        "TRUNCATED_ROW"
+      ],
+      "replayed_count": 684,
+      "role": "timestamp_collision",
+      "schema_version": "1.0",
+      "seq_audit_counts": {
+        "GAP": 0,
+        "INCREMENT": 684,
+        "REPEAT": 0,
+        "RESET": 0
+      },
+      "session_id": "LEGACY_2026-07-13_empty_desk_collector_v1_30s",
+      "source_class": "PHYSICAL_MR60_JSONL",
+      "status": "REPLAYED",
+      "warning_counts": {},
+      "warnings": 0
+    },
+    {
+      "compact_result_sha256": "a738b0a1f36483a7ef1e99c6163526bce69a3f41077c60e7589225c99c6b1422",
+      "evidence_family": "PRE_PR18_LEGACY_ESP_JSONL",
+      "firmware_version": null,
+      "first_replay_event_id": "replay_event:fa42370e5d72515ce5ea94da2cc2b85dadef1b0cff1fbef4f44c111fe555eea4",
+      "full_session_replayed": true,
+      "git_blob_sha": "57a3b895700d1fb848ddfa7414e1a41d2318ce16",
+      "inventory_current_path": "archive/legacy_main_repo/devices/mmwave/firmware/logs/baseline/2026-07-13_empty_desk_prechange_30s.jsonl",
+      "last_replay_event_id": "replay_event:277fd7f2e5872e08d1143aac3856700ce08c499e7cc0c16683e70f396640e9d3",
+      "max_republication_run": null,
+      "mode": "FAST",
+      "note": null,
+      "packet_count_inventory": 274,
+      "parsed": 274,
+      "phase_age_available": false,
+      "q1_status": "RECEIVE_CADENCE_ONLY",
+      "q2_handoff_reason": null,
+      "rejected_count": 0,
+      "rejected_reasons": [],
+      "replayed_count": 274,
+      "role": "phase_age_absent",
+      "schema_version": null,
+      "seq_audit_counts": {
+        "GAP": 0,
+        "INCREMENT": 274,
+        "REPEAT": 0,
+        "RESET": 0
+      },
+      "session_id": "LEGACY_2026-07-13_empty_desk_prechange_30s",
+      "source_class": "PHYSICAL_MR60_JSONL",
+      "status": "REPLAYED",
+      "warning_counts": {
+        "PHASE_AGE_NOT_PRESENT": 274,
+        "PRESENCE_FIELD_NOT_PRESENT": 2
+      },
+      "warnings": 276
+    }
+  ],
+  "public_offline_fixture": {
+    "replayed_count": 1,
+    "session_id": "p001",
+    "source_class": "PUBLIC_OFFLINE_FIXTURE",
+    "status": "REPLAYED"
+  },
+  "schema_version": "I2.1",
+  "synthetic_q1_q2_fixture": {
+    "compact_result_sha256": "afe1c7f6842f76a40a5c1dd0e0cfa18bc1d6d6901e10226f3954b5e6ab75c33c",
+    "profile_id": "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1",
+    "replayed_count": 4,
+    "seed": 7,
+    "session_id": "SYNTHETIC_Q1_CADENCE_JITTER_TINY",
+    "source_class": "SYNTHETIC_Q1_Q2_FIXTURE",
+    "status": "REPLAYED"
+  },
+  "unavailable_inventoried_without_blob": [
+    {
+      "evidence_family": "PR18_PILOT_CAPTURE",
+      "session_id": "M-C0-PILOT-DESKWORK-001",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "PR18_PILOT_CAPTURE",
+      "session_id": "M-C0-PILOT-STATIONARY-001",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "AUG08_LIVE_RAW_JSONL",
+      "session_id": "AUG08_IDENTITY_RAW_20S",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "AUG08_LIVE_RAW_JSONL",
+      "session_id": "AUG08_NO_PERSON_RAW_10S",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "session_id": "PI_20260816_13",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "session_id": "PI_20260816_14",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "session_id": "PI_20260816_15",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "session_id": "PI_20260817_06",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "session_id": "PI_20260817_07",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "session_id": "PI_20260817_08",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    },
+    {
+      "evidence_family": "RECENT_PI_RUNTIME_REFERENCE",
+      "session_id": "PI_20260817_09",
+      "status": "UNAVAILABLE",
+      "unavailable_reason": "NO_GIT_BLOB_IN_Q1_INVENTORY"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "audit_date": "2026-08-23",
+  "contract_id": "MMWAVE_V2_I2_SCHEMA_COMPATIBILITY_REGISTRY_V1",
+  "phase": "I2",
+  "schema_version": "I2.1",
+  "versions": {
+    "1.0": {
+      "absent_legacy_fields": [
+        "config_hash",
+        "firmware_version often null"
+      ],
+      "known_limitation": "firmware identity may be null",
+      "normalization": "map present fields only; do not fabricate firmware/config",
+      "optional_fields": [
+        "firmware_version",
+        "config_hash",
+        "session_id"
+      ],
+      "required_replay_identity_fields": [
+        "ts_monotonic_ms",
+        "seq"
+      ]
+    },
+    "1.1": {
+      "absent_legacy_fields": [
+        "some 1.2 freeze/filter flags"
+      ],
+      "known_limitation": "firmware present as safenest-mr60-esp/1.1.0",
+      "normalization": "preserve firmware_version; do not upgrade schema",
+      "optional_fields": [
+        "config_hash",
+        "session_id"
+      ],
+      "required_replay_identity_fields": [
+        "ts_monotonic_ms",
+        "seq",
+        "phase_age_ms"
+      ]
+    },
+    "1.2": {
+      "absent_legacy_fields": [],
+      "known_limitation": "Pi host receive timestamp still absent from ESP JSONL",
+      "normalization": "preserve config_hash and auxiliary 1.2 fields under mr60_telemetry",
+      "optional_fields": [
+        "session_id",
+        "freeze_detected",
+        "human_detected_stable"
+      ],
+      "required_replay_identity_fields": [
+        "ts_monotonic_ms",
+        "seq",
+        "phase_age_ms"
+      ]
+    },
+    "legacy_unversioned": {
+      "absent_legacy_fields": [
+        "schema_version",
+        "phase_age_ms",
+        "firmware_version",
+        "config_hash"
+      ],
+      "known_limitation": "source-update estimate cannot be formed; presence may exist",
+      "normalization": "FIELD_ABSENT_LEGACY; never fill phase_age_ms",
+      "optional_fields": [
+        "human_detected_raw",
+        "breath_phase"
+      ],
+      "required_replay_identity_fields": [
+        "ts_monotonic_ms",
+        "seq"
+      ]
+    }
+  }
+}

@@ -43,6 +43,7 @@ AVAILABILITY_STATES = (
     "INPUT_UNAVAILABLE",
     "PHYSIOLOGY_ELIGIBLE",
 )
+OUTPUT_AVAILABILITY_STATES = AVAILABILITY_STATES + ("NOT_EVALUATED",)
 COMPONENT_STATUSES = ("available", "unavailable", "not_evaluated")
 APPLICATION_STATES = (
     "PRESENCE_SUPPRESSED",
@@ -236,6 +237,14 @@ def resolve_precedence(
         actionable = False
         if "NOT_IMPLEMENTED_MODEL_BOUNDARY" not in reasons:
             reasons.append("NOT_IMPLEMENTED_MODEL_BOUNDARY")
+    elif declared_quality == "NOT_EVALUATED":
+        availability = "NOT_EVALUATED"
+        application_state = "NOT_EVALUATED"
+        physiology_boundary_entered = False
+        physiology_executed = False
+        actionable = False
+        if "NOT_IMPLEMENTED_MODEL_BOUNDARY" not in reasons:
+            reasons.append("NOT_IMPLEMENTED_MODEL_BOUNDARY")
     else:
         schema_errors.append("UNDECLARED_QUALITY_STATE")
         availability = "INPUT_UNAVAILABLE"
@@ -273,7 +282,10 @@ def resolve_precedence(
 
 
 def mock_inference_result(precedence: dict[str, Any]) -> dict[str, Any]:
-    unavailable = precedence["availability_state"] != "PHYSIOLOGY_ELIGIBLE"
+    unavailable = precedence["availability_state"] in (
+        "PRESENCE_SUPPRESSED",
+        "INPUT_UNAVAILABLE",
+    )
     status = "unavailable" if unavailable else "not_evaluated"
     component = {
         "confidence": {
@@ -442,7 +454,7 @@ def validate_runtime_output(record: dict[str, Any], input_record: dict[str, Any]
         if key not in record:
             errors.append(f"OUTPUT_MISSING_{key.upper()}")
     availability = record.get("availability_state")
-    if availability not in AVAILABILITY_STATES:
+    if availability not in OUTPUT_AVAILABILITY_STATES:
         errors.append("OUTPUT_AVAILABILITY_STATE")
     if record.get("application_state") not in APPLICATION_STATES:
         errors.append("OUTPUT_APPLICATION_STATE")

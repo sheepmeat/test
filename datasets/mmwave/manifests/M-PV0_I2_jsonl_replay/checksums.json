@@ -1,0 +1,19 @@
+{
+  "algorithm": "SHA-256",
+  "config_file": {
+    "path": "config/mmwave/i2_jsonl_replay_contract.json",
+    "sha256": "21fe7b5a6686fe2fcad88cca206dcac065cc9613b6c4b38d1ea18088ee32ec12"
+  },
+  "encoding": "utf-8 JSON indent=2 sort_keys=True trailing newline",
+  "files": {
+    "determinism_audit.json": "bddd4d9ffcdcce6a79075ca4a9c7856493b64d6a151a43f3c20bae5aad43ade6",
+    "exception_registry.json": "93bb56202287635d22d5b4d1c2eb3bd73f968755ae1d568687fed892bf552188",
+    "lineage_audit.json": "f780a50cb3c021ae35832da824e5edac26b1726d3f6130a9ab6d46e1a3b5795a",
+    "replay_contract.json": "21fe7b5a6686fe2fcad88cca206dcac065cc9613b6c4b38d1ea18088ee32ec12",
+    "replay_source_inventory.json": "3b35fffcc6e8ed592e3c3f17f1251fe7f0252fa8eff488194ea693e287ed60bb",
+    "representative_session_results.json": "2c023c8c30499711130137b72d2411524398c845cc9fa3483c3000ce1f255ffd",
+    "schema_compatibility_registry.json": "7d9776b23db18d9cf29b2ae58b9f21d24d95cf515ea786376a3826bf60587134"
+  },
+  "phase": "I2",
+  "schema_version": "I2.1"
+}

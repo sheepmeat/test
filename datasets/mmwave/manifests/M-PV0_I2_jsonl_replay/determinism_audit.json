@@ -1,0 +1,9 @@
+{
+  "as_recorded_vs_fast_evidence_timestamps_identical": true,
+  "as_recorded_vs_fast_virtual_schedule_differs": true,
+  "audit_date": "2026-08-23",
+  "physical_repeat_identical": true,
+  "schema_version": "I2.1",
+  "synthetic_repeat_identical": true,
+  "wall_clock_excluded_from_evidence_hash": true
+}
