@@ -1,0 +1,34 @@
+{
+  "candidate_id": "F3_TRACE_PLUS_QUALITY",
+  "fail_closed_rule": "invalid R1 timing/mask/metadata is an exception; flat/short/zero-band cases are typed unavailable",
+  "input_contract": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+  "quality_descriptor_names": [
+    "trace_sample_count",
+    "trace_duration_s",
+    "trace_mad_about_median",
+    "trace_robust_rms_about_median",
+    "trace_robust_range_p05_p95",
+    "trace_mean_square",
+    "trace_is_exact_flat",
+    "valid_sample_fraction",
+    "source_quality_flag_count"
+  ],
+  "quality_flags": [
+    "R1_FINITE_OUTPUT",
+    "R1_NATIVE_SCALE_PRESERVED",
+    "EXACT_FLAT_TRACE",
+    "FEATURE_UNAVAILABLE_SHORT_TRACE",
+    "FEATURE_UNAVAILABLE_NO_RESPIRATORY_BAND_ENERGY"
+  ],
+  "schema_id": "MMWAVE_V2_R2_F3_TRACE_PLUS_QUALITY_DESCRIPTOR_V1",
+  "schema_version": "R2.1",
+  "status": "BOUNDED_CANDIDATE_FOR_M_PV1_NOT_SELECTED",
+  "trace_output": {
+    "name": "respiratory_motion_trace",
+    "repository_evidence": "waveform arrays are intentionally not persisted in R2 evidence",
+    "runtime_retention": "trace/time/validity mask retained for downstream R3 work",
+    "semantics": "offset-centered native phase-like relative motion",
+    "time_axis": "R1 timestamps and variable length preserved",
+    "units": "phase_like_radian; absolute displacement equivalence not claimed"
+  }
+}

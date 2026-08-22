@@ -1,0 +1,33 @@
+{
+  "actual_success": {
+    "D0": 318,
+    "D1": 265
+  },
+  "checks": {
+    "D0_EXPECTED_SUCCESS_COUNT": true,
+    "D0_TRAIN_ONLY": true,
+    "D1_EXPECTED_SUCCESS_COUNT": true,
+    "NATIVE_SCALE_PRESERVED": true,
+    "NO_CANDIDATE_SELECTION": true,
+    "NO_D2": true,
+    "NO_MODEL_TRAINING": true,
+    "NO_MR60_SUPERVISED_USE": true,
+    "NO_RECORD_EXCEPTIONS": true,
+    "NO_WINDOW_LOCAL_NORMALIZATION": true
+  },
+  "expected_success": {
+    "D0": 318,
+    "D1": 265
+  },
+  "gate": "PASS_WITH_LIMITATIONS",
+  "limitations": [
+    "F1/F2/F3 are bounded candidates; no winner selected",
+    "R1 common 10 Hz rate remains a candidate, not final M-PV1 rate",
+    "D1 sign alignment and native reference units remain source-level limitations",
+    "no predictive or clinical claim is made"
+  ],
+  "ok": true,
+  "phase": "R2",
+  "schema_version": "R2.1",
+  "status": "BOUNDED_CANDIDATES_READY_FOR_M_PV1"
+}

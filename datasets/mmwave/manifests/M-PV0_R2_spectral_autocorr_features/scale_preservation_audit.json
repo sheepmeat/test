@@ -1,0 +1,170 @@
+{
+  "D0": {
+    "cross_domain_gain_matching_count": 0,
+    "native_scale_preserved_count": 318,
+    "scale_feature_ranges": {
+      "common_trace_mad_about_median": {
+        "finite_count": 318,
+        "max": 24.501328275359025,
+        "median": 3.826310935008826,
+        "min": 0.2591348871731258
+      },
+      "native_mad_about_median": {
+        "finite_count": 318,
+        "max": 24.501328275359025,
+        "median": 3.826310935008826,
+        "min": 0.2591348871731258
+      },
+      "native_robust_range_p05_p95": {
+        "finite_count": 318,
+        "max": 84.59484260731928,
+        "median": 17.97814821590162,
+        "min": 1.6717078327307222
+      },
+      "native_robust_rms_about_median": {
+        "finite_count": 318,
+        "max": 30.210407283146395,
+        "median": 5.98923975209377,
+        "min": 0.5146419568107928
+      },
+      "respiratory_band_energy": {
+        "finite_count": 318,
+        "max": 2139.247440338705,
+        "median": 197.3501449828162,
+        "min": 0.40305303011877414
+      },
+      "total_signal_energy": {
+        "finite_count": 318,
+        "max": 273800.61246407544,
+        "median": 10761.461297455833,
+        "min": 79.45690311301259
+      }
+    },
+    "success": 318,
+    "window_local_scale_normalization_count": 0
+  },
+  "D1": {
+    "cross_domain_gain_matching_count": 0,
+    "native_scale_preserved_count": 265,
+    "scale_feature_ranges": {
+      "common_trace_mad_about_median": {
+        "finite_count": 265,
+        "max": 69.44099345403316,
+        "median": 1.1627994300639664,
+        "min": 0.22691354987531787
+      },
+      "native_mad_about_median": {
+        "finite_count": 265,
+        "max": 68.7700105159577,
+        "median": 1.150789024371365,
+        "min": 0.22284244063023761
+      },
+      "native_robust_range_p05_p95": {
+        "finite_count": 265,
+        "max": 322.45644667167176,
+        "median": 5.249654229273651,
+        "min": 1.1924044199482764
+      },
+      "native_robust_rms_about_median": {
+        "finite_count": 265,
+        "max": 94.73826422579216,
+        "median": 1.681082528210172,
+        "min": 0.47654892779276686
+      },
+      "respiratory_band_energy": {
+        "finite_count": 265,
+        "max": 8960.946392600536,
+        "median": 61.69163696693214,
+        "min": 0.2322589024434813
+      },
+      "total_signal_energy": {
+        "finite_count": 265,
+        "max": 4964936.97954331,
+        "median": 1474.4117776953476,
+        "min": 54.954972591068014
+      }
+    },
+    "success": 265,
+    "window_local_scale_normalization_count": 0
+  },
+  "policy": {
+    "absolute_scale_features_are_candidates_not_cutoffs": true,
+    "cross_domain_gain_matching": false,
+    "low_amplitude_is_not_auto_apnea": true,
+    "native_scale_preserved": true,
+    "window_local_MAD_division": false
+  },
+  "schema_version": "R2.1",
+  "synthetic_scale_test_reference": "see deterministic tests.normalized_shape_is_scale_stable and absolute_scale_is_preserved",
+  "synthetic_tests": {
+    "fixture": {
+      "base_trace": "0.8*sin(0.20 Hz) + 0.12*sin(0.35 Hz)",
+      "flat_trace": "constant 2.0",
+      "sample_count": 300,
+      "sample_rate_hz": 10.0,
+      "small_trace": "base_trace / 100"
+    },
+    "model_selection_used": false,
+    "purpose": "engineering_sanity_only; no model or candidate selection",
+    "reference_tuning_used": false,
+    "schema_version": "R2.1",
+    "tests": {
+      "absolute_scale_is_preserved": {
+        "expected_amplitude_ratio": 100.0,
+        "expected_energy_ratio": 10000.0,
+        "observed_ratios": {
+          "native_mad_about_median": 99.99999999999999,
+          "respiratory_band_energy": 10000.000000000007,
+          "total_signal_energy": 10000.0
+        },
+        "pass": true
+      },
+      "exact_flat_trace_is_typed_unavailable": {
+        "all_emitted_values_finite": true,
+        "f1_status": "FEATURE_UNAVAILABLE_FLAT_TRACE",
+        "f2_status": "FEATURE_UNAVAILABLE_FLAT_TRACE",
+        "f3_status": "FEATURE_UNAVAILABLE_FLAT_TRACE",
+        "flat_shape_keys_present": [],
+        "pass": true
+      },
+      "low_amplitude_periodic_trace_remains_representable": {
+        "f1_status": "AVAILABLE",
+        "f2_status": "AVAILABLE",
+        "pass": true,
+        "trace_is_exact_flat": false
+      },
+      "normalized_shape_is_scale_stable": {
+        "max_absolute_shape_difference": 1.1102230246251565e-16,
+        "pass": true,
+        "per_feature_absolute_difference": {
+          "spectral_shape_centroid_hz": 0.0,
+          "spectral_shape_entropy_normalized": 5.551115123125783e-17,
+          "spectral_shape_fraction_0p10_0p25_hz": 0.0,
+          "spectral_shape_fraction_0p25_0p40_hz": 1.734723475976807e-17,
+          "spectral_shape_fraction_0p40_0p55_hz": 1.3446648037662018e-20,
+          "spectral_shape_fraction_0p55_0p70_hz": 7.543887186483612e-22,
+          "spectral_shape_peak_fraction": 1.1102230246251565e-16,
+          "spectral_shape_peak_frequency_hz": 0.0
+        },
+        "status_base": "AVAILABLE",
+        "status_small": "AVAILABLE"
+      },
+      "sign_invariance_is_explicit": {
+        "max_absolute_shape_difference": 0.0,
+        "pass": true,
+        "per_feature_absolute_difference": {
+          "spectral_shape_centroid_hz": 0.0,
+          "spectral_shape_entropy_normalized": 0.0,
+          "spectral_shape_fraction_0p10_0p25_hz": 0.0,
+          "spectral_shape_fraction_0p25_0p40_hz": 0.0,
+          "spectral_shape_fraction_0p40_0p55_hz": 0.0,
+          "spectral_shape_fraction_0p55_0p70_hz": 0.0,
+          "spectral_shape_peak_fraction": 0.0,
+          "spectral_shape_peak_frequency_hz": 0.0
+        },
+        "source_sign_flip_applied": false
+      }
+    },
+    "threshold_selection_used": false
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "candidate_ids": [
+    "F1_NORMALIZED_SPECTRAL",
+    "F2_SPECTRAL_AUTOCORR",
+    "F3_TRACE_PLUS_QUALITY"
+  ],
+  "candidate_schema_ids": [
+    "MMWAVE_V2_R2_F1_NORMALIZED_SPECTRAL_V1",
+    "MMWAVE_V2_R2_F2_SPECTRAL_AUTOCORR_V1",
+    "MMWAVE_V2_R2_F3_TRACE_PLUS_QUALITY_DESCRIPTOR_V1"
+  ],
+  "candidate_set_id": "MMWAVE_V2_R2_REPRESENTATION_CANDIDATE_SET_V1",
+  "domains": {
+    "D0": "frozen TRAIN only; R1 lineage windows",
+    "D1": "all successful development recordings; no oversampling"
+  },
+  "evidence_policy": "compact scalar features and provenance only; no waveform arrays committed",
+  "forbidden_in_R2": [
+    "model training",
+    "neural preprocessing",
+    "D0-derived scaler",
+    "MR60-derived scaler",
+    "window-local MAD division",
+    "R2 derivative",
+    "spectral target encoding",
+    "autocorrelation target encoding",
+    "breathing-evidence score",
+    "RR ML target encoding",
+    "temporal hold logic",
+    "APNEA feature labels",
+    "D2 access",
+    "MR60 supervised use"
+  ],
+  "input_contract": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+  "respiratory_band_hz": [
+    0.1,
+    0.7
+  ],
+  "schema_version": "R2.1",
+  "selected_candidate": null,
+  "selection_performed": false,
+  "status": "BOUNDED_CANDIDATES_READY_FOR_M_PV1"
+}
