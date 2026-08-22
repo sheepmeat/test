@@ -1,0 +1,18 @@
+{
+  "algorithm": "SHA-256",
+  "config_file": {
+    "path": "config/mmwave/i1_runtime_semantic_contract.json",
+    "sha256": "048aad5ac2bfbf0a32103a9626ff6d22032fe7db2ee57977f5de4f95e442d39d"
+  },
+  "encoding": "utf-8 JSON indent=2 sort_keys=True trailing newline",
+  "files": {
+    "exception_registry.json": "31bca8cd3d2f5f811cfcba076ebb34cb21cf42a586d99de90a6b3dd7361a3296",
+    "provenance_contract.json": "6988c59486369a6f295155fce9a264f2c1e0820f8c6f2575f578776a5ffb611f",
+    "replay_interface_skeleton.json": "451abd96c59fad2a63a6ab1af9d915ef6a7b17ca9370f85eb5e36058a3221239",
+    "runtime_input_schema.json": "583f4e7f92c5575cd8cb693296ff45ffa11e89d5a85ee875ffed495155568f63",
+    "runtime_output_schema.json": "1e23ab3fb8f538525d1551bc3c11823885cd611f47c953a03c0dab1b8352b435",
+    "runtime_semantic_contract.json": "048aad5ac2bfbf0a32103a9626ff6d22032fe7db2ee57977f5de4f95e442d39d"
+  },
+  "phase": "I1",
+  "schema_version": "I1.1"
+}

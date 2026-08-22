@@ -1,0 +1,508 @@
+{
+  "allowed_in_i1": [
+    "serializer/deserializer",
+    "schema validator",
+    "tiny deterministic fixture",
+    "no-op/mock inference boundary"
+  ],
+  "audit_date": "2026-08-22",
+  "contract_id": "MMWAVE_V2_I1_REPLAY_INTERFACE_SKELETON_V1",
+  "feeders_for_i2": [
+    "historical JSONL",
+    "public adapted traces",
+    "synthetic corruption fixtures"
+  ],
+  "forbidden_in_i1": [
+    "running V1/V2 across historical sessions",
+    "computing replay metrics",
+    "MR60 application scoring"
+  ],
+  "interface": {
+    "deserialize_runtime_record": "scripts.mmwave_i1_runtime_io_contract.deserialize_runtime_record",
+    "resolve_precedence": "scripts.mmwave_i1_runtime_io_contract.resolve_precedence",
+    "serialize_runtime_record": "scripts.mmwave_i1_runtime_io_contract.serialize_runtime_record",
+    "validate_runtime_input": "scripts.mmwave_i1_runtime_io_contract.validate_runtime_input",
+    "validate_runtime_output": "scripts.mmwave_i1_runtime_io_contract.validate_runtime_output"
+  },
+  "phase": "I1",
+  "record_kinds": [
+    "runtime_input",
+    "runtime_output"
+  ],
+  "schema_version": "I1.1",
+  "tiny_deterministic_fixture": {
+    "mr60_missing_freshness_fail_closed": {
+      "input": {
+        "adapter": {
+          "adapter_profile_id": "MR60_ESP_TELEMETRY_V1",
+          "software_git_sha": "03b0f4c3b5bcff3f066eaf3f29a43d4889ad24b9"
+        },
+        "event": {
+          "event_id": "seq-10",
+          "sample_id": "seq-10"
+        },
+        "freshness": {
+          "phase_age_ms": {
+            "applicability": "REQUIRED_FOR_PRODUCTION_MR60",
+            "value": null
+          },
+          "seq": {
+            "applicability": "REQUIRED_FOR_PRODUCTION_MR60",
+            "value": 10
+          }
+        },
+        "model_input_boundary": {
+          "eligible_for_physiological_inference": false,
+          "feature_schema_id": "DEFERRED_TO_R2_M_PV1",
+          "input_values": null,
+          "model_input_contract_id": "DEFERRED_TO_M_PV1",
+          "native_amplitude_descriptors": {},
+          "not_for_physiological_inference": true,
+          "representation_profile_id": "DEFERRED_TO_R1_R2_R3",
+          "tensor_shape": "DEFERRED_TO_M_PV1",
+          "time_coverage": {
+            "end": 2000,
+            "start": 1000,
+            "unit": "ms"
+          },
+          "validity_mask": null
+        },
+        "mr60_telemetry": {
+          "breath_phase": {
+            "applicability": "OPTIONAL_MR60_TELEMETRY_NOT_V2_RR_TRUTH",
+            "value": null
+          },
+          "breath_rate_raw": {
+            "status": "AUXILIARY_TELEMETRY_NOT_V2_RR_TRUTH",
+            "used_as_v2_supervised_rr_truth": false,
+            "value": null
+          },
+          "config_hash": "unspecified",
+          "firmware_version": "unspecified",
+          "schema_version": "unspecified",
+          "session_id": "esp-session-001",
+          "ts_monotonic_ms": {
+            "applicability": "REQUIRED_FOR_PRODUCTION_MR60_AS_RECEIVE_OR_PUBLISH_CLOCK",
+            "not_physical_radar_acquisition_time": true,
+            "value": 2000
+          }
+        },
+        "presence": {
+          "applicability": "REQUIRED_FOR_PRODUCTION_MR60",
+          "field": "human_detected_raw",
+          "inferred_from_amplitude": false,
+          "value": true
+        },
+        "provenance": {
+          "adapter_profile_id": "MR60_ESP_TELEMETRY_V1",
+          "dataset_or_device_id": "device-mr60-production",
+          "event_id": "seq-10",
+          "firmware_config_identity": "unspecified",
+          "recording_id": "jsonl-stream",
+          "representation_profile_id": "DEFERRED_TO_R1_R2_R3",
+          "runtime_window_id": "runtime_window:09b21dbb6fbe5f97e3f3afb87cc79d050d4dba6e01ae8a317ce2eea657a647fd",
+          "session_id": "esp-session-001",
+          "software_git_sha": "03b0f4c3b5bcff3f066eaf3f29a43d4889ad24b9",
+          "source_id": "device-mr60-production",
+          "synthetic_corruption_profile_id": null,
+          "transport_record_id": "transport-uuid-not-evidence"
+        },
+        "quality": {
+          "declared_availability_state": "INPUT_UNAVAILABLE",
+          "detection_implemented_in_i1": false,
+          "external_policy_id": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+          "reason_codes": [
+            "SOURCE_STALE"
+          ]
+        },
+        "schema_id": "MMWAVE_V2_I1_RUNTIME_INPUT_CONTRACT_V1",
+        "schema_version": "I1.1",
+        "session": {
+          "recording_id": "jsonl-stream",
+          "session_id": "esp-session-001",
+          "subject_id": null
+        },
+        "signal": {
+          "native_amplitude_descriptors": {},
+          "payload": {
+            "kind": "trace_reference",
+            "not_a_final_tensor": true,
+            "values": null
+          },
+          "representation_profile_id": "DEFERRED_TO_R1_R2_R3",
+          "sampling": {
+            "rate_hz": null,
+            "rate_status": "DEFERRED_TO_R1_M_PV1"
+          },
+          "semantics": "unspecified_native",
+          "units": null
+        },
+        "source": {
+          "dataset_or_device_id": "device-mr60-production",
+          "domain_class": "PRODUCTION_MR60",
+          "radar_domain": "mr60",
+          "source_id": "device-mr60-production"
+        },
+        "timestamps": {
+          "model_evaluation_time": {
+            "authoritative": false,
+            "clock_domain": "runtime_eval",
+            "monotonic_or_wall": "monotonic",
+            "notes": "DEFERRED_TO_I2",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": null
+          },
+          "runtime_receive_time": {
+            "authoritative": false,
+            "clock_domain": "pi_receive",
+            "monotonic_or_wall": "monotonic",
+            "notes": "host receive clock; not radar acquisition time",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": 2000
+          },
+          "source_native_sample_time": {
+            "authoritative": false,
+            "clock_domain": "unknown_physical_radar",
+            "monotonic_or_wall": "unspecified",
+            "notes": "ESP ts_monotonic_ms is not claimed as physical radar acquisition time",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": null
+          },
+          "source_update_estimate": {
+            "authoritative": false,
+            "clock_domain": "esp_ts_monotonic_ms_minus_phase_age_ms",
+            "monotonic_or_wall": "monotonic",
+            "notes": "freshness missing; estimate cannot be formed",
+            "reconstructed": true,
+            "unit": "ms",
+            "value": null
+          },
+          "transport_publish_time": {
+            "authoritative": true,
+            "clock_domain": "esp_ts_monotonic_ms",
+            "monotonic_or_wall": "monotonic",
+            "notes": "ESP publish/receive-side monotonic clock, not physical radar acquisition time",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": 2000
+          },
+          "window_end": {
+            "authoritative": true,
+            "clock_domain": "esp_ts_monotonic_ms",
+            "monotonic_or_wall": "monotonic",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": 2000
+          },
+          "window_start": {
+            "authoritative": true,
+            "clock_domain": "esp_ts_monotonic_ms",
+            "monotonic_or_wall": "monotonic",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": 1000
+          }
+        }
+      },
+      "output": {
+        "actionable": false,
+        "application_state": "INPUT_UNAVAILABLE",
+        "availability_state": "INPUT_UNAVAILABLE",
+        "breathing_evidence": {
+          "confidence": {
+            "component": "breathing_evidence",
+            "status": "unavailable",
+            "value": null
+          },
+          "reason_codes": [
+            "SOURCE_STALE"
+          ],
+          "status": "unavailable",
+          "value": null
+        },
+        "inference_kind": "MockInferenceResult",
+        "physiology_boundary_entered": false,
+        "physiology_executed": false,
+        "provenance": {
+          "runtime_window_id": "runtime_window:09b21dbb6fbe5f97e3f3afb87cc79d050d4dba6e01ae8a317ce2eea657a647fd",
+          "source_id": "device-mr60-production"
+        },
+        "quality": {
+          "confidence": {
+            "component": "quality_availability",
+            "status": "available",
+            "value": null
+          },
+          "reason_codes": [
+            "SOURCE_STALE"
+          ],
+          "status": "available",
+          "value": "INPUT_UNAVAILABLE"
+        },
+        "reason_codes": [
+          "SOURCE_STALE"
+        ],
+        "rr": {
+          "confidence": {
+            "component": "rr",
+            "status": "unavailable",
+            "value": null
+          },
+          "reason_codes": [
+            "SOURCE_STALE"
+          ],
+          "status": "unavailable",
+          "value": null
+        },
+        "schema_id": "MMWAVE_V2_I1_RUNTIME_OUTPUT_CONTRACT_V1",
+        "schema_version": "I1.1",
+        "temporal_hold": {
+          "confidence": {
+            "component": "temporal_hold",
+            "status": "unavailable",
+            "value": null
+          },
+          "reason_codes": [
+            "SOURCE_STALE"
+          ],
+          "status": "unavailable",
+          "value": null
+        },
+        "warning": "NOT_IMPLEMENTED_MODEL_BOUNDARY; not a physiological prediction"
+      }
+    },
+    "public_d0_without_phase_age_eligible": {
+      "input": {
+        "adapter": {
+          "adapter_profile_id": "D0_A6_UNFILTERED_UNNORMALIZED_PHASE",
+          "software_git_sha": "03b0f4c3b5bcff3f066eaf3f29a43d4889ad24b9"
+        },
+        "event": {
+          "event_id": "window-000",
+          "sample_id": "idx-0"
+        },
+        "freshness": {
+          "phase_age_ms": {
+            "applicability": "NOT_APPLICABLE_TO_PUBLIC_OFFLINE_DOMAIN",
+            "value": null
+          },
+          "seq": {
+            "applicability": "NOT_APPLICABLE_TO_PUBLIC_OFFLINE_DOMAIN",
+            "value": null
+          }
+        },
+        "model_input_boundary": {
+          "eligible_for_physiological_inference": true,
+          "feature_schema_id": "DEFERRED_TO_R2_M_PV1",
+          "input_values": null,
+          "model_input_contract_id": "DEFERRED_TO_M_PV1",
+          "native_amplitude_descriptors": {
+            "native_mad": null
+          },
+          "not_for_physiological_inference": false,
+          "representation_profile_id": "DEFERRED_TO_R1_R2_R3",
+          "tensor_shape": "DEFERRED_TO_M_PV1",
+          "time_coverage": {
+            "end": 12.0,
+            "start": 0.0,
+            "unit": "s"
+          },
+          "validity_mask": null
+        },
+        "mr60_telemetry": {
+          "breath_rate_raw": {
+            "status": "AUXILIARY_TELEMETRY_NOT_V2_RR_TRUTH",
+            "used_as_v2_supervised_rr_truth": false,
+            "value": null
+          }
+        },
+        "presence": {
+          "applicability": "NOT_APPLICABLE_TO_PUBLIC_OFFLINE_DOMAIN",
+          "field": "human_detected_raw",
+          "inferred_from_amplitude": false,
+          "value": null
+        },
+        "provenance": {
+          "adapter_profile_id": "D0_A6_UNFILTERED_UNNORMALIZED_PHASE",
+          "dataset_or_device_id": "dataset-10_5281_zenodo_18599983",
+          "event_id": "window-000",
+          "firmware_config_identity": null,
+          "recording_id": "p001_rec01",
+          "representation_profile_id": "DEFERRED_TO_R1_R2_R3",
+          "runtime_window_id": "runtime_window:0a2ba64b7f2dcc6d958bdcb44cc34eb003ba6af21d832073ccc0b4c86b1a346c",
+          "session_id": "p001",
+          "software_git_sha": "03b0f4c3b5bcff3f066eaf3f29a43d4889ad24b9",
+          "source_id": "dataset-10_5281_zenodo_18599983",
+          "synthetic_corruption_profile_id": null,
+          "transport_record_id": null
+        },
+        "quality": {
+          "declared_availability_state": "PHYSIOLOGY_ELIGIBLE",
+          "detection_implemented_in_i1": false,
+          "external_policy_id": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+          "reason_codes": []
+        },
+        "schema_id": "MMWAVE_V2_I1_RUNTIME_INPUT_CONTRACT_V1",
+        "schema_version": "I1.1",
+        "session": {
+          "recording_id": "p001_rec01",
+          "session_id": "p001",
+          "subject_id": "p001"
+        },
+        "signal": {
+          "native_amplitude_descriptors": {},
+          "payload": {
+            "kind": "trace_reference",
+            "not_a_final_tensor": true,
+            "values": [
+              0.1,
+              -0.2,
+              0.15
+            ]
+          },
+          "representation_profile_id": "DEFERRED_TO_R1_R2_R3",
+          "sampling": {
+            "rate_hz": null,
+            "rate_status": "DEFERRED_TO_R1_M_PV1"
+          },
+          "semantics": "phase_like",
+          "units": "phase_like_radian"
+        },
+        "source": {
+          "dataset_or_device_id": "dataset-10_5281_zenodo_18599983",
+          "domain_class": "PUBLIC_OFFLINE",
+          "radar_domain": "60ghz",
+          "source_id": "dataset-10_5281_zenodo_18599983"
+        },
+        "timestamps": {
+          "model_evaluation_time": {
+            "authoritative": false,
+            "clock_domain": "runtime_eval",
+            "monotonic_or_wall": "monotonic",
+            "notes": "DEFERRED_TO_I2",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": null
+          },
+          "runtime_receive_time": {
+            "authoritative": false,
+            "clock_domain": "not_applicable_public_offline",
+            "monotonic_or_wall": "unspecified",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": null
+          },
+          "source_native_sample_time": {
+            "authoritative": true,
+            "clock_domain": "native_sample_index_over_fs",
+            "monotonic_or_wall": "index_reconstructed",
+            "reconstructed": true,
+            "unit": "s",
+            "value": 0.0
+          },
+          "source_update_estimate": {
+            "authoritative": false,
+            "clock_domain": "not_applicable_public_offline",
+            "monotonic_or_wall": "unspecified",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": null
+          },
+          "transport_publish_time": {
+            "authoritative": false,
+            "clock_domain": "not_applicable_public_offline",
+            "monotonic_or_wall": "unspecified",
+            "reconstructed": false,
+            "unit": "ms",
+            "value": null
+          },
+          "window_end": {
+            "authoritative": true,
+            "clock_domain": "native_sample_index_over_fs",
+            "monotonic_or_wall": "index_reconstructed",
+            "reconstructed": true,
+            "unit": "s",
+            "value": 12.0
+          },
+          "window_start": {
+            "authoritative": true,
+            "clock_domain": "native_sample_index_over_fs",
+            "monotonic_or_wall": "index_reconstructed",
+            "reconstructed": true,
+            "unit": "s",
+            "value": 0.0
+          }
+        }
+      },
+      "output": {
+        "actionable": false,
+        "application_state": "NOT_EVALUATED",
+        "availability_state": "PHYSIOLOGY_ELIGIBLE",
+        "breathing_evidence": {
+          "confidence": {
+            "component": "breathing_evidence",
+            "status": "not_evaluated",
+            "value": null
+          },
+          "reason_codes": [
+            "NOT_IMPLEMENTED_MODEL_BOUNDARY"
+          ],
+          "status": "not_evaluated",
+          "value": null
+        },
+        "inference_kind": "MockInferenceResult",
+        "physiology_boundary_entered": true,
+        "physiology_executed": false,
+        "provenance": {
+          "runtime_window_id": "runtime_window:0a2ba64b7f2dcc6d958bdcb44cc34eb003ba6af21d832073ccc0b4c86b1a346c",
+          "source_id": "dataset-10_5281_zenodo_18599983"
+        },
+        "quality": {
+          "confidence": {
+            "component": "quality_availability",
+            "status": "available",
+            "value": null
+          },
+          "reason_codes": [
+            "NOT_IMPLEMENTED_MODEL_BOUNDARY"
+          ],
+          "status": "available",
+          "value": "PHYSIOLOGY_ELIGIBLE"
+        },
+        "reason_codes": [
+          "NOT_IMPLEMENTED_MODEL_BOUNDARY"
+        ],
+        "rr": {
+          "confidence": {
+            "component": "rr",
+            "status": "not_evaluated",
+            "value": null
+          },
+          "reason_codes": [
+            "NOT_IMPLEMENTED_MODEL_BOUNDARY"
+          ],
+          "status": "not_evaluated",
+          "value": null
+        },
+        "schema_id": "MMWAVE_V2_I1_RUNTIME_OUTPUT_CONTRACT_V1",
+        "schema_version": "I1.1",
+        "temporal_hold": {
+          "confidence": {
+            "component": "temporal_hold",
+            "status": "not_evaluated",
+            "value": null
+          },
+          "reason_codes": [
+            "NOT_IMPLEMENTED_MODEL_BOUNDARY"
+          ],
+          "status": "not_evaluated",
+          "value": null
+        },
+        "warning": "NOT_IMPLEMENTED_MODEL_BOUNDARY; not a physiological prediction"
+      }
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "absolute_paths_forbidden": true,
+  "archive_or_version_snapshot_fallback_forbidden": true,
+  "audit_date": "2026-08-22",
+  "contract_id": "MMWAVE_V2_I1_PROVENANCE_CONTRACT_V1",
+  "deterministic_runtime_window_id": {
+    "algorithm": "SHA-256 of canonical JSON",
+    "fields": [
+      "contract_id",
+      "source_id",
+      "session_id",
+      "recording_id",
+      "event_id",
+      "window_start",
+      "window_end"
+    ],
+    "prefix": "runtime_window:",
+    "random_uuid_alone_forbidden": true
+  },
+  "phase": "I1",
+  "required_lineage_fields": [
+    "source_id",
+    "dataset_or_device_id",
+    "session_id",
+    "recording_id",
+    "event_id",
+    "adapter_profile_id",
+    "representation_profile_id",
+    "software_git_sha",
+    "runtime_window_id"
+  ],
+  "schema_version": "I1.1",
+  "synthetic_corruption_profile_id": "required when domain_class=SYNTHETIC_CORRUPTION",
+  "transport_record_id": "optional UUID for runtime transport; not evidence identity"
+}

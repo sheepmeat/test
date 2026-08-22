@@ -1,0 +1,296 @@
+{
+  "additionalProperties": false,
+  "application_states": [
+    "PRESENCE_SUPPRESSED",
+    "INPUT_UNAVAILABLE",
+    "RESPIRATION_PRESENT",
+    "ABNORMAL_RR",
+    "APNEA_PROXY_CANDIDATE",
+    "NOT_EVALUATED"
+  ],
+  "audit_date": "2026-08-22",
+  "component_statuses": [
+    "available",
+    "unavailable",
+    "not_evaluated"
+  ],
+  "contract_id": "MMWAVE_V2_I1_RUNTIME_OUTPUT_CONTRACT_V1",
+  "description": "Semantic V2 runtime output skeleton. Component slots are not neural heads.",
+  "phase": "I1",
+  "properties": {
+    "actionable": {
+      "type": "boolean"
+    },
+    "application_state": {
+      "enum": [
+        "PRESENCE_SUPPRESSED",
+        "INPUT_UNAVAILABLE",
+        "RESPIRATION_PRESENT",
+        "ABNORMAL_RR",
+        "APNEA_PROXY_CANDIDATE",
+        "NOT_EVALUATED"
+      ]
+    },
+    "availability_state": {
+      "enum": [
+        "PRESENCE_SUPPRESSED",
+        "INPUT_UNAVAILABLE",
+        "PHYSIOLOGY_ELIGIBLE"
+      ]
+    },
+    "breathing_evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "additionalProperties": false,
+          "properties": {
+            "component": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status": {
+              "enum": [
+                "available",
+                "unavailable",
+                "not_evaluated"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "component",
+            "status"
+          ],
+          "type": "object"
+        },
+        "reason_codes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "not_evaluated"
+          ]
+        },
+        "value": {}
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "inference_kind": {
+      "enum": [
+        "MockInferenceResult",
+        "NOT_IMPLEMENTED_MODEL_BOUNDARY"
+      ]
+    },
+    "physiology_boundary_entered": {
+      "type": "boolean"
+    },
+    "physiology_executed": {
+      "type": "boolean"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "quality": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "additionalProperties": false,
+          "properties": {
+            "component": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status": {
+              "enum": [
+                "available",
+                "unavailable",
+                "not_evaluated"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "component",
+            "status"
+          ],
+          "type": "object"
+        },
+        "reason_codes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "not_evaluated"
+          ]
+        },
+        "value": {}
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "reason_codes": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "rr": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "additionalProperties": false,
+          "properties": {
+            "component": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status": {
+              "enum": [
+                "available",
+                "unavailable",
+                "not_evaluated"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "component",
+            "status"
+          ],
+          "type": "object"
+        },
+        "reason_codes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "not_evaluated"
+          ]
+        },
+        "value": {}
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "schema_id": {
+      "const": "MMWAVE_V2_I1_RUNTIME_OUTPUT_CONTRACT_V1"
+    },
+    "schema_version": {
+      "const": "I1.1"
+    },
+    "temporal_hold": {
+      "additionalProperties": false,
+      "properties": {
+        "confidence": {
+          "additionalProperties": false,
+          "properties": {
+            "component": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "status": {
+              "enum": [
+                "available",
+                "unavailable",
+                "not_evaluated"
+              ]
+            },
+            "value": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "component",
+            "status"
+          ],
+          "type": "object"
+        },
+        "reason_codes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "status": {
+          "enum": [
+            "available",
+            "unavailable",
+            "not_evaluated"
+          ]
+        },
+        "value": {}
+      },
+      "required": [
+        "status"
+      ],
+      "type": "object"
+    },
+    "warning": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_id",
+    "schema_version",
+    "availability_state",
+    "reason_codes",
+    "physiology_executed",
+    "physiology_boundary_entered",
+    "actionable",
+    "application_state"
+  ],
+  "schema_version": "I1.1",
+  "title": "MMWAVE_V2_I1_RUNTIME_OUTPUT_CONTRACT_V1",
+  "type": "object"
+}
