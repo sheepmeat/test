@@ -1,0 +1,23 @@
+{
+  "schema_version": "M-PV3.8.3-EVIDENCE-AUDIT",
+  "audit_id": "MMWAVE_V2_M_PV38_ABSENT_SOURCE_EVIDENCE_GAP_AUDIT_V1",
+  "source_layers": [
+    {
+      "source": "M-PV1 materialized D1 example manifest",
+      "context_count": 265,
+      "classification": {"valid_present": 236, "valid_absent": 0, "ambiguous": 8, "invalid_or_unavailable": 21},
+      "d1_dev_val": {"valid_present": 57, "valid_absent": 0, "ambiguous": 2, "invalid_or_unavailable": 3},
+      "finding": "No row is a verified NO_HUMAN_TARGET intended-negative observation."
+    },
+    {
+      "source": "M-PV0 R3 compact D1 target-row audit",
+      "context_count": 265,
+      "classification": {"valid_present": 0, "valid_absent": 0, "ambiguous_or_transition": 35, "invalid_or_unavailable": 265},
+      "finding": "All compact-source target states are TARGET_UNAVAILABLE; this layer cannot supply final negative-class evidence."
+    }
+  ],
+  "recovery_assessment": {
+    "existing_recording_recovery_for_absent": "NOT_SUPPORTED",
+    "reason": ["No immutable no-human-target presence evidence is available.", "No immutable no-target-physiological-source evidence is available.", "No predeclared negative-class recording slots or deterministic scan bounds exist.", "Weak periodicity is already governed as AMBIGUOUS, not ABSENT."]
+  }
+}
