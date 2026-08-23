@@ -1,0 +1,35 @@
+{
+  "schema_version": "M-PV3.8.4-FINAL-CLOSURE-AUDIT",
+  "audit_id": "MMWAVE_V2_M_PV38_FINAL_CLOSURE_INDEPENDENT_AUDIT_V1",
+  "phase": "M-PV3.8-FINAL-CLOSURE-INDEPENDENT-AUDIT",
+  "mode": "AUDIT_ONLY",
+  "decision": "NEEDS_CORRECTION",
+  "base_commit_sha": "d72ab5c",
+  "claimed_current_decision": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+  "blocking_finding_ids": [
+    "ACQUISITION_GATE_MANIFEST_LIFECYCLE_STATE_MISMATCH",
+    "CLOSURE_STATUS_NOT_UNIQUELY_FROZEN"
+  ],
+  "verified_non_blocking": {
+    "invalid_absent_substitution": false,
+    "evaluation_skipped_due_to_model_failure": false,
+    "evaluation_blocked_due_to_invalid_membership": true,
+    "m_pv4_authorized": false
+  },
+  "observed_status_conflict": {
+    "config_schema": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
+    "config_independent_audit_result": "APPROVED",
+    "acquisition_gate_schema": "M-PV3.8.3_CORRECTIVE",
+    "acquisition_gate_audit_state": "NEEDS_CORRECTION_RESOLVED_PENDING_INDEPENDENT_REAUDIT",
+    "final_lock_construction_status": "NOT_AUTHORIZED_PENDING_INDEPENDENT_REAUDIT",
+    "planning_result_status": "READY_FOR_CAPTURE_AUTHORIZATION",
+    "preflight_status": "CAPTURE_BLOCKED",
+    "feasibility_status": "ACQUISITION_REQUIRES_RESOURCE_ACCESS"
+  },
+  "authorizations": {
+    "acquisition": false,
+    "membership_construction": false,
+    "evaluation": false,
+    "m_pv4": false
+  }
+}

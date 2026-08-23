@@ -1,0 +1,9 @@
+{
+  "schema_version": "M-PV3.8.4-FINAL-CLOSURE-AUDIT",
+  "algorithm": "sha256",
+  "files": {
+    "docs/mmwave/20260824_SafeNest_mmWave_M-PV3_8_Final_Closure_Independent_Audit_01.md": "71a59c27b48fa9039c18ecca07c94f48b1877bfc4763c4043c5f425caa64ad5a",
+    "datasets/mmwave/manifests/M-PV3_8_final_closure_independent_audit/audit_result.json": "672230dca5bf5bb134b47444f2807bc2a0fa1ea905fe152047beb421b3e94dc2",
+    "datasets/mmwave/manifests/M-PV3_8_final_closure_independent_audit/blocking_findings.json": "fb9fe98a6c5a1a89eec3cb071d15727745b1628f1639a63e8716806abdcb50c6"
+  }
+}
