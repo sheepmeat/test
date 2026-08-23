@@ -1,0 +1,86 @@
+{
+  "schema_version": "M-PV3.8.4_FEASIBILITY_AUDIT_V1",
+  "audit_id": "MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_FEASIBILITY_AUDIT_V1",
+  "audit_date": "2026-08-24",
+  "mode": "EVIDENCE_AVAILABILITY_AUDIT_ONLY_NO_CAPTURE_NO_MEMBERSHIP_NO_EVALUATION",
+  "inputs": {
+    "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+    "contract_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
+    "acquisition_plan_id": "MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_PLAN_V1",
+    "preflight_id": "MMWAVE_V2_M_PV38_ABSENT_CAPTURE_PREFLIGHT_V1",
+    "repository_commit_sha_observed": "fb20d7853630bf63128ad85d174431e339701677"
+  },
+  "decision": {
+    "status": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+    "current_setup_feasible": false,
+    "feasible_after_resources_are_authoritatively_available": true,
+    "rationale": "The approved protocol is bounded and technically coherent, but the current setup has no live supported mmWave interface, no verified sensor identity or raw/timestamp/health stream, and no authoritative empty-zone evidence mechanism. These are missing resources and access controls, not a contract contradiction or a data-collection authorization."
+  },
+  "hardware_feasibility": {
+    "status": "RESOURCE_ACCESS_REQUIRED",
+    "findings": [
+      {"requirement": "Designated supported mmWave sensor", "current_evidence": "No target interface was detected during the preflight.", "minimum_resource": "A physically available supported sensor assigned to the campaign."},
+      {"requirement": "Recording interface and raw-stream access", "current_evidence": "Repository capture tooling exists, but no live target interface or raw stream was verified.", "minimum_resource": "Approved host-to-sensor interface, permissions, and a non-campaign connectivity check."},
+      {"requirement": "Sensor identity and configuration", "current_evidence": "No live device was available for interrogation.", "minimum_resource": "Device serial/identifier, firmware version, configuration identity or hash, and interface settings recorded from the live device."},
+      {"requirement": "Monotonic timestamps and health telemetry", "current_evidence": "Neither field family was observed from a live stream.", "minimum_resource": "Live telemetry that exposes timestamp, continuity, fault/dropout, and health/configuration fields required by the contract."}
+    ],
+    "conclusion": "The hardware path is plausible but not presently executable. Hardware readiness may be established only by resource access and a separate non-campaign verification."
+  },
+  "evidence_feasibility": {
+    "status": "RESOURCE_AND_GOVERNANCE_ACCESS_REQUIRED",
+    "findings": [
+      {"requirement": "No-human-target proof", "minimum_resource": "An authorized continuous occupancy reference covering the full target zone, independently reviewable and time synchronized."},
+      {"requirement": "No-target-physiological-source proof", "minimum_resource": "A sealed-zone/access record that covers the recording and proves no human, animal, respiration simulator, or other physiological source is present."},
+      {"requirement": "Time synchronization", "minimum_resource": "A shared host clock or explicit synchronization marker, with recorded alignment evidence; visual guess alignment is not acceptable."},
+      {"requirement": "Immutable evidence receipt", "minimum_resource": "Tamper-evident hashes for the occupancy/access evidence and an immediate post-capture SHA-256 receipt binding each actual recording to its predeclared identity."}
+    ],
+    "operator_statement": "SUPPORTING_ONLY_NOT_AUTHORITATIVE_UNLESS_AN_APPROVED_PROTOCOL_EXPLICITLY_DEFINES_IT_AS_THE_OCCUPANCY_REFERENCE",
+    "conclusion": "Authoritative ABSENT proof is feasible only if an independent occupancy and access-control mechanism is supplied. It cannot be inferred from radar non-detection, weak periodicity, or an operator assertion alone."
+  },
+  "minimum_resource_package": {
+    "hardware": [
+      "one designated supported mmWave sensor with stable power and a supported recording interface",
+      "one authorized occupancy-reference system that continuously covers the fixed target zone",
+      "rigid mount and measured target-zone geometry",
+      "a host capable of retaining immutable raw recordings and timestamps"
+    ],
+    "personnel": [
+      "sensor custodian able to identify firmware and configuration",
+      "capture operator responsible for the fixed nine-slot protocol",
+      "independent evidence reviewer for occupancy/access and negative-class evidence"
+    ],
+    "environment": [
+      "controlled indoor room with a bounded target zone and controlled access",
+      "static non-human background with no animal, physiological source, periodic moving reflector, fan, or respiration simulator",
+      "ability to maintain a continuous 300-second empty interval per fixed slot"
+    ],
+    "software_and_evidence_tooling": [
+      "non-campaign interface checker for raw fields, monotonic timestamps, continuity, and health telemetry",
+      "campaign artifact generator that can create the pre-capture identity lock and immediate one-to-one SHA-256 receipts",
+      "time-synchronization evidence recorder and immutable occupancy/access evidence hasher",
+      "recording, occupancy/evidence, sensor-health, and rejection registries"
+    ]
+  },
+  "authorization_boundary": {
+    "preconditions_before_any_campaign_predeclaration": [
+      "All hardware and evidence resources in the minimum resource package are physically available and verified.",
+      "A non-campaign interface and evidence-tooling check passes without creating campaign evidence.",
+      "The authoritative occupancy reference, access-control procedure, target-zone geometry, and synchronization method are approved.",
+      "All nine slot identities can be completely declared before the first capture."
+    ],
+    "preserved_rules": [
+      "ABSENT remains no-human-target, no-target-physiological-source, valid-sensor, intended-negative evidence only.",
+      "The three lineage groups, fixed nine slots, checksum lifecycle, no-replacement rule, and deterministic CHRONOLOGICAL_FIRST_N_QUALIFYING_V1 rule are unchanged.",
+      "No capture, membership construction, evaluation, candidate-output access, or M-PV4 authorization follows from this audit."
+    ]
+  },
+  "prohibitions_preserved": {
+    "campaign_predeclaration_created": false,
+    "capture_performed": false,
+    "absent_labels_created": false,
+    "membership_constructed": false,
+    "model_evaluation_performed": false,
+    "m_pv38_requirements_modified": false,
+    "m_pv4_authorized": false
+  }
+}
