@@ -1,0 +1,9 @@
+{
+  "schema_version": "M-PV3.8.2",
+  "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+  "final_membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+  "required_artifacts": ["membership_manifest.json", "ambiguity_exception_registry.json", "checksums.json", "checksums.sha256"],
+  "required_provenance_fields": ["source_dataset", "source_dataset_checksum", "subject_id", "session_id", "recording_id", "recording_checksum", "context_start_time", "context_end_time", "target_start_time", "target_end_time", "reference_source_id", "reference_recording_id", "reference_interval_start_time", "reference_interval_end_time", "label_mapping_id", "label_mapping_version", "label_mapping_checksum", "raw_reference_label", "protocol_or_operator_record_id", "split", "quality_state", "quality_provenance", "reviewer_decision", "reviewer_evidence_id"],
+  "ambiguity_policy": "RETAIN_WITH_ORIGINAL_EVIDENCE_AND_EXCLUDE_FROM_PURE_CLASS_MEMBERSHIP_AND_METRICS",
+  "immutable_before_candidate_output_access": true
+}

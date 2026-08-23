@@ -1,0 +1,17 @@
+{
+  "schema_version": "M-PV3.8.2",
+  "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+  "phase": "M-PV3.8-ABSENT-MEMBERSHIP",
+  "mode": "CONTRACT_DESIGN_ONLY",
+  "source_boundary": "D1_GOVERNED_NON_D2_ABSENT_EXTENSION_ONLY",
+  "candidate_evaluation": "NOT_AUTHORIZED_BY_THIS_CONTRACT",
+  "minimum_membership": {
+    "eligible_present": 57,
+    "eligible_absent": 57,
+    "subjects": ["D1_PERSON_03", "D1_PERSON_09", "D1_PERSON_11"],
+    "eligible_absent_per_subject": 19,
+    "distinct_absent_recordings_per_subject": 3,
+    "recording_context_quota": [7, 6, 6]
+  },
+  "terminal_states": ["MEMBERSHIP_READY_FOR_M_PV38_SELECTION_EVALUATION", "BLOCKED_INVALID_FINAL_MEMBERSHIP", "ROLE_L_FULL_TASK_DIRECTION_RECONSIDERATION_REQUIRED"]
+}

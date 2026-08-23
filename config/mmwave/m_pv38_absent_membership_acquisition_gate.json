@@ -1,0 +1,75 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+  "schema_version": "M-PV3.8.2",
+  "phase": "M-PV3.8-ABSENT-MEMBERSHIP",
+  "mode": "CONTRACT_DESIGN_ONLY",
+  "purpose": "Define the one bounded, governed acquisition and final-lock process required to provide valid D1 ABSENT evidence for the M-PV3.8 final selection membership.",
+  "current_state": {
+    "m_pv38_final_selection_result": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "available_eligible_present": 57,
+    "available_eligible_absent": 0,
+    "model_evaluation_performed": false,
+    "selection_performed": false
+  },
+  "non_negotiable_boundaries": {
+    "permitted_source_boundary": "D1_GOVERNED_NON_D2_ABSENT_EXTENSION_ONLY",
+    "d2_access": "FORBIDDEN",
+    "mr60_supervised_physiology": "FORBIDDEN",
+    "synthetic_absent_labels": "FORBIDDEN",
+    "ambiguous_relabeling": "FORBIDDEN",
+    "model_contract_modification": "FORBIDDEN",
+    "threshold_modification": "FORBIDDEN",
+    "candidate_output_access_before_final_lock": "FORBIDDEN"
+  },
+  "eligible_absent_definition": {
+    "canonical_label": "BREATHING_REFERENCE_ABSENT",
+    "meaning": "A SafeNest non-clinical breathing-reference state, not clinical apnea and not an inference from radar amplitude, model output, missing data, presence, or quality failure.",
+    "required_evidence": ["pre_authorized_D1_non_MR60_reference_source", "synchronized_reference_timestamp_interval", "reference_source_reports_absent_for_the_entire_target_interval", "operator_or_protocol_record_confirms_the_same_intentional_non_breathing_interval", "immutable_source_recording_identifier"],
+    "target_interval_rule": "The complete five-second physiology target interval must be contained within the same authoritative reference ABSENT interval. Any onset, offset, disagreement, incomplete coverage, or uncertain alignment is AMBIGUOUS, never ABSENT.",
+    "prohibited_derivations": ["radar_only_inference", "model_prediction", "missing_or_invalid_input", "quality_failure", "synthetic_generation", "conversion_of_AMBIGUOUS", "conversion_of_TARGET_UNAVAILABLE"]
+  },
+  "bounded_acquisition_campaign": {
+    "campaign_id": "D1_ABSENT_COMPLEMENT_CAMPAIGN_V1",
+    "attempt_limit": 1,
+    "held_out_subjects": ["D1_PERSON_03", "D1_PERSON_09", "D1_PERSON_11"],
+    "subject_disjoint_from_candidate_training": true,
+    "required_distinct_absent_recordings_per_subject": 3,
+    "eligible_absent_context_quota_per_subject": 19,
+    "eligible_absent_context_quota_per_recording": [7, 6, 6],
+    "eligible_absent_context_total": 57,
+    "recording_separation_rules": ["Each ABSENT recording ID must be distinct from every candidate-training recording ID.", "Each ABSENT recording ID must be distinct from every final-membership PRESENT recording ID for that subject.", "Selected 30-second input contexts must not overlap another selected final-membership input context.", "No selected target interval may be reused.", "A recording that fails provenance or quality qualification is rejected rather than replaced after the campaign closes."],
+    "campaign_stop": "The campaign stops when exactly 19 eligible ABSENT contexts have been accepted for each held-out subject, or when the three predeclared ABSENT recordings for any subject have been exhausted. No additional recording, subject, source, or collection round is authorized by this contract."
+  },
+  "quality_and_reference_requirements": {
+    "quality_state": "VALID_FOR_ENTIRE_30_SECOND_INPUT_AND_5_SECOND_TARGET",
+    "required": ["raw_sensor_recording_is_available_and_immutable", "reference_recording_is_available_and_immutable", "monotonic_timestamps_and_resolvable_clock_alignment", "complete_reference_coverage_for_context_and_target", "no_missing_stale_freeze_or_large_gap_condition_under_the_governing_quality_contract", "no_INPUT_UNAVAILABLE_state_for_the_selected_context", "independent_review_of_reference_and_protocol_agreement"],
+    "failure_rule": "Any quality, timing, reference, or reviewer disagreement fails closed: retain the row in the exception or ambiguity registry and do not count it as eligible ABSENT."
+  },
+  "final_membership_lock": {
+    "membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+    "state_before_lock": "ACQUISITION_REQUIRED",
+    "required_counts": {"eligible_present": 57, "eligible_absent": 57, "eligible_absent_per_subject": 19, "held_out_subject_count": 3},
+    "membership_manifest": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/membership_manifest.json",
+    "exception_and_ambiguity_registry": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/ambiguity_exception_registry.json",
+    "checksum_files": ["datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/checksums.json", "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/checksums.sha256"],
+    "required_row_fields": ["membership_row_id", "canonical_label", "source_dataset", "source_dataset_checksum", "subject_id", "session_id", "recording_id", "recording_checksum", "context_start_time", "context_end_time", "target_start_time", "target_end_time", "reference_source_id", "reference_recording_id", "reference_interval_start_time", "reference_interval_end_time", "reference_alignment_method_and_evidence", "label_mapping_id", "label_mapping_version", "label_mapping_checksum", "raw_reference_label", "protocol_or_operator_record_id", "split", "quality_state", "quality_provenance", "reviewer_decision", "reviewer_evidence_id"],
+    "label_mapping_rule": "The manifest must map the immutable raw reference label to BREATHING_REFERENCE_ABSENT with an explicit mapping ID, version, checksum, and evidence. A mapping cannot be inferred or revised after membership lock.",
+    "ambiguity_registry_rule": "Every rejected, uncertain, transition, incomplete, or disagreement row is recorded with its original label/reference evidence, reason code, and exclusion decision. AMBIGUOUS is retained and never converted to PRESENT or ABSENT.",
+    "lock_rule": "Lock all membership rows, provenance fields, label mapping, ambiguity registry, subject/class counts, and checksums before any candidate output is opened. The lock is immutable for M-PV3.8 selection."
+  },
+  "minimum_acceptable_membership": {
+    "both_class": true,
+    "eligible_present": 57,
+    "eligible_absent": 57,
+    "per_subject_absent": 19,
+    "subjects": ["D1_PERSON_03", "D1_PERSON_09", "D1_PERSON_11"],
+    "recording_diversity": "Three distinct qualifying ABSENT recordings per subject, with the fixed 7/6/6 context allocation.",
+    "training_disjointness": "All final-membership subjects, recordings, and windows are disjoint from candidate training.",
+    "acceptance_statement": "This is the complete minimum for proceeding to the already-defined M-PV3.8 final selection evaluation. It is not a model-selection result by itself."
+  },
+  "terminal_decisions": {
+    "membership_ready": "When all 57 PRESENT and all 57 governed ABSENT rows satisfy the final lock, M-PV3.8 final selection evaluation may proceed once under its existing contract.",
+    "membership_blocked": "If any count, subject, recording separation, provenance, label mapping, ambiguity, checksum, or quality rule fails, final selection remains BLOCKED_INVALID_FINAL_MEMBERSHIP and no candidate output is opened.",
+    "direction_reconsideration_required": "If the one bounded campaign closes without the complete valid membership, or if an authoritative non-D2/non-MR60 ABSENT reference cannot be established, stop collection and mark ROLE_L_FULL_TASK selection direction RECONSIDERATION_REQUIRED. This contract authorizes no additional collection loop."
+  }
+}
