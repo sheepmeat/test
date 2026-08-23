@@ -1,0 +1,831 @@
+{
+  "ambiguous_handling": {
+    "D0_TRAIN_count": 40,
+    "D1_DEV_VAL_count": 2,
+    "converted_to_present_or_absent": false,
+    "policy": "retain provenance and exclude from pure-class loss/metrics"
+  },
+  "availability": {
+    "baseline_30s_context": {
+      "freeze": {
+        "context_requirement_s": 30,
+        "decision_slots_after_context": 91,
+        "decision_step_s": 1,
+        "first_valid_decision_time_s": 30.0,
+        "input_unavailable_count": 30,
+        "input_unavailable_ratio": 0.32967032967032966,
+        "interruption_interval_s": [
+          40,
+          41
+        ],
+        "invalid_mapping": {
+          "PRESENT_or_ABSENT_emitted": false,
+          "application_state": "INPUT_UNAVAILABLE",
+          "model_invocation": "BLOCKED",
+          "physiology_label": "TARGET_UNAVAILABLE"
+        },
+        "mode": "SOURCE_FREEZE",
+        "physiology_targets_created_or_rewritten": false,
+        "presence_state": "PRESENT_ASSUMED_FOR_ORDERING_DIAGNOSTIC",
+        "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+        "recovery_time_after_event_s": 30.0,
+        "runtime_order": [
+          "presence",
+          "input_availability",
+          "breathing_evidence"
+        ],
+        "stream_duration_s": 120,
+        "synthetic_quality_only": true,
+        "usable_prediction_count": 61,
+        "usable_prediction_ratio": 0.6703296703296703
+      },
+      "gap": {
+        "context_requirement_s": 30,
+        "decision_slots_after_context": 91,
+        "decision_step_s": 1,
+        "first_valid_decision_time_s": 30.0,
+        "input_unavailable_count": 30,
+        "input_unavailable_ratio": 0.32967032967032966,
+        "interruption_interval_s": [
+          40,
+          41
+        ],
+        "invalid_mapping": {
+          "PRESENT_or_ABSENT_emitted": false,
+          "application_state": "INPUT_UNAVAILABLE",
+          "model_invocation": "BLOCKED",
+          "physiology_label": "TARGET_UNAVAILABLE"
+        },
+        "mode": "LARGE_GAP",
+        "physiology_targets_created_or_rewritten": false,
+        "presence_state": "PRESENT_ASSUMED_FOR_ORDERING_DIAGNOSTIC",
+        "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+        "recovery_time_after_event_s": 30.0,
+        "runtime_order": [
+          "presence",
+          "input_availability",
+          "breathing_evidence"
+        ],
+        "stream_duration_s": 120,
+        "synthetic_quality_only": true,
+        "usable_prediction_count": 61,
+        "usable_prediction_ratio": 0.6703296703296703
+      },
+      "stale_source": {
+        "context_requirement_s": 30,
+        "decision_slots_after_context": 91,
+        "decision_step_s": 1,
+        "first_valid_decision_time_s": 30.0,
+        "input_unavailable_count": 30,
+        "input_unavailable_ratio": 0.32967032967032966,
+        "interruption_interval_s": [
+          40,
+          41
+        ],
+        "invalid_mapping": {
+          "PRESENT_or_ABSENT_emitted": false,
+          "application_state": "INPUT_UNAVAILABLE",
+          "model_invocation": "BLOCKED",
+          "physiology_label": "TARGET_UNAVAILABLE"
+        },
+        "mode": "STALE_SOURCE",
+        "physiology_targets_created_or_rewritten": false,
+        "presence_state": "PRESENT_ASSUMED_FOR_ORDERING_DIAGNOSTIC",
+        "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+        "recovery_time_after_event_s": 30.0,
+        "runtime_order": [
+          "presence",
+          "input_availability",
+          "breathing_evidence"
+        ],
+        "stream_duration_s": 120,
+        "synthetic_quality_only": true,
+        "usable_prediction_count": 61,
+        "usable_prediction_ratio": 0.6703296703296703
+      }
+    },
+    "context_difference_s": 15,
+    "real_sensor_recovery_measured": false,
+    "recovery_difference_s_by_mode": {
+      "freeze": 15.0,
+      "gap": 15.0,
+      "stale_source": 15.0
+    },
+    "short_context": {
+      "freeze": {
+        "context_requirement_s": 15,
+        "decision_slots_after_context": 106,
+        "decision_step_s": 1,
+        "first_valid_decision_time_s": 15.0,
+        "input_unavailable_count": 15,
+        "input_unavailable_ratio": 0.14150943396226415,
+        "interruption_interval_s": [
+          40,
+          41
+        ],
+        "invalid_mapping": {
+          "PRESENT_or_ABSENT_emitted": false,
+          "application_state": "INPUT_UNAVAILABLE",
+          "model_invocation": "BLOCKED",
+          "physiology_label": "TARGET_UNAVAILABLE"
+        },
+        "mode": "SOURCE_FREEZE",
+        "physiology_targets_created_or_rewritten": false,
+        "presence_state": "PRESENT_ASSUMED_FOR_ORDERING_DIAGNOSTIC",
+        "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+        "recovery_time_after_event_s": 15.0,
+        "runtime_order": [
+          "presence",
+          "input_availability",
+          "breathing_evidence"
+        ],
+        "stream_duration_s": 120,
+        "synthetic_quality_only": true,
+        "usable_prediction_count": 91,
+        "usable_prediction_ratio": 0.8584905660377359
+      },
+      "gap": {
+        "context_requirement_s": 15,
+        "decision_slots_after_context": 106,
+        "decision_step_s": 1,
+        "first_valid_decision_time_s": 15.0,
+        "input_unavailable_count": 15,
+        "input_unavailable_ratio": 0.14150943396226415,
+        "interruption_interval_s": [
+          40,
+          41
+        ],
+        "invalid_mapping": {
+          "PRESENT_or_ABSENT_emitted": false,
+          "application_state": "INPUT_UNAVAILABLE",
+          "model_invocation": "BLOCKED",
+          "physiology_label": "TARGET_UNAVAILABLE"
+        },
+        "mode": "LARGE_GAP",
+        "physiology_targets_created_or_rewritten": false,
+        "presence_state": "PRESENT_ASSUMED_FOR_ORDERING_DIAGNOSTIC",
+        "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+        "recovery_time_after_event_s": 15.0,
+        "runtime_order": [
+          "presence",
+          "input_availability",
+          "breathing_evidence"
+        ],
+        "stream_duration_s": 120,
+        "synthetic_quality_only": true,
+        "usable_prediction_count": 91,
+        "usable_prediction_ratio": 0.8584905660377359
+      },
+      "stale_source": {
+        "context_requirement_s": 15,
+        "decision_slots_after_context": 106,
+        "decision_step_s": 1,
+        "first_valid_decision_time_s": 15.0,
+        "input_unavailable_count": 15,
+        "input_unavailable_ratio": 0.14150943396226415,
+        "interruption_interval_s": [
+          40,
+          41
+        ],
+        "invalid_mapping": {
+          "PRESENT_or_ABSENT_emitted": false,
+          "application_state": "INPUT_UNAVAILABLE",
+          "model_invocation": "BLOCKED",
+          "physiology_label": "TARGET_UNAVAILABLE"
+        },
+        "mode": "STALE_SOURCE",
+        "physiology_targets_created_or_rewritten": false,
+        "presence_state": "PRESENT_ASSUMED_FOR_ORDERING_DIAGNOSTIC",
+        "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+        "recovery_time_after_event_s": 15.0,
+        "runtime_order": [
+          "presence",
+          "input_availability",
+          "breathing_evidence"
+        ],
+        "stream_duration_s": 120,
+        "synthetic_quality_only": true,
+        "usable_prediction_count": 91,
+        "usable_prediction_ratio": 0.8584905660377359
+      }
+    },
+    "status": "SYNTHETIC_QUALITY_ONLY_DIAGNOSTIC",
+    "threshold_tuning_on_corruption": false
+  },
+  "baseline_30s_comparison": {
+    "baseline": {
+      "candidate_keys": [
+        "family_b/seed_11",
+        "family_b/seed_23",
+        "family_b/seed_47",
+        "family_c/seed_11",
+        "family_c/seed_23",
+        "family_c/seed_47"
+      ],
+      "context_duration_s": 30,
+      "groups": {
+        "D0_TRAIN_OBSERVE": {
+          "aggregate": {
+            "absent_f1": {
+              "max": 0.9956709956709957,
+              "mean": 0.8420724156328933,
+              "min": 0.45454545454545453,
+              "n": 6,
+              "std": 0.19200504878488717
+            },
+            "absent_recall": {
+              "max": 0.9913793103448276,
+              "mean": 0.771551724137931,
+              "min": 0.3017241379310345,
+              "n": 6,
+              "std": 0.24563923660936035
+            },
+            "brier": {
+              "max": 0.17589944287010537,
+              "mean": 0.06755287505280934,
+              "min": 0.0033077926956909956,
+              "n": 6,
+              "std": 0.05935511692095449
+            },
+            "macro_f1": {
+              "max": 0.9962970362970363,
+              "mean": 0.8848233405214897,
+              "min": 0.6227951153324287,
+              "n": 6,
+              "std": 0.1322443423682619
+            },
+            "present_f1": {
+              "max": 0.9969230769230769,
+              "mean": 0.9275742654100863,
+              "min": 0.7910447761194029,
+              "n": 6,
+              "std": 0.0729954680147369
+            },
+            "present_recall": {
+              "max": 1.0,
+              "mean": 0.9948559670781894,
+              "min": 0.9814814814814815,
+              "n": 6,
+              "std": 0.0065875763759597125
+            }
+          },
+          "ambiguous_count_in_governed_membership": 40,
+          "ambiguous_handling": "EXCLUDED_BY_FROZEN_M_PV2_TARGET_MASK",
+          "per_candidate": [
+            {
+              "absent_count": 116,
+              "absent_f1": 0.45454545454545453,
+              "absent_recall": 0.3017241379310345,
+              "brier": 0.17589944287010537,
+              "candidate": "family_b/seed_11",
+              "eligible_count": 278,
+              "macro_f1": 0.6227951153324287,
+              "present_count": 162,
+              "present_f1": 0.7910447761194029,
+              "present_recall": 0.9814814814814815
+            },
+            {
+              "absent_count": 116,
+              "absent_f1": 0.7419354838709677,
+              "absent_recall": 0.5948275862068966,
+              "brier": 0.11643031500877468,
+              "candidate": "family_b/seed_23",
+              "eligible_count": 278,
+              "macro_f1": 0.806102877070619,
+              "present_count": 162,
+              "present_f1": 0.8702702702702703,
+              "present_recall": 0.9938271604938271
+            },
+            {
+              "absent_count": 116,
+              "absent_f1": 0.9502262443438914,
+              "absent_recall": 0.9051724137931034,
+              "brier": 0.03571776252915792,
+              "candidate": "family_b/seed_47",
+              "eligible_count": 278,
+              "macro_f1": 0.9586952117241845,
+              "present_count": 162,
+              "present_f1": 0.9671641791044776,
+              "present_recall": 1.0
+            },
+            {
+              "absent_count": 116,
+              "absent_f1": 0.9454545454545454,
+              "absent_recall": 0.896551724137931,
+              "brier": 0.036915356939666404,
+              "candidate": "family_c/seed_11",
+              "eligible_count": 278,
+              "macro_f1": 0.9548701298701299,
+              "present_count": 162,
+              "present_f1": 0.9642857142857143,
+              "present_recall": 1.0
+            },
+            {
+              "absent_count": 116,
+              "absent_f1": 0.9646017699115044,
+              "absent_recall": 0.9396551724137931,
+              "brier": 0.037046580273460625,
+              "candidate": "family_c/seed_23",
+              "eligible_count": 278,
+              "macro_f1": 0.97017967283454,
+              "present_count": 162,
+              "present_f1": 0.9757575757575757,
+              "present_recall": 0.9938271604938271
+            },
+            {
+              "absent_count": 116,
+              "absent_f1": 0.9956709956709957,
+              "absent_recall": 0.9913793103448276,
+              "brier": 0.0033077926956909956,
+              "candidate": "family_c/seed_47",
+              "eligible_count": 278,
+              "macro_f1": 0.9962970362970363,
+              "present_count": 162,
+              "present_f1": 0.9969230769230769,
+              "present_recall": 1.0
+            }
+          ]
+        },
+        "D1_DEV_VAL": {
+          "aggregate": {
+            "absent_f1": null,
+            "absent_recall": null,
+            "brier": {
+              "max": 0.09854056720607236,
+              "mean": 0.028404010429413245,
+              "min": 0.0012677252259954447,
+              "n": 6,
+              "std": 0.03243106614527186
+            },
+            "macro_f1": null,
+            "present_f1": {
+              "max": 1.0,
+              "mean": 0.995575221238938,
+              "min": 0.9911504424778761,
+              "n": 6,
+              "std": 0.004424778761061954
+            },
+            "present_recall": {
+              "max": 1.0,
+              "mean": 0.9912280701754387,
+              "min": 0.9824561403508771,
+              "n": 6,
+              "std": 0.00877192982456143
+            }
+          },
+          "ambiguous_count_in_governed_membership": 2,
+          "ambiguous_handling": "EXCLUDED_BY_FROZEN_M_PV2_TARGET_MASK",
+          "per_candidate": [
+            {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "brier": 0.09854056720607236,
+              "candidate": "family_b/seed_11",
+              "eligible_count": 57,
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 1.0,
+              "present_recall": 1.0
+            },
+            {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "brier": 0.0064572784995837705,
+              "candidate": "family_b/seed_23",
+              "eligible_count": 57,
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 1.0,
+              "present_recall": 1.0
+            },
+            {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "brier": 0.025080918907178347,
+              "candidate": "family_b/seed_47",
+              "eligible_count": 57,
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 0.9911504424778761,
+              "present_recall": 0.9824561403508771
+            },
+            {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "brier": 0.02115794692809779,
+              "candidate": "family_c/seed_11",
+              "eligible_count": 57,
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 0.9911504424778761,
+              "present_recall": 0.9824561403508771
+            },
+            {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "brier": 0.01791962580955174,
+              "candidate": "family_c/seed_23",
+              "eligible_count": 57,
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 0.9911504424778761,
+              "present_recall": 0.9824561403508771
+            },
+            {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "brier": 0.0012677252259954447,
+              "candidate": "family_c/seed_47",
+              "eligible_count": 57,
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 1.0,
+              "present_recall": 1.0
+            }
+          ]
+        }
+      },
+      "input_samples": 300,
+      "lane": "M-PV2_candidate_training",
+      "selection_status": "NO_SELECTED_MODEL_IN_BASELINE_LANE",
+      "selection_use": false,
+      "source_evidence": "datasets/mmwave/manifests/M-PV2_candidate_training/breathing_metrics.json"
+    },
+    "comparison_is_not_selection": true,
+    "short_minus_baseline_mean_delta": {
+      "D0_TRAIN_OBSERVE": {
+        "absent_recall": -0.007183908045977017,
+        "macro_f1": -0.10141696725288685,
+        "present_recall": -0.19032921810699588
+      },
+      "D1_DEV_VAL": {
+        "absent_recall": null,
+        "macro_f1": null,
+        "present_recall": -0.605263157894737
+      }
+    }
+  },
+  "breathing_evidence": {
+    "required_metrics": [
+      "macro_f1",
+      "present_recall",
+      "absent_recall",
+      "ambiguous_handling"
+    ],
+    "short_context_metrics": {
+      "aggregate": {
+        "D0_TRAIN_OBSERVE": {
+          "absent_count": 116,
+          "ambiguous_count": 40,
+          "ambiguous_handling": "EXCLUDED_FROM_LOSS_AND_METRICS_NO_LABEL_REWRITE",
+          "metrics_across_seeds": {
+            "absent_f1": {
+              "max": 0.8858447488584474,
+              "mean": 0.7547818139665486,
+              "min": 0.6781115879828327,
+              "n": 3,
+              "std": 0.09312068019017491
+            },
+            "absent_recall": {
+              "max": 0.8362068965517241,
+              "mean": 0.764367816091954,
+              "min": 0.6810344827586207,
+              "n": 3,
+              "std": 0.06386813439911744
+            },
+            "brier": {
+              "max": 0.21340863570973317,
+              "mean": 0.16474451728842868,
+              "min": 0.06789302655701836,
+              "n": 3,
+              "std": 0.06848462243154045
+            },
+            "macro_f1": {
+              "max": 0.9058303862986599,
+              "mean": 0.7834063732686029,
+              "min": 0.7214320107231628,
+              "n": 3,
+              "std": 0.08656908767570089
+            },
+            "present_f1": {
+              "max": 0.9258160237388724,
+              "mean": 0.8120309325706572,
+              "min": 0.7424749163879598,
+              "n": 3,
+              "std": 0.08111986487793083
+            },
+            "present_recall": {
+              "max": 0.9629629629629629,
+              "mean": 0.8045267489711935,
+              "min": 0.6851851851851852,
+              "n": 3,
+              "std": 0.11672308315788338
+            }
+          },
+          "present_count": 162,
+          "record_count": 318,
+          "supervision_eligible_count": 278
+        },
+        "D1_DEV_VAL": {
+          "absent_count": 0,
+          "ambiguous_count": 2,
+          "ambiguous_handling": "EXCLUDED_FROM_LOSS_AND_METRICS_NO_LABEL_REWRITE",
+          "metrics_across_seeds": {
+            "absent_f1": null,
+            "absent_recall": null,
+            "brier": {
+              "max": 0.26366434584634735,
+              "mean": 0.20890366899525992,
+              "min": 0.10287983950204066,
+              "n": 3,
+              "std": 0.07498376483925696
+            },
+            "macro_f1": null,
+            "present_f1": {
+              "max": 0.9345794392523364,
+              "mean": 0.4731330578658958,
+              "min": 0.16129032258064516,
+              "n": 3,
+              "std": 0.33294639477028803
+            },
+            "present_recall": {
+              "max": 0.8771929824561403,
+              "mean": 0.3859649122807018,
+              "min": 0.08771929824561403,
+              "n": 3,
+              "std": 0.3499989007589474
+            }
+          },
+          "present_count": 57,
+          "record_count": 59,
+          "supervision_eligible_count": 57
+        }
+      },
+      "per_seed": {
+        "11": {
+          "checkpoint": {
+            "bytes": 13125,
+            "path": "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_11.pt",
+            "sha256": "34d5e290ee2886624ca382382bc51e6296c85a5a0015e3537bc650ce7d421672"
+          },
+          "groups": {
+            "D0_TRAIN_OBSERVE": {
+              "absent_count": 116,
+              "absent_f1": 0.7003891050583657,
+              "absent_recall": 0.7758620689655172,
+              "ambiguous_count": 40,
+              "ambiguous_handling": "EXCLUDED_FROM_LOSS_AND_METRICS_NO_LABEL_REWRITE",
+              "brier": 0.21340863570973317,
+              "confusion": {
+                "FN": 51,
+                "FP": 26,
+                "TN": 90,
+                "TP": 111
+              },
+              "macro_f1": 0.7214320107231628,
+              "present_count": 162,
+              "present_f1": 0.7424749163879598,
+              "present_recall": 0.6851851851851852,
+              "record_count": 318,
+              "status": "DEFINED",
+              "supervision_eligible_count": 278,
+              "target_unavailable_count": 0,
+              "threshold": 0.5
+            },
+            "D1_DEV_VAL": {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "ambiguous_count": 2,
+              "ambiguous_handling": "EXCLUDED_FROM_LOSS_AND_METRICS_NO_LABEL_REWRITE",
+              "brier": 0.2601668216373918,
+              "confusion": {
+                "FN": 46,
+                "FP": 0,
+                "TN": 0,
+                "TP": 11
+              },
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 0.3235294117647059,
+              "present_recall": 0.19298245614035087,
+              "record_count": 59,
+              "status": "DEFINED",
+              "supervision_eligible_count": 57,
+              "target_unavailable_count": 0,
+              "threshold": 0.5
+            }
+          },
+          "seed": 11,
+          "training": {
+            "best_epoch": 4,
+            "best_validation_loss": 0.7103357315063477,
+            "determinism": {
+              "deterministic_algorithms": true,
+              "numpy_version": "1.26.4",
+              "seed": 11,
+              "torch_num_interop_threads": 1,
+              "torch_num_threads": 1,
+              "torch_version": "2.8.0"
+            },
+            "epochs_run": 30,
+            "last_validation_loss": 0.8318358063697815,
+            "parameter_count": 2297,
+            "seed": 11
+          }
+        },
+        "23": {
+          "checkpoint": {
+            "bytes": 13125,
+            "path": "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_23.pt",
+            "sha256": "f99bb2399776433d5c2b55d396dbe7f515c8088d65a971f6e848bbccbe01033a"
+          },
+          "groups": {
+            "D0_TRAIN_OBSERVE": {
+              "absent_count": 116,
+              "absent_f1": 0.8858447488584474,
+              "absent_recall": 0.8362068965517241,
+              "ambiguous_count": 40,
+              "ambiguous_handling": "EXCLUDED_FROM_LOSS_AND_METRICS_NO_LABEL_REWRITE",
+              "brier": 0.06789302655701836,
+              "confusion": {
+                "FN": 6,
+                "FP": 19,
+                "TN": 97,
+                "TP": 156
+              },
+              "macro_f1": 0.9058303862986599,
+              "present_count": 162,
+              "present_f1": 0.9258160237388724,
+              "present_recall": 0.9629629629629629,
+              "record_count": 318,
+              "status": "DEFINED",
+              "supervision_eligible_count": 278,
+              "target_unavailable_count": 0,
+              "threshold": 0.5
+            },
+            "D1_DEV_VAL": {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "ambiguous_count": 2,
+              "ambiguous_handling": "EXCLUDED_FROM_LOSS_AND_METRICS_NO_LABEL_REWRITE",
+              "brier": 0.10287983950204066,
+              "confusion": {
+                "FN": 7,
+                "FP": 0,
+                "TN": 0,
+                "TP": 50
+              },
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 0.9345794392523364,
+              "present_recall": 0.8771929824561403,
+              "record_count": 59,
+              "status": "DEFINED",
+              "supervision_eligible_count": 57,
+              "target_unavailable_count": 0,
+              "threshold": 0.5
+            }
+          },
+          "seed": 23,
+          "training": {
+            "best_epoch": 90,
+            "best_validation_loss": 0.3097551465034485,
+            "determinism": {
+              "deterministic_algorithms": true,
+              "numpy_version": "1.26.4",
+              "seed": 23,
+              "torch_num_interop_threads": 1,
+              "torch_num_threads": 1,
+              "torch_version": "2.8.0"
+            },
+            "epochs_run": 110,
+            "last_validation_loss": 0.4792601466178894,
+            "parameter_count": 2297,
+            "seed": 23
+          }
+        },
+        "47": {
+          "checkpoint": {
+            "bytes": 13125,
+            "path": "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_47.pt",
+            "sha256": "4559508292f1f85dfb7f26c72ae9adac139e006650552729f48bbd868706e6b3"
+          },
+          "groups": {
+            "D0_TRAIN_OBSERVE": {
+              "absent_count": 116,
+              "absent_f1": 0.6781115879828327,
+              "absent_recall": 0.6810344827586207,
+              "ambiguous_count": 40,
+              "ambiguous_handling": "EXCLUDED_FROM_LOSS_AND_METRICS_NO_LABEL_REWRITE",
+              "brier": 0.2129318895985345,
+              "confusion": {
+                "FN": 38,
+                "FP": 37,
+                "TN": 79,
+                "TP": 124
+              },
+              "macro_f1": 0.7229567227839859,
+              "present_count": 162,
+              "present_f1": 0.7678018575851393,
+              "present_recall": 0.7654320987654321,
+              "record_count": 318,
+              "status": "DEFINED",
+              "supervision_eligible_count": 278,
+              "target_unavailable_count": 0,
+              "threshold": 0.5
+            },
+            "D1_DEV_VAL": {
+              "absent_count": 0,
+              "absent_f1": null,
+              "absent_recall": null,
+              "ambiguous_count": 2,
+              "ambiguous_handling": "EXCLUDED_FROM_LOSS_AND_METRICS_NO_LABEL_REWRITE",
+              "brier": 0.26366434584634735,
+              "confusion": {
+                "FN": 52,
+                "FP": 0,
+                "TN": 0,
+                "TP": 5
+              },
+              "macro_f1": null,
+              "present_count": 57,
+              "present_f1": 0.16129032258064516,
+              "present_recall": 0.08771929824561403,
+              "record_count": 59,
+              "status": "DEFINED",
+              "supervision_eligible_count": 57,
+              "target_unavailable_count": 0,
+              "threshold": 0.5
+            }
+          },
+          "seed": 47,
+          "training": {
+            "best_epoch": 5,
+            "best_validation_loss": 0.7182039022445679,
+            "determinism": {
+              "deterministic_algorithms": true,
+              "numpy_version": "1.26.4",
+              "seed": 47,
+              "torch_num_interop_threads": 1,
+              "torch_num_threads": 1,
+              "torch_version": "2.8.0"
+            },
+            "epochs_run": 30,
+            "last_validation_loss": 0.878222644329071,
+            "parameter_count": 2297,
+            "seed": 47
+          }
+        }
+      }
+    }
+  },
+  "candidate_identity": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_BREATHING_CANDIDATE_V1",
+  "excluded_tasks": {
+    "rr": {
+      "evaluated": false,
+      "status": "METADATA_ONLY",
+      "trained": false
+    },
+    "temporal_hold": {
+      "status": "EXCLUDED",
+      "trained": false
+    }
+  },
+  "gate": "PASS_WITH_LIMITATIONS",
+  "identity": "SHORT_CONTEXT_CANDIDATE_RESULT",
+  "latency": {
+    "baseline_30s_context_requirement_s": 30,
+    "first_valid_decision_time_s": {
+      "baseline_30s": 30,
+      "short_context": 15,
+      "short_minus_baseline_s": -15
+    },
+    "recovery_time_comparison_is_synthetic_quality_only": true,
+    "runtime_latency_hardware_validated": false,
+    "short_context_requirement_s": 15
+  },
+  "safety_checks": {
+    "d2_accessed": false,
+    "existing_30s_artifacts_modified": false,
+    "future_leakage": false,
+    "mr60_supervised_physiology_used": false,
+    "q2_invalid_can_emit_physiology": false,
+    "radar_amplitude_label_generation": false
+  },
+  "schema_version": "M-PV2-SHORT-15S.1",
+  "selection": {
+    "final_selection": false,
+    "interpretation_rule": "descriptive comparison only; defer selection to later M-PV3 evaluation",
+    "performed": false,
+    "selected_model": null
+  },
+  "status": "EVIDENCE_PRODUCED_NO_SELECTION"
+}

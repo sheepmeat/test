@@ -1,0 +1,51 @@
+{
+  "alignment_validation": {
+    "context_end_equals_target_end": true,
+    "fixed_target_start_sample": true,
+    "future_samples": false,
+    "internal_event_position": false,
+    "random_alignment": false,
+    "row_count": 562
+  },
+  "base_target_contract": {
+    "base_context_interval_s": "[t-30s,t]",
+    "base_target_anchor": "FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT",
+    "base_target_interval_s": "[t-5s,t]",
+    "source": "datasets/mmwave/manifests/M-PV1_public_multidomain_contract/m_pv2_example_manifest.json"
+  },
+  "excluded_task_alignment": {
+    "rr": {
+      "evaluated": false,
+      "reason": "15 seconds is not a robust multi-cycle RR context at low rates",
+      "status": "METADATA_ONLY",
+      "trained": false
+    },
+    "temporal_hold": {
+      "reason": "history/persistence belongs to later model decisions",
+      "status": "NOT_TRAINED"
+    }
+  },
+  "identity": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_TARGET_ALIGNMENT_V1",
+  "label_semantics": {
+    "ambiguous_learning_mask": 0,
+    "ambiguous_rows": 48,
+    "apnea_protocol_to_label": false,
+    "breath_hold_name_to_label": false,
+    "clinical_apnea_claim": false,
+    "present_absent_inherited_from": "M-PV1 breathing_reference_state",
+    "radar_amplitude_to_label": false,
+    "target_unavailable_rows": 0
+  },
+  "schema_version": "M-PV2-SHORT-15S.1",
+  "short_target_contract": {
+    "causal": true,
+    "future_information_used": false,
+    "relative_target_interval_s": "[10s,15s]",
+    "relative_target_sample_range": [
+      100,
+      150
+    ],
+    "short_context_interval_s": "[t-15s,t]",
+    "short_target_interval_s": "[t-5s,t]"
+  }
+}

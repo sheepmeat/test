@@ -1,0 +1,17 @@
+{
+  "files": {
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/dataset_audit.json": "5793c4d17118be524b47dce93abf08f2520c31c312a3850724e0c6a8abca05d6",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/evaluation_result.json": "c6e7eb90ff10dab97c44dde6b73e2593e90a861dad7c2eac55ae208d32f65ae2",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/input_contract.json": "12f8944dcd5cdd3be653a403fb0606483e493c4d24ed5a409dcafa58335f4a15",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/limitations.json": "a16bb0266191f9287e115fc25eeb49e5a6fc739b8b30c99377d6f92c518dd320",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/model_card.json": "ff3bbcd97fcbffed5cbf029ebb9cd3d8c1e6481a02a228a4c5dcc3245577ec4a",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/target_alignment.json": "89c242d4ebc3bf38e1d81dd8bb72c8675bd35293fb3e63cde5bde49639d1acc3",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/training_config.json": "6b9407c8304c31a8691ee848ff2ec341fbb8df22c19ebaa9174e2c0c320893c1",
+    "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_11.pt": "34d5e290ee2886624ca382382bc51e6296c85a5a0015e3537bc650ce7d421672",
+    "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_23.pt": "f99bb2399776433d5c2b55d396dbe7f515c8088d65a971f6e848bbccbe01033a",
+    "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_47.pt": "4559508292f1f85dfb7f26c72ae9adac139e006650552729f48bbd868706e6b3"
+  },
+  "identity": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_CHECKSUMS_V1",
+  "schema_version": "M-PV2-SHORT-15S.1",
+  "self_checksum_excluded": true
+}

@@ -1,0 +1,75 @@
+{
+  "causal_rules": {
+    "context_end_equals_target_end": true,
+    "future_samples_forbidden": true,
+    "internal_event_position_forbidden": true,
+    "random_target_alignment_forbidden": true
+  },
+  "context": {
+    "duration_s": 15,
+    "interval": "[t-15s,t]",
+    "ordering": "OLDEST_TO_NEWEST",
+    "samples": 150,
+    "sampling_rate_hz": 10,
+    "shape": "[B,150,1]",
+    "target_end_sample_exclusive_in_short_context": 150,
+    "target_interval": "[t-5s,t]",
+    "target_start_sample_in_short_context": 100
+  },
+  "identity": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_BREATHING_CANDIDATE_V1",
+  "inheritance_boundaries": {
+    "d0_d1_governance_modified": false,
+    "i1_i2_i3_runtime_contracts_modified": false,
+    "m_pv1_frozen_contract_modified": false,
+    "m_pv2_30s_contract_modified": false,
+    "q2_policy_modified": false
+  },
+  "invalid_input_must_not_become": [
+    "PRESENT",
+    "ABSENT",
+    "APNEA"
+  ],
+  "profile_id": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_INPUT_PROFILE_V1",
+  "quality_order": [
+    "presence",
+    "input_availability",
+    "breathing_evidence"
+  ],
+  "representation": {
+    "derivation": "tail 150 samples from accepted 300-sample M-PV1/R1 context",
+    "input_channel": "accepted R1 sensor-independent relative-motion trace",
+    "mask_channel": false,
+    "runtime_invalid_input": "hard Q2 pre-gate; do not zero-fill invalid input into physiology",
+    "trace_scaler": "one global mean/std fit on D0 TRAIN plus D1_DEV_TRAIN only"
+  },
+  "schema_version": "M-PV2-SHORT-15S.1",
+  "task_contract": {
+    "ambiguous_policy": "retain provenance; mask from training and accuracy metrics",
+    "inherited_reference_states": [
+      "BREATHING_REFERENCE_PRESENT",
+      "BREATHING_REFERENCE_ABSENT",
+      "BREATHING_REFERENCE_AMBIGUOUS"
+    ],
+    "primary_task": "breathing_evidence",
+    "reference_state_mapping": {
+      "BREATHING_REFERENCE_ABSENT": "ABSENT",
+      "BREATHING_REFERENCE_AMBIGUOUS": "AMBIGUOUS",
+      "BREATHING_REFERENCE_PRESENT": "PRESENT",
+      "runtime_invalid_input": "TARGET_UNAVAILABLE"
+    },
+    "rr_analysis": "METADATA_ONLY",
+    "rr_primary_target": false,
+    "target_states": [
+      "PRESENT",
+      "ABSENT",
+      "AMBIGUOUS",
+      "TARGET_UNAVAILABLE"
+    ],
+    "target_unavailable_policy": "no physiological label; runtime application state INPUT_UNAVAILABLE",
+    "temporal_hold_training": false,
+    "training_states": [
+      "BREATHING_REFERENCE_PRESENT",
+      "BREATHING_REFERENCE_ABSENT"
+    ]
+  }
+}
