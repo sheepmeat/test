@@ -1,0 +1,544 @@
+{
+  "all_safety_pass": true,
+  "candidates": [
+    {
+      "candidate_key": "family_b/seed_11",
+      "quality": {
+        "candidate_key": "family_b/seed_11",
+        "class": "B_DIAGNOSTIC_ONLY",
+        "clean_count": 59,
+        "diagnostic_coverage": [
+          "FLAT_EXACT",
+          "JITTER_PLUS_LARGE_GAP",
+          "LARGE_GAP",
+          "REPUBLICATION_TO_FREEZE",
+          "SOURCE_FREEZE",
+          "STALE_SOURCE"
+        ],
+        "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+        "quality_head_task_support": true,
+        "quality_metrics": {
+          "clean_false_rejection": 0.0,
+          "hard_Q2_invalid_false_acceptance": 0.0
+        },
+        "selection_use": false,
+        "synthetic_invalid_count": 6
+      },
+      "safety": {
+        "candidate_key": "family_b/seed_11",
+        "class": "A",
+        "clean_false_rejection": 0.0,
+        "fail_closed_preservation": true,
+        "input_unavailable_emissions": {
+          "ABSENT": 0,
+          "APNEA": 0,
+          "NORMAL": 0,
+          "PRESENT": 0
+        },
+        "input_unavailable_must_not_emit": [
+          "PRESENT",
+          "ABSENT",
+          "NORMAL",
+          "APNEA"
+        ],
+        "invalid_to_physiology_transition": 0,
+        "non_compensable": true,
+        "pass": true,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0015807368326932192
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.006753953173756599
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.009371464140713215
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.007230299059301615
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.007723246235400438
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.008698978461325169
+          }
+        },
+        "physiology_emitted_after_invalid": 0,
+        "q2_invalid_false_acceptance": 0.0,
+        "q2_scope": "SYNTHETIC_ONLY",
+        "quality_cutoff": 0.5,
+        "runtime_precedence": [
+          "PRESENCE",
+          "QUALITY_OR_AVAILABILITY",
+          "PHYSIOLOGY"
+        ]
+      },
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL_PLUS_Q2"
+    },
+    {
+      "candidate_key": "family_b/seed_23",
+      "quality": {
+        "candidate_key": "family_b/seed_23",
+        "class": "B_DIAGNOSTIC_ONLY",
+        "clean_count": 59,
+        "diagnostic_coverage": [
+          "FLAT_EXACT",
+          "JITTER_PLUS_LARGE_GAP",
+          "LARGE_GAP",
+          "REPUBLICATION_TO_FREEZE",
+          "SOURCE_FREEZE",
+          "STALE_SOURCE"
+        ],
+        "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+        "quality_head_task_support": true,
+        "quality_metrics": {
+          "clean_false_rejection": 0.0,
+          "hard_Q2_invalid_false_acceptance": 0.0
+        },
+        "selection_use": false,
+        "synthetic_invalid_count": 6
+      },
+      "safety": {
+        "candidate_key": "family_b/seed_23",
+        "class": "A",
+        "clean_false_rejection": 0.0,
+        "fail_closed_preservation": true,
+        "input_unavailable_emissions": {
+          "ABSENT": 0,
+          "APNEA": 0,
+          "NORMAL": 0,
+          "PRESENT": 0
+        },
+        "input_unavailable_must_not_emit": [
+          "PRESENT",
+          "ABSENT",
+          "NORMAL",
+          "APNEA"
+        ],
+        "invalid_to_physiology_transition": 0,
+        "non_compensable": true,
+        "pass": true,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0001645584707148373
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 5.1890176109736785e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00019237784727010876
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0010214083595201373
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00019659723329823464
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0004162787226960063
+          }
+        },
+        "physiology_emitted_after_invalid": 0,
+        "q2_invalid_false_acceptance": 0.0,
+        "q2_scope": "SYNTHETIC_ONLY",
+        "quality_cutoff": 0.5,
+        "runtime_precedence": [
+          "PRESENCE",
+          "QUALITY_OR_AVAILABILITY",
+          "PHYSIOLOGY"
+        ]
+      },
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL_PLUS_Q2"
+    },
+    {
+      "candidate_key": "family_b/seed_47",
+      "quality": {
+        "candidate_key": "family_b/seed_47",
+        "class": "B_DIAGNOSTIC_ONLY",
+        "clean_count": 59,
+        "diagnostic_coverage": [
+          "FLAT_EXACT",
+          "JITTER_PLUS_LARGE_GAP",
+          "LARGE_GAP",
+          "REPUBLICATION_TO_FREEZE",
+          "SOURCE_FREEZE",
+          "STALE_SOURCE"
+        ],
+        "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+        "quality_head_task_support": true,
+        "quality_metrics": {
+          "clean_false_rejection": 0.0,
+          "hard_Q2_invalid_false_acceptance": 0.0
+        },
+        "selection_use": false,
+        "synthetic_invalid_count": 6
+      },
+      "safety": {
+        "candidate_key": "family_b/seed_47",
+        "class": "A",
+        "clean_false_rejection": 0.0,
+        "fail_closed_preservation": true,
+        "input_unavailable_emissions": {
+          "ABSENT": 0,
+          "APNEA": 0,
+          "NORMAL": 0,
+          "PRESENT": 0
+        },
+        "input_unavailable_must_not_emit": [
+          "PRESENT",
+          "ABSENT",
+          "NORMAL",
+          "APNEA"
+        ],
+        "invalid_to_physiology_transition": 0,
+        "non_compensable": true,
+        "pass": true,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.015413518995046616
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 5.3215870138956234e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0004441315250005573
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.9126964363968e-05
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00017858347564470023
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 3.1513151043327525e-05
+          }
+        },
+        "physiology_emitted_after_invalid": 0,
+        "q2_invalid_false_acceptance": 0.0,
+        "q2_scope": "SYNTHETIC_ONLY",
+        "quality_cutoff": 0.5,
+        "runtime_precedence": [
+          "PRESENCE",
+          "QUALITY_OR_AVAILABILITY",
+          "PHYSIOLOGY"
+        ]
+      },
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL_PLUS_Q2"
+    },
+    {
+      "candidate_key": "family_c/seed_11",
+      "quality": {
+        "candidate_key": "family_c/seed_11",
+        "class": "B_DIAGNOSTIC_ONLY",
+        "clean_count": 59,
+        "diagnostic_coverage": [
+          "FLAT_EXACT",
+          "JITTER_PLUS_LARGE_GAP",
+          "LARGE_GAP",
+          "REPUBLICATION_TO_FREEZE",
+          "SOURCE_FREEZE",
+          "STALE_SOURCE"
+        ],
+        "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+        "quality_head_task_support": true,
+        "quality_metrics": {
+          "clean_false_rejection": 0.0,
+          "hard_Q2_invalid_false_acceptance": 0.0
+        },
+        "selection_use": false,
+        "synthetic_invalid_count": 6
+      },
+      "safety": {
+        "candidate_key": "family_c/seed_11",
+        "class": "A",
+        "clean_false_rejection": 0.0,
+        "fail_closed_preservation": true,
+        "input_unavailable_emissions": {
+          "ABSENT": 0,
+          "APNEA": 0,
+          "NORMAL": 0,
+          "PRESENT": 0
+        },
+        "input_unavailable_must_not_emit": [
+          "PRESENT",
+          "ABSENT",
+          "NORMAL",
+          "APNEA"
+        ],
+        "invalid_to_physiology_transition": 0,
+        "non_compensable": true,
+        "pass": true,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.5664489150246652e-10
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00044872495345771313
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0024726020637899637
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00021906908659730107
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0025274637155234814
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0013099873904138803
+          }
+        },
+        "physiology_emitted_after_invalid": 0,
+        "q2_invalid_false_acceptance": 0.0,
+        "q2_scope": "SYNTHETIC_ONLY",
+        "quality_cutoff": 0.5,
+        "runtime_precedence": [
+          "PRESENCE",
+          "QUALITY_OR_AVAILABILITY",
+          "PHYSIOLOGY"
+        ]
+      },
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL_PLUS_Q2"
+    },
+    {
+      "candidate_key": "family_c/seed_23",
+      "quality": {
+        "candidate_key": "family_c/seed_23",
+        "class": "B_DIAGNOSTIC_ONLY",
+        "clean_count": 59,
+        "diagnostic_coverage": [
+          "FLAT_EXACT",
+          "JITTER_PLUS_LARGE_GAP",
+          "LARGE_GAP",
+          "REPUBLICATION_TO_FREEZE",
+          "SOURCE_FREEZE",
+          "STALE_SOURCE"
+        ],
+        "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+        "quality_head_task_support": true,
+        "quality_metrics": {
+          "clean_false_rejection": 0.0,
+          "hard_Q2_invalid_false_acceptance": 0.0
+        },
+        "selection_use": false,
+        "synthetic_invalid_count": 6
+      },
+      "safety": {
+        "candidate_key": "family_c/seed_23",
+        "class": "A",
+        "clean_false_rejection": 0.0,
+        "fail_closed_preservation": true,
+        "input_unavailable_emissions": {
+          "ABSENT": 0,
+          "APNEA": 0,
+          "NORMAL": 0,
+          "PRESENT": 0
+        },
+        "input_unavailable_must_not_emit": [
+          "PRESENT",
+          "ABSENT",
+          "NORMAL",
+          "APNEA"
+        ],
+        "invalid_to_physiology_transition": 0,
+        "non_compensable": true,
+        "pass": true,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 3.8949329872473015e-11
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0012078696163371205
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00839542131870985
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00020004015823360533
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0054305787198245525
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.004610762465745211
+          }
+        },
+        "physiology_emitted_after_invalid": 0,
+        "q2_invalid_false_acceptance": 0.0,
+        "q2_scope": "SYNTHETIC_ONLY",
+        "quality_cutoff": 0.5,
+        "runtime_precedence": [
+          "PRESENCE",
+          "QUALITY_OR_AVAILABILITY",
+          "PHYSIOLOGY"
+        ]
+      },
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL_PLUS_Q2"
+    },
+    {
+      "candidate_key": "family_c/seed_47",
+      "quality": {
+        "candidate_key": "family_c/seed_47",
+        "class": "B_DIAGNOSTIC_ONLY",
+        "clean_count": 59,
+        "diagnostic_coverage": [
+          "FLAT_EXACT",
+          "JITTER_PLUS_LARGE_GAP",
+          "LARGE_GAP",
+          "REPUBLICATION_TO_FREEZE",
+          "SOURCE_FREEZE",
+          "STALE_SOURCE"
+        ],
+        "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+        "quality_head_task_support": true,
+        "quality_metrics": {
+          "clean_false_rejection": 0.0,
+          "hard_Q2_invalid_false_acceptance": 0.0
+        },
+        "selection_use": false,
+        "synthetic_invalid_count": 6
+      },
+      "safety": {
+        "candidate_key": "family_c/seed_47",
+        "class": "A",
+        "clean_false_rejection": 0.0,
+        "fail_closed_preservation": true,
+        "input_unavailable_emissions": {
+          "ABSENT": 0,
+          "APNEA": 0,
+          "NORMAL": 0,
+          "PRESENT": 0
+        },
+        "input_unavailable_must_not_emit": [
+          "PRESENT",
+          "ABSENT",
+          "NORMAL",
+          "APNEA"
+        ],
+        "invalid_to_physiology_transition": 0,
+        "non_compensable": true,
+        "pass": true,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 8.391940614638216e-11
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.063255124085117e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0002397106436546892
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.6110931028379127e-05
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00012578326277434826
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0005314782611094415
+          }
+        },
+        "physiology_emitted_after_invalid": 0,
+        "q2_invalid_false_acceptance": 0.0,
+        "q2_scope": "SYNTHETIC_ONLY",
+        "quality_cutoff": 0.5,
+        "runtime_precedence": [
+          "PRESENCE",
+          "QUALITY_OR_AVAILABILITY",
+          "PHYSIOLOGY"
+        ]
+      },
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL_PLUS_Q2"
+    }
+  ],
+  "q2_scope": "SYNTHETIC_ONLY",
+  "quality_class": "B_DIAGNOSTIC_ONLY",
+  "role_id": "ROLE_L_FULL_TASK",
+  "runtime_precedence": [
+    "PRESENCE",
+    "QUALITY_OR_AVAILABILITY",
+    "PHYSIOLOGY"
+  ],
+  "safety_class": "A_NON_COMPENSABLE",
+  "selection_use": false,
+  "validation_group": "D1_DEV_VAL_PLUS_Q2"
+}
