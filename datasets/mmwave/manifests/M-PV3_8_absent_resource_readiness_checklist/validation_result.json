@@ -1,0 +1,12 @@
+{
+  "schema_version": "M-PV3.8.4_RESOURCE_READINESS_CHECKLIST_V1",
+  "checklist_id": "MMWAVE_V2_M_PV38_ABSENT_RESOURCE_READINESS_CHECKLIST_V1",
+  "result_type": "READINESS_REQUIREMENTS_VALIDATION_ONLY",
+  "artifact_valid": true,
+  "capture_authorized": false,
+  "campaign_predeclaration_created": false,
+  "capture_started": false,
+  "membership_constructed": false,
+  "model_evaluation_performed": false,
+  "m_pv4_authorized": false
+}

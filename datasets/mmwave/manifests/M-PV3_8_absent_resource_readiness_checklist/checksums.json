@@ -1,0 +1,9 @@
+{
+  "schema_version": "M-PV3.8.4_RESOURCE_READINESS_CHECKLIST_V1",
+  "checklist_id": "MMWAVE_V2_M_PV38_ABSENT_RESOURCE_READINESS_CHECKLIST_V1",
+  "artifacts": {
+    "datasets/mmwave/manifests/M-PV3_8_absent_resource_readiness_checklist/readiness_requirements.json": "586260d74763145ab00b19cedddb5d0685be67fba158d3fbdb295c4804ba2ba6",
+    "datasets/mmwave/manifests/M-PV3_8_absent_resource_readiness_checklist/validation_result.json": "77e58bddfa44ad6014bc67f3f0bfe4fd4b0d5a65654330ba5ce160c442e5f29d",
+    "docs/mmwave/20260824_SafeNest_mmWave_M-PV3_8_ABSENT_Acquisition_Resource_Readiness_Checklist_01.md": "d0047304e33005a544d25ae087d3e83b48a929358b6c5ed93635b4cc759701d3"
+  }
+}
