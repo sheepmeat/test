@@ -1,0 +1,177 @@
+{
+  "contract_alias": "MMWAVE_V2_M_PV3_SELECTION_CONTRACT_V1",
+  "contract_id": "MMWV_V2_M_PV3_SELECTION_CONTRACT_V1",
+  "evaluation_scope": {
+    "authorized_candidates": 9,
+    "d1_absent_class_expected": false,
+    "families": [
+      "family_a",
+      "family_b",
+      "family_c"
+    ],
+    "locked_test_available": false,
+    "observe_only_group": "D0_TRAIN",
+    "primary_validation_group": "D1_DEV_VAL",
+    "seeds": [
+      11,
+      23,
+      47
+    ],
+    "synthetic_quality_evaluation": {
+      "enabled": true,
+      "modes": [
+        "SOURCE_FREEZE",
+        "LARGE_GAP",
+        "STALE_SOURCE",
+        "FLAT_EXACT",
+        "REPUBLICATION_TO_FREEZE"
+      ],
+      "physiology_target_rewrite": false,
+      "profile": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+      "selection_use": "QUALITY_ABSTENTION_ONLY",
+      "training": false
+    },
+    "train_fitted_preprocessing": true
+  },
+  "evidence_requirements": {
+    "files": [
+      "selection_contract.json",
+      "candidate_selection_inventory.json",
+      "candidate_metrics_audit.json",
+      "candidate_ranking.json",
+      "selection_decision.json",
+      "determinism_audit.json",
+      "exception_registry.json",
+      "validation_result.json",
+      "checksums.sha256"
+    ],
+    "paths": "repository-relative POSIX",
+    "raw_or_tensor_cache_commit": false,
+    "root": "datasets/mmwave/manifests/M-PV3_candidate_selection"
+  },
+  "fixed_operating_points": {
+    "breathing_present_cutoff": 0.5,
+    "no_calibration_fit": true,
+    "no_threshold_search": true,
+    "quality_invalid_cutoff": 0.5
+  },
+  "forbidden_actions": [
+    "RETRAINING",
+    "NEW_ARCHITECTURE",
+    "M-PV1_DATA_OR_CONTRACT_CHANGE",
+    "M-PV2_DATA_OR_CHECKPOINT_CHANGE",
+    "D2_PAYLOAD_OR_SEMANTIC_ACCESS",
+    "MR60_SUPERVISED_PHYSIOLOGY",
+    "INT8_OR_TFLITE_CONVERSION",
+    "RASPBERRY_PI_DEPLOYMENT",
+    "CALIBRATION_FITTING",
+    "FINAL_PRODUCTION_THRESHOLD_TUNING",
+    "CLINICAL_APNEA_OR_APNEA_PROXY_LABEL_CREATION"
+  ],
+  "lane": "30S_CANDIDATE_ONLY",
+  "mandatory_safety_gates": {
+    "clean_false_rejection": {
+      "require": "<= 0.10"
+    },
+    "determinism": {
+      "require": "fresh-process replay has equal canonical parameter hash, input/scaler/config hashes, and predictions within 1e-7"
+    },
+    "forbidden_data": {
+      "require": "D2 and MR60 supervised physiology access counts are zero"
+    },
+    "provenance": {
+      "require": "all rows retain source, subject, recording, context/target interval, split, extraction profiles, labels/masks, and quality lineage"
+    },
+    "q2_invalid_false_acceptance": {
+      "meaning": "Every evaluated invalid-input corruption must be withheld by the fixed quality gate; raw neural outputs are not consumer-visible physiology.",
+      "require": "== 0.0"
+    },
+    "quality_handling": {
+      "require": "quality mask and fixed fail-closed consumer gate are present"
+    },
+    "unavailable_inputs": {
+      "require": "INPUT_UNAVAILABLE rows have breathing_mask=0 and rr_mask=0 and are excluded from physiology metrics"
+    }
+  },
+  "phase": "M-PV3",
+  "purpose": "Evaluate the merged M-PV2 30-second candidate registry without retraining and decide whether a float candidate is ready for a later calibration/deployment gate.",
+  "ranking_policy": {
+    "combined_score": "NOT_USED",
+    "otherwise": "MULTIPLE_ACCEPTABLE_CANDIDATES",
+    "primary": [
+      "safety_gate_pass",
+      "q2_invalid_false_acceptance",
+      "clean_false_rejection",
+      "determinism_pass"
+    ],
+    "secondary": [
+      "breathing_present_recall_desc",
+      "breathing_brier_asc",
+      "rr_mae_bpm_asc",
+      "rr_within_4_bpm_desc",
+      "rr_within_6_bpm_desc"
+    ],
+    "tertiary": [
+      "parameter_count_asc",
+      "family_complexity_asc"
+    ],
+    "unique_selection_rule": "A single candidate may be selected only if it passes all gates and strictly dominates every other acceptable full-task candidate on every secondary metric (within 1e-12 ties) with no safety disadvantage.",
+    "validation_loss_only": "FORBIDDEN"
+  },
+  "ready_for_m_pv4": {
+    "final_production_ready": false,
+    "meaning": "A later gate may consume the M-PV3 shortlist; no production deployment is implied.",
+    "requires": "single selected float model or an explicitly accepted shortlist contract"
+  },
+  "reproducibility": {
+    "canonical_parameter_sha256_must_match_registry": true,
+    "checkpoint_sha256_must_match_registry": true,
+    "evaluate_all_seed_variants": true,
+    "prediction_abs_tolerance": 1e-07,
+    "representative_fresh_process_replay": "family_b_seed_11",
+    "seed_variance_metrics": [
+      "mean",
+      "median",
+      "std",
+      "min",
+      "max"
+    ]
+  },
+  "selection_outputs": [
+    "SELECTED_FLOAT_MODEL",
+    "MULTIPLE_ACCEPTABLE_CANDIDATES",
+    "NO_SELECTION_READY"
+  ],
+  "status": "FROZEN_BEFORE_EVALUATION",
+  "upstream": {
+    "candidate_registry": "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json",
+    "d2": "FORBIDDEN",
+    "mr60_supervised_physiology": "FORBIDDEN",
+    "parallel_15s_lane": "EXCLUDED_FROM_THIS_GATE",
+    "selection_input": "M-PV2 merged registry only",
+    "training_contract": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1"
+  },
+  "utility_gates": {
+    "breathing": {
+      "brier_max": 0.05,
+      "calibration": "Brier and fixed-bin ECE diagnostics only",
+      "fixed_threshold": 0.5,
+      "present_recall_min": 0.95
+    },
+    "family_a": {
+      "full_task_selection": false,
+      "status": "RR_QUALITY_ONLY_SUPPORT_LIMITATION"
+    },
+    "full_task_families": [
+      "family_b",
+      "family_c"
+    ],
+    "rr": {
+      "mae_bpm_max": 5.0,
+      "target": "continuous_rr_bpm",
+      "within_2_bpm_min": 0.4,
+      "within_4_bpm_min": 0.6,
+      "within_6_bpm_min": 0.75
+    }
+  }
+}

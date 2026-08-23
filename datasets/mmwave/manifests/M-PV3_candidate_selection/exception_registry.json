@@ -1,0 +1,44 @@
+{
+  "d2_access": false,
+  "exceptions": [
+    {
+      "code": "D0_VAL_NOT_AUTHORIZED",
+      "reason": "Frozen M-PV1 model-ready membership provides D0 TRAIN only; D0 metrics are observe-only.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "D1_ABSENT_CLASS_UNAVAILABLE",
+      "reason": "D1_DEV_VAL has no model-ready ABSENT rows; absent-class discrimination is not established.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "Q2_IS_SYNTHETIC_EVALUATION",
+      "reason": "Q2 modes are deterministic unavailable-input profiles, not live MR60 captures.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "FAMILY_A_BREATHING_UNSUPPORTED",
+      "reason": "Family A has no breathing head and remains RR/quality-only.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "NO_15S_MIXING",
+      "reason": "The parallel 15-second lane was not waited on and no 15-second artifact entered this registry or gate.",
+      "severity": "INVARIANT"
+    },
+    {
+      "code": "NO_CALIBRATION_OR_DEPLOYMENT",
+      "reason": "No calibration fitting, final threshold tuning, INT8/TFLite conversion, Pi deployment, or clinical claim was performed.",
+      "severity": "INVARIANT"
+    },
+    {
+      "code": "FINAL_SELECTION_STATUS",
+      "reason": "The evidence does not support a safe unique selection.",
+      "severity": "LIMITATION"
+    }
+  ],
+  "mr60_supervised_physiology": false,
+  "phase": "M-PV3",
+  "schema_version": "M-PV3.1",
+  "training_invocations": 0
+}

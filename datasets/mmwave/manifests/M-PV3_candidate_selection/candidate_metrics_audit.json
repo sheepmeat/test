@@ -1,0 +1,4455 @@
+{
+  "all_nine_reported": true,
+  "calibration_fitting": false,
+  "candidates": [
+    {
+      "architecture": "family_a",
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "candidate_key": "family_a/seed_11",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "8bb69f3bb5ad99da0bd0bc73a6b5d77afdedac9d7ff33d76fa6065a84aaf6d62",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_a/candidate_seed_11.pt",
+        "sha256": "8b90bb906b5a51af8d25e4bf51bcf520e0374973efb28efb39704275bc12c931"
+      },
+      "parameter_count": 5986,
+      "reproducibility": {
+        "canonical_parameter_sha256": "8bb69f3bb5ad99da0bd0bc73a6b5d77afdedac9d7ff33d76fa6065a84aaf6d62",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "330b2f63cfcebdab9f6c731b04e401c3b07f406d37ef7dd23cae6404cc2415f6",
+        "registry_canonical_sha256": "8bb69f3bb5ad99da0bd0bc73a6b5d77afdedac9d7ff33d76fa6065a84aaf6d62"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 11,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "family_a_support_limitation": true,
+          "family_has_breathing_head": false
+        },
+        "full_task": false,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 2.556914660090115e-05
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.019699564203619957
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.03803222253918648
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.037098269909620285
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0392790362238884
+              }
+            },
+            "probability_distribution": {
+              "max": 0.996185839176178,
+              "mean": 0.9778922844593454,
+              "min": 2.556914660090115e-05,
+              "std": 0.11930521356780303
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 6.507999521655802,
+            "RMSE_bpm": 8.457326028883255,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 5.158548851013183,
+            "prediction_range_bpm": {
+              "max": 33.005035400390625,
+              "min": 11.000667572021484
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.21604938271604937,
+            "within_4_bpm": 0.3765432098765432,
+            "within_6_bpm": 0.5679012345679012
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 0.9959297776222229,
+              "mean": 0.9932718640666897,
+              "min": 0.946200430393219,
+              "std": 0.007404882167465067
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 4.208156334726434,
+            "RMSE_bpm": 6.759813368078546,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.4858779907226562,
+            "prediction_range_bpm": {
+              "max": 42.911651611328125,
+              "min": 7.5656843185424805
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.42105263157894735,
+            "within_4_bpm": 0.6842105263157895,
+            "within_6_bpm": 0.8245614035087719
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 3.0298913770820946e-05
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.028700171038508415
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.03297313675284386
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0313221737742424
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.030917378142476082
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9959297776222229,
+              "mean": 0.9176091115399458,
+              "min": 3.0298913770820946e-05,
+              "std": 0.2600306152495346
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 4.208156334726434,
+            "RMSE_bpm": 6.759813368078546,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.4858779907226562,
+            "prediction_range_bpm": {
+              "max": 42.911651611328125,
+              "min": 7.5656843185424805
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.42105263157894735,
+            "within_4_bpm": 0.6842105263157895,
+            "within_6_bpm": 0.8245614035087719
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    },
+    {
+      "architecture": "family_a",
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "candidate_key": "family_a/seed_23",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "1197566b7f61d32c3348fd43b26537b912e3aa52b91ee1c2e69be373afdca40e",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_a/candidate_seed_23.pt",
+        "sha256": "cf03d89d89e07814593facbd06b62fc997304bc022aa5e6d872d104150b2dad2"
+      },
+      "parameter_count": 5986,
+      "reproducibility": {
+        "canonical_parameter_sha256": "1197566b7f61d32c3348fd43b26537b912e3aa52b91ee1c2e69be373afdca40e",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "421e28f27e11f4fc823df8383a775e97757b579ae11f79ddb5124fdf486326a8",
+        "registry_canonical_sha256": "1197566b7f61d32c3348fd43b26537b912e3aa52b91ee1c2e69be373afdca40e"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 23,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "family_a_support_limitation": true,
+          "family_has_breathing_head": false
+        },
+        "full_task": false,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0018026806646957994
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.07169490307569504
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.10069625824689865
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.09484311193227768
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.1203438863158226
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9960178732872009,
+              "mean": 0.9783055443628821,
+              "min": 0.0018026806646957994,
+              "std": 0.11305763039802919
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 6.512730609517039,
+            "RMSE_bpm": 8.337681518416083,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 5.471997127532959,
+            "prediction_range_bpm": {
+              "max": 31.50979995727539,
+              "min": 12.31963062286377
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.19753086419753085,
+            "within_4_bpm": 0.3950617283950617,
+            "within_6_bpm": 0.5493827160493827
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 0.9961953163146973,
+              "mean": 0.9907895053847361,
+              "min": 0.9266126751899719,
+              "std": 0.011271199822673791
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 3.9577183137860215,
+            "RMSE_bpm": 6.4946307407363815,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 1.8461761474609375,
+            "prediction_range_bpm": {
+              "max": 39.54109191894531,
+              "min": 8.334003448486328
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.5087719298245614,
+            "within_4_bpm": 0.7368421052631579,
+            "within_6_bpm": 0.8070175438596491
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0022831561509519815
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.08563117682933807
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.08407240360975266
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.10553787648677826
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0817103236913681
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9961953163146973,
+              "mean": 0.9189971211635566,
+              "min": 0.0022831561509519815,
+              "std": 0.24705508289706002
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 3.9577183137860215,
+            "RMSE_bpm": 6.4946307407363815,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 1.8461761474609375,
+            "prediction_range_bpm": {
+              "max": 39.54109191894531,
+              "min": 8.334003448486328
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.5087719298245614,
+            "within_4_bpm": 0.7368421052631579,
+            "within_6_bpm": 0.8070175438596491
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    },
+    {
+      "architecture": "family_a",
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "candidate_key": "family_a/seed_47",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "634f63ab46a83d61fde7b88a319dd0c4bb49ff11c83cd68f1e1b98a971db943a",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_a/candidate_seed_47.pt",
+        "sha256": "7d7acfd2a9171e9fe4f34fe8cf1bdf24009b43d65d3f887b34205af1b51b82ef"
+      },
+      "parameter_count": 5986,
+      "reproducibility": {
+        "canonical_parameter_sha256": "634f63ab46a83d61fde7b88a319dd0c4bb49ff11c83cd68f1e1b98a971db943a",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "ad138137e3530e5c9c089fc54b803a4752a2c03f3abb49ed48017ea7c03be607",
+        "registry_canonical_sha256": "634f63ab46a83d61fde7b88a319dd0c4bb49ff11c83cd68f1e1b98a971db943a"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 47,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "family_a_support_limitation": true,
+          "family_has_breathing_head": false
+        },
+        "full_task": false,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0010694436496123672
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.08102194964885712
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.19763514399528503
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.11330150812864304
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.1256224811077118
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9950054287910461,
+              "mean": 0.9756001741362262,
+              "min": 0.0010694436496123672,
+              "std": 0.10966638119287088
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 6.641770781293328,
+            "RMSE_bpm": 8.45724673126806,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 5.463685989379883,
+            "prediction_range_bpm": {
+              "max": 31.470821380615234,
+              "min": 10.065407752990723
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.2037037037037037,
+            "within_4_bpm": 0.35185185185185186,
+            "within_6_bpm": 0.5246913580246914
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 0.9980831146240234,
+              "mean": 0.9884701199450735,
+              "min": 0.9807828068733215,
+              "std": 0.003898472065740123
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 4.038610274331612,
+            "RMSE_bpm": 6.672759046564427,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.1693058013916016,
+            "prediction_range_bpm": {
+              "max": 39.723724365234375,
+              "min": 7.7830352783203125
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.49122807017543857,
+            "within_4_bpm": 0.7543859649122807,
+            "within_6_bpm": 0.8245614035087719
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0012421421706676483
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0952313244342804
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.09760503470897675
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0980212390422821
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.10085940361022949
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9980831146240234,
+              "mean": 0.9173858784488402,
+              "min": 0.0012421421706676483,
+              "std": 0.24445071925814132
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 4.0386102910627395,
+            "RMSE_bpm": 6.672759051541546,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.1693058013916016,
+            "prediction_range_bpm": {
+              "max": 39.723724365234375,
+              "min": 7.7830352783203125
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.49122807017543857,
+            "within_4_bpm": 0.7543859649122807,
+            "within_6_bpm": 0.8245614035087719
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    },
+    {
+      "architecture": "family_b",
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "candidate_key": "family_b/seed_11",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "84bb325bb2fa8054b39ac7c30f3aadf6acc1ed5886b79f93352d77b1fb5d4aba",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_11.pt",
+        "sha256": "5633a7eefa83544cd33a251b0016b40f37e28039f985b31c98bdcfa37aa8b1a6"
+      },
+      "parameter_count": 17915,
+      "reproducibility": {
+        "canonical_parameter_sha256": "84bb325bb2fa8054b39ac7c30f3aadf6acc1ed5886b79f93352d77b1fb5d4aba",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "7450e4feb90a30a63be5cd84aa383a855b006fd1439af884b360452109158ba3",
+        "registry_canonical_sha256": "84bb325bb2fa8054b39ac7c30f3aadf6acc1ed5886b79f93352d77b1fb5d4aba"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 11,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "brier": false,
+          "family_has_breathing_head": true,
+          "present_recall": true,
+          "rr_mae": true,
+          "rr_within_2": false,
+          "rr_within_4": true,
+          "rr_within_6": true
+        },
+        "full_task": true,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.17589944287010537,
+            "F1": 0.7910447761194029,
+            "PR_AUC": 0.9132575587475198,
+            "ROC_AUC": 0.878299276287782,
+            "absent_count": 116,
+            "calibration_ece": {
+              "ECE": 0.14817408887709646,
+              "bins": 10,
+              "eligible_count": 278,
+              "rows": [
+                {
+                  "accuracy": 0.0,
+                  "bin": 0,
+                  "confidence": 0.08689882233738899,
+                  "count": 2,
+                  "gap": 0.08689882233738899,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 1,
+                  "confidence": 0.1525836318731308,
+                  "count": 10,
+                  "gap": 0.1525836318731308,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": 0.1111111111111111,
+                  "bin": 2,
+                  "confidence": 0.2566790713204278,
+                  "count": 9,
+                  "gap": 0.14556796020931667,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": 0.1111111111111111,
+                  "bin": 3,
+                  "confidence": 0.36364858018027413,
+                  "count": 9,
+                  "gap": 0.252537469069163,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": 0.125,
+                  "bin": 4,
+                  "confidence": 0.44462084025144577,
+                  "count": 8,
+                  "gap": 0.31962084025144577,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 0.14814814814814814,
+                  "bin": 5,
+                  "confidence": 0.5573474654444942,
+                  "count": 27,
+                  "gap": 0.40919931729634607,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 0.4146341463414634,
+                  "bin": 6,
+                  "confidence": 0.6524233105706005,
+                  "count": 41,
+                  "gap": 0.23778916422913715,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 0.6,
+                  "bin": 7,
+                  "confidence": 0.7470282566547394,
+                  "count": 50,
+                  "gap": 0.1470282566547394,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 0.7368421052631579,
+                  "bin": 8,
+                  "confidence": 0.8484983757922524,
+                  "count": 38,
+                  "gap": 0.11165627052909455,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 0.9523809523809523,
+                  "bin": 9,
+                  "confidence": 0.9638185564960752,
+                  "count": 84,
+                  "gap": 0.011437604115122846,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 3,
+              "FP": 81,
+              "TN": 35,
+              "TP": 159
+            },
+            "eligible_count": 278,
+            "false_absent_on_PRESENT": 0.018518518518518517,
+            "false_present_on_ABSENT": 0.6982758620689655,
+            "precision": 0.6625,
+            "present_count": 162,
+            "probability_distribution": {
+              "max": 0.9999024868011475,
+              "mean": 0.7309079018267367,
+              "min": 0.0860772505402565,
+              "std": 0.2279994389944618
+            },
+            "recall": 0.9814814814814815,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 1,
+            "invalid_input_physiology_suppressed_count": 4,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.2,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 1.0,
+                "probability_mean": 0.9997308850288391
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.007219238206744194
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.005462452303618193
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0039780111983418465
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0031299979891628027
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9999998807907104,
+              "mean": 0.9867908657642352,
+              "min": 0.0031299979891628027,
+              "std": 0.10994776837431017
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 6.469127685170114,
+            "RMSE_bpm": 8.387316273328695,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 4.947322502136231,
+            "prediction_range_bpm": {
+              "max": 35.39510726928711,
+              "min": 12.256780624389648
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.19753086419753085,
+            "within_4_bpm": 0.3950617283950617,
+            "within_6_bpm": 0.5679012345679012
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "Brier": 0.09854056768808094,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.2934914053532115,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 5,
+                  "confidence": 0.5685641765594482,
+                  "count": 4,
+                  "gap": 0.43143582344055176,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6489745020866394,
+                  "count": 30,
+                  "gap": 0.3510254979133606,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7409343235194683,
+                  "count": 16,
+                  "gap": 0.2590656764805317,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8367291688919067,
+                  "count": 2,
+                  "gap": 0.16327083110809326,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9998181223869324,
+                  "count": 5,
+                  "gap": 0.00018187761306764916,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 57
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.7065085946467885,
+              "min": 0.5236203074455261,
+              "std": 0.11137038507555688
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9993864398891643,
+              "min": 0.9989872574806213,
+              "std": 0.00023848084952740237
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 4.564752260843913,
+            "RMSE_bpm": 7.03833466506959,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.794027328491211,
+            "prediction_range_bpm": {
+              "max": 47.368377685546875,
+              "min": 9.825277328491211
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.3333333333333333,
+            "within_4_bpm": 0.631578947368421,
+            "within_6_bpm": 0.7719298245614035
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.09854056720607236,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.29349140430751597,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 5,
+                  "confidence": 0.5685641765594482,
+                  "count": 4,
+                  "gap": 0.43143582344055176,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6489745020866394,
+                  "count": 30,
+                  "gap": 0.3510254979133606,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7409343272447586,
+                  "count": 16,
+                  "gap": 0.2590656727552414,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8367291688919067,
+                  "count": 2,
+                  "gap": 0.16327083110809326,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9998181223869324,
+                  "count": 5,
+                  "gap": 0.00018187761306764916,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 57
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.706508595692484,
+              "min": 0.5236203074455261,
+              "std": 0.11137038566726143
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.009288412518799305
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00694939075037837
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.006450250279158354
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.009016119875013828
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.008698978461325169
+              }
+            },
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9219406735210214,
+              "min": 0.006450250279158354,
+              "std": 0.26603523788089317
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 4.564752260843913,
+            "RMSE_bpm": 7.03833466506959,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.794027328491211,
+            "prediction_range_bpm": {
+              "max": 47.368377685546875,
+              "min": 9.825277328491211
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.3333333333333333,
+            "within_4_bpm": 0.631578947368421,
+            "within_6_bpm": 0.7719298245614035
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    },
+    {
+      "architecture": "family_b",
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "candidate_key": "family_b/seed_23",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+        "sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c"
+      },
+      "parameter_count": 17915,
+      "reproducibility": {
+        "canonical_parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "29c435aca603e705f80b5fdf144f8b7989a935ad88edba7f9a3223c336972724",
+        "registry_canonical_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 23,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "brier": true,
+          "family_has_breathing_head": true,
+          "present_recall": true,
+          "rr_mae": true,
+          "rr_within_2": true,
+          "rr_within_4": true,
+          "rr_within_6": false
+        },
+        "full_task": true,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.11643031500877468,
+            "F1": 0.8702702702702703,
+            "PR_AUC": 0.9789074125678932,
+            "ROC_AUC": 0.9691890166028098,
+            "absent_count": 116,
+            "calibration_ece": {
+              "ECE": 0.15025538410539174,
+              "bins": 10,
+              "eligible_count": 278,
+              "rows": [
+                {
+                  "accuracy": 0.0,
+                  "bin": 0,
+                  "confidence": 0.04058414581231773,
+                  "count": 11,
+                  "gap": 0.04058414581231773,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 1,
+                  "confidence": 0.14927367730574173,
+                  "count": 22,
+                  "gap": 0.14927367730574173,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 2,
+                  "confidence": 0.24884643591940403,
+                  "count": 8,
+                  "gap": 0.24884643591940403,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": 0.06666666666666667,
+                  "bin": 3,
+                  "confidence": 0.35621344844500225,
+                  "count": 15,
+                  "gap": 0.2895467817783356,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 4,
+                  "confidence": 0.4487211619104658,
+                  "count": 14,
+                  "gap": 0.4487211619104658,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 0.25,
+                  "bin": 5,
+                  "confidence": 0.5223357677459717,
+                  "count": 12,
+                  "gap": 0.2723357677459717,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 0.17647058823529413,
+                  "bin": 6,
+                  "confidence": 0.649423336281496,
+                  "count": 17,
+                  "gap": 0.4729527480462018,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 0.26666666666666666,
+                  "bin": 7,
+                  "confidence": 0.7435119867324829,
+                  "count": 15,
+                  "gap": 0.4768453200658162,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 0.6428571428571429,
+                  "bin": 8,
+                  "confidence": 0.8536618245499474,
+                  "count": 28,
+                  "gap": 0.21080468169280453,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 0.9779411764705882,
+                  "bin": 9,
+                  "confidence": 0.98574297042454,
+                  "count": 136,
+                  "gap": 0.007801793953951752,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 1,
+              "FP": 47,
+              "TN": 69,
+              "TP": 161
+            },
+            "eligible_count": 278,
+            "false_absent_on_PRESENT": 0.006172839506172839,
+            "false_present_on_ABSENT": 0.4051724137931034,
+            "precision": 0.7740384615384616,
+            "present_count": 162,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.732989197055032,
+              "min": 0.0026273608673363924,
+              "std": 0.3163558655378825
+            },
+            "recall": 0.9938271604938271,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 1,
+            "invalid_input_physiology_suppressed_count": 4,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.2,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 1.0,
+                "probability_mean": 0.9999946355819702
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 5.8521964092506096e-05
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0008438069489784539
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 4.320875814300962e-05
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0010313880629837513
+              }
+            },
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9872385767794354,
+              "min": 4.320875814300962e-05,
+              "std": 0.11050630482955083
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 5.720937016569538,
+            "RMSE_bpm": 7.538933280130474,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 4.24566780090332,
+            "prediction_range_bpm": {
+              "max": 42.74204635620117,
+              "min": 11.235015869140625
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.2345679012345679,
+            "within_4_bpm": 0.4691358024691358,
+            "within_6_bpm": 0.6296296296296297
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "Brier": 0.0064572784995837705,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.05198444818195547,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": null,
+                  "bin": 5,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6688169240951538,
+                  "count": 1,
+                  "gap": 0.3311830759048462,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.787822961807251,
+                  "count": 1,
+                  "gap": 0.21217703819274902,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8599440199988229,
+                  "count": 7,
+                  "gap": 0.14005598000117714,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9700133005777994,
+                  "count": 48,
+                  "gap": 0.029986699422200558,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 57
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9480155518180445,
+              "min": 0.6688169240951538,
+              "std": 0.061277203320658814
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.999968782319861,
+              "min": 0.999798595905304,
+              "std": 3.682480558351002e-05
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 4.1938734389188,
+            "RMSE_bpm": 6.276408275163277,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.0810203552246094,
+            "prediction_range_bpm": {
+              "max": 39.06822204589844,
+              "min": -0.3417701721191406
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.49122807017543857,
+            "within_4_bpm": 0.6666666666666666,
+            "within_6_bpm": 0.7017543859649122
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.0064572784995837705,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.05198444818195547,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": null,
+                  "bin": 5,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6688169240951538,
+                  "count": 1,
+                  "gap": 0.3311830759048462,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.787822961807251,
+                  "count": 1,
+                  "gap": 0.21217703819274902,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8599440199988229,
+                  "count": 7,
+                  "gap": 0.14005598000117714,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9700133005777994,
+                  "count": 48,
+                  "gap": 0.029986699422200558,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 57
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9480155518180445,
+              "min": 0.6688169240951538,
+              "std": 0.061277203320658814
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00011854243348352611
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0001402063062414527
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00014117383398115635
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00011706995428539813
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0004162787226960063
+              }
+            },
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9218608035644138,
+              "min": 0.00011706995428539813,
+              "std": 0.26830972245195767
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 4.1938734389188,
+            "RMSE_bpm": 6.276408275163277,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.0810203552246094,
+            "prediction_range_bpm": {
+              "max": 39.06822204589844,
+              "min": -0.3417701721191406
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.49122807017543857,
+            "within_4_bpm": 0.6666666666666666,
+            "within_6_bpm": 0.7017543859649122
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    },
+    {
+      "architecture": "family_b",
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "candidate_key": "family_b/seed_47",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "1ef93f709d2f23f6c92f0ed235287f422cae2675eb06fb958d286903fd75d40e",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_47.pt",
+        "sha256": "ed3da35adb0837426065cc575b7e4ff6f41ef9a8fb295bb29f7eb8bcff4db280"
+      },
+      "parameter_count": 17915,
+      "reproducibility": {
+        "canonical_parameter_sha256": "1ef93f709d2f23f6c92f0ed235287f422cae2675eb06fb958d286903fd75d40e",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "d5f9bd1bc0820b6b6ead74d68c47455e4e01ef2a81bbc753cc8d2cbab7751d6a",
+        "registry_canonical_sha256": "1ef93f709d2f23f6c92f0ed235287f422cae2675eb06fb958d286903fd75d40e"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 47,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "brier": true,
+          "family_has_breathing_head": true,
+          "present_recall": true,
+          "rr_mae": true,
+          "rr_within_2": true,
+          "rr_within_4": true,
+          "rr_within_6": false
+        },
+        "full_task": true,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.03571776252915792,
+            "F1": 0.9671641791044776,
+            "PR_AUC": 0.9994076613269471,
+            "ROC_AUC": 0.9991485738612176,
+            "absent_count": 116,
+            "calibration_ece": {
+              "ECE": 0.07597385195688287,
+              "bins": 10,
+              "eligible_count": 278,
+              "rows": [
+                {
+                  "accuracy": 0.0,
+                  "bin": 0,
+                  "confidence": 0.029520996258595136,
+                  "count": 56,
+                  "gap": 0.029520996258595136,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 1,
+                  "confidence": 0.14239494543936518,
+                  "count": 18,
+                  "gap": 0.14239494543936518,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 2,
+                  "confidence": 0.2542060315608978,
+                  "count": 10,
+                  "gap": 0.2542060315608978,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 3,
+                  "confidence": 0.34505781531333923,
+                  "count": 14,
+                  "gap": 0.34505781531333923,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 4,
+                  "confidence": 0.4501071444579533,
+                  "count": 7,
+                  "gap": 0.4501071444579533,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 5,
+                  "confidence": 0.5263620018959045,
+                  "count": 2,
+                  "gap": 0.5263620018959045,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 0.16666666666666666,
+                  "bin": 6,
+                  "confidence": 0.6472477515538534,
+                  "count": 6,
+                  "gap": 0.48058108488718676,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 7,
+                  "confidence": 0.7361054420471191,
+                  "count": 2,
+                  "gap": 0.7361054420471191,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8724764982859293,
+                  "count": 3,
+                  "gap": 0.12752350171407068,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 0.9875,
+                  "bin": 9,
+                  "confidence": 0.9911864649504423,
+                  "count": 160,
+                  "gap": 0.0036864649504422253,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 11,
+              "TN": 105,
+              "TP": 162
+            },
+            "eligible_count": 278,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": 0.09482758620689655,
+            "precision": 0.9364161849710982,
+            "present_count": 162,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.6559553591141332,
+              "min": 1.9218423403799534e-05,
+              "std": 0.41684943191588786
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 1,
+            "invalid_input_physiology_suppressed_count": 4,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.2,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 1.0,
+                "probability_mean": 0.9999998807907104
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00032096097129397094
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 4.273137165000662e-05
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 2.1951374947093427e-05
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 1.0814619599841535e-05
+              }
+            },
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9875285475001547,
+              "min": 1.0814619599841535e-05,
+              "std": 0.11057118591603332
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 4.761832822163899,
+            "RMSE_bpm": 6.617202103080665,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 3.629828453063965,
+            "prediction_range_bpm": {
+              "max": 38.436561584472656,
+              "min": 2.847744941711426
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.30246913580246915,
+            "within_4_bpm": 0.5555555555555556,
+            "within_6_bpm": 0.7592592592592593
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "Brier": 0.025080918907178347,
+            "F1": 0.9911504424778761,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.06211597563927637,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 1,
+                  "confidence": 0.12591803073883057,
+                  "count": 1,
+                  "gap": 0.8740819692611694,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 5,
+                  "confidence": 0.5506576895713806,
+                  "count": 1,
+                  "gap": 0.4493423104286194,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6612849632898966,
+                  "count": 3,
+                  "gap": 0.3387150367101034,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7991124391555786,
+                  "count": 1,
+                  "gap": 0.2008875608444214,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8556870222091675,
+                  "count": 2,
+                  "gap": 0.14431297779083252,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9854790264246415,
+                  "count": 49,
+                  "gap": 0.014520973575358531,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 56
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.017543859649122806,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9378840243607237,
+              "min": 0.12591803073883057,
+              "std": 0.14567952662457131
+            },
+            "recall": 0.9824561403508771,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9999831551212376,
+              "min": 0.9998435974121094,
+              "std": 2.5794312542715088e-05
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 4.900417813083582,
+            "RMSE_bpm": 7.830777919443116,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.3080272674560547,
+            "prediction_range_bpm": {
+              "max": 37.28302764892578,
+              "min": -11.513181686401367
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.45614035087719296,
+            "within_4_bpm": 0.6491228070175439,
+            "within_6_bpm": 0.7368421052631579
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.025080918907178347,
+            "F1": 0.9911504424778761,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.06211597563927637,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 1,
+                  "confidence": 0.12591803073883057,
+                  "count": 1,
+                  "gap": 0.8740819692611694,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 5,
+                  "confidence": 0.5506576895713806,
+                  "count": 1,
+                  "gap": 0.4493423104286194,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6612849632898966,
+                  "count": 3,
+                  "gap": 0.3387150367101034,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7991124391555786,
+                  "count": 1,
+                  "gap": 0.2008875608444214,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8556870222091675,
+                  "count": 2,
+                  "gap": 0.14431297779083252,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9854790264246415,
+                  "count": 49,
+                  "gap": 0.014520973575358531,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 56
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.017543859649122806,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9378840243607237,
+              "min": 0.12591803073883057,
+              "std": 0.14567952662457131
+            },
+            "recall": 0.9824561403508771,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00013282631698530167
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 1.2168363355158363e-05
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 2.3858825443312526e-05
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0007743952446617186
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 3.1513151043327525e-05
+              }
+            },
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9218747017821016,
+              "min": 1.2168363355158363e-05,
+              "std": 0.26831136207102796
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 4.900417813083582,
+            "RMSE_bpm": 7.830777919443116,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.3080272674560547,
+            "prediction_range_bpm": {
+              "max": 37.28302764892578,
+              "min": -11.513181686401367
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.45614035087719296,
+            "within_4_bpm": 0.6491228070175439,
+            "within_6_bpm": 0.7368421052631579
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    },
+    {
+      "architecture": "family_c",
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "candidate_key": "family_c/seed_11",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "5e1aefa8a4affca778649814e60efed05d0b8812094013555dfac6b21e90d79b",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_11.pt",
+        "sha256": "539bd6021d10a9abd35a22b49c0db728a122b60356f59609fead9280d82f7768"
+      },
+      "parameter_count": 21115,
+      "reproducibility": {
+        "canonical_parameter_sha256": "5e1aefa8a4affca778649814e60efed05d0b8812094013555dfac6b21e90d79b",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "0d08e4d450fefc51330bc6f4fb931e74b0426c988f7f5e297b08b4e588c7c28b",
+        "registry_canonical_sha256": "5e1aefa8a4affca778649814e60efed05d0b8812094013555dfac6b21e90d79b"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 11,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "brier": true,
+          "family_has_breathing_head": true,
+          "present_recall": true,
+          "rr_mae": true,
+          "rr_within_2": false,
+          "rr_within_4": true,
+          "rr_within_6": true
+        },
+        "full_task": true,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.036915356939666404,
+            "F1": 0.9642857142857143,
+            "PR_AUC": 0.9989898037138971,
+            "ROC_AUC": 0.9986696466581524,
+            "absent_count": 116,
+            "calibration_ece": {
+              "ECE": 0.07656011638682572,
+              "bins": 10,
+              "eligible_count": 278,
+              "rows": [
+                {
+                  "accuracy": 0.0,
+                  "bin": 0,
+                  "confidence": 0.028507074176969485,
+                  "count": 56,
+                  "gap": 0.028507074176969485,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 1,
+                  "confidence": 0.15170922910883314,
+                  "count": 21,
+                  "gap": 0.15170922910883314,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 2,
+                  "confidence": 0.24561632293112137,
+                  "count": 17,
+                  "gap": 0.24561632293112137,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 3,
+                  "confidence": 0.36137548585732776,
+                  "count": 6,
+                  "gap": 0.36137548585732776,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 4,
+                  "confidence": 0.4469505473971367,
+                  "count": 4,
+                  "gap": 0.4469505473971367,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 5,
+                  "confidence": 0.5154630243778229,
+                  "count": 2,
+                  "gap": 0.5154630243778229,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 6,
+                  "confidence": 0.6236184040705363,
+                  "count": 3,
+                  "gap": 0.6236184040705363,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 7,
+                  "confidence": 0.7565474510192871,
+                  "count": 2,
+                  "gap": 0.7565474510192871,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 0.3333333333333333,
+                  "bin": 8,
+                  "confidence": 0.8700003027915955,
+                  "count": 3,
+                  "gap": 0.5366669694582622,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 0.9817073170731707,
+                  "bin": 9,
+                  "confidence": 0.9960061751487779,
+                  "count": 164,
+                  "gap": 0.014298858075607157,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 12,
+              "TN": 104,
+              "TP": 162
+            },
+            "eligible_count": 278,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": 0.10344827586206896,
+            "precision": 0.9310344827586207,
+            "present_count": 162,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.659293929336466,
+              "min": 3.1344468425231753e-06,
+              "std": 0.4249942414903533
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00013983687676955014
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.000647601904347539
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.022913245484232903
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0004306617775000632
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.005453646648675203
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9999996423721313,
+              "mean": 0.9839104332445473,
+              "min": 0.00013983687676955014,
+              "std": 0.12265823595463173
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 4.563968586156398,
+            "RMSE_bpm": 6.112976860347833,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 3.44487621307373,
+            "prediction_range_bpm": {
+              "max": 43.610626220703125,
+              "min": 4.618400573730469
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.2777777777777778,
+            "within_4_bpm": 0.5679012345679012,
+            "within_6_bpm": 0.7654320987654321
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "Brier": 0.02115794692809779,
+            "F1": 0.9911504424778761,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.043235822335669825,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": 1.0,
+                  "bin": 0,
+                  "confidence": 0.0957157239317894,
+                  "count": 1,
+                  "gap": 0.9042842760682106,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 5,
+                  "confidence": 0.5808907747268677,
+                  "count": 1,
+                  "gap": 0.4191092252731323,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6291624903678894,
+                  "count": 1,
+                  "gap": 0.3708375096321106,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": null,
+                  "bin": 7,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.856248160203298,
+                  "count": 3,
+                  "gap": 0.14375183979670203,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9933538168084388,
+                  "count": 51,
+                  "gap": 0.0066461831915611835,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 56
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.017543859649122806,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9567641776643301,
+              "min": 0.0957157239317894,
+              "std": 0.13888344247985857
+            },
+            "recall": 0.9824561403508771,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 0.9999942779541016,
+              "mean": 0.9993202565080028,
+              "min": 0.9938613176345825,
+              "std": 0.001066768937831304
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 4.539816287525913,
+            "RMSE_bpm": 6.433115257698816,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 3.1881542205810547,
+            "prediction_range_bpm": {
+              "max": 35.0087776184082,
+              "min": 5.076687812805176
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.3333333333333333,
+            "within_4_bpm": 0.631578947368421,
+            "within_6_bpm": 0.7894736842105263
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.02115794692809779,
+            "F1": 0.9911504424778761,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.043235822335669825,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": 1.0,
+                  "bin": 0,
+                  "confidence": 0.0957157239317894,
+                  "count": 1,
+                  "gap": 0.9042842760682106,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 5,
+                  "confidence": 0.5808907747268677,
+                  "count": 1,
+                  "gap": 0.4191092252731323,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6291624903678894,
+                  "count": 1,
+                  "gap": 0.3708375096321106,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": null,
+                  "bin": 7,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.856248160203298,
+                  "count": 3,
+                  "gap": 0.14375183979670203,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9933538168084388,
+                  "count": 51,
+                  "gap": 0.0066461831915611835,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 56
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.017543859649122806,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9567641776643301,
+              "min": 0.0957157239317894,
+              "std": 0.13888344247985857
+            },
+            "recall": 0.9824561403508771,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 4.263927877445894e-09
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0007517402991652489
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0013155118795111775
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00033159650047309697
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0013099873904138803
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9999942779541016,
+              "mean": 0.9213063120985259,
+              "min": 4.263927877445894e-09,
+              "std": 0.26798869690572724
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 4.539816287525913,
+            "RMSE_bpm": 6.433115257698816,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 3.1881542205810547,
+            "prediction_range_bpm": {
+              "max": 35.0087776184082,
+              "min": 5.076687812805176
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.3333333333333333,
+            "within_4_bpm": 0.631578947368421,
+            "within_6_bpm": 0.7894736842105263
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    },
+    {
+      "architecture": "family_c",
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "candidate_key": "family_c/seed_23",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "de0352416c32703195c9a218bc915ef949351882304dd8668a5957527a91eaae",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_23.pt",
+        "sha256": "ce99a6534928138bc5e2d271123185f93aceb6386b8a24b0ecb3679c7d6d70de"
+      },
+      "parameter_count": 21115,
+      "reproducibility": {
+        "canonical_parameter_sha256": "de0352416c32703195c9a218bc915ef949351882304dd8668a5957527a91eaae",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "3229edde87416dc9d3e64562f9d7431aac4d5329054e0ee55cda1d95745a7688",
+        "registry_canonical_sha256": "de0352416c32703195c9a218bc915ef949351882304dd8668a5957527a91eaae"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 23,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "brier": true,
+          "family_has_breathing_head": true,
+          "present_recall": true,
+          "rr_mae": true,
+          "rr_within_2": false,
+          "rr_within_4": true,
+          "rr_within_6": true
+        },
+        "full_task": true,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.037046580273460625,
+            "F1": 0.9757575757575757,
+            "PR_AUC": 0.9987167801332804,
+            "ROC_AUC": 0.9981907194550873,
+            "absent_count": 116,
+            "calibration_ece": {
+              "ECE": 0.08699155409431769,
+              "bins": 10,
+              "eligible_count": 278,
+              "rows": [
+                {
+                  "accuracy": 0.0,
+                  "bin": 0,
+                  "confidence": 0.037297980264262405,
+                  "count": 43,
+                  "gap": 0.037297980264262405,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 1,
+                  "confidence": 0.14999359065578097,
+                  "count": 21,
+                  "gap": 0.14999359065578097,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 2,
+                  "confidence": 0.25042849481105806,
+                  "count": 20,
+                  "gap": 0.25042849481105806,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 3,
+                  "confidence": 0.3552074357867241,
+                  "count": 16,
+                  "gap": 0.3552074357867241,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": 0.1,
+                  "bin": 4,
+                  "confidence": 0.46248202919960024,
+                  "count": 10,
+                  "gap": 0.36248202919960026,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": 0.4,
+                  "bin": 5,
+                  "confidence": 0.5349638819694519,
+                  "count": 5,
+                  "gap": 0.13496388196945186,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 0.3333333333333333,
+                  "bin": 6,
+                  "confidence": 0.6649246017138163,
+                  "count": 3,
+                  "gap": 0.331591268380483,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7409468740224838,
+                  "count": 4,
+                  "gap": 0.2590531259775162,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 0.8,
+                  "bin": 8,
+                  "confidence": 0.8655468106269837,
+                  "count": 10,
+                  "gap": 0.06554681062698364,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9880000650882721,
+                  "count": 146,
+                  "gap": 0.011999934911727905,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 1,
+              "FP": 7,
+              "TN": 109,
+              "TP": 161
+            },
+            "eligible_count": 278,
+            "false_absent_on_PRESENT": 0.006172839506172839,
+            "false_present_on_ABSENT": 0.0603448275862069,
+            "precision": 0.9583333333333334,
+            "present_count": 162,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.6496663526481138,
+              "min": 0.0005790451541543007,
+              "std": 0.3966788232168159
+            },
+            "recall": 0.9938271604938271,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 1,
+            "invalid_input_physiology_suppressed_count": 4,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.2,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 1.0,
+                "probability_mean": 0.987122654914856
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.003839110257104039
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.00012951037206221372
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.000994967296719551
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0005316796596162021
+              }
+            },
+            "probability_distribution": {
+              "max": 0.9999997615814209,
+              "mean": 0.9872278149082306,
+              "min": 0.00012951037206221372,
+              "std": 0.1104000624436638
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 4.667549032988372,
+            "RMSE_bpm": 6.304149558913191,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 3.842863731384277,
+            "prediction_range_bpm": {
+              "max": 36.326499938964844,
+              "min": 5.209575653076172
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.29012345679012347,
+            "within_4_bpm": 0.5123456790123457,
+            "within_6_bpm": 0.7469135802469136
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "Brier": 0.01791962580955174,
+            "F1": 0.9911504424778761,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.07009617592159066,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 4,
+                  "confidence": 0.40055620670318604,
+                  "count": 1,
+                  "gap": 0.599443793296814,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": null,
+                  "bin": 5,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6397227048873901,
+                  "count": 2,
+                  "gap": 0.36027729511260986,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7516394108533859,
+                  "count": 4,
+                  "gap": 0.24836058914661407,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.84752057492733,
+                  "count": 4,
+                  "gap": 0.15247942507266998,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9766929654971414,
+                  "count": 46,
+                  "gap": 0.023307034502858648,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 56
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.017543859649122806,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9299038240784093,
+              "min": 0.40055620670318604,
+              "std": 0.11404451731986569
+            },
+            "recall": 0.9824561403508771,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9999622298499286,
+              "min": 0.9997209906578064,
+              "std": 6.095662250187178e-05
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 4.541094194378769,
+            "RMSE_bpm": 6.4600821452910795,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.894702911376953,
+            "prediction_range_bpm": {
+              "max": 34.00602722167969,
+              "min": -2.7044448852539062
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.3684210526315789,
+            "within_4_bpm": 0.631578947368421,
+            "within_6_bpm": 0.8070175438596491
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.01791962580955174,
+            "F1": 0.9911504424778761,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.07009617592159066,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 4,
+                  "confidence": 0.40055620670318604,
+                  "count": 1,
+                  "gap": 0.599443793296814,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": null,
+                  "bin": 5,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 6,
+                  "confidence": 0.6397227048873901,
+                  "count": 2,
+                  "gap": 0.36027729511260986,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7516394108533859,
+                  "count": 4,
+                  "gap": 0.24836058914661407,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.84752057492733,
+                  "count": 4,
+                  "gap": 0.15247942507266998,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9766929654971414,
+                  "count": 46,
+                  "gap": 0.023307034502858648,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 56
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.017543859649122806,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9299038240784093,
+              "min": 0.40055620670318604,
+              "std": 0.11404451731986569
+            },
+            "recall": 0.9824561403508771,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 7.12696524018952e-09
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0015316229546442628
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.002111382083967328
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.004376874305307865
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.004610762465745211
+              }
+            },
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9220375345325377,
+              "min": 7.12696524018952e-09,
+              "std": 0.26768057223382796
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 4.541094194378769,
+            "RMSE_bpm": 6.4600821452910795,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.894702911376953,
+            "prediction_range_bpm": {
+              "max": 34.00602722167969,
+              "min": -2.7044448852539062
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.3684210526315789,
+            "within_4_bpm": 0.631578947368421,
+            "within_6_bpm": 0.8070175438596491
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    },
+    {
+      "architecture": "family_c",
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "candidate_key": "family_c/seed_47",
+      "checkpoint": {
+        "metadata": {
+          "canonical_parameter_sha256": "e57c1fc56933f15b654697dcdae5e098c8c7154620974357795a280dff0b250d",
+          "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+          "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+          "selection_status": "CANDIDATE_ONLY"
+        },
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_47.pt",
+        "sha256": "2f1b446c808cfb90d02dc6cce754311ade19cf2e3bb03b20814a1268934cb5a1"
+      },
+      "parameter_count": 21115,
+      "reproducibility": {
+        "canonical_parameter_sha256": "e57c1fc56933f15b654697dcdae5e098c8c7154620974357795a280dff0b250d",
+        "checkpoint_sha256_match": true,
+        "prediction_sha256": "9d75d6023c19ddee38ee434e7a712d255d27901994fa1d2b9e2ec87a7c4776ca",
+        "registry_canonical_sha256": "e57c1fc56933f15b654697dcdae5e098c8c7154620974357795a280dff0b250d"
+      },
+      "safety": {
+        "checks": {
+          "canonical_parameter_hash": true,
+          "checkpoint_integrity": true,
+          "clean_false_rejection_limit": true,
+          "d2_and_mr60_forbidden_access_absent": true,
+          "provenance_intact": true,
+          "q2_all_required_modes_evaluated": true,
+          "q2_invalid_physiology_not_exposed": true,
+          "quality_handling_present": true,
+          "unavailable_inputs_not_used_as_physiology": true
+        },
+        "pass": true
+      },
+      "seed": 47,
+      "selection_eligible": false,
+      "utility": {
+        "checks": {
+          "brier": true,
+          "family_has_breathing_head": true,
+          "present_recall": true,
+          "rr_mae": true,
+          "rr_within_2": true,
+          "rr_within_4": true,
+          "rr_within_6": false
+        },
+        "full_task": true,
+        "pass": false
+      },
+      "validation": {
+        "D0_TRAIN_OBSERVE_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.0033077926956909956,
+            "F1": 0.9969230769230769,
+            "PR_AUC": 1.0,
+            "ROC_AUC": 1.0,
+            "absent_count": 116,
+            "calibration_ece": {
+              "ECE": 0.0150967353299525,
+              "bins": 10,
+              "eligible_count": 278,
+              "rows": [
+                {
+                  "accuracy": 0.0,
+                  "bin": 0,
+                  "confidence": 0.014432978693648124,
+                  "count": 106,
+                  "gap": 0.014432978693648124,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 1,
+                  "confidence": 0.15053073018789292,
+                  "count": 5,
+                  "gap": 0.15053073018789292,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 2,
+                  "confidence": 0.21836504340171814,
+                  "count": 3,
+                  "gap": 0.21836504340171814,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 4,
+                  "confidence": 0.4201262593269348,
+                  "count": 1,
+                  "gap": 0.4201262593269348,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": null,
+                  "bin": 5,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": 0.0,
+                  "bin": 6,
+                  "confidence": 0.644306480884552,
+                  "count": 1,
+                  "gap": 0.644306480884552,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": null,
+                  "bin": 7,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": null,
+                  "bin": 8,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9987974372910865,
+                  "count": 162,
+                  "gap": 0.0012025627089135016,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 1,
+              "TN": 115,
+              "TP": 162
+            },
+            "eligible_count": 278,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": 0.008620689655172414,
+            "precision": 0.9938650306748467,
+            "present_count": 162,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.5964290003742403,
+              "min": 4.2329347138547746e-08,
+              "std": 0.47844801729400366
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 318,
+          "consumer_quality_gate": {
+            "clean_input_count": 318,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 318,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 323,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.40852004289627075
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 2.4364098862861283e-05
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 1.2833531400247011e-05
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 3.259873847127892e-05
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0010408236412331462
+              }
+            },
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9856912802084683,
+              "min": 1.2833531400247011e-05,
+              "std": 0.11513316382716114
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 323,
+          "rr": {
+            "MAE_bpm": 2.7079822248294025,
+            "RMSE_bpm": 4.2689347921375305,
+            "eligible_count": 162,
+            "median_absolute_error_bpm": 1.9172277832031241,
+            "prediction_range_bpm": {
+              "max": 38.87984085083008,
+              "min": 5.410956382751465
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 42.0,
+              "min": 6.0
+            },
+            "within_2_bpm": 0.5308641975308642,
+            "within_4_bpm": 0.8333333333333334,
+            "within_6_bpm": 0.9074074074074074
+          },
+          "synthetic_count": 5
+        },
+        "D1_DEV_VAL": {
+          "breathing": {
+            "Brier": 0.0012677252259954447,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.008272339377486875,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": null,
+                  "bin": 5,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": null,
+                  "bin": 6,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7780320644378662,
+                  "count": 1,
+                  "gap": 0.2219679355621338,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8649768829345703,
+                  "count": 1,
+                  "gap": 0.1350231170654297,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9979175946929238,
+                  "count": 55,
+                  "gap": 0.0020824053070761517,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 57
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.991727660622513,
+              "min": 0.7780320644378662,
+              "std": 0.03463081903765956
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 59,
+            "hard_Q2_invalid_false_acceptance": null,
+            "per_corruption_mode": {},
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9999946416434595,
+              "min": 0.9998676776885986,
+              "std": 2.1269291770939826e-05
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 0
+          },
+          "record_count": 59,
+          "rr": {
+            "MAE_bpm": 4.460836209748921,
+            "RMSE_bpm": 6.761024104687144,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.3799400329589844,
+            "prediction_range_bpm": {
+              "max": 38.126380920410156,
+              "min": 8.32497787475586
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.45614035087719296,
+            "within_4_bpm": 0.6491228070175439,
+            "within_6_bpm": 0.7368421052631579
+          },
+          "synthetic_count": 0
+        },
+        "D1_DEV_VAL_PLUS_Q2": {
+          "breathing": {
+            "Brier": 0.0012677252259954447,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "calibration_ece": {
+              "ECE": 0.008272339377486875,
+              "bins": 10,
+              "eligible_count": 57,
+              "rows": [
+                {
+                  "accuracy": null,
+                  "bin": 0,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.0,
+                  "upper": 0.1
+                },
+                {
+                  "accuracy": null,
+                  "bin": 1,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.1,
+                  "upper": 0.2
+                },
+                {
+                  "accuracy": null,
+                  "bin": 2,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.2,
+                  "upper": 0.30000000000000004
+                },
+                {
+                  "accuracy": null,
+                  "bin": 3,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.30000000000000004,
+                  "upper": 0.4
+                },
+                {
+                  "accuracy": null,
+                  "bin": 4,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.4,
+                  "upper": 0.5
+                },
+                {
+                  "accuracy": null,
+                  "bin": 5,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.5,
+                  "upper": 0.6000000000000001
+                },
+                {
+                  "accuracy": null,
+                  "bin": 6,
+                  "confidence": null,
+                  "count": 0,
+                  "gap": null,
+                  "lower": 0.6000000000000001,
+                  "upper": 0.7000000000000001
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 7,
+                  "confidence": 0.7780320644378662,
+                  "count": 1,
+                  "gap": 0.2219679355621338,
+                  "lower": 0.7000000000000001,
+                  "upper": 0.8
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 8,
+                  "confidence": 0.8649768829345703,
+                  "count": 1,
+                  "gap": 0.1350231170654297,
+                  "lower": 0.8,
+                  "upper": 0.9
+                },
+                {
+                  "accuracy": 1.0,
+                  "bin": 9,
+                  "confidence": 0.9979175946929238,
+                  "count": 55,
+                  "gap": 0.0020824053070761517,
+                  "lower": 0.9,
+                  "upper": 1.0
+                }
+              ],
+              "status": "DIAGNOSTIC_ONLY"
+            },
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 57
+            },
+            "eligible_count": 57,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "precision": 1.0,
+            "present_count": 57,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.991727660622513,
+              "min": 0.7780320644378662,
+              "std": 0.03463081903765956
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "clean_count": 59,
+          "consumer_quality_gate": {
+            "clean_input_count": 59,
+            "cutoff": 0.5,
+            "invalid_input_count": 5,
+            "invalid_input_physiology_exposed_count": 0,
+            "invalid_input_physiology_suppressed_count": 5,
+            "physiology_exposure_rule": "quality_probability >= 0.5",
+            "raw_physiology_heads_not_consumer_visible_when_quality_invalid": true
+          },
+          "quality": {
+            "clean_count": 59,
+            "clean_false_rejection": 0.0,
+            "eligible_count": 64,
+            "hard_Q2_invalid_false_acceptance": 0.0,
+            "per_corruption_mode": {
+              "FLAT_EXACT": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 4.260994401761309e-08
+              },
+              "LARGE_GAP": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 7.3818358941935e-05
+              },
+              "REPUBLICATION_TO_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 5.5106404033722356e-05
+              },
+              "SOURCE_FREEZE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 9.902328747557476e-05
+              },
+              "STALE_SOURCE": {
+                "count": 1,
+                "invalid_false_acceptance": 0.0,
+                "probability_mean": 0.0005314782611094415
+              }
+            },
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9218819269669627,
+              "min": 4.260994401761309e-08,
+              "std": 0.26832599278620395
+            },
+            "status": "DEFINED",
+            "synthetic_invalid_count": 5
+          },
+          "record_count": 64,
+          "rr": {
+            "MAE_bpm": 4.460836209748921,
+            "RMSE_bpm": 6.761024104687144,
+            "eligible_count": 57,
+            "median_absolute_error_bpm": 2.3799400329589844,
+            "prediction_range_bpm": {
+              "max": 38.126380920410156,
+              "min": 8.32497787475586
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.45614035087719296,
+            "within_4_bpm": 0.6491228070175439,
+            "within_6_bpm": 0.7368421052631579
+          },
+          "synthetic_count": 5
+        },
+        "primary_group": "D1_DEV_VAL_PLUS_Q2_EVALUATION"
+      }
+    }
+  ],
+  "d2_used": false,
+  "final_threshold_tuning": false,
+  "int8_or_tflite": false,
+  "mr60_supervised_physiology": false,
+  "phase": "M-PV3",
+  "primary_validation_group": "D1_DEV_VAL",
+  "q2_evaluation_modes": [
+    "SOURCE_FREEZE",
+    "LARGE_GAP",
+    "STALE_SOURCE",
+    "FLAT_EXACT",
+    "REPUBLICATION_TO_FREEZE"
+  ],
+  "representative_replay_input_sha256": "30c481cca08a514ee6aa60d69fb1998de1e8fe736a4e1a992cfb948c73112cf1",
+  "representative_replay_prediction_sha256": "7450e4feb90a30a63be5cd84aa383a855b006fd1439af884b360452109158ba3",
+  "retraining": false,
+  "schema_version": "M-PV3.1",
+  "training_invocations": 0
+}
