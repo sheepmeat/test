@@ -1,0 +1,13 @@
+{
+  "schema_version": "M-PV3.8_LIFECYCLE_CLOSURE_V1",
+  "phase_id": "M-PV3.8",
+  "files": {
+    "config/mmwave/m_pv38_absent_membership_acquisition_gate.json": "b85a3736b5bb34942ef2f3455f6dd896be2e17dd407b411811dddbb417a03a52",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/acquisition_gate.json": "70016924884fa9d546492c382bffb3a4d16e2ed46f51b64cabe01b6fb8d0ecd9",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/final_lock_requirements.json": "c094c1e27f2f375362311ad943dd1ae1ad16bdf6f846ff1de15430177c8bbfa0",
+    "datasets/mmwave/manifests/M-PV3_8_absent_acquisition_planning/planning_result.json": "e6a413d90cab2c246f717576275ce5eeedbdc035e3653bd487592d8cca9d11b6",
+    "datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/lifecycle_closure_state.json": "c6469a58018f18bd7c756cfa07cd770eab868edfe9c73ef45fad3e72bc06567d",
+    "datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/validation_result.json": "c23ccbd7eefe738c5694407d3ec88f640ff8dca412125f36291dd156476f1fae",
+    "docs/mmwave/20260824_SafeNest_mmWave_M-PV3_8_Lifecycle_State_Consolidation_01.md": "94d51ce40d7377886a4920434d84f01dc9b44a6f60a708bc794bf34f963224c3"
+  }
+}
