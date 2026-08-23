@@ -1,9 +1,16 @@
 {
-  "schema_version": "M-PV3.8.2",
+  "schema_version": "M-PV3.8.3_CORRECTIVE",
   "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
   "final_membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
-  "required_artifacts": ["membership_manifest.json", "ambiguity_exception_registry.json", "checksums.json", "checksums.sha256"],
-  "required_provenance_fields": ["source_dataset", "source_dataset_checksum", "subject_id", "session_id", "recording_id", "recording_checksum", "context_start_time", "context_end_time", "target_start_time", "target_end_time", "reference_source_id", "reference_recording_id", "reference_interval_start_time", "reference_interval_end_time", "label_mapping_id", "label_mapping_version", "label_mapping_checksum", "raw_reference_label", "protocol_or_operator_record_id", "split", "quality_state", "quality_provenance", "reviewer_decision", "reviewer_evidence_id"],
-  "ambiguity_policy": "RETAIN_WITH_ORIGINAL_EVIDENCE_AND_EXCLUDE_FROM_PURE_CLASS_MEMBERSHIP_AND_METRICS",
+  "construction_status": "NOT_AUTHORIZED_PENDING_INDEPENDENT_REAUDIT",
+  "required_artifacts": ["campaign_predeclaration.json", "membership_manifest.json", "ambiguity_exception_registry.json", "checksums.json", "checksums.sha256"],
+  "required_membership_metadata": ["membership_id", "contract_id", "contract_version", "creation_timestamp", "generator_tool_version", "repository_commit_sha", "membership_checksum", "preprocessing_artifact_identifiers_and_checksums"],
+  "required_accepted_window_fields": ["window_id", "recording_id", "subject_id", "start_time", "end_time", "class", "class_assignment_reason", "acquisition_lineage_group_id", "source_dataset", "source_dataset_checksum", "session_id", "recording_checksum", "context_start_time", "context_end_time", "target_start_time", "target_end_time", "presence_source_id", "presence_evidence", "target_physiological_source_evidence", "label_mapping_id", "label_mapping_version", "label_mapping_checksum", "raw_source_state", "split", "quality_state", "quality_provenance", "deterministic_selection_order", "reviewer_decision", "reviewer_evidence_id"],
+  "required_absent_semantics": {"subject_id": "NO_HUMAN_TARGET", "class": "ABSENT", "class_assignment_reason": "NO_HUMAN_TARGET_NO_TARGET_PHYSIOLOGICAL_SOURCE_VALID_SENSOR_OBSERVATION_INTENDED_NEGATIVE_CLASS", "forbidden_assignments": ["HUMAN_PRESENT_BREATH_HOLD", "APNEA_LIKE_INTERVAL", "NO_RESPIRATION_DETECTED", "LOW_SNR", "RADAR_FAILURE", "SENSOR_DROPOUT", "MISSING_INPUT", "INPUT_UNAVAILABLE", "AMBIGUOUS_PRESENCE"]},
+  "deterministic_selection": {"rule": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1", "predeclaration_required_before_acquisition": true, "manual_easier_negative_selection": "FORBIDDEN"},
+  "no_replacement": "FORBIDDEN_FOR_THE_ENTIRE_CAMPAIGN_INCLUDING_TOP_UP_REALLOCATION_ALTERNATE_RECORDING_AND_SECOND_ATTEMPT",
+  "preprocessing_isolation": {"fit_or_refresh_using_final_membership": "FORBIDDEN", "regenerate_cache_or_create_derived_feature_artifact_using_final_membership": "FORBIDDEN", "modify_feature_extraction_using_final_evaluation_data": "FORBIDDEN", "allowed_parameter_source": "PREVIOUSLY_AUTHORIZED_TRAINING_ARTIFACTS_ONLY"},
+  "ambiguity_policy": "RETAIN_WITH_ORIGINAL_EVIDENCE_AND_EXCLUDE_FROM_PURE_CLASS_MEMBERSHIP_AND_METRICS_NEVER_RELABEL",
+  "reproducibility": "The lock must be reconstructible from the predeclaration, immutable identifiers, deterministic order, mapping/version checksums, membership metadata, and recorded reason codes without undocumented operator decisions.",
   "immutable_before_candidate_output_access": true
 }

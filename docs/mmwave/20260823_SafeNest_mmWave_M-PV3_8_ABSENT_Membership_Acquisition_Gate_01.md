@@ -4,6 +4,8 @@
 **Phase mode:** Contract design only
 **Current selection state:** `BLOCKED_INVALID_FINAL_MEMBERSHIP`
 
+> Superseded for governance by `20260823_SafeNest_mmWave_M-PV3_8_ABSENT_Membership_Contract_Corrective_Revision_01.md` and schema `M-PV3.8.3_CORRECTIVE`. This historical draft must not be used to construct membership.
+
 ## 1. Purpose and boundary
 
 M-PV3.8 final selection is blocked because the required final D1 membership has 57 eligible PRESENT contexts and zero eligible ABSENT contexts. This contract defines the smallest governed process to acquire and lock valid ABSENT evidence. It does not evaluate models, open candidate outputs, select a candidate, change a model contract or threshold, access D2, or use MR60 supervised physiology.
