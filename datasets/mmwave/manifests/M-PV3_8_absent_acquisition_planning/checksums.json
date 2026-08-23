@@ -1,0 +1,7 @@
+{
+  "schema_version": "M-PV3.8.3-ACQUISITION-PLAN",
+  "files": {
+    "datasets/mmwave/manifests/M-PV3_8_absent_acquisition_planning/acquisition_plan.json": "fe11c9ef9ff171aec90861173c611144e8a7621bf22dfb35318d66dccf3078cb",
+    "datasets/mmwave/manifests/M-PV3_8_absent_acquisition_planning/planning_result.json": "c3e61d87520c9e0a7bb63c97aa5cbc0da01c86f66e0896c12374f8b53671f2d0"
+  }
+}
