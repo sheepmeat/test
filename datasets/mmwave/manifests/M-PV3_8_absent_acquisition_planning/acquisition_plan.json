@@ -1,5 +1,5 @@
 {
-  "schema_version": "M-PV3.8.3-ACQUISITION-PLAN",
+  "schema_version": "M-PV3.8.4-CHECKSUM-LIFECYCLE-PLAN",
   "plan_id": "MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_PLAN_V1",
   "mode": "PLANNING_ONLY_NO_CAPTURE_NO_MEMBERSHIP",
   "contract_reference": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
@@ -8,7 +8,7 @@
   "authoritative_evidence": {"no_human_target": "A continuous, time-synchronized, authorized target-zone occupancy reference covering the complete recording, with immutable evidence hash and independent review.", "no_target_physiological_source": "The same target-zone occupancy reference plus a sealed-zone/access record proving no human, animal, respiration simulator, or other physiological source is present.", "valid_sensor_observation": "Immutable sensor-health telemetry and raw-stream continuity evidence, validated under the governing quality contract. Operator statement is supporting evidence only unless it is the explicitly authorized occupancy reference."},
   "capture_protocol": {"recording_duration_seconds": 300, "candidate_context_seconds": 30, "target_seconds": 5, "required_continuous_empty_interval_seconds": 300, "health_check": "Pre- and post-slot health checks are recorded outside candidate-window selection; any failure rejects the slot.", "selection_rule": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1", "manual_selection": "FORBIDDEN"},
   "prelock_artifacts": ["campaign_predeclaration.json", "recording_manifest.json", "occupancy_and_sensor_evidence_registry.json", "rejection_registry.json", "checksums.json", "checksums.sha256"],
-  "checksum_timing_risk": "A checksum of a future recording cannot exist before capture. Predeclaration must lock the planned recording ID and slot identity before capture; an immutable post-capture receipt must bind the resulting checksum to that fixed ID before any eligibility scan. The approved contract should explicitly confirm this two-stage receipt interpretation before capture.",
+  "recording_identity_lifecycle": {"stage_1_pre_capture": {"planned_recording_id": "REQUIRED_AND_LOCKED", "recording_checksum": "NOT_APPLICABLE"}, "stage_2_post_capture": {"post_capture_checksum_receipts.json": "REQUIRED_AND_LOCKED_BEFORE_ELIGIBILITY_SCAN", "binding": "PLANNED_RECORDING_ID_TO_ACTUAL_RECORDING_IDENTIFIER_AND_SHA256"}},
   "stop_conditions": ["Stop successfully when all nine fixed slots have captured valid evidence and are ready for later authorized deterministic scanning.", "Stop a slot immediately on any presence, physiological-source, sensor-validity, timestamp, or provenance failure; retain a rejection record.", "Stop the campaign when any fixed slot fails; do not replace, top up, reallocate, adjust quota, or start a second attempt.", "If an authorized occupancy reference cannot cover the target zone, classify the source as DATA_SOURCE_INVALID_FOR_M_PV3_8 and do not capture for this purpose."],
   "out_of_scope": ["ABSENT_LABEL_CREATION", "MEMBERSHIP_CONSTRUCTION", "MODEL_EVALUATION", "CANDIDATE_OUTPUT_ACCESS", "M_PV4_AUTHORIZATION"]
 }
