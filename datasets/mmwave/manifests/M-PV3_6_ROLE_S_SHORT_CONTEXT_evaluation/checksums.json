@@ -1,0 +1,26 @@
+{
+  "files": {
+    "config/mmwave/m_pv36_role_based_evaluation_contract.json": "43c47360237b1d2357f6d17d8c0b7ea26c4410042698419cd8710b2fc86cbd0a",
+    "datasets/mmwave/manifests/M-PV0_I3_fail_closed_regression/availability_precedence_audit.json": "9df92c5dc4f5e005fb0803f0fc07bc78bf171f0ff3a9d4d98ff485135b638fdc",
+    "datasets/mmwave/manifests/M-PV0_I3_fail_closed_regression/i3_regression_contract.json": "9ebbe0b33e68e6f29dc611972c3bf9ca5675fa03d06e859d78223ac2a0b1903a",
+    "datasets/mmwave/manifests/M-PV0_I3_fail_closed_regression/presence_precedence_audit.json": "ccb7a80ac76181a20d325a0268fc6824772acae6a97c0771f11068bd37e513e5",
+    "datasets/mmwave/manifests/M-PV0_I3_fail_closed_regression/synthetic_q2_regression.json": "0e898e8526125fdc430e5c87f20440bd66fd02f32b4def6827919eaa6daf704a",
+    "datasets/mmwave/manifests/M-PV0_Q2_input_unavailable_contract/synthetic_quality_profile.json": "669e031698ade400d2694fc63fb860807bba9e621a275786dc33b3850cf7fab6",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/dataset_audit.json": "5793c4d17118be524b47dce93abf08f2520c31c312a3850724e0c6a8abca05d6",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/evaluation_result.json": "c6e7eb90ff10dab97c44dde6b73e2593e90a861dad7c2eac55ae208d32f65ae2",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/input_contract.json": "12f8944dcd5cdd3be653a403fb0606483e493c4d24ed5a409dcafa58335f4a15",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/model_card.json": "ff3bbcd97fcbffed5cbf029ebb9cd3d8c1e6481a02a228a4c5dcc3245577ec4a",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/target_alignment.json": "89c242d4ebc3bf38e1d81dd8bb72c8675bd35293fb3e63cde5bde49639d1acc3",
+    "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/training_config.json": "6b9407c8304c31a8691ee848ff2ec341fbb8df22c19ebaa9174e2c0c320893c1",
+    "datasets/mmwave/manifests/M-PV3_6_ROLE_S_SHORT_CONTEXT_evaluation/evidence_manifest.json": "c2af58b0e96822321f8b3f5cea41a326256f8b5ba526cafeeda226613d8ac9b2",
+    "datasets/mmwave/manifests/M-PV3_6_role_based_evaluation/evaluation_matrix.json": "18b879184d198bf3835fbaed8ce3ab050b1564a72e457a2f7e55599ea0981792",
+    "datasets/mmwave/manifests/M-PV3_6_role_based_evaluation/evidence_requirements.json": "89122bbdcf3e92e104a110218760c68d61e54b6facddd0b53651dbe223785874",
+    "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_11.pt": "34d5e290ee2886624ca382382bc51e6296c85a5a0015e3537bc650ce7d421672",
+    "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_23.pt": "f99bb2399776433d5c2b55d396dbe7f515c8088d65a971f6e848bbccbe01033a",
+    "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_47.pt": "4559508292f1f85dfb7f26c72ae9adac139e006650552729f48bbd868706e6b3",
+    "scripts/mmwave_i3_fail_closed_regression.py": "da7fd0a7335aa56165e85b8e1105b8fef6dd1dc32f955b4f126d221edcd35ca7",
+    "scripts/mmwave_m_pv2_short_context_15s_candidate.py": "082f51862ce7941aa5e3f5c77c8f31beb5b5feb470a902b27de2c3019d74dbd1",
+    "scripts/mmwave_q2_input_unavailable.py": "f048cfd7e571a7f93eaaf5022605944a1e9f82e05b69ac723ad6786572517820"
+  },
+  "schema_version": "M-PV3.6-ROLE-S.1"
+}
