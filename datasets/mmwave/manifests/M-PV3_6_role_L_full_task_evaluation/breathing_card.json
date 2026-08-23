@@ -1,0 +1,385 @@
+{
+  "absent_metric_policy": "NOT_APPLICABLE_WHERE_GOVERNED_ABSENT_UNAVAILABLE",
+  "calibration_fitting": false,
+  "candidates": [
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_b/seed_11",
+      "family": "family_b",
+      "metrics": {
+        "Brier": 0.09854056768808094,
+        "F1": 1.0,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "absent_recall": {
+          "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+          "status": "NOT_APPLICABLE"
+        },
+        "calibration_fitting": false,
+        "confusion": {
+          "FN": 0,
+          "FP": 0,
+          "TN": 0,
+          "TP": 57
+        },
+        "ece": {
+          "calibration_fitting": false,
+          "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+          "status": "NOT_APPLICABLE"
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": null,
+        "fixed_threshold": 0.5,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.7065085946467885,
+          "min": 0.5236203074455261,
+          "std": 0.11137038507555688
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "seed": 11,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_b/seed_23",
+      "family": "family_b",
+      "metrics": {
+        "Brier": 0.0064572784995837705,
+        "F1": 1.0,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "absent_recall": {
+          "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+          "status": "NOT_APPLICABLE"
+        },
+        "calibration_fitting": false,
+        "confusion": {
+          "FN": 0,
+          "FP": 0,
+          "TN": 0,
+          "TP": 57
+        },
+        "ece": {
+          "calibration_fitting": false,
+          "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+          "status": "NOT_APPLICABLE"
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": null,
+        "fixed_threshold": 0.5,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9480155518180445,
+          "min": 0.6688169240951538,
+          "std": 0.061277203320658814
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "seed": 23,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_b/seed_47",
+      "family": "family_b",
+      "metrics": {
+        "Brier": 0.025080918907178347,
+        "F1": 0.9911504424778761,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "absent_recall": {
+          "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+          "status": "NOT_APPLICABLE"
+        },
+        "calibration_fitting": false,
+        "confusion": {
+          "FN": 1,
+          "FP": 0,
+          "TN": 0,
+          "TP": 56
+        },
+        "ece": {
+          "calibration_fitting": false,
+          "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+          "status": "NOT_APPLICABLE"
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.017543859649122806,
+        "false_present_on_ABSENT": null,
+        "fixed_threshold": 0.5,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9378840243607237,
+          "min": 0.12591803073883057,
+          "std": 0.14567952662457131
+        },
+        "recall": 0.9824561403508771,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "seed": 47,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_c/seed_11",
+      "family": "family_c",
+      "metrics": {
+        "Brier": 0.02115794692809779,
+        "F1": 0.9911504424778761,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "absent_recall": {
+          "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+          "status": "NOT_APPLICABLE"
+        },
+        "calibration_fitting": false,
+        "confusion": {
+          "FN": 1,
+          "FP": 0,
+          "TN": 0,
+          "TP": 56
+        },
+        "ece": {
+          "calibration_fitting": false,
+          "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+          "status": "NOT_APPLICABLE"
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.017543859649122806,
+        "false_present_on_ABSENT": null,
+        "fixed_threshold": 0.5,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9567641776643301,
+          "min": 0.0957157239317894,
+          "std": 0.13888344247985857
+        },
+        "recall": 0.9824561403508771,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "seed": 11,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_c/seed_23",
+      "family": "family_c",
+      "metrics": {
+        "Brier": 0.01791962580955174,
+        "F1": 0.9911504424778761,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "absent_recall": {
+          "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+          "status": "NOT_APPLICABLE"
+        },
+        "calibration_fitting": false,
+        "confusion": {
+          "FN": 1,
+          "FP": 0,
+          "TN": 0,
+          "TP": 56
+        },
+        "ece": {
+          "calibration_fitting": false,
+          "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+          "status": "NOT_APPLICABLE"
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.017543859649122806,
+        "false_present_on_ABSENT": null,
+        "fixed_threshold": 0.5,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9299038240784093,
+          "min": 0.40055620670318604,
+          "std": 0.11404451731986569
+        },
+        "recall": 0.9824561403508771,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "seed": 23,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_c/seed_47",
+      "family": "family_c",
+      "metrics": {
+        "Brier": 0.0012677252259954447,
+        "F1": 1.0,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "absent_recall": {
+          "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+          "status": "NOT_APPLICABLE"
+        },
+        "calibration_fitting": false,
+        "confusion": {
+          "FN": 0,
+          "FP": 0,
+          "TN": 0,
+          "TP": 57
+        },
+        "ece": {
+          "calibration_fitting": false,
+          "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+          "status": "NOT_APPLICABLE"
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": null,
+        "fixed_threshold": 0.5,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.991727660622513,
+          "min": 0.7780320644378662,
+          "std": 0.03463081903765956
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "seed": 47,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    }
+  ],
+  "class": "B",
+  "ece_policy": "NOT_APPLICABLE_UNLESS_CALIBRATION_ALREADY_VALID; no numeric ECE emitted",
+  "eligible_absent": 0,
+  "eligible_present": 57,
+  "role_id": "ROLE_L_FULL_TASK",
+  "selection_use": false,
+  "validation_group": "D1_DEV_VAL"
+}

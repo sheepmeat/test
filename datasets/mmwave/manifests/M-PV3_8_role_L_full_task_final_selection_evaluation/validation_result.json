@@ -1,0 +1,47 @@
+{
+  "artifact_valid": true,
+  "authorized_candidate_count": 6,
+  "blocking_reasons": [
+    "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership manifest is not present in the repository.",
+    "Required eligible ABSENT contexts: 57; observed governed eligible ABSENT contexts: 0.",
+    "Each held-out subject is missing the required 19 eligible ABSENT contexts.",
+    "The one-time membership lock, membership checksum coverage, and ambiguous exception registry cannot be verified.",
+    "The available D1 source rows do not carry all final-lock provenance fields as explicit fields: label_mapping, quality_provenance."
+  ],
+  "candidate_evaluation_performed": false,
+  "candidate_output_accessed": false,
+  "contract_id": "MMWAVE_V2_M_PV38_MINIMAL_SELECTION_READINESS_GATE_V1",
+  "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "evaluated_candidate_count": 0,
+  "failed_membership_requirements": [
+    "membership_manifest_present",
+    "membership_checksum_coverage",
+    "eligible_absent_count_57",
+    "eligible_absent_count_19_per_held_out_subject",
+    "ambiguous_exception_registry_present"
+  ],
+  "gate": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "no_combined_score": true,
+  "no_d2": true,
+  "no_m_pv4_approval": true,
+  "no_mr60_supervised_physiology": true,
+  "no_post_hoc_seed_selection": true,
+  "no_ranking": true,
+  "no_threshold_change": true,
+  "no_training": true,
+  "ok": true,
+  "phase": "M-PV3.8",
+  "role_id": "ROLE_L_FULL_TASK",
+  "schema_version": "M-PV3.8.1_ROLE_L_FULL_TASK_FINAL_SELECTION",
+  "selected_candidate": null,
+  "selection_candidate_decisions": {
+    "Family_B_seed_11": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "Family_B_seed_23": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "Family_B_seed_47": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "Family_C_seed_11": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "Family_C_seed_23": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "Family_C_seed_47": "BLOCKED_INVALID_FINAL_MEMBERSHIP"
+  },
+  "selection_result": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "terminal_membership_block": true
+}

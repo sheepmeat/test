@@ -1,0 +1,45 @@
+{
+  "gate": "PASS_WITH_LIMITATIONS",
+  "limitations": [
+    {
+      "code": "D1_ABSENT_LIMITATION",
+      "statement": "D1 DEV VAL has 57 eligible PRESENT, 2 AMBIGUOUS, and 0 eligible ABSENT; ABSENT recall/specificity/full both-class role eligibility are NOT_APPLICABLE or incomplete."
+    },
+    {
+      "code": "D0_OBSERVE_ONLY",
+      "statement": "D0 TRAIN is observe-only and no reserved D0 VAL/subject-heldout membership was opened."
+    },
+    {
+      "code": "D2_LOCKED",
+      "statement": "D2 semantic access, inference, and selection remain forbidden."
+    },
+    {
+      "code": "MR60_SUPERVISED_FORBIDDEN",
+      "statement": "No MR60 supervised physiology was used."
+    },
+    {
+      "code": "NO_CALIBRATION",
+      "statement": "No calibration fitting and no final threshold tuning were performed; numeric ECE is not emitted."
+    },
+    {
+      "code": "NO_INT8_TFLITE",
+      "statement": "No INT8 quantization or TFLite conversion was performed."
+    },
+    {
+      "code": "NO_PI_BENCHMARK",
+      "statement": "No Raspberry Pi latency or throughput claim was made."
+    },
+    {
+      "code": "NO_SELECTION",
+      "statement": "No Family B/C winner, best-seed choice, combined score, weighted ranking, Pareto winner, or M-PV4 recommendation was produced."
+    },
+    {
+      "code": "Q2_SYNTHETIC_ONLY",
+      "statement": "Q2 corruption cards are SYNTHETIC_ONLY safety evidence and are not live-device validation."
+    }
+  ],
+  "role_eligibility_for_future_selection": "INCOMPLETE_DUE_D1_ABSENT_COVERAGE_AND_M_PV3_GUARD_RESULTS",
+  "role_id": "ROLE_L_FULL_TASK",
+  "selection_use": false,
+  "sufficiently_evidenced_for_future_selection_consideration": false
+}

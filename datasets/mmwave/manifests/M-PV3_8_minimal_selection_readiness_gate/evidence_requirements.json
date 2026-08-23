@@ -1,0 +1,25 @@
+{
+  "schema_version": "M-PV3.8.1",
+  "contract_id": "MMWAVE_V2_M_PV38_MINIMAL_SELECTION_READINESS_GATE_V1",
+  "mode": "CONTRACT_DESIGN_ONLY",
+  "required_before_any_candidate_output_access": [
+    "D1_FINAL_SELECTION_BOTH_CLASS_V1_membership_manifest",
+    "membership_checksum_coverage",
+    "57_eligible_PRESENT_contexts",
+    "57_eligible_ABSENT_contexts",
+    "19_eligible_ABSENT_contexts_per_each_of_D1_PERSON_03_D1_PERSON_09_D1_PERSON_11",
+    "candidate_training_subject_disjointness_proof",
+    "AMBIGUOUS_provenance_and_exclusion_registry"
+  ],
+  "required_for_each_candidate": [
+    "Class_A_Q2_fail_closed_result",
+    "presence_quality_availability_physiology_precedence_result",
+    "frozen_breathing_guard_result",
+    "frozen_RR_guard_result",
+    "both_class_breathing_report",
+    "per_subject_result"
+  ],
+  "decision_outputs": ["BLOCKED_INVALID_FINAL_MEMBERSHIP", "SINGLE_SELECTION_READY", "MULTIPLE_CANDIDATES_PASS_NO_SELECTION", "NO_SELECTION_READY"],
+  "rr_remediation_trigger": "Only when ABSENT evidence is complete and all six candidates fail exclusively on one or more frozen RR guards after passing Class A safety and frozen breathing guards.",
+  "forbidden": ["D2_ACCESS", "MR60_SUPERVISED_PHYSIOLOGY", "THRESHOLD_RELAXATION", "WEIGHTED_OR_COMBINED_RANKING", "POST_HOC_SEED_SELECTION", "UNBOUNDED_DATA_COLLECTION"]
+}

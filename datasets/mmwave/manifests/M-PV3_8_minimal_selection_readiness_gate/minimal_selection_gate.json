@@ -1,0 +1,25 @@
+{
+  "schema_version": "M-PV3.8.1",
+  "contract_id": "MMWAVE_V2_M_PV38_MINIMAL_SELECTION_READINESS_GATE_V1",
+  "phase": "M-PV3.8",
+  "mode": "CONTRACT_DESIGN_ONLY",
+  "contract_path": "config/mmwave/m_pv38_minimal_selection_readiness_gate.json",
+  "selection_scope": {
+    "primary_role": "ROLE_L_FULL_TASK",
+    "authorized_candidates": ["Family_B_seed_11", "Family_B_seed_23", "Family_B_seed_47", "Family_C_seed_11", "Family_C_seed_23", "Family_C_seed_47"],
+    "secondary_role": "ROLE_S_SHORT_CONTEXT",
+    "secondary_role_selection_status": "NOT_EVALUATED_AND_NOT_SUBSTITUTABLE_IN_M_PV3_8"
+  },
+  "minimum_final_membership": {
+    "membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+    "eligible_present": 57,
+    "eligible_absent": 57,
+    "held_out_subject_count": 3,
+    "absent_contexts_per_subject": 19,
+    "subject_disjoint_from_candidate_training": true,
+    "ambiguous": "RETAINED_FOR_PROVENANCE_EXCLUDED_FROM_PURE_CLASS_METRICS"
+  },
+  "execution_status": "NOT_EXECUTED",
+  "selection_status": "NO_SELECTION_PERFORMED",
+  "m_pv4_status": "NOT_AUTHORIZED_UNTIL_SINGLE_SELECTION_READY"
+}

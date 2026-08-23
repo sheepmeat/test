@@ -1,0 +1,8 @@
+{
+  "schema_version": "M-PV3.8.1",
+  "files": {
+    "config/mmwave/m_pv38_minimal_selection_readiness_gate.json": "ed7e36e38c237098ccb8e0dd96c96cd3b8a2baf6d6a9039b913438492ed0a357",
+    "datasets/mmwave/manifests/M-PV3_8_minimal_selection_readiness_gate/evidence_requirements.json": "a3031408fab7c9050f803bff12f68550855ba64ddb56ce4db12de9bb39fb474a",
+    "datasets/mmwave/manifests/M-PV3_8_minimal_selection_readiness_gate/minimal_selection_gate.json": "8ada0902330bdb3f52853843939c7e9f9a2051ac58981769c6260ac3adcb5ec9"
+  }
+}
