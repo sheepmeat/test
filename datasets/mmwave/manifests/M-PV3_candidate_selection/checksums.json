@@ -1,0 +1,13 @@
+{
+  "files": {
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json": "519bc933f1febfc52ac0c0b2a2353573e878322e4d0041b4cb2c47619669a36a",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_ranking.json": "5fa09b217d59b118f1690ce63f22f8060727e0e32026e744039ee2972674919a",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_selection_inventory.json": "8d864b4eb33503897cd8cf03e5ab13a5df17e752bd5c47631db8e95147eeb4ef",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/determinism_audit.json": "8032f6042d22afd28d0620dcedffbd7d348935419ede135b1206042102375562",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/exception_registry.json": "bb6f00486fbc39abdad2e2ac88793977421f5daa617cd899e39182cb00038025",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/selection_contract.json": "e5d6510025f59aa6eeee5c0f1c4d2c1fd01c39c4dd75f7b0ef8741845bd69cc9",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/selection_decision.json": "1816ba5c084756c59379376b9169d2d23878f138a593a9c85104cef9b068320e",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/validation_result.json": "1041444dc4ed4b92ef3acf6fd6a50e53ad50339b2e4e78e1dced6e5956bd20f2"
+  },
+  "schema_version": "M-PV3.1"
+}
