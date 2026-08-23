@@ -1,0 +1,154 @@
+{
+  "schema_version": "M-PV3.8.4_RESOURCE_READINESS_CHECKLIST_V1",
+  "checklist_id": "MMWAVE_V2_M_PV38_ABSENT_RESOURCE_READINESS_CHECKLIST_V1",
+  "date": "2026-08-24",
+  "mode": "READINESS_REQUIREMENTS_ONLY_NO_CAPTURE_NO_MEMBERSHIP_NO_EVALUATION",
+  "contract_reference": {
+    "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+    "contract_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
+    "selection_rule": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+    "repository_main_commit_observed": "744786270e5194cdfbbc28c3a6dfc4f054074a47"
+  },
+  "required_hardware": [
+    {
+      "id": "HW-01",
+      "requirement": "One designated supported mmWave sensor physically available to the campaign, with stable power and a host-supported recording interface.",
+      "acceptance_evidence": ["sensor serial or immutable device identifier", "supported interface identifier", "power and connection check recorded outside campaign capture"]
+    },
+    {
+      "id": "HW-02",
+      "requirement": "A rigid mount and measured bounded target-zone geometry fixed before the campaign lock.",
+      "acceptance_evidence": ["placement record with position, height, azimuth, and elevation", "target-zone polygon or equivalent bounded geometry", "photographic or measured mounting evidence if authorized"]
+    },
+    {
+      "id": "HW-03",
+      "requirement": "An authorized independent occupancy-reference system that continuously covers the complete target zone.",
+      "acceptance_evidence": ["occupancy-reference device identity", "coverage confirmation for the full target zone", "retention path for immutable source evidence"]
+    },
+    {
+      "id": "HW-04",
+      "requirement": "A host with sufficient controlled storage for immutable raw recordings, telemetry, evidence receipts, and registries.",
+      "acceptance_evidence": ["raw recording retention path", "write-permission and storage-capacity check", "clock source available to the host"]
+    }
+  ],
+  "required_software_and_tooling": [
+    {
+      "id": "SW-01",
+      "requirement": "A non-campaign interface checker capable of verifying raw observation availability, monotonic timestamps, continuity, and sensor-health telemetry without creating campaign evidence.",
+      "acceptance_evidence": ["successful device-check record", "observed required field inventory", "fault/dropout handling result"]
+    },
+    {
+      "id": "SW-02",
+      "requirement": "A governed artifact generator for the nine-slot pre-capture identity lock and immediate post-capture one-to-one SHA-256 receipts.",
+      "acceptance_evidence": ["non-campaign fixture demonstration", "receipt binding test from planned to actual recording identity", "tool version recorded"]
+    },
+    {
+      "id": "SW-03",
+      "requirement": "Time-synchronization and evidence-hashing tooling for the sensor, occupancy reference, and access-control evidence.",
+      "acceptance_evidence": ["shared-clock or explicit-sync-marker procedure", "recorded alignment method", "immutable evidence hashes"]
+    },
+    {
+      "id": "SW-04",
+      "requirement": "Registry tooling for recording provenance, occupancy/evidence, sensor health, and rejections.",
+      "acceptance_evidence": ["schema validation against a non-campaign fixture", "immutable identifiers present", "rejection retention demonstrated"]
+    }
+  ],
+  "required_evidence_and_proof": [
+    {
+      "id": "EV-01",
+      "requirement": "Continuous authoritative proof that no human target is present in the complete target zone for each candidate interval.",
+      "not_acceptable": ["radar non-detection", "weak periodicity", "operator statement alone", "no respiration detected"]
+    },
+    {
+      "id": "EV-02",
+      "requirement": "Sealed-zone or access-control proof that no animal, respiration simulator, or other physiological source is present.",
+      "not_acceptable": ["human-present breath hold", "apnea-like interval", "low-SNR or sensor-fault observation"]
+    },
+    {
+      "id": "EV-03",
+      "requirement": "Resolvable time synchronization across sensor, occupancy reference, and access-control evidence.",
+      "not_acceptable": ["visual guess alignment", "undocumented manual timestamp adjustment"]
+    },
+    {
+      "id": "EV-04",
+      "requirement": "Immutable evidence receipts: evidence hashes and immediate post-capture SHA-256 receipt binding one actual recording to one predeclared planned recording ID.",
+      "not_acceptable": ["eligibility scan before receipt lock", "duplicate or absent planned-recording binding"]
+    }
+  ],
+  "required_personnel_and_process": [
+    {
+      "id": "PP-01",
+      "role": "sensor custodian",
+      "requirement": "Provides device access and records sensor identity, firmware, configuration, and supported interface settings."
+    },
+    {
+      "id": "PP-02",
+      "role": "capture operator",
+      "requirement": "Executes the fixed environmental protocol only after authorization; cannot manually select windows or replace a failed slot."
+    },
+    {
+      "id": "PP-03",
+      "role": "independent evidence reviewer",
+      "requirement": "Reviews occupancy/access evidence and negative-class provenance; the operator cannot be the sole authoritative evidence source."
+    },
+    {
+      "id": "PP-04",
+      "role": "campaign authority",
+      "requirement": "Approves the occupancy-reference mechanism, synchronization method, and one complete nine-slot pre-capture lock before any capture."
+    }
+  ],
+  "minimum_setup_for_future_preflight_pass": [
+    "All HW-01 through HW-04 resources are physically available and evidenced.",
+    "All SW-01 through SW-04 tools pass their non-campaign checks and fixture demonstrations.",
+    "All EV-01 through EV-04 evidence mechanisms are approved, continuous, time synchronized, and hashable.",
+    "All PP-01 through PP-04 roles are assigned and available for the bounded campaign.",
+    "The room has controlled access, static non-human background, no animal or physiological source, no periodic mechanical reflector, and can maintain a 300-second uninterrupted empty interval.",
+    "Complete immutable values are known for every required field of all nine slots before campaign_predeclaration.json is generated."
+  ],
+  "estimated_blockers": [
+    {
+      "id": "B-01",
+      "severity": "HARD_BLOCKER",
+      "dependency": "physical access to the designated supported sensor and its raw/telemetry interface",
+      "estimate": "Cannot be time-estimated from repository evidence; depends on equipment custodian access.",
+      "clear_condition": "Non-campaign interface check verifies identity, raw data, timestamps, continuity, and health telemetry."
+    },
+    {
+      "id": "B-02",
+      "severity": "HARD_BLOCKER",
+      "dependency": "authorized independent occupancy-reference and sealed-zone/access-control mechanism",
+      "estimate": "Cannot be time-estimated until the evidence authority approves a mechanism and room access is available.",
+      "clear_condition": "Continuous, synchronized, hashable no-human and no-physiological-source evidence covers the complete target zone."
+    },
+    {
+      "id": "B-03",
+      "severity": "HARD_BLOCKER",
+      "dependency": "artifact and synchronization tooling demonstration",
+      "estimate": "Bounded engineering check after HW-01 and B-02 are available; no campaign capture is needed for the demonstration.",
+      "clear_condition": "Fixture evidence proves all registries, time alignment, and one-to-one receipt binding."
+    },
+    {
+      "id": "B-04",
+      "severity": "CAMPAIGN_STOP_CONDITION",
+      "dependency": "any failed fixed slot after a future campaign lock",
+      "estimate": "No recovery estimate is allowed because replacement, top-up, reallocation, alternate recording, and second attempt are forbidden.",
+      "clear_condition": "Not applicable; failure ends the bounded campaign."
+    }
+  ],
+  "preserved_governance": [
+    "ABSENT means only no human target, no target physiological source, valid sensor observation, and intended negative-class evidence.",
+    "The three lineage groups and nine fixed slots remain subject-disjoint; no replacement, top-up, reallocation, alternate recording, or second attempt is allowed.",
+    "The two-stage pre-capture identity lock and post-capture immutable checksum receipt lifecycle remains required.",
+    "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1 remains the only selection rule; manual easier-negative selection is forbidden.",
+    "This checklist does not authorize M-PV4, model evaluation, membership construction, or capture."
+  ],
+  "prohibitions_preserved": {
+    "campaign_predeclaration_created": false,
+    "capture_started": false,
+    "absent_labels_created": false,
+    "membership_constructed": false,
+    "model_evaluation_performed": false,
+    "contract_requirements_relaxed": false,
+    "m_pv4_authorized": false
+  }
+}
