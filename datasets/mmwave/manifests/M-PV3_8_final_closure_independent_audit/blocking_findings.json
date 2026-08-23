@@ -1,0 +1,17 @@
+{
+  "schema_version": "M-PV3.8.4-FINAL-CLOSURE-AUDIT",
+  "audit_id": "MMWAVE_V2_M_PV38_FINAL_CLOSURE_INDEPENDENT_AUDIT_V1",
+  "decision": "NEEDS_CORRECTION",
+  "findings": [
+    {
+      "finding_id": "ACQUISITION_GATE_MANIFEST_LIFECYCLE_STATE_MISMATCH",
+      "severity": "BLOCKING",
+      "summary": "acquisition_gate.json remains M-PV3.8.3 PENDING_REAUDIT while config is M-PV3.8.4 with re-audit APPROVED; final_lock_requirements still pending re-audit."
+    },
+    {
+      "finding_id": "CLOSURE_STATUS_NOT_UNIQUELY_FROZEN",
+      "severity": "BLOCKING",
+      "summary": "READY_FOR_CAPTURE_AUTHORIZATION, CAPTURE_BLOCKED, and ACQUISITION_REQUIRES_RESOURCE_ACCESS coexist without a superseding formal freeze marker."
+    }
+  ]
+}
