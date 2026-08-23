@@ -1,8 +1,8 @@
 {
-  "schema_version": "M-PV3.8.2",
+  "schema_version": "M-PV3.8.3_CORRECTIVE",
   "files": {
-    "config/mmwave/m_pv38_absent_membership_acquisition_gate.json": "95a654b1b72d14310e904300b8442ee041f0f7194e82a76a10010b08b32f6267",
-    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/acquisition_gate.json": "73aea973c0268dbafff07679a8f2c9782447a9b6aca10fdc381d9e2e3d706402",
-    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/final_lock_requirements.json": "18e4059f0a421360bf8175749a82e9aee5618a8fa35167570ea924f41ccbfcc6"
+    "config/mmwave/m_pv38_absent_membership_acquisition_gate.json": "58b781cbd1eb7e88885e19e88b3f2fc6f8aa9ea54ec70e636567db65b891c8ed",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/acquisition_gate.json": "91b6054abcc4fd775d4639c17a8fd058410002ee8121700fb8457b978bc823ba",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/final_lock_requirements.json": "b7a1a9f1420e626d59c2127dce4c38bea4b38c9bc4dc796cb723518ad9211ddd"
   }
 }
