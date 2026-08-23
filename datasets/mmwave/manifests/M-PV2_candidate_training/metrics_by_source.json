@@ -1,0 +1,3365 @@
+{
+  "family_a/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.8338901756796986e-05
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.026841478422284126
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.03080655075609684
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.02660820074379444
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.028310604393482208
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0392790362238884
+          }
+        },
+        "probability_distribution": {
+          "max": 0.996185839176178,
+          "mean": 0.9749288500857621,
+          "min": 2.8338901756796986e-05,
+          "std": 0.13048103671405023
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 6.507999521655802,
+        "RMSE_bpm": 8.457326028883255,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 5.158548851013183,
+        "prediction_range_bpm": {
+          "max": 33.005035400390625,
+          "min": 11.000667572021484
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.21604938271604937,
+        "within_4_bpm": 0.3765432098765432
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.7494703317643143e-05
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.03823861479759216
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.02129277214407921
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.02907560206949711
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.017994951456785202
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.032959774136543274
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9998553991317749,
+          "mean": 0.9642315014856107,
+          "min": 2.7494703317643143e-05,
+          "std": 0.16948911796954433
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 3.462861002490507,
+        "RMSE_bpm": 4.839781313772129,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 2.214445114135742,
+        "prediction_range_bpm": {
+          "max": 31.324241638183594,
+          "min": 2.704214096069336
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.46368715083798884,
+        "within_4_bpm": 0.7039106145251397
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.5922872737282887e-05
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.030347386375069618
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.028386587277054787
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.04199489578604698
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.030917378142476082
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9959297776222229,
+          "mean": 0.9177298773498137,
+          "min": 2.5922872737282887e-05,
+          "std": 0.2596220782761532
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 4.208156334726434,
+        "RMSE_bpm": 6.759813368078546,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.4858779907226562,
+        "prediction_range_bpm": {
+          "max": 42.911651611328125,
+          "min": 7.5656843185424805
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.42105263157894735,
+        "within_4_bpm": 0.6842105263157895
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.5922872737282887e-05
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.030347386375069618
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.028386587277054787
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.04199489578604698
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.030917378142476082
+          }
+        },
+        "probability_distribution": {
+          "max": 0.996185839176178,
+          "mean": 0.9802612182427585,
+          "min": 2.5922872737282887e-05,
+          "std": 0.10993872027234619
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 5.909410199030351,
+        "RMSE_bpm": 8.050040492394059,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 4.418346405029297,
+        "prediction_range_bpm": {
+          "max": 42.911651611328125,
+          "min": 7.5656843185424805
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.2694063926940639,
+        "within_4_bpm": 0.45662100456621
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 2.299843186929368,
+      "rr.RMSE_bpm": 1.6975126608047093,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 2.672670860290527,
+      "rr.within_2_bpm": 0.20500324886289797,
+      "rr.within_4_bpm": 0.3076673164392463
+    }
+  },
+  "family_a/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.002094188006594777
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.07394740730524063
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.09018755704164505
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0852816179394722
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.09293890744447708
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.1203438863158226
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9960178732872009,
+          "mean": 0.975518838126632,
+          "min": 0.002094188006594777,
+          "std": 0.1234889643678434
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 6.512730609517039,
+        "RMSE_bpm": 8.337681518416083,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 5.471997127532959,
+        "prediction_range_bpm": {
+          "max": 31.50979995727539,
+          "min": 12.31963062286377
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.19753086419753085,
+        "within_4_bpm": 0.3950617283950617
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0020020848605781794
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.11326345801353455
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08188638836145401
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.10100442171096802
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.06665139645338058
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08075615763664246
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9998164772987366,
+          "mean": 0.9635019448758908,
+          "min": 0.0020020848605781794,
+          "std": 0.1603721455828441
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 3.3953370355361,
+        "RMSE_bpm": 4.639354670176437,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 2.5484724044799805,
+        "prediction_range_bpm": {
+          "max": 28.521007537841797,
+          "min": 5.420093536376953
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.45251396648044695,
+        "within_4_bpm": 0.6871508379888268
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.001823481754399836
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0904005914926529
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08024226129055023
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08948814868927002
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0817103236913681
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9961953163146973,
+          "mean": 0.9187538378846511,
+          "min": 0.001823481754399836,
+          "std": 0.24786620426065012
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 3.9577183137860215,
+        "RMSE_bpm": 6.4946307407363815,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 1.8461761474609375,
+        "prediction_range_bpm": {
+          "max": 39.54109191894531,
+          "min": 8.334003448486328
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.5087719298245614,
+        "within_4_bpm": 0.7368421052631579
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.001823481754399836
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0904005914926529
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08024226129055023
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08948814868927002
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0817103236913681
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9961953163146973,
+          "mean": 0.9801140199308722,
+          "min": 0.001823481754399836,
+          "std": 0.1051553660057192
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 5.847727409258281,
+        "RMSE_bpm": 7.899487349630387,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 4.1889142990112305,
+        "prediction_range_bpm": {
+          "max": 39.54109191894531,
+          "min": 8.334003448486328
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.2785388127853881,
+        "within_4_bpm": 0.4840182648401826
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 2.5550122957310175,
+      "rr.RMSE_bpm": 1.8430507776797018,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 3.625820980072022,
+      "rr.within_2_bpm": 0.3112410656270306,
+      "rr.within_4_bpm": 0.34178037686809615
+    }
+  },
+  "family_a/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0011539706028997898
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.12386790663003922
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08350985497236252
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.09748736768960953
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08814682066440582
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.1256224811077118
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9950054287910461,
+          "mean": 0.9725925744479568,
+          "min": 0.0011539706028997898,
+          "std": 0.12187328011584313
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 6.641770781293328,
+        "RMSE_bpm": 8.45724673126806,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 5.463685989379883,
+        "prediction_range_bpm": {
+          "max": 31.470821380615234,
+          "min": 10.065407752990723
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.2037037037037037,
+        "within_4_bpm": 0.35185185185185186
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0011168124619871378
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.09980624914169312
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.09545136988162994
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08966033160686493
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.07564079761505127
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.08571376651525497
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9997153878211975,
+          "mean": 0.9565561883046696,
+          "min": 0.0011168124619871378,
+          "std": 0.15903914015516443
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 3.280792880990652,
+        "RMSE_bpm": 4.63165620844788,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 2.233945846557617,
+        "prediction_range_bpm": {
+          "max": 29.161561965942383,
+          "min": 5.186090469360352
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.4748603351955307,
+        "within_4_bpm": 0.7150837988826816
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0010561560047790408
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.10593670606613159
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.09393428266048431
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.11235728859901428
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.10085940361022949
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9980831146240234,
+          "mean": 0.9177168892765621,
+          "min": 0.0010561560047790408,
+          "std": 0.24334851015844997
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 4.0386102910627395,
+        "RMSE_bpm": 6.672759051541546,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.1693058013916016,
+        "prediction_range_bpm": {
+          "max": 39.723724365234375,
+          "min": 7.7830352783203125
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.49122807017543857,
+        "within_4_bpm": 0.7543859649122807
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "breathing": {
+        "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0010561560047790408
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.10593670606613159
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.09393428266048431
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.11235728859901428
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.10085940361022949
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9980831146240234,
+          "mean": 0.97731436291406,
+          "min": 0.0010561560047790408,
+          "std": 0.10317841158923449
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 5.964235859178516,
+        "RMSE_bpm": 8.031052539055468,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 4.526885299682618,
+        "prediction_range_bpm": {
+          "max": 39.723724365234375,
+          "min": 7.7830352783203125
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.2785388127853881,
+        "within_4_bpm": 0.45662100456621
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 2.6031604902305885,
+      "rr.RMSE_bpm": 1.7844876797265146,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 3.2943801879882812,
+      "rr.within_2_bpm": 0.28752436647173485,
+      "rr.within_4_bpm": 0.40253411306042886
+    }
+  },
+  "family_b/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 162,
+        "max": 0.9999024868011475,
+        "mean": 0.8520567417144775,
+        "min": 0.27692946791648865,
+        "std": 0.13932301104068756
+      },
+      "breathing": {
+        "Brier": 0.17589944287010537,
+        "F1": 0.7910447761194029,
+        "PR_AUC": 0.9132575587475198,
+        "ROC_AUC": 0.878299276287782,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 3,
+          "FP": 81,
+          "TN": 35,
+          "TP": 159
+        },
+        "eligible_count": 278,
+        "false_absent_on_PRESENT": 0.018518518518518517,
+        "false_present_on_ABSENT": 0.6982758620689655,
+        "precision": 0.6625,
+        "present_count": 162,
+        "probability_distribution": {
+          "max": 0.9999024868011475,
+          "mean": 0.7309079018267367,
+          "min": 0.0860772505402565,
+          "std": 0.2279994389944618
+        },
+        "recall": 0.9814814814814815,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.007597275543957949
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.007362517528235912
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.003828582586720586
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.01033487543463707
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.007008615415543318
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0031299979891628027
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9999998807907104,
+          "mean": 0.980719725066727,
+          "min": 0.0031299979891628027,
+          "std": 0.13381564240172275
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 6.469127685170114,
+        "RMSE_bpm": 8.387316273328695,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 4.947322502136231,
+        "prediction_range_bpm": {
+          "max": 35.39510726928711,
+          "min": 12.256780624389648
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.19753086419753085,
+        "within_4_bpm": 0.3950617283950617
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 179,
+        "max": 1.0,
+        "mean": 0.7118896842002869,
+        "min": 0.34763363003730774,
+        "std": 0.12354130297899246
+      },
+      "breathing": {
+        "Brier": 0.0982699855901368,
+        "F1": 0.9771428571428571,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 8,
+          "FP": 0,
+          "TN": 0,
+          "TP": 171
+        },
+        "eligible_count": 179,
+        "false_absent_on_PRESENT": 0.0446927374301676,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 179,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.7118897219942935,
+          "min": 0.34763363003730774,
+          "std": 0.12354130199091838
+        },
+        "recall": 0.9553072625698324,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.011163446120917797
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.009591696783900261
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.007315263617783785
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.008325508795678616
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00616493821144104
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.006678515579551458
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9682200902205019,
+          "min": 0.00616493821144104,
+          "std": 0.1728895064874805
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 4.907068758703477,
+        "RMSE_bpm": 5.87965977560003,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 4.684602737426758,
+        "prediction_range_bpm": {
+          "max": 30.0210018157959,
+          "min": 8.88716983795166
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.22905027932960895,
+        "within_4_bpm": 0.4245810055865922
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 57,
+        "max": 1.0,
+        "mean": 0.7065086364746094,
+        "min": 0.5236203074455261,
+        "std": 0.11137038469314575
+      },
+      "breathing": {
+        "Brier": 0.09854056720607236,
+        "F1": 1.0,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 0,
+          "FP": 0,
+          "TN": 0,
+          "TP": 57
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.706508595692484,
+          "min": 0.5236203074455261,
+          "std": 0.11137038566726143
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0015807368326932192
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.006753953173756599
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.009371464140713215
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.007723246235400438
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.008698978461325169
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9218426301922591,
+          "min": 0.0015807368326932192,
+          "std": 0.26637295586102544
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 4.564752260843913,
+        "RMSE_bpm": 7.03833466506959,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.794027328491211,
+        "prediction_range_bpm": {
+          "max": 47.368377685546875,
+          "min": 9.825277328491211
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.3333333333333333,
+        "within_4_bpm": 0.631578947368421
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 219,
+        "max": 1.0,
+        "mean": 0.8141742944717407,
+        "min": 0.27692946791648865,
+        "std": 0.14719258248806
+      },
+      "breathing": {
+        "Brier": 0.16273688790637436,
+        "F1": 0.8372093023255814,
+        "PR_AUC": 0.9005738380755102,
+        "ROC_AUC": 0.8289245788064872,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 3,
+          "FP": 81,
+          "TN": 35,
+          "TP": 216
+        },
+        "eligible_count": 335,
+        "false_absent_on_PRESENT": 0.0136986301369863,
+        "false_present_on_ABSENT": 0.6982758620689655,
+        "precision": 0.7272727272727273,
+        "present_count": 219,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.726756378096431,
+          "min": 0.0860772505402565,
+          "std": 0.2129160186013189
+        },
+        "recall": 0.9863013698630136,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0015807368326932192
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.006753953173756599
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.009371464140713215
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.007723246235400438
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.008698978461325169
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9861566947367169,
+          "min": 0.0015807368326932192,
+          "std": 0.11278545151445282
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 5.9734683281537055,
+        "RMSE_bpm": 8.057980773623672,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 4.2752976226806645,
+        "prediction_range_bpm": {
+          "max": 47.368377685546875,
+          "min": 9.825277328491211
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.2328767123287671,
+        "within_4_bpm": 0.45662100456621
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "breathing.Brier": 0.077358875664033,
+      "breathing.F1": 0.20895522388059706,
+      "breathing.absent_count": 116.0,
+      "breathing.eligible_count": 221.0,
+      "breathing.false_absent_on_PRESENT": 0.018518518518518517,
+      "breathing.precision": 0.3375,
+      "breathing.present_count": 105.0,
+      "breathing.recall": 0.01851851851851849,
+      "breathing.threshold": 0.0,
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 1.9043754243262008,
+      "rr.RMSE_bpm": 1.3489816082591046,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 2.15329517364502,
+      "rr.within_2_bpm": 0.13580246913580246,
+      "rr.within_4_bpm": 0.2365172189733593
+    }
+  },
+  "family_b/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 162,
+        "max": 1.0,
+        "mean": 0.9469655156135559,
+        "min": 0.35665225982666016,
+        "std": 0.10393502563238144
+      },
+      "breathing": {
+        "Brier": 0.11643031500877468,
+        "F1": 0.8702702702702703,
+        "PR_AUC": 0.9789074125678932,
+        "ROC_AUC": 0.9691890166028098,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 1,
+          "FP": 47,
+          "TN": 69,
+          "TP": 161
+        },
+        "eligible_count": 278,
+        "false_absent_on_PRESENT": 0.006172839506172839,
+        "false_present_on_ABSENT": 0.4051724137931034,
+        "precision": 0.7740384615384616,
+        "present_count": 162,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.732989197055032,
+          "min": 0.0026273608673363924,
+          "std": 0.3163558655378825
+        },
+        "recall": 0.9938271604938271,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0001668093609623611
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0010227160528302193
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.6921248718281277e-05
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.03877937362995e-05
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00011026029096683487
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0010313880629837513
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9811063494483077,
+          "min": 1.03877937362995e-05,
+          "std": 0.1347210378261066
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 5.720937016569538,
+        "RMSE_bpm": 7.538933280130474,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 4.24566780090332,
+        "prediction_range_bpm": {
+          "max": 42.74204635620117,
+          "min": 11.235015869140625
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.2345679012345679,
+        "within_4_bpm": 0.4691358024691358
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 179,
+        "max": 1.0,
+        "mean": 0.9242216348648071,
+        "min": 0.3552229702472687,
+        "std": 0.10864238440990448
+      },
+      "breathing": {
+        "Brier": 0.01754553095782355,
+        "F1": 0.9943820224719101,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 2,
+          "FP": 0,
+          "TN": 0,
+          "TP": 177
+        },
+        "eligible_count": 179,
+        "false_absent_on_PRESENT": 0.0111731843575419,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 179,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9242216148855966,
+          "min": 0.3552229702472687,
+          "std": 0.10864238264727405
+        },
+        "recall": 0.9888268156424581,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0028427515644580126
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0004202068957965821
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00027827706071548164
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00011328665277687833
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 7.347977225435898e-05
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00023873033933341503
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9685724823026648,
+          "min": 7.347977225435898e-05,
+          "std": 0.1743113305679648
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 4.86578522048183,
+        "RMSE_bpm": 5.992855600341162,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 4.169425010681152,
+        "prediction_range_bpm": {
+          "max": 29.44863510131836,
+          "min": 5.012945175170898
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.24581005586592178,
+        "within_4_bpm": 0.4748603351955307
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 57,
+        "max": 1.0,
+        "mean": 0.948015570640564,
+        "min": 0.6688169240951538,
+        "std": 0.06127720698714256
+      },
+      "breathing": {
+        "Brier": 0.0064572784995837705,
+        "F1": 1.0,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 0,
+          "FP": 0,
+          "TN": 0,
+          "TP": 57
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9480155518180445,
+          "min": 0.6688169240951538,
+          "std": 0.061277203320658814
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0001645584707148373
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 5.1890176109736785e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00019237784727010876
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00019659723329823464
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0004162787226960063
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9218621853019044,
+          "min": 5.1890176109736785e-05,
+          "std": 0.26830497613008986
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 4.1938734389188,
+        "RMSE_bpm": 6.276408275163277,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.0810203552246094,
+        "prediction_range_bpm": {
+          "max": 39.06822204589844,
+          "min": -0.3417701721191406
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.49122807017543857,
+        "within_4_bpm": 0.6666666666666666
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 219,
+        "max": 1.0,
+        "mean": 0.9472388029098511,
+        "min": 0.35665225982666016,
+        "std": 0.0947016179561615
+      },
+      "breathing": {
+        "Brier": 0.09771848491616608,
+        "F1": 0.9008264462809917,
+        "PR_AUC": 0.9841436423581951,
+        "ROC_AUC": 0.9711462761769799,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 1,
+          "FP": 47,
+          "TN": 69,
+          "TP": 218
+        },
+        "eligible_count": 335,
+        "false_absent_on_PRESENT": 0.0045662100456621,
+        "false_present_on_ABSENT": 0.4051724137931034,
+        "precision": 0.8226415094339623,
+        "present_count": 219,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.7695757708505296,
+          "min": 0.0026273608673363924,
+          "std": 0.30036596574318664
+        },
+        "recall": 0.9954337899543378,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0001645584707148373
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 5.1890176109736785e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00019237784727010876
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00019659723329823464
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0004162787226960063
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9865844727690141,
+          "min": 5.1890176109736785e-05,
+          "std": 0.11360490856490532
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 5.323482112797428,
+        "RMSE_bpm": 7.23158078364329,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 3.6992500305175753,
+        "prediction_range_bpm": {
+          "max": 42.74204635620117,
+          "min": -0.3417701721191406
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.3013698630136986,
+        "within_4_bpm": 0.5205479452054794
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "breathing.Brier": 0.10997303650919091,
+      "breathing.F1": 0.12972972972972974,
+      "breathing.absent_count": 116.0,
+      "breathing.eligible_count": 221.0,
+      "breathing.false_absent_on_PRESENT": 0.006172839506172839,
+      "breathing.precision": 0.22596153846153844,
+      "breathing.present_count": 105.0,
+      "breathing.recall": 0.006172839506172867,
+      "breathing.threshold": 0.0,
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 1.527063577650738,
+      "rr.RMSE_bpm": 1.2625250049671966,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 2.1646474456787104,
+      "rr.within_2_bpm": 0.2566601689408707,
+      "rr.within_4_bpm": 0.19753086419753085
+    }
+  },
+  "family_b/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 162,
+        "max": 1.0,
+        "mean": 0.9876353144645691,
+        "min": 0.6066116690635681,
+        "std": 0.03793764486908913
+      },
+      "breathing": {
+        "Brier": 0.03571776252915792,
+        "F1": 0.9671641791044776,
+        "PR_AUC": 0.9994076613269471,
+        "ROC_AUC": 0.9991485738612176,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 0,
+          "FP": 11,
+          "TN": 105,
+          "TP": 162
+        },
+        "eligible_count": 278,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": 0.09482758620689655,
+        "precision": 0.9364161849710982,
+        "present_count": 162,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.6559553591141332,
+          "min": 1.9218423403799534e-05,
+          "std": 0.41684943191588786
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 8.949873881647363e-05
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0006157027091830969
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 3.0682378564961255e-05
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.005437547340989113
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0003250950248911977
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.0814619599841535e-05
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9814130674204747,
+          "min": 1.0814619599841535e-05,
+          "std": 0.1346589534971399
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 4.761832822163899,
+        "RMSE_bpm": 6.617202103080665,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 3.629828453063965,
+        "prediction_range_bpm": {
+          "max": 38.436561584472656,
+          "min": 2.847744941711426
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.30246913580246915,
+        "within_4_bpm": 0.5555555555555556
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 179,
+        "max": 1.0,
+        "mean": 0.9441751837730408,
+        "min": 0.1071215271949768,
+        "std": 0.12575763463974
+      },
+      "breathing": {
+        "Brier": 0.018931401869587534,
+        "F1": 0.9887005649717514,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 4,
+          "FP": 0,
+          "TN": 0,
+          "TP": 175
+        },
+        "eligible_count": 179,
+        "false_absent_on_PRESENT": 0.0223463687150838,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 179,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9441751052713927,
+          "min": 0.1071215271949768,
+          "std": 0.12575763594361755
+        },
+        "recall": 0.9776536312849162,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0015337361255660653
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0009297826909460127
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.1125219973328058e-06
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 6.276668136706576e-05
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0002473870699759573
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00037664923002012074
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9685363944511484,
+          "min": 2.1125219973328058e-06,
+          "std": 0.1743308910429338
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 4.225643024764247,
+        "RMSE_bpm": 5.3078240766970355,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 3.527904510498047,
+        "prediction_range_bpm": {
+          "max": 22.111461639404297,
+          "min": -3.8181610107421875
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.3016759776536313,
+        "within_4_bpm": 0.547486033519553
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 57,
+        "max": 1.0,
+        "mean": 0.9378840327262878,
+        "min": 0.12591803073883057,
+        "std": 0.1456795334815979
+      },
+      "breathing": {
+        "Brier": 0.025080918907178347,
+        "F1": 0.9911504424778761,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 1,
+          "FP": 0,
+          "TN": 0,
+          "TP": 56
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.017543859649122806,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9378840243607237,
+          "min": 0.12591803073883057,
+          "std": 0.14567952662457131
+        },
+        "recall": 0.9824561403508771,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.015413518995046616
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 5.3215870138956234e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0004441315250005573
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00017858347564470023
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 3.1513151043327525e-05
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9221113611745295,
+          "min": 3.1513151043327525e-05,
+          "std": 0.2675038251999638
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 4.900417813083582,
+        "RMSE_bpm": 7.830777919443116,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.3080272674560547,
+        "prediction_range_bpm": {
+          "max": 37.28302764892578,
+          "min": -11.513181686401367
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.45614035087719296,
+        "within_4_bpm": 0.6491228070175439
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 219,
+        "max": 1.0,
+        "mean": 0.9746863842010498,
+        "min": 0.12591803073883057,
+        "std": 0.08405286073684692
+      },
+      "breathing": {
+        "Brier": 0.0339079115248211,
+        "F1": 0.9732142857142857,
+        "PR_AUC": 0.9980739411897981,
+        "ROC_AUC": 0.9959455203904897,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 1,
+          "FP": 11,
+          "TN": 105,
+          "TP": 218
+        },
+        "eligible_count": 335,
+        "false_absent_on_PRESENT": 0.0045662100456621,
+        "false_present_on_ABSENT": 0.09482758620689655,
+        "precision": 0.9519650655021834,
+        "present_count": 219,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.7039253111113143,
+          "min": 1.9218423403799534e-05,
+          "std": 0.3987878040768891
+        },
+        "recall": 0.9954337899543378,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.015413518995046616
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 5.3215870138956234e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0004441315250005573
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00017858349019661546
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 3.1513151043327525e-05
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9868755277973985,
+          "min": 3.1513151043327525e-05,
+          "std": 0.11328300424657657
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 4.797902888293679,
+        "RMSE_bpm": 6.953483616925294,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 3.2868309020996094,
+        "prediction_range_bpm": {
+          "max": 38.436561584472656,
+          "min": -11.513181686401367
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.3424657534246575,
+        "within_4_bpm": 0.5799086757990868
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "breathing.Brier": 0.010636843621979572,
+      "breathing.F1": 0.023986263373398486,
+      "breathing.absent_count": 116.0,
+      "breathing.eligible_count": 221.0,
+      "breathing.false_absent_on_PRESENT": 0.017543859649122806,
+      "breathing.precision": 0.06358381502890176,
+      "breathing.present_count": 105.0,
+      "breathing.recall": 0.01754385964912286,
+      "breathing.threshold": 0.0,
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 0.13858499091968302,
+      "rr.RMSE_bpm": 1.213575816362451,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 1.3218011856079102,
+      "rr.within_2_bpm": 0.1536712150747238,
+      "rr.within_4_bpm": 0.0935672514619883
+    }
+  },
+  "family_c/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 162,
+        "max": 1.0,
+        "mean": 0.996258556842804,
+        "min": 0.8930439949035645,
+        "std": 0.011516688391566277
+      },
+      "breathing": {
+        "Brier": 0.036915356939666404,
+        "F1": 0.9642857142857143,
+        "PR_AUC": 0.9989898037138971,
+        "ROC_AUC": 0.9986696466581524,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 0,
+          "FP": 12,
+          "TN": 104,
+          "TP": 162
+        },
+        "eligible_count": 278,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": 0.10344827586206896,
+        "precision": 0.9310344827586207,
+        "present_count": 162,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.659293929336466,
+          "min": 3.1344468425231753e-06,
+          "std": 0.4249942414903533
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.265362259417202e-09
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0042419759556651115
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0033911948557943106
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.001152718672528863
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0016946241958066821
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.005453646648675203
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9999996423721313,
+          "mean": 0.9808315404533674,
+          "min": 1.265362259417202e-09,
+          "std": 0.13438161571802035
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 4.563968586156398,
+        "RMSE_bpm": 6.112976860347833,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 3.44487621307373,
+        "prediction_range_bpm": {
+          "max": 43.610626220703125,
+          "min": 4.618400573730469
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.2777777777777778,
+        "within_4_bpm": 0.5679012345679012
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 179,
+        "max": 1.0,
+        "mean": 0.9795034527778625,
+        "min": 0.666522204875946,
+        "std": 0.051093533635139465
+      },
+      "breathing": {
+        "Brier": 0.0030306525080228837,
+        "F1": 1.0,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 0,
+          "FP": 0,
+          "TN": 0,
+          "TP": 179
+        },
+        "eligible_count": 179,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 179,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9795035776479284,
+          "min": 0.666522204875946,
+          "std": 0.05109353362988691
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.1797463628226978e-07
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.000535009428858757
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 8.213638648157939e-05
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0009449012577533722
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0002075533411698416
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0002537109248805791
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9677146730968023,
+          "min": 1.1797463628226978e-07,
+          "std": 0.1742240733469841
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 3.3973699495113094,
+        "RMSE_bpm": 4.591256897727469,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 2.581876754760742,
+        "prediction_range_bpm": {
+          "max": 26.0205135345459,
+          "min": -3.9176502227783203
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.4134078212290503,
+        "within_4_bpm": 0.664804469273743
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 57,
+        "max": 1.0,
+        "mean": 0.9567642211914062,
+        "min": 0.0957157239317894,
+        "std": 0.13888344168663025
+      },
+      "breathing": {
+        "Brier": 0.02115794692809779,
+        "F1": 0.9911504424778761,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 1,
+          "FP": 0,
+          "TN": 0,
+          "TP": 56
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.017543859649122806,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9567641776643301,
+          "min": 0.0957157239317894,
+          "std": 0.13888344247985857
+        },
+        "recall": 0.9824561403508771,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.5664489150246652e-10
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00044872495345771313
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0024726020637899637
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0025274637155234814
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0013099873904138803
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9999942779541016,
+          "mean": 0.9213539673789375,
+          "min": 1.5664489150246652e-10,
+          "std": 0.26782511098863493
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 4.539816287525913,
+        "RMSE_bpm": 6.433115257698816,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 3.1881542205810547,
+        "prediction_range_bpm": {
+          "max": 35.0087776184082,
+          "min": 5.076687812805176
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.3333333333333333,
+        "within_4_bpm": 0.631578947368421
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 219,
+        "max": 1.0,
+        "mean": 0.9859791994094849,
+        "min": 0.0957157239317894,
+        "std": 0.07361214607954025
+      },
+      "breathing": {
+        "Brier": 0.03423424538545922,
+        "F1": 0.9710467706013363,
+        "PR_AUC": 0.9975277886083737,
+        "ROC_AUC": 0.9949614233978901,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 1,
+          "FP": 12,
+          "TN": 104,
+          "TP": 218
+        },
+        "eligible_count": 335,
+        "false_absent_on_PRESENT": 0.0045662100456621,
+        "false_present_on_ABSENT": 0.10344827586206896,
+        "precision": 0.9478260869565217,
+        "present_count": 219,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.7099082700967294,
+          "min": 3.1344468425231753e-06,
+          "std": 0.40701857561648186
+        },
+        "recall": 0.9954337899543378,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.5664489150246652e-10
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00044872501166537404
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0024726020637899637
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.002527463948354125
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0013099873904138803
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9999996423721313,
+          "mean": 0.9862307299943464,
+          "min": 1.5664489150246652e-10,
+          "std": 0.11344148353661278
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 4.557682371444354,
+        "RMSE_bpm": 6.197892610910762,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 3.3375911712646484,
+        "prediction_range_bpm": {
+          "max": 43.610626220703125,
+          "min": 4.618400573730469
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.2922374429223744,
+        "within_4_bpm": 0.5844748858447488
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "breathing.Brier": 0.015757410011568614,
+      "breathing.F1": 0.02686472819216179,
+      "breathing.absent_count": 116.0,
+      "breathing.eligible_count": 221.0,
+      "breathing.false_absent_on_PRESENT": 0.017543859649122806,
+      "breathing.precision": 0.06896551724137934,
+      "breathing.present_count": 105.0,
+      "breathing.recall": 0.01754385964912286,
+      "breathing.threshold": 0.0,
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 0.024152298630484736,
+      "rr.RMSE_bpm": 0.32013839735098326,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 0.25672199249267535,
+      "rr.within_2_bpm": 0.055555555555555525,
+      "rr.within_4_bpm": 0.06367771280051981
+    }
+  },
+  "family_c/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 162,
+        "max": 1.0,
+        "mean": 0.9653701782226562,
+        "min": 0.4759461581707001,
+        "std": 0.08292752504348755
+      },
+      "breathing": {
+        "Brier": 0.037046580273460625,
+        "F1": 0.9757575757575757,
+        "PR_AUC": 0.9987167801332804,
+        "ROC_AUC": 0.9981907194550873,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 1,
+          "FP": 7,
+          "TN": 109,
+          "TP": 161
+        },
+        "eligible_count": 278,
+        "false_absent_on_PRESENT": 0.006172839506172839,
+        "false_present_on_ABSENT": 0.0603448275862069,
+        "precision": 0.9583333333333334,
+        "present_count": 162,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.6496663526481138,
+          "min": 0.0005790451541543007,
+          "std": 0.3966788232168159
+        },
+        "recall": 0.9938271604938271,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 4.456913504924387e-09
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0024444761220365763
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.002427963772788644
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.01601710356771946
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.009897923097014427
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0005316796596162021
+          }
+        },
+        "probability_distribution": {
+          "max": 0.9999997615814209,
+          "mean": 0.9812138439615253,
+          "min": 4.456913504924387e-09,
+          "std": 0.13406813482454702
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 4.667549032988372,
+        "RMSE_bpm": 6.304149558913191,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 3.842863731384277,
+        "prediction_range_bpm": {
+          "max": 36.326499938964844,
+          "min": 5.209575653076172
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.29012345679012347,
+        "within_4_bpm": 0.5123456790123457
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 179,
+        "max": 1.0,
+        "mean": 0.9284623861312866,
+        "min": 0.4206126630306244,
+        "std": 0.10664547234773636
+      },
+      "breathing": {
+        "Brier": 0.016490886611300014,
+        "F1": 0.9943820224719101,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 2,
+          "FP": 0,
+          "TN": 0,
+          "TP": 177
+        },
+        "eligible_count": 179,
+        "false_absent_on_PRESENT": 0.0111731843575419,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 179,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9284623867972603,
+          "min": 0.4206126630306244,
+          "std": 0.1066454711113192
+        },
+        "recall": 0.9888268156424581,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 4.05522115443091e-07
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.03795868903398514
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00018984572670888156
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.002505068900063634
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0019456632435321808
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00309286592528224
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9682283500056974,
+          "min": 4.05522115443091e-07,
+          "std": 0.17309061391220526
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 3.8531595262069276,
+        "RMSE_bpm": 5.577583333894207,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 2.6679039001464844,
+        "prediction_range_bpm": {
+          "max": 25.936237335205078,
+          "min": -11.58958625793457
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.4134078212290503,
+        "within_4_bpm": 0.6480446927374302
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 57,
+        "max": 1.0,
+        "mean": 0.9299038052558899,
+        "min": 0.40055620670318604,
+        "std": 0.11404450982809067
+      },
+      "breathing": {
+        "Brier": 0.01791962580955174,
+        "F1": 0.9911504424778761,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 1,
+          "FP": 0,
+          "TN": 0,
+          "TP": 56
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.017543859649122806,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9299038240784093,
+          "min": 0.40055620670318604,
+          "std": 0.11404451731986569
+        },
+        "recall": 0.9824561403508771,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 3.8949329872473015e-11
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0012078696163371205
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00839542131870985
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0054305787198245525
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.004610762465745211
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9221471280203961,
+          "min": 3.8949329872473015e-11,
+          "std": 0.2673049894376812
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 4.541094194378769,
+        "RMSE_bpm": 6.4600821452910795,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.894702911376953,
+        "prediction_range_bpm": {
+          "max": 34.00602722167969,
+          "min": -2.7044448852539062
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.3684210526315789,
+        "within_4_bpm": 0.631578947368421
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 219,
+        "max": 1.0,
+        "mean": 0.9561392068862915,
+        "min": 0.40055620670318604,
+        "std": 0.09335104376077652
+      },
+      "breathing": {
+        "Brier": 0.03379214324527314,
+        "F1": 0.9796839729119639,
+        "PR_AUC": 0.998499889768662,
+        "ROC_AUC": 0.9971658006613131,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 2,
+          "FP": 7,
+          "TN": 109,
+          "TP": 217
+        },
+        "eligible_count": 335,
+        "false_absent_on_PRESENT": 0.0091324200913242,
+        "false_present_on_ABSENT": 0.0603448275862069,
+        "precision": 0.96875,
+        "present_count": 219,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.6973485492795373,
+          "min": 0.0005790451541543007,
+          "std": 0.3793179950849577
+        },
+        "recall": 0.9908675799086758,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 3.8949329872473015e-11
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0012078694999217987
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00839542131870985
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0054305787198245525
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.004610762465745211
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9866475981310132,
+          "min": 3.8949329872473015e-11,
+          "std": 0.11317650146903853
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 4.634636129788611,
+        "RMSE_bpm": 6.345103661681266,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 3.5949363708496094,
+        "prediction_range_bpm": {
+          "max": 36.326499938964844,
+          "min": -2.7044448852539062
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.3105022831050228,
+        "within_4_bpm": 0.54337899543379
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "breathing.Brier": 0.019126954463908885,
+      "breathing.F1": 0.01539286672030038,
+      "breathing.absent_count": 116.0,
+      "breathing.eligible_count": 221.0,
+      "breathing.false_absent_on_PRESENT": 0.011371020142949967,
+      "breathing.precision": 0.04166666666666663,
+      "breathing.present_count": 105.0,
+      "breathing.recall": 0.011371020142949995,
+      "breathing.threshold": 0.0,
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 0.12645483860960294,
+      "rr.RMSE_bpm": 0.15593258637788843,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 0.9481608200073239,
+      "rr.within_2_bpm": 0.07829759584145546,
+      "rr.within_4_bpm": 0.11923326835607528
+    }
+  },
+  "family_c/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 162,
+        "max": 1.0,
+        "mean": 0.9987973570823669,
+        "min": 0.9725247025489807,
+        "std": 0.00378535152412951
+      },
+      "breathing": {
+        "Brier": 0.0033077926956909956,
+        "F1": 0.9969230769230769,
+        "PR_AUC": 1.0,
+        "ROC_AUC": 1.0,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 0,
+          "FP": 1,
+          "TN": 115,
+          "TP": 162
+        },
+        "eligible_count": 278,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": 0.008620689655172414,
+        "precision": 0.9938650306748467,
+        "present_count": 162,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.5964290003742403,
+          "min": 4.2329347138547746e-08,
+          "std": 0.47844801729400366
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 318,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 324,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.94201952297135e-08
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00017429952276870608
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00028661213582381606
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00025331354117952287
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 9.717293141875416e-05
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0010408236412331462
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9813904477951285,
+          "min": 1.94201952297135e-08,
+          "std": 0.13476278331583486
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 324,
+      "rr": {
+        "MAE_bpm": 2.7079822248294025,
+        "RMSE_bpm": 4.2689347921375305,
+        "eligible_count": 162,
+        "median_absolute_error_bpm": 1.9172277832031241,
+        "prediction_range_bpm": {
+          "max": 38.87984085083008,
+          "min": 5.410956382751465
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.5308641975308642,
+        "within_4_bpm": 0.8333333333333334
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "D1_present_probability_distribution": {
+        "count": 179,
+        "max": 1.0,
+        "mean": 0.9965079426765442,
+        "min": 0.9032610654830933,
+        "std": 0.011240183375775814
+      },
+      "breathing": {
+        "Brier": 0.00013853545165185916,
+        "F1": 1.0,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 0,
+          "FP": 0,
+          "TN": 0,
+          "TP": 179
+        },
+        "eligible_count": 179,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 179,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9965080495653206,
+          "min": 0.9032610654830933,
+          "std": 0.011240183887001197
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 185,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 191,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 1.207978357342654e-06
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00031350672361440957
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 7.264143641805276e-05
+          },
+          "REPUBLICATION_TO_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00011998557602055371
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00015244136739056557
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.000371111324056983
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9685797415285585,
+          "min": 1.207978357342654e-06,
+          "std": 0.1744006896475171
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 6
+      },
+      "record_count": 191,
+      "rr": {
+        "MAE_bpm": 2.841907922116072,
+        "RMSE_bpm": 3.9116173486116104,
+        "eligible_count": 179,
+        "median_absolute_error_bpm": 1.9948883056640625,
+        "prediction_range_bpm": {
+          "max": 27.47423553466797,
+          "min": 2.3819446563720703
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 25.78125,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.5027932960893855,
+        "within_4_bpm": 0.7430167597765364
+      },
+      "synthetic_count": 6
+    },
+    "D1_DEV_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 57,
+        "max": 1.0,
+        "mean": 0.9917275905609131,
+        "min": 0.7780320644378662,
+        "std": 0.03463082015514374
+      },
+      "breathing": {
+        "Brier": 0.0012677252259954447,
+        "F1": 1.0,
+        "PR_AUC": null,
+        "ROC_AUC": null,
+        "absent_count": 0,
+        "confusion": {
+          "FN": 0,
+          "FP": 0,
+          "TN": 0,
+          "TP": 57
+        },
+        "eligible_count": 57,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": null,
+        "precision": 1.0,
+        "present_count": 57,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.991727660622513,
+          "min": 0.7780320644378662,
+          "std": 0.03463081903765956
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 59,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 64,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 8.391940614638216e-11
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.063255124085117e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0002397106436546892
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00012578326277434826
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0005314782611094415
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9218843978401063,
+          "min": 8.391940614638216e-11,
+          "std": 0.2683175051275914
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 64,
+      "rr": {
+        "MAE_bpm": 4.460836209748921,
+        "RMSE_bpm": 6.761024104687144,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.3799400329589844,
+        "prediction_range_bpm": {
+          "max": 38.126380920410156,
+          "min": 8.32497787475586
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.45614035087719296,
+        "within_4_bpm": 0.6491228070175439
+      },
+      "synthetic_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "D1_present_probability_distribution": {
+        "count": 219,
+        "max": 1.0,
+        "mean": 0.9969573616981506,
+        "min": 0.7780320644378662,
+        "std": 0.018230946734547615
+      },
+      "breathing": {
+        "Brier": 0.002960676738160708,
+        "F1": 0.9977220956719818,
+        "PR_AUC": 1.0,
+        "ROC_AUC": 1.0,
+        "absent_count": 116,
+        "confusion": {
+          "FN": 0,
+          "FP": 1,
+          "TN": 115,
+          "TP": 219
+        },
+        "eligible_count": 335,
+        "false_absent_on_PRESENT": 0.0,
+        "false_present_on_ABSENT": 0.008620689655172414,
+        "precision": 0.9954545454545455,
+        "present_count": 219,
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.6636887724164837,
+          "min": 4.2329347138547746e-08,
+          "std": 0.460685460017431
+        },
+        "recall": 1.0,
+        "status": "DEFINED",
+        "threshold": 0.5
+      },
+      "quality": {
+        "clean_count": 377,
+        "clean_false_rejection": 0.0,
+        "eligible_count": 382,
+        "hard_Q2_invalid_false_acceptance": 0.0,
+        "per_corruption_mode": {
+          "FLAT_EXACT": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 8.391940614638216e-11
+          },
+          "JITTER_PLUS_LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 2.063255124085117e-05
+          },
+          "LARGE_GAP": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0002397106436546892
+          },
+          "SOURCE_FREEZE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.00012578326277434826
+          },
+          "STALE_SOURCE": {
+            "count": 1,
+            "invalid_false_acceptance": 0.0,
+            "probability_mean": 0.0005314782611094415
+          }
+        },
+        "probability_distribution": {
+          "max": 1.0,
+          "mean": 0.9868305086549628,
+          "min": 8.391940614638216e-11,
+          "std": 0.11362642868445952
+        },
+        "status": "DEFINED",
+        "synthetic_invalid_count": 5
+      },
+      "record_count": 382,
+      "rr": {
+        "MAE_bpm": 3.1642044948769485,
+        "RMSE_bpm": 5.037670316578661,
+        "eligible_count": 219,
+        "median_absolute_error_bpm": 1.9441633605957023,
+        "prediction_range_bpm": {
+          "max": 38.87984085083008,
+          "min": 5.410956382751465
+        },
+        "status": "DEFINED",
+        "target_range_bpm": {
+          "max": 42.0,
+          "min": 6.0
+        },
+        "within_2_bpm": 0.5114155251141552,
+        "within_4_bpm": 0.7853881278538812
+      },
+      "synthetic_count": 5
+    },
+    "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS": {
+      "breathing.Brier": 0.002040067469695551,
+      "breathing.F1": 0.003076923076923088,
+      "breathing.absent_count": 116.0,
+      "breathing.eligible_count": 221.0,
+      "breathing.false_absent_on_PRESENT": 0.0,
+      "breathing.precision": 0.006134969325153339,
+      "breathing.present_count": 105.0,
+      "breathing.recall": 0.0,
+      "breathing.threshold": 0.0,
+      "quality.clean_count": 259.0,
+      "quality.clean_false_rejection": 0.0,
+      "quality.eligible_count": 260.0,
+      "quality.hard_Q2_invalid_false_acceptance": 0.0,
+      "quality.synthetic_invalid_count": 1.0,
+      "rr.MAE_bpm": 1.7528539849195184,
+      "rr.RMSE_bpm": 2.4920893125496137,
+      "rr.eligible_count": 105.0,
+      "rr.median_absolute_error_bpm": 0.4627122497558602,
+      "rr.within_2_bpm": 0.07472384665367127,
+      "rr.within_4_bpm": 0.1842105263157895
+    }
+  }
+}

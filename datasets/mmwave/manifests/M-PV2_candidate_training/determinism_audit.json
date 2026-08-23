@@ -1,0 +1,22 @@
+{
+  "canonical_parameter_sha256_equal": true,
+  "checkpoint_sha256": "5633a7eefa83544cd33a251b0016b40f37e28039f985b31c98bdcfa37aa8b1a6",
+  "deterministic": true,
+  "fresh_process": true,
+  "primary_parameter_sha256": "84bb325bb2fa8054b39ac7c30f3aadf6acc1ed5886b79f93352d77b1fb5d4aba",
+  "replay_parameter_sha256": "84bb325bb2fa8054b39ac7c30f3aadf6acc1ed5886b79f93352d77b1fb5d4aba",
+  "representative": "family_b_seed_11",
+  "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+  "schedule": {
+    "batch_size": 32,
+    "gradient_clip_norm": 1.0,
+    "learning_rate": 0.001,
+    "max_epochs": 150,
+    "min_epochs": 30,
+    "optimizer": "Adam",
+    "patience": 20,
+    "weight_decay": 0.0001
+  },
+  "schema_version": "M-PV2.1",
+  "split_identity": "MMWAVE_V2_M_PV1_D1_DEV_SUBJECT_SPLIT_V1"
+}

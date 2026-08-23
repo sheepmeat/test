@@ -1,0 +1,86 @@
+{
+  "family_a/seed_11": {
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+  },
+  "family_a/seed_23": {
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+  },
+  "family_a/seed_47": {
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+  },
+  "family_b/seed_11": {
+    "context_count": 59,
+    "eligible_context_count": 57,
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "final_5s_anchor": "INDICES_250_300_OF_FIXED_300_SAMPLE_CONTEXT",
+    "mean_probability_by_reference_state": {
+      "BREATHING_REFERENCE_AMBIGUOUS": 0.7519842386245728,
+      "BREATHING_REFERENCE_PRESENT": 0.7065086364746094
+    },
+    "no_event_threshold_or_sequence_tuning": true,
+    "status": "DIAGNOSTIC_ONLY"
+  },
+  "family_b/seed_23": {
+    "context_count": 59,
+    "eligible_context_count": 57,
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "final_5s_anchor": "INDICES_250_300_OF_FIXED_300_SAMPLE_CONTEXT",
+    "mean_probability_by_reference_state": {
+      "BREATHING_REFERENCE_AMBIGUOUS": 0.8842116594314575,
+      "BREATHING_REFERENCE_PRESENT": 0.948015570640564
+    },
+    "no_event_threshold_or_sequence_tuning": true,
+    "status": "DIAGNOSTIC_ONLY"
+  },
+  "family_b/seed_47": {
+    "context_count": 59,
+    "eligible_context_count": 57,
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "final_5s_anchor": "INDICES_250_300_OF_FIXED_300_SAMPLE_CONTEXT",
+    "mean_probability_by_reference_state": {
+      "BREATHING_REFERENCE_AMBIGUOUS": 0.9754362106323242,
+      "BREATHING_REFERENCE_PRESENT": 0.9378840327262878
+    },
+    "no_event_threshold_or_sequence_tuning": true,
+    "status": "DIAGNOSTIC_ONLY"
+  },
+  "family_c/seed_11": {
+    "context_count": 59,
+    "eligible_context_count": 57,
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "final_5s_anchor": "INDICES_250_300_OF_FIXED_300_SAMPLE_CONTEXT",
+    "mean_probability_by_reference_state": {
+      "BREATHING_REFERENCE_AMBIGUOUS": 0.826370358467102,
+      "BREATHING_REFERENCE_PRESENT": 0.9567642211914062
+    },
+    "no_event_threshold_or_sequence_tuning": true,
+    "status": "DIAGNOSTIC_ONLY"
+  },
+  "family_c/seed_23": {
+    "context_count": 59,
+    "eligible_context_count": 57,
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "final_5s_anchor": "INDICES_250_300_OF_FIXED_300_SAMPLE_CONTEXT",
+    "mean_probability_by_reference_state": {
+      "BREATHING_REFERENCE_AMBIGUOUS": 0.7006201148033142,
+      "BREATHING_REFERENCE_PRESENT": 0.9299038052558899
+    },
+    "no_event_threshold_or_sequence_tuning": true,
+    "status": "DIAGNOSTIC_ONLY"
+  },
+  "family_c/seed_47": {
+    "context_count": 59,
+    "eligible_context_count": 57,
+    "event_F1": "DEFERRED_TO_M_PV3_OR_LATER",
+    "final_5s_anchor": "INDICES_250_300_OF_FIXED_300_SAMPLE_CONTEXT",
+    "mean_probability_by_reference_state": {
+      "BREATHING_REFERENCE_AMBIGUOUS": 0.9989819526672363,
+      "BREATHING_REFERENCE_PRESENT": 0.9917275905609131
+    },
+    "no_event_threshold_or_sequence_tuning": true,
+    "status": "DIAGNOSTIC_ONLY"
+  }
+}

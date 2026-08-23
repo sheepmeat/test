@@ -1,0 +1,32 @@
+{
+  "family_a": {
+    "max": 0.20564724504947662,
+    "mean": 0.20266002913316092,
+    "median": 0.20404404401779175,
+    "metric": "best_validation_loss",
+    "min": 0.19828879833221436,
+    "seed_count": 3,
+    "selection_use": false,
+    "std": 0.003159462762702624
+  },
+  "family_b": {
+    "max": 0.46978557109832764,
+    "mean": 0.2933669040600459,
+    "median": 0.2469666302204132,
+    "metric": "best_validation_loss",
+    "min": 0.1633485108613968,
+    "seed_count": 3,
+    "selection_use": false,
+    "std": 0.1293333084990297
+  },
+  "family_c": {
+    "max": 0.19225090742111206,
+    "mean": 0.16260444869597754,
+    "median": 0.17614631354808807,
+    "metric": "best_validation_loss",
+    "min": 0.11941612511873245,
+    "seed_count": 3,
+    "selection_use": false,
+    "std": 0.031238469403534887
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "candidates": [
+    {
+      "checkpoint_bytes": 27341,
+      "family": "family_a",
+      "float32_parameter_bytes": 23944,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 5986,
+      "seed": 11
+    },
+    {
+      "checkpoint_bytes": 27341,
+      "family": "family_a",
+      "float32_parameter_bytes": 23944,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 5986,
+      "seed": 23
+    },
+    {
+      "checkpoint_bytes": 27341,
+      "family": "family_a",
+      "float32_parameter_bytes": 23944,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 5986,
+      "seed": 47
+    },
+    {
+      "checkpoint_bytes": 76473,
+      "family": "family_b",
+      "float32_parameter_bytes": 71660,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 17915,
+      "seed": 11
+    },
+    {
+      "checkpoint_bytes": 76473,
+      "family": "family_b",
+      "float32_parameter_bytes": 71660,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 17915,
+      "seed": 23
+    },
+    {
+      "checkpoint_bytes": 76473,
+      "family": "family_b",
+      "float32_parameter_bytes": 71660,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 17915,
+      "seed": 47
+    },
+    {
+      "checkpoint_bytes": 89337,
+      "family": "family_c",
+      "float32_parameter_bytes": 84460,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 21115,
+      "seed": 11
+    },
+    {
+      "checkpoint_bytes": 89337,
+      "family": "family_c",
+      "float32_parameter_bytes": 84460,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 21115,
+      "seed": 23
+    },
+    {
+      "checkpoint_bytes": 89337,
+      "family": "family_c",
+      "float32_parameter_bytes": 84460,
+      "int8_or_tflite_generated": false,
+      "parameter_count": 21115,
+      "seed": 47
+    }
+  ],
+  "deployment": "DEFERRED_NO_PI_NO_QUANTIZATION",
+  "schema_version": "M-PV2.1"
+}
