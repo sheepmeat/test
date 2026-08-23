@@ -40,13 +40,13 @@
 
 | Branch | Original tip SHA | Related PR | Unified branch preservation | Deletion status |
 |---|---|---|---|---|
-| `codex/thermal-b6r0-asset-baseline-audit` | `ee966f9186915a2364e81f944f45aabf22b7b71c` | #125, `OPEN` at audit time | full `--no-ff` merge; report and manifest directory preserved | `PENDING_REMOTE_PUSH_AND_VALIDATION` |
-| `codex/thermal-b6r1-mi48-inventory-v2` | `d87d452372cc890e85ec6c4d5ec117052be865df` | #124, `OPEN` at audit time | full `--no-ff` merge; report, manifest directory, profiler, and test preserved | `PENDING_REMOTE_PUSH_AND_VALIDATION` |
-| `docs/thermal-b6r-robust-relative-roadmap` | `37f5b2dd914654a12539149317b0895cdf47c00b` | #117, `MERGED` | already an ancestor of `origin/main`; authoritative main copy retained | `PENDING_REMOTE_PUSH_AND_VALIDATION` |
-| `codex/thermal-b6r1-mi48-inventory` | `bb5d7fd1518b50297e46858365540cf60ce9e740` | 확인된 전용 PR 없음 | already an ancestor of `origin/main`; unique work 없음 | `PENDING_LOCAL_CLEANUP` |
-| `thermal/b6r-1-mi48-inventory` | `bb5d7fd1518b50297e46858365540cf60ce9e740` | 확인된 전용 PR 없음 | already an ancestor of `origin/main`; unique work 없음 | `PENDING_LOCAL_CLEANUP` |
+| `codex/thermal-b6r0-asset-baseline-audit` | `ee966f9186915a2364e81f944f45aabf22b7b71c` | #125, `OPEN` at audit time | full `--no-ff` merge; report and manifest directory preserved | local `NOT_DELETED_WORKTREE_IN_USE`; remote `NOT_DELETED_APPROVAL_REJECTED` |
+| `codex/thermal-b6r1-mi48-inventory-v2` | `d87d452372cc890e85ec6c4d5ec117052be865df` | #124, `OPEN` at audit time | full `--no-ff` merge; report, manifest directory, profiler, and test preserved | local `DELETED`; remote `NOT_DELETED_APPROVAL_REJECTED` |
+| `docs/thermal-b6r-robust-relative-roadmap` | `37f5b2dd914654a12539149317b0895cdf47c00b` | #117, `MERGED` | already an ancestor of `origin/main`; authoritative main copy retained | local `DELETED`; remote `NOT_DELETED_APPROVAL_REJECTED` |
+| `codex/thermal-b6r1-mi48-inventory` | `bb5d7fd1518b50297e46858365540cf60ce9e740` | 확인된 전용 PR 없음 | already an ancestor of `origin/main`; unique work 없음 | local `DELETED` |
+| `thermal/b6r-1-mi48-inventory` | `bb5d7fd1518b50297e46858365540cf60ce9e740` | 확인된 전용 PR 없음 | already an ancestor of `origin/main`; unique work 없음 | local `DELETED` |
 
-PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감사 시 GitHub CLI 인증 토큰이 유효하지 않아 PR 댓글 또는 종료 작업은 수행하지 않았다.
+PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감사 시 GitHub CLI 인증 토큰이 유효하지 않아 PR 댓글 또는 종료 작업은 수행하지 않았다. 원격 구브랜치 삭제 요청도 열린 PR의 협업·복구 위험에 대한 별도 명시 승인이 필요하다는 안전 검토로 거부되어 재시도하지 않았다.
 
 ## Current Blockers
 

@@ -90,20 +90,29 @@
 ## 11. 검증 결과
 
 - `ee966f9186915a2364e81f944f45aabf22b7b71c`와 `d87d452372cc890e85ec6c4d5ec117052be865df`를 `--no-ff`로 병합해 source commit history를 보존했다.
+- 두 source tip과 roadmap tip에 대한 `git merge-base --is-ancestor`가 모두 exit `0`이었다.
+- 두 source commit이 추가한 모든 path의 source blob과 통합 branch blob을 비교했고 mismatch가 `0`이었다.
 - B6R-0/B6R-1 보고서와 artifact/code/test 경로가 통합 tree에 존재한다.
 - `docs/README.md`와 canonical B6-R roadmap blob은 `origin/main`과 동일하다.
 - bundled Python 3.12.13으로 `tests/test_thermal_b6r1_mi48_inventory.py`의 synthetic test 함수 4개를 임시 디렉터리에서 직접 실행해 `4 PASS`를 확인했다. `pytest` module은 설치되어 있지 않아 pytest runner는 사용하지 못했다.
-- 최종 ancestry, content, test, `git diff --check`, remote branch 검증은 통합 기록 commit과 최초 push 후 수행한다.
+- `git diff --check origin/main...HEAD`는 exit `0`이었다.
+- `origin/main...HEAD`에는 B6R-0/B6R-1 보고서·manifest, B6R-1 profiler/test, 통합 인덱스·보고서만 추가되었다. 원시 thermal dataset, model binary, CO2/mmWave/ESP32/PIR 파일은 없다.
+- 최초 원격 push 후 `origin/feature/thermal-b6r-development`와 local HEAD가 `5923eb1b5605aad299950c2c8e593c98f8a5c8d5`로 일치했다.
 
 ## 12. 삭제 가능 브랜치
 
-최초 remote push와 migration validation 전에는 어떤 branch도 삭제하지 않는다.
+통합 branch 최초 push와 migration validation 후 다음 로컬 branch를 `git branch -d`로 삭제했다.
 
-- `codex/thermal-b6r0-asset-baseline-audit`: `PENDING_REMOTE_PUSH_AND_VALIDATION`
-- `codex/thermal-b6r1-mi48-inventory-v2`: `PENDING_REMOTE_PUSH_AND_VALIDATION`
-- `docs/thermal-b6r-robust-relative-roadmap`: `SAFE_TO_DELETE_ALREADY_MERGED` 후보이나 아직 삭제하지 않음
-- `codex/thermal-b6r1-mi48-inventory`: `SAFE_TO_DELETE_ALREADY_MERGED` 후보이나 아직 삭제하지 않음
-- `thermal/b6r-1-mi48-inventory`: `SAFE_TO_DELETE_ALREADY_MERGED` 후보이나 아직 삭제하지 않음
+- `codex/thermal-b6r1-mi48-inventory-v2`
+- `docs/thermal-b6r-robust-relative-roadmap`
+- `codex/thermal-b6r1-mi48-inventory`
+- `thermal/b6r-1-mi48-inventory`
+
+다음 로컬 branch는 삭제하지 않았다.
+
+- `codex/thermal-b6r0-asset-baseline-audit`: 별도 `Thermal_AI_B6R0_Worktree`에서 체크아웃 중이어서 `git branch -d`가 거부했다. worktree를 삭제하거나 `git branch -D`를 사용하지 않았다.
+
+원격 삭제는 수행되지 않았다. `origin/codex/thermal-b6r0-asset-baseline-audit`, `origin/codex/thermal-b6r1-mi48-inventory-v2`, `origin/docs/thermal-b6r-robust-relative-roadmap` 삭제 요청은 PR #124·#125가 열린 상태인 협업·복구 위험 때문에 별도의 명시 승인이 필요하다는 안전 검토에서 거부됐다. 우회 또는 분할 재시도하지 않았으며 세 branch 모두 `NOT_DELETED_APPROVAL_REJECTED`로 기록한다.
 
 ## 13. 삭제 금지 브랜치
 
@@ -119,7 +128,12 @@
 - Start main SHA: `5125029a08a839819d50774b73fdb2b1ef0c86a0`
 - B6R-0 merge SHA: `c70d994ecd4be666dd46e0b7b06872ee8f97f0f2`
 - B6R-1 merge SHA: `d0c0c911eb2e27cf91d8f057d1cc9f9360c7fb6a`
-- 통합 기록, remote push, branch cleanup 및 최종 검증: `PENDING`
+- 최초 통합 기록 SHA: `5923eb1b5605aad299950c2c8e593c98f8a5c8d5`
+- Remote push: `PASS`; `origin/feature/thermal-b6r-development` 생성 확인
+- Local cleanup: 4개 안전 삭제, B6R-0 worktree branch 1개 보존
+- Remote cleanup: 안전 승인 거부로 0개 삭제, 구브랜치 3개 보존
+- PR action: GitHub CLI 인증 불가로 댓글·종료 없음
+- 최종 문서 상태 반영 commit SHA는 이 보고서를 포함하므로 최종 응답에서 기록한다.
 
 ## 15. 향후 B6-R 개발 규칙
 
