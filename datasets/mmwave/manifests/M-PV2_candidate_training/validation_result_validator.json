@@ -1,0 +1,350 @@
+{
+  "candidate_count": 9,
+  "checks": [
+    {
+      "detail": "FROZEN_BEFORE_TRAINING",
+      "name": "contract_frozen_before_training",
+      "ok": true
+    },
+    {
+      "detail": {
+        "contract": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+        "snapshot": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1"
+      },
+      "name": "contract_snapshot_matches_contract_id",
+      "ok": true
+    },
+    {
+      "detail": "M-PV1.2_CORRECTIVE_ALIGNMENT",
+      "name": "m_pv1_corrective_schema",
+      "ok": true
+    },
+    {
+      "detail": {
+        "ok": true,
+        "ready": true
+      },
+      "name": "m_pv1_gate_ready",
+      "ok": true
+    },
+    {
+      "detail": {
+        "model_ready": 562,
+        "unique": 562
+      },
+      "name": "m_pv1_model_ready_count",
+      "ok": true
+    },
+    {
+      "detail": 0,
+      "name": "m_pv1_duplicate_overlays_zero",
+      "ok": true
+    },
+    {
+      "detail": {
+        "D0": 318,
+        "D1": 244
+      },
+      "name": "membership_source_counts",
+      "ok": true
+    },
+    {
+      "detail": 562,
+      "name": "membership_model_input_ids_unique",
+      "ok": true
+    },
+    {
+      "detail": [
+        "TRAIN"
+      ],
+      "name": "d0_train_only",
+      "ok": true
+    },
+    {
+      "detail": "subject intersection",
+      "name": "d1_split_subject_disjoint",
+      "ok": true
+    },
+    {
+      "detail": {
+        "model_inference_count": 0,
+        "selection_use": "NO",
+        "semantic_access": "NO"
+      },
+      "name": "d2_m_pv1_locked",
+      "ok": true
+    },
+    {
+      "detail": {
+        "by_source": {
+          "D0": 318,
+          "D1": 244
+        },
+        "model_ready_unique": 562
+      },
+      "name": "tensor_lineage_count",
+      "ok": true
+    },
+    {
+      "detail": {
+        "membership": 0,
+        "tensor": 0
+      },
+      "name": "tensor_lineage_duplicate_zero",
+      "ok": true
+    },
+    {
+      "detail": {
+        "raw": false,
+        "tensor_cache": false
+      },
+      "name": "tensor_cache_not_committed",
+      "ok": true
+    },
+    {
+      "detail": "NOT_AUTHORIZED",
+      "name": "d0_val_not_used",
+      "ok": true
+    },
+    {
+      "detail": [
+        [
+          "family_a",
+          11
+        ],
+        [
+          "family_a",
+          23
+        ],
+        [
+          "family_a",
+          47
+        ],
+        [
+          "family_b",
+          11
+        ],
+        [
+          "family_b",
+          23
+        ],
+        [
+          "family_b",
+          47
+        ],
+        [
+          "family_c",
+          11
+        ],
+        [
+          "family_c",
+          23
+        ],
+        [
+          "family_c",
+          47
+        ]
+      ],
+      "name": "all_authorized_family_seed_runs_present",
+      "ok": true
+    },
+    {
+      "detail": {
+        "final_selection": false,
+        "selected_float_model": false
+      },
+      "name": "no_final_selection",
+      "ok": true
+    },
+    {
+      "detail": "all present under models/mmwave/m_pv2",
+      "name": "compact_checkpoint_paths",
+      "ok": true
+    },
+    {
+      "detail": "model directory scan",
+      "name": "no_optimizer_or_all_epoch_artifacts",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_a/seed_11",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_a/seed_23",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_a/seed_47",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_b/seed_11",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_b/seed_23",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_b/seed_47",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_c/seed_11",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_c/seed_23",
+      "ok": true
+    },
+    {
+      "detail": [
+        "D0_TRAIN_OBSERVE",
+        "D1_DEV_TRAIN_OBSERVE",
+        "D1_DEV_VAL",
+        "POOLED_D0_TRAIN_PLUS_D1_VAL",
+        "source_gap_D0_TRAIN_MINUS_D1_VAL_ABS"
+      ],
+      "name": "metrics_present_family_c/seed_47",
+      "ok": true
+    },
+    {
+      "detail": 12,
+      "name": "trace_breathing_metric_defined",
+      "ok": true
+    },
+    {
+      "detail": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "name": "d1_absent_class_reported_zero",
+      "ok": true
+    },
+    {
+      "detail": 9,
+      "name": "rr_metrics_meaningful",
+      "ok": true
+    },
+    {
+      "detail": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "name": "q2_fail_closed_evaluated",
+      "ok": true
+    },
+    {
+      "detail": {
+        "family_a/seed_11": true,
+        "family_a/seed_23": true,
+        "family_a/seed_47": true,
+        "family_b/seed_11": true,
+        "family_b/seed_23": true,
+        "family_b/seed_47": true,
+        "family_c/seed_11": true,
+        "family_c/seed_23": true,
+        "family_c/seed_47": true
+      },
+      "name": "degeneracy_pass",
+      "ok": true
+    },
+    {
+      "detail": {
+        "canonical_parameter_sha256_equal": true,
+        "deterministic": true,
+        "fresh_process": true
+      },
+      "name": "deterministic_replay",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "forbidden_artifact_scan",
+      "ok": true
+    }
+  ],
+  "d2_semantic_use": false,
+  "failed_checks": [],
+  "final_selection": false,
+  "gate": "PASS_WITH_LIMITATIONS",
+  "limitations": [
+    "D0 VAL was not used because frozen M-PV1 model-ready membership is TRAIN-only.",
+    "D1 model-ready membership has no ABSENT examples.",
+    "Event F1 remains deferred to M-PV3 or later."
+  ],
+  "m_pv2_ready_for_m_pv3": true,
+  "mr60_supervised_use": false,
+  "ok": true,
+  "phase": "M-PV2",
+  "schema_version": "M-PV2.1",
+  "selected_float_model": false
+}

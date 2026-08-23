@@ -1,0 +1,188 @@
+{
+  "family_a/seed_11": {
+    "all_absent": {
+      "status": "BREATHING_HEAD_NOT_AUTHORIZED"
+    },
+    "all_present": {
+      "status": "BREATHING_HEAD_NOT_AUTHORIZED"
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.0039385114796459675
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 5.019376277923584,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  },
+  "family_a/seed_23": {
+    "all_absent": {
+      "status": "BREATHING_HEAD_NOT_AUTHORIZED"
+    },
+    "all_present": {
+      "status": "BREATHING_HEAD_NOT_AUTHORIZED"
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.00519816717132926
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 4.732242584228516,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  },
+  "family_a/seed_47": {
+    "all_absent": {
+      "status": "BREATHING_HEAD_NOT_AUTHORIZED"
+    },
+    "all_present": {
+      "status": "BREATHING_HEAD_NOT_AUTHORIZED"
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.0034812449011951685
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 5.056765079498291,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  },
+  "family_b/seed_11": {
+    "all_absent": {
+      "count": 116,
+      "probability_std": 0.21988801658153534,
+      "unique_rounded": 116
+    },
+    "all_present": {
+      "count": 219,
+      "probability_std": 0.14719258248806,
+      "unique_rounded": 217
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.0006686766864731908
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 5.433226585388184,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  },
+  "family_b/seed_23": {
+    "all_absent": {
+      "count": 116,
+      "probability_std": 0.2674359381198883,
+      "unique_rounded": 116
+    },
+    "all_present": {
+      "count": 219,
+      "probability_std": 0.0947016179561615,
+      "unique_rounded": 208
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.001521637779660523
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 6.109389305114746,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  },
+  "family_b/seed_47": {
+    "all_absent": {
+      "count": 116,
+      "probability_std": 0.2149987369775772,
+      "unique_rounded": 116
+    },
+    "all_present": {
+      "count": 219,
+      "probability_std": 0.08405286073684692,
+      "unique_rounded": 162
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.0002463284181430936
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 6.768439769744873,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  },
+  "family_c/seed_11": {
+    "all_absent": {
+      "count": 116,
+      "probability_std": 0.22946684062480927,
+      "unique_rounded": 116
+    },
+    "all_present": {
+      "count": 219,
+      "probability_std": 0.07361214607954025,
+      "unique_rounded": 138
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.0021145197097212076
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 6.756377220153809,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  },
+  "family_c/seed_23": {
+    "all_absent": {
+      "count": 116,
+      "probability_std": 0.18417507410049438,
+      "unique_rounded": 116
+    },
+    "all_present": {
+      "count": 219,
+      "probability_std": 0.09335104376077652,
+      "unique_rounded": 191
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.0008000801899470389
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 6.300178527832031,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  },
+  "family_c/seed_47": {
+    "all_absent": {
+      "count": 116,
+      "probability_std": 0.08194492012262344,
+      "unique_rounded": 104
+    },
+    "all_present": {
+      "count": 219,
+      "probability_std": 0.018230946734547615,
+      "unique_rounded": 105
+    },
+    "constant_quality": {
+      "count": 377,
+      "probability_std": 0.0004409385146573186
+    },
+    "constant_rr": {
+      "count": 377,
+      "prediction_std_bpm": 7.9524664878845215,
+      "target_constant_test": "INPUTS_UNCHANGED_TARGET_NOT_REWRITTEN"
+    },
+    "fail_closed": true
+  }
+}

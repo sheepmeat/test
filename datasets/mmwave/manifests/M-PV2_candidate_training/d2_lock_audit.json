@@ -1,0 +1,10 @@
+{
+  "feature_extraction": false,
+  "model_inference_count": 0,
+  "payload_digest_access": false,
+  "schema_version": "M-PV2.1",
+  "selection": false,
+  "semantic_access": false,
+  "status": "LOCKED",
+  "target_use": false
+}

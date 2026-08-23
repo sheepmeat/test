@@ -1,0 +1,28 @@
+{
+  "apples_to_apples_comparison": false,
+  "artifact": "datasets/mmwave/processed/mmwave_respiration_v1.npz",
+  "class_map": {
+    "0": "NORMAL",
+    "1": "RAPID_OR_ABNORMAL",
+    "2": "APNEA"
+  },
+  "retraining": false,
+  "selection_use": false,
+  "sha256": "a08072f3d9b55cd95b530c7b5b90f17ef80f6015ee76119f217b9d834c1107fb",
+  "status": "OBSERVE_ONLY",
+  "test_shape": [
+    468,
+    300,
+    1
+  ],
+  "train_shape": [
+    2491,
+    300,
+    1
+  ],
+  "val_shape": [
+    474,
+    300,
+    1
+  ]
+}

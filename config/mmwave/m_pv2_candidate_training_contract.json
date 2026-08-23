@@ -1,0 +1,168 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV2_BOUNDED_CANDIDATE_TRAINING_V1",
+  "phase": "M-PV2",
+  "status": "FROZEN_BEFORE_TRAINING",
+  "purpose": "Train and compare a bounded candidate pool from the accepted M-PV1 public multidomain contract; no final model selection.",
+  "upstream_contracts": {
+    "m_pv1": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+    "m_pv1_schema": "M-PV1.2_CORRECTIVE_ALIGNMENT",
+    "r1": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+    "r2_f2": "MMWAVE_V2_R2_F2_SPECTRAL_AUTOCORR_V1",
+    "r2_f3": "MMWAVE_V2_R2_F3_TRACE_PLUS_QUALITY_DESCRIPTOR_V1",
+    "q2": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1"
+  },
+  "dataset_scope": {
+    "sources": ["D0", "D1"],
+    "d0": {
+      "allowed_role": "PRIMARY_SUPERVISED_DEVELOPMENT_DOMAIN",
+      "train_split": "TRAIN",
+      "model_ready_unique_expected": 318,
+      "val_use": "NOT_AUTHORIZED_FOR_M_PV2",
+      "val_reason": "The frozen M-PV1 model-ready manifest contains D0 TRAIN only; reconstructing D0 VAL would change the frozen 562-input membership.",
+      "heldout_use": "FORBIDDEN",
+      "m_n6_use": "FORBIDDEN"
+    },
+    "d1": {
+      "allowed_role": "AUXILIARY_CROSS_DOMAIN_REFERENCE_DEVELOPMENT_DOMAIN",
+      "train_split": "D1_DEV_TRAIN",
+      "eval_split": "D1_DEV_VAL",
+      "subject_split": "MMWAVE_V2_M_PV1_D1_DEV_SUBJECT_SPLIT_V1",
+      "model_ready_unique_expected": 244,
+      "short_audit_only_expected": 21,
+      "train_subjects": ["D1_PERSON_01", "D1_PERSON_02", "D1_PERSON_04", "D1_PERSON_05", "D1_PERSON_06", "D1_PERSON_07", "D1_PERSON_08", "D1_PERSON_10"],
+      "eval_subjects": ["D1_PERSON_03", "D1_PERSON_09", "D1_PERSON_11"],
+      "recording_level_leakage": "FORBIDDEN"
+    },
+    "expected_clean_unique_model_inputs": 562,
+    "expected_duplicate_target_overlays": 0,
+    "d2": {
+      "role": "LOCKED_PUBLIC_CROSS_DEVICE_TEST",
+      "semantic_access": "FORBIDDEN",
+      "feature_extraction": "FORBIDDEN",
+      "inference": "FORBIDDEN",
+      "selection": "FORBIDDEN"
+    },
+    "mr60": {
+      "role": "REFERENCE_OR_QA_ONLY",
+      "supervised_use": "FORBIDDEN"
+    }
+  },
+  "authorized_candidate_families": {
+    "family_a": {
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "representation": "PROFILE_A_FEATURE_F2_V1",
+      "tasks": ["rr", "quality"],
+      "breathing_head": false,
+      "architecture": "MLP(59->64->32) with RR regression and quality logit heads"
+    },
+    "family_b": {
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "representation": "PROFILE_B_TRACE_F3_R1_V1",
+      "tasks": ["breathing_evidence", "rr", "quality"],
+      "breathing_head": true,
+      "architecture": "small Conv1D/TCN trace branch plus scalar descriptor branch"
+    },
+    "family_c": {
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "representation": "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1",
+      "tasks": ["breathing_evidence", "rr", "quality"],
+      "breathing_head": true,
+      "architecture": "family B trace branch plus F2 scalar branch"
+    }
+  },
+  "forbidden_in_this_phase": [
+    "FINAL_MODEL_SELECTION",
+    "SELECTED_FLOAT_MODEL",
+    "M-PV3_SELECTION_GATE",
+    "D2_SEMANTIC_USE",
+    "D2_INFERENCE",
+    "MR60_SUPERVISED_LABELS",
+    "MR60_TRAINING",
+    "INT8_QUANTIZATION",
+    "TFLITE_CONVERSION",
+    "CALIBRATION_FITTING",
+    "FINAL_THRESHOLD_TUNING",
+    "PI_DEPLOYMENT",
+    "DIRECT_NEURAL_TEMPORAL_HOLD_HEAD",
+    "CLINICAL_APNEA_CLAIM"
+  ],
+  "seeds": [11, 23, 47],
+  "max_primary_runs": 9,
+  "determinism": {
+    "cpu_preferred": true,
+    "torch_deterministic_algorithms": true,
+    "representative_repeat": "family_b_seed_11_twice_in_clean_process",
+    "required_equalities": ["split_identity", "scaler_sha256", "schedule", "config_sha256", "canonical_parameter_sha256"]
+  },
+  "optimizer": {
+    "name": "Adam",
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "batch_size": 32,
+    "max_epochs": 150,
+    "early_stopping": {
+      "min_epochs": 30,
+      "patience": 20,
+      "monitor": "D1_DEV_VAL_masked_composite_loss"
+    },
+    "gradient_clip_norm": 1.0
+  },
+  "loss": {
+    "family_a": {"rr": 1.0, "quality": 0.5},
+    "family_b": {"breathing_evidence": 1.0, "rr": 0.5, "quality": 0.5},
+    "family_c": {"breathing_evidence": 1.0, "rr": 0.5, "quality": 0.5},
+    "rr": "Huber on TRAIN-fitted RR z-score",
+    "breathing_evidence": "BCEWithLogits; PRESENT=1, ABSENT=0",
+    "quality": "BCEWithLogits; QUALITY_VALID=1, INPUT_UNAVAILABLE=0",
+    "masked_targets": "AMBIGUOUS, TARGET_UNAVAILABLE, and unavailable RR have mask 0; no zero encoding"
+  },
+  "preprocessing": {
+    "feature_scaler": "global per-feature z-score fit on TRAIN clean membership only",
+    "trace_scaler": "one global trace mean/std fit on TRAIN clean membership only",
+    "source_specific_gain_matching": false,
+    "window_local_mad_division": false,
+    "rr_scaler": "mean/std fit on TRAIN RR-eligible rows only",
+    "invalid_feature_policy": "finite mask plus deterministic zero fill after masking; mask is retained as an input"
+  },
+  "source_balancing": {
+    "source_weights": {"D0": 0.75, "D1": 0.25},
+    "subject_weighting": "inverse eligible-example count per subject within source and split, normalized within source",
+    "blind_d1_oversampling": false,
+    "repeated_window_cap": 1
+  },
+  "synthetic_quality": {
+    "enabled": true,
+    "maximum_fraction_of_unique_clean_inputs_per_task": 0.1,
+    "actual_training_count": 50,
+    "profiles": ["MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1"],
+    "modes": ["FLAT_EXACT", "SOURCE_FREEZE", "STALE_SOURCE", "LARGE_GAP", "JITTER_PLUS_LARGE_GAP", "REPUBLICATION_TO_FREEZE"],
+    "physiology_target_rewrite": false,
+    "d2_used": false,
+    "mr60_labels_used": false,
+    "selection": "deterministic sorted training inputs; no VAL tuning"
+  },
+  "metrics": {
+    "fixed_breathing_threshold": 0.5,
+    "breathing": ["PR_AUC", "ROC_AUC", "recall", "precision", "F1", "Brier", "false_absent_on_PRESENT", "D1_present_probability_distribution"],
+    "rr": ["MAE", "median_absolute_error", "RMSE", "within_2_bpm", "within_4_bpm"],
+    "quality": ["hard_Q2_invalid_false_acceptance", "clean_false_rejection", "per_corruption_mode"],
+    "report_by": ["D0", "D1", "pooled", "seed", "family"],
+    "source_gap": "absolute D0-D1 metric gap where both are defined",
+    "seed_sensitivity": ["mean", "median", "std", "min", "max"],
+    "calibration": "diagnostics only (Brier/ECE); no calibration fitting",
+    "temporal_event_f1": "DEFERRED_TO_M_PV3_OR_LATER"
+  },
+  "artifact_policy": {
+    "evidence_root": "datasets/mmwave/manifests/M-PV2_candidate_training",
+    "model_roots": ["models/mmwave/m_pv2/family_a", "models/mmwave/m_pv2/family_b", "models/mmwave/m_pv2/family_c"],
+    "commit_checkpoints": "compact float32 state dictionaries only",
+    "forbidden_committed_artifacts": ["raw_archives", "waveform_arrays", "tensor_caches", "optimizer_states", "all_epoch_checkpoints", "int8_or_tflite_models"],
+    "paths": "repository-relative POSIX"
+  },
+  "exit_policy": {
+    "candidate_statuses": ["VIABLE", "NON_VIABLE", "DEGENERATE", "TECHNICALLY_FAILED"],
+    "pass_with_limitations_allowed": ["family_a_breathing_not_supported", "d1_absent_class_unavailable", "temporal_event_f1_deferred", "one_family_non_viable", "exact_byte_repeat_unavailable_if_canonical_hash_matches"],
+    "blocked_conditions": ["leakage", "d2_or_mr60_semantic_use", "all_breathing_families_collapse", "rr_unmeaningful_for_all_authorized_rr_heads", "q2_fail_open", "reproducibility_failure"],
+    "m_pv2_ready_for_m_pv3": "candidate_registry_bounded_not_final_selection"
+  }
+}
