@@ -1,0 +1,169 @@
+{
+  "schema_version": "1.0",
+  "stage_id": "B6R-0",
+  "artifact_identity": "B6R-0_runtime_lineage",
+  "generated_at": "2026-08-22T22:19:02+09:00",
+  "repository_relative_evidence": {
+    "manifest": "models/model_manifest.json",
+    "manifest_sha256": "ef0946008af944e424a83c1dd53a66c04e9fc71228843a33f3fb79a227a6921d",
+    "config": "config/models.yaml",
+    "config_sha256": "8a29d670df6c31a68fa8aa3a97c29651f6733865ac87d1b6f852f7f1ffbc4e50",
+    "interpreter": "inference/thermal_interpreter.py",
+    "pi_runner": "inference/infer_pi_thermal.py",
+    "runtime_config": "config/sensors.yaml"
+  },
+  "current_model_selector": {
+    "selector_exists": false,
+    "control_file": "models/model_manifest.json",
+    "control_key": "models.thermal",
+    "default_selection": true,
+    "opt_in_b6r_selector": false,
+    "explicit_rollback_selector": false,
+    "config_models_yaml_role": "duplicate_contract_used_by_validator; not the direct ThermalInterpreter selector"
+  },
+  "current_runtime_identity": {
+    "model_id": "thermal_fall_int8",
+    "version": "0.1.0",
+    "path": "models/thermal/thermal_fall_int8_v0.1.0.tflite",
+    "format": "TensorFlow Lite",
+    "quantization": "full_int8",
+    "deployment_allowed_in_manifest": true,
+    "validation_status_in_manifest": "CONFIRMED_SYNTHETIC_ONLY",
+    "actual_file_size_bytes": 318184,
+    "actual_file_sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+    "b5_full_int8_size_bytes": 318280,
+    "b5_full_int8_sha256": "fa9730c29535477a3994c11e664474a0ca0116afaaa172889f47446ab2ac46be",
+    "b5_binary_identity_match": false
+  },
+  "input_contract": {
+    "shape": [
+      1,
+      62,
+      80,
+      1
+    ],
+    "accepted_frame_shapes": [
+      [
+        62,
+        80
+      ],
+      [
+        62,
+        80,
+        1
+      ],
+      [
+        1,
+        62,
+        80,
+        1
+      ]
+    ],
+    "dtype": "int8",
+    "scale": 0.003921568859368563,
+    "zero_point": -128,
+    "semantic": "normalized_thermal_frame",
+    "source_locations": [
+      "models/model_manifest.json:19-30",
+      "inference/thermal_interpreter.py:93-135",
+      "inference/thermal_interpreter.py:137-163"
+    ]
+  },
+  "preprocessing_path": {
+    "identity": "LEGACY_PER_FRAME_MINMAX_OR_ASSUMED_0_1",
+    "actual_behavior": [
+      "cast input to float32",
+      "validate shape",
+      "reject NaN or infinity",
+      "if frame min < 0 or max > 1, apply frame-wise min-max to [0,1]",
+      "otherwise pass values through as already normalized",
+      "quantize using runtime input scale and zero point"
+    ],
+    "p1_global_zscore_used": false,
+    "robust_relative_b6r_used": false,
+    "source_locations": [
+      "inference/thermal_interpreter.py:137-179"
+    ]
+  },
+  "output_contract": {
+    "shape": [
+      1,
+      3
+    ],
+    "dtype": "int8",
+    "scale": 0.00390625,
+    "zero_point": -128,
+    "class_map": {
+      "0": "NOT_HUMAN",
+      "1": "HUMAN_NORMAL",
+      "2": "HUMAN_FALL"
+    },
+    "decode_behavior": [
+      "dequantize integer output",
+      "reject non-finite output",
+      "clip negative values to zero",
+      "renormalize positive values to a sum of one",
+      "return [0.333, 0.333, 0.334] if total probability is non-positive"
+    ],
+    "source_locations": [
+      "models/model_manifest.json:32-46",
+      "inference/thermal_interpreter.py:181-203"
+    ]
+  },
+  "error_and_invalid_frame_handling": {
+    "interpreter_init": [
+      "missing manifest raises FileNotFoundError",
+      "missing model raises FileNotFoundError",
+      "manifest/file hash mismatch raises ValueError",
+      "tensor contract mismatch raises ValueError"
+    ],
+    "pi_runner": {
+      "null_or_wrong_type": "valid=false, state=SENSOR_MISSING, error=FRAME_NULL_OR_INVALID_TYPE",
+      "wrong_shape": "valid=false, state=INVALID_SHAPE",
+      "80x62_shape": "transposed to 62x80",
+      "inference_exception": "valid=false, state=THERMAL_INFER_ERROR"
+    },
+    "source_locations": [
+      "inference/thermal_interpreter.py:61-91",
+      "inference/infer_pi_thermal.py:23-89"
+    ]
+  },
+  "observed_runtime_inconsistencies": [
+    {
+      "id": "PI_RUNNER_PREDICTION_FIELDS_NOT_IN_DATACLASS",
+      "evidence": "inference/infer_pi_thermal.py:68-75 accesses pred.fallback_reason and pred.fallback_used, but ThermalPrediction defines only fields at inference/thermal_interpreter.py:39-47",
+      "impact": "a successful prediction can be converted into THERMAL_INFER_ERROR by the runner after invoke",
+      "status": "RECORDED_NOT_FIXED"
+    },
+    {
+      "id": "CLASS_SEMANTICS_NAMING_MISMATCH",
+      "evidence": "current runtime emits HUMAN_FALL while B6-R roadmap uses HUMAN_FALL_PROXY for lying/fall-suspected posture proxy",
+      "impact": "current output must not be treated as B6-R semantic activation",
+      "status": "RECORDED_NOT_FIXED"
+    }
+  ],
+  "offline_vs_runtime": {
+    "offline_b_stage": {
+      "model_identity": "SMALL_CNN_BASELINE_V1",
+      "preprocessing": "P1_TRAIN_FITTED_GLOBAL_ZSCORE",
+      "artifact_chain": [
+        "FLOAT_KERAS",
+        "TFLITE_FP32",
+        "FULL_INT8"
+      ],
+      "artifact_materialization": "external_only_or_not_materialized_in_current_worktree"
+    },
+    "current_runtime": {
+      "model_identity": "thermal_fall_int8 v0.1.0",
+      "preprocessing": "legacy per-frame min-max or assumed [0,1]",
+      "artifact": "models/thermal/thermal_fall_int8_v0.1.0.tflite"
+    },
+    "equivalence_claim_supported": false,
+    "mismatch_status": "OFFLINE_B5_AND_CURRENT_RUNTIME_ARE_NOT_THE_SAME_VERIFIED_LINEAGE"
+  },
+  "b6r_activation": {
+    "active": false,
+    "evidence": "no B6R selector, robust-relative preprocessing identity, B6-R model manifest entry, or rollback configuration was found in active runtime paths",
+    "runtime_behavior_changed_by_this_audit": false
+  }
+}

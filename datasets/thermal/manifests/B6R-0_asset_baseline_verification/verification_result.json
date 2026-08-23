@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "stage_id": "B6R-0",
+  "artifact_identity": "B6R-0_verification_result",
+  "generated_at": "2026-08-22T22:19:02+09:00",
+  "status": "FAIL",
+  "decisions": {
+    "b5_transfer_arm_availability": "UNAVAILABLE",
+    "fresh_path_readiness": "NOT_READY",
+    "current_runtime_lineage": "legacy thermal_fall_int8 v0.1.0 from models/model_manifest.json",
+    "offline_runtime_equivalence": "NOT_ESTABLISHED"
+  },
+  "stop_conditions": [
+    {
+      "id": "B5_EXTERNAL_ASSETS_NOT_MATERIALIZED",
+      "severity": "HIGH",
+      "evidence": "B5 checkpoint and candidate binaries are recorded as external/not materialized; current exact bytes cannot be re-hashed here",
+      "action": "STOP; do not use a similarly named current legacy model as B5 evidence"
+    },
+    {
+      "id": "RUNTIME_CAPABILITY_UNAVAILABLE",
+      "severity": "HIGH",
+      "evidence": "TensorFlow, ai_edge_litert, and tflite_runtime are unavailable",
+      "action": "STOP; do not claim current tensor load or Pi runtime capability"
+    },
+    {
+      "id": "NO_PI_HARDWARE_EVIDENCE",
+      "severity": "MEDIUM",
+      "evidence": "Execution platform is Windows 11 AMD64 and no Pi device-tree evidence exists",
+      "action": "Do not claim Raspberry Pi latency, memory, or stability"
+    }
+  ],
+  "validation_evidence": [
+    {
+      "command_identity": "scripts/validate_thermal_t_b5.py --mode FULL_EXPERIMENT",
+      "exit_code": 1,
+      "result": "FAIL: live predecessor validation blocked by missing TensorFlow",
+      "historical_artifacts_modified": false
+    },
+    {
+      "command_identity": "scripts/validate_thermal_t_b4.py --mode FULL_EXPERIMENT",
+      "exit_code": 1,
+      "result": "FAIL: predecessor validation blocked by missing TensorFlow",
+      "historical_artifacts_modified": false
+    },
+    {
+      "command_identity": "scripts/validate_thermal_t_b5q1.py",
+      "exit_code": 0,
+      "result": "PASS_WITH_LIMITATIONS; no corrective candidate created",
+      "historical_artifacts_modified": false
+    },
+    {
+      "command_identity": "scripts/validate_thermal_t_b5_mi48_quantization_review.py",
+      "exit_code": 0,
+      "result": "PASS_WITH_LIMITATIONS; audit-only, no candidate created",
+      "historical_artifacts_modified": false
+    },
+    {
+      "command_identity": "AST parse of inference/thermal_interpreter.py and inference/infer_pi_thermal.py; JSON parse of models/model_manifest.json",
+      "exit_code": 0,
+      "result": "PASS",
+      "historical_artifacts_modified": false
+    },
+    {
+      "command_identity": "import inference.thermal_interpreter",
+      "exit_code": 1,
+      "result": "FAIL: ModuleNotFoundError for tensorflow after runtime fallbacks",
+      "historical_artifacts_modified": false
+    }
+  ],
+  "claims_allowed": [
+    "The current manifest selects thermal_fall_int8 v0.1.0 at the repository-relative legacy path.",
+    "The current legacy binary's SHA-256 and size match the current manifest.",
+    "Repository metadata identifies the historical B5 candidate chain and class/preprocessing/architecture identities.",
+    "The historical B5 binaries are not materialized in this current worktree.",
+    "The current runtime code contains legacy frame-wise min-max or assumed [0,1] preprocessing.",
+    "The repository contains source code whose layer arithmetic matches SMALL_CNN_BASELINE_V1 and 312131 parameters."
+  ],
+  "claims_not_allowed": [
+    "B5 FLOAT/Keras checkpoint is currently available or hash-verified.",
+    "The current legacy binary is the B5 FULL_INT8 candidate.",
+    "Current runtime uses P1_TRAIN_FITTED_GLOBAL_ZSCORE.",
+    "Current runtime uses B6-R robust-relative preprocessing.",
+    "TensorFlow/TFLite model load parity or current tensor details were runtime-verified here.",
+    "Raspberry Pi latency, memory, stability, or real Thermal-44 performance.",
+    "MI48 snapshot usability, schema, abnormal-pixel statistics, or split validity.",
+    "Any production or actual fall-detection performance claim."
+  ],
+  "scope_control": {
+    "agent_ownership": "LunaMax Agent 2 / B6R-0 only",
+    "agent1_dependency": "PENDING_B6R1_PARALLEL_RESULT",
+    "b6r1_executed": false,
+    "b6r2_executed": false,
+    "training_executed": false,
+    "runtime_behavior_modified": false,
+    "historical_artifacts_modified": false,
+    "legacy_model_binary_modified": false,
+    "mi48_raw_dataset_modified": false,
+    "docs_readme_modified": false,
+    "mmwave_modified": false,
+    "esp32_modified": false,
+    "co2_modified": false
+  },
+  "recommended_next_stage": "B6R-1",
+  "recommendation_status": "NOT_EXECUTED"
+}
