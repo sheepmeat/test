@@ -1,0 +1,20 @@
+{
+  "entries": [
+    {
+      "code": "PI_HOST_RECEIVE_TIMESTAMP_UNAVAILABLE",
+      "detail": "Inventoried ESP JSONL does not carry Pi host receive time"
+    },
+    {
+      "code": "PR18_AND_RECENT_PI_BLOBS_ABSENT",
+      "detail": "Q1 already recorded these families as unavailable git blobs"
+    },
+    {
+      "code": "3598_RUN_PREFIX_ONLY_IN_COMMITTED_SUMMARY",
+      "detail": "Full blob remains replayable via git object identity"
+    }
+  ],
+  "firmware_identities_may_be_null": true,
+  "i3_not_performed": true,
+  "phase": "I2",
+  "schema_version": "I2.1"
+}
