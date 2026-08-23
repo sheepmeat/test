@@ -1,0 +1,65 @@
+{
+  "candidate_output_accessed": false,
+  "candidates": [
+    {
+      "candidate_key": "Family_B_seed_11",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_B_seed_23",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_B_seed_47",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_11",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_23",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_47",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    }
+  ],
+  "card_id": "CARD_A_SAFETY",
+  "evaluation_status": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "input_unavailable_must_not_emit": [
+    "PRESENT",
+    "ABSENT",
+    "NORMAL",
+    "APNEA"
+  ],
+  "metrics": null,
+  "q2_scope": "NOT_EVALUATED_DUE_INVALID_FINAL_MEMBERSHIP",
+  "role_id": "ROLE_L_FULL_TASK",
+  "runtime_precedence": [
+    "PRESENCE",
+    "QUALITY_OR_AVAILABILITY",
+    "PHYSIOLOGY"
+  ],
+  "schema_version": "M-PV3.8.1_ROLE_L_FULL_TASK_FINAL_SELECTION",
+  "title": "Class A safety"
+}
