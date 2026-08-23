@@ -1,0 +1,153 @@
+{
+  "F1_role": "ABLATION_BASELINE_ONLY",
+  "F2_role": "ACTIVE_SCALAR_CANDIDATE",
+  "F3_role": "ACTIVE_TRACE_QUALITY_CANDIDATE",
+  "common_rate_hz": 10.0,
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "hybrid_profile": {
+    "breathing_evidence_supported": true,
+    "composition": [
+      "PROFILE_B_TRACE_F3_R1_V1",
+      "PROFILE_A_FEATURE_F2_V1"
+    ],
+    "new_feature_engineering": false,
+    "profile_id": "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1",
+    "status": "AUTHORIZED_CONDITIONAL_M_PV2_CANDIDATE",
+    "use_only_if": "M-PV2 family comparison requires a trace+scalar composition"
+  },
+  "low_amplitude_auto_normalization": false,
+  "native_scale_descriptors": [
+    "native_mad_about_median",
+    "native_robust_rms_about_median",
+    "native_robust_range_p05_p95",
+    "native_peak_to_peak",
+    "common_trace_mad_about_median",
+    "common_trace_robust_rms_about_median",
+    "total_signal_energy",
+    "total_signal_mean_square",
+    "log_total_signal_energy",
+    "respiratory_band_energy",
+    "respiratory_band_power",
+    "log_respiratory_band_energy"
+  ],
+  "original_scale_information_preserved": true,
+  "rate_decision": {
+    "engineering_basis": [
+      "D0 canonical trace is already exact 10 Hz",
+      "D1 500/2000 Hz reference and radar are anti-aliased to 10 Hz",
+      "10 Hz Nyquist is far above the 0.1-0.7 Hz respiratory band",
+      "fixed 300-sample context is small enough for on-device candidate families",
+      "deterministic scipy resample_poly path is already inherited by R1"
+    ],
+    "model_accuracy_used": false,
+    "status": "FROZEN"
+  },
+  "scalar_profile": {
+    "breathing_evidence_supported": false,
+    "feature_count": 25,
+    "feature_order": [
+      "spectral_shape_fraction_0p10_0p25_hz",
+      "spectral_shape_fraction_0p25_0p40_hz",
+      "spectral_shape_fraction_0p40_0p55_hz",
+      "spectral_shape_fraction_0p55_0p70_hz",
+      "spectral_shape_centroid_hz",
+      "spectral_shape_peak_frequency_hz",
+      "spectral_shape_peak_fraction",
+      "spectral_shape_entropy_normalized",
+      "native_mad_about_median",
+      "native_robust_rms_about_median",
+      "native_robust_range_p05_p95",
+      "native_peak_to_peak",
+      "common_trace_mad_about_median",
+      "common_trace_robust_rms_about_median",
+      "total_signal_energy",
+      "total_signal_mean_square",
+      "log_total_signal_energy",
+      "respiratory_band_power",
+      "respiratory_band_energy",
+      "log_respiratory_band_energy",
+      "autocorr_periodicity_peak_strength",
+      "autocorr_periodicity_peak_lag_s",
+      "autocorr_periodicity_peak_frequency_hz",
+      "autocorr_periodicity_lag_mean",
+      "autocorr_abs_entropy_normalized"
+    ],
+    "normalization": "TRAIN_FITTED_FEATURE_SCALER_ONLY_IF_NEEDED",
+    "profile_id": "PROFILE_A_FEATURE_F2_V1",
+    "quality_sidecar_order": [
+      "trace_sample_count",
+      "trace_duration_s",
+      "trace_mad_about_median",
+      "trace_robust_rms_about_median",
+      "trace_robust_range_p05_p95",
+      "trace_mean_square",
+      "trace_is_exact_flat",
+      "valid_sample_fraction",
+      "source_quality_flag_count"
+    ],
+    "source_contract": "MMWAVE_V2_R2_F2_SPECTRAL_AUTOCORR_V1",
+    "status": "ACTIVE_M_PV2_CANDIDATE_FOR_RR_QUALITY_ONLY",
+    "unsupported_reason": "global 30 s F2 representation has no defensible final 5 s target location"
+  },
+  "source_specific_gain_matching": false,
+  "task_compatibility_matrix": {
+    "PROFILE_A_FEATURE_F2_V1": {
+      "breathing_evidence": false,
+      "quality": true,
+      "reason": "global 30 s F2 vector does not preserve the final 5 s target location",
+      "rr": true,
+      "temporal_hold": false
+    },
+    "PROFILE_B_TRACE_F3_R1_V1": {
+      "breathing_evidence": true,
+      "quality": true,
+      "reason": "ordered 10 Hz trace and mask preserve the fixed final target interval",
+      "rr": true,
+      "temporal_hold": false
+    },
+    "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1": {
+      "breathing_evidence": true,
+      "quality": true,
+      "reason": "trace branch preserves target location; F2 remains auxiliary",
+      "rr": true,
+      "temporal_hold": false
+    }
+  },
+  "trace_profile": {
+    "breathing_evidence_supported": true,
+    "context_samples": 300,
+    "mask": "TRUE only for finite trace with valid timing; no zero-fill",
+    "profile_id": "PROFILE_B_TRACE_F3_R1_V1",
+    "quality_sidecar_order": [
+      "trace_sample_count",
+      "trace_duration_s",
+      "trace_mad_about_median",
+      "trace_robust_rms_about_median",
+      "trace_robust_range_p05_p95",
+      "trace_mean_square",
+      "trace_is_exact_flat",
+      "valid_sample_fraction",
+      "source_quality_flag_count"
+    ],
+    "rate_hz": 10.0,
+    "scale_descriptor_order": [
+      "native_mad_about_median",
+      "native_robust_rms_about_median",
+      "native_robust_range_p05_p95",
+      "native_peak_to_peak",
+      "common_trace_mad_about_median",
+      "common_trace_robust_rms_about_median",
+      "total_signal_energy",
+      "total_signal_mean_square",
+      "log_total_signal_energy",
+      "respiratory_band_energy",
+      "respiratory_band_power",
+      "log_respiratory_band_energy"
+    ],
+    "source_contract": "MMWAVE_V2_R2_F3_TRACE_PLUS_QUALITY_DESCRIPTOR_V1",
+    "status": "ACTIVE_M_PV2_CANDIDATE",
+    "trace_contract": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+    "trace_order": "oldest_to_newest, index 0 at context_start_s"
+  },
+  "window_local_MAD_divide_only": false
+}

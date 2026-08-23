@@ -1,0 +1,32 @@
+{
+  "D0": {
+    "allowed_splits": [
+      "TRAIN",
+      "VAL",
+      "D0_SUBJECT_HELDOUT"
+    ],
+    "m_pv1_examples": "TRAIN only; one unique causal context per D0 window with fixed final breathing target",
+    "mr60_supervised": false,
+    "role": "PRIMARY_SUPERVISED_DEVELOPMENT_DOMAIN",
+    "source": "10.5281/zenodo.18599983_v1.1"
+  },
+  "D1": {
+    "m_pv1_examples": "D1_DEV_TRAIN and D1_DEV_VAL subject-disjoint 30 s reference contexts where duration permits; breathing target is fixed final 5 s",
+    "mr60_supervised": false,
+    "recordings": 265,
+    "role": "AUXILIARY_CROSS_DOMAIN_REFERENCE_DEVELOPMENT_DOMAIN",
+    "source": "10.6084/m9.figshare.9691544.v1"
+  },
+  "D2": {
+    "m_pv1_access": "custody-state only",
+    "role": "LOCKED_PUBLIC_CROSS_DEVICE_TEST"
+  },
+  "D3": {
+    "status": "NOT_INCLUDED_NON_BLOCKING"
+  },
+  "MR60": {
+    "role": "REFERENCE_OR_QA_ONLY",
+    "supervised_physiology": "FORBIDDEN"
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1"
+}

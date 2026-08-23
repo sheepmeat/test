@@ -1,0 +1,40 @@
+{
+  "causal_context": true,
+  "contract_id": "MMWAVE_V2_M_PV1_TEMPORAL_CONTEXT_CONTRACT_V1",
+  "direct_temporal_hold_neural_supervision": false,
+  "gap_policy": "Q2 fail closed; no interpolation across large gaps or source freeze",
+  "hold_composition": "breathing evidence + RR + hard quality gate -> deterministic sequential temporal composer",
+  "mask_policy": "valid timing and finite trace mask; Q2 invalid windows are INPUT_UNAVAILABLE",
+  "minimum_usable_duration_s": 30.0,
+  "model_context_duration_s": 30.0,
+  "model_context_samples": 300,
+  "model_context_semantics": "[t-30 s, t] causal context",
+  "model_evaluation_stride_s": 5.0,
+  "padding_policy": "no physiological padding; no zero-fill as valid signal",
+  "persistence_threshold": "not finalized; later development-only calibration may choose an application threshold without clinical apnea language",
+  "rr_reference_interval": {
+    "anchor": "FULL_CAUSAL_CONTEXT_REFERENCE_INTERVAL",
+    "duration_s": 30.0,
+    "separate_from_breathing_target": true
+  },
+  "short_record_policy": "D1 <30 s is reference/feature audit only and is excluded from model-ready fixed-context examples",
+  "target_interval": {
+    "arbitrary_internal_target_interval": false,
+    "breathing_target_anchor": "FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT",
+    "breathing_target_duration_s": 5.0,
+    "breathing_target_semantics": "same fixed final interval for PRESENT, ABSENT, AMBIGUOUS, and TARGET_UNAVAILABLE",
+    "default": "breathing evidence always uses final fixed 5 s interval [t-5 s, t]",
+    "event_relative_hold_interval_s": 5.0,
+    "future_information_allowed": false,
+    "must_be_fully_inside_authoritative_event": true
+  },
+  "temporal_history": {
+    "crosses_recording": false,
+    "crosses_session": false,
+    "crosses_subject": false,
+    "history_is_not_a_training_label": true,
+    "previous_valid_baseline_required": true,
+    "representation": "sequential composer state keyed by previous valid breathing context"
+  },
+  "temporal_hold_learning_boundary": "DETERMINISTIC_POST_BREATHING_COMPOSITION_ONLY"
+}

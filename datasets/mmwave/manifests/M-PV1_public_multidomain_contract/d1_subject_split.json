@@ -1,0 +1,73 @@
+{
+  "algorithm": "SHA256(namespace:seed:subject_id) ascending; first 8 DEV_TRAIN; remaining 3 DEV_VAL",
+  "assignment": {
+    "D1_PERSON_01": "D1_DEV_TRAIN",
+    "D1_PERSON_02": "D1_DEV_TRAIN",
+    "D1_PERSON_03": "D1_DEV_VAL",
+    "D1_PERSON_04": "D1_DEV_TRAIN",
+    "D1_PERSON_05": "D1_DEV_TRAIN",
+    "D1_PERSON_06": "D1_DEV_TRAIN",
+    "D1_PERSON_07": "D1_DEV_TRAIN",
+    "D1_PERSON_08": "D1_DEV_TRAIN",
+    "D1_PERSON_09": "D1_DEV_VAL",
+    "D1_PERSON_10": "D1_DEV_TRAIN",
+    "D1_PERSON_11": "D1_DEV_VAL"
+  },
+  "condition_coverage_by_split": {
+    "D1_DEV_TRAIN": {
+      "after_sport": 13,
+      "angle_variation": 16,
+      "apnea": 19,
+      "apnea_after_sport": 7,
+      "artefact_movement": 3,
+      "artefact_speech": 3,
+      "default": 112,
+      "distance_variation": 9,
+      "lying": 4,
+      "standing": 17
+    },
+    "D1_DEV_VAL": {
+      "after_sport": 5,
+      "angle_variation": 8,
+      "apnea": 6,
+      "artefact_movement": 1,
+      "artefact_speech": 3,
+      "default": 27,
+      "distance_variation": 3,
+      "sitting": 3,
+      "standing": 6
+    }
+  },
+  "counts": {
+    "D1_DEV_TRAIN": 8,
+    "D1_DEV_VAL": 3
+  },
+  "final_test_created": false,
+  "namespace": "MMWAVE_V2_M_PV1_D1_DEV_SPLIT",
+  "performance_selection": "FORBIDDEN",
+  "recording_counts_by_split": {
+    "D1_DEV_TRAIN": 203,
+    "D1_DEV_VAL": 62
+  },
+  "recording_level_leakage": "NO",
+  "seed": 20260823,
+  "split_identity": "MMWAVE_V2_M_PV1_D1_DEV_SUBJECT_SPLIT_V1",
+  "split_unit": "SUBJECT",
+  "subject_ids": {
+    "D1_DEV_TRAIN": [
+      "D1_PERSON_01",
+      "D1_PERSON_02",
+      "D1_PERSON_04",
+      "D1_PERSON_05",
+      "D1_PERSON_06",
+      "D1_PERSON_07",
+      "D1_PERSON_08",
+      "D1_PERSON_10"
+    ],
+    "D1_DEV_VAL": [
+      "D1_PERSON_03",
+      "D1_PERSON_09",
+      "D1_PERSON_11"
+    ]
+  }
+}
