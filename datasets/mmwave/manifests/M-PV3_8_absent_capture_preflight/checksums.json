@@ -1,0 +1,9 @@
+{
+  "schema_version": "M-PV3.8.4_CAPTURE_PREFLIGHT_V1",
+  "preflight_id": "MMWAVE_V2_M_PV38_ABSENT_CAPTURE_PREFLIGHT_V1",
+  "artifacts": {
+    "datasets/mmwave/manifests/M-PV3_8_absent_capture_preflight/preflight_readiness.json": "56f4bfd69974c8fcce1202e133f99c218d01307ee86f05ce3835dc4f58f69a66",
+    "datasets/mmwave/manifests/M-PV3_8_absent_capture_preflight/validation_result.json": "57a999f9f2138e8de098dc378f14f6c09977b5617e86d78c49d25707f6012ae7",
+    "docs/mmwave/20260823_SafeNest_mmWave_M-PV3_8_ABSENT_Capture_Preflight_Result_01.md": "842c1517f6c0935d45b4b0b0b369949a130cc15877a9ceba5c7dd8d89a49775b"
+  }
+}
