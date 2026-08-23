@@ -1,0 +1,21 @@
+{
+  "algorithm": "SHA-256",
+  "config_file": {
+    "path": "config/mmwave/i3_fail_closed_regression_contract.json",
+    "sha256": "9ebbe0b33e68e6f29dc611972c3bf9ca5675fa03d06e859d78223ac2a0b1903a"
+  },
+  "encoding": "utf-8 JSON indent=2 sort_keys=True trailing newline",
+  "files": {
+    "availability_precedence_audit.json": "9df92c5dc4f5e005fb0803f0fc07bc78bf171f0ff3a9d4d98ff485135b638fdc",
+    "determinism_audit.json": "34665b9fd92aa8ba99e08fd804d0951113f45e8663b0a068851cc77c9794e2ec",
+    "exception_registry.json": "53fe5c3741e24cadb4ef7b185675d3c4d74565e33ce2a6932a869765111d79d9",
+    "historical_replay_regression.json": "ae50e8d2fca1b9ef238865d271edc78f1dc09603d89fcba959a119fcce9dc4aa",
+    "i3_regression_contract.json": "9ebbe0b33e68e6f29dc611972c3bf9ca5675fa03d06e859d78223ac2a0b1903a",
+    "presence_precedence_audit.json": "ccb7a80ac76181a20d325a0268fc6824772acae6a97c0771f11068bd37e513e5",
+    "regression_matrix.json": "b95ec4bba039d1de63e7b752305227a830083264345bb5d8bf86828119e727f6",
+    "session_reset_audit.json": "678239e4e2494fc24a2b2b343a7f8716e89b0e420c46199f006e38ac5653bb81",
+    "synthetic_q2_regression.json": "0e898e8526125fdc430e5c87f20440bd66fd02f32b4def6827919eaa6daf704a"
+  },
+  "phase": "I3",
+  "schema_version": "I3.1"
+}

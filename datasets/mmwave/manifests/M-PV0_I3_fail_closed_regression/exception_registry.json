@@ -1,0 +1,19 @@
+{
+  "entries": [
+    {
+      "code": "HISTORICAL_3598_PREFIX_ONLY",
+      "detail": "Committed I3 summary reuses the I2 64-row prefix; the full blob remains replayable by git SHA"
+    },
+    {
+      "code": "PI_HOST_RECEIVE_CLOCK_ABSENT",
+      "detail": "Inventoried ESP JSONL has no Pi host receive timestamp"
+    },
+    {
+      "code": "LEGACY_FIRMWARE_NULL",
+      "detail": "Several 1.0 historical sessions have null firmware_version"
+    }
+  ],
+  "near_flat_threshold": "NOT_ADDED",
+  "phase": "I3",
+  "schema_version": "I3.1"
+}

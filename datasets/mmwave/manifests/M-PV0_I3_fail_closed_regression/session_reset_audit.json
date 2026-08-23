@@ -1,0 +1,18 @@
+{
+  "device_change_resets": true,
+  "firmware_change_resets": true,
+  "i2_owns_parser_rejects": true,
+  "phase": "I3",
+  "q2_owns_runtime_timing_unavailability": true,
+  "rejected_reasons": [
+    "NON_NUMERIC_TIMESTAMP",
+    "TRUNCATED_ROW"
+  ],
+  "seq_gap_interpolated": false,
+  "seq_gap_replayed_count": 2,
+  "session_a_state": "INPUT_UNAVAILABLE",
+  "session_b_independent_state": "PHYSIOLOGY_ELIGIBLE",
+  "session_state_leak": false,
+  "session_unit_reset_observed": true,
+  "silent_timestamp_repair": false
+}

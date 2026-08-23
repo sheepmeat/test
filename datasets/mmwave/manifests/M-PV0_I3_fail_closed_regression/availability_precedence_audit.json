@@ -1,0 +1,89 @@
+{
+  "audit_date": "2026-08-23",
+  "class_confidence_overrides_unavailable": false,
+  "exact_flat": {
+    "availability_state": "INPUT_UNAVAILABLE",
+    "interpolation_applied": false,
+    "physiology_class_assigned": null,
+    "primary_reason": "SIGNAL_FLAT_EXACT",
+    "reasons": [
+      "SIGNAL_FLAT_EXACT"
+    ],
+    "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+  },
+  "invalid_timestamp": {
+    "availability_state": "INPUT_UNAVAILABLE",
+    "interpolation_applied": false,
+    "physiology_class_assigned": null,
+    "primary_reason": "TIMESTAMP_UNRESOLVED",
+    "reasons": [
+      "TIMESTAMP_UNRESOLVED"
+    ],
+    "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+  },
+  "isolated_republication": {
+    "availability_state": "PHYSIOLOGY_ELIGIBLE",
+    "reasons": []
+  },
+  "large_gap": {
+    "availability_state": "INPUT_UNAVAILABLE",
+    "interpolation_applied": false,
+    "physiology_class_assigned": null,
+    "primary_reason": "LARGE_GAP",
+    "reasons": [
+      "LARGE_GAP"
+    ],
+    "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+  },
+  "low_amplitude_dynamic": {
+    "availability_state": "PHYSIOLOGY_ELIGIBLE",
+    "reasons": []
+  },
+  "phase": "I3",
+  "production_missing_freshness": {
+    "availability_state": "INPUT_UNAVAILABLE",
+    "reasons": [
+      "SOURCE_STALE"
+    ]
+  },
+  "public_missing_freshness": {
+    "i1_availability_state": "PHYSIOLOGY_ELIGIBLE",
+    "q2_availability_state": "PHYSIOLOGY_ELIGIBLE"
+  },
+  "recovery": {
+    "availability_state": "INPUT_UNAVAILABLE",
+    "interpolation_applied": false,
+    "physiology_class_assigned": null,
+    "primary_reason": "LARGE_GAP",
+    "reasons": [
+      "LARGE_GAP",
+      "SIGNAL_FLAT_EXACT",
+      "RECOVERY_WARMUP"
+    ],
+    "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+  },
+  "source_freeze": {
+    "availability_state": "INPUT_UNAVAILABLE",
+    "interpolation_applied": false,
+    "physiology_class_assigned": null,
+    "primary_reason": "SOURCE_FREEZE",
+    "reasons": [
+      "SOURCE_FREEZE"
+    ],
+    "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+  },
+  "stale": {
+    "availability_state": "INPUT_UNAVAILABLE",
+    "interpolation_applied": false,
+    "physiology_class_assigned": null,
+    "primary_reason": "SOURCE_STALE",
+    "reasons": [
+      "SOURCE_STALE"
+    ],
+    "window_state": "INVALID_WINDOW_INPUT_UNAVAILABLE"
+  },
+  "typical_jitter": {
+    "availability_state": "PHYSIOLOGY_ELIGIBLE",
+    "reasons": []
+  }
+}
