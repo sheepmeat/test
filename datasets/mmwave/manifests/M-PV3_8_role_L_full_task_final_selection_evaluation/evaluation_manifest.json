@@ -1,0 +1,315 @@
+{
+  "authorized_candidates": [
+    "Family_B_seed_11",
+    "Family_B_seed_23",
+    "Family_B_seed_47",
+    "Family_C_seed_11",
+    "Family_C_seed_23",
+    "Family_C_seed_47"
+  ],
+  "blocking_reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 is not locked and does not contain the required 57 eligible ABSENT contexts (19 per held-out subject).",
+  "candidate_count": 6,
+  "candidate_evaluation_performed": false,
+  "candidate_output_accessed": false,
+  "candidate_roster_audit": {
+    "authorized_roster_matches_contract": true,
+    "checkpoint_files_opened": false,
+    "expected_authorized_roster": [
+      "Family_B_seed_11",
+      "Family_B_seed_23",
+      "Family_B_seed_47",
+      "Family_C_seed_11",
+      "Family_C_seed_23",
+      "Family_C_seed_47"
+    ],
+    "observed_authorized_roster": [
+      "Family_B_seed_11",
+      "Family_B_seed_23",
+      "Family_B_seed_47",
+      "Family_C_seed_11",
+      "Family_C_seed_23",
+      "Family_C_seed_47"
+    ],
+    "registry": "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json",
+    "registry_sha256": "6dd9bee70e5d1decfb2e60e8f3cf5afbcc28a73a6b2791057f425e129719044f"
+  },
+  "cards": {
+    "breathing": "card_b_breathing.json",
+    "candidate_decision_table": "candidate_decision_table.json",
+    "membership_audit": "membership_audit.json",
+    "rr": "card_c_rr.json",
+    "safety": "card_a_safety.json",
+    "stability": "card_d_stability.json"
+  },
+  "combined_score_created": false,
+  "contract_id": "MMWAVE_V2_M_PV38_MINIMAL_SELECTION_READINESS_GATE_V1",
+  "contract_mode": "CONTRACT_DESIGN_ONLY",
+  "contract_schema_version": "M-PV3.8.1",
+  "contract_sha256": "ed7e36e38c237098ccb8e0dd96c96cd3b8a2baf6d6a9039b913438492ed0a357",
+  "d2_access": false,
+  "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "evaluation_mode": "FINAL_SELECTION_MEMBERSHIP_GATE",
+  "excluded_candidates": [
+    "Family_A",
+    "ROLE_S_SHORT_CONTEXT_15s",
+    "M-PV3.5_isolation_CNN"
+  ],
+  "m_pv4_approved": false,
+  "membership_audit": {
+    "ambiguous_exception_registry_present": false,
+    "ambiguous_records": [
+      {
+        "breathing_reference_state": "BREATHING_REFERENCE_AMBIGUOUS",
+        "breathing_supervision_eligible": false,
+        "model_input_id": "D1::D1_PERSON_03-2017-01-17_18-14-30__C000",
+        "provenance": {
+          "label_mapping": null,
+          "quality_provenance": null,
+          "quality_status": "CLEAN",
+          "recording_or_session": "D1_PERSON_03-2017-01-17_18-14-30",
+          "reference_method": "D1_RESPIRATION_WELCH_PERIODICITY_V1",
+          "source_dataset": "10.6084/m9.figshare.9691544.v1",
+          "source_file": "datasets/raw_archives/external_datasets/d1_2417ghz/extracted/datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/apnea/DATASET_2017-01-17_18-14-30_Person 3.mat",
+          "split": "D1_DEV_VAL",
+          "subject": "D1_PERSON_03",
+          "time_or_window": {
+            "context_end_s": 30.0,
+            "context_start_s": 0.0,
+            "context_time_range_s": [
+              0.0,
+              30.0
+            ],
+            "target_end_s": 30.0,
+            "target_start_s": 25.0
+          }
+        },
+        "quality_status": "CLEAN",
+        "recording_id": "D1_PERSON_03-2017-01-17_18-14-30",
+        "split": "D1_DEV_VAL",
+        "subject_id": "D1_PERSON_03"
+      },
+      {
+        "breathing_reference_state": "BREATHING_REFERENCE_AMBIGUOUS",
+        "breathing_supervision_eligible": false,
+        "model_input_id": "D1::D1_PERSON_09-2017-02-13_10-43-37__C000",
+        "provenance": {
+          "label_mapping": null,
+          "quality_provenance": null,
+          "quality_status": "CLEAN",
+          "recording_or_session": "D1_PERSON_09-2017-02-13_10-43-37",
+          "reference_method": "D1_RESPIRATION_WELCH_PERIODICITY_V1",
+          "source_dataset": "10.6084/m9.figshare.9691544.v1",
+          "source_file": "datasets/raw_archives/external_datasets/d1_2417ghz/extracted/datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-13_10-43-37_Person 9.mat",
+          "split": "D1_DEV_VAL",
+          "subject": "D1_PERSON_09",
+          "time_or_window": {
+            "context_end_s": 30.0,
+            "context_start_s": 0.0,
+            "context_time_range_s": [
+              0.0,
+              30.0
+            ],
+            "target_end_s": 30.0,
+            "target_start_s": 25.0
+          }
+        },
+        "quality_status": "CLEAN",
+        "recording_id": "D1_PERSON_09-2017-02-13_10-43-37",
+        "split": "D1_DEV_VAL",
+        "subject_id": "D1_PERSON_09"
+      }
+    ],
+    "blocking_reasons": [
+      "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership manifest is not present in the repository.",
+      "Required eligible ABSENT contexts: 57; observed governed eligible ABSENT contexts: 0.",
+      "Each held-out subject is missing the required 19 eligible ABSENT contexts.",
+      "The one-time membership lock, membership checksum coverage, and ambiguous exception registry cannot be verified.",
+      "The available D1 source rows do not carry all final-lock provenance fields as explicit fields: label_mapping, quality_provenance."
+    ],
+    "candidate_training_subject_disjointness": {
+      "held_out_subject_count": 3,
+      "overlap": [],
+      "pass": true,
+      "training_split_scope": [
+        "TRAIN",
+        "D1_DEV_TRAIN"
+      ],
+      "training_subject_count": 74
+    },
+    "expected_membership_manifest_candidates": [
+      {
+        "path": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/membership_manifest.json",
+        "present": false
+      },
+      {
+        "path": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/manifest.json",
+        "present": false
+      },
+      {
+        "path": "datasets/mmwave/manifests/M-PV3_8_minimal_selection_readiness_gate/D1_FINAL_SELECTION_BOTH_CLASS_V1_membership_manifest.json",
+        "present": false
+      },
+      {
+        "path": "datasets/mmwave/manifests/M-PV3_8_minimal_selection_readiness_gate/d1_final_selection_membership_manifest.json",
+        "present": false
+      }
+    ],
+    "held_out_subjects": [
+      "D1_PERSON_03",
+      "D1_PERSON_09",
+      "D1_PERSON_11"
+    ],
+    "membership_checksum_coverage": false,
+    "membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+    "membership_lock_valid": false,
+    "membership_manifest_present": false,
+    "observed_class_counts_by_subject": {
+      "D1_PERSON_03": {
+        "absent": 0,
+        "ambiguous": 1,
+        "present": 19
+      },
+      "D1_PERSON_09": {
+        "absent": 0,
+        "ambiguous": 1,
+        "present": 24
+      },
+      "D1_PERSON_11": {
+        "absent": 0,
+        "ambiguous": 0,
+        "present": 14
+      }
+    },
+    "observed_source_rows": {
+      "ambiguous": 2,
+      "d1_final_split_model_ready": 59,
+      "eligible_absent": 0,
+      "eligible_present": 57,
+      "model_ready_total": 562,
+      "required_absent": 57,
+      "required_ambiguous_handling": "RETAIN_PROVENANCE_EXCLUDE_FROM_PURE_CLASS_METRICS_NO_RELABEL",
+      "required_present": 57
+    },
+    "per_subject": {
+      "D1_PERSON_03": {
+        "absent_deficit": 19,
+        "ambiguous_records": [
+          {
+            "breathing_reference_state": "BREATHING_REFERENCE_AMBIGUOUS",
+            "breathing_supervision_eligible": false,
+            "model_input_id": "D1::D1_PERSON_03-2017-01-17_18-14-30__C000",
+            "provenance": {
+              "label_mapping": null,
+              "quality_provenance": null,
+              "quality_status": "CLEAN",
+              "recording_or_session": "D1_PERSON_03-2017-01-17_18-14-30",
+              "reference_method": "D1_RESPIRATION_WELCH_PERIODICITY_V1",
+              "source_dataset": "10.6084/m9.figshare.9691544.v1",
+              "source_file": "datasets/raw_archives/external_datasets/d1_2417ghz/extracted/datasets/measurement_data_person3/PCG_front_radar_front/radar_4L_PCG_2L/apnea/DATASET_2017-01-17_18-14-30_Person 3.mat",
+              "split": "D1_DEV_VAL",
+              "subject": "D1_PERSON_03",
+              "time_or_window": {
+                "context_end_s": 30.0,
+                "context_start_s": 0.0,
+                "context_time_range_s": [
+                  0.0,
+                  30.0
+                ],
+                "target_end_s": 30.0,
+                "target_start_s": 25.0
+              }
+            },
+            "quality_status": "CLEAN",
+            "recording_id": "D1_PERSON_03-2017-01-17_18-14-30",
+            "split": "D1_DEV_VAL",
+            "subject_id": "D1_PERSON_03"
+          }
+        ],
+        "observed_ambiguous": 1,
+        "observed_eligible_absent": 0,
+        "observed_eligible_present": 19,
+        "observed_total_model_ready_contexts": 20,
+        "required_eligible_absent": 19,
+        "required_eligible_present": 19
+      },
+      "D1_PERSON_09": {
+        "absent_deficit": 19,
+        "ambiguous_records": [
+          {
+            "breathing_reference_state": "BREATHING_REFERENCE_AMBIGUOUS",
+            "breathing_supervision_eligible": false,
+            "model_input_id": "D1::D1_PERSON_09-2017-02-13_10-43-37__C000",
+            "provenance": {
+              "label_mapping": null,
+              "quality_provenance": null,
+              "quality_status": "CLEAN",
+              "recording_or_session": "D1_PERSON_09-2017-02-13_10-43-37",
+              "reference_method": "D1_RESPIRATION_WELCH_PERIODICITY_V1",
+              "source_dataset": "10.6084/m9.figshare.9691544.v1",
+              "source_file": "datasets/raw_archives/external_datasets/d1_2417ghz/extracted/datasets/measurement_data_person9/PCG_neck_radar_neck/PCG_carotid_R_radar_carotid_L/DATASET_2017-02-13_10-43-37_Person 9.mat",
+              "split": "D1_DEV_VAL",
+              "subject": "D1_PERSON_09",
+              "time_or_window": {
+                "context_end_s": 30.0,
+                "context_start_s": 0.0,
+                "context_time_range_s": [
+                  0.0,
+                  30.0
+                ],
+                "target_end_s": 30.0,
+                "target_start_s": 25.0
+              }
+            },
+            "quality_status": "CLEAN",
+            "recording_id": "D1_PERSON_09-2017-02-13_10-43-37",
+            "split": "D1_DEV_VAL",
+            "subject_id": "D1_PERSON_09"
+          }
+        ],
+        "observed_ambiguous": 1,
+        "observed_eligible_absent": 0,
+        "observed_eligible_present": 24,
+        "observed_total_model_ready_contexts": 25,
+        "required_eligible_absent": 19,
+        "required_eligible_present": 19
+      },
+      "D1_PERSON_11": {
+        "absent_deficit": 19,
+        "ambiguous_records": [],
+        "observed_ambiguous": 0,
+        "observed_eligible_absent": 0,
+        "observed_eligible_present": 14,
+        "observed_total_model_ready_contexts": 14,
+        "required_eligible_absent": 19,
+        "required_eligible_present": 19
+      }
+    },
+    "provenance_required_fields": [
+      "source_dataset",
+      "subject",
+      "recording_or_session",
+      "time_or_window",
+      "label_mapping",
+      "split",
+      "quality_provenance"
+    ],
+    "source_boundary": "D1_GOVERNED_NON_D2_ONLY",
+    "source_manifest": "datasets/mmwave/manifests/M-PV1_public_multidomain_contract/m_pv2_example_manifest.json",
+    "source_manifest_sha256": "48c942e02c3c4048a2146553837a9e049e179826a70afda2c5cd4f5ae47de42b",
+    "source_row_explicit_provenance_missing_counts": {
+      "label_mapping": 59,
+      "quality_provenance": 59
+    }
+  },
+  "membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+  "mr60_supervised_physiology": false,
+  "phase": "M-PV3.8",
+  "post_hoc_seed_selection": false,
+  "ranking_created": false,
+  "role_id": "ROLE_L_FULL_TASK",
+  "schema_version": "M-PV3.8.1_ROLE_L_FULL_TASK_FINAL_SELECTION",
+  "selected_candidate": null,
+  "selection_result": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "threshold_modified": false,
+  "training_performed": false
+}

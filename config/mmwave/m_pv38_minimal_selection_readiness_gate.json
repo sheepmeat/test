@@ -1,0 +1,96 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV38_MINIMAL_SELECTION_READINESS_GATE_V1",
+  "schema_version": "M-PV3.8.1",
+  "phase": "M-PV3.8",
+  "mode": "CONTRACT_DESIGN_ONLY",
+  "purpose": "Define the one bounded, final both-class validation gate that is minimally required before an existing ROLE_L_FULL_TASK candidate can be selected for a later M-PV4 gate.",
+  "current_decision": {
+    "primary_candidate_direction": "ROLE_L_FULL_TASK_30_SECONDS",
+    "secondary_candidate_direction": "ROLE_S_SHORT_CONTEXT_15_SECONDS",
+    "m_pv35_context_conclusion": "NO_STABLE_CONTEXT_LENGTH_WINNER",
+    "m_pv3_selection_state": "NO_SELECTION_READY",
+    "selection_performed_in_this_phase": false
+  },
+  "authorized_candidate_roster": {
+    "role_id": "ROLE_L_FULL_TASK",
+    "families": ["Family_B", "Family_C"],
+    "seeds": [11, 23, 47],
+    "candidates": ["Family_B_seed_11", "Family_B_seed_23", "Family_B_seed_47", "Family_C_seed_11", "Family_C_seed_23", "Family_C_seed_47"],
+    "candidate_count": 6,
+    "role_input_shape": "[B,300,1]",
+    "secondary_role_status": "ROLE_S_SHORT_CONTEXT_IS_OUT_OF_SCOPE_FOR_THIS_SELECTION_GATE_AND_CANNOT_COMPENSATE_FOR_OR_REPLACE_ROLE_L_FULL_TASK"
+  },
+  "frozen_rules": {
+    "breathing": {
+      "present_recall_min": 0.95,
+      "brier_max": 0.05
+    },
+    "rr": {
+      "mae_bpm_max": 5.0,
+      "within_2_bpm_min": 0.4,
+      "within_4_bpm_min": 0.6,
+      "within_6_bpm_min": 0.75
+    },
+    "safety": {
+      "q2_fail_closed": true,
+      "runtime_precedence": ["PRESENCE", "QUALITY_OR_AVAILABILITY", "PHYSIOLOGY"],
+      "input_unavailable_must_not_emit": ["PRESENT", "ABSENT", "NORMAL", "APNEA"]
+    },
+    "prohibitions": ["THRESHOLD_RELAXATION", "CALIBRATION_FITTING", "WEIGHTED_SCORE", "COMBINED_RANKING", "PARETO_WINNER", "POST_HOC_SEED_SELECTION", "D2_ACCESS", "MR60_SUPERVISED_PHYSIOLOGY"]
+  },
+  "one_time_final_validation_membership": {
+    "membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+    "state": "REQUIRES_ONE_GOVERNED_LOCK_BEFORE_CANDIDATE_OUTPUT_ACCESS",
+    "source_boundary": "D1_GOVERNED_NON_D2_ONLY",
+    "candidate_training_subject_disjoint": true,
+    "held_out_subjects": ["D1_PERSON_03", "D1_PERSON_09", "D1_PERSON_11"],
+    "subject_count": 3,
+    "present_requirement": {
+      "eligible_contexts": 57,
+      "rule": "Include the existing 57 eligible D1 PRESENT contexts; do not regenerate labels or replace contexts after lock."
+    },
+    "absent_requirement": {
+      "eligible_contexts": 57,
+      "per_held_out_subject": 19,
+      "rule": "Lock exactly 57 eligible D1 ABSENT contexts, 19 from each held-out subject, before any M-PV3.8 candidate output is inspected."
+    },
+    "subject_rule": "Every included subject must contribute both eligible PRESENT and eligible ABSENT contexts. No subject, recording, or window may be in candidate training and this final membership.",
+    "ambiguous_handling": {
+      "retain_in_provenance_and_exception_registry": true,
+      "exclude_from_pure_class_breathing_metrics": true,
+      "exclude_from_present_and_absent_membership_counts": true,
+      "must_not_be_relabeled_as_present_or_absent": true
+    },
+    "provenance_requirement": ["source_dataset", "subject", "session_or_recording", "time_or_window", "label_mapping", "split", "quality_provenance"],
+    "lock_rule": "The complete membership manifest, hashes, class counts, and subject counts are frozen before any of the six candidate outputs are opened. No top-up, replacement, resampling, or second final membership is permitted."
+  },
+  "evaluation_protocol": {
+    "evaluate_every_authorized_candidate_once": true,
+    "same_locked_membership_for_every_candidate": true,
+    "fixed_checkpoints_and_preprocessing_only": true,
+    "no_retraining_or_new_architecture_in_this_gate": true,
+    "class_a_safety_metrics": ["q2_invalid_false_acceptance", "fail_closed_preservation", "invalid_to_physiology_transition", "input_unavailable_forbidden_emission_count"],
+    "breathing_metrics": ["present_recall", "brier", "absent_recall", "specificity", "precision", "f1"],
+    "rr_metrics": ["mae_bpm", "within_2_bpm", "within_4_bpm", "within_6_bpm"],
+    "absent_metric_interpretation": "ABSENT recall, specificity, precision, and F1 are mandatory both-class reporting evidence. They receive no new numerical selection threshold in M-PV3.8 and cannot compensate for a frozen guard failure.",
+    "reporting": ["every_candidate", "every_seed", "per_subject_results", "class_counts", "ambiguous_exclusions", "all_frozen_guard_results", "class_a_safety_results"]
+  },
+  "selection_decision": {
+    "candidate_pass_condition": "The candidate passes every Class A safety requirement and every frozen breathing and RR guard on D1_FINAL_SELECTION_BOTH_CLASS_V1.",
+    "selection_ready_condition": "Exactly one of the six authorized candidates satisfies the candidate pass condition.",
+    "multiple_pass_condition": "Two or more candidates satisfy the candidate pass condition. Emit MULTIPLE_CANDIDATES_PASS_NO_SELECTION; do not rank, break ties, or select a seed.",
+    "no_pass_condition": "No candidate satisfies the candidate pass condition. Emit NO_SELECTION_READY.",
+    "membership_failure_condition": "If the locked membership violates class, subject, provenance, or AMBIGUOUS rules, emit BLOCKED_INVALID_FINAL_MEMBERSHIP without evaluating selection.",
+    "m_pv4_authorization": "Only SINGLE_SELECTION_READY authorizes a later, separately governed M-PV4 gate. It does not authorize deployment, threshold change, D2 access, or MR60 supervised physiology."
+  },
+  "bounded_rr_remediation": {
+    "phase_id": "M-PV3.8-RR-ONE",
+    "status": "CONDITIONALLY_AUTHORIZED_ONCE_ONLY",
+    "trigger_all_required": ["D1_FINAL_SELECTION_BOTH_CLASS_V1_IS_COMPLETE", "EVERY_CANDIDATE_PASSES_CLASS_A_SAFETY", "EVERY_CANDIDATE_PASSES_FROZEN_BREATHING_GUARDS", "NO_CANDIDATE_PASSES_ALL_FROZEN_RR_GUARDS", "EACH_CANDIDATE_FAILURE_SET_CONTAINS_ONLY_RR_GUARDS"],
+    "scope": "One pre-registered RR-only remediation hypothesis, applied once to the fixed Family B/C and seed 11/23/47 roster using immutable split and provenance rules. The remediation may not alter breathing, safety, labels, thresholds, D2 access, MR60 supervised physiology, or the final membership definition.",
+    "evaluation_rule": "Train or fit only from authorized non-final training data if the future remediation protocol requires it, then perform one final evaluation on the already locked membership. No interim inspection, rerun, top-up, second remediation, or repeated final evaluation is permitted.",
+    "terminal_outcomes": ["SINGLE_SELECTION_READY", "MULTIPLE_CANDIDATES_PASS_NO_SELECTION", "NO_SELECTION_READY"],
+    "after_unsuccessful_remediation": "NO_SELECTION_READY is terminal for this candidate direction; M-PV4 remains unauthorized and no additional data-collection or RR-remediation loop is authorized by M-PV3.8."
+  },
+  "stopping_condition": "Stop immediately after the one-time final membership is invalidated or after its single evaluation produces a terminal decision. If and only if the RR-only trigger is met, stop after M-PV3.8-RR-ONE produces its one terminal decision."
+}

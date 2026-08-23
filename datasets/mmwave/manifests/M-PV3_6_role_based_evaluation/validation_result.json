@@ -110,10 +110,12 @@
     },
     {
       "detail": {
-        "long": 30,
-        "short": 15
+        "full": "M_PV3_FAMILY_B_AND_FAMILY_C_ONLY",
+        "isolation": "M_PV35_30S_PARITY_CNN_ONLY",
+        "rr_quality": "M_PV3_FAMILY_A_ONLY",
+        "short": "[B,150,1]"
       },
-      "name": "explicit_role_definitions",
+      "name": "explicit_role_subrole_membership",
       "ok": true
     },
     {
@@ -150,13 +152,21 @@
       "ok": true
     },
     {
-      "detail": [
-        "rr_mae_bpm",
-        "within_2_bpm",
-        "within_4_bpm",
-        "within_6_bpm"
-      ],
-      "name": "long_rr_is_role_specific_and_guarded",
+      "detail": {
+        "full": [
+          "breathing_evidence",
+          "rr",
+          "quality"
+        ],
+        "isolation": [
+          "breathing_evidence"
+        ],
+        "rr_quality": [
+          "rr",
+          "quality"
+        ]
+      },
+      "name": "long_subrole_task_applicability_is_explicit",
       "ok": true
     },
     {
@@ -194,7 +204,8 @@
           "ambiguous": 2,
           "eligible_absent": 0,
           "eligible_present": 57,
-          "sufficiency": "INCOMPLETE"
+          "present_evaluation_state": "AVAILABLE_WITH_LIMITATION",
+          "stable_role_eligibility": "INCOMPLETE"
         },
         "future_authorization_requirement": "EXPLICIT_GOVERNED_SPLIT_AUTHORIZATION_BEFORE_ACCESS",
         "required_properties": [
@@ -208,19 +219,37 @@
         "reserved_d0_evaluation_membership": "NOT_AUTHORIZED_TO_OPEN_IN_M_PV36",
         "state": "REQUIRES_FUTURE_GATE"
       },
-      "name": "d1_absent_deficiency_and_future_authorization_recorded",
+      "name": "d1_present_limit_and_absent_deficiency_recorded",
       "ok": true
     },
     {
       "detail": {
-        "long": [
-          "L_BREATHING",
-          "L_FOOTPRINT",
-          "L_QUALITY",
-          "L_RESPONSIVENESS",
-          "L_RR",
-          "L_SAFETY",
-          "L_STABILITY"
+        "full": [
+          "L_FULL_BREATHING",
+          "L_FULL_FOOTPRINT",
+          "L_FULL_QUALITY_DIAGNOSTIC",
+          "L_FULL_RESPONSIVENESS",
+          "L_FULL_RR",
+          "L_FULL_SAFETY",
+          "L_FULL_STABILITY"
+        ],
+        "isolation": [
+          "L_I_BREATHING",
+          "L_I_FOOTPRINT",
+          "L_I_QUALITY",
+          "L_I_RESPONSIVENESS",
+          "L_I_RR",
+          "L_I_SAFETY",
+          "L_I_STABILITY"
+        ],
+        "rr_quality": [
+          "L_RQ_BREATHING",
+          "L_RQ_FOOTPRINT",
+          "L_RQ_QUALITY_DIAGNOSTIC",
+          "L_RQ_RESPONSIVENESS",
+          "L_RQ_RR",
+          "L_RQ_SAFETY",
+          "L_RQ_STABILITY"
         ],
         "short": [
           "S_BREATHING",
@@ -232,15 +261,29 @@
           "S_TEMPORAL_HOLD"
         ]
       },
-      "name": "evaluation_matrix_has_separate_role_cards",
+      "name": "evaluation_matrix_has_separate_role_subrole_cards",
+      "ok": true
+    },
+    {
+      "detail": {
+        "class_a_cards": 4,
+        "class_b_cards": 12,
+        "q2_in_class_a": true,
+        "q2_not_in_class_b": true
+      },
+      "name": "i1_q2_precedence_and_quality_safety_classification",
       "ok": true
     },
     {
       "detail": {
         "D1_ABSENT_EVALUATION": "INCOMPLETE",
+        "D1_PRESENT_EVALUATION": "AVAILABLE_WITH_LIMITATION",
         "D2_FINAL_CROSS_DEVICE": "NOT_AUTHORIZED",
+        "I1_Q2_SAFETY_PRECEDENCE": "AVAILABLE",
         "MR60_SUPERVISED_PHYSIOLOGY": "NOT_AUTHORIZED",
         "RASPBERRY_PI_LATENCY": "REQUIRES_FUTURE_GATE",
+        "ROLE_L_ISOLATION_RR_AND_QUALITY": "NOT_APPLICABLE",
+        "ROLE_L_RR_QUALITY_BREATHING": "NOT_APPLICABLE",
         "ROLE_S_RR": "NOT_APPLICABLE",
         "SEED_STABILITY_THRESHOLD": "THRESHOLD_REQUIRES_PRE_REGISTRATION"
       },
@@ -274,5 +317,5 @@
   "gate": "PASS_WITH_LIMITATIONS",
   "ok": true,
   "phase": "M-PV3.6",
-  "schema_version": "M-PV3.6.1"
+  "schema_version": "M-PV3.6.2_CORRECTIVE"
 }

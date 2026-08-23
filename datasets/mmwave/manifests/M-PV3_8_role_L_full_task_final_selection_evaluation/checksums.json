@@ -1,0 +1,22 @@
+{
+  "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "files": {
+    "datasets/mmwave/manifests/M-PV3_8_role_L_full_task_final_selection_evaluation/candidate_decision_table.json": "c92c01c76c64a2b61267f4378ef81860553bcb510431a3324fd83ecdc1a54baf",
+    "datasets/mmwave/manifests/M-PV3_8_role_L_full_task_final_selection_evaluation/card_a_safety.json": "4102240f83a30fc59fbd9933d78013bcdaa42b8de1e1a42caa15c5f64be4af12",
+    "datasets/mmwave/manifests/M-PV3_8_role_L_full_task_final_selection_evaluation/card_b_breathing.json": "67336bdd9a36f2c21ba0dfe550cf9dce8321ead589e8003bbf224f199f99e625",
+    "datasets/mmwave/manifests/M-PV3_8_role_L_full_task_final_selection_evaluation/card_c_rr.json": "6c61ba1f02dd3da2388d779f4d497cc8307300376a35367bebc95c6196648d2a",
+    "datasets/mmwave/manifests/M-PV3_8_role_L_full_task_final_selection_evaluation/card_d_stability.json": "2da48fa19db2be9c079a1f087228183ea3ed72f5b7d532131f3cba54f5159875",
+    "datasets/mmwave/manifests/M-PV3_8_role_L_full_task_final_selection_evaluation/evaluation_manifest.json": "b703fd8e4fafaf3c8d481e9c004a0ed0a75fa784c3a93c41fea986e2e754d209",
+    "datasets/mmwave/manifests/M-PV3_8_role_L_full_task_final_selection_evaluation/membership_audit.json": "71e3f7d2ea248c9f12685069b60f8f12969e03bf547a44ecd46a111326b61744",
+    "datasets/mmwave/manifests/M-PV3_8_role_L_full_task_final_selection_evaluation/validation_result.json": "503300c850c62a995fcb696a1050cf4c42756adcfce3e4a00fea90ff5d275151"
+  },
+  "inputs": {
+    "config/mmwave/m_pv38_minimal_selection_readiness_gate.json": "ed7e36e38c237098ccb8e0dd96c96cd3b8a2baf6d6a9039b913438492ed0a357",
+    "datasets/mmwave/manifests/M-PV1_public_multidomain_contract/m_pv2_example_manifest.json": "48c942e02c3c4048a2146553837a9e049e179826a70afda2c5cd4f5ae47de42b",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json": "6dd9bee70e5d1decfb2e60e8f3cf5afbcc28a73a6b2791057f425e129719044f",
+    "datasets/mmwave/manifests/M-PV3_8_minimal_selection_readiness_gate/evidence_requirements.json": "a3031408fab7c9050f803bff12f68550855ba64ddb56ce4db12de9bb39fb474a",
+    "datasets/mmwave/manifests/M-PV3_8_minimal_selection_readiness_gate/minimal_selection_gate.json": "8ada0902330bdb3f52853843939c7e9f9a2051ac58981769c6260ac3adcb5ec9",
+    "docs/mmwave/20260823_M-PV3_8_ROLE_L_FULL_TASK_FINAL_SELECTION_EVALUATION.md": "9f38aaea411a24886ab0592f3c24b2a200171b7749bbe441ae9b92d66cc582e6"
+  },
+  "schema_version": "M-PV3.8.1_ROLE_L_FULL_TASK_FINAL_SELECTION"
+}

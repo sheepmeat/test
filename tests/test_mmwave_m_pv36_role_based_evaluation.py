@@ -28,6 +28,52 @@ def test_short_role_does_not_receive_rr_penalty() -> None:
     assert role["temporal_hold_metric_status"] == "NOT_APPLICABLE"
 
 
+def test_long_role_subroles_have_non_overlapping_membership_and_explicit_not_applicable_metrics() -> None:
+    contract = json.loads((ROOT / "config/mmwave/m_pv36_role_based_evaluation_contract.json").read_text(encoding="utf-8"))
+    full_task = contract["roles"]["ROLE_L_FULL_TASK"]
+    rr_quality = contract["roles"]["ROLE_L_RR_QUALITY"]
+    isolation = contract["roles"]["ROLE_L_ISOLATION"]
+
+    assert full_task["membership"] == "M_PV3_FAMILY_B_AND_FAMILY_C_ONLY"
+    assert full_task["input_shape"] == "[B,300,1]"
+    assert full_task["tasks"] == ["breathing_evidence", "rr", "quality"]
+
+    assert rr_quality["membership"] == "M_PV3_FAMILY_A_ONLY"
+    assert rr_quality["input_shape"] == "[B,59]"
+    assert rr_quality["breathing_metric_status"] == "NOT_APPLICABLE_NO_BREATHING_HEAD"
+
+    assert isolation["membership"] == "M_PV35_30S_PARITY_CNN_ONLY"
+    assert isolation["input_shape"] == "[B,300,1]"
+    assert isolation["rr_metric_status"] == "NOT_APPLICABLE_NO_RR_HEAD"
+    assert isolation["quality_metric_status"] == "NOT_APPLICABLE_NO_QUALITY_HEAD"
+
+
+def test_i1_q2_safety_precedence_is_class_a_and_non_compensable() -> None:
+    contract = json.loads((ROOT / "config/mmwave/m_pv36_role_based_evaluation_contract.json").read_text(encoding="utf-8"))
+    safety = contract["metric_taxonomy"]["class_a_safety"]
+    invariants = safety["i1_q2_runtime_invariants"]
+
+    assert safety["runtime_precedence"] == ["PRESENCE", "QUALITY_OR_AVAILABILITY", "PHYSIOLOGY"]
+    assert invariants["presence_false_blocks_physiology_card"] is True
+    assert invariants["presence_unknown_blocks_physiology_card"] is True
+    assert invariants["input_unavailable_blocks_physiology_card"] is True
+    assert invariants["input_unavailable_must_not_emit"] == ["PRESENT", "ABSENT", "NORMAL", "APNEA"]
+    assert invariants["q2_synthetic_evidence_scope"] == "SAFETY_EVIDENCE_ONLY"
+    assert contract["metric_taxonomy"]["class_b_role_specific_physiology"]["q2_safety_metrics_are_compensable_utility"] is False
+
+
+def test_d1_present_is_available_with_limitation_not_stable_role_eligibility() -> None:
+    contract = json.loads((ROOT / "config/mmwave/m_pv36_role_based_evaluation_contract.json").read_text(encoding="utf-8"))
+    d1 = contract["evaluation_data_requirements"]["breathing_both_class_evaluation_required"]["current_d1_dev_val"]
+    assert d1 == {
+        "eligible_present": 57,
+        "ambiguous": 2,
+        "eligible_absent": 0,
+        "present_evaluation_state": "AVAILABLE_WITH_LIMITATION",
+        "stable_role_eligibility": "INCOMPLETE",
+    }
+
+
 def test_focused_contract_validator_passes() -> None:
     result = validator.validate()
     assert result["ok"] is True, result

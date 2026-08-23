@@ -1,0 +1,243 @@
+{
+  "candidates": [
+    {
+      "assembled_feature_tensor": {
+        "bytes": 2484,
+        "dtype": "float32",
+        "family_input_dim": 621,
+        "scalar_descriptor_count": 21,
+        "shape": [
+          1,
+          621
+        ]
+      },
+      "candidate_key": "family_b/seed_11",
+      "checkpoint_path": "models/mmwave/m_pv2/family_b/candidate_seed_11.pt",
+      "class": "E_ENGINEERING_ONLY",
+      "deterministic_memory_estimate_bytes": 75644,
+      "family": "family_b",
+      "flops_estimate": 1231552,
+      "hardware_latency": "NOT_MEASURED",
+      "mac_formula": "Conv1D multiply-accumulates + dense multiply-accumulates; bias/ReLU/pool overhead excluded",
+      "macs_estimate": 615776,
+      "model_bytes_checkpoint": 76473,
+      "parameter_bytes_float32": 71660,
+      "parameter_count": 17915,
+      "raspberry_pi_claim": false,
+      "role_input": {
+        "context_seconds": 30,
+        "dtype": "float32",
+        "shape": [
+          1,
+          300,
+          1
+        ],
+        "trace_tensor_bytes": 1200,
+        "validity_mask_bytes": 300
+      },
+      "seed": 11,
+      "selection_use": false,
+      "synthetic_only": false
+    },
+    {
+      "assembled_feature_tensor": {
+        "bytes": 2484,
+        "dtype": "float32",
+        "family_input_dim": 621,
+        "scalar_descriptor_count": 21,
+        "shape": [
+          1,
+          621
+        ]
+      },
+      "candidate_key": "family_b/seed_23",
+      "checkpoint_path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+      "class": "E_ENGINEERING_ONLY",
+      "deterministic_memory_estimate_bytes": 75644,
+      "family": "family_b",
+      "flops_estimate": 1231552,
+      "hardware_latency": "NOT_MEASURED",
+      "mac_formula": "Conv1D multiply-accumulates + dense multiply-accumulates; bias/ReLU/pool overhead excluded",
+      "macs_estimate": 615776,
+      "model_bytes_checkpoint": 76473,
+      "parameter_bytes_float32": 71660,
+      "parameter_count": 17915,
+      "raspberry_pi_claim": false,
+      "role_input": {
+        "context_seconds": 30,
+        "dtype": "float32",
+        "shape": [
+          1,
+          300,
+          1
+        ],
+        "trace_tensor_bytes": 1200,
+        "validity_mask_bytes": 300
+      },
+      "seed": 23,
+      "selection_use": false,
+      "synthetic_only": false
+    },
+    {
+      "assembled_feature_tensor": {
+        "bytes": 2484,
+        "dtype": "float32",
+        "family_input_dim": 621,
+        "scalar_descriptor_count": 21,
+        "shape": [
+          1,
+          621
+        ]
+      },
+      "candidate_key": "family_b/seed_47",
+      "checkpoint_path": "models/mmwave/m_pv2/family_b/candidate_seed_47.pt",
+      "class": "E_ENGINEERING_ONLY",
+      "deterministic_memory_estimate_bytes": 75644,
+      "family": "family_b",
+      "flops_estimate": 1231552,
+      "hardware_latency": "NOT_MEASURED",
+      "mac_formula": "Conv1D multiply-accumulates + dense multiply-accumulates; bias/ReLU/pool overhead excluded",
+      "macs_estimate": 615776,
+      "model_bytes_checkpoint": 76473,
+      "parameter_bytes_float32": 71660,
+      "parameter_count": 17915,
+      "raspberry_pi_claim": false,
+      "role_input": {
+        "context_seconds": 30,
+        "dtype": "float32",
+        "shape": [
+          1,
+          300,
+          1
+        ],
+        "trace_tensor_bytes": 1200,
+        "validity_mask_bytes": 300
+      },
+      "seed": 47,
+      "selection_use": false,
+      "synthetic_only": false
+    },
+    {
+      "assembled_feature_tensor": {
+        "bytes": 2684,
+        "dtype": "float32",
+        "family_input_dim": 671,
+        "scalar_descriptor_count": 71,
+        "shape": [
+          1,
+          671
+        ]
+      },
+      "candidate_key": "family_c/seed_11",
+      "checkpoint_path": "models/mmwave/m_pv2/family_c/candidate_seed_11.pt",
+      "class": "E_ENGINEERING_ONLY",
+      "deterministic_memory_estimate_bytes": 88644,
+      "family": "family_c",
+      "flops_estimate": 1237952,
+      "hardware_latency": "NOT_MEASURED",
+      "mac_formula": "Conv1D multiply-accumulates + dense multiply-accumulates; bias/ReLU/pool overhead excluded",
+      "macs_estimate": 618976,
+      "model_bytes_checkpoint": 89337,
+      "parameter_bytes_float32": 84460,
+      "parameter_count": 21115,
+      "raspberry_pi_claim": false,
+      "role_input": {
+        "context_seconds": 30,
+        "dtype": "float32",
+        "shape": [
+          1,
+          300,
+          1
+        ],
+        "trace_tensor_bytes": 1200,
+        "validity_mask_bytes": 300
+      },
+      "seed": 11,
+      "selection_use": false,
+      "synthetic_only": false
+    },
+    {
+      "assembled_feature_tensor": {
+        "bytes": 2684,
+        "dtype": "float32",
+        "family_input_dim": 671,
+        "scalar_descriptor_count": 71,
+        "shape": [
+          1,
+          671
+        ]
+      },
+      "candidate_key": "family_c/seed_23",
+      "checkpoint_path": "models/mmwave/m_pv2/family_c/candidate_seed_23.pt",
+      "class": "E_ENGINEERING_ONLY",
+      "deterministic_memory_estimate_bytes": 88644,
+      "family": "family_c",
+      "flops_estimate": 1237952,
+      "hardware_latency": "NOT_MEASURED",
+      "mac_formula": "Conv1D multiply-accumulates + dense multiply-accumulates; bias/ReLU/pool overhead excluded",
+      "macs_estimate": 618976,
+      "model_bytes_checkpoint": 89337,
+      "parameter_bytes_float32": 84460,
+      "parameter_count": 21115,
+      "raspberry_pi_claim": false,
+      "role_input": {
+        "context_seconds": 30,
+        "dtype": "float32",
+        "shape": [
+          1,
+          300,
+          1
+        ],
+        "trace_tensor_bytes": 1200,
+        "validity_mask_bytes": 300
+      },
+      "seed": 23,
+      "selection_use": false,
+      "synthetic_only": false
+    },
+    {
+      "assembled_feature_tensor": {
+        "bytes": 2684,
+        "dtype": "float32",
+        "family_input_dim": 671,
+        "scalar_descriptor_count": 71,
+        "shape": [
+          1,
+          671
+        ]
+      },
+      "candidate_key": "family_c/seed_47",
+      "checkpoint_path": "models/mmwave/m_pv2/family_c/candidate_seed_47.pt",
+      "class": "E_ENGINEERING_ONLY",
+      "deterministic_memory_estimate_bytes": 88644,
+      "family": "family_c",
+      "flops_estimate": 1237952,
+      "hardware_latency": "NOT_MEASURED",
+      "mac_formula": "Conv1D multiply-accumulates + dense multiply-accumulates; bias/ReLU/pool overhead excluded",
+      "macs_estimate": 618976,
+      "model_bytes_checkpoint": 89337,
+      "parameter_bytes_float32": 84460,
+      "parameter_count": 21115,
+      "raspberry_pi_claim": false,
+      "role_input": {
+        "context_seconds": 30,
+        "dtype": "float32",
+        "shape": [
+          1,
+          300,
+          1
+        ],
+        "trace_tensor_bytes": 1200,
+        "validity_mask_bytes": 300
+      },
+      "seed": 47,
+      "selection_use": false,
+      "synthetic_only": false
+    }
+  ],
+  "class": "E_ENGINEERING_ONLY",
+  "pi_latency_measured": false,
+  "raspberry_pi_claim": false,
+  "role_id": "ROLE_L_FULL_TASK",
+  "selection_use": false
+}

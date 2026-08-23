@@ -1,0 +1,3610 @@
+{
+  "family_b": {
+    "all_frozen_seeds_reported": true,
+    "class": "C_STABILITY",
+    "family": "family_b",
+    "per_subject_results": {
+      "11": {
+        "D1_PERSON_03": {
+          "breathing": {
+            "Brier": 0.10064394840419541,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 19
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 19,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 19,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.7049241693396318,
+              "min": 0.5236203074455261,
+              "std": 0.11650837980286691
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 20,
+          "rr": {
+            "MAE_bpm": 6.119137763977051,
+            "RMSE_bpm": 8.185692769944128,
+            "eligible_count": 19,
+            "median_absolute_error_bpm": 4.361976623535156,
+            "prediction_range_bpm": {
+              "max": 16.46123504638672,
+              "min": 9.825277328491211
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.21052631578947367,
+            "within_4_bpm": 0.47368421052631576,
+            "within_6_bpm": 0.5789473684210527
+          }
+        },
+        "D1_PERSON_09": {
+          "breathing": {
+            "Brier": 0.09685248233148573,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 24
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 24,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 24,
+            "probability_distribution": {
+              "max": 0.9999555349349976,
+              "mean": 0.7086171160141627,
+              "min": 0.5695348978042603,
+              "std": 0.10930918191799721
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 25,
+          "rr": {
+            "MAE_bpm": 4.77637791633606,
+            "RMSE_bpm": 7.679469096631628,
+            "eligible_count": 24,
+            "median_absolute_error_bpm": 3.2769784927368164,
+            "prediction_range_bpm": {
+              "max": 47.368377685546875,
+              "min": 11.037097930908203
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 25.78125,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.25,
+            "within_4_bpm": 0.6666666666666666,
+            "within_6_bpm": 0.875
+          }
+        },
+        "D1_PERSON_11": {
+          "breathing": {
+            "Brier": 0.09857984541445168,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 14
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 14,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 14,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.7050442695617676,
+              "min": 0.5837569832801819,
+              "std": 0.10761488045851493
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 14,
+          "rr": {
+            "MAE_bpm": 2.092442716870989,
+            "RMSE_bpm": 3.1074471110845123,
+            "eligible_count": 14,
+            "median_absolute_error_bpm": 0.6123991012573242,
+            "prediction_range_bpm": {
+              "max": 15.734543800354004,
+              "min": 11.011018753051758
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 14.0625,
+              "min": 9.375
+            },
+            "within_2_bpm": 0.6428571428571429,
+            "within_4_bpm": 0.7857142857142857,
+            "within_6_bpm": 0.8571428571428571
+          }
+        }
+      },
+      "23": {
+        "D1_PERSON_03": {
+          "breathing": {
+            "Brier": 0.0035651486474275068,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 19
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 19,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 19,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9572872582234835,
+              "min": 0.8153242468833923,
+              "std": 0.041722539919809815
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 20,
+          "rr": {
+            "MAE_bpm": 5.659065296775417,
+            "RMSE_bpm": 7.713869858655274,
+            "eligible_count": 19,
+            "median_absolute_error_bpm": 3.67386531829834,
+            "prediction_range_bpm": {
+              "max": 20.095460891723633,
+              "min": 11.35887336730957
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.3684210526315789,
+            "within_4_bpm": 0.5263157894736842,
+            "within_6_bpm": 0.5263157894736842
+          }
+        },
+        "D1_PERSON_09": {
+          "breathing": {
+            "Brier": 0.00950377576450201,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 24
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 24,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 24,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9387423694133759,
+              "min": 0.6688169240951538,
+              "std": 0.07583718388373015
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 25,
+          "rr": {
+            "MAE_bpm": 3.1126259565353394,
+            "RMSE_bpm": 5.400247900104455,
+            "eligible_count": 24,
+            "median_absolute_error_bpm": 1.5783967971801758,
+            "prediction_range_bpm": {
+              "max": 39.06822204589844,
+              "min": 9.88906478881836
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 25.78125,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.6666666666666666,
+            "within_4_bpm": 0.75,
+            "within_6_bpm": 0.8333333333333334
+          }
+        },
+        "D1_PERSON_11": {
+          "breathing": {
+            "Brier": 0.0051597460510609695,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 14
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 14,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 14,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9513294100761414,
+              "min": 0.8201398849487305,
+              "std": 0.052829156036459254
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 14,
+          "rr": {
+            "MAE_bpm": 4.058966296059745,
+            "RMSE_bpm": 5.444145508920207,
+            "eligible_count": 14,
+            "median_absolute_error_bpm": 2.3321189880371094,
+            "prediction_range_bpm": {
+              "max": 17.939472198486328,
+              "min": -0.34177589416503906
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 14.0625,
+              "min": 9.375
+            },
+            "within_2_bpm": 0.35714285714285715,
+            "within_4_bpm": 0.7142857142857143,
+            "within_6_bpm": 0.7142857142857143
+          }
+        }
+      },
+      "47": {
+        "D1_PERSON_03": {
+          "breathing": {
+            "Brier": 0.011009927555108066,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 19
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 19,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 19,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9600805451995448,
+              "min": 0.6644977927207947,
+              "std": 0.09703795486067542
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 20,
+          "rr": {
+            "MAE_bpm": 7.0122628462942025,
+            "RMSE_bpm": 9.900133784736596,
+            "eligible_count": 19,
+            "median_absolute_error_bpm": 5.44719123840332,
+            "prediction_range_bpm": {
+              "max": 29.43196678161621,
+              "min": 8.263394355773926
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.42105263157894735,
+            "within_4_bpm": 0.47368421052631576,
+            "within_6_bpm": 0.5263157894736842
+          }
+        },
+        "D1_PERSON_09": {
+          "breathing": {
+            "Brier": 0.017548450602828353,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 24
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 24,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 24,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9350785041848818,
+              "min": 0.5506576895713806,
+              "std": 0.1154714249672011
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 25,
+          "rr": {
+            "MAE_bpm": 3.828000863393148,
+            "RMSE_bpm": 6.1060362247936375,
+            "eligible_count": 24,
+            "median_absolute_error_bpm": 2.1619415283203125,
+            "prediction_range_bpm": {
+              "max": 37.28302764892578,
+              "min": 9.859970092773438
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 25.78125,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.4583333333333333,
+            "within_4_bpm": 0.6666666666666666,
+            "within_6_bpm": 0.7916666666666666
+          }
+        },
+        "D1_PERSON_11": {
+          "breathing": {
+            "Brier": 0.057090074145809765,
+            "F1": 0.9629629629629629,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 13
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 14,
+            "false_absent_on_PRESENT": 0.07142857142857142,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 14,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9125696250370571,
+              "min": 0.1259179711341858,
+              "std": 0.22236457379638727
+            },
+            "recall": 0.9285714285714286,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 14,
+          "rr": {
+            "MAE_bpm": 3.872771603720529,
+            "RMSE_bpm": 7.261704973962134,
+            "eligible_count": 14,
+            "median_absolute_error_bpm": 2.0845561027526855,
+            "prediction_range_bpm": {
+              "max": 15.494126319885254,
+              "min": -11.513179779052734
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 14.0625,
+              "min": 9.375
+            },
+            "within_2_bpm": 0.5,
+            "within_4_bpm": 0.8571428571428571,
+            "within_6_bpm": 0.9285714285714286
+          }
+        }
+      }
+    },
+    "post_hoc_seed_selection": false,
+    "seed_results": {
+      "11": {
+        "breathing": {
+          "Brier": 0.09854056768808094,
+          "F1": 1.0,
+          "PR_AUC": null,
+          "ROC_AUC": null,
+          "absent_count": 0,
+          "absent_recall": {
+            "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+            "status": "NOT_APPLICABLE"
+          },
+          "calibration_fitting": false,
+          "confusion": {
+            "FN": 0,
+            "FP": 0,
+            "TN": 0,
+            "TP": 57
+          },
+          "ece": {
+            "calibration_fitting": false,
+            "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+            "status": "NOT_APPLICABLE"
+          },
+          "eligible_count": 57,
+          "false_absent_on_PRESENT": 0.0,
+          "false_present_on_ABSENT": null,
+          "fixed_threshold": 0.5,
+          "precision": 1.0,
+          "present_count": 57,
+          "probability_distribution": {
+            "max": 1.0,
+            "mean": 0.7065085946467885,
+            "min": 0.5236203074455261,
+            "std": 0.11137038507555688
+          },
+          "recall": 1.0,
+          "status": "DEFINED",
+          "threshold": 0.5
+        },
+        "candidate_key": "family_b/seed_11",
+        "quality": {
+          "candidate_key": "family_b/seed_11",
+          "class": "B_DIAGNOSTIC_ONLY",
+          "clean_count": 59,
+          "diagnostic_coverage": [
+            "FLAT_EXACT",
+            "JITTER_PLUS_LARGE_GAP",
+            "LARGE_GAP",
+            "REPUBLICATION_TO_FREEZE",
+            "SOURCE_FREEZE",
+            "STALE_SOURCE"
+          ],
+          "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+          "quality_head_task_support": true,
+          "quality_metrics": {
+            "clean_false_rejection": 0.0,
+            "hard_Q2_invalid_false_acceptance": 0.0
+          },
+          "selection_use": false,
+          "synthetic_invalid_count": 6
+        },
+        "rr": {
+          "MAE_bpm": 4.564752260843913,
+          "RMSE_bpm": 7.03833466506959,
+          "eligible_count": 57,
+          "median_absolute_error_bpm": 2.794027328491211,
+          "prediction_range_bpm": {
+            "max": 47.368377685546875,
+            "min": 9.825277328491211
+          },
+          "status": "DEFINED",
+          "target": "continuous_rr_bpm",
+          "target_range_bpm": {
+            "max": 37.5,
+            "min": 7.03125
+          },
+          "within_2_bpm": 0.3333333333333333,
+          "within_4_bpm": 0.631578947368421,
+          "within_6_bpm": 0.7719298245614035
+        },
+        "safety": {
+          "clean_false_rejection": 0.0,
+          "invalid_to_physiology_transition": 0,
+          "pass": true,
+          "q2_invalid_false_acceptance": 0.0
+        },
+        "seed": 11,
+        "selection_use": false,
+        "subject_results": {
+          "D1_PERSON_03": {
+            "breathing": {
+              "Brier": 0.10064394840419541,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 19
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 19,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 19,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.7049241693396318,
+                "min": 0.5236203074455261,
+                "std": 0.11650837980286691
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 20,
+            "rr": {
+              "MAE_bpm": 6.119137763977051,
+              "RMSE_bpm": 8.185692769944128,
+              "eligible_count": 19,
+              "median_absolute_error_bpm": 4.361976623535156,
+              "prediction_range_bpm": {
+                "max": 16.46123504638672,
+                "min": 9.825277328491211
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 37.5,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.21052631578947367,
+              "within_4_bpm": 0.47368421052631576,
+              "within_6_bpm": 0.5789473684210527
+            }
+          },
+          "D1_PERSON_09": {
+            "breathing": {
+              "Brier": 0.09685248233148573,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 24
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 24,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 24,
+              "probability_distribution": {
+                "max": 0.9999555349349976,
+                "mean": 0.7086171160141627,
+                "min": 0.5695348978042603,
+                "std": 0.10930918191799721
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 25,
+            "rr": {
+              "MAE_bpm": 4.77637791633606,
+              "RMSE_bpm": 7.679469096631628,
+              "eligible_count": 24,
+              "median_absolute_error_bpm": 3.2769784927368164,
+              "prediction_range_bpm": {
+                "max": 47.368377685546875,
+                "min": 11.037097930908203
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 25.78125,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.25,
+              "within_4_bpm": 0.6666666666666666,
+              "within_6_bpm": 0.875
+            }
+          },
+          "D1_PERSON_11": {
+            "breathing": {
+              "Brier": 0.09857984541445168,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 14
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 14,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 14,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.7050442695617676,
+                "min": 0.5837569832801819,
+                "std": 0.10761488045851493
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 14,
+            "rr": {
+              "MAE_bpm": 2.092442716870989,
+              "RMSE_bpm": 3.1074471110845123,
+              "eligible_count": 14,
+              "median_absolute_error_bpm": 0.6123991012573242,
+              "prediction_range_bpm": {
+                "max": 15.734543800354004,
+                "min": 11.011018753051758
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 14.0625,
+                "min": 9.375
+              },
+              "within_2_bpm": 0.6428571428571429,
+              "within_4_bpm": 0.7857142857142857,
+              "within_6_bpm": 0.8571428571428571
+            }
+          }
+        }
+      },
+      "23": {
+        "breathing": {
+          "Brier": 0.0064572784995837705,
+          "F1": 1.0,
+          "PR_AUC": null,
+          "ROC_AUC": null,
+          "absent_count": 0,
+          "absent_recall": {
+            "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+            "status": "NOT_APPLICABLE"
+          },
+          "calibration_fitting": false,
+          "confusion": {
+            "FN": 0,
+            "FP": 0,
+            "TN": 0,
+            "TP": 57
+          },
+          "ece": {
+            "calibration_fitting": false,
+            "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+            "status": "NOT_APPLICABLE"
+          },
+          "eligible_count": 57,
+          "false_absent_on_PRESENT": 0.0,
+          "false_present_on_ABSENT": null,
+          "fixed_threshold": 0.5,
+          "precision": 1.0,
+          "present_count": 57,
+          "probability_distribution": {
+            "max": 1.0,
+            "mean": 0.9480155518180445,
+            "min": 0.6688169240951538,
+            "std": 0.061277203320658814
+          },
+          "recall": 1.0,
+          "status": "DEFINED",
+          "threshold": 0.5
+        },
+        "candidate_key": "family_b/seed_23",
+        "quality": {
+          "candidate_key": "family_b/seed_23",
+          "class": "B_DIAGNOSTIC_ONLY",
+          "clean_count": 59,
+          "diagnostic_coverage": [
+            "FLAT_EXACT",
+            "JITTER_PLUS_LARGE_GAP",
+            "LARGE_GAP",
+            "REPUBLICATION_TO_FREEZE",
+            "SOURCE_FREEZE",
+            "STALE_SOURCE"
+          ],
+          "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+          "quality_head_task_support": true,
+          "quality_metrics": {
+            "clean_false_rejection": 0.0,
+            "hard_Q2_invalid_false_acceptance": 0.0
+          },
+          "selection_use": false,
+          "synthetic_invalid_count": 6
+        },
+        "rr": {
+          "MAE_bpm": 4.1938734389188,
+          "RMSE_bpm": 6.276408275163277,
+          "eligible_count": 57,
+          "median_absolute_error_bpm": 2.0810203552246094,
+          "prediction_range_bpm": {
+            "max": 39.06822204589844,
+            "min": -0.3417701721191406
+          },
+          "status": "DEFINED",
+          "target": "continuous_rr_bpm",
+          "target_range_bpm": {
+            "max": 37.5,
+            "min": 7.03125
+          },
+          "within_2_bpm": 0.49122807017543857,
+          "within_4_bpm": 0.6666666666666666,
+          "within_6_bpm": 0.7017543859649122
+        },
+        "safety": {
+          "clean_false_rejection": 0.0,
+          "invalid_to_physiology_transition": 0,
+          "pass": true,
+          "q2_invalid_false_acceptance": 0.0
+        },
+        "seed": 23,
+        "selection_use": false,
+        "subject_results": {
+          "D1_PERSON_03": {
+            "breathing": {
+              "Brier": 0.0035651486474275068,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 19
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 19,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 19,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9572872582234835,
+                "min": 0.8153242468833923,
+                "std": 0.041722539919809815
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 20,
+            "rr": {
+              "MAE_bpm": 5.659065296775417,
+              "RMSE_bpm": 7.713869858655274,
+              "eligible_count": 19,
+              "median_absolute_error_bpm": 3.67386531829834,
+              "prediction_range_bpm": {
+                "max": 20.095460891723633,
+                "min": 11.35887336730957
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 37.5,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.3684210526315789,
+              "within_4_bpm": 0.5263157894736842,
+              "within_6_bpm": 0.5263157894736842
+            }
+          },
+          "D1_PERSON_09": {
+            "breathing": {
+              "Brier": 0.00950377576450201,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 24
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 24,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 24,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9387423694133759,
+                "min": 0.6688169240951538,
+                "std": 0.07583718388373015
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 25,
+            "rr": {
+              "MAE_bpm": 3.1126259565353394,
+              "RMSE_bpm": 5.400247900104455,
+              "eligible_count": 24,
+              "median_absolute_error_bpm": 1.5783967971801758,
+              "prediction_range_bpm": {
+                "max": 39.06822204589844,
+                "min": 9.88906478881836
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 25.78125,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.6666666666666666,
+              "within_4_bpm": 0.75,
+              "within_6_bpm": 0.8333333333333334
+            }
+          },
+          "D1_PERSON_11": {
+            "breathing": {
+              "Brier": 0.0051597460510609695,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 14
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 14,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 14,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9513294100761414,
+                "min": 0.8201398849487305,
+                "std": 0.052829156036459254
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 14,
+            "rr": {
+              "MAE_bpm": 4.058966296059745,
+              "RMSE_bpm": 5.444145508920207,
+              "eligible_count": 14,
+              "median_absolute_error_bpm": 2.3321189880371094,
+              "prediction_range_bpm": {
+                "max": 17.939472198486328,
+                "min": -0.34177589416503906
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 14.0625,
+                "min": 9.375
+              },
+              "within_2_bpm": 0.35714285714285715,
+              "within_4_bpm": 0.7142857142857143,
+              "within_6_bpm": 0.7142857142857143
+            }
+          }
+        }
+      },
+      "47": {
+        "breathing": {
+          "Brier": 0.025080918907178347,
+          "F1": 0.9911504424778761,
+          "PR_AUC": null,
+          "ROC_AUC": null,
+          "absent_count": 0,
+          "absent_recall": {
+            "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+            "status": "NOT_APPLICABLE"
+          },
+          "calibration_fitting": false,
+          "confusion": {
+            "FN": 1,
+            "FP": 0,
+            "TN": 0,
+            "TP": 56
+          },
+          "ece": {
+            "calibration_fitting": false,
+            "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+            "status": "NOT_APPLICABLE"
+          },
+          "eligible_count": 57,
+          "false_absent_on_PRESENT": 0.017543859649122806,
+          "false_present_on_ABSENT": null,
+          "fixed_threshold": 0.5,
+          "precision": 1.0,
+          "present_count": 57,
+          "probability_distribution": {
+            "max": 1.0,
+            "mean": 0.9378840243607237,
+            "min": 0.12591803073883057,
+            "std": 0.14567952662457131
+          },
+          "recall": 0.9824561403508771,
+          "status": "DEFINED",
+          "threshold": 0.5
+        },
+        "candidate_key": "family_b/seed_47",
+        "quality": {
+          "candidate_key": "family_b/seed_47",
+          "class": "B_DIAGNOSTIC_ONLY",
+          "clean_count": 59,
+          "diagnostic_coverage": [
+            "FLAT_EXACT",
+            "JITTER_PLUS_LARGE_GAP",
+            "LARGE_GAP",
+            "REPUBLICATION_TO_FREEZE",
+            "SOURCE_FREEZE",
+            "STALE_SOURCE"
+          ],
+          "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+          "quality_head_task_support": true,
+          "quality_metrics": {
+            "clean_false_rejection": 0.0,
+            "hard_Q2_invalid_false_acceptance": 0.0
+          },
+          "selection_use": false,
+          "synthetic_invalid_count": 6
+        },
+        "rr": {
+          "MAE_bpm": 4.900417813083582,
+          "RMSE_bpm": 7.830777919443116,
+          "eligible_count": 57,
+          "median_absolute_error_bpm": 2.3080272674560547,
+          "prediction_range_bpm": {
+            "max": 37.28302764892578,
+            "min": -11.513181686401367
+          },
+          "status": "DEFINED",
+          "target": "continuous_rr_bpm",
+          "target_range_bpm": {
+            "max": 37.5,
+            "min": 7.03125
+          },
+          "within_2_bpm": 0.45614035087719296,
+          "within_4_bpm": 0.6491228070175439,
+          "within_6_bpm": 0.7368421052631579
+        },
+        "safety": {
+          "clean_false_rejection": 0.0,
+          "invalid_to_physiology_transition": 0,
+          "pass": true,
+          "q2_invalid_false_acceptance": 0.0
+        },
+        "seed": 47,
+        "selection_use": false,
+        "subject_results": {
+          "D1_PERSON_03": {
+            "breathing": {
+              "Brier": 0.011009927555108066,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 19
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 19,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 19,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9600805451995448,
+                "min": 0.6644977927207947,
+                "std": 0.09703795486067542
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 20,
+            "rr": {
+              "MAE_bpm": 7.0122628462942025,
+              "RMSE_bpm": 9.900133784736596,
+              "eligible_count": 19,
+              "median_absolute_error_bpm": 5.44719123840332,
+              "prediction_range_bpm": {
+                "max": 29.43196678161621,
+                "min": 8.263394355773926
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 37.5,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.42105263157894735,
+              "within_4_bpm": 0.47368421052631576,
+              "within_6_bpm": 0.5263157894736842
+            }
+          },
+          "D1_PERSON_09": {
+            "breathing": {
+              "Brier": 0.017548450602828353,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 24
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 24,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 24,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9350785041848818,
+                "min": 0.5506576895713806,
+                "std": 0.1154714249672011
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 25,
+            "rr": {
+              "MAE_bpm": 3.828000863393148,
+              "RMSE_bpm": 6.1060362247936375,
+              "eligible_count": 24,
+              "median_absolute_error_bpm": 2.1619415283203125,
+              "prediction_range_bpm": {
+                "max": 37.28302764892578,
+                "min": 9.859970092773438
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 25.78125,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.4583333333333333,
+              "within_4_bpm": 0.6666666666666666,
+              "within_6_bpm": 0.7916666666666666
+            }
+          },
+          "D1_PERSON_11": {
+            "breathing": {
+              "Brier": 0.057090074145809765,
+              "F1": 0.9629629629629629,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 1,
+                "FP": 0,
+                "TN": 0,
+                "TP": 13
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 14,
+              "false_absent_on_PRESENT": 0.07142857142857142,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 14,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9125696250370571,
+                "min": 0.1259179711341858,
+                "std": 0.22236457379638727
+              },
+              "recall": 0.9285714285714286,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 14,
+            "rr": {
+              "MAE_bpm": 3.872771603720529,
+              "RMSE_bpm": 7.261704973962134,
+              "eligible_count": 14,
+              "median_absolute_error_bpm": 2.0845561027526855,
+              "prediction_range_bpm": {
+                "max": 15.494126319885254,
+                "min": -11.513179779052734
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 14.0625,
+                "min": 9.375
+              },
+              "within_2_bpm": 0.5,
+              "within_4_bpm": 0.8571428571428571,
+              "within_6_bpm": 0.9285714285714286
+            }
+          }
+        }
+      }
+    },
+    "selection_use": false,
+    "summary": {
+      "breathing_brier": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 23,
+          "value": 0.0064572784995837705
+        },
+        "direction": "lower_is_better",
+        "max": 0.09854056768808094,
+        "mean": 0.04335958836494769,
+        "min": 0.0064572784995837705,
+        "population_std": 0.03975269680414057,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 23,
+            "value": 0.0064572784995837705
+          },
+          {
+            "seed": 47,
+            "value": 0.025080918907178347
+          },
+          {
+            "seed": 11,
+            "value": 0.09854056768808094
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.09854056768808094,
+          "23": 0.0064572784995837705,
+          "47": 0.025080918907178347
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 0.09854056768808094
+        }
+      },
+      "breathing_f1": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 23,
+          "value": 1.0
+        },
+        "direction": "higher_is_better",
+        "max": 1.0,
+        "mean": 0.9970501474926253,
+        "min": 0.9911504424778761,
+        "population_std": 0.00417172142292949,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 47,
+            "value": 0.9911504424778761
+          },
+          {
+            "seed": 11,
+            "value": 1.0
+          },
+          {
+            "seed": 23,
+            "value": 1.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 1.0,
+          "23": 1.0,
+          "47": 0.9911504424778761
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.9911504424778761
+        }
+      },
+      "breathing_precision": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 1.0
+        },
+        "direction": "higher_is_better",
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "population_std": 0.0,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 1.0
+          },
+          {
+            "seed": 23,
+            "value": 1.0
+          },
+          {
+            "seed": 47,
+            "value": 1.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 1.0,
+          "23": 1.0,
+          "47": 1.0
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 1.0
+        }
+      },
+      "breathing_present_recall": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 23,
+          "value": 1.0
+        },
+        "direction": "higher_is_better",
+        "max": 1.0,
+        "mean": 0.9941520467836257,
+        "min": 0.9824561403508771,
+        "population_std": 0.00827025475071988,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 47,
+            "value": 0.9824561403508771
+          },
+          {
+            "seed": 11,
+            "value": 1.0
+          },
+          {
+            "seed": 23,
+            "value": 1.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 1.0,
+          "23": 1.0,
+          "47": 0.9824561403508771
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.9824561403508771
+        }
+      },
+      "clean_false_rejection": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 11,
+          "value": 0.0
+        },
+        "direction": "lower_is_better",
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "population_std": 0.0,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.0
+          },
+          {
+            "seed": 23,
+            "value": 0.0
+          },
+          {
+            "seed": 47,
+            "value": 0.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.0,
+          "23": 0.0,
+          "47": 0.0
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.0
+        }
+      },
+      "invalid_to_physiology_transition": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 11,
+          "value": 0.0
+        },
+        "direction": "lower_is_better",
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "population_std": 0.0,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.0
+          },
+          {
+            "seed": 23,
+            "value": 0.0
+          },
+          {
+            "seed": 47,
+            "value": 0.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.0,
+          "23": 0.0,
+          "47": 0.0
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.0
+        }
+      },
+      "q2_invalid_false_acceptance": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 11,
+          "value": 0.0
+        },
+        "direction": "lower_is_better",
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "population_std": 0.0,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.0
+          },
+          {
+            "seed": 23,
+            "value": 0.0
+          },
+          {
+            "seed": 47,
+            "value": 0.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.0,
+          "23": 0.0,
+          "47": 0.0
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.0
+        }
+      },
+      "rr_mae_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 23,
+          "value": 4.1938734389188
+        },
+        "direction": "lower_is_better",
+        "max": 4.900417813083582,
+        "mean": 4.553014504282099,
+        "min": 4.1938734389188,
+        "population_std": 0.2885649197469022,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 23,
+            "value": 4.1938734389188
+          },
+          {
+            "seed": 11,
+            "value": 4.564752260843913
+          },
+          {
+            "seed": 47,
+            "value": 4.900417813083582
+          }
+        ],
+        "values_by_seed": {
+          "11": 4.564752260843913,
+          "23": 4.1938734389188,
+          "47": 4.900417813083582
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 4.900417813083582
+        }
+      },
+      "rr_median_absolute_error_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 23,
+          "value": 2.0810203552246094
+        },
+        "direction": "lower_is_better",
+        "max": 2.794027328491211,
+        "mean": 2.3943583170572915,
+        "min": 2.0810203552246094,
+        "population_std": 0.29741612103318416,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 23,
+            "value": 2.0810203552246094
+          },
+          {
+            "seed": 47,
+            "value": 2.3080272674560547
+          },
+          {
+            "seed": 11,
+            "value": 2.794027328491211
+          }
+        ],
+        "values_by_seed": {
+          "11": 2.794027328491211,
+          "23": 2.0810203552246094,
+          "47": 2.3080272674560547
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 2.794027328491211
+        }
+      },
+      "rr_within_2_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 23,
+          "value": 0.49122807017543857
+        },
+        "direction": "higher_is_better",
+        "max": 0.49122807017543857,
+        "mean": 0.4269005847953216,
+        "min": 0.3333333333333333,
+        "population_std": 0.06769495264789605,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.3333333333333333
+          },
+          {
+            "seed": 47,
+            "value": 0.45614035087719296
+          },
+          {
+            "seed": 23,
+            "value": 0.49122807017543857
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.3333333333333333,
+          "23": 0.49122807017543857,
+          "47": 0.45614035087719296
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 0.3333333333333333
+        }
+      },
+      "rr_within_4_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 23,
+          "value": 0.6666666666666666
+        },
+        "direction": "higher_is_better",
+        "max": 0.6666666666666666,
+        "mean": 0.6491228070175439,
+        "min": 0.631578947368421,
+        "population_std": 0.014324501419784667,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.631578947368421
+          },
+          {
+            "seed": 47,
+            "value": 0.6491228070175439
+          },
+          {
+            "seed": 23,
+            "value": 0.6666666666666666
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.631578947368421,
+          "23": 0.6666666666666666,
+          "47": 0.6491228070175439
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 0.631578947368421
+        }
+      },
+      "rr_within_6_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 11,
+          "value": 0.7719298245614035
+        },
+        "direction": "higher_is_better",
+        "max": 0.7719298245614035,
+        "mean": 0.7368421052631579,
+        "min": 0.7017543859649122,
+        "population_std": 0.028649002839569334,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 23,
+            "value": 0.7017543859649122
+          },
+          {
+            "seed": 47,
+            "value": 0.7368421052631579
+          },
+          {
+            "seed": 11,
+            "value": 0.7719298245614035
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.7719298245614035,
+          "23": 0.7017543859649122,
+          "47": 0.7368421052631579
+        },
+        "worst_seed": {
+          "seed": 23,
+          "value": 0.7017543859649122
+        }
+      }
+    }
+  },
+  "family_c": {
+    "all_frozen_seeds_reported": true,
+    "class": "C_STABILITY",
+    "family": "family_c",
+    "per_subject_results": {
+      "11": {
+        "D1_PERSON_03": {
+          "breathing": {
+            "Brier": 0.04438517048104991,
+            "F1": 0.972972972972973,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 18
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 19,
+            "false_absent_on_PRESENT": 0.05263157894736842,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 19,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9428515759737868,
+              "min": 0.0957157239317894,
+              "std": 0.2027787664238296
+            },
+            "recall": 0.9473684210526315,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 20,
+          "rr": {
+            "MAE_bpm": 5.875332531176116,
+            "RMSE_bpm": 7.936053301768792,
+            "eligible_count": 19,
+            "median_absolute_error_bpm": 3.733510971069336,
+            "prediction_range_bpm": {
+              "max": 22.951171875,
+              "min": 10.764760971069336
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.15789473684210525,
+            "within_4_bpm": 0.5263157894736842,
+            "within_6_bpm": 0.7368421052631579
+          }
+        },
+        "D1_PERSON_09": {
+          "breathing": {
+            "Brier": 0.007760863739864139,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 24
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 24,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 24,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9628341297308604,
+              "min": 0.6291624903678894,
+              "std": 0.0798721592734391
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 25,
+          "rr": {
+            "MAE_bpm": 4.731425603230794,
+            "RMSE_bpm": 6.488729619496096,
+            "eligible_count": 24,
+            "median_absolute_error_bpm": 3.0990591049194336,
+            "prediction_range_bpm": {
+              "max": 35.0087776184082,
+              "min": 11.052536010742188
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 25.78125,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.2916666666666667,
+            "within_4_bpm": 0.5833333333333334,
+            "within_6_bpm": 0.75
+          }
+        },
+        "D1_PERSON_11": {
+          "breathing": {
+            "Brier": 0.01260169330248116,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 14
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 14,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 14,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9652399591037205,
+              "min": 0.5808911323547363,
+              "std": 0.10674002463635718
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 14,
+          "rr": {
+            "MAE_bpm": 2.398857389177595,
+            "RMSE_bpm": 3.293054446874769,
+            "eligible_count": 14,
+            "median_absolute_error_bpm": 1.6120977401733398,
+            "prediction_range_bpm": {
+              "max": 17.841999053955078,
+              "min": 5.076683044433594
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 14.0625,
+              "min": 9.375
+            },
+            "within_2_bpm": 0.6428571428571429,
+            "within_4_bpm": 0.8571428571428571,
+            "within_6_bpm": 0.9285714285714286
+          }
+        }
+      },
+      "23": {
+        "D1_PERSON_03": {
+          "breathing": {
+            "Brier": 0.025118083360226626,
+            "F1": 0.972972972972973,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 1,
+              "FP": 0,
+              "TN": 0,
+              "TP": 18
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 19,
+            "false_absent_on_PRESENT": 0.05263157894736842,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 19,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9350540951678628,
+              "min": 0.40055620670318604,
+              "std": 0.1445687130943677
+            },
+            "recall": 0.9473684210526315,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 20,
+          "rr": {
+            "MAE_bpm": 6.42008816568475,
+            "RMSE_bpm": 8.302150156161423,
+            "eligible_count": 19,
+            "median_absolute_error_bpm": 4.269286155700684,
+            "prediction_range_bpm": {
+              "max": 22.966991424560547,
+              "min": 2.477511405944824
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.10526315789473684,
+            "within_4_bpm": 0.42105263157894735,
+            "within_6_bpm": 0.7368421052631579
+          }
+        },
+        "D1_PERSON_09": {
+          "breathing": {
+            "Brier": 0.014793921302445648,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 24
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 24,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 24,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9242095649242401,
+              "min": 0.6233265399932861,
+              "std": 0.09513007544132757
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 25,
+          "rr": {
+            "MAE_bpm": 3.94831911722819,
+            "RMSE_bpm": 5.495482374361496,
+            "eligible_count": 24,
+            "median_absolute_error_bpm": 2.593997001647949,
+            "prediction_range_bpm": {
+              "max": 34.00602722167969,
+              "min": 10.515625
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 25.78125,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.4166666666666667,
+            "within_4_bpm": 0.6666666666666666,
+            "within_6_bpm": 0.7916666666666666
+          }
+        },
+        "D1_PERSON_11": {
+          "breathing": {
+            "Brier": 0.013508658714609061,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 14
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 14,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 14,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9326757320335933,
+              "min": 0.6561185121536255,
+              "std": 0.09474229075442776
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 14,
+          "rr": {
+            "MAE_bpm": 3.007215295519148,
+            "RMSE_bpm": 4.959586382381341,
+            "eligible_count": 14,
+            "median_absolute_error_bpm": 1.589385986328125,
+            "prediction_range_bpm": {
+              "max": 16.957202911376953,
+              "min": -2.704425811767578
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 14.0625,
+              "min": 9.375
+            },
+            "within_2_bpm": 0.6428571428571429,
+            "within_4_bpm": 0.8571428571428571,
+            "within_6_bpm": 0.9285714285714286
+          }
+        }
+      },
+      "47": {
+        "D1_PERSON_03": {
+          "breathing": {
+            "Brier": 7.394030507924006e-05,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 19
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 19,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 19,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9979874428949858,
+              "min": 0.9625211954116821,
+              "std": 0.008360019077627569
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 20,
+          "rr": {
+            "MAE_bpm": 6.051366354289808,
+            "RMSE_bpm": 8.569303326058469,
+            "eligible_count": 19,
+            "median_absolute_error_bpm": 3.4231348037719727,
+            "prediction_range_bpm": {
+              "max": 29.33746337890625,
+              "min": 8.32497787475586
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 37.5,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.42105263157894735,
+            "within_4_bpm": 0.5263157894736842,
+            "within_6_bpm": 0.5789473684210527
+          }
+        },
+        "D1_PERSON_09": {
+          "breathing": {
+            "Brier": 0.000766566688789716,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 24
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 24,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 24,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.9936094880104065,
+              "min": 0.8649768829345703,
+              "std": 0.026939340105143216
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 25,
+          "rr": {
+            "MAE_bpm": 5.052180091540019,
+            "RMSE_bpm": 6.980270827124275,
+            "eligible_count": 24,
+            "median_absolute_error_bpm": 3.458784580230713,
+            "prediction_range_bpm": {
+              "max": 38.126380920410156,
+              "min": 10.996813774108887
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 25.78125,
+              "min": 7.03125
+            },
+            "within_2_bpm": 0.25,
+            "within_4_bpm": 0.5833333333333334,
+            "within_6_bpm": 0.7083333333333334
+          }
+        },
+        "D1_PERSON_11": {
+          "breathing": {
+            "Brier": 0.003746996495445235,
+            "F1": 1.0,
+            "PR_AUC": null,
+            "ROC_AUC": null,
+            "absent_count": 0,
+            "absent_recall": {
+              "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+              "status": "NOT_APPLICABLE"
+            },
+            "calibration_fitting": false,
+            "confusion": {
+              "FN": 0,
+              "FP": 0,
+              "TN": 0,
+              "TP": 14
+            },
+            "ece": {
+              "calibration_fitting": false,
+              "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+              "status": "NOT_APPLICABLE"
+            },
+            "eligible_count": 14,
+            "false_absent_on_PRESENT": 0.0,
+            "false_present_on_ABSENT": null,
+            "fixed_threshold": 0.5,
+            "precision": 1.0,
+            "present_count": 14,
+            "probability_distribution": {
+              "max": 1.0,
+              "mean": 0.980006239243916,
+              "min": 0.7780318856239319,
+              "std": 0.057855388912993355
+            },
+            "recall": 1.0,
+            "status": "DEFINED",
+            "threshold": 0.5
+          },
+          "record_count": 14,
+          "rr": {
+            "MAE_bpm": 1.2885270799909319,
+            "RMSE_bpm": 1.7101769043898563,
+            "eligible_count": 14,
+            "median_absolute_error_bpm": 1.0328316688537598,
+            "prediction_range_bpm": {
+              "max": 15.126514434814453,
+              "min": 8.420648574829102
+            },
+            "status": "DEFINED",
+            "target": "continuous_rr_bpm",
+            "target_range_bpm": {
+              "max": 14.0625,
+              "min": 9.375
+            },
+            "within_2_bpm": 0.8571428571428571,
+            "within_4_bpm": 0.9285714285714286,
+            "within_6_bpm": 1.0
+          }
+        }
+      }
+    },
+    "post_hoc_seed_selection": false,
+    "seed_results": {
+      "11": {
+        "breathing": {
+          "Brier": 0.02115794692809779,
+          "F1": 0.9911504424778761,
+          "PR_AUC": null,
+          "ROC_AUC": null,
+          "absent_count": 0,
+          "absent_recall": {
+            "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+            "status": "NOT_APPLICABLE"
+          },
+          "calibration_fitting": false,
+          "confusion": {
+            "FN": 1,
+            "FP": 0,
+            "TN": 0,
+            "TP": 56
+          },
+          "ece": {
+            "calibration_fitting": false,
+            "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+            "status": "NOT_APPLICABLE"
+          },
+          "eligible_count": 57,
+          "false_absent_on_PRESENT": 0.017543859649122806,
+          "false_present_on_ABSENT": null,
+          "fixed_threshold": 0.5,
+          "precision": 1.0,
+          "present_count": 57,
+          "probability_distribution": {
+            "max": 1.0,
+            "mean": 0.9567641776643301,
+            "min": 0.0957157239317894,
+            "std": 0.13888344247985857
+          },
+          "recall": 0.9824561403508771,
+          "status": "DEFINED",
+          "threshold": 0.5
+        },
+        "candidate_key": "family_c/seed_11",
+        "quality": {
+          "candidate_key": "family_c/seed_11",
+          "class": "B_DIAGNOSTIC_ONLY",
+          "clean_count": 59,
+          "diagnostic_coverage": [
+            "FLAT_EXACT",
+            "JITTER_PLUS_LARGE_GAP",
+            "LARGE_GAP",
+            "REPUBLICATION_TO_FREEZE",
+            "SOURCE_FREEZE",
+            "STALE_SOURCE"
+          ],
+          "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+          "quality_head_task_support": true,
+          "quality_metrics": {
+            "clean_false_rejection": 0.0,
+            "hard_Q2_invalid_false_acceptance": 0.0
+          },
+          "selection_use": false,
+          "synthetic_invalid_count": 6
+        },
+        "rr": {
+          "MAE_bpm": 4.539816287525913,
+          "RMSE_bpm": 6.433115257698816,
+          "eligible_count": 57,
+          "median_absolute_error_bpm": 3.1881542205810547,
+          "prediction_range_bpm": {
+            "max": 35.0087776184082,
+            "min": 5.076687812805176
+          },
+          "status": "DEFINED",
+          "target": "continuous_rr_bpm",
+          "target_range_bpm": {
+            "max": 37.5,
+            "min": 7.03125
+          },
+          "within_2_bpm": 0.3333333333333333,
+          "within_4_bpm": 0.631578947368421,
+          "within_6_bpm": 0.7894736842105263
+        },
+        "safety": {
+          "clean_false_rejection": 0.0,
+          "invalid_to_physiology_transition": 0,
+          "pass": true,
+          "q2_invalid_false_acceptance": 0.0
+        },
+        "seed": 11,
+        "selection_use": false,
+        "subject_results": {
+          "D1_PERSON_03": {
+            "breathing": {
+              "Brier": 0.04438517048104991,
+              "F1": 0.972972972972973,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 1,
+                "FP": 0,
+                "TN": 0,
+                "TP": 18
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 19,
+              "false_absent_on_PRESENT": 0.05263157894736842,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 19,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9428515759737868,
+                "min": 0.0957157239317894,
+                "std": 0.2027787664238296
+              },
+              "recall": 0.9473684210526315,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 20,
+            "rr": {
+              "MAE_bpm": 5.875332531176116,
+              "RMSE_bpm": 7.936053301768792,
+              "eligible_count": 19,
+              "median_absolute_error_bpm": 3.733510971069336,
+              "prediction_range_bpm": {
+                "max": 22.951171875,
+                "min": 10.764760971069336
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 37.5,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.15789473684210525,
+              "within_4_bpm": 0.5263157894736842,
+              "within_6_bpm": 0.7368421052631579
+            }
+          },
+          "D1_PERSON_09": {
+            "breathing": {
+              "Brier": 0.007760863739864139,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 24
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 24,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 24,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9628341297308604,
+                "min": 0.6291624903678894,
+                "std": 0.0798721592734391
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 25,
+            "rr": {
+              "MAE_bpm": 4.731425603230794,
+              "RMSE_bpm": 6.488729619496096,
+              "eligible_count": 24,
+              "median_absolute_error_bpm": 3.0990591049194336,
+              "prediction_range_bpm": {
+                "max": 35.0087776184082,
+                "min": 11.052536010742188
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 25.78125,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.2916666666666667,
+              "within_4_bpm": 0.5833333333333334,
+              "within_6_bpm": 0.75
+            }
+          },
+          "D1_PERSON_11": {
+            "breathing": {
+              "Brier": 0.01260169330248116,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 14
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 14,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 14,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9652399591037205,
+                "min": 0.5808911323547363,
+                "std": 0.10674002463635718
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 14,
+            "rr": {
+              "MAE_bpm": 2.398857389177595,
+              "RMSE_bpm": 3.293054446874769,
+              "eligible_count": 14,
+              "median_absolute_error_bpm": 1.6120977401733398,
+              "prediction_range_bpm": {
+                "max": 17.841999053955078,
+                "min": 5.076683044433594
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 14.0625,
+                "min": 9.375
+              },
+              "within_2_bpm": 0.6428571428571429,
+              "within_4_bpm": 0.8571428571428571,
+              "within_6_bpm": 0.9285714285714286
+            }
+          }
+        }
+      },
+      "23": {
+        "breathing": {
+          "Brier": 0.01791962580955174,
+          "F1": 0.9911504424778761,
+          "PR_AUC": null,
+          "ROC_AUC": null,
+          "absent_count": 0,
+          "absent_recall": {
+            "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+            "status": "NOT_APPLICABLE"
+          },
+          "calibration_fitting": false,
+          "confusion": {
+            "FN": 1,
+            "FP": 0,
+            "TN": 0,
+            "TP": 56
+          },
+          "ece": {
+            "calibration_fitting": false,
+            "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+            "status": "NOT_APPLICABLE"
+          },
+          "eligible_count": 57,
+          "false_absent_on_PRESENT": 0.017543859649122806,
+          "false_present_on_ABSENT": null,
+          "fixed_threshold": 0.5,
+          "precision": 1.0,
+          "present_count": 57,
+          "probability_distribution": {
+            "max": 1.0,
+            "mean": 0.9299038240784093,
+            "min": 0.40055620670318604,
+            "std": 0.11404451731986569
+          },
+          "recall": 0.9824561403508771,
+          "status": "DEFINED",
+          "threshold": 0.5
+        },
+        "candidate_key": "family_c/seed_23",
+        "quality": {
+          "candidate_key": "family_c/seed_23",
+          "class": "B_DIAGNOSTIC_ONLY",
+          "clean_count": 59,
+          "diagnostic_coverage": [
+            "FLAT_EXACT",
+            "JITTER_PLUS_LARGE_GAP",
+            "LARGE_GAP",
+            "REPUBLICATION_TO_FREEZE",
+            "SOURCE_FREEZE",
+            "STALE_SOURCE"
+          ],
+          "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+          "quality_head_task_support": true,
+          "quality_metrics": {
+            "clean_false_rejection": 0.0,
+            "hard_Q2_invalid_false_acceptance": 0.0
+          },
+          "selection_use": false,
+          "synthetic_invalid_count": 6
+        },
+        "rr": {
+          "MAE_bpm": 4.541094194378769,
+          "RMSE_bpm": 6.4600821452910795,
+          "eligible_count": 57,
+          "median_absolute_error_bpm": 2.894702911376953,
+          "prediction_range_bpm": {
+            "max": 34.00602722167969,
+            "min": -2.7044448852539062
+          },
+          "status": "DEFINED",
+          "target": "continuous_rr_bpm",
+          "target_range_bpm": {
+            "max": 37.5,
+            "min": 7.03125
+          },
+          "within_2_bpm": 0.3684210526315789,
+          "within_4_bpm": 0.631578947368421,
+          "within_6_bpm": 0.8070175438596491
+        },
+        "safety": {
+          "clean_false_rejection": 0.0,
+          "invalid_to_physiology_transition": 0,
+          "pass": true,
+          "q2_invalid_false_acceptance": 0.0
+        },
+        "seed": 23,
+        "selection_use": false,
+        "subject_results": {
+          "D1_PERSON_03": {
+            "breathing": {
+              "Brier": 0.025118083360226626,
+              "F1": 0.972972972972973,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 1,
+                "FP": 0,
+                "TN": 0,
+                "TP": 18
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 19,
+              "false_absent_on_PRESENT": 0.05263157894736842,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 19,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9350540951678628,
+                "min": 0.40055620670318604,
+                "std": 0.1445687130943677
+              },
+              "recall": 0.9473684210526315,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 20,
+            "rr": {
+              "MAE_bpm": 6.42008816568475,
+              "RMSE_bpm": 8.302150156161423,
+              "eligible_count": 19,
+              "median_absolute_error_bpm": 4.269286155700684,
+              "prediction_range_bpm": {
+                "max": 22.966991424560547,
+                "min": 2.477511405944824
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 37.5,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.10526315789473684,
+              "within_4_bpm": 0.42105263157894735,
+              "within_6_bpm": 0.7368421052631579
+            }
+          },
+          "D1_PERSON_09": {
+            "breathing": {
+              "Brier": 0.014793921302445648,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 24
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 24,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 24,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9242095649242401,
+                "min": 0.6233265399932861,
+                "std": 0.09513007544132757
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 25,
+            "rr": {
+              "MAE_bpm": 3.94831911722819,
+              "RMSE_bpm": 5.495482374361496,
+              "eligible_count": 24,
+              "median_absolute_error_bpm": 2.593997001647949,
+              "prediction_range_bpm": {
+                "max": 34.00602722167969,
+                "min": 10.515625
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 25.78125,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.4166666666666667,
+              "within_4_bpm": 0.6666666666666666,
+              "within_6_bpm": 0.7916666666666666
+            }
+          },
+          "D1_PERSON_11": {
+            "breathing": {
+              "Brier": 0.013508658714609061,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 14
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 14,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 14,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9326757320335933,
+                "min": 0.6561185121536255,
+                "std": 0.09474229075442776
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 14,
+            "rr": {
+              "MAE_bpm": 3.007215295519148,
+              "RMSE_bpm": 4.959586382381341,
+              "eligible_count": 14,
+              "median_absolute_error_bpm": 1.589385986328125,
+              "prediction_range_bpm": {
+                "max": 16.957202911376953,
+                "min": -2.704425811767578
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 14.0625,
+                "min": 9.375
+              },
+              "within_2_bpm": 0.6428571428571429,
+              "within_4_bpm": 0.8571428571428571,
+              "within_6_bpm": 0.9285714285714286
+            }
+          }
+        }
+      },
+      "47": {
+        "breathing": {
+          "Brier": 0.0012677252259954447,
+          "F1": 1.0,
+          "PR_AUC": null,
+          "ROC_AUC": null,
+          "absent_count": 0,
+          "absent_recall": {
+            "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+            "status": "NOT_APPLICABLE"
+          },
+          "calibration_fitting": false,
+          "confusion": {
+            "FN": 0,
+            "FP": 0,
+            "TN": 0,
+            "TP": 57
+          },
+          "ece": {
+            "calibration_fitting": false,
+            "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+            "status": "NOT_APPLICABLE"
+          },
+          "eligible_count": 57,
+          "false_absent_on_PRESENT": 0.0,
+          "false_present_on_ABSENT": null,
+          "fixed_threshold": 0.5,
+          "precision": 1.0,
+          "present_count": 57,
+          "probability_distribution": {
+            "max": 1.0,
+            "mean": 0.991727660622513,
+            "min": 0.7780320644378662,
+            "std": 0.03463081903765956
+          },
+          "recall": 1.0,
+          "status": "DEFINED",
+          "threshold": 0.5
+        },
+        "candidate_key": "family_c/seed_47",
+        "quality": {
+          "candidate_key": "family_c/seed_47",
+          "class": "B_DIAGNOSTIC_ONLY",
+          "clean_count": 59,
+          "diagnostic_coverage": [
+            "FLAT_EXACT",
+            "JITTER_PLUS_LARGE_GAP",
+            "LARGE_GAP",
+            "REPUBLICATION_TO_FREEZE",
+            "SOURCE_FREEZE",
+            "STALE_SOURCE"
+          ],
+          "q2_metrics_classification": "CLASS_A_ONLY_NON_COMPENSABLE",
+          "quality_head_task_support": true,
+          "quality_metrics": {
+            "clean_false_rejection": 0.0,
+            "hard_Q2_invalid_false_acceptance": 0.0
+          },
+          "selection_use": false,
+          "synthetic_invalid_count": 6
+        },
+        "rr": {
+          "MAE_bpm": 4.460836209748921,
+          "RMSE_bpm": 6.761024104687144,
+          "eligible_count": 57,
+          "median_absolute_error_bpm": 2.3799400329589844,
+          "prediction_range_bpm": {
+            "max": 38.126380920410156,
+            "min": 8.32497787475586
+          },
+          "status": "DEFINED",
+          "target": "continuous_rr_bpm",
+          "target_range_bpm": {
+            "max": 37.5,
+            "min": 7.03125
+          },
+          "within_2_bpm": 0.45614035087719296,
+          "within_4_bpm": 0.6491228070175439,
+          "within_6_bpm": 0.7368421052631579
+        },
+        "safety": {
+          "clean_false_rejection": 0.0,
+          "invalid_to_physiology_transition": 0,
+          "pass": true,
+          "q2_invalid_false_acceptance": 0.0
+        },
+        "seed": 47,
+        "selection_use": false,
+        "subject_results": {
+          "D1_PERSON_03": {
+            "breathing": {
+              "Brier": 7.394030507924006e-05,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 19
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 19,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 19,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9979874428949858,
+                "min": 0.9625211954116821,
+                "std": 0.008360019077627569
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 20,
+            "rr": {
+              "MAE_bpm": 6.051366354289808,
+              "RMSE_bpm": 8.569303326058469,
+              "eligible_count": 19,
+              "median_absolute_error_bpm": 3.4231348037719727,
+              "prediction_range_bpm": {
+                "max": 29.33746337890625,
+                "min": 8.32497787475586
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 37.5,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.42105263157894735,
+              "within_4_bpm": 0.5263157894736842,
+              "within_6_bpm": 0.5789473684210527
+            }
+          },
+          "D1_PERSON_09": {
+            "breathing": {
+              "Brier": 0.000766566688789716,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 24
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 24,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 24,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.9936094880104065,
+                "min": 0.8649768829345703,
+                "std": 0.026939340105143216
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 25,
+            "rr": {
+              "MAE_bpm": 5.052180091540019,
+              "RMSE_bpm": 6.980270827124275,
+              "eligible_count": 24,
+              "median_absolute_error_bpm": 3.458784580230713,
+              "prediction_range_bpm": {
+                "max": 38.126380920410156,
+                "min": 10.996813774108887
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 25.78125,
+                "min": 7.03125
+              },
+              "within_2_bpm": 0.25,
+              "within_4_bpm": 0.5833333333333334,
+              "within_6_bpm": 0.7083333333333334
+            }
+          },
+          "D1_PERSON_11": {
+            "breathing": {
+              "Brier": 0.003746996495445235,
+              "F1": 1.0,
+              "PR_AUC": null,
+              "ROC_AUC": null,
+              "absent_count": 0,
+              "absent_recall": {
+                "reason": "NO_GOVERNED_ELIGIBLE_ABSENT_IN_D1_DEV_VAL",
+                "status": "NOT_APPLICABLE"
+              },
+              "calibration_fitting": false,
+              "confusion": {
+                "FN": 0,
+                "FP": 0,
+                "TN": 0,
+                "TP": 14
+              },
+              "ece": {
+                "calibration_fitting": false,
+                "reason": "CALIBRATION_NOT_VALIDATED_AND_NO_BOTH_CLASS_COVERAGE",
+                "status": "NOT_APPLICABLE"
+              },
+              "eligible_count": 14,
+              "false_absent_on_PRESENT": 0.0,
+              "false_present_on_ABSENT": null,
+              "fixed_threshold": 0.5,
+              "precision": 1.0,
+              "present_count": 14,
+              "probability_distribution": {
+                "max": 1.0,
+                "mean": 0.980006239243916,
+                "min": 0.7780318856239319,
+                "std": 0.057855388912993355
+              },
+              "recall": 1.0,
+              "status": "DEFINED",
+              "threshold": 0.5
+            },
+            "record_count": 14,
+            "rr": {
+              "MAE_bpm": 1.2885270799909319,
+              "RMSE_bpm": 1.7101769043898563,
+              "eligible_count": 14,
+              "median_absolute_error_bpm": 1.0328316688537598,
+              "prediction_range_bpm": {
+                "max": 15.126514434814453,
+                "min": 8.420648574829102
+              },
+              "status": "DEFINED",
+              "target": "continuous_rr_bpm",
+              "target_range_bpm": {
+                "max": 14.0625,
+                "min": 9.375
+              },
+              "within_2_bpm": 0.8571428571428571,
+              "within_4_bpm": 0.9285714285714286,
+              "within_6_bpm": 1.0
+            }
+          }
+        }
+      }
+    },
+    "selection_use": false,
+    "summary": {
+      "breathing_brier": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 0.0012677252259954447
+        },
+        "direction": "lower_is_better",
+        "max": 0.02115794692809779,
+        "mean": 0.013448432654548323,
+        "min": 0.0012677252259954447,
+        "population_std": 0.008713931604494334,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 47,
+            "value": 0.0012677252259954447
+          },
+          {
+            "seed": 23,
+            "value": 0.01791962580955174
+          },
+          {
+            "seed": 11,
+            "value": 0.02115794692809779
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.02115794692809779,
+          "23": 0.01791962580955174,
+          "47": 0.0012677252259954447
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 0.02115794692809779
+        }
+      },
+      "breathing_f1": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 1.0
+        },
+        "direction": "higher_is_better",
+        "max": 1.0,
+        "mean": 0.9941002949852508,
+        "min": 0.9911504424778761,
+        "population_std": 0.00417172142292949,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.9911504424778761
+          },
+          {
+            "seed": 23,
+            "value": 0.9911504424778761
+          },
+          {
+            "seed": 47,
+            "value": 1.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.9911504424778761,
+          "23": 0.9911504424778761,
+          "47": 1.0
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 0.9911504424778761
+        }
+      },
+      "breathing_precision": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 1.0
+        },
+        "direction": "higher_is_better",
+        "max": 1.0,
+        "mean": 1.0,
+        "min": 1.0,
+        "population_std": 0.0,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 1.0
+          },
+          {
+            "seed": 23,
+            "value": 1.0
+          },
+          {
+            "seed": 47,
+            "value": 1.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 1.0,
+          "23": 1.0,
+          "47": 1.0
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 1.0
+        }
+      },
+      "breathing_present_recall": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 1.0
+        },
+        "direction": "higher_is_better",
+        "max": 1.0,
+        "mean": 0.9883040935672515,
+        "min": 0.9824561403508771,
+        "population_std": 0.00827025475071988,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.9824561403508771
+          },
+          {
+            "seed": 23,
+            "value": 0.9824561403508771
+          },
+          {
+            "seed": 47,
+            "value": 1.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.9824561403508771,
+          "23": 0.9824561403508771,
+          "47": 1.0
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 0.9824561403508771
+        }
+      },
+      "clean_false_rejection": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 11,
+          "value": 0.0
+        },
+        "direction": "lower_is_better",
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "population_std": 0.0,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.0
+          },
+          {
+            "seed": 23,
+            "value": 0.0
+          },
+          {
+            "seed": 47,
+            "value": 0.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.0,
+          "23": 0.0,
+          "47": 0.0
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.0
+        }
+      },
+      "invalid_to_physiology_transition": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 11,
+          "value": 0.0
+        },
+        "direction": "lower_is_better",
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "population_std": 0.0,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.0
+          },
+          {
+            "seed": 23,
+            "value": 0.0
+          },
+          {
+            "seed": 47,
+            "value": 0.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.0,
+          "23": 0.0,
+          "47": 0.0
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.0
+        }
+      },
+      "q2_invalid_false_acceptance": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 11,
+          "value": 0.0
+        },
+        "direction": "lower_is_better",
+        "max": 0.0,
+        "mean": 0.0,
+        "min": 0.0,
+        "population_std": 0.0,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.0
+          },
+          {
+            "seed": 23,
+            "value": 0.0
+          },
+          {
+            "seed": 47,
+            "value": 0.0
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.0,
+          "23": 0.0,
+          "47": 0.0
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.0
+        }
+      },
+      "rr_mae_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 4.460836209748921
+        },
+        "direction": "lower_is_better",
+        "max": 4.541094194378769,
+        "mean": 4.5139155638845345,
+        "min": 4.460836209748921,
+        "population_std": 0.037536396897514056,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 47,
+            "value": 4.460836209748921
+          },
+          {
+            "seed": 11,
+            "value": 4.539816287525913
+          },
+          {
+            "seed": 23,
+            "value": 4.541094194378769
+          }
+        ],
+        "values_by_seed": {
+          "11": 4.539816287525913,
+          "23": 4.541094194378769,
+          "47": 4.460836209748921
+        },
+        "worst_seed": {
+          "seed": 23,
+          "value": 4.541094194378769
+        }
+      },
+      "rr_median_absolute_error_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 2.3799400329589844
+        },
+        "direction": "lower_is_better",
+        "max": 3.1881542205810547,
+        "mean": 2.820932388305664,
+        "min": 2.3799400329589844,
+        "population_std": 0.33405000705888277,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 47,
+            "value": 2.3799400329589844
+          },
+          {
+            "seed": 23,
+            "value": 2.894702911376953
+          },
+          {
+            "seed": 11,
+            "value": 3.1881542205810547
+          }
+        ],
+        "values_by_seed": {
+          "11": 3.1881542205810547,
+          "23": 2.894702911376953,
+          "47": 2.3799400329589844
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 3.1881542205810547
+        }
+      },
+      "rr_within_2_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 0.45614035087719296
+        },
+        "direction": "higher_is_better",
+        "max": 0.45614035087719296,
+        "mean": 0.3859649122807018,
+        "min": 0.3333333333333333,
+        "population_std": 0.05164772436449033,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.3333333333333333
+          },
+          {
+            "seed": 23,
+            "value": 0.3684210526315789
+          },
+          {
+            "seed": 47,
+            "value": 0.45614035087719296
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.3333333333333333,
+          "23": 0.3684210526315789,
+          "47": 0.45614035087719296
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 0.3333333333333333
+        }
+      },
+      "rr_within_4_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 47,
+          "value": 0.6491228070175439
+        },
+        "direction": "higher_is_better",
+        "max": 0.6491228070175439,
+        "mean": 0.6374269005847953,
+        "min": 0.631578947368421,
+        "population_std": 0.00827025475071988,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 11,
+            "value": 0.631578947368421
+          },
+          {
+            "seed": 23,
+            "value": 0.631578947368421
+          },
+          {
+            "seed": 47,
+            "value": 0.6491228070175439
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.631578947368421,
+          "23": 0.631578947368421,
+          "47": 0.6491228070175439
+        },
+        "worst_seed": {
+          "seed": 11,
+          "value": 0.631578947368421
+        }
+      },
+      "rr_within_6_bpm": {
+        "all_frozen_seeds_present": true,
+        "best_seed": {
+          "seed": 23,
+          "value": 0.8070175438596491
+        },
+        "direction": "higher_is_better",
+        "max": 0.8070175438596491,
+        "mean": 0.7777777777777778,
+        "min": 0.7368421052631579,
+        "population_std": 0.029818827564870094,
+        "selection_use": false,
+        "sorted_values_for_audit": [
+          {
+            "seed": 47,
+            "value": 0.7368421052631579
+          },
+          {
+            "seed": 11,
+            "value": 0.7894736842105263
+          },
+          {
+            "seed": 23,
+            "value": 0.8070175438596491
+          }
+        ],
+        "values_by_seed": {
+          "11": 0.7894736842105263,
+          "23": 0.8070175438596491,
+          "47": 0.7368421052631579
+        },
+        "worst_seed": {
+          "seed": 47,
+          "value": 0.7368421052631579
+        }
+      }
+    }
+  }
+}
