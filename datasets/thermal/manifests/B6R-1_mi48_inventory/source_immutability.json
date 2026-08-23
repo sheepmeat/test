@@ -1,0 +1,107 @@
+{
+  "after": {
+    "files": [
+      {
+        "byte_size": 1740348425,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/test.zip",
+        "mtime_ns": 1785126580000000000,
+        "relative_path": "test.zip",
+        "sha256": "3a838bd70835e579ecfaa820a6c0b4cbc6ba7b76729417c73845f0c959281449"
+      },
+      {
+        "byte_size": 4194304000,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/train.zip.001",
+        "mtime_ns": 1785129228000000000,
+        "relative_path": "train.zip.001",
+        "sha256": "9dd2f944f43209dd44463956b7b34030daecc22bf49050478e77aae27c48dbc4"
+      },
+      {
+        "byte_size": 4194304000,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/train.zip.002",
+        "mtime_ns": 1785129364000000000,
+        "relative_path": "train.zip.002",
+        "sha256": "91be187a432e21c6020928d115d1394ccf540cc6addac8f064a7b181cabe2259"
+      },
+      {
+        "byte_size": 4194304000,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/train.zip.003",
+        "mtime_ns": 1785123246000000000,
+        "relative_path": "train.zip.003",
+        "sha256": "a2e263e0a9024363d787a335ad8641d2a73ee61129d7cb2eb1cffa32b16e1187"
+      },
+      {
+        "byte_size": 1408015891,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/train.zip.004",
+        "mtime_ns": 1785120366000000000,
+        "relative_path": "train.zip.004",
+        "sha256": "406160460568f387b9a84e392430ed2afe57aeb055d073ba93f722c3b0d3b071"
+      },
+      {
+        "byte_size": 3492475558,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/validation.zip",
+        "mtime_ns": 1785122572000000000,
+        "relative_path": "validation.zip",
+        "sha256": "06d52e24163d1fe243ebfbdb7d2dcef33fcc0a5ed0531ad81621ec1490af4f8f"
+      }
+    ],
+    "logical_source_id": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES",
+    "root_status": "AVAILABLE"
+  },
+  "before": {
+    "files": [
+      {
+        "byte_size": 1740348425,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/test.zip",
+        "mtime_ns": 1785126580000000000,
+        "relative_path": "test.zip",
+        "sha256": "3a838bd70835e579ecfaa820a6c0b4cbc6ba7b76729417c73845f0c959281449"
+      },
+      {
+        "byte_size": 4194304000,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/train.zip.001",
+        "mtime_ns": 1785129228000000000,
+        "relative_path": "train.zip.001",
+        "sha256": "9dd2f944f43209dd44463956b7b34030daecc22bf49050478e77aae27c48dbc4"
+      },
+      {
+        "byte_size": 4194304000,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/train.zip.002",
+        "mtime_ns": 1785129364000000000,
+        "relative_path": "train.zip.002",
+        "sha256": "91be187a432e21c6020928d115d1394ccf540cc6addac8f064a7b181cabe2259"
+      },
+      {
+        "byte_size": 4194304000,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/train.zip.003",
+        "mtime_ns": 1785123246000000000,
+        "relative_path": "train.zip.003",
+        "sha256": "a2e263e0a9024363d787a335ad8641d2a73ee61129d7cb2eb1cffa32b16e1187"
+      },
+      {
+        "byte_size": 1408015891,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/train.zip.004",
+        "mtime_ns": 1785120366000000000,
+        "relative_path": "train.zip.004",
+        "sha256": "406160460568f387b9a84e392430ed2afe57aeb055d073ba93f722c3b0d3b071"
+      },
+      {
+        "byte_size": 3492475558,
+        "logical_source_identifier": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES/validation.zip",
+        "mtime_ns": 1785122572000000000,
+        "relative_path": "validation.zip",
+        "sha256": "06d52e24163d1fe243ebfbdb7d2dcef33fcc0a5ed0531ad81621ec1490af4f8f"
+      }
+    ],
+    "logical_source_id": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES",
+    "root_status": "AVAILABLE"
+  },
+  "comparison": {
+    "added": [],
+    "after_file_count": 6,
+    "before_file_count": 6,
+    "changed": [],
+    "removed": [],
+    "status": "PASS"
+  },
+  "schema_version": "safenest.thermal.b6r1.source_immutability.v1"
+}

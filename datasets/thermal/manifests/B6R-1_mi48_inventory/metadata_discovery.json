@@ -1,0 +1,137 @@
+{
+  "directory_components": [
+    {
+      "component": "test",
+      "count": 16001
+    },
+    {
+      "component": "validation",
+      "count": 16001
+    }
+  ],
+  "field_status_definitions": {
+    "ABSENT": "No field evidence was observed.",
+    "AMBIGUOUS": "A filename or directory clue exists but cannot safely define a SafeNest field.",
+    "DERIVABLE_WITHOUT_AMBIGUITY": "Not assigned by this profiler unless the source contract proves the derivation.",
+    "DIRECTLY_OBSERVED": "Field name was observed in a source structure; value provenance is not thereby trusted."
+  },
+  "filename_patterns": [
+    {
+      "count": 1,
+      "pattern": "test.zip"
+    },
+    {
+      "count": 4,
+      "pattern": "train.zip.<index>"
+    },
+    {
+      "count": 1,
+      "pattern": "validation.zip"
+    }
+  ],
+  "labels_remapped": false,
+  "observed_text_and_archive_sources": [
+    {
+      "observed_fields": [
+        "source_label"
+      ],
+      "provenance_confidence": "DIRECTLY_OBSERVED_FIELD_NAMES_ONLY",
+      "relative_path": "test.zip",
+      "source_kind": "ARCHIVE_LABEL_FILENAME_ONLY_AMBIGUOUS"
+    },
+    {
+      "observed_fields": [
+        "source_label"
+      ],
+      "provenance_confidence": "DIRECTLY_OBSERVED_FIELD_NAMES_ONLY",
+      "relative_path": "validation.zip",
+      "source_kind": "ARCHIVE_LABEL_FILENAME_ONLY_AMBIGUOUS"
+    }
+  ],
+  "required_field_registry": [
+    {
+      "field": "subject_id",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "session_id",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "recording_id",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "timestamp",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "scenario_id",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "source_label",
+      "observed_in": [
+        "test.zip",
+        "validation.zip"
+      ],
+      "provenance_confidence": "FIELD_NAME_OBSERVED_WITHOUT_VALUE_PROVENANCE",
+      "status": "DIRECTLY_OBSERVED"
+    },
+    {
+      "field": "posture_label",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "presence_label",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "split_role",
+      "observed_in": [],
+      "provenance_confidence": "DIRECTORY_NAME_NOT_A_SAFE_NEST_ROLE_ASSIGNMENT",
+      "status": "AMBIGUOUS"
+    },
+    {
+      "field": "native_shape",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "native_dtype",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "native_byte_order",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    },
+    {
+      "field": "physical_unit",
+      "observed_in": [],
+      "provenance_confidence": "NO_OBSERVED_FIELD",
+      "status": "ABSENT"
+    }
+  ],
+  "schema_version": "safenest.thermal.b6r1.metadata_discovery.v1",
+  "split_roles_assigned": false,
+  "subject_or_session_groups_created": false
+}

@@ -1,0 +1,59 @@
+{
+  "exceptions": [
+    {
+      "code": "SOURCE_IDENTITY_UNRESOLVED",
+      "message": "The caller did not assert an authoritative MI48 identity; no source was promoted to MI48 evidence.",
+      "relative_path": ".",
+      "severity": "ERROR"
+    },
+    {
+      "code": "ARCHIVE_IMAGE_GEOMETRY_NOT_MI48_VERIFIED",
+      "message": "Archive image geometry was observed without treating image pixels as MI48 thermal frames.",
+      "relative_path": "test.zip",
+      "severity": "INFO"
+    },
+    {
+      "code": "ARCHIVE_LABEL_SEMANTICS_AMBIGUOUS",
+      "message": "A label-like member exists, but its schema and provenance are not an authoritative MI48 contract.",
+      "relative_path": "test.zip",
+      "severity": "INFO"
+    },
+    {
+      "code": "MULTI_VOLUME_ARCHIVE_COMPONENT_EXCLUDED",
+      "message": "Archive volume was accounted for but not opened as an independent dataset.",
+      "relative_path": "train.zip.001",
+      "severity": "INFO"
+    },
+    {
+      "code": "MULTI_VOLUME_ARCHIVE_COMPONENT_EXCLUDED",
+      "message": "Archive volume was accounted for but not opened as an independent dataset.",
+      "relative_path": "train.zip.002",
+      "severity": "INFO"
+    },
+    {
+      "code": "MULTI_VOLUME_ARCHIVE_COMPONENT_EXCLUDED",
+      "message": "Archive volume was accounted for but not opened as an independent dataset.",
+      "relative_path": "train.zip.003",
+      "severity": "INFO"
+    },
+    {
+      "code": "MULTI_VOLUME_ARCHIVE_COMPONENT_EXCLUDED",
+      "message": "Archive volume was accounted for but not opened as an independent dataset.",
+      "relative_path": "train.zip.004",
+      "severity": "INFO"
+    },
+    {
+      "code": "ARCHIVE_IMAGE_GEOMETRY_NOT_MI48_VERIFIED",
+      "message": "Archive image geometry was observed without treating image pixels as MI48 thermal frames.",
+      "relative_path": "validation.zip",
+      "severity": "INFO"
+    },
+    {
+      "code": "ARCHIVE_LABEL_SEMANTICS_AMBIGUOUS",
+      "message": "A label-like member exists, but its schema and provenance are not an authoritative MI48 contract.",
+      "relative_path": "validation.zip",
+      "severity": "INFO"
+    }
+  ],
+  "schema_version": "safenest.thermal.b6r1.exception_registry.v1"
+}

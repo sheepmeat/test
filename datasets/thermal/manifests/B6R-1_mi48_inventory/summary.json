@@ -1,0 +1,82 @@
+{
+  "accounting": {
+    "corrupt": 0,
+    "excluded_with_explicit_reason": 6,
+    "invariant_total_equals_readable_plus_corrupt_plus_excluded": true,
+    "readability_status_counts": {
+      "READABLE": 6,
+      "UNREADABLE": 0
+    },
+    "readable": 0,
+    "total_discovered": 6,
+    "unknown_schema_file_count": 6
+  },
+  "anomaly_candidate_policy": {
+    "criteria": [
+      "EXACT_ZERO_REPEAT",
+      "EXACT_65535_REPEAT",
+      "FRAME_MIN_REPEAT",
+      "FRAME_MAX_REPEAT",
+      "NONFINITE_REPEAT"
+    ],
+    "effective_minimum_repeat_count": null,
+    "minimum_repeat_count": 2,
+    "no_invalid_or_dead_pixel_claim": true,
+    "no_preprocessing_threshold_selected": true,
+    "repeat_fraction_threshold": 0.01,
+    "status_label": "ANOMALY_CANDIDATE"
+  },
+  "artifact_id": "B6R-1_mi48_inventory",
+  "decision": {
+    "B6R_1_MI48_DATASET_STATUS": "INCONCLUSIVE",
+    "B6R_2_supportable_now": false,
+    "B6R_2_was_executed": false,
+    "reason": "Candidate files were observed, but MI48 dataset identity was not resolved from authoritative evidence."
+  },
+  "determinism": {
+    "csv_order": "stable field order and sorted rows",
+    "file_order": "POSIX relative path ascending",
+    "json_order": "sort_keys=true",
+    "randomness_used": false,
+    "timestamps_in_evidence_payload": false
+  },
+  "exceptions_file": "exception_registry.json",
+  "metadata_discovery_file": "metadata_discovery.json",
+  "profiler_version": "1.0.0",
+  "schema_families_file": "schema_families.json",
+  "schema_version": "safenest.thermal.b6r1.mi48.inventory.v1",
+  "source": {
+    "identity_status": "UNRESOLVED",
+    "logical_source_id": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES",
+    "raw_source_modified_by_profiler": false,
+    "root_status": "AVAILABLE",
+    "source_files_are_read_only_inputs": true
+  },
+  "source_immutability_file": "source_immutability.json",
+  "thermal_frames": {
+    "coordinate_profile_file": "coordinate_frequency_profile.csv",
+    "distribution": {
+      "dtype_counts_by_frame": {},
+      "dtype_max_count": 0,
+      "dtype_min_count": 0,
+      "eligible_frame_count": 0,
+      "exact_65535_count": 0,
+      "exact_zero_count": 0,
+      "finite_pixel_count": 0,
+      "global_pixel_max": null,
+      "global_pixel_min": null,
+      "nonfinite_pixel_count": 0,
+      "per_frame_metric_summaries": {},
+      "percentile_semantics": "p2/p98/span are exact per-frame finite-pixel statistics; aggregate summaries describe the distribution of those frame statistics, not a guessed global pixel percentile.",
+      "pixel_count": 0,
+      "shape_counts_by_frame": {}
+    },
+    "frame_statistics_file": "frame_statistics.csv",
+    "identified_without_guessing": 0
+  },
+  "validation_requirements": {
+    "accounting_invariant": true,
+    "source_checksum_strategy": "SHA-256 per discovered source file plus size and mtime_ns before/after",
+    "source_immutability_status": "PASS"
+  }
+}
