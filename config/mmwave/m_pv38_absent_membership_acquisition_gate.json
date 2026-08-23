@@ -1,12 +1,12 @@
 {
   "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
-  "schema_version": "M-PV3.8.3_CORRECTIVE",
+  "schema_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
   "phase": "M-PV3.8-ABSENT-MEMBERSHIP",
   "mode": "CONTRACT_CORRECTION_ONLY",
   "purpose": "Correct the ABSENT semantic definition and final-lock schema before any governed D1 negative-class acquisition or M-PV3.8 selection evaluation.",
   "current_state": {
-    "independent_audit_result": "NEEDS_CORRECTION",
-    "membership_construction": "BLOCKED_PENDING_REAUDIT",
+    "independent_audit_result": "APPROVED",
+    "membership_construction": "BLOCKED_INVALID_FINAL_MEMBERSHIP_DUE_NO_SOURCE_EVIDENCE",
     "m_pv38_final_selection_result": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
     "available_eligible_present": 57,
     "available_eligible_absent": 0,
@@ -41,10 +41,14 @@
   "pre_acquisition_deterministic_selection": {
     "required_predeclaration_artifact": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/campaign_predeclaration.json",
     "must_be_locked_before_acquisition": true,
-    "required_predeclared_fields": ["contract_id", "contract_version", "campaign_id", "generator_tool_version", "repository_commit_sha", "creation_timestamp", "acquisition_lineage_group_id", "recording_slot_id", "recording_id", "recording_checksum", "recording_order", "context_quota", "scan_start_time", "scan_end_time", "window_length_seconds", "target_length_seconds", "selection_rule_version"],
+    "required_predeclared_fields": ["contract_id", "contract_version", "campaign_id", "generator_tool_version", "repository_commit_sha", "creation_timestamp", "acquisition_lineage_group_id", "recording_slot_id", "planned_recording_id", "recording_order", "context_quota", "scan_start_time", "scan_end_time", "window_length_seconds", "target_length_seconds", "selection_rule_version"],
     "selection_rule": "For each predeclared recording slot in ascending recording_order, exhaustively scan candidate 30-second contexts in ascending context_start_time. Apply the immutable eligibility predicate to every candidate in that order and accept the first context_quota qualifying windows. Record every rejected candidate and reason in the ambiguity/exception registry. Operators must not select, skip, reorder, or substitute easier negative windows.",
     "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
     "manual_selection": "FORBIDDEN"
+  },
+  "recording_identity_lifecycle": {
+    "stage_1_pre_capture_identity_lock": {"required": ["campaign_id", "recording_slot_id", "planned_recording_id", "acquisition_lineage_group_id", "recording_order", "sensor_identity", "placement", "target_zone", "selection_rule_version", "contract_version", "repository_commit_sha", "creation_timestamp"], "recording_checksum": "NOT_APPLICABLE_BEFORE_CAPTURE", "lock_rule": "Freeze the planned identity before capture; it cannot be changed, replaced, or reallocated."},
+    "stage_2_post_capture_immutable_checksum_receipt": {"receipt_artifact": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/post_capture_checksum_receipts.json", "required": ["planned_recording_id", "actual_recording_identifier", "sha256", "file_metadata", "capture_timestamp", "source_provenance", "generator_tool_version"], "binding_rule": "The immutable receipt must bind exactly one created recording to exactly one predeclared planned_recording_id. A mismatch, duplicate binding, or absent receipt fails the slot.", "eligibility_scan": "FORBIDDEN_UNTIL_RECEIPT_IS_LOCKED"}
   },
   "bounded_acquisition_campaign": {
     "campaign_id": "D1_ABSENT_COMPLEMENT_CAMPAIGN_V1",
@@ -75,9 +79,10 @@
     "required_counts": {"eligible_present": 57, "eligible_absent": 57, "eligible_absent_per_lineage_group": 19, "lineage_group_count": 3},
     "membership_manifest": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/membership_manifest.json",
     "campaign_predeclaration": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/campaign_predeclaration.json",
+    "post_capture_checksum_receipts": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/post_capture_checksum_receipts.json",
     "exception_and_ambiguity_registry": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/ambiguity_exception_registry.json",
     "checksum_files": ["datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/checksums.json", "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/checksums.sha256"],
-    "required_membership_metadata": ["membership_id", "contract_id", "contract_version", "creation_timestamp", "generator_tool_version", "repository_commit_sha", "membership_checksum", "preprocessing_artifact_identifiers_and_checksums"],
+    "required_membership_metadata": ["membership_id", "contract_id", "contract_version", "creation_timestamp", "generator_tool_version", "repository_commit_sha", "membership_checksum", "post_capture_checksum_receipt_checksum", "preprocessing_artifact_identifiers_and_checksums"],
     "required_accepted_window_fields": ["window_id", "recording_id", "subject_id", "start_time", "end_time", "class", "class_assignment_reason", "acquisition_lineage_group_id", "membership_row_id", "source_dataset", "source_dataset_checksum", "session_id", "recording_checksum", "context_start_time", "context_end_time", "target_start_time", "target_end_time", "presence_source_id", "presence_evidence", "target_physiological_source_evidence", "label_mapping_id", "label_mapping_version", "label_mapping_checksum", "raw_source_state", "split", "quality_state", "quality_provenance", "deterministic_selection_order", "reviewer_decision", "reviewer_evidence_id"],
     "label_mapping_rule": "The immutable raw source state must map to class ABSENT using the explicit no-human/no-target reason code, mapping ID, version, checksum, and source evidence. A mapping cannot be inferred, revised, or operator-decided after the predeclaration lock.",
     "ambiguity_registry_rule": "Every scanned but rejected, uncertain, transition, incomplete, human-present, non-detection, invalid-input, or disagreement row is retained with original evidence, deterministic scan order, reason code, and exclusion decision. AMBIGUOUS is never converted to PRESENT or ABSENT.",

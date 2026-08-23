@@ -1,0 +1,11 @@
+{
+  "schema_version": "M-PV3.8.4-CHECKSUM-LIFECYCLE-PLAN",
+  "plan_id": "MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_PLAN_V1",
+  "result_type": "PLANNING_RESULT_ONLY",
+  "status": "READY_FOR_CAPTURE_AUTHORIZATION",
+  "gate": "PASS",
+  "plan_validation": {"fixed_lineage_groups": 3, "fixed_recording_slots": 9, "later_context_target": 57, "selection_rule": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1", "replacement_top_up_reallocation_second_attempt": "FORBIDDEN"},
+  "completion": {"capture_performed": false, "absent_labels_created": false, "membership_constructed": false, "model_evaluation_performed": false, "candidate_outputs_inspected": false, "m_pv4_authorized": false},
+  "checksum_lifecycle": "Clarified: lock planned recording identity before capture; lock an immutable one-to-one SHA-256 receipt after capture and before any eligibility scan.",
+  "next_authorized_step": "A separately authorized one bounded capture campaign may now be considered; this result itself does not capture or construct membership."
+}

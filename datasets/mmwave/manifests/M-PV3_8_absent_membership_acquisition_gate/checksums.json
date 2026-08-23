@@ -1,8 +1,8 @@
 {
-  "schema_version": "M-PV3.8.3_CORRECTIVE",
+  "schema_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
   "files": {
-    "config/mmwave/m_pv38_absent_membership_acquisition_gate.json": "58b781cbd1eb7e88885e19e88b3f2fc6f8aa9ea54ec70e636567db65b891c8ed",
+    "config/mmwave/m_pv38_absent_membership_acquisition_gate.json": "b0c066ad7fbf140c41257b16c0f27dbac9cb66e2c41f075b73d3af11907ee880",
     "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/acquisition_gate.json": "91b6054abcc4fd775d4639c17a8fd058410002ee8121700fb8457b978bc823ba",
-    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/final_lock_requirements.json": "b7a1a9f1420e626d59c2127dce4c38bea4b38c9bc4dc796cb723518ad9211ddd"
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/final_lock_requirements.json": "15e315258c6de6c54129ee88f62833fbde80211e2d4c227a9b284337f8b07d71"
   }
 }
