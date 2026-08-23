@@ -1,0 +1,32 @@
+{
+  "schema_version": "M-PV3.8.2-AUDIT",
+  "audit_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_INDEPENDENT_AUDIT_V1",
+  "decision": "NEEDS_CORRECTION",
+  "findings": [
+    {
+      "finding_id": "ABSENT_CLASS_SEMANTICS_UNDER_SPECIFIED",
+      "severity": "BLOCKING",
+      "summary": "Eligible ABSENT still centers on an intentional non-breathing interval and does not hard-separate no-human / no-physiological-source observations from human-present non-detection or apnea-proxy intervals."
+    },
+    {
+      "finding_id": "FINAL_LOCK_MISSING_IMMUTABILITY_FIELDS",
+      "severity": "BLOCKING",
+      "summary": "Final lock omits required window_id, class_assignment_reason, creation_timestamp, and software provenance before candidate-output access."
+    },
+    {
+      "finding_id": "WITHIN_RECORDING_EASY_NEGATIVE_SELECTION",
+      "severity": "BLOCKING",
+      "summary": "Recording quotas are fixed, but within-recording ABSENT context selection has no predeclared deterministic schedule, allowing easy-negative cherry-picking before lock."
+    },
+    {
+      "finding_id": "FAILED_RECORDING_REPLACEMENT_LOOPHOLE",
+      "severity": "BLOCKING",
+      "summary": "Machine-readable wording forbids replacement only after campaign close, which can authorize during-campaign replacement or reallocation."
+    },
+    {
+      "finding_id": "PREPROCESSING_CACHE_LEAKAGE_UNCONTROLLED",
+      "severity": "BLOCKING",
+      "summary": "Acquisition lock does not forbid fitting or refreshing preprocessing statistics, caches, or derived artifacts on final-membership recordings before lock."
+    }
+  ]
+}
