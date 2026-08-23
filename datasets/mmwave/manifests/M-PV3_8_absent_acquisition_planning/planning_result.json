@@ -1,0 +1,11 @@
+{
+  "schema_version": "M-PV3.8.3-ACQUISITION-PLAN",
+  "plan_id": "MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_PLAN_V1",
+  "result_type": "PLANNING_RESULT_ONLY",
+  "status": "ABSENT_ACQUISITION_REQUIRED",
+  "gate": "PASS_WITH_LIMITATIONS",
+  "plan_validation": {"fixed_lineage_groups": 3, "fixed_recording_slots": 9, "later_context_target": 57, "selection_rule": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1", "replacement_top_up_reallocation_second_attempt": "FORBIDDEN"},
+  "completion": {"capture_performed": false, "absent_labels_created": false, "membership_constructed": false, "model_evaluation_performed": false, "candidate_outputs_inspected": false, "m_pv4_authorized": false},
+  "blocking_precondition": "Before capture, the contract owner must resolve the checksum-timing interpretation: predeclare and lock planned recording IDs before capture, then bind each resulting SHA-256 to its fixed ID through an immutable post-capture receipt before any eligibility scan.",
+  "next_authorized_step": "Obtain explicit contract-owner approval of the checksum-receipt interpretation, then separately authorize the one bounded capture campaign."
+}
