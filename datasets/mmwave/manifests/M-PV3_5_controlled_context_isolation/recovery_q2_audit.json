@@ -1,0 +1,92 @@
+{
+  "comparison": {
+    "context_refill_difference_s_30_minus_15": 15,
+    "first_valid_inference_difference_s_30_minus_15": 15
+  },
+  "lanes": {
+    "CONTEXT_15S": [
+      {
+        "context_refill_time_s": 15,
+        "first_valid_inference_time_s": 15,
+        "invalid_application_state": "INPUT_UNAVAILABLE",
+        "invalid_emitted_as_absent": false,
+        "invalid_emitted_as_apnea": false,
+        "invalid_emitted_as_normal": false,
+        "invalid_emitted_as_present": false,
+        "mode": "SOURCE_FREEZE",
+        "model_invocation_when_invalid": "BLOCKED",
+        "real_mr60_latency_measured": false,
+        "synthetic_q2_only": true
+      },
+      {
+        "context_refill_time_s": 15,
+        "first_valid_inference_time_s": 15,
+        "invalid_application_state": "INPUT_UNAVAILABLE",
+        "invalid_emitted_as_absent": false,
+        "invalid_emitted_as_apnea": false,
+        "invalid_emitted_as_normal": false,
+        "invalid_emitted_as_present": false,
+        "mode": "LARGE_GAP",
+        "model_invocation_when_invalid": "BLOCKED",
+        "real_mr60_latency_measured": false,
+        "synthetic_q2_only": true
+      },
+      {
+        "context_refill_time_s": 15,
+        "first_valid_inference_time_s": 15,
+        "invalid_application_state": "INPUT_UNAVAILABLE",
+        "invalid_emitted_as_absent": false,
+        "invalid_emitted_as_apnea": false,
+        "invalid_emitted_as_normal": false,
+        "invalid_emitted_as_present": false,
+        "mode": "STALE_SOURCE",
+        "model_invocation_when_invalid": "BLOCKED",
+        "real_mr60_latency_measured": false,
+        "synthetic_q2_only": true
+      }
+    ],
+    "CONTEXT_30S": [
+      {
+        "context_refill_time_s": 30,
+        "first_valid_inference_time_s": 30,
+        "invalid_application_state": "INPUT_UNAVAILABLE",
+        "invalid_emitted_as_absent": false,
+        "invalid_emitted_as_apnea": false,
+        "invalid_emitted_as_normal": false,
+        "invalid_emitted_as_present": false,
+        "mode": "SOURCE_FREEZE",
+        "model_invocation_when_invalid": "BLOCKED",
+        "real_mr60_latency_measured": false,
+        "synthetic_q2_only": true
+      },
+      {
+        "context_refill_time_s": 30,
+        "first_valid_inference_time_s": 30,
+        "invalid_application_state": "INPUT_UNAVAILABLE",
+        "invalid_emitted_as_absent": false,
+        "invalid_emitted_as_apnea": false,
+        "invalid_emitted_as_normal": false,
+        "invalid_emitted_as_present": false,
+        "mode": "LARGE_GAP",
+        "model_invocation_when_invalid": "BLOCKED",
+        "real_mr60_latency_measured": false,
+        "synthetic_q2_only": true
+      },
+      {
+        "context_refill_time_s": 30,
+        "first_valid_inference_time_s": 30,
+        "invalid_application_state": "INPUT_UNAVAILABLE",
+        "invalid_emitted_as_absent": false,
+        "invalid_emitted_as_apnea": false,
+        "invalid_emitted_as_normal": false,
+        "invalid_emitted_as_present": false,
+        "mode": "STALE_SOURCE",
+        "model_invocation_when_invalid": "BLOCKED",
+        "real_mr60_latency_measured": false,
+        "synthetic_q2_only": true
+      }
+    ]
+  },
+  "not_a_real_sensor_latency_measurement": true,
+  "profile": "SYNTHETIC_Q2_INPUT_UNAVAILABLE_ONLY"
+}

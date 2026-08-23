@@ -1,0 +1,119 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+  "phase": "M-PV3.5",
+  "frozen_before_training": true,
+  "decision_boundary": {
+    "purpose": "controlled_context_duration_ablation_only",
+    "production_model_selection": false,
+    "m_pv4_approval": false,
+    "threshold_tuning": false,
+    "calibration": false,
+    "int8_or_tflite": false,
+    "raspberry_pi_claim": false
+  },
+  "lanes": [
+    {
+      "lane_id": "CONTEXT_15S",
+      "context_seconds": 15,
+      "input_shape": "[B,150,1]",
+      "sample_count": 150,
+      "input_interval": "[t-15s,t]"
+    },
+    {
+      "lane_id": "CONTEXT_30S",
+      "context_seconds": 30,
+      "input_shape": "[B,300,1]",
+      "sample_count": 300,
+      "input_interval": "[t-30s,t]"
+    }
+  ],
+  "shared_controls": {
+    "sampling_rate_hz": 10,
+    "target": {
+      "name": "breathing_evidence",
+      "interval": "[t-5s,t]",
+      "anchor": "FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT",
+      "states": ["PRESENT", "ABSENT", "AMBIGUOUS", "TARGET_UNAVAILABLE"],
+      "ambiguous_policy": "retain_provenance_exclude_from_pure_class_loss_and_metrics",
+      "target_unavailable_policy": "hard_input_unavailable_abstention_without_physiology_label"
+    },
+    "architecture": {
+      "identifier": "PARITY_TRACE_CNN_V1",
+      "layers": [
+        "Conv1D(1->8,k5,s2,valid)",
+        "ReLU",
+        "Conv1D(8->16,k5,s2,valid)",
+        "ReLU",
+        "Conv1D(16->24,k3,s2,valid)",
+        "ReLU",
+        "AdaptiveAvgPool1D(1)",
+        "Linear(24->16)",
+        "ReLU",
+        "Linear(16->1)"
+      ],
+      "parameter_count_expected": 2297,
+      "variable_input_length_is_the_only_architectural_degree_of_freedom": true
+    },
+    "preprocessing": {
+      "representation": "accepted_M_PV1_R1_sensor_independent_relative_motion_trace",
+      "common_scaler": "single_global_z_score_fit_once_on_full_30s_clean_train_membership_then_applied_to_both_lanes",
+      "fit_scope": ["D0:TRAIN", "D1:D1_DEV_TRAIN"],
+      "source_specific_gain_matching": false,
+      "window_local_normalization": false,
+      "validation_statistics_used": false
+    },
+    "optimization": {
+      "name": "Adam",
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "batch_size": 32,
+      "max_epochs": 150,
+      "early_stopping": {
+        "monitor": "D1_DEV_VAL_masked_breathing_bce",
+        "min_epochs": 30,
+        "patience": 20,
+        "improvement_epsilon": 1e-10
+      },
+      "gradient_clip_norm": 1.0,
+      "seeds": [11, 23, 47]
+    },
+    "loss": {
+      "name": "masked_binary_cross_entropy_with_logits",
+      "threshold_fixed_before_training": 0.5,
+      "source_weights": {"D0": 0.75, "D1": 0.25},
+      "subject_weighting": "inverse_eligible_breathing_count_within_source",
+      "class_weighting": "inverse_class_mass_after_source_subject_weighting_fit_on_train_only"
+    }
+  },
+  "dataset_scope": {
+    "allowed": {
+      "D0": {"split": "TRAIN", "expected_contexts": 318, "role": "training_only"},
+      "D1": {
+        "train_split": "D1_DEV_TRAIN",
+        "validation_split": "D1_DEV_VAL",
+        "expected_contexts": 244,
+        "subject_disjoint": true
+      }
+    },
+    "forbidden": [
+      "D0_VAL",
+      "D0_SUBJECT_HELDOUT",
+      "D2",
+      "MR60_SUPERVISED_PHYSIOLOGY",
+      "NEW_LABELS",
+      "REGENERATED_TARGETS"
+    ]
+  },
+  "q2_fail_closed": {
+    "invalid_application_state": "INPUT_UNAVAILABLE",
+    "invalid_input_must_not_become": ["PRESENT", "ABSENT", "NORMAL", "APNEA"],
+    "model_invocation_when_invalid": "BLOCKED",
+    "quality_gate_modified": false,
+    "threshold_tuned_on_q2": false
+  },
+  "final_gate": {
+    "allowed_values": ["PASS_WITH_LIMITATIONS", "BLOCKED"],
+    "pass_statement": "controlled comparison completed",
+    "selection_result": "NOT_APPLICABLE_NO_MODEL_SELECTION"
+  }
+}

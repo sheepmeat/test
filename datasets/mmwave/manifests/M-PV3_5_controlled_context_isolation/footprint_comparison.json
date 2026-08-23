@@ -1,0 +1,39 @@
+{
+  "identity": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+  "interpretation": "operation_and_memory_estimates_only_not_a_hardware_benchmark",
+  "lanes": {
+    "CONTEXT_15S": {
+      "adaptive_pool_additions_excluded_from_mac_count": 384,
+      "conv_output_lengths": [
+        73,
+        35,
+        17
+      ],
+      "estimated_flops_from_macs_only": 90608,
+      "estimated_macs_per_inference": 45304,
+      "hardware_speed_measured": false,
+      "input_tensor_bytes_float32": 600,
+      "input_tensor_shape": "[1,150,1]",
+      "parameter_bytes_float32": 9188,
+      "parameter_count": 2297,
+      "raspberry_pi_speed_claim": false
+    },
+    "CONTEXT_30S": {
+      "adaptive_pool_additions_excluded_from_mac_count": 816,
+      "conv_output_lengths": [
+        148,
+        72,
+        35
+      ],
+      "estimated_flops_from_macs_only": 185440,
+      "estimated_macs_per_inference": 92720,
+      "hardware_speed_measured": false,
+      "input_tensor_bytes_float32": 1200,
+      "input_tensor_shape": "[1,300,1]",
+      "parameter_bytes_float32": 9188,
+      "parameter_count": 2297,
+      "raspberry_pi_speed_claim": false
+    }
+  },
+  "parameter_count_identical": true
+}

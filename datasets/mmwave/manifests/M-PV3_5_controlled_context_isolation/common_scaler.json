@@ -1,0 +1,14 @@
+{
+  "fit_context_seconds": 30,
+  "fit_scope": [
+    "D0:TRAIN",
+    "D1:D1_DEV_TRAIN"
+  ],
+  "mean": 0.5681105335535223,
+  "profile_id": "MMWAVE_V2_M_PV35_COMMON_30S_TRAIN_ZSCORE_V1",
+  "sample_count": 150900,
+  "sha256": "71c1999711711bf83efcd649e635e8e98e79a6c1726f72eb2f05c53afdcb36c1",
+  "shared_without_refit_across_lanes": true,
+  "std": 10.976509586515288,
+  "window_count": 503
+}

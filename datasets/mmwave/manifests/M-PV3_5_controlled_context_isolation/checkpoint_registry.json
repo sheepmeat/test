@@ -1,0 +1,48 @@
+{
+  "checkpoints": [
+    {
+      "bytes": 13573,
+      "lane_id": "CONTEXT_15S",
+      "path": "models/mmwave/m_pv35_context_isolation/context_15s/seed_11.pt",
+      "seed": 11,
+      "sha256": "c8a3d6db5dfde18fd6eca9ae790eb893e944e3624f136dc3340ad84eea58b65f"
+    },
+    {
+      "bytes": 13573,
+      "lane_id": "CONTEXT_15S",
+      "path": "models/mmwave/m_pv35_context_isolation/context_15s/seed_23.pt",
+      "seed": 23,
+      "sha256": "4285d41d0b8c6c499ff15e217b81b1cd8dbb12b6c1a398f0d6ce50db9b2de388"
+    },
+    {
+      "bytes": 13573,
+      "lane_id": "CONTEXT_15S",
+      "path": "models/mmwave/m_pv35_context_isolation/context_15s/seed_47.pt",
+      "seed": 47,
+      "sha256": "5769eda61d6c0448a3783c75f6c11393d5f5ca759e73274323d58d80ab88ffe6"
+    },
+    {
+      "bytes": 13573,
+      "lane_id": "CONTEXT_30S",
+      "path": "models/mmwave/m_pv35_context_isolation/context_30s/seed_11.pt",
+      "seed": 11,
+      "sha256": "ee3b49cb901dd105de0753c32b9a6049db44a96af8b67cc28117a4aae380dcbc"
+    },
+    {
+      "bytes": 13573,
+      "lane_id": "CONTEXT_30S",
+      "path": "models/mmwave/m_pv35_context_isolation/context_30s/seed_23.pt",
+      "seed": 23,
+      "sha256": "67f97186caa89f1c4f0425040aef1d45753ebd8227b4ff1460d4f276b35a0600"
+    },
+    {
+      "bytes": 13573,
+      "lane_id": "CONTEXT_30S",
+      "path": "models/mmwave/m_pv35_context_isolation/context_30s/seed_47.pt",
+      "seed": 47,
+      "sha256": "fcf3a9497877edd92b1e9b72a417fae561eb38c0a9e8eea3315ee171069f9b21"
+    }
+  ],
+  "identity": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+  "selection_status": "NO_SELECTION_EVALUATION_ONLY"
+}
