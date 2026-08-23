@@ -10,6 +10,13 @@
 - Gate: **PASS_WITH_LIMITATIONS**
 - Review purpose: independent agent review of a bounded 15-second breathing-evidence ablation
 
+### Delivery and review routing
+
+- Pull request: [#130](https://github.com/sheepmeat/test/pull/130)
+- Source branch: `codex/mmwave-v2-m-pv2-short-context-15s`
+- Target branch: `main`
+- This PR is independent of the existing M-PV3 selection PR and contains no M-PV3 artifacts.
+
 ## 2. Executive result
 
 A separate 15-second causal breathing-evidence candidate was produced for comparison with the existing 30-second M-PV2 lane.
