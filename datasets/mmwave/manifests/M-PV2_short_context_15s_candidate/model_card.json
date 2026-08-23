@@ -1,0 +1,128 @@
+{
+  "architecture": {
+    "description": "lightweight valid Conv1D breathing-evidence classifier",
+    "edge_deployable_candidate": true,
+    "family": "SHORT_CONTEXT_TRACE_CNN",
+    "float32_parameter_bytes": 9188,
+    "flops_estimate": {
+      "conv_output_lengths": [
+        73,
+        35,
+        17
+      ],
+      "estimated_flops": 90608,
+      "latency_estimate_is_not_raspberry_pi_measurement": true,
+      "latency_estimate_ms_at_1_gflop_s": 0.090608,
+      "multiply_accumulates": 45304
+    },
+    "input_shape": "[B,150,1]",
+    "output_shape": "[B,1]",
+    "parameter_count": 2297
+  },
+  "checkpoints": [
+    {
+      "bytes": 13125,
+      "path": "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_11.pt",
+      "sha256": "34d5e290ee2886624ca382382bc51e6296c85a5a0015e3537bc650ce7d421672"
+    },
+    {
+      "bytes": 13125,
+      "path": "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_23.pt",
+      "sha256": "f99bb2399776433d5c2b55d396dbe7f515c8088d65a971f6e848bbccbe01033a"
+    },
+    {
+      "bytes": 13125,
+      "path": "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_47.pt",
+      "sha256": "4559508292f1f85dfb7f26c72ae9adac139e006650552729f48bbd868706e6b3"
+    }
+  ],
+  "identity": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_BREATHING_CANDIDATE_V1",
+  "input_contract": "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/input_contract.json",
+  "latency_estimate": {
+    "estimated_inference_latency_ms": 0.090608,
+    "hardware_measurement": false,
+    "method": "deterministic operation count at declared 1 GFLOP/s reference only",
+    "raspberry_pi_measurement": false
+  },
+  "quantization": "NOT_GENERATED",
+  "runtime_safety": {
+    "hard_q2_invalid_blocks_model_invocation": true,
+    "invalid_input_cannot_emit_present_absent_apnea": true,
+    "presence_gate_precedes_availability": true,
+    "rr": "not_present",
+    "temporal_hold": "not_present"
+  },
+  "schema_version": "M-PV2-SHORT-15S.1",
+  "selection": {
+    "final_selection": false,
+    "selected_float_model": false,
+    "selection_status": "NOT_SELECTED"
+  },
+  "status": "CANDIDATE_ONLY_NOT_SELECTED",
+  "target": {
+    "ambiguous": "masked_and_not_rewritten",
+    "inherited_reference_states": [
+      "BREATHING_REFERENCE_PRESENT",
+      "BREATHING_REFERENCE_ABSENT",
+      "BREATHING_REFERENCE_AMBIGUOUS"
+    ],
+    "primary": "breathing_evidence",
+    "states": [
+      "PRESENT",
+      "ABSENT"
+    ],
+    "target_unavailable": "hard_abstention_state"
+  },
+  "tflite": "NOT_GENERATED",
+  "training_config": "datasets/mmwave/manifests/M-PV2_short_context_15s_candidate/training_config.json",
+  "training_summaries": [
+    {
+      "best_epoch": 4,
+      "best_validation_loss": 0.7103357315063477,
+      "determinism": {
+        "deterministic_algorithms": true,
+        "numpy_version": "1.26.4",
+        "seed": 11,
+        "torch_num_interop_threads": 1,
+        "torch_num_threads": 1,
+        "torch_version": "2.8.0"
+      },
+      "epochs_run": 30,
+      "last_validation_loss": 0.8318358063697815,
+      "parameter_count": 2297,
+      "seed": 11
+    },
+    {
+      "best_epoch": 90,
+      "best_validation_loss": 0.3097551465034485,
+      "determinism": {
+        "deterministic_algorithms": true,
+        "numpy_version": "1.26.4",
+        "seed": 23,
+        "torch_num_interop_threads": 1,
+        "torch_num_threads": 1,
+        "torch_version": "2.8.0"
+      },
+      "epochs_run": 110,
+      "last_validation_loss": 0.4792601466178894,
+      "parameter_count": 2297,
+      "seed": 23
+    },
+    {
+      "best_epoch": 5,
+      "best_validation_loss": 0.7182039022445679,
+      "determinism": {
+        "deterministic_algorithms": true,
+        "numpy_version": "1.26.4",
+        "seed": 47,
+        "torch_num_interop_threads": 1,
+        "torch_num_threads": 1,
+        "torch_version": "2.8.0"
+      },
+      "epochs_run": 30,
+      "last_validation_loss": 0.878222644329071,
+      "parameter_count": 2297,
+      "seed": 47
+    }
+  ]
+}

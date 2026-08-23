@@ -1,0 +1,108 @@
+{
+  "configuration_sha256": "47c7def6f8e18306cfa755c9f181ce70ba39944ccfda6d572b9e33baa221acf7",
+  "evaluation": {
+    "accuracy_groups": [
+      "D0_TRAIN_OBSERVE",
+      "D1_DEV_VAL"
+    ],
+    "baseline_reference": "datasets/mmwave/manifests/M-PV2_candidate_training/breathing_metrics.json",
+    "metrics": [
+      "macro_f1",
+      "present_recall",
+      "absent_recall",
+      "ambiguous_handling"
+    ],
+    "selection_during_phase": false
+  },
+  "forbidden_or_deferred": [
+    "RR_LEARNING",
+    "TEMPORAL_HOLD_LEARNING",
+    "D0_VAL",
+    "D0_SUBJECT_HELDOUT",
+    "D2",
+    "MR60_SUPERVISED_PHYSIOLOGY",
+    "CALIBRATION",
+    "THRESHOLD_TUNING_ON_CORRUPTION",
+    "INT8_OR_TFLITE",
+    "RASPBERRY_PI_VALIDATION",
+    "FINAL_SELECTION"
+  ],
+  "frozen_before_training": true,
+  "identity": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_BREATHING_CANDIDATE_V1",
+  "loss": {
+    "absent": 0,
+    "ambiguous_mask": 0,
+    "class_weighting": "inverse class mass after source/subject weighting, fit on TRAIN membership only",
+    "name": "masked_binary_cross_entropy_with_logits",
+    "present": 1,
+    "source_weights": {
+      "D0": 0.75,
+      "D1": 0.25
+    },
+    "subject_weighting": "inverse eligible breathing-example count within source and split",
+    "target_unavailable_mask": 0
+  },
+  "model": {
+    "architecture": "Conv1D(1->8,k5,s2) -> Conv1D(8->16,k5,s2) -> Conv1D(16->24,k3,s2) -> newest-5-position mean pool -> Linear(24->16) -> breathing logit",
+    "edge_candidate": true,
+    "input_shape": "[B,150,1]",
+    "output": "breathing_evidence_logit_only",
+    "quality_head": false,
+    "rr_head": false,
+    "temporal_hold_head": false
+  },
+  "optimizer": {
+    "batch_size": 32,
+    "early_stopping": {
+      "min_epochs": 30,
+      "monitor": "D1_DEV_VAL_masked_breathing_bce",
+      "patience": 20
+    },
+    "gradient_clip_norm": 1.0,
+    "learning_rate": 0.001,
+    "max_epochs": 150,
+    "name": "Adam",
+    "weight_decay": 0.0001
+  },
+  "preprocessing": {
+    "d0_subject_heldout_used": false,
+    "d0_val_used": false,
+    "d2_used": false,
+    "fit_scope": [
+      "D0:TRAIN",
+      "D1:D1_DEV_TRAIN"
+    ],
+    "mr60_supervised_labels_used": false,
+    "trace_scaler": "global z-score",
+    "validation_statistics_used": false
+  },
+  "primary_run_count": 3,
+  "quality": {
+    "hard_q2_pre_gate": true,
+    "invalid_application_state": "INPUT_UNAVAILABLE",
+    "synthetic_corruption": {
+      "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+      "used_for_physiology_labels": false,
+      "used_for_threshold_tuning": false,
+      "used_only_for_availability_diagnostic": true
+    }
+  },
+  "schema_version": "M-PV2-SHORT-15S.1",
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "trace_scaler": {
+    "fit_scope": [
+      "D0:TRAIN",
+      "D1:D1_DEV_TRAIN"
+    ],
+    "mean": 0.2085389941930771,
+    "profile_id": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_TRACE_ZSCORE_TRAIN_ONLY_V1",
+    "sample_count": 75450,
+    "sha256": "c09ce6e1d1bda6e05789ff8893371374778ead932c5c53868c67178f6d5fe5d2",
+    "std": 7.205591201782227,
+    "window_count": 503
+  }
+}
