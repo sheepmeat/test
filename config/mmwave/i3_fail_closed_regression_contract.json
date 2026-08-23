@@ -1,0 +1,33 @@
+{
+  "audit_date": "2026-08-23",
+  "base_sha": "e84d802e5b9aa28e6729a02b304f1f70043f89c3",
+  "contract_id": "MMWAVE_V2_I3_FAIL_CLOSED_REGRESSION_CONTRACT_V1",
+  "d2_used": false,
+  "dependencies": {
+    "i1_output": "MMWAVE_V2_I1_RUNTIME_OUTPUT_CONTRACT_V1",
+    "i1_provenance": "MMWAVE_V2_I1_PROVENANCE_CONTRACT_V1",
+    "i1_semantic": "MMWAVE_V2_I1_RUNTIME_SEMANTIC_CONTRACT_V1",
+    "i2_harness": "MMWAVE_V2_I2_REPLAY_HARNESS_V1",
+    "i2_replay": "MMWAVE_V2_I2_HISTORICAL_JSONL_REPLAY_CONTRACT_V1",
+    "q2_availability": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+    "q2_evaluator": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+    "q2_synthetic_profile": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1"
+  },
+  "gate_id": "MMWAVE_V2_I3_RUNTIME_SAFETY_GATE_V1",
+  "m_pv1_selection_performed": false,
+  "matrix_id": "MMWAVE_V2_I3_REGRESSION_MATRIX_V1",
+  "model_inference": false,
+  "model_training": false,
+  "mr60_supervised_use": false,
+  "phase": "I3",
+  "precedence": [
+    "presence",
+    "input availability / quality",
+    "physiology",
+    "application state"
+  ],
+  "q2_threshold_fork": false,
+  "q3_performed": false,
+  "schema_version": "I3.1",
+  "source_mutation_forbidden": true
+}

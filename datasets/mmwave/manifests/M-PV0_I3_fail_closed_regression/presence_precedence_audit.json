@@ -1,0 +1,56 @@
+{
+  "audit_date": "2026-08-23",
+  "no_person": {
+    "actionable": false,
+    "application_state": "PRESENCE_SUPPRESSED",
+    "availability_state": "PRESENCE_SUPPRESSED",
+    "physiology_executed": false,
+    "reason_codes": [
+      "PRESENCE_NOT_CONFIRMED"
+    ],
+    "schema_errors": []
+  },
+  "phase": "I3",
+  "presence_inferred_from_amplitude": false,
+  "presence_over_quality": {
+    "actionable": false,
+    "application_state": "PRESENCE_SUPPRESSED",
+    "availability_state": "PRESENCE_SUPPRESSED",
+    "physiology_executed": false,
+    "reason_codes": [
+      "PRESENCE_NOT_CONFIRMED",
+      "LARGE_GAP"
+    ],
+    "schema_errors": []
+  },
+  "true_plus_invalid": {
+    "actionable": false,
+    "application_state": "INPUT_UNAVAILABLE",
+    "availability_state": "INPUT_UNAVAILABLE",
+    "physiology_executed": false,
+    "reason_codes": [
+      "LARGE_GAP"
+    ],
+    "schema_errors": []
+  },
+  "true_plus_valid": {
+    "actionable": false,
+    "application_state": "NOT_EVALUATED",
+    "availability_state": "PHYSIOLOGY_ELIGIBLE",
+    "physiology_executed": false,
+    "reason_codes": [
+      "NOT_IMPLEMENTED_MODEL_BOUNDARY"
+    ],
+    "schema_errors": []
+  },
+  "unknown_production": {
+    "actionable": false,
+    "application_state": "PRESENCE_SUPPRESSED",
+    "availability_state": "PRESENCE_SUPPRESSED",
+    "physiology_executed": false,
+    "reason_codes": [
+      "PRESENCE_NOT_CONFIRMED"
+    ],
+    "schema_errors": []
+  }
+}

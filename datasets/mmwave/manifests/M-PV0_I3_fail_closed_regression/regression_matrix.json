@@ -1,0 +1,116 @@
+{
+  "audit_date": "2026-08-23",
+  "contract_id": "MMWAVE_V2_I3_REGRESSION_MATRIX_V1",
+  "phase": "I3",
+  "rows": [
+    {
+      "case": "no_person",
+      "expected_state": "PRESENCE_SUPPRESSED",
+      "observed_state": "PRESENCE_SUPPRESSED",
+      "physiology_executed": false,
+      "presence": false,
+      "primary_reason": "PRESENCE_NOT_CONFIRMED",
+      "quality_condition": "CLEAN_VALID",
+      "reasons": [
+        "PRESENCE_NOT_CONFIRMED"
+      ]
+    },
+    {
+      "case": "unknown_person",
+      "expected_state": "PRESENCE_SUPPRESSED",
+      "observed_state": "PRESENCE_SUPPRESSED",
+      "physiology_executed": false,
+      "presence": null,
+      "primary_reason": "PRESENCE_NOT_CONFIRMED",
+      "quality_condition": "CLEAN_VALID",
+      "reasons": [
+        "PRESENCE_NOT_CONFIRMED"
+      ]
+    },
+    {
+      "case": "clean_valid",
+      "expected_state": "PHYSIOLOGY_ELIGIBLE",
+      "observed_state": "PHYSIOLOGY_ELIGIBLE",
+      "physiology_executed": false,
+      "presence": true,
+      "primary_reason": null,
+      "quality_condition": "CLEAN_VALID",
+      "reasons": []
+    },
+    {
+      "case": "large_gap",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "observed_state": "INPUT_UNAVAILABLE",
+      "physiology_executed": false,
+      "presence": true,
+      "primary_reason": "LARGE_GAP",
+      "quality_condition": "LARGE_GAP",
+      "reasons": [
+        "LARGE_GAP"
+      ]
+    },
+    {
+      "case": "source_freeze",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "observed_state": "INPUT_UNAVAILABLE",
+      "physiology_executed": false,
+      "presence": true,
+      "primary_reason": "SOURCE_FREEZE",
+      "quality_condition": "SOURCE_FREEZE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ]
+    },
+    {
+      "case": "stale",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "observed_state": "INPUT_UNAVAILABLE",
+      "physiology_executed": false,
+      "presence": true,
+      "primary_reason": "SOURCE_STALE",
+      "quality_condition": "SOURCE_STALE",
+      "reasons": [
+        "SOURCE_STALE"
+      ]
+    },
+    {
+      "case": "exact_flat",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "observed_state": "INPUT_UNAVAILABLE",
+      "physiology_executed": false,
+      "presence": true,
+      "primary_reason": "SIGNAL_FLAT_EXACT",
+      "quality_condition": "SIGNAL_FLAT_EXACT",
+      "reasons": [
+        "SIGNAL_FLAT_EXACT"
+      ]
+    },
+    {
+      "case": "invalid_timestamp",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "observed_state": "INPUT_UNAVAILABLE",
+      "physiology_executed": false,
+      "presence": true,
+      "primary_reason": "TIMESTAMP_UNRESOLVED",
+      "quality_condition": "TIMESTAMP_INVALID",
+      "reasons": [
+        "TIMESTAMP_UNRESOLVED"
+      ]
+    },
+    {
+      "case": "recovery",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "observed_state": "INPUT_UNAVAILABLE",
+      "physiology_executed": false,
+      "presence": true,
+      "primary_reason": "LARGE_GAP",
+      "quality_condition": "RECOVERY_WARMUP",
+      "reasons": [
+        "LARGE_GAP",
+        "SIGNAL_FLAT_EXACT",
+        "RECOVERY_WARMUP"
+      ]
+    }
+  ],
+  "schema_version": "I3.1"
+}
