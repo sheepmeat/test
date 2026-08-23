@@ -1,0 +1,25 @@
+{
+  "apnea_strings_used_as_labels": false,
+  "breath_hold_names_used_as_labels": false,
+  "d2_lock": {
+    "feature_extraction": "NO",
+    "model_inference_count": 0,
+    "selection": null,
+    "semantic_access": "NO",
+    "target_use": "NO"
+  },
+  "d2_semantic_access": false,
+  "identity": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+  "invalid_input_application_state": "INPUT_UNAVAILABLE",
+  "invalid_input_does_not_emit": [
+    "PRESENT",
+    "ABSENT",
+    "NORMAL",
+    "APNEA"
+  ],
+  "mr60_supervised_physiology": false,
+  "q2_fail_closed": true,
+  "quality_gate_modified": false,
+  "radar_amplitude_used_as_labels": false,
+  "target_rewritten": false
+}
