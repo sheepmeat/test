@@ -1,0 +1,30 @@
+{
+  "schema_version": "M-PV3.8.3_CORRECTIVE-REAUDIT",
+  "audit_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_INDEPENDENT_REAUDIT_V1",
+  "phase": "M-PV3.8-ABSENT-MEMBERSHIP-INDEPENDENT-REAUDIT",
+  "mode": "AUDIT_ONLY",
+  "decision": "APPROVED",
+  "prior_audit_decision": "NEEDS_CORRECTION",
+  "audited_contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+  "audited_schema_version": "M-PV3.8.3_CORRECTIVE",
+  "base_commit_sha": "c900205a6aaaceb1a7a7a08177f7ae26c996461c",
+  "prior_blocking_findings_resolved": [
+    "ABSENT_CLASS_SEMANTICS_UNDER_SPECIFIED",
+    "FINAL_LOCK_MISSING_IMMUTABILITY_FIELDS",
+    "WITHIN_RECORDING_EASY_NEGATIVE_SELECTION",
+    "FAILED_RECORDING_REPLACEMENT_LOOPHOLE",
+    "PREPROCESSING_CACHE_LEAKAGE_UNCONTROLLED"
+  ],
+  "membership_construction_authorized_by_this_audit": false,
+  "model_evaluation_authorized": false,
+  "m_pv4_authorized": false,
+  "non_actions": [
+    "no_absent_sample_creation",
+    "no_membership_construction",
+    "no_evaluation_run",
+    "no_candidate_inspection",
+    "no_threshold_modification",
+    "no_d2_access",
+    "no_mr60_supervised_physiology"
+  ]
+}

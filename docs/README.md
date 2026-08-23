@@ -11,6 +11,7 @@
 - [M-PV2-SHORT-15S breathing 후보 결과 (PASS_WITH_LIMITATIONS, no selection)](mmwave/20260823_Luna_Max_Fast_2_M-PV2_SHORT_15S_CANDIDATE_RESULT_SUMMARY.md)
 - [15s vs 30s context comparison independent review (no selection, comparison gate recommended)](mmwave/20260823_SafeNest_mmWave_15S_30S_Context_Comparison_Independent_Review_01.md)
 - [M-PV3.8 ABSENT membership acquisition contract independent audit (NEEDS_CORRECTION)](mmwave/20260823_SafeNest_mmWave_M-PV3_8_ABSENT_Membership_Acquisition_Contract_Independent_Audit_01.md)
+- [M-PV3.8 ABSENT membership acquisition contract independent re-audit (APPROVED)](mmwave/20260823_SafeNest_mmWave_M-PV3_8_ABSENT_Membership_Acquisition_Contract_Independent_ReAudit_01.md)
 - [D0 V2 subject split·label eligibility audit (CURRENT)](mmwave/20260822_SafeNest_mmWave_D0_V2_Subject_Split_Label_Eligibility_Audit_01.md)
 - [D2 locked acquisition·cryptographic seal (CURRENT, payload auth-blocked)](mmwave/20260822_SafeNest_mmWave_D2_Locked_Acquisition_Cryptographic_Seal_01.md)
 - [Q1 MR60-like cadence/jitter/duplicate synthetic corruption profile (CURRENT)](mmwave/20260822_SafeNest_mmWave_Q1_MR60_Timing_Corruption_Profile_01.md)

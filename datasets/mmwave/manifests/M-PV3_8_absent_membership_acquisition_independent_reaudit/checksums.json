@@ -1,0 +1,9 @@
+{
+  "schema_version": "M-PV3.8.3_CORRECTIVE-REAUDIT",
+  "algorithm": "sha256",
+  "files": {
+    "docs/mmwave/20260823_SafeNest_mmWave_M-PV3_8_ABSENT_Membership_Acquisition_Contract_Independent_ReAudit_01.md": "b827456bbc9248e4450fea2d5034b55aa86024c53a8c2bb2d5f363eed0306b4a",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_independent_reaudit/audit_result.json": "76338d7b09d568bac7845e4da5deb513b9f4650648a3255baabe552c82215b47",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_independent_reaudit/blocking_findings.json": "7de87a331f468323ac53713f33ccacbec6da844151b005a56330cfea269dd8a7"
+  }
+}
