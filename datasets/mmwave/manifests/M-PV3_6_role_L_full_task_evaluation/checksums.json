@@ -1,0 +1,21 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1",
+  "files": {
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/breathing_card.json": "75f8e31d8637918f49dd2b0bb2b284d85b102270e8462e48e5aca3eae684a9a9",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/footprint_card.json": "2b395d141758a5f04090e8ece072e46c6a78a1db54b0f5f1e2e398d6c4006b00",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/limitations.json": "918f6551c89ffafe1902b8f4fddec9aaa3a1e0ddbb3bf18b9196690313a06a02",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/quality_safety_card.json": "1abc59a49f80c7d87dc00ddcaf07f2855cf30470e3265df5bc295fb333907837",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/role_l_full_task_evaluation_manifest.json": "1d145cde23f054ec5f4c1267ac8f13b4c973023214aa95abbf04c32d6936783d",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/rr_card.json": "608b63d4725d11c81311caf499db06f1901a28c00dc389ce279dad1337f7eeec",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/stability_card.json": "a352db5005428e043207f43b9ebc4bc52c0d863508b8f261bd66462ec92deb63",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/validation_result.json": "7940eebae0ce5a4225788eb7ed31634b9bf7005f2d76064b6e089d5d4a799060"
+  },
+  "inputs": {
+    "config/mmwave/m_pv36_role_based_evaluation_contract.json": "43c47360237b1d2357f6d17d8c0b7ea26c4410042698419cd8710b2fc86cbd0a",
+    "config/mmwave/m_pv3_selection_contract.json": "69bcf28e83fe070e257f8eb2bbf035d2ef0cb9dc2cb2a205bca5f95bc10e5aa8",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json": "6dd9bee70e5d1decfb2e60e8f3cf5afbcc28a73a6b2791057f425e129719044f",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json": "519bc933f1febfc52ac0c0b2a2353573e878322e4d0041b4cb2c47619669a36a",
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/selection_decision.json": "1816ba5c084756c59379376b9169d2d23878f138a593a9c85104cef9b068320e"
+  },
+  "schema_version": "M-PV3.6.2_ROLE_L_FULL_TASK_EVALUATION"
+}
