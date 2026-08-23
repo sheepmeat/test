@@ -8,6 +8,9 @@
 - Role: `ROLE_S_SHORT_CONTEXT`
 - Candidate: `MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_BREATHING_CANDIDATE_V1`
 - Frozen base: **PR #134 merged state**, merge commit `443d45d408829becc6a4e4db71bd6d9152c0d41d`
+- Evaluation PR: [#135](https://github.com/sheepmeat/test/pull/135)
+- Evaluation branch: `codex/mmwave-m-pv36-role-s-short-context`
+- PR target: `docs/mmwave-m-pv36-role-evaluation-contract`
 - Contract schema: `M-PV3.6.2_CORRECTIVE`
 - Gate: **PASS_WITH_LIMITATIONS**
 
