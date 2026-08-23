@@ -1,0 +1,198 @@
+{
+  "availability_precedence": [
+    "presence",
+    "Q2 input availability",
+    "physiology targets",
+    "temporal composition"
+  ],
+  "contract_id": "MMWAVE_V2_M_PV1_MODEL_INPUT_CONTRACT_V1",
+  "dtype": "FLOAT32 development; boolean masks are BOOL",
+  "fitted_statistics": "M-PV2 may fit a global robust/z-score feature scaler on TRAIN membership only; no source-specific gain matching",
+  "presence_authority": "human_detected_raw external production field; not trained from D0/D1",
+  "profiles": {
+    "PROFILE_A_FEATURE_F2_V1": {
+      "history_dimension": "none; temporal history is sequential composer state",
+      "inputs": [
+        {
+          "dtype": "float32",
+          "feature_order": [
+            "spectral_shape_fraction_0p10_0p25_hz",
+            "spectral_shape_fraction_0p25_0p40_hz",
+            "spectral_shape_fraction_0p40_0p55_hz",
+            "spectral_shape_fraction_0p55_0p70_hz",
+            "spectral_shape_centroid_hz",
+            "spectral_shape_peak_frequency_hz",
+            "spectral_shape_peak_fraction",
+            "spectral_shape_entropy_normalized",
+            "native_mad_about_median",
+            "native_robust_rms_about_median",
+            "native_robust_range_p05_p95",
+            "native_peak_to_peak",
+            "common_trace_mad_about_median",
+            "common_trace_robust_rms_about_median",
+            "total_signal_energy",
+            "total_signal_mean_square",
+            "log_total_signal_energy",
+            "respiratory_band_power",
+            "respiratory_band_energy",
+            "log_respiratory_band_energy",
+            "autocorr_periodicity_peak_strength",
+            "autocorr_periodicity_peak_lag_s",
+            "autocorr_periodicity_peak_frequency_hz",
+            "autocorr_periodicity_lag_mean",
+            "autocorr_abs_entropy_normalized"
+          ],
+          "name": "f2_features",
+          "required": true,
+          "shape": [
+            "B",
+            25
+          ]
+        },
+        {
+          "dtype": "bool",
+          "feature_order": [
+            "spectral_shape_fraction_0p10_0p25_hz",
+            "spectral_shape_fraction_0p25_0p40_hz",
+            "spectral_shape_fraction_0p40_0p55_hz",
+            "spectral_shape_fraction_0p55_0p70_hz",
+            "spectral_shape_centroid_hz",
+            "spectral_shape_peak_frequency_hz",
+            "spectral_shape_peak_fraction",
+            "spectral_shape_entropy_normalized",
+            "native_mad_about_median",
+            "native_robust_rms_about_median",
+            "native_robust_range_p05_p95",
+            "native_peak_to_peak",
+            "common_trace_mad_about_median",
+            "common_trace_robust_rms_about_median",
+            "total_signal_energy",
+            "total_signal_mean_square",
+            "log_total_signal_energy",
+            "respiratory_band_power",
+            "respiratory_band_energy",
+            "log_respiratory_band_energy",
+            "autocorr_periodicity_peak_strength",
+            "autocorr_periodicity_peak_lag_s",
+            "autocorr_periodicity_peak_frequency_hz",
+            "autocorr_periodicity_lag_mean",
+            "autocorr_abs_entropy_normalized"
+          ],
+          "name": "f2_feature_valid_mask",
+          "required": true,
+          "shape": [
+            "B",
+            25
+          ]
+        },
+        {
+          "dtype": "float32",
+          "feature_order": [
+            "trace_sample_count",
+            "trace_duration_s",
+            "trace_mad_about_median",
+            "trace_robust_rms_about_median",
+            "trace_robust_range_p05_p95",
+            "trace_mean_square",
+            "trace_is_exact_flat",
+            "valid_sample_fraction",
+            "source_quality_flag_count"
+          ],
+          "name": "quality_descriptors",
+          "required": true,
+          "shape": [
+            "B",
+            9
+          ]
+        }
+      ],
+      "metadata_not_tensor": [
+        "availability_state",
+        "source_domain",
+        "subject_id",
+        "recording_id",
+        "context_id",
+        "split"
+      ]
+    },
+    "PROFILE_B_TRACE_F3_R1_V1": {
+      "history_dimension": "none; temporal history is sequential composer state",
+      "inputs": [
+        {
+          "dtype": "float32",
+          "name": "trace",
+          "required": true,
+          "shape": [
+            "B",
+            300,
+            1
+          ],
+          "time_axis": "oldest_to_newest"
+        },
+        {
+          "dtype": "bool",
+          "name": "trace_valid_mask",
+          "required": true,
+          "shape": [
+            "B",
+            300,
+            1
+          ]
+        },
+        {
+          "dtype": "float32",
+          "feature_order": [
+            "native_mad_about_median",
+            "native_robust_rms_about_median",
+            "native_robust_range_p05_p95",
+            "native_peak_to_peak",
+            "common_trace_mad_about_median",
+            "common_trace_robust_rms_about_median",
+            "total_signal_energy",
+            "total_signal_mean_square",
+            "log_total_signal_energy",
+            "respiratory_band_energy",
+            "respiratory_band_power",
+            "log_respiratory_band_energy"
+          ],
+          "name": "scale_descriptors",
+          "required": true,
+          "shape": [
+            "B",
+            12
+          ]
+        },
+        {
+          "dtype": "float32",
+          "feature_order": [
+            "trace_sample_count",
+            "trace_duration_s",
+            "trace_mad_about_median",
+            "trace_robust_rms_about_median",
+            "trace_robust_range_p05_p95",
+            "trace_mean_square",
+            "trace_is_exact_flat",
+            "valid_sample_fraction",
+            "source_quality_flag_count"
+          ],
+          "name": "quality_descriptors",
+          "required": true,
+          "shape": [
+            "B",
+            9
+          ]
+        }
+      ],
+      "padding": "none for model-ready clean examples; invalid/gap regions are masked and fail the Q2 window gate"
+    },
+    "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1": {
+      "history_dimension": "none; temporal history is sequential composer state",
+      "inputs": [
+        "all inputs from PROFILE_B_TRACE_F3_R1_V1",
+        "all inputs from PROFILE_A_FEATURE_F2_V1"
+      ],
+      "shape_semantics": "trace and scalar inputs retain independent masks and feature order"
+    }
+  },
+  "variable_length_policy": "fixed 30 s context for model-ready examples; short D1 recordings remain audit-only"
+}

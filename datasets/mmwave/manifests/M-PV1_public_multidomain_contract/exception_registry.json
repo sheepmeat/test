@@ -1,0 +1,27 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "d2_access": false,
+  "entries": [
+    {
+      "detail": "D0 whole-window ABSENT remains zero; 5 s event-relative intervals fully contained in authoritative holds provide ABSENT supervision without whole-window APNEA.",
+      "id": "M-PV1-D0-ABSENT-WHOLE-WINDOW-ZERO",
+      "severity": "RESOLVED_BY_REFORMULATION"
+    },
+    {
+      "detail": "D1 respiration waveform is materialized, but source protocol strings do not supply defensible onset/recovery boundaries; temporal hold remains unavailable.",
+      "id": "M-PV1-D1-TEMPORAL-HOLD-UNAVAILABLE",
+      "severity": "LIMITATION"
+    },
+    {
+      "detail": "D1 recordings shorter than 30 s remain reference/feature audit only; no fake padding.",
+      "id": "M-PV1-D1-SHORT-RECORDINGS",
+      "severity": "LIMITATION"
+    },
+    {
+      "detail": "No accepted D3 adapter is present.",
+      "id": "M-PV1-D3-NOT_INCLUDED",
+      "severity": "NON_BLOCKING"
+    }
+  ],
+  "mr60_supervised_use": false
+}

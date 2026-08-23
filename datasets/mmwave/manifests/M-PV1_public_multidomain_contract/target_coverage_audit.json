@@ -1,0 +1,2415 @@
+{
+  "by_domain": {
+    "D0": {
+      "breathing": {
+        "ABSENT": 133,
+        "AMBIGUOUS": 156,
+        "PRESENT": 162,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 451,
+      "quality": {
+        "CLEAN": 451,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 162,
+        "TARGET_UNAVAILABLE": 289
+      },
+      "task_eligibility": {
+        "breathing": 295,
+        "quality": 451,
+        "rr": 162,
+        "temporal_hold": 451
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 156,
+        "EVENT_POSITIVE": 133,
+        "NON_EVENT": 162,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "D1": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 8,
+        "PRESENT": 236,
+        "TARGET_UNAVAILABLE": 21
+      },
+      "example_count": 265,
+      "quality": {
+        "CLEAN": 244,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 236,
+        "TARGET_UNAVAILABLE": 29
+      },
+      "task_eligibility": {
+        "breathing": 236,
+        "quality": 244,
+        "rr": 236,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 265
+      }
+    }
+  },
+  "by_split": {
+    "D1_DEV_TRAIN": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 6,
+        "PRESENT": 179,
+        "TARGET_UNAVAILABLE": 18
+      },
+      "example_count": 203,
+      "quality": {
+        "CLEAN": 185,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 179,
+        "TARGET_UNAVAILABLE": 24
+      },
+      "task_eligibility": {
+        "breathing": 179,
+        "quality": 185,
+        "rr": 179,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 203
+      }
+    },
+    "D1_DEV_VAL": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 2,
+        "PRESENT": 57,
+        "TARGET_UNAVAILABLE": 3
+      },
+      "example_count": 62,
+      "quality": {
+        "CLEAN": 59,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 57,
+        "TARGET_UNAVAILABLE": 5
+      },
+      "task_eligibility": {
+        "breathing": 57,
+        "quality": 59,
+        "rr": 57,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 62
+      }
+    },
+    "TRAIN": {
+      "breathing": {
+        "ABSENT": 133,
+        "AMBIGUOUS": 156,
+        "PRESENT": 162,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 451,
+      "quality": {
+        "CLEAN": 451,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 162,
+        "TARGET_UNAVAILABLE": 289
+      },
+      "task_eligibility": {
+        "breathing": 295,
+        "quality": 451,
+        "rr": 162,
+        "temporal_hold": 451
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 156,
+        "EVENT_POSITIVE": 133,
+        "NON_EVENT": 162,
+        "TARGET_UNAVAILABLE": 0
+      }
+    }
+  },
+  "by_subject": {
+    "D1_PERSON_01": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 0,
+        "PRESENT": 17,
+        "TARGET_UNAVAILABLE": 14
+      },
+      "example_count": 31,
+      "quality": {
+        "CLEAN": 17,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 17,
+        "TARGET_UNAVAILABLE": 14
+      },
+      "task_eligibility": {
+        "breathing": 17,
+        "quality": 17,
+        "rr": 17,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 31
+      }
+    },
+    "D1_PERSON_02": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 3,
+        "PRESENT": 31,
+        "TARGET_UNAVAILABLE": 1
+      },
+      "example_count": 35,
+      "quality": {
+        "CLEAN": 34,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 31,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 31,
+        "quality": 34,
+        "rr": 31,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 35
+      }
+    },
+    "D1_PERSON_03": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 1,
+        "PRESENT": 19,
+        "TARGET_UNAVAILABLE": 1
+      },
+      "example_count": 21,
+      "quality": {
+        "CLEAN": 20,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 19,
+        "TARGET_UNAVAILABLE": 2
+      },
+      "task_eligibility": {
+        "breathing": 19,
+        "quality": 20,
+        "rr": 19,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 21
+      }
+    },
+    "D1_PERSON_04": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 0,
+        "PRESENT": 17,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 17,
+      "quality": {
+        "CLEAN": 17,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 17,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "task_eligibility": {
+        "breathing": 17,
+        "quality": 17,
+        "rr": 17,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 17
+      }
+    },
+    "D1_PERSON_05": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 1,
+        "PRESENT": 18,
+        "TARGET_UNAVAILABLE": 1
+      },
+      "example_count": 20,
+      "quality": {
+        "CLEAN": 19,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 18,
+        "TARGET_UNAVAILABLE": 2
+      },
+      "task_eligibility": {
+        "breathing": 18,
+        "quality": 19,
+        "rr": 18,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 20
+      }
+    },
+    "D1_PERSON_06": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 0,
+        "PRESENT": 20,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 20,
+      "quality": {
+        "CLEAN": 20,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 20,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "task_eligibility": {
+        "breathing": 20,
+        "quality": 20,
+        "rr": 20,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 20
+      }
+    },
+    "D1_PERSON_07": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 2,
+        "PRESENT": 36,
+        "TARGET_UNAVAILABLE": 1
+      },
+      "example_count": 39,
+      "quality": {
+        "CLEAN": 38,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 36,
+        "TARGET_UNAVAILABLE": 3
+      },
+      "task_eligibility": {
+        "breathing": 36,
+        "quality": 38,
+        "rr": 36,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 39
+      }
+    },
+    "D1_PERSON_08": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 0,
+        "PRESENT": 18,
+        "TARGET_UNAVAILABLE": 1
+      },
+      "example_count": 19,
+      "quality": {
+        "CLEAN": 18,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 18,
+        "TARGET_UNAVAILABLE": 1
+      },
+      "task_eligibility": {
+        "breathing": 18,
+        "quality": 18,
+        "rr": 18,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 19
+      }
+    },
+    "D1_PERSON_09": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 1,
+        "PRESENT": 24,
+        "TARGET_UNAVAILABLE": 2
+      },
+      "example_count": 27,
+      "quality": {
+        "CLEAN": 25,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 24,
+        "TARGET_UNAVAILABLE": 3
+      },
+      "task_eligibility": {
+        "breathing": 24,
+        "quality": 25,
+        "rr": 24,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 27
+      }
+    },
+    "D1_PERSON_10": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 0,
+        "PRESENT": 22,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 22,
+      "quality": {
+        "CLEAN": 22,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 22,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "task_eligibility": {
+        "breathing": 22,
+        "quality": 22,
+        "rr": 22,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 22
+      }
+    },
+    "D1_PERSON_11": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 0,
+        "PRESENT": 14,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 14,
+      "quality": {
+        "CLEAN": 14,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 14,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "task_eligibility": {
+        "breathing": 14,
+        "quality": 14,
+        "rr": 14,
+        "temporal_hold": 0
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 0,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 0,
+        "TARGET_UNAVAILABLE": 14
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p001": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p003": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p007": {
+      "breathing": {
+        "ABSENT": 3,
+        "AMBIGUOUS": 3,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 10,
+      "quality": {
+        "CLEAN": 10,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 6
+      },
+      "task_eligibility": {
+        "breathing": 7,
+        "quality": 10,
+        "rr": 4,
+        "temporal_hold": 10
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 3,
+        "EVENT_POSITIVE": 3,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p008": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 10,
+      "quality": {
+        "CLEAN": 10,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 6
+      },
+      "task_eligibility": {
+        "breathing": 6,
+        "quality": 10,
+        "rr": 4,
+        "temporal_hold": 10
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p009": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p013": {
+      "breathing": {
+        "ABSENT": 3,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 11,
+      "quality": {
+        "CLEAN": 11,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 7
+      },
+      "task_eligibility": {
+        "breathing": 7,
+        "quality": 11,
+        "rr": 4,
+        "temporal_hold": 11
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 3,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p014": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p016": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p019": {
+      "breathing": {
+        "ABSENT": 3,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 11,
+      "quality": {
+        "CLEAN": 11,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 7
+      },
+      "task_eligibility": {
+        "breathing": 7,
+        "quality": 11,
+        "rr": 4,
+        "temporal_hold": 11
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 3,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p020": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p023": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p025": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p026": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 2,
+        "PRESENT": 5,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 7,
+      "quality": {
+        "CLEAN": 7,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 5,
+        "TARGET_UNAVAILABLE": 2
+      },
+      "task_eligibility": {
+        "breathing": 5,
+        "quality": 7,
+        "rr": 5,
+        "temporal_hold": 7
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 5,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p027": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p028": {
+      "breathing": {
+        "ABSENT": 3,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 11,
+      "quality": {
+        "CLEAN": 11,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 7
+      },
+      "task_eligibility": {
+        "breathing": 7,
+        "quality": 11,
+        "rr": 4,
+        "temporal_hold": 11
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 3,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p029": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p030": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p031": {
+      "breathing": {
+        "ABSENT": 3,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 11,
+      "quality": {
+        "CLEAN": 11,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 7
+      },
+      "task_eligibility": {
+        "breathing": 7,
+        "quality": 11,
+        "rr": 4,
+        "temporal_hold": 11
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 3,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p034": {
+      "breathing": {
+        "ABSENT": 0,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 8,
+      "quality": {
+        "CLEAN": 8,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 8,
+        "rr": 4,
+        "temporal_hold": 8
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 0,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p035": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 10,
+      "quality": {
+        "CLEAN": 10,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 6
+      },
+      "task_eligibility": {
+        "breathing": 6,
+        "quality": 10,
+        "rr": 4,
+        "temporal_hold": 10
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p037": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 10,
+      "quality": {
+        "CLEAN": 10,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 6
+      },
+      "task_eligibility": {
+        "breathing": 6,
+        "quality": 10,
+        "rr": 4,
+        "temporal_hold": 10
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p038": {
+      "breathing": {
+        "ABSENT": 3,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 11,
+      "quality": {
+        "CLEAN": 11,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 7
+      },
+      "task_eligibility": {
+        "breathing": 7,
+        "quality": 11,
+        "rr": 4,
+        "temporal_hold": 11
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 3,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p040": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p042": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p043": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p044": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 10,
+      "quality": {
+        "CLEAN": 10,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 6
+      },
+      "task_eligibility": {
+        "breathing": 6,
+        "quality": 10,
+        "rr": 4,
+        "temporal_hold": 10
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p046": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p048": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p049": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p050": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p051": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p052": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 3,
+        "PRESENT": 5,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 10,
+      "quality": {
+        "CLEAN": 10,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 5,
+        "TARGET_UNAVAILABLE": 5
+      },
+      "task_eligibility": {
+        "breathing": 7,
+        "quality": 10,
+        "rr": 5,
+        "temporal_hold": 10
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 3,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 5,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p054": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p055": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p056": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p057": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p059": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p060": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p061": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p064": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 4,
+        "PRESENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 10,
+      "quality": {
+        "CLEAN": 10,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 4,
+        "TARGET_UNAVAILABLE": 6
+      },
+      "task_eligibility": {
+        "breathing": 6,
+        "quality": 10,
+        "rr": 4,
+        "temporal_hold": 10
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 4,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 4,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p066": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p067": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p068": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p070": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p071": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p073": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p075": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p076": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p077": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p078": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p079": {
+      "breathing": {
+        "ABSENT": 1,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 5,
+      "quality": {
+        "CLEAN": 5,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 3
+      },
+      "task_eligibility": {
+        "breathing": 3,
+        "quality": 5,
+        "rr": 2,
+        "temporal_hold": 5
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 1,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p080": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p081": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p084": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p087": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p089": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p091": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p092": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p094": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p097": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p099": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p100": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p105": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p108": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p109": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    },
+    "dataset-10_5281_zenodo_18599983-p110": {
+      "breathing": {
+        "ABSENT": 2,
+        "AMBIGUOUS": 2,
+        "PRESENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      },
+      "example_count": 6,
+      "quality": {
+        "CLEAN": 6,
+        "SYNTHETIC_INPUT_UNAVAILABLE": 0
+      },
+      "rr": {
+        "AVAILABLE": 2,
+        "TARGET_UNAVAILABLE": 4
+      },
+      "task_eligibility": {
+        "breathing": 4,
+        "quality": 6,
+        "rr": 2,
+        "temporal_hold": 6
+      },
+      "temporal_hold": {
+        "AMBIGUOUS": 2,
+        "EVENT_POSITIVE": 2,
+        "NON_EVENT": 2,
+        "TARGET_UNAVAILABLE": 0
+      }
+    }
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "status_vocabulary": {
+    "breathing": [
+      "PRESENT",
+      "ABSENT",
+      "AMBIGUOUS",
+      "TARGET_UNAVAILABLE"
+    ],
+    "quality": [
+      "CLEAN",
+      "SYNTHETIC_INPUT_UNAVAILABLE"
+    ],
+    "rr": [
+      "AVAILABLE",
+      "TARGET_UNAVAILABLE"
+    ],
+    "temporal_hold": [
+      "EVENT_POSITIVE",
+      "NON_EVENT",
+      "AMBIGUOUS",
+      "TARGET_UNAVAILABLE"
+    ]
+  },
+  "synthetic_quality_is_not_physio_label": true,
+  "synthetic_quality_recipe_counts": {
+    "Q1_MR60_TIMING_CORRUPTION": 0,
+    "Q2_INPUT_UNAVAILABLE": 0
+  },
+  "zero_counts_are_visible": true
+}

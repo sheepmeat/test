@@ -1,0 +1,26 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV1_TEMPORAL_CONTEXT_CONTRACT_V1",
+  "gap_policy": "Q2 fail closed; no interpolation across large gaps or source freeze",
+  "hold_composition": "breathing evidence + RR + hard quality gate -> deterministic sequential temporal composer",
+  "mask_policy": "valid timing and finite trace mask; Q2 invalid windows are INPUT_UNAVAILABLE",
+  "minimum_usable_duration_s": 30.0,
+  "model_context_duration_s": 30.0,
+  "model_context_samples": 300,
+  "model_evaluation_stride_s": 5.0,
+  "padding_policy": "no physiological padding; no zero-fill as valid signal",
+  "persistence_threshold": "not finalized; later development-only calibration may choose an application threshold without clinical apnea language",
+  "short_record_policy": "D1 <30 s is reference/feature audit only and is excluded from model-ready fixed-context examples",
+  "target_interval": {
+    "default": "30 s context for PRESENT/RR; 5 s event-relative interval for D0 ABSENT/HOLD_ACTIVE",
+    "event_relative_hold_interval_s": 5.0,
+    "must_be_fully_inside_authoritative_event": true
+  },
+  "temporal_history": {
+    "crosses_recording": false,
+    "crosses_session": false,
+    "crosses_subject": false,
+    "history_is_not_a_training_label": true,
+    "previous_valid_baseline_required": true,
+    "representation": "sequential composer state keyed by previous valid breathing context"
+  }
+}

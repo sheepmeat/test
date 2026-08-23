@@ -1,0 +1,40 @@
+{
+  "base_absent_count": 0,
+  "base_ambiguous_count": 156,
+  "base_present_count": 162,
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "d0_audit": {
+    "base_absent_count": 0,
+    "base_ambiguous_count": 156,
+    "base_present_count": 162,
+    "base_window_count": 318,
+    "d0_heldout_used": false,
+    "d0_split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+    "event_interval_absent_count": 133,
+    "event_interval_policy": {
+      "duration_s": 5.0,
+      "radar_or_model_used": false,
+      "requires_full_containment": true,
+      "selection": "first 5 s of the intersection between an authoritative hold interval and a 30 s context",
+      "whole_window_apnea_default": false
+    },
+    "event_overlap_below_5s_count": 23,
+    "event_overlap_count": 156,
+    "m_n6_excluded_used": false,
+    "selection_scope": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1 -> TRAIN only",
+    "source_id": "D0",
+    "zero_class_resolution": "EVENT_RELATIVE_ABSENT_INTERVALS_ADDED; no whole-window binary classifier is claimed"
+  },
+  "d0_internal_heldout_subject_count": 14,
+  "d0_train_model_contexts": 318,
+  "d0_train_subject_count": 66,
+  "d0_val_or_internal_heldout_used_for_m_pv1_selection": false,
+  "d0_val_subject_count": 14,
+  "event_overlap_below_5s_count": 23,
+  "event_relative_absent_contexts": 133,
+  "inherited_split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+  "m_n6_excluded_subjects_used": false,
+  "reference_labels_not_derived_from_radar": true,
+  "split_changed": false,
+  "zero_class_resolution": "EVENT_RELATIVE_ABSENT_INTERVALS_ADDED; no whole-window binary classifier is claimed"
+}

@@ -1,0 +1,17 @@
+{
+  "BREATHING_SEMANTIC_COMPATIBILITY": {
+    "reason": "both use PRESENT/ABSENT/AMBIGUOUS/TARGET_UNAVAILABLE; D0 ABSENT is event-relative and D1 weak references are AMBIGUOUS rather than fabricated ABSENT",
+    "status": "YES_WITH_COVERAGE_DIFFERENCE"
+  },
+  "COMMON_INPUT_SCHEMA": "YES",
+  "D0_AND_D1_FIXED_CONTEXT": "YES where duration >=30 s and Q2-compatible timing is valid",
+  "RR_SEMANTIC_COMPATIBILITY": {
+    "reason": "both expose rr_bpm, validity, source, method, and explicit unavailable reason",
+    "status": "YES_WITH_DOMAIN_METHODS"
+  },
+  "TEMPORAL_HOLD_SEMANTIC_COMPATIBILITY": {
+    "reason": "D0 has authoritative voluntary hold intervals; D1 has no defensible within-recording onset/offset",
+    "status": "PARTIAL"
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1"
+}

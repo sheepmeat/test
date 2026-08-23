@@ -1,0 +1,32 @@
+{
+  "config": {
+    "path": "config/mmwave/m_pv1_public_multidomain_contract.json",
+    "sha256": "210dce248e09b8fa20047d8733056fad3fb35ec99374e586600510bf6a049825"
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "files": {
+    "cross_domain_compatibility.json": "d751ccfc87c82d193be4ed09cf99ec5627e81818971ea0b0def8aef4b4378e64",
+    "d0_model_ready_audit.json": "2f31bb20ee8ef4561729c2218c952df6ab3a91f9117bfe0dc7aff7842c183799",
+    "d1_reference_materialization_audit.json": "ce58dfe7001b610e1fac88a51427ede94098819a72c4e617c4833295189ece6c",
+    "d1_subject_split.json": "67b46938ce8548334160173640636452159a94628beb07f44f5015ff8e095d76",
+    "d2_lock_audit.json": "d51930c1bf487e3c644822c62ba8356ded873138385da7ab198ee29470fb68fd",
+    "dataset_role_contract.json": "6470e5efaf68b108c8328e61794205450b7d91ffa49c9249c1bde244342a567d",
+    "exception_registry.json": "b622f2461c3eb019e239f0ac5432f5f9c2f2e277a3625693fe393b10e8f4775a",
+    "m_pv2_example_manifest.json": "a456c96eb03b30c36811923a13897d0e059645c1d7d0003faf8d8bacb3b3db06",
+    "model_input_contract.json": "1cf89f6860fed8116b527748d6949723b58399dd976193c6ed5f1a585f978bcc",
+    "prerequisite_audit.json": "d46d5c322a0d8465fe4aee31947effbcf3e2d24f41c1fd44ff4fe83f6a2524c0",
+    "quality_abstention_contract.json": "b21f217461fe9752b6d5d8ba90aa42dd6d7b6f257461266f028fc4e007e2af9b",
+    "representation_freeze.json": "bcb0a1cbdeacb9027990a7bf5719a9e2c9efb727e81b13752c1e35ab996d672a",
+    "source_balancing_contract.json": "d635c3ed9ebe0cc970d9142528e696b6d809cdd6b16e08bc656ae7c21471ce8f",
+    "target_coverage_audit.json": "4beb646e8fa46d88e16299f8552be9bfef3c17606cbf2143d61f44c32c3fbea2",
+    "target_mapping_profile.json": "1eaafe5a2b4e5b7b57a9e01a6d3f8ac137d523fda301bb78e924d155f3560969",
+    "temporal_context_contract.json": "22ae0cb7f6afcc53b60f5d5d1573fab6fe0979ebb241edf147ee7696dd2b5698",
+    "validation_result.json": "da72f1e82b8d0f3aaaa0bdbace64c48a6a6784e55af90f86119a835d37ab0aa7"
+  },
+  "generator": {
+    "path": "scripts/mmwave_m_pv1_public_multidomain_contract.py",
+    "sha256": "e41404a01f314007416af72e4688240fa8976218354f0132689ecedc2730761f"
+  },
+  "raw_payload_not_committed": true,
+  "schema_version": "M-PV1.1"
+}

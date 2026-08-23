@@ -1,0 +1,45 @@
+{
+  "DIRECT_THREE_CLASS_PRIMARY_TARGET": false,
+  "breathing_evidence": {
+    "d0_reference": "authoritative A6/Movesense evidence plus event-relative hold intervals",
+    "d1_reference": "synchronized respiration waveform; weak periodicity is AMBIGUOUS, not ABSENT",
+    "radar_amplitude_as_label": false,
+    "semantic_meaning": "reference-supported periodic respiratory activity during the target interval",
+    "source_apnea_term_auto_target": false,
+    "states": [
+      "PRESENT",
+      "ABSENT",
+      "AMBIGUOUS",
+      "TARGET_UNAVAILABLE"
+    ],
+    "whole_window_apnea_default": false
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_TARGET_MAPPING_PROFILE_V1",
+  "rr": {
+    "d0_method": "INHERITED_A4_MOVESENSE_CHEST_ACC_SPECTRAL_PEAK_V1",
+    "d1_method": "D1_RESPIRATION_WELCH_PERIODICITY_V1",
+    "field": "rr_bpm",
+    "search_band_hz": [
+      0.1,
+      0.7
+    ],
+    "type": "continuous_float_bpm_or_null",
+    "unavailable_reason_required": true,
+    "validity_required": true,
+    "zero_is_not_unavailable": true
+  },
+  "supervision_masks": [
+    "breathing_supervision_eligible",
+    "rr_supervision_eligible",
+    "temporal_hold_supervision_eligible",
+    "quality_supervision_eligible"
+  ],
+  "temporal_hold": {
+    "baseline_required": true,
+    "d0": "event-relative authoritative intervals plus baseline/non-event",
+    "d1": "UNAVAILABLE; source protocol strings do not define onset/offset",
+    "final_persistence_threshold": "DEFERRED_TO_POST_MODEL_DEVELOPMENT_CALIBRATION; no heldout tuning in M-PV1",
+    "onset_and_recovery_explicit": true,
+    "semantic_meaning": "event-relative voluntary breath-hold proxy; not clinical apnea"
+  }
+}

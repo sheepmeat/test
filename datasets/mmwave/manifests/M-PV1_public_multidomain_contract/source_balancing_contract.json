@@ -1,0 +1,21 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV1_SOURCE_BALANCING_CONTRACT_V1",
+  "oversampling": "no blind D1 window oversampling until counts equal D0",
+  "rationale": "D0 is the primary 66-subject supervised domain; D1 is an 11-subject auxiliary domain. Both remain subject-balanced within source without blind window-count equalization.",
+  "repeated_window_cap": "at most 1 clean fixed context per D1 recording in an epoch; D0 event-relative intervals retain recording/window lineage and are capped at 2 target roles per base context",
+  "source_weights": {
+    "D0": 0.75,
+    "D1": 0.25
+  },
+  "subject_weighting": "inverse eligible-example count per subject within source and split, normalized within source",
+  "synthetic_ratio": {
+    "maximum_fraction_of_clean_examples_per_task": 0.1,
+    "profile_ids": [
+      "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1",
+      "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1"
+    ],
+    "selection_method": "fixed recipe; no VAL tuning"
+  },
+  "task_eligibility": "each task consumes only its explicit supervision mask; an RR-unavailable row is never encoded as zero",
+  "weights_tuned_by_validation": false
+}
