@@ -3,6 +3,8 @@
 **Date:** 2026-08-23
 **Scope:** Planning only; no capture, label, membership, or evaluation
 
+> Checksum timing is clarified by `20260823_SafeNest_mmWave_M-PV3_8_ABSENT_Acquisition_Contract_Checksum_Lifecycle_Clarification_01.md`. This plan must use that two-stage identity lifecycle.
+
 ## 1. Minimum campaign design
 
 The future campaign targets 57 potential ABSENT contexts across three fixed acquisition-lineage groups (`D1_PERSON_03`, `D1_PERSON_09`, and `D1_PERSON_11`). Each group has three predeclared slots with fixed later scan quotas of 7, 6, and 6 contexts. This is nine slots total; it is not a membership and it creates no label.
