@@ -8,6 +8,8 @@
 - [M-PV0 공개 멀티도메인 범위·V1 기준선·source 역할 동결 (CURRENT)](mmwave/20260822_SafeNest_mmWave_M-PV0_Public_Multidomain_Scope_Baseline_Source_Role_Freeze_01.md)
 - [M-PV3 30초 후보 평가·선정 게이트 (PASS_WITH_LIMITATIONS, no selection ready)](mmwave/20260823_SafeNest_mmWave_M-PV3_Candidate_Selection_Gate_01.md)
 - [M-PV3 수행내역 (2026-08-23)](20260823_GPT_수행내역.md#mpv3-candidate-evaluation--selection-gate--30s-lane)
+- [M-PV2-SHORT-15S breathing 후보 결과 (PASS_WITH_LIMITATIONS, no selection)](mmwave/20260823_Luna_Max_Fast_2_M-PV2_SHORT_15S_CANDIDATE_RESULT_SUMMARY.md)
+- [15s vs 30s context comparison independent review (no selection, comparison gate recommended)](mmwave/20260823_SafeNest_mmWave_15S_30S_Context_Comparison_Independent_Review_01.md)
 - [D0 V2 subject split·label eligibility audit (CURRENT)](mmwave/20260822_SafeNest_mmWave_D0_V2_Subject_Split_Label_Eligibility_Audit_01.md)
 - [D2 locked acquisition·cryptographic seal (CURRENT, payload auth-blocked)](mmwave/20260822_SafeNest_mmWave_D2_Locked_Acquisition_Cryptographic_Seal_01.md)
 - [Q1 MR60-like cadence/jitter/duplicate synthetic corruption profile (CURRENT)](mmwave/20260822_SafeNest_mmWave_Q1_MR60_Timing_Corruption_Profile_01.md)
