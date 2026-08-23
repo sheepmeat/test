@@ -1,0 +1,18 @@
+{
+  "schema_version": "M-PV3.8.4_CAPTURE_PREFLIGHT_V1",
+  "preflight_id": "MMWAVE_V2_M_PV38_ABSENT_CAPTURE_PREFLIGHT_V1",
+  "result_type": "STATIC_PREFLIGHT_ARTIFACT_VALIDATION",
+  "status": "CAPTURE_BLOCKED",
+  "artifact_valid": true,
+  "capture_authorized": false,
+  "capture_performed": false,
+  "membership_constructed": false,
+  "model_evaluation_performed": false,
+  "candidate_outputs_inspected": false,
+  "m_pv4_authorized": false,
+  "expected_failed_live_readiness_checks": [
+    "SENSOR_INTERFACE",
+    "EMPTY_ZONE_EVIDENCE"
+  ],
+  "validation_note": "A valid preflight artifact can correctly report CAPTURE_BLOCKED. This validation does not claim hardware readiness and does not start capture."
+}
