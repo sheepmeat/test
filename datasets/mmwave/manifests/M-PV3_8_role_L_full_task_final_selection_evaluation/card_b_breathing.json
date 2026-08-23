@@ -1,0 +1,62 @@
+{
+  "ambiguous_policy": "RETAIN_PROVENANCE_EXCLUDE_NO_RELABEL",
+  "candidate_output_accessed": false,
+  "candidates": [
+    {
+      "candidate_key": "Family_B_seed_11",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_B_seed_23",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_B_seed_47",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_11",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_23",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_47",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    }
+  ],
+  "card_id": "CARD_B_BREATHING",
+  "evaluation_status": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "frozen_guards": {
+    "brier_max": 0.05,
+    "present_recall_min": 0.95
+  },
+  "metrics": null,
+  "required_class_counts": {
+    "ABSENT": 57,
+    "PRESENT": 57
+  },
+  "role_id": "ROLE_L_FULL_TASK",
+  "schema_version": "M-PV3.8.1_ROLE_L_FULL_TASK_FINAL_SELECTION",
+  "title": "Both-class breathing"
+}
