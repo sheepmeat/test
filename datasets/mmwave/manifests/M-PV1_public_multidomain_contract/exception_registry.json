@@ -3,9 +3,14 @@
   "d2_access": false,
   "entries": [
     {
-      "detail": "D0 whole-window ABSENT remains zero; 5 s event-relative intervals fully contained in authoritative holds provide ABSENT supervision without whole-window APNEA.",
-      "id": "M-PV1-D0-ABSENT-WHOLE-WINDOW-ZERO",
+      "detail": "The first M-PV1 manifest attached arbitrary internal 5 s event intervals to 30 s inputs. Corrective M-PV1 freezes the final 5 s causal target for every breathing state and removes duplicate event-overlay input rows.",
+      "id": "M-PV1-CORRECTIVE-TARGET-CONTEXT-MISMATCH",
       "severity": "RESOLVED_BY_REFORMULATION"
+    },
+    {
+      "detail": "The original 133 event-relative candidates were re-evaluated; only fully contained final target intervals remain ABSENT supervision, and the remainder are audit-only.",
+      "id": "M-PV1-D0-ABSENT-RECOUNT",
+      "severity": "RESOLVED_BY_RECOUNT"
     },
     {
       "detail": "D1 respiration waveform is materialized, but source protocol strings do not supply defensible onset/recovery boundaries; temporal hold remains unavailable.",
@@ -15,6 +20,11 @@
     {
       "detail": "D1 recordings shorter than 30 s remain reference/feature audit only; no fake padding.",
       "id": "M-PV1-D1-SHORT-RECORDINGS",
+      "severity": "LIMITATION"
+    },
+    {
+      "detail": "The global F2 scalar profile cannot encode the fixed final 5 s target location, so F2 MLP is limited to RR/quality and temporal composition.",
+      "id": "M-PV1-F2-BREATHING-UNSUPPORTED",
       "severity": "LIMITATION"
     },
     {

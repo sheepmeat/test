@@ -5,6 +5,7 @@
   "common_rate_hz": 10.0,
   "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
   "hybrid_profile": {
+    "breathing_evidence_supported": true,
     "composition": [
       "PROFILE_B_TRACE_F3_R1_V1",
       "PROFILE_A_FEATURE_F2_V1"
@@ -42,6 +43,7 @@
     "status": "FROZEN"
   },
   "scalar_profile": {
+    "breathing_evidence_supported": false,
     "feature_count": 25,
     "feature_order": [
       "spectral_shape_fraction_0p10_0p25_hz",
@@ -84,10 +86,35 @@
       "source_quality_flag_count"
     ],
     "source_contract": "MMWAVE_V2_R2_F2_SPECTRAL_AUTOCORR_V1",
-    "status": "ACTIVE_M_PV2_CANDIDATE"
+    "status": "ACTIVE_M_PV2_CANDIDATE_FOR_RR_QUALITY_ONLY",
+    "unsupported_reason": "global 30 s F2 representation has no defensible final 5 s target location"
   },
   "source_specific_gain_matching": false,
+  "task_compatibility_matrix": {
+    "PROFILE_A_FEATURE_F2_V1": {
+      "breathing_evidence": false,
+      "quality": true,
+      "reason": "global 30 s F2 vector does not preserve the final 5 s target location",
+      "rr": true,
+      "temporal_hold": false
+    },
+    "PROFILE_B_TRACE_F3_R1_V1": {
+      "breathing_evidence": true,
+      "quality": true,
+      "reason": "ordered 10 Hz trace and mask preserve the fixed final target interval",
+      "rr": true,
+      "temporal_hold": false
+    },
+    "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1": {
+      "breathing_evidence": true,
+      "quality": true,
+      "reason": "trace branch preserves target location; F2 remains auxiliary",
+      "rr": true,
+      "temporal_hold": false
+    }
+  },
   "trace_profile": {
+    "breathing_evidence_supported": true,
     "context_samples": 300,
     "mask": "TRUE only for finite trace with valid timing; no zero-fill",
     "profile_id": "PROFILE_B_TRACE_F3_R1_V1",

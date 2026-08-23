@@ -51,6 +51,39 @@ D1_DOI = "10.6084/m9.figshare.9691544.v1"
 D1_SOURCE_ADAPTER = "D1_NATIVE_SIXPORT_PHASE_DISPLACEMENT_V1"
 D1_REFERENCE_METHOD = "D1_RESPIRATION_WELCH_PERIODICITY_V1"
 
+# Corrective M-PV1 target binding.  Every model-ready context has one causal
+# breathing target at the final fixed interval of that context.  RR remains a
+# separate full-context reference task (see ``_alignment_metadata`` below).
+MODEL_CONTEXT_DURATION_S = 30.0
+BREATHING_TARGET_DURATION_S = 5.0
+BREATHING_TARGET_ANCHOR = "FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT"
+RR_REFERENCE_ANCHOR = "FULL_CAUSAL_CONTEXT_REFERENCE_INTERVAL"
+TEMPORAL_HOLD_LEARNING_BOUNDARY = "DETERMINISTIC_POST_BREATHING_COMPOSITION_ONLY"
+
+PROFILE_TASK_COMPATIBILITY = {
+    "PROFILE_A_FEATURE_F2_V1": {
+        "breathing_evidence": False,
+        "rr": True,
+        "quality": True,
+        "temporal_hold": False,
+        "reason": "global 30 s F2 vector does not preserve the final 5 s target location",
+    },
+    "PROFILE_B_TRACE_F3_R1_V1": {
+        "breathing_evidence": True,
+        "rr": True,
+        "quality": True,
+        "temporal_hold": False,
+        "reason": "ordered 10 Hz trace and mask preserve the fixed final target interval",
+    },
+    "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1": {
+        "breathing_evidence": True,
+        "rr": True,
+        "quality": True,
+        "temporal_hold": False,
+        "reason": "trace branch preserves target location; F2 remains auxiliary",
+    },
+}
+
 D0_R3_DIR = Path("datasets/mmwave/manifests/M-PV0_R3_breathing_rr_temporal_hold")
 D0_SPLIT_PATH = Path("datasets/mmwave/manifests/M-PV0_D0_v2_split_label_audit/v2_subject_split.json")
 D0_A6_PATH = Path("datasets/mmwave/manifests/a6_full_conversion/full_window_manifest.jsonl")
@@ -161,6 +194,175 @@ def md5_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def fixed_breathing_interval(context_start_s: float, context_end_s: float) -> Tuple[float, float]:
+    """Return the only permitted breathing target interval for a context."""
+    context_start_s = float(context_start_s)
+    context_end_s = float(context_end_s)
+    if context_end_s - context_start_s < BREATHING_TARGET_DURATION_S:
+        raise ValueError("context is shorter than the fixed breathing target")
+    return (
+        float(context_end_s - BREATHING_TARGET_DURATION_S),
+        context_end_s,
+    )
+
+
+def _target_record(
+    *,
+    model_input_id: str,
+    task: str,
+    state: str,
+    target_start_s: float,
+    target_end_s: float,
+    target_anchor: str,
+    supervision_eligible: bool,
+    provenance: Mapping[str, Any],
+    reference_interval_s: Optional[Sequence[float]] = None,
+    representation_profile_compatibility: Optional[Mapping[str, Any]] = None,
+    learning_boundary: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Create an explicit task target so interval semantics cannot be hidden."""
+    record: Dict[str, Any] = {
+        "target_id": f"{model_input_id}__{task.upper()}",
+        "model_input_id": model_input_id,
+        "target_task": task,
+        "target_state": state,
+        "target_start_s": float(target_start_s),
+        "target_end_s": float(target_end_s),
+        "target_duration_s": float(target_end_s - target_start_s),
+        "target_anchor": target_anchor,
+        "causal_context": True,
+        "supervision_eligible": bool(supervision_eligible),
+        "provenance": dict(provenance),
+    }
+    if reference_interval_s is not None:
+        record["reference_interval_s"] = [float(reference_interval_s[0]), float(reference_interval_s[1])]
+        record["reference_duration_s"] = float(reference_interval_s[1] - reference_interval_s[0])
+    if representation_profile_compatibility is not None:
+        record["representation_profile_compatibility"] = dict(representation_profile_compatibility)
+    if learning_boundary is not None:
+        record["learning_boundary"] = learning_boundary
+    return record
+
+
+def _alignment_metadata(
+    *,
+    model_input_id: str,
+    context_start_s: float,
+    context_end_s: float,
+    breathing_state: str,
+    breathing_target_status: str,
+    breathing_supervision_eligible: bool,
+    rr_target_status: str,
+    rr_bpm: Optional[float],
+    rr_validity: str,
+    rr_unavailable_reason: Optional[str],
+    temporal_state: str,
+    quality_status: str,
+    quality_supervision_eligible: bool,
+    provenance: Mapping[str, Any],
+) -> Dict[str, Any]:
+    """Attach the frozen causal context/target contract to one unique input."""
+    context_start_s = float(context_start_s)
+    context_end_s = float(context_end_s)
+    target_start_s, target_end_s = fixed_breathing_interval(context_start_s, context_end_s)
+    rr_start_s, rr_end_s = context_start_s, context_end_s
+    task_compatibility = {
+        profile: dict(values) for profile, values in PROFILE_TASK_COMPATIBILITY.items()
+    }
+    target_records = [
+        _target_record(
+            model_input_id=model_input_id,
+            task="breathing_evidence",
+            state=breathing_state,
+            target_start_s=target_start_s,
+            target_end_s=target_end_s,
+            target_anchor=BREATHING_TARGET_ANCHOR,
+            supervision_eligible=breathing_supervision_eligible,
+            provenance=provenance,
+            reference_interval_s=(context_start_s, context_end_s),
+            representation_profile_compatibility={
+                profile: values["breathing_evidence"]
+                for profile, values in task_compatibility.items()
+            },
+        ),
+        _target_record(
+            model_input_id=model_input_id,
+            task="rr",
+            state="AVAILABLE" if rr_target_status == "AVAILABLE" and rr_bpm is not None else "TARGET_UNAVAILABLE",
+            target_start_s=rr_start_s,
+            target_end_s=rr_end_s,
+            target_anchor=RR_REFERENCE_ANCHOR,
+            supervision_eligible=rr_target_status == "AVAILABLE" and rr_bpm is not None,
+            provenance=provenance,
+            reference_interval_s=(rr_start_s, rr_end_s),
+            representation_profile_compatibility={
+                profile: values["rr"] for profile, values in task_compatibility.items()
+            },
+        ),
+        _target_record(
+            model_input_id=model_input_id,
+            task="temporal_hold",
+            state=temporal_state,
+            target_start_s=target_start_s,
+            target_end_s=target_end_s,
+            target_anchor=BREATHING_TARGET_ANCHOR,
+            supervision_eligible=False,
+            provenance=provenance,
+            reference_interval_s=(context_start_s, context_end_s),
+            representation_profile_compatibility={
+                profile: values["temporal_hold"]
+                for profile, values in task_compatibility.items()
+            },
+            learning_boundary=TEMPORAL_HOLD_LEARNING_BOUNDARY,
+        ),
+        _target_record(
+            model_input_id=model_input_id,
+            task="quality",
+            state=quality_status,
+            target_start_s=rr_start_s,
+            target_end_s=rr_end_s,
+            target_anchor=RR_REFERENCE_ANCHOR,
+            supervision_eligible=quality_supervision_eligible,
+            provenance=provenance,
+            reference_interval_s=(rr_start_s, rr_end_s),
+            representation_profile_compatibility={
+                profile: values["quality"] for profile, values in task_compatibility.items()
+            },
+        ),
+    ]
+    return {
+        "model_input_id": model_input_id,
+        "model_ready": True,
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "model_input_tensor_contract": INPUT_ID,
+        "context_start_s": context_start_s,
+        "context_end_s": context_end_s,
+        "context_duration_s": float(context_end_s - context_start_s),
+        "model_context_duration_s": float(context_end_s - context_start_s),
+        "causal_context": True,
+        "target_task": "breathing_evidence",
+        "target_start_s": target_start_s,
+        "target_end_s": target_end_s,
+        "target_duration_s": BREATHING_TARGET_DURATION_S,
+        "target_anchor": BREATHING_TARGET_ANCHOR,
+        "target_interval_start_s": target_start_s,
+        "target_interval_end_s": target_end_s,
+        "target_interval_duration_s": BREATHING_TARGET_DURATION_S,
+        "rr_reference_interval_start_s": rr_start_s,
+        "rr_reference_interval_end_s": rr_end_s,
+        "rr_reference_interval_duration_s": float(rr_end_s - rr_start_s),
+        "rr_reference_interval_anchor": RR_REFERENCE_ANCHOR,
+        "representation_profile_compatibility": task_compatibility,
+        "supervision_eligibility": {
+            "breathing_evidence": bool(breathing_supervision_eligible),
+            "rr": bool(rr_target_status == "AVAILABLE" and rr_bpm is not None),
+            "temporal_hold": False,
+            "quality": bool(quality_supervision_eligible),
+        },
+        "target_records": target_records,
+    }
 
 
 def git_output(*args: str) -> str:
@@ -425,7 +627,9 @@ def d1_materialize() -> Tuple[Dict[str, Any], List[Dict[str, Any]], Dict[str, An
                 "subject_id": inventory_row["subject_id"],
                 "split": split["assignment"].get(inventory_row["subject_id"], "UNASSIGNED"),
                 "example_role": "REFERENCE_AUDIT_ONLY",
-                "model_context_duration_s": 30.0,
+                "model_ready": False,
+                "model_input_id": None,
+                "model_context_duration_s": MODEL_CONTEXT_DURATION_S,
                 "target_status": "TARGET_UNAVAILABLE",
                 "breathing_supervision_eligible": False,
                 "rr_supervision_eligible": False,
@@ -433,6 +637,7 @@ def d1_materialize() -> Tuple[Dict[str, Any], List[Dict[str, Any]], Dict[str, An
                 "quality_supervision_eligible": False,
                 "quality_status": "REFERENCE_AUDIT_ONLY",
                 "unavailable_reason": "D1_ADAPTER_" + exc.code,
+                "audit_only_reason": "D1_ADAPTER_BLOCKED_NO_MODEL_INPUT_TENSOR",
                 "provenance": {"source_file": source_file, "adapter_id": D1_SOURCE_ADAPTER},
             })
             continue
@@ -449,9 +654,12 @@ def d1_materialize() -> Tuple[Dict[str, Any], List[Dict[str, Any]], Dict[str, An
                 "subject_id": inventory_row["subject_id"],
                 "split": split["assignment"][inventory_row["subject_id"]],
                 "example_role": "REFERENCE_AUDIT_ONLY",
+                "model_ready": False,
+                "model_input_id": None,
                 "context_start_s": 0.0,
                 "context_end_s": duration,
-                "model_context_duration_s": 30.0,
+                "context_duration_s": duration,
+                "model_context_duration_s": MODEL_CONTEXT_DURATION_S,
                 "breathing_target_status": "TARGET_UNAVAILABLE",
                 "breathing_reference_state": "TARGET_UNAVAILABLE",
                 "rr_target_status": "TARGET_UNAVAILABLE",
@@ -463,6 +671,7 @@ def d1_materialize() -> Tuple[Dict[str, Any], List[Dict[str, Any]], Dict[str, An
                 "quality_supervision_eligible": False,
                 "quality_status": "CLEAN_REFERENCE_ONLY",
                 "unavailable_reason": "SHORTER_THAN_30S_CONTEXT",
+                "audit_only_reason": "SHORTER_THAN_30S_CONTEXT_NO_PADDING",
                 "provenance": {
                     "source_dataset": D1_DOI,
                     "source_id": "D1",
@@ -477,12 +686,44 @@ def d1_materialize() -> Tuple[Dict[str, Any], List[Dict[str, Any]], Dict[str, An
             })
             continue
         for index in range(context_count):
-            start = float(index * 30.0)
-            end = float(start + 30.0)
+            start = float(index * MODEL_CONTEXT_DURATION_S)
+            end = float(start + MODEL_CONTEXT_DURATION_S)
             sample_start = int(round(start * fs))
             sample_end = int(round(end * fs))
             result = _reference_window(reference[sample_start:sample_end], fs)
             status = result.get("status", "TARGET_UNAVAILABLE")
+            model_input_id = "D1::" + inventory_row["recording_id"] + "__C" + str(index).zfill(3)
+            provenance = {
+                "source_dataset": D1_DOI,
+                "dataset_version": "figshare_v1",
+                "source_id": "D1",
+                "subject_id": inventory_row["subject_id"],
+                "recording_id": inventory_row["recording_id"],
+                "source_file": source_file,
+                "adapter_id": D1_SOURCE_ADAPTER,
+                "reference_channel": "respiration",
+                "reference_method": D1_REFERENCE_METHOD,
+                "native_sampling_rate_hz": fs,
+                "context_time_range_s": [start, end],
+                "resampled_model_rate_hz": 10.0,
+                "target_anchor": BREATHING_TARGET_ANCHOR,
+            }
+            aligned = _alignment_metadata(
+                model_input_id=model_input_id,
+                context_start_s=start,
+                context_end_s=end,
+                breathing_state=("BREATHING_REFERENCE_PRESENT" if status == "PRESENT" else "BREATHING_REFERENCE_AMBIGUOUS"),
+                breathing_target_status=result.get("breathing_target_status", "TARGET_UNAVAILABLE"),
+                breathing_supervision_eligible=status == "PRESENT",
+                rr_target_status=result.get("rr_target_status", "TARGET_UNAVAILABLE"),
+                rr_bpm=result.get("rr_bpm"),
+                rr_validity=result.get("rr_validity", "UNAVAILABLE"),
+                rr_unavailable_reason=result.get("rr_unavailable_reason"),
+                temporal_state="TARGET_UNAVAILABLE",
+                quality_status="CLEAN",
+                quality_supervision_eligible=True,
+                provenance=provenance,
+            )
             rows.append({
                 "example_id": "D1_" + inventory_row["recording_id"] + "__C" + str(index).zfill(3),
                 "source_id": "D1",
@@ -492,9 +733,9 @@ def d1_materialize() -> Tuple[Dict[str, Any], List[Dict[str, Any]], Dict[str, An
                 "example_role": "MODEL_READY_REFERENCE_WINDOW",
                 "context_start_s": start,
                 "context_end_s": end,
-                "model_context_duration_s": 30.0,
+                "model_context_duration_s": MODEL_CONTEXT_DURATION_S,
                 "breathing_target_status": result.get("breathing_target_status", "TARGET_UNAVAILABLE"),
-                "breathing_reference_state": status,
+                "breathing_reference_state": "BREATHING_REFERENCE_PRESENT" if status == "PRESENT" else "BREATHING_REFERENCE_AMBIGUOUS",
                 "rr_target_status": result.get("rr_target_status", "TARGET_UNAVAILABLE"),
                 "rr_bpm": result.get("rr_bpm"),
                 "rr_validity": result.get("rr_validity", "UNAVAILABLE"),
@@ -507,20 +748,9 @@ def d1_materialize() -> Tuple[Dict[str, Any], List[Dict[str, Any]], Dict[str, An
                 "quality_supervision_eligible": True,
                 "quality_status": "CLEAN",
                 "reference_analysis": result,
-                "provenance": {
-                    "source_dataset": D1_DOI,
-                    "dataset_version": "figshare_v1",
-                    "source_id": "D1",
-                    "subject_id": inventory_row["subject_id"],
-                    "recording_id": inventory_row["recording_id"],
-                    "source_file": source_file,
-                    "adapter_id": D1_SOURCE_ADAPTER,
-                    "reference_channel": "respiration",
-                    "reference_method": D1_REFERENCE_METHOD,
-                    "native_sampling_rate_hz": fs,
-                    "context_time_range_s": [start, end],
-                    "resampled_model_rate_hz": 10.0,
-                },
+                "temporal_hold_learning_boundary": TEMPORAL_HOLD_LEARNING_BOUNDARY,
+                "provenance": provenance,
+                **aligned,
             })
     audit = {
         "status": "MATERIALIZED_COMPACT_REFERENCE_TARGETS",
@@ -562,13 +792,125 @@ def d0_examples() -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
     r3_rows = load_jsonl(ROOT / D0_R3_DIR / "d0_target_rows.jsonl")
     a6 = {row["window_id"]: row for row in load_jsonl(ROOT / D0_A6_PATH)}
     examples: List[Dict[str, Any]] = []
+    event_alignment_audit: List[Dict[str, Any]] = []
     event_count = 0
     short_event_count = 0
+    corrected_absent_count = 0
+    corrected_ambiguous_event_count = 0
+    corrected_audit_only_count = 0
     for row in sorted(r3_rows, key=lambda item: item["window_id"]):
         window_id = row["window_id"]
         evidence = row["breathing_evidence"]
         rr = row["rr_target"]
         hold = row["temporal_hold"]
+        context_start = float(row["reference_time_range_s"][0])
+        context_end = float(row["reference_time_range_s"][1])
+        target_start, target_end = fixed_breathing_interval(context_start, context_end)
+        events = a6.get(window_id, {}).get("annotation_events_overlapping", [])
+        full_target_events: List[Mapping[str, Any]] = []
+        partial_target_events: List[Mapping[str, Any]] = []
+        for event in events:
+            event_count += 1
+            event_start = float(event["event_start_seconds"])
+            event_end = float(event["event_end_seconds"])
+            overlap_start = max(event_start, target_start)
+            overlap_end = min(event_end, target_end)
+            target_overlap = max(0.0, overlap_end - overlap_start)
+            old_context_overlap = max(0.0, min(event_end, context_end) - max(event_start, context_start))
+            old_candidate = old_context_overlap >= BREATHING_TARGET_DURATION_S
+            if old_context_overlap < BREATHING_TARGET_DURATION_S:
+                short_event_count += 1
+            fully_contains_target = event_start <= target_start and event_end >= target_end
+            if fully_contains_target:
+                full_target_events.append(event)
+                decision = "ABSENT_SUPERVISION"
+                reason = "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT"
+            elif target_overlap > 0.0:
+                partial_target_events.append(event)
+                decision = "AUDIT_ONLY_TARGET_UNAVAILABLE"
+                reason = "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL"
+            else:
+                decision = "AUDIT_ONLY_TARGET_UNAVAILABLE"
+                reason = "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL"
+            if decision != "ABSENT_SUPERVISION":
+                corrected_audit_only_count += 1
+            event_alignment_audit.append({
+                "model_input_id": "D0::" + window_id,
+                "window_id": window_id,
+                "event_id": str(event["event_id"]),
+                "authoritative_event_interval_s": [event_start, event_end],
+                "fixed_target_interval_s": [target_start, target_end],
+                "target_overlap_s": target_overlap,
+                "old_event_relative_candidate": old_candidate,
+                "decision": decision,
+                "reason": reason,
+                "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+            })
+
+        if full_target_events:
+            breathing_state = "BREATHING_REFERENCE_ABSENT"
+            breathing_target_status = "AVAILABLE"
+            breathing_supervision_eligible = True
+            corrected_absent_count += 1
+            temporal_state = "EVENT_POSITIVE"
+            event_reference = full_target_events[0]
+        elif partial_target_events or evidence["breathing_reference_state"] == "BREATHING_REFERENCE_AMBIGUOUS":
+            breathing_state = "BREATHING_REFERENCE_AMBIGUOUS"
+            breathing_target_status = "AMBIGUOUS"
+            breathing_supervision_eligible = False
+            if partial_target_events:
+                corrected_ambiguous_event_count += 1
+            temporal_state = "AMBIGUOUS"
+            event_reference = (partial_target_events or events or [None])[0]
+        elif evidence["breathing_reference_state"] == "BREATHING_REFERENCE_PRESENT":
+            breathing_state = "BREATHING_REFERENCE_PRESENT"
+            breathing_target_status = "AVAILABLE"
+            breathing_supervision_eligible = True
+            temporal_state = "NON_EVENT"
+            event_reference = None
+        else:
+            breathing_state = "BREATHING_REFERENCE_AMBIGUOUS"
+            breathing_target_status = "TARGET_UNAVAILABLE"
+            breathing_supervision_eligible = False
+            temporal_state = "TARGET_UNAVAILABLE"
+            event_reference = None
+
+        provenance = {
+            "source_dataset": row["dataset_id"],
+            "dataset_version": row["provenance"]["dataset_version"],
+            "subject_id": row["subject_id"],
+            "recording_id": row["recording_id"],
+            "window_id": window_id,
+            "source_file": row["provenance"]["source_file"],
+            "adapter_id": row["provenance"]["extraction_profile"],
+            "r1_contract": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+            "r2_contract": "MMWAVE_V2_R2_SPECTRAL_AUTOCORR_V1",
+            "r3_contract": row["schema_version"],
+            "q2_contract": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+            "reference_method": rr.get("reference_method"),
+            "context_time_range_s": row["reference_time_range_s"],
+            "breathing_target_interval_s": [target_start, target_end],
+            "target_anchor": BREATHING_TARGET_ANCHOR,
+            "authoritative_event_ids_reaching_target": [str(e["event_id"]) for e in events if max(float(e["event_start_seconds"]), target_start) < min(float(e["event_end_seconds"]), target_end)],
+            "authoritative_event_ids_fully_containing_target": [str(e["event_id"]) for e in full_target_events],
+            "clinical_apnea_claimed": False,
+        }
+        aligned = _alignment_metadata(
+            model_input_id="D0::" + window_id,
+            context_start_s=context_start,
+            context_end_s=context_end,
+            breathing_state=breathing_state,
+            breathing_target_status=breathing_target_status,
+            breathing_supervision_eligible=breathing_supervision_eligible,
+            rr_target_status=rr["target_status"],
+            rr_bpm=rr.get("rr_bpm"),
+            rr_validity=rr.get("validity", "UNAVAILABLE"),
+            rr_unavailable_reason=rr.get("unavailable_reason"),
+            temporal_state=temporal_state,
+            quality_status="CLEAN",
+            quality_supervision_eligible=True,
+            provenance=provenance,
+        )
         examples.append({
             "example_id": "D0_" + window_id,
             "source_id": "D0",
@@ -578,98 +920,24 @@ def d0_examples() -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
             "window_id": window_id,
             "split": "TRAIN",
             "example_role": "MODEL_CONTEXT_WINDOW",
-            "context_start_s": float(row["reference_time_range_s"][0]),
-            "context_end_s": float(row["reference_time_range_s"][1]),
-            "model_context_duration_s": 30.0,
             "evaluation_stride_s": 5.0,
-            "breathing_reference_state": evidence["breathing_reference_state"],
-            "breathing_target_status": evidence["target_status"],
+            "breathing_reference_state": breathing_state,
+            "breathing_target_status": breathing_target_status,
             "rr_target_status": rr["target_status"],
             "rr_bpm": rr.get("rr_bpm"),
             "rr_validity": rr.get("validity", "UNAVAILABLE"),
             "rr_unavailable_reason": rr.get("unavailable_reason"),
-            "temporal_hold_target_status": (
-                "NON_EVENT" if hold["event_state"] == "NO_HOLD_EVENT_IN_WINDOW" else
-                "AMBIGUOUS" if hold.get("transition_ambiguity") not in (None, "NONE") else "EVENT_RELATIVE"
-            ),
+            "temporal_hold_target_status": temporal_state,
             "temporal_event_state": hold["event_state"],
-            "temporal_hold_supervision_eligible": bool(row["supervision_eligibility"]["temporal_hold_supervision_eligible"]),
-            "breathing_supervision_eligible": bool(row["supervision_eligibility"]["breathing_evidence_supervision_eligible"]),
-            "rr_supervision_eligible": bool(row["supervision_eligibility"]["rr_supervision_eligible"]),
+            "temporal_hold_learning_boundary": TEMPORAL_HOLD_LEARNING_BOUNDARY,
+            "temporal_hold_supervision_eligible": False,
+            "breathing_supervision_eligible": breathing_supervision_eligible,
+            "rr_supervision_eligible": rr["target_status"] == "AVAILABLE" and rr.get("rr_bpm") is not None,
             "quality_supervision_eligible": True,
             "quality_status": "CLEAN",
-            "provenance": {
-                "source_dataset": row["dataset_id"],
-                "dataset_version": row["provenance"]["dataset_version"],
-                "subject_id": row["subject_id"],
-                "recording_id": row["recording_id"],
-                "window_id": window_id,
-                "source_file": row["provenance"]["source_file"],
-                "adapter_id": row["provenance"]["extraction_profile"],
-                "r1_contract": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
-                "r2_contract": "MMWAVE_V2_R2_SPECTRAL_AUTOCORR_V1",
-                "r3_contract": row["schema_version"],
-                "q2_contract": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
-                "reference_method": rr.get("reference_method"),
-                "context_time_range_s": row["reference_time_range_s"],
-            },
+            "provenance": provenance,
+            **aligned,
         })
-        for event in a6.get(window_id, {}).get("annotation_events_overlapping", []):
-            event_count += 1
-            context_start = float(row["reference_time_range_s"][0])
-            context_end = float(row["reference_time_range_s"][1])
-            event_start = max(float(event["event_start_seconds"]), context_start)
-            event_end = min(float(event["event_end_seconds"]), context_end)
-            if event_end - event_start < 5.0:
-                short_event_count += 1
-                continue
-            target_end = event_start + 5.0
-            event_id = str(event["event_id"])
-            examples.append({
-                "example_id": "D0_" + window_id + "__HOLD5S_" + event_id,
-                "source_id": "D0",
-                "dataset_id": row["dataset_id"],
-                "subject_id": row["subject_id"],
-                "recording_id": row["recording_id"],
-                "window_id": window_id,
-                "split": "TRAIN",
-                "example_role": "EVENT_RELATIVE_HOLD_INTERVAL",
-                "context_start_s": context_start,
-                "context_end_s": context_end,
-                "target_interval_start_s": event_start,
-                "target_interval_end_s": target_end,
-                "target_interval_duration_s": 5.0,
-                "model_context_duration_s": 30.0,
-                "evaluation_stride_s": 5.0,
-                "breathing_reference_state": "BREATHING_REFERENCE_ABSENT",
-                "breathing_target_status": "AVAILABLE",
-                "rr_target_status": "TARGET_UNAVAILABLE",
-                "rr_bpm": None,
-                "rr_validity": "UNAVAILABLE",
-                "rr_unavailable_reason": "VOLUNTARY_HOLD_INTERVAL",
-                "temporal_hold_target_status": "EVENT_POSITIVE",
-                "temporal_event_state": "HOLD_ACTIVE",
-                "temporal_hold_supervision_eligible": True,
-                "breathing_supervision_eligible": True,
-                "rr_supervision_eligible": False,
-                "quality_supervision_eligible": True,
-                "quality_status": "CLEAN",
-                "provenance": {
-                    "source_dataset": row["dataset_id"],
-                    "dataset_version": row["provenance"]["dataset_version"],
-                    "subject_id": row["subject_id"],
-                    "recording_id": row["recording_id"],
-                    "window_id": window_id,
-                    "source_file": row["provenance"]["source_file"],
-                    "adapter_id": row["provenance"]["extraction_profile"],
-                    "reference_method": "A6_AUTHORITATIVE_VOLUNTARY_NON_BREATHING_INTERVAL",
-                    "authoritative_event_id": event_id,
-                    "authoritative_event_interval_s": [float(event["event_start_seconds"]), float(event["event_end_seconds"])],
-                    "target_interval_s": [event_start, target_end],
-                    "interval_is_fully_inside_authoritative_event": True,
-                    "clinical_apnea_claimed": False,
-                },
-            })
     audit = {
         "source_id": "D0",
         "selection_scope": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1 -> TRAIN only",
@@ -678,16 +946,24 @@ def d0_examples() -> Tuple[List[Dict[str, Any]], Dict[str, Any]]:
         "base_ambiguous_count": sum(r["breathing_evidence"]["breathing_reference_state"] == "BREATHING_REFERENCE_AMBIGUOUS" for r in r3_rows),
         "base_absent_count": 0,
         "event_overlap_count": event_count,
-        "event_interval_absent_count": sum(e["example_role"] == "EVENT_RELATIVE_HOLD_INTERVAL" for e in examples),
+        "old_event_relative_candidate_count": sum(1 for item in event_alignment_audit if item["old_event_relative_candidate"]),
+        "corrected_event_interval_absent_count": corrected_absent_count,
+        "corrected_event_interval_ambiguous_count": corrected_ambiguous_event_count,
+        "corrected_event_audit_only_count": corrected_audit_only_count,
+        "event_interval_absent_count": corrected_absent_count,
         "event_overlap_below_5s_count": short_event_count,
+        "event_alignment_audit": event_alignment_audit,
         "event_interval_policy": {
-            "duration_s": 5.0,
-            "selection": "first 5 s of the intersection between an authoritative hold interval and a 30 s context",
+            "duration_s": BREATHING_TARGET_DURATION_S,
+            "selection": "fixed final 5 s interval [context_end-5 s, context_end]",
+            "target_anchor": BREATHING_TARGET_ANCHOR,
             "requires_full_containment": True,
+            "requires_causal_context": True,
+            "event_overlay_rows_are_model_inputs": False,
             "radar_or_model_used": False,
             "whole_window_apnea_default": False,
         },
-        "zero_class_resolution": "EVENT_RELATIVE_ABSENT_INTERVALS_ADDED; no whole-window binary classifier is claimed",
+        "zero_class_resolution": "FIXED_FINAL_TARGET_ALIGNMENT; only fully contained final intervals are ABSENT; rejected candidates remain audit-only",
         "d0_split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
         "d0_heldout_used": False,
         "m_n6_excluded_used": False,
@@ -705,21 +981,33 @@ def target_coverage(examples: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
 
     def counts(rows: Iterable[Dict[str, Any]]) -> Dict[str, Any]:
         rows = list(rows)
+        model_ready_rows = [row for row in rows if row.get("model_ready") is True]
+        model_input_ids = [row.get("model_input_id") for row in model_ready_rows]
+        unique_model_input_ids = {value for value in model_input_ids if value}
+        target_records = [record for row in model_ready_rows for record in row.get("target_records", [])]
         return {
             "example_count": len(rows),
-            "breathing": {state: sum(_breathing_state(r) == state for r in rows) for state in breathing_states},
-            "rr": {state: sum(_rr_state(r) == state for r in rows) for state in rr_states},
-            "temporal_hold": {state: sum(r.get("temporal_hold_target_status") == state for r in rows) for state in hold_states},
+            "model_ready_example_count": len(model_ready_rows),
+            "audit_only_example_count": len(rows) - len(model_ready_rows),
+            "unique_model_input_contexts": len(unique_model_input_ids),
+            "target_record_count": len(target_records),
+            "duplicate_target_overlay_count": len(model_ready_rows) - len(unique_model_input_ids),
+            "breathing": {state: sum(_breathing_state(r) == state for r in model_ready_rows) for state in breathing_states},
+            "breathing_audit_only": {state: sum(_breathing_state(r) == state for r in rows if r.get("model_ready") is not True) for state in breathing_states},
+            "rr": {state: sum(_rr_state(r) == state for r in model_ready_rows) for state in rr_states},
+            "temporal_hold": {state: sum(r.get("temporal_hold_target_status") == state for r in model_ready_rows) for state in hold_states},
             "quality": {
-                "CLEAN": sum(r.get("quality_status") == "CLEAN" for r in rows),
+                "CLEAN": sum(r.get("quality_status") == "CLEAN" for r in model_ready_rows),
                 "SYNTHETIC_INPUT_UNAVAILABLE": 0,
+                "clean_unique_model_input_contexts": sum(r.get("quality_status") == "CLEAN" for r in model_ready_rows),
             },
             "task_eligibility": {
-                "breathing": sum(bool(r.get("breathing_supervision_eligible")) for r in rows),
-                "rr": sum(bool(r.get("rr_supervision_eligible")) for r in rows),
-                "temporal_hold": sum(bool(r.get("temporal_hold_supervision_eligible")) for r in rows),
-                "quality": sum(bool(r.get("quality_supervision_eligible")) for r in rows),
+                "breathing": sum(bool(r.get("breathing_supervision_eligible")) for r in model_ready_rows),
+                "rr": sum(bool(r.get("rr_supervision_eligible")) for r in model_ready_rows),
+                "temporal_hold": sum(bool(r.get("temporal_hold_supervision_eligible")) for r in model_ready_rows),
+                "quality": sum(bool(r.get("quality_supervision_eligible")) for r in model_ready_rows),
             },
+            "target_records_by_task": dict(sorted(Counter(record.get("target_task") for record in target_records).items())),
         }
 
     by_domain = {domain: counts(r for r in examples if r["source_id"] == domain) for domain in domains}
@@ -736,6 +1024,10 @@ def target_coverage(examples: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
         "by_domain": by_domain,
         "by_split": by_split,
         "by_subject": by_subject,
+        "unique_model_input_contexts": len({row.get("model_input_id") for row in examples if row.get("model_ready") is True and row.get("model_input_id")}),
+        "target_record_count": sum(len(row.get("target_records", [])) for row in examples if row.get("model_ready") is True),
+        "duplicate_target_overlay_count": sum(1 for row in examples if row.get("model_ready") is True) - len({row.get("model_input_id") for row in examples if row.get("model_ready") is True and row.get("model_input_id")}),
+        "quality_clean_unique_model_input_count": sum(1 for row in examples if row.get("model_ready") is True and row.get("quality_status") == "CLEAN"),
         "zero_counts_are_visible": True,
         "synthetic_quality_recipe_counts": {"Q1_MR60_TIMING_CORRUPTION": 0, "Q2_INPUT_UNAVAILABLE": 0},
         "synthetic_quality_is_not_physio_label": True,
@@ -773,14 +1065,14 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
             "role": "PRIMARY_SUPERVISED_DEVELOPMENT_DOMAIN",
             "source": "10.5281/zenodo.18599983_v1.1",
             "allowed_splits": ["TRAIN", "VAL", "D0_SUBJECT_HELDOUT"],
-            "m_pv1_examples": "TRAIN only plus event-relative hold intervals",
+            "m_pv1_examples": "TRAIN only; one unique causal context per D0 window with fixed final breathing target",
             "mr60_supervised": False,
         },
         "D1": {
             "role": "AUXILIARY_CROSS_DOMAIN_REFERENCE_DEVELOPMENT_DOMAIN",
             "source": D1_DOI,
             "recordings": 265,
-            "m_pv1_examples": "D1_DEV_TRAIN and D1_DEV_VAL subject-disjoint 30 s reference windows where duration permits",
+            "m_pv1_examples": "D1_DEV_TRAIN and D1_DEV_VAL subject-disjoint 30 s reference contexts where duration permits; breathing target is fixed final 5 s",
             "mr60_supervised": False,
         },
         "D2": {"role": "LOCKED_PUBLIC_CROSS_DEVICE_TEST", "m_pv1_access": "custody-state only"},
@@ -796,7 +1088,10 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
         "d0_val_subject_count": len(split["subject_ids"]["VAL"]),
         "d0_internal_heldout_subject_count": len(split["subject_ids"]["D0_SUBJECT_HELDOUT"]),
         "d0_train_model_contexts": d0_audit["base_window_count"],
+        "unique_model_input_contexts": d0_audit["base_window_count"],
         "event_relative_absent_contexts": d0_audit["event_interval_absent_count"],
+        "corrected_event_interval_absent_count": d0_audit["corrected_event_interval_absent_count"],
+        "corrected_event_interval_audit_only_count": d0_audit["corrected_event_audit_only_count"],
         "base_present_count": d0_audit["base_present_count"],
         "base_absent_count": d0_audit["base_absent_count"],
         "base_ambiguous_count": d0_audit["base_ambiguous_count"],
@@ -823,11 +1118,13 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
         "scalar_profile": {
             "profile_id": "PROFILE_A_FEATURE_F2_V1",
             "source_contract": "MMWAVE_V2_R2_F2_SPECTRAL_AUTOCORR_V1",
-            "status": "ACTIVE_M_PV2_CANDIDATE",
+            "status": "ACTIVE_M_PV2_CANDIDATE_FOR_RR_QUALITY_ONLY",
             "feature_order": F2_FEATURES,
             "feature_count": len(F2_FEATURES),
             "quality_sidecar_order": F3_QUALITY,
             "normalization": "TRAIN_FITTED_FEATURE_SCALER_ONLY_IF_NEEDED",
+            "breathing_evidence_supported": False,
+            "unsupported_reason": "global 30 s F2 representation has no defensible final 5 s target location",
         },
         "trace_profile": {
             "profile_id": "PROFILE_B_TRACE_F3_R1_V1",
@@ -840,6 +1137,7 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
             "mask": "TRUE only for finite trace with valid timing; no zero-fill",
             "scale_descriptor_order": SCALE_DESCRIPTORS,
             "quality_sidecar_order": F3_QUALITY,
+            "breathing_evidence_supported": True,
         },
         "hybrid_profile": {
             "profile_id": "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1",
@@ -847,10 +1145,12 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
             "composition": ["PROFILE_B_TRACE_F3_R1_V1", "PROFILE_A_FEATURE_F2_V1"],
             "new_feature_engineering": False,
             "use_only_if": "M-PV2 family comparison requires a trace+scalar composition",
+            "breathing_evidence_supported": True,
         },
         "F1_role": "ABLATION_BASELINE_ONLY",
         "F2_role": "ACTIVE_SCALAR_CANDIDATE",
         "F3_role": "ACTIVE_TRACE_QUALITY_CANDIDATE",
+        "task_compatibility_matrix": PROFILE_TASK_COMPATIBILITY,
         "window_local_MAD_divide_only": False,
         "source_specific_gain_matching": False,
         "low_amplitude_auto_normalization": False,
@@ -869,7 +1169,8 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
                     {"name": "f2_feature_valid_mask", "dtype": "bool", "shape": ["B", len(F2_FEATURES)], "feature_order": F2_FEATURES, "required": True},
                     {"name": "quality_descriptors", "dtype": "float32", "shape": ["B", len(F3_QUALITY)], "feature_order": F3_QUALITY, "required": True},
                 ],
-                "metadata_not_tensor": ["availability_state", "source_domain", "subject_id", "recording_id", "context_id", "split"],
+                "metadata_not_tensor": ["availability_state", "source_domain", "subject_id", "recording_id", "context_id", "split", "target_start_s", "target_end_s", "target_anchor"],
+                "breathing_target_location_support": "NO; do not use this profile for breathing_evidence supervision",
                 "history_dimension": "none; temporal history is sequential composer state",
             },
             "PROFILE_B_TRACE_F3_R1_V1": {
@@ -880,25 +1181,36 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
                     {"name": "quality_descriptors", "dtype": "float32", "shape": ["B", len(F3_QUALITY)], "feature_order": F3_QUALITY, "required": True},
                 ],
                 "padding": "none for model-ready clean examples; invalid/gap regions are masked and fail the Q2 window gate",
+                "breathing_target_location_support": "YES; final 5 s is represented by ordered trace indices 250:300",
                 "history_dimension": "none; temporal history is sequential composer state",
             },
             "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1": {
                 "inputs": ["all inputs from PROFILE_B_TRACE_F3_R1_V1", "all inputs from PROFILE_A_FEATURE_F2_V1"],
                 "shape_semantics": "trace and scalar inputs retain independent masks and feature order",
+                "breathing_target_location_support": "YES via trace branch; F2 is auxiliary only",
                 "history_dimension": "none; temporal history is sequential composer state",
             },
         },
         "fitted_statistics": "M-PV2 may fit a global robust/z-score feature scaler on TRAIN membership only; no source-specific gain matching",
         "variable_length_policy": "fixed 30 s context for model-ready examples; short D1 recordings remain audit-only",
+        "target_anchor_metadata_is_not_a_tensor": True,
     }
     target_contract = {
         "contract_id": TARGET_ID,
         "DIRECT_THREE_CLASS_PRIMARY_TARGET": False,
         "breathing_evidence": {
             "states": ["PRESENT", "ABSENT", "AMBIGUOUS", "TARGET_UNAVAILABLE"],
-            "semantic_meaning": "reference-supported periodic respiratory activity during the target interval",
-            "d0_reference": "authoritative A6/Movesense evidence plus event-relative hold intervals",
-            "d1_reference": "synchronized respiration waveform; weak periodicity is AMBIGUOUS, not ABSENT",
+            "semantic_meaning": "reference-supported breathing evidence over the final fixed target interval of the causal context",
+            "target_duration_s": BREATHING_TARGET_DURATION_S,
+            "target_anchor": BREATHING_TARGET_ANCHOR,
+            "context_duration_s": MODEL_CONTEXT_DURATION_S,
+            "causal_context": True,
+            "output_semantics": "breathing evidence over final target interval of current causal context",
+            "present_absent_same_target_duration": True,
+            "present_absent_same_target_semantics": True,
+            "arbitrary_internal_target_interval": False,
+            "d0_reference": "authoritative A6/Movesense evidence plus fixed-final-interval event binding",
+            "d1_reference": "synchronized respiration waveform over the 30 s reference context with fixed-final-5 s anchor; weak periodicity is AMBIGUOUS, not ABSENT",
             "radar_amplitude_as_label": False,
             "source_apnea_term_auto_target": False,
             "whole_window_apnea_default": False,
@@ -912,6 +1224,9 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
             "d0_method": "INHERITED_A4_MOVESENSE_CHEST_ACC_SPECTRAL_PEAK_V1",
             "d1_method": D1_REFERENCE_METHOD,
             "search_band_hz": [0.1, 0.7],
+            "reference_interval_duration_s": MODEL_CONTEXT_DURATION_S,
+            "reference_interval_anchor": RR_REFERENCE_ANCHOR,
+            "separate_from_breathing_interval": True,
         },
         "temporal_hold": {
             "semantic_meaning": "event-relative voluntary breath-hold proxy; not clinical apnea",
@@ -919,6 +1234,8 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
             "d1": "UNAVAILABLE; source protocol strings do not define onset/offset",
             "baseline_required": True,
             "onset_and_recovery_explicit": True,
+            "learning_boundary": TEMPORAL_HOLD_LEARNING_BOUNDARY,
+            "direct_neural_supervision": False,
             "final_persistence_threshold": "DEFERRED_TO_POST_MODEL_DEVELOPMENT_CALIBRATION; no heldout tuning in M-PV1",
         },
         "supervision_masks": [
@@ -930,15 +1247,27 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
     }
     temporal = {
         "contract_id": TEMPORAL_ID,
-        "model_context_duration_s": 30.0,
+        "model_context_duration_s": MODEL_CONTEXT_DURATION_S,
         "model_context_samples": 300,
         "model_evaluation_stride_s": 5.0,
+        "model_context_semantics": "[t-30 s, t] causal context",
+        "causal_context": True,
         "target_interval": {
-            "default": "30 s context for PRESENT/RR; 5 s event-relative interval for D0 ABSENT/HOLD_ACTIVE",
-            "event_relative_hold_interval_s": 5.0,
+            "default": "breathing evidence always uses final fixed 5 s interval [t-5 s, t]",
+            "breathing_target_duration_s": BREATHING_TARGET_DURATION_S,
+            "breathing_target_anchor": BREATHING_TARGET_ANCHOR,
+            "breathing_target_semantics": "same fixed final interval for PRESENT, ABSENT, AMBIGUOUS, and TARGET_UNAVAILABLE",
+            "event_relative_hold_interval_s": BREATHING_TARGET_DURATION_S,
             "must_be_fully_inside_authoritative_event": True,
+            "arbitrary_internal_target_interval": False,
+            "future_information_allowed": False,
         },
-        "minimum_usable_duration_s": 30.0,
+        "rr_reference_interval": {
+            "duration_s": MODEL_CONTEXT_DURATION_S,
+            "anchor": RR_REFERENCE_ANCHOR,
+            "separate_from_breathing_target": True,
+        },
+        "minimum_usable_duration_s": MODEL_CONTEXT_DURATION_S,
         "short_record_policy": "D1 <30 s is reference/feature audit only and is excluded from model-ready fixed-context examples",
         "padding_policy": "no physiological padding; no zero-fill as valid signal",
         "mask_policy": "valid timing and finite trace mask; Q2 invalid windows are INPUT_UNAVAILABLE",
@@ -952,6 +1281,8 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
             "history_is_not_a_training_label": True,
         },
         "hold_composition": "breathing evidence + RR + hard quality gate -> deterministic sequential temporal composer",
+        "temporal_hold_learning_boundary": TEMPORAL_HOLD_LEARNING_BOUNDARY,
+        "direct_temporal_hold_neural_supervision": False,
         "persistence_threshold": "not finalized; later development-only calibration may choose an application threshold without clinical apnea language",
     }
     quality = {
@@ -982,16 +1313,41 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
         "source_weights": {"D0": 0.75, "D1": 0.25},
         "rationale": "D0 is the primary 66-subject supervised domain; D1 is an 11-subject auxiliary domain. Both remain subject-balanced within source without blind window-count equalization.",
         "subject_weighting": "inverse eligible-example count per subject within source and split, normalized within source",
-        "repeated_window_cap": "at most 1 clean fixed context per D1 recording in an epoch; D0 event-relative intervals retain recording/window lineage and are capped at 2 target roles per base context",
+        "repeated_window_cap": "at most 1 clean fixed context per D1 recording in an epoch; D0 has one unique model input per base context and no event-overlay input duplication",
         "task_eligibility": "each task consumes only its explicit supervision mask; an RR-unavailable row is never encoded as zero",
-        "synthetic_ratio": {"maximum_fraction_of_clean_examples_per_task": 0.10, "profile_ids": ["MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1", "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1"], "selection_method": "fixed recipe; no VAL tuning"},
+        "quality_counting_unit": "unique clean model_input_id, never target overlay rows",
+        "synthetic_ratio": {"maximum_fraction_of_clean_examples_per_task": 0.10, "denominator": "unique clean model inputs per task", "profile_ids": ["MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1", "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1"], "selection_method": "fixed recipe; no VAL tuning"},
         "oversampling": "no blind D1 window oversampling until counts equal D0",
         "weights_tuned_by_validation": False,
     }
     families = {
         "contract_id": CONTRACT_ID,
+        "task_compatibility_matrix": {
+            "FAMILY_A_FEATURE_MLP": {
+                "input_profile": "PROFILE_A_FEATURE_F2_V1",
+                "breathing_evidence": "NO",
+                "rr": "YES",
+                "quality": "YES",
+                "temporal_hold": "COMPOSER_ONLY",
+                "reason": "global F2 vector cannot encode final 5 s target location",
+            },
+            "FAMILY_B_SMALL_CONV1D_TCN": {
+                "input_profile": "PROFILE_B_TRACE_F3_R1_V1",
+                "breathing_evidence": "YES",
+                "rr": "YES",
+                "quality": "YES",
+                "temporal_hold": "COMPOSER_ONLY",
+            },
+            "FAMILY_C_TRACE_FEATURE_HYBRID": {
+                "input_profile": "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1",
+                "breathing_evidence": "YES",
+                "rr": "YES",
+                "quality": "YES",
+                "temporal_hold": "COMPOSER_ONLY",
+            },
+        },
         "authorized_m_pv2_families": [
-            {"family_id": "FAMILY_A_FEATURE_MLP", "input_profile": "PROFILE_A_FEATURE_F2_V1", "targets": ["breathing_evidence", "rr", "quality"], "temporal_hold": "composer_only"},
+            {"family_id": "FAMILY_A_FEATURE_MLP", "input_profile": "PROFILE_A_FEATURE_F2_V1", "targets": ["rr", "quality"], "breathing_evidence": "unsupported", "temporal_hold": "composer_only"},
             {"family_id": "FAMILY_B_SMALL_CONV1D_TCN", "input_profile": "PROFILE_B_TRACE_F3_R1_V1", "targets": ["breathing_evidence", "rr", "quality"], "temporal_hold": "composer_only"},
             {"family_id": "FAMILY_C_TRACE_FEATURE_HYBRID", "input_profile": "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1", "targets": ["breathing_evidence", "rr", "quality"], "temporal_hold": "composer_only", "condition": "only if bounded hybrid comparison is justified in M-PV2"},
         ],
@@ -1000,23 +1356,39 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
     }
     example_manifest = {
         "contract_id": EXAMPLE_ID,
-        "schema_version": "M-PV1.1",
+        "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT",
         "example_count": len(examples),
+        "model_ready_example_count": sum(row.get("model_ready") is True for row in examples),
+        "audit_only_example_count": sum(row.get("model_ready") is not True for row in examples),
+        "unique_model_input_contexts": len({row.get("model_input_id") for row in examples if row.get("model_ready") is True and row.get("model_input_id")}),
+        "duplicate_target_overlay_count": 0,
+        "target_interval_contract": {
+            "breathing_target_duration_s": BREATHING_TARGET_DURATION_S,
+            "breathing_target_anchor": BREATHING_TARGET_ANCHOR,
+            "causal_context": True,
+            "arbitrary_internal_target_interval": False,
+        },
         "examples": examples,
         "synthetic_quality_recipes": [
             {"profile_id": "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1", "lineage_required": True, "physiology_target_rewrite": False},
             {"profile_id": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1", "lineage_required": True, "target": "INPUT_UNAVAILABLE", "physiology_target_rewrite": False},
         ],
         "waveform_payloads_committed": False,
-        "regeneration_policy": "derive traces/features from accepted D0/R1/R2 evidence or canonical D1 adapter; compact target rows contain provenance only",
+        "regeneration_policy": "derive traces/features from accepted D0/R1/R2 evidence or canonical D1 adapter; one row is one unique model input and target records are task-specific overlays on that same input",
     }
     compatibility = {
         "contract_id": CONTRACT_ID,
-        "BREATHING_SEMANTIC_COMPATIBILITY": {"status": "YES_WITH_COVERAGE_DIFFERENCE", "reason": "both use PRESENT/ABSENT/AMBIGUOUS/TARGET_UNAVAILABLE; D0 ABSENT is event-relative and D1 weak references are AMBIGUOUS rather than fabricated ABSENT"},
+        "BREATHING_SEMANTIC_COMPATIBILITY": {"status": "YES_FIXED_FINAL_TARGET", "reason": "D0 and D1 use the same 5 s final target interval and anchor; D1 weak references remain AMBIGUOUS rather than fabricated ABSENT"},
         "RR_SEMANTIC_COMPATIBILITY": {"status": "YES_WITH_DOMAIN_METHODS", "reason": "both expose rr_bpm, validity, source, method, and explicit unavailable reason"},
-        "TEMPORAL_HOLD_SEMANTIC_COMPATIBILITY": {"status": "PARTIAL", "reason": "D0 has authoritative voluntary hold intervals; D1 has no defensible within-recording onset/offset"},
+        "TEMPORAL_HOLD_SEMANTIC_COMPATIBILITY": {"status": "COMPOSER_ONLY", "reason": "D0 has authoritative voluntary hold intervals; D1 has no defensible within-recording onset/offset; neither is a direct neural target"},
         "COMMON_INPUT_SCHEMA": "YES",
         "D0_AND_D1_FIXED_CONTEXT": "YES where duration >=30 s and Q2-compatible timing is valid",
+        "BREATHING_TARGET_FIXED_ANCHOR": "YES",
+        "BREATHING_PRESENT_ABSENT_SAME_TARGET_DURATION": "YES",
+        "BREATHING_PRESENT_ABSENT_SAME_TARGET_SEMANTICS": "YES",
+        "FEATURE_PROFILE_TARGET_LOCATION_AMBIGUOUS": "NO; F2 breathing task is disabled",
+        "RR_INTERVAL_SEPARATE_FROM_BREATHING_INTERVAL": "YES",
+        "MODEL_FAMILY_TASK_COMPATIBILITY_FROZEN": "YES",
     }
     d2_lock = load_json(ROOT / "datasets/mmwave/manifests/M-PV0_D2_locked_acquisition/access_state.json")
     d2_audit = {
@@ -1035,9 +1407,11 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
     exceptions = {
         "contract_id": CONTRACT_ID,
         "entries": [
-            {"id": "M-PV1-D0-ABSENT-WHOLE-WINDOW-ZERO", "severity": "RESOLVED_BY_REFORMULATION", "detail": "D0 whole-window ABSENT remains zero; 5 s event-relative intervals fully contained in authoritative holds provide ABSENT supervision without whole-window APNEA."},
+            {"id": "M-PV1-CORRECTIVE-TARGET-CONTEXT-MISMATCH", "severity": "RESOLVED_BY_REFORMULATION", "detail": "The first M-PV1 manifest attached arbitrary internal 5 s event intervals to 30 s inputs. Corrective M-PV1 freezes the final 5 s causal target for every breathing state and removes duplicate event-overlay input rows."},
+            {"id": "M-PV1-D0-ABSENT-RECOUNT", "severity": "RESOLVED_BY_RECOUNT", "detail": "The original 133 event-relative candidates were re-evaluated; only fully contained final target intervals remain ABSENT supervision, and the remainder are audit-only."},
             {"id": "M-PV1-D1-TEMPORAL-HOLD-UNAVAILABLE", "severity": "LIMITATION", "detail": "D1 respiration waveform is materialized, but source protocol strings do not supply defensible onset/recovery boundaries; temporal hold remains unavailable."},
             {"id": "M-PV1-D1-SHORT-RECORDINGS", "severity": "LIMITATION", "detail": "D1 recordings shorter than 30 s remain reference/feature audit only; no fake padding."},
+            {"id": "M-PV1-F2-BREATHING-UNSUPPORTED", "severity": "LIMITATION", "detail": "The global F2 scalar profile cannot encode the fixed final 5 s target location, so F2 MLP is limited to RR/quality and temporal composition."},
             {"id": "M-PV1-D3-NOT_INCLUDED", "severity": "NON_BLOCKING", "detail": "No accepted D3 adapter is present."},
         ],
         "mr60_supervised_use": False,
@@ -1046,7 +1420,7 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
     coverage = target_coverage(examples)
     validation = {
         "contract_id": CONTRACT_ID,
-        "schema_version": "M-PV1.1",
+        "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT",
         "phase": "M-PV1",
         "gate": "PASS_WITH_LIMITATIONS",
         "ok": True,
@@ -1069,6 +1443,19 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
             "COMMON_INPUT_SCHEMA_FROZEN": "YES",
             "COMMON_TARGET_SCHEMA_FROZEN": "YES",
             "TEMPORAL_CONTEXT_FROZEN": "YES",
+            "BREATHING_TARGET_FIXED_ANCHOR": "YES",
+            "BREATHING_PRESENT_ABSENT_SAME_TARGET_DURATION": "YES",
+            "BREATHING_PRESENT_ABSENT_SAME_TARGET_SEMANTICS": "YES",
+            "EVENT_TARGET_CONTEXT_CAUSAL": "YES",
+            "ARBITRARY_INTERNAL_TARGET_INTERVAL": "NO",
+            "MODEL_READY_TARGET_WITHOUT_VALID_INPUT_TENSOR": "NO",
+            "FEATURE_PROFILE_TARGET_LOCATION_AMBIGUOUS": "NO",
+            "DUPLICATE_INPUT_CONTRADICTORY_BREATHING_LABELS": "NO",
+            "QUALITY_CONTEXT_DUPLICATE_COUNTING": "NO",
+            "SYNTHETIC_RATIO_USES_UNIQUE_CLEAN_INPUT_COUNT": "YES",
+            "TEMPORAL_HOLD_LEARNING_BOUNDARY_FROZEN": "YES",
+            "MODEL_FAMILY_TASK_COMPATIBILITY_FROZEN": "YES",
+            "RR_INTERVAL_SEPARATE_FROM_BREATHING_INTERVAL": "YES",
             "SOURCE_BALANCING_FROZEN": "YES",
             "DIRECT_THREE_CLASS_PRIMARY_TARGET": "NO",
             "WHOLE_WINDOW_APNEA_DEFAULT": "NO",
@@ -1089,16 +1476,22 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
         "coverage_summary": {
             "D0_base_present": d0_audit["base_present_count"],
             "D0_base_absent": d0_audit["base_absent_count"],
-            "D0_event_relative_absent": d0_audit["event_interval_absent_count"],
+            "D0_corrected_absent": d0_audit["corrected_event_interval_absent_count"],
+            "D0_corrected_ambiguous": sum(_breathing_state(row) == "AMBIGUOUS" for row in d0_rows),
+            "D0_unique_model_input_contexts": sum(row.get("model_ready") is True for row in d0_rows),
             "D1_model_ready_contexts": d1_audit.get("model_ready_context_count", 0),
             "D1_short_audit_only": d1_audit.get("short_recording_audit_only_count", 0),
+            "total_unique_model_input_contexts": coverage["unique_model_input_contexts"],
+            "total_target_records": coverage["target_record_count"],
+            "duplicate_target_overlays": coverage["duplicate_target_overlay_count"],
+            "quality_clean_unique_model_inputs": coverage["quality_clean_unique_model_input_count"],
         },
         "limitations": exceptions["entries"],
         "m_pv1_ready_for_m_pv2": True,
     }
     config = {
         "contract_id": CONTRACT_ID,
-        "schema_version": "M-PV1.1",
+        "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT",
         "phase": "M-PV1",
         "status": "FROZEN_FOR_M_PV2",
         "upstream_contracts": {
@@ -1112,9 +1505,17 @@ def build_documents(determinism_checked: bool) -> Dict[str, Any]:
             "I1": "MMWAVE_V2_I1_RUNTIME_SEMANTIC_CONTRACT_V1",
         },
         "rate_hz": 10.0,
-        "context_duration_s": 30.0,
-        "model_context_duration_s": 30.0,
+        "context_duration_s": MODEL_CONTEXT_DURATION_S,
+        "model_context_duration_s": MODEL_CONTEXT_DURATION_S,
         "evaluation_stride_s": 5.0,
+        "breathing_target_duration_s": BREATHING_TARGET_DURATION_S,
+        "breathing_target_anchor": BREATHING_TARGET_ANCHOR,
+        "breathing_target_semantics": "final fixed interval of current causal context",
+        "causal_context": True,
+        "arbitrary_internal_target_interval": False,
+        "rr_reference_interval_duration_s": MODEL_CONTEXT_DURATION_S,
+        "rr_reference_interval_anchor": RR_REFERENCE_ANCHOR,
+        "temporal_hold_learning_boundary": TEMPORAL_HOLD_LEARNING_BOUNDARY,
         "representation_profiles": ["PROFILE_A_FEATURE_F2_V1", "PROFILE_B_TRACE_F3_R1_V1", "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1"],
         "target_contract": TARGET_ID,
         "temporal_contract": TEMPORAL_ID,
@@ -1157,7 +1558,7 @@ def generate(output_dir: Path, determinism_checked: bool) -> None:
     file_hashes = {name: sha256_file(output_dir / name) for name in sorted(documents)}
     checksums = {
         "contract_id": CONTRACT_ID,
-        "schema_version": "M-PV1.1",
+        "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT",
         "files": file_hashes,
         "config": {"path": rel(ROOT / CONFIG_REL), "sha256": sha256_file(ROOT / CONFIG_REL)},
         "generator": {"path": rel(ROOT / "scripts/mmwave_m_pv1_public_multidomain_contract.py"), "sha256": sha256_file(ROOT / "scripts/mmwave_m_pv1_public_multidomain_contract.py")},

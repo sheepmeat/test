@@ -1,4 +1,9 @@
 {
+  "arbitrary_internal_target_interval": false,
+  "breathing_target_anchor": "FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT",
+  "breathing_target_duration_s": 5.0,
+  "breathing_target_semantics": "final fixed interval of current causal context",
+  "causal_context": true,
   "context_duration_s": 30.0,
   "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
   "d2_used": false,
@@ -15,11 +20,14 @@
     "PROFILE_B_TRACE_F3_R1_V1",
     "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1"
   ],
-  "schema_version": "M-PV1.1",
+  "rr_reference_interval_anchor": "FULL_CAUSAL_CONTEXT_REFERENCE_INTERVAL",
+  "rr_reference_interval_duration_s": 30.0,
+  "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT",
   "source_balancing_contract": "MMWAVE_V2_M_PV1_SOURCE_BALANCING_CONTRACT_V1",
   "status": "FROZEN_FOR_M_PV2",
   "target_contract": "MMWAVE_V2_M_PV1_TARGET_MAPPING_PROFILE_V1",
   "temporal_contract": "MMWAVE_V2_M_PV1_TEMPORAL_CONTEXT_CONTRACT_V1",
+  "temporal_hold_learning_boundary": "DETERMINISTIC_POST_BREATHING_COMPOSITION_ONLY",
   "upstream_contracts": {
     "D0": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
     "D1": "D1_NATIVE_SIXPORT_PHASE_DISPLACEMENT_V1",

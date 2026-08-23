@@ -11,6 +11,7 @@
   "presence_authority": "human_detected_raw external production field; not trained from D0/D1",
   "profiles": {
     "PROFILE_A_FEATURE_F2_V1": {
+      "breathing_target_location_support": "NO; do not use this profile for breathing_evidence supervision",
       "history_dimension": "none; temporal history is sequential composer state",
       "inputs": [
         {
@@ -112,10 +113,14 @@
         "subject_id",
         "recording_id",
         "context_id",
-        "split"
+        "split",
+        "target_start_s",
+        "target_end_s",
+        "target_anchor"
       ]
     },
     "PROFILE_B_TRACE_F3_R1_V1": {
+      "breathing_target_location_support": "YES; final 5 s is represented by ordered trace indices 250:300",
       "history_dimension": "none; temporal history is sequential composer state",
       "inputs": [
         {
@@ -186,6 +191,7 @@
       "padding": "none for model-ready clean examples; invalid/gap regions are masked and fail the Q2 window gate"
     },
     "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1": {
+      "breathing_target_location_support": "YES via trace branch; F2 is auxiliary only",
       "history_dimension": "none; temporal history is sequential composer state",
       "inputs": [
         "all inputs from PROFILE_B_TRACE_F3_R1_V1",
@@ -194,5 +200,6 @@
       "shape_semantics": "trace and scalar inputs retain independent masks and feature order"
     }
   },
+  "target_anchor_metadata_is_not_a_tensor": true,
   "variable_length_policy": "fixed 30 s context for model-ready examples; short D1 recordings remain audit-only"
 }

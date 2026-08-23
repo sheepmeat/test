@@ -3,27 +3,2846 @@
   "base_ambiguous_count": 156,
   "base_present_count": 162,
   "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "corrected_event_interval_absent_count": 116,
+  "corrected_event_interval_audit_only_count": 40,
   "d0_audit": {
     "base_absent_count": 0,
     "base_ambiguous_count": 156,
     "base_present_count": 162,
     "base_window_count": 318,
+    "corrected_event_audit_only_count": 40,
+    "corrected_event_interval_absent_count": 116,
+    "corrected_event_interval_ambiguous_count": 12,
     "d0_heldout_used": false,
     "d0_split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
-    "event_interval_absent_count": 133,
+    "event_alignment_audit": [
+      {
+        "authoritative_event_interval_s": [
+          21.274611,
+          31.826364
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p001-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p001-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.998744,
+          32.473538
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p001-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p001-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.933184,
+          34.340915
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p003-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p003-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.876591,
+          35.818495
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p003-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p003-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          31.912578,
+          38.938295
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p007-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p007-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.201945,
+          36.70163
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p007-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p007-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.201945,
+          36.70163
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p007-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p007-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.427841,
+          32.135787
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p008-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p008-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.427841,
+          32.135787
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p008-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p008-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.366759,
+          33.77009
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p008-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p008-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.366759,
+          33.77009
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p008-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p008-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          18.41366,
+          31.242727
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p009-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p009-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.601547,
+          34.630614
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p009-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p009-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.611098,
+          33.731132
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p013-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p013-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.611098,
+          33.731132
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p013-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p013-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.859522,
+          36.170043
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p013-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p013-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.859522,
+          36.170043
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p013-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p013-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.099813,
+          30.3193
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p014-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p014-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.574597,
+          30.586202
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p014-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p014-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.859209,
+          32.904702
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p016-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p016-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.962284,
+          32.072752
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p016-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p016-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.508366,
+          35.101386
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p019-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p019-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.508366,
+          35.101386
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p019-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p019-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.77911,
+          34.080528
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p019-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p019-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.77911,
+          34.080528
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p019-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p019-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.688831,
+          32.588421
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p020-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p020-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.925891,
+          32.407514
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p020-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p020-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.520401,
+          32.692986
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p023-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p023-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.134518,
+          29.948788
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p023-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 4.948788,
+        "window_id": "dataset-10_5281_zenodo_18599983-p023-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.95016,
+          32.568939
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p025-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p025-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.253396,
+          34.554736
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p025-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p025-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          26.963347,
+          34.650465
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p026-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 3.036653000000001,
+        "window_id": "dataset-10_5281_zenodo_18599983-p026-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          26.963347,
+          34.650465
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p026-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p026-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.489561,
+          32.469485
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p027-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p027-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.592586,
+          30.858346
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p027-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p027-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.481812,
+          38.481812
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p028-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.481812,
+          38.481812
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p028-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p028-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.590688,
+          33.590688
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p028-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p028-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.590688,
+          33.590688
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p028-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p028-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.545716,
+          32.242837
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p029-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p029-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.739861,
+          32.097456
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p029-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p029-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.278424,
+          30.187924
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p030-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p030-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.739033,
+          31.833742
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p030-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p030-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.833948,
+          38.652717
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p031-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p031-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.833948,
+          38.652717
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p031-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p031-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.452451,
+          33.964716
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p031-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p031-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.452451,
+          33.964716
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p031-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p031-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          27.306299,
+          33.462608
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p034-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 2.693701000000001,
+        "window_id": "dataset-10_5281_zenodo_18599983-p034-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          27.306299,
+          33.462608
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p034-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p034-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          27.393321,
+          34.140301
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p034-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 2.6066789999999997,
+        "window_id": "dataset-10_5281_zenodo_18599983-p034-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          27.393321,
+          34.140301
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p034-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p034-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.351014,
+          31.247228
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p035-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p035-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.351014,
+          31.247228
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p035-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p035-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.576218,
+          33.817041
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p035-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p035-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.576218,
+          33.817041
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p035-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p035-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.001979,
+          31.810286
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p037-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p037-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.001979,
+          31.810286
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p037-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p037-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.846262,
+          34.912579
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p037-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p037-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.846262,
+          34.912579
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p037-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p037-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.192091,
+          35.089815
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p038-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p038-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.192091,
+          35.089815
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p038-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p038-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.321271,
+          34.779787
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p038-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p038-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.321271,
+          34.779787
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p038-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p038-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          24.850641,
+          32.445186
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p040-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p040-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          24.812637,
+          33.729423
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p040-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p040-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.428582,
+          30.777721
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p042-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p042-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.63341,
+          31.522409
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p042-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p042-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.888428,
+          33.391264
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p043-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p043-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.032693,
+          32.362183
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p043-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p043-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          25.428629,
+          36.607794
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p044-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 4.571370999999999,
+        "window_id": "dataset-10_5281_zenodo_18599983-p044-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          25.428629,
+          36.607794
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p044-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p044-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.889028,
+          33.123989
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p044-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p044-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.889028,
+          33.123989
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p044-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p044-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.363458,
+          32.915246
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p046-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p046-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.575402,
+          33.266121
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p046-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p046-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.230083,
+          34.824311
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p048-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p048-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.833837,
+          34.451616
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p048-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p048-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.095984,
+          32.985644
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p049-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p049-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.72118,
+          31.559555
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p049-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p049-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.375457,
+          33.388544
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p050-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p050-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.008705,
+          30.688608
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p050-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p050-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.243114,
+          35.543114
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p051-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p051-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.03411,
+          33.73411
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p051-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p051-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          25.860502,
+          36.753421
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p052-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 4.139498,
+        "window_id": "dataset-10_5281_zenodo_18599983-p052-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          25.860502,
+          36.753421
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p052-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p052-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          4.372438,
+          15.184606
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p052-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p052-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.199888,
+          31.226484
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p054-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p054-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.024287,
+          35.596828
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p054-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p054-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.549399,
+          32.918957
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p055-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p055-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.824004,
+          33.689826
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p055-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p055-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.954891,
+          32.217533
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p056-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p056-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.18754,
+          33.315184
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p056-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p056-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.557938,
+          33.319338
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p057-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p057-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.530593,
+          31.933003
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p057-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p057-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.059688,
+          29.867934
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p059-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 4.867934000000002,
+        "window_id": "dataset-10_5281_zenodo_18599983-p059-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.405363,
+          32.427772
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p059-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p059-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.563897,
+          34.463025
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p060-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p060-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.417119,
+          32.417119
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p060-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p060-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          19.519452,
+          31.842441
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p061-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p061-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.688026,
+          33.165941
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p061-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p061-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          27.895099,
+          36.791097
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p064-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 2.1049010000000017,
+        "window_id": "dataset-10_5281_zenodo_18599983-p064-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          27.895099,
+          36.791097
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p064-lying-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p064-lying-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.99622,
+          34.805671
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p064-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p064-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.99622,
+          34.805671
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          55.0,
+          60.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p064-sitting-rest__W0001",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p064-sitting-rest__W0001"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.934595,
+          32.225421
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p066-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p066-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.850355,
+          31.867866
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p066-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p066-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.971304,
+          30.289826
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p067-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p067-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          18.50801,
+          26.907239
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p067-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 1.9072390000000006,
+        "window_id": "dataset-10_5281_zenodo_18599983-p067-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.661964,
+          31.900789
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p068-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p068-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.154348,
+          31.500323
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p068-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p068-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.408478,
+          34.656123
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p070-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p070-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.752611,
+          32.844715
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p070-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p070-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          24.014423,
+          35.69587
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p071-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p071-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.540575,
+          34.766014
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p071-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p071-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.46649,
+          33.494031
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p073-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p073-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.264418,
+          31.495765
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p073-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p073-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.400624,
+          34.331667
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p075-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p075-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          12.186618,
+          21.95754
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p075-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "EVENT_DOES_NOT_REACH_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 0.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p075-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.983309,
+          32.311667
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p076-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p076-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.079189,
+          32.539787
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p076-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p076-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.580309,
+          34.196744
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p077-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p077-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.514573,
+          33.125167
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p077-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p077-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.733393,
+          31.748864
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p078-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p078-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.084242,
+          31.89126
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p078-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p078-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.800122,
+          31.623569
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p079-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p079-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          28.303488,
+          39.833352
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p079-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": false,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 1.6965119999999985,
+        "window_id": "dataset-10_5281_zenodo_18599983-p079-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          24.523827,
+          34.846066
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p080-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p080-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.893289,
+          31.105719
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p080-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p080-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.2075,
+          33.143593
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p081-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p081-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.017833,
+          31.196617
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p081-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p081-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.97525,
+          30.698062
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p084-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p084-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          24.623004,
+          34.110267
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p084-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p084-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.311062,
+          31.968216
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p087-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p087-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.631882,
+          35.064179
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p087-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p087-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          19.704671,
+          31.86131
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p089-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p089-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.829779,
+          32.882778
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p089-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p089-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          18.391182,
+          30.020583
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p091-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p091-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          18.859755,
+          28.382459
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p091-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 3.3824590000000008,
+        "window_id": "dataset-10_5281_zenodo_18599983-p091-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          19.303135,
+          30.061091
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p092-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p092-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          19.725152,
+          30.884637
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p092-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p092-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.043816,
+          31.011707
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p094-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p094-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.092291,
+          32.563938
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p094-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p094-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.819988,
+          32.974646
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p097-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p097-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.320375,
+          31.327372
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p097-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p097-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.677542,
+          34.140609
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p099-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p099-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          19.493108,
+          30.654517
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p099-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p099-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          18.87063,
+          29.819776
+        ],
+        "decision": "AUDIT_ONLY_TARGET_UNAVAILABLE",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p100-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "TARGET_OVERLAPS_EVENT_BUT_IS_NOT_FULLY_INSIDE_FIXED_FINAL_INTERVAL",
+        "target_overlap_s": 4.819776000000001,
+        "window_id": "dataset-10_5281_zenodo_18599983-p100-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          18.810583,
+          30.123273
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p100-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p100-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          19.01157,
+          30.850021
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p105-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p105-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          18.623406,
+          30.212114
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p105-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p105-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.210879,
+          32.210879
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p108-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p108-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          19.902195,
+          31.10812
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p108-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p108-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          22.126982,
+          32.399344
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p109-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p109-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          20.649917,
+          30.649917
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p109-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p109-sitting-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          23.212838,
+          35.142806
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p110-lying-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p110-lying-rest__W0000"
+      },
+      {
+        "authoritative_event_interval_s": [
+          21.95845,
+          34.163235
+        ],
+        "decision": "ABSENT_SUPERVISION",
+        "event_id": "EVT_0001",
+        "fixed_target_interval_s": [
+          25.0,
+          30.0
+        ],
+        "model_input_id": "D0::dataset-10_5281_zenodo_18599983-p110-sitting-rest__W0000",
+        "model_input_tensor_status": "VALID_DECLARED_REGENERABLE_FROM_ACCEPTED_CONTRACTS",
+        "old_event_relative_candidate": true,
+        "reason": "FIXED_FINAL_TARGET_FULLY_INSIDE_AUTHORITATIVE_EVENT",
+        "target_overlap_s": 5.0,
+        "window_id": "dataset-10_5281_zenodo_18599983-p110-sitting-rest__W0000"
+      }
+    ],
+    "event_interval_absent_count": 116,
     "event_interval_policy": {
       "duration_s": 5.0,
+      "event_overlay_rows_are_model_inputs": false,
       "radar_or_model_used": false,
+      "requires_causal_context": true,
       "requires_full_containment": true,
-      "selection": "first 5 s of the intersection between an authoritative hold interval and a 30 s context",
+      "selection": "fixed final 5 s interval [context_end-5 s, context_end]",
+      "target_anchor": "FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT",
       "whole_window_apnea_default": false
     },
     "event_overlap_below_5s_count": 23,
     "event_overlap_count": 156,
     "m_n6_excluded_used": false,
+    "old_event_relative_candidate_count": 133,
     "selection_scope": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1 -> TRAIN only",
     "source_id": "D0",
-    "zero_class_resolution": "EVENT_RELATIVE_ABSENT_INTERVALS_ADDED; no whole-window binary classifier is claimed"
+    "zero_class_resolution": "FIXED_FINAL_TARGET_ALIGNMENT; only fully contained final intervals are ABSENT; rejected candidates remain audit-only"
   },
   "d0_internal_heldout_subject_count": 14,
   "d0_train_model_contexts": 318,
@@ -31,10 +2850,11 @@
   "d0_val_or_internal_heldout_used_for_m_pv1_selection": false,
   "d0_val_subject_count": 14,
   "event_overlap_below_5s_count": 23,
-  "event_relative_absent_contexts": 133,
+  "event_relative_absent_contexts": 116,
   "inherited_split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
   "m_n6_excluded_subjects_used": false,
   "reference_labels_not_derived_from_radar": true,
   "split_changed": false,
-  "zero_class_resolution": "EVENT_RELATIVE_ABSENT_INTERVALS_ADDED; no whole-window binary classifier is claimed"
+  "unique_model_input_contexts": 318,
+  "zero_class_resolution": "FIXED_FINAL_TARGET_ALIGNMENT; only fully contained final intervals are ABSENT; rejected candidates remain audit-only"
 }

@@ -107,3 +107,87 @@ D2는 `LOCKED_PUBLIC_CROSS_DEVICE_TEST` custody state만 읽었다.
 기계 판독 산출물은 `datasets/mmwave/manifests/M-PV1_public_multidomain_contract/`와 `config/mmwave/m_pv1_public_multidomain_contract.json`에 있다. 생성기와 focused validator는 각각 `scripts/mmwave_m_pv1_public_multidomain_contract.py`, `scripts/validate_mmwave_m_pv1_public_multidomain_contract.py`다.
 
 M-PV1 결과: **`PASS_WITH_LIMITATIONS`**, **M-PV2 ready = YES**. 이번 단계에서는 학습·선정·튜닝·양자화를 시작하지 않는다.
+
+---
+
+# M-PV1 CORRECTIVE — TARGET/CONTEXT ALIGNMENT
+
+## Previous issue
+
+독립 검토에서 첫 번째 M-PV1 manifest의 `EVENT_RELATIVE_HOLD_INTERVAL` 행이 30초 model context 안의 임의 위치에 있는 5초 target을 가리키는 문제가 확인됐다. 예를 들어 `[0,30]` input에 `[21.274611,26.274611]` ABSENT를 붙였지만, F2 global vector에는 그 위치 정보가 없었다. trace/hybrid도 target 위치를 계약으로 고정하지 않으면 M-PV2가 임의 결정을 해야 했다. 따라서 최초 `PASS_WITH_LIMITATIONS / M-PV2 ready=YES` 판정은 보류됐고, 아래 corrective가 필요했다. 최초 판정과 이 수정 사실은 함께 보존한다.
+
+## Corrective decision
+
+모든 model-ready input을 causal context `[t-30 s, t]`로 두고, breathing target을 항상 그 context의 마지막 고정 5초 `[t-5 s, t]`로 동결했다.
+
+- target duration: **5초**
+- target anchor: **`FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT`**
+- causal: **YES**, future sample 없음
+- PRESENT와 ABSENT는 같은 duration·anchor·semantics 사용
+- 임의 internal target interval: **허용하지 않음**
+- 30초 미만 D1은 fake padding 없이 audit-only
+- RR은 breathing target과 분리된 30초 reference interval `[t-30 s,t]`로 유지
+
+모델 입력 하나당 하나의 row만 남겼다. 기존 event overlay를 별도 model input으로 복제하지 않고, `model_input_id`, `target_id`, `target_task`, `target_interval`, `target_anchor`, `causal_context`, task mask, provenance를 task별 `target_records`에 명시했다.
+
+## D0 corrected coverage
+
+기존 133개 event-relative 후보를 보존하기 위해 규칙을 맞추지 않고 전부 다시 평가했다. authoritative event가 고정된 마지막 5초 전체를 포함할 때만 ABSENT supervision으로 유지했다.
+
+- unique D0 model input contexts: **318**
+- D0 PRESENT: **162**
+- D0 corrected ABSENT: **116**
+- D0 AMBIGUOUS: **40**
+- 기존 133 후보 중 corrective audit-only: **17**
+- 전체 authoritative event overlap audit: **156**
+- 5초 미만 overlap: **23**
+- event overlay model-input duplicate: **0**
+
+116개보다 더 줄어드는 후보는 `AUDIT_ONLY_TARGET_UNAVAILABLE`로 기록하고, target count를 보존하기 위해 재분류하지 않았다. D0 whole-window ABSENT가 0이었다는 사실도 계속 노출한다.
+
+## D1 corrected coverage
+
+D1도 동일한 final-5-second anchor를 사용한다. synchronized respiration reference의 30초 periodicity 분석은 reference evidence로만 사용하고 `apnea` protocol string으로 ABSENT를 만들지 않았다.
+
+- unique D1 model-ready contexts: **244**
+- D1 PRESENT: **236**
+- D1 ABSENT: **0**
+- D1 AMBIGUOUS: **8**
+- D1 short audit-only / TARGET_UNAVAILABLE: **21**
+
+## Family/task compatibility
+
+| Family / profile | Breathing evidence | RR | Quality | Temporal hold |
+|---|---:|---:|---:|---:|
+| F2 MLP / `PROFILE_A_FEATURE_F2_V1` | **NO** — global 30초 vector가 final 5초 위치를 보존하지 않음 | YES | YES | composer-only |
+| Trace/TCN / `PROFILE_B_TRACE_F3_R1_V1` | YES | YES | YES | composer-only |
+| Hybrid / `PROFILE_C_HYBRID_TRACE_PLUS_F2_V1` | YES via trace branch | YES | YES | composer-only |
+
+F2 MLP는 breathing task에 강제로 사용하지 않는다. temporal hold는 direct neural label이 아니라 `breathing evidence + RR + Q2 hard gate` 이후의 deterministic sequential composition으로 경계를 동결했다.
+
+## Duplicate-input and quality correction
+
+- total unique model inputs: **562** (D0 318 + D1 244)
+- target records: **2,248** (task records, not independent tensors)
+- duplicate target overlays counted as model inputs: **0**
+- clean quality denominator: **562 unique model inputs**
+- synthetic quality maximum: clean unique input count의 10%
+
+따라서 physiological event를 추가해도 CLEAN quality example 수가 증가하지 않는다. subject weighting과 source weighting도 unique model input/task eligibility 기준으로 재계산했다.
+
+## Corrective validators and M-PV2 readiness
+
+추가 validator/test는 다음 invariant를 검사한다.
+
+- fixed breathing anchor and identical PRESENT/ABSENT duration/semantics
+- causal target and no arbitrary internal interval/future leakage
+- every model-ready row has a valid declared regenerable tensor contract
+- short events/short recordings are audit-only without padding
+- no duplicate or contradictory breathing labels per input
+- D1 follows the same target anchor
+- RR interval remains separate
+- F2/trace/hybrid task compatibility is frozen
+- quality counts use unique clean model inputs
+- deterministic generation remains true
+
+Corrective 결과는 **`PASS_WITH_LIMITATIONS`**, `M_PV1_READY_FOR_M_PV2=YES`다. M-PV2는 target location, target duration, causal rule, family/task compatibility, duplicate-input accounting을 새로 결정할 필요가 없다. 모델 학습·선정·threshold tuning·calibration·INT8/TFLite·D2/MR60 supervised use는 여전히 수행하지 않았다.
