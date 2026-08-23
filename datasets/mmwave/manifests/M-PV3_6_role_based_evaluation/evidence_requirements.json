@@ -1,11 +1,11 @@
 {
-  "schema_version": "M-PV3.6.1",
+  "schema_version": "M-PV3.6.2_CORRECTIVE",
   "contract_id": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1",
   "phase": "M-PV3.6",
   "evidence_requirements": [
     {"requirement_id": "M_PV3_HISTORICAL_SELECTION", "state": "AVAILABLE", "scope": "30S_M_PV3", "statement": "M-PV3 remains PASS_WITH_LIMITATIONS and NO_SELECTION_READY."},
     {"requirement_id": "M_PV35_CONTROLLED_CONTEXT_INTERPRETATION", "state": "AVAILABLE", "scope": "CONTEXT_ONLY_INTERPRETATION", "statement": "Current governed evidence does not isolate a stable context-duration performance advantage."},
-    {"requirement_id": "D1_PRESENT_EVALUATION", "state": "AVAILABLE", "scope": "D1_DEV_VAL", "statement": "57 eligible PRESENT contexts and three subject-disjoint validation subjects are recorded."},
+    {"requirement_id": "D1_PRESENT_EVALUATION", "state": "AVAILABLE_WITH_LIMITATION", "scope": "D1_DEV_VAL", "statement": "57 eligible PRESENT contexts and three subject-disjoint validation subjects are recorded, but zero eligible ABSENT contexts prevent stable role eligibility."},
     {"requirement_id": "D1_ABSENT_EVALUATION", "state": "INCOMPLETE", "scope": "D1_DEV_VAL", "statement": "Zero eligible ABSENT contexts; ABSENT recall, specificity, balanced macro F1, and full discrimination cannot be established."},
     {"requirement_id": "BREATHING_BOTH_CLASS_EVALUATION", "state": "REQUIRES_FUTURE_GATE", "scope": "FUTURE_GOVERNED_MEMBERSHIP", "required": ["subject_disjoint", "eligible_present", "eligible_absent", "ambiguous_preserved", "no_target_regeneration", "no_leakage"]},
     {"requirement_id": "D0_TRAIN", "state": "AVAILABLE_WITH_LIMITATION", "scope": "D0_TRAIN", "statement": "Observe-only; not held-out selection evidence."},
@@ -14,6 +14,9 @@
     {"requirement_id": "MR60_SUPERVISED_PHYSIOLOGY", "state": "NOT_AUTHORIZED", "scope": "MR60", "statement": "Supervised physiology remains forbidden."},
     {"requirement_id": "ROLE_S_RR", "state": "NOT_APPLICABLE", "scope": "15S", "statement": "No authorized 15s RR training or evaluation."},
     {"requirement_id": "ROLE_S_TEMPORAL_HOLD", "state": "NOT_APPLICABLE", "scope": "15S", "statement": "No authorized 15s temporal-hold training or evaluation."},
+    {"requirement_id": "ROLE_L_RR_QUALITY_BREATHING", "state": "NOT_APPLICABLE", "scope": "M_PV3_FAMILY_A", "statement": "Family A has no breathing head and cannot emit a breathing physiology card."},
+    {"requirement_id": "ROLE_L_ISOLATION_RR_AND_QUALITY", "state": "NOT_APPLICABLE", "scope": "M_PV35_PARITY_CNN", "statement": "The M-PV3.5 parity CNN is breathing-only and has no RR or quality head."},
+    {"requirement_id": "I1_Q2_SAFETY_PRECEDENCE", "state": "AVAILABLE", "scope": "CLASS_A_RUNTIME_INVARIANT", "statement": "Presence precedes quality/availability, which precedes physiology; false or unknown presence and INPUT_UNAVAILABLE block physiology."},
     {"requirement_id": "Q2_RESPONSIVENESS", "state": "AVAILABLE_WITH_LIMITATION", "scope": "SYNTHETIC_Q2", "statement": "Engineering timing evidence must be marked SYNTHETIC_ONLY."},
     {"requirement_id": "RASPBERRY_PI_LATENCY", "state": "REQUIRES_FUTURE_GATE", "scope": "REAL_HARDWARE", "statement": "No runtime-speed claim without separately measured hardware evidence."},
     {"requirement_id": "SEED_STABILITY_THRESHOLD", "state": "THRESHOLD_REQUIRES_PRE_REGISTRATION", "scope": "FUTURE_ROLE_EVALUATION", "statement": "Future maximum variance and/or minimum worst-seed rule requires justification before results."},
