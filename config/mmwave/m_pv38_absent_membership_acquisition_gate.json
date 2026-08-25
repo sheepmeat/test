@@ -6,7 +6,10 @@
   "purpose": "Correct the ABSENT semantic definition and final-lock schema before any governed D1 negative-class acquisition or M-PV3.8 selection evaluation.",
   "current_state": {
     "independent_audit_result": "APPROVED",
-    "membership_construction": "BLOCKED_INVALID_FINAL_MEMBERSHIP_DUE_NO_SOURCE_EVIDENCE",
+    "lifecycle_closure_status": "RESOURCE_BLOCKED_CLOSED",
+    "lifecycle_closure_reason": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+    "membership_construction": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "acquisition_status": "RESOURCE_BLOCKED_CLOSED",
     "m_pv38_final_selection_result": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
     "available_eligible_present": 57,
     "available_eligible_absent": 0,
@@ -75,7 +78,7 @@
   },
   "final_membership_lock": {
     "membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
-    "state_before_lock": "CONTRACT_CORRECTED_REAUDIT_REQUIRED",
+    "state_before_lock": "RESOURCE_BLOCKED_CLOSED",
     "required_counts": {"eligible_present": 57, "eligible_absent": 57, "eligible_absent_per_lineage_group": 19, "lineage_group_count": 3},
     "membership_manifest": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/membership_manifest.json",
     "campaign_predeclaration": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/campaign_predeclaration.json",
@@ -100,7 +103,7 @@
     "acceptance_statement": "This is the complete minimum for proceeding to the already-defined M-PV3.8 final selection evaluation. It is not a model-selection result by itself."
   },
   "terminal_decisions": {
-    "contract_ready_for_reaudit": "The corrected contract and schema may be independently re-audited. This is not membership construction authorization.",
+    "contract_audit_approved": "The M-PV3.8.4 checksum-lifecycle clarification and corrected schema are independently audit-approved. This is not membership construction authorization.",
     "membership_ready_after_future_authorization": "Only a separately authorized future construction that satisfies every corrected requirement may lock the membership; then the already-defined M-PV3.8 final selection evaluation may be considered once.",
     "membership_blocked": "If any count, no-human semantic, deterministic-selection, recording separation, provenance, label mapping, ambiguity, checksum, quality, or preprocessing-isolation rule fails, final selection remains BLOCKED_INVALID_FINAL_MEMBERSHIP and no candidate output is opened.",
     "direction_reconsideration_required": "If the one bounded campaign closes without the complete valid membership, or if an authoritative non-D2/non-MR60 ABSENT reference cannot be established, stop collection and mark ROLE_L_FULL_TASK selection direction RECONSIDERATION_REQUIRED. This contract authorizes no additional collection loop."

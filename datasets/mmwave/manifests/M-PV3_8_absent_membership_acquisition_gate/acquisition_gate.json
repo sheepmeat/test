@@ -1,13 +1,15 @@
 {
-  "schema_version": "M-PV3.8.3_CORRECTIVE",
+  "schema_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
   "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
   "phase": "M-PV3.8-ABSENT-MEMBERSHIP",
   "mode": "CONTRACT_CORRECTION_ONLY",
-  "audit_state": "NEEDS_CORRECTION_RESOLVED_PENDING_INDEPENDENT_REAUDIT",
-  "membership_construction": "NOT_AUTHORIZED_BY_THIS_CONTRACT_REVISION",
-  "candidate_evaluation": "NOT_AUTHORIZED",
+  "audit_state": "APPROVED",
+  "lifecycle_closure_status": "RESOURCE_BLOCKED_CLOSED",
+  "lifecycle_closure_reason": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+  "membership_construction": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "candidate_evaluation": "NOT_EXECUTED",
   "eligible_absent": {"class": "ABSENT", "subject_id": "NO_HUMAN_TARGET", "required_reason": "NO_HUMAN_TARGET_NO_TARGET_PHYSIOLOGICAL_SOURCE_VALID_SENSOR_OBSERVATION_INTENDED_NEGATIVE_CLASS", "forbidden": ["HUMAN_PRESENT_BREATH_HOLD", "APNEA_LIKE_INTERVAL", "NO_RESPIRATION_DETECTED", "LOW_SNR", "RADAR_FAILURE", "SENSOR_DROPOUT", "MISSING_INPUT", "INPUT_UNAVAILABLE", "AMBIGUOUS_PRESENCE"]},
   "bounded_campaign": {"attempt_limit": 1, "lineage_groups": ["D1_PERSON_03", "D1_PERSON_09", "D1_PERSON_11"], "recording_slots_per_group": 3, "quotas_per_slot": [7, 6, 6], "total_absent": 57, "selection_rule": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1", "replacement_top_up_reallocation_second_attempt": "FORBIDDEN_AT_ALL_TIMES"},
   "final_lock": {"membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1", "required_counts": {"present": 57, "absent": 57, "absent_per_lineage_group": 19}, "required_membership_metadata": ["membership_id", "contract_version", "creation_timestamp", "generator_tool_version", "repository_commit_sha", "membership_checksum"], "required_window_fields": ["window_id", "recording_id", "subject_id", "start_time", "end_time", "class", "class_assignment_reason"], "preprocessing_final_membership_unseen": true},
-  "terminal_states": ["CONTRACT_READY_FOR_INDEPENDENT_REAUDIT", "BLOCKED_INVALID_FINAL_MEMBERSHIP", "ROLE_L_FULL_TASK_DIRECTION_RECONSIDERATION_REQUIRED"]
+  "terminal_states": ["RESOURCE_BLOCKED_CLOSED", "BLOCKED_INVALID_FINAL_MEMBERSHIP", "ROLE_L_FULL_TASK_DIRECTION_RECONSIDERATION_REQUIRED"]
 }
