@@ -15,6 +15,7 @@
 - [M-PV3.8 final closure independent audit (NEEDS_CORRECTION)](mmwave/20260824_SafeNest_mmWave_M-PV3_8_Final_Closure_Independent_Audit_01.md)
 - [M-PV3.8 lifecycle state consolidation (RESOURCE_BLOCKED_CLOSED)](mmwave/20260824_SafeNest_mmWave_M-PV3_8_Lifecycle_State_Consolidation_01.md)
 - [M-PV3.8 final closure independent re-audit (APPROVED, RESOURCE_BLOCKED_CLOSED freeze)](mmwave/20260824_SafeNest_mmWave_M-PV3_8_Final_Closure_Independent_ReAudit_01.md)
+- [M-PV3.8 final closure independent re-audit verification (VERIFIED)](mmwave/20260825_SafeNest_mmWave_M-PV3_8_Final_Closure_Independent_ReAudit_Verification_01.md)
 - [D0 V2 subject split·label eligibility audit (CURRENT)](mmwave/20260822_SafeNest_mmWave_D0_V2_Subject_Split_Label_Eligibility_Audit_01.md)
 - [D2 locked acquisition·cryptographic seal (CURRENT, payload auth-blocked)](mmwave/20260822_SafeNest_mmWave_D2_Locked_Acquisition_Cryptographic_Seal_01.md)
 - [Q1 MR60-like cadence/jitter/duplicate synthetic corruption profile (CURRENT)](mmwave/20260822_SafeNest_mmWave_Q1_MR60_Timing_Corruption_Profile_01.md)
