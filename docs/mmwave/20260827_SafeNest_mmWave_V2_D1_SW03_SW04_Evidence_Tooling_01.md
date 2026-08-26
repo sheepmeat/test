@@ -27,7 +27,7 @@ PHASE: MMWAVE-V2-D1-SWPREP-03-04C
 CORRECTIVE: GENERALIZE_FIXTURE_TO_OPERATIONAL_NON_CAMPAIGN
 ORIGINAL_PR_BASE: 13a56b7e41e9519ad61238a74861ef4ad6ea16ab
 OLD_REVIEWED_HEAD: 0b7c5babd70e8da37fb227b923a3142b13b7cf42
-CORRECTIVE_HEAD: PENDING_FINAL_CORRECTIVE_COMMIT
+CORRECTIVE_HEAD: 43f0aa82 (implementation commit)
 BRANCH: feature/mmwave-d1-sw03-sw04-evidence-tooling
 PR: #174 (open; not merged)
 
@@ -153,7 +153,7 @@ Executed checks:
 - `python3 scripts/mmwave/m_pv38_evidence_registry.py validate-evidence-bundle` — passed.
 - Individual provenance, occupancy, health, and rejection validators — passed on the generated fixture registry inputs.
 - Operational CLI test — actual temporary-file hash, receipt verification, and explicit-marker sync record creation/validation passed.
-- `git diff --check` — required before final commit/push.
+- `git diff --check` — passed before final staging.
 
 Focused tests retain the original fixture coverage and add operational coverage for live-debug scope semantics, actual temporary-file hashing, shared-clock and explicit-marker records, non-fixture operational registry states, missing occupancy, retained health faults/rejections, dangling cross-registry references, unknown hash/sync references, and unchanged D1/no-threshold/no-SW-02 behavior.
 
