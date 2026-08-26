@@ -1,6 +1,6 @@
 # SafeNest Thermal B6-R robust-relative FP32 병렬 개발 로드맵
 
-문서 상태: **B6R-0~14 설계·승인용 로드맵 + 2026-08-26 public-data 보조 흐름 실행 개정**
+문서 상태: **B6R-0~14 설계·승인용 로드맵 + 2026-08-26 public-data 보조 흐름 B6R-P2 실행 개정**
 
 대상 후보: `B6-R robust-relative FP32`
 
@@ -8,7 +8,7 @@
 
 작성일: `2026-08-22`
 
-실행 개정일: `2026-08-26` (`B6R-P0` 추가·실행)
+실행 개정일: `2026-08-26` (`B6R-P0`, `B6R-P1` 완료; `B6R-P2` 정의·실행)
 
 > 이 문서는 코드, 모델, 데이터, 임계값 또는 runtime을 구현하거나 변경하지 않는다. 향후 실행은 사용자가 명시적으로 승인한 **한 stage 또는 한 parallel wave**만 수행하고, 검증·증거 요약 후 반드시 멈춘다.
 
@@ -22,8 +22,9 @@
 MI48 본선: B6R-1 INCONCLUSIVE → B6R-2 BLOCKED → 신규 MI48 근거 필요
 
 public 보조: B6R-P0 dataset materialization/split lock
-             → 사용자 별도 승인 시 B6R-P1 controlled training
-             → offline/shadow-only 후보
+             → B6R-P1 controlled training
+             → B6R-P2 FP32 TFLite export/offline parity
+             → offline/shadow-only deployment-format 후보
 ```
 
 `B6R-P0`에서 실제 수행된 내용은 다음과 같다.
@@ -119,6 +120,7 @@ P1 TRAIN-global z-score
 |---|---|---|---|---|---|
 | `B6R-P0` Public SDT Dataset Materialization & Split Contract | `PASS_WITH_LIMITATIONS` | 공개 SDT thermal frame을 재현 가능한 학습 입력으로 만들고 source split 역할을 잠금 | archive 6개 read-only 접근, 승인된 public-data 보조 흐름 | `PUBLIC_SDT_48000_THERMAL_ONLY_V1`, split별 NPY/provenance, contract, source/determinism audit | validator 통과; test tuning 금지; public-only claim boundary 고정 |
 | `B6R-P1` Public SDT Controlled Training | `PASS_WITH_LIMITATIONS` | P0의 TRAIN/DEVELOPMENT만으로 별도 실험 모델을 학습하고 후보 identity를 생성 | 사용자의 2026-08-26 별도 승인, P0 exact contract/checksum | `thermal_public_sdt_pooled_mlp_v1` NumPy model, metadata, run/history/validation manifest | development-only 결과와 limitation 기록; test·MI48 미사용; default activation `false`; TFLite/Pi는 새 stage |
+| `B6R-P2` Public SDT FP32 TFLite Export & Offline Parity | `PASS` | P1 NumPy 후보의 identity와 parameter를 그대로 FP32 TFLite로 변환하고 DEVELOPMENT에서 NumPy↔TensorFlow↔TFLite 구현 동등성을 검증 | P1 `PASS_WITH_LIMITATIONS`, exact model/metadata hash, TensorFlow/TFLite export capability, DEVELOPMENT fixture | 별도 FP32 `.tflite`, export/tensor/parity/determinism/locked-test/legacy audit manifest, validator와 보고서 | 사전 tolerance 내 3단계 parity, argmax 100%, locked test read 0, legacy/default/runtime 불변, shadow-only 경계 확인 |
 
 #### `B6R-P0` — Public SDT Dataset Materialization & Split Contract
 
@@ -136,6 +138,20 @@ P1 TRAIN-global z-score
 - **2026-08-26 Result:** TensorFlow/PyTorch가 없는 환경에서 NumPy-only `PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1`을 학습했다. adaptive mean pool `(8,10)` → 32-unit ReLU → 3-class softmax, parameter `2,691`, best epoch `40`, DEVELOPMENT accuracy `0.9070`, macro-F1 `0.9013`이다. seed `42`로 두 번 학습한 weight/history가 일치했고 test read count는 `0`이다.
 - **Deployment Boundary:** 새 model ID와 artifact 경로를 사용하고 legacy model·`models/model_manifest.json` default를 덮어쓰지 않는다. 생성 후보는 offline/shadow-only이며 `default_activation=false`, `safety_authority=false`다. TFLite export, Pi benchmark, runtime selector 변경은 이 stage의 결과가 아니다.
 - **STOP Condition:** 기존 `thermal_train.py`의 combined random split 또는 legacy model overwrite 경로 사용, test metric으로 epoch/threshold/model 선택, MI48·실제 낙상·physical 검증 주장.
+
+#### `B6R-P2` — Public SDT FP32 TFLite Export & Offline Parity
+
+- **Status:** `PASS` — 2026-08-26 실제 FP32 TFLite export, interpreter load, 3단계 parity 및 독립 validator가 통과했다.
+- **Purpose:** P1의 NumPy-only public-SDT candidate를 다시 학습하거나 architecture를 바꾸지 않고 기능적으로 동일한 TensorFlow/Keras graph로 재구성하고, 별도 FP32 TFLite deployment-format artifact를 만든 뒤 offline implementation parity를 검증한다.
+- **Entry Conditions:** P0/P1 contract와 보고서 접근 가능, P1 status `PASS_WITH_LIMITATIONS`, model/metadata exact SHA-256 일치, weight shape·dtype·parameter count 검증 가능, P0 DEVELOPMENT materialization 접근 가능, 프로젝트 격리 TensorFlow/TFLite export 환경.
+- **Required Inheritance:** `PUBLIC_SDT_48000_THERMAL_ONLY_V1`, `PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1`, `SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1`, class order `NOT_HUMAN/HUMAN_NORMAL/HUMAN_FALL_PROXY`, P1 architecture·trained parameter·seed·DEVELOPMENT 선택 결과를 그대로 유지한다. `LOCKED_PUBLIC_TEST`는 path를 구성하지 않고 read count `0`을 요구한다.
+- **Tasks:** P1 artifact integrity 재검증, integer-linspace `(62,80)→(8,10)` adaptive mean pool을 TensorFlow로 동등 재구성, trained weight 무손실 주입, DEVELOPMENT-only deterministic fixture 생성, NumPy↔TensorFlow intermediate parity, built-in-op FP32 TFLite export, interpreter tensor metadata 확인, TensorFlow↔TFLite 및 NumPy↔TFLite parity, 2회 export byte determinism과 legacy/default 불변 audit.
+- **Artifacts:** `config/thermal/b6r_p2_public_sdt_fp32_tflite_contract.json`, `models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite`, `datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/`, export/validator/focused test, 한국어 stage 보고서.
+- **Validation:** 결과 확인 전에 고정한 max absolute probability tolerance `1e-5`, mean absolute probability tolerance `1e-6`, intermediate max absolute tolerance `1e-5`, prediction agreement `100%`, mismatch `0`; FP32 input/output와 quantization 없음; P1/P0 identity·artifact hash; locked test read `0`; legacy model·default manifest·runtime selector·safety authority 불변.
+- **Exit Criteria:** P1 parameter 그대로 구성한 NumPy↔TensorFlow representation parity PASS, 실제 FP32 `.tflite` 생성·load 성공, predefined tolerance 내 TensorFlow↔TFLite·NumPy↔TFLite PASS, tensor metadata·artifact SHA-256·재현 절차 기록, `default_activation=false`, `safety_authority=false`, public-only/shadow-only claim boundary 유지.
+- **Deployment Boundary:** artifact 생성은 Raspberry Pi, MI48 physical input, 실제 낙상, latency·memory·장시간 안정성, runtime integration 또는 competition readiness 검증이 아니다. legacy model, `models/model_manifest.json` default, runtime selector를 바꾸지 않는다.
+- **STOP Condition:** P1 hash/weight/contract 불일치, adaptive pooling 또는 output parity gate 실패, TensorFlow/TFLite 변환 불가, 예상치 못한 quantization, locked test 접근, legacy/default/runtime 변경. 성공하더라도 Pi benchmark·runtime integration·후속 public stage를 같은 실행에서 시작하지 않는다.
+- **2026-08-26 Result:** P1 SHA-256 `35680056...25677`, metadata·4개 FP32 weight shape·2,691 parameters를 재검증했다. 48개 DEVELOPMENT fixture에서 NumPy↔TensorFlow probability max abs `1.4901161e-7`, TensorFlow↔TFLite `2.9802322e-7`, NumPy↔TFLite `3.5762787e-7`, 최종 mean abs `3.8006313e-8`, prediction agreement `100%`, mismatch `0`이었다. FP32 artifact는 `70,592 bytes`, SHA-256 `f88d65d7...c52ff`이며 2회 export byte hash가 일치했다. locked test read `0`, legacy/default/runtime/safety authority 변경 `false`다.
 
 ### B.1 Stage별 실행 계약
 

@@ -1,0 +1,406 @@
+{
+  "locked_public_test_access_count": 0,
+  "predefined_tolerances": {
+    "definition_timing": "defined_before_B6R-P2_export_and_parity_execution",
+    "hidden_max_abs": 1e-05,
+    "logits_max_abs": 1e-05,
+    "mismatch_count_max": 0,
+    "pooling_max_abs": 1e-05,
+    "prediction_agreement_min": 1.0,
+    "probabilities_max_abs": 1e-05,
+    "probabilities_mean_abs": 1e-06,
+    "rationale": "FP32 reconstruction and built-in TFLite kernels may change operation ordering while preserving float32 semantics. These fixed limits are strict enough to expose graph or weight-transfer errors and are not tuned after observing P2 results."
+  },
+  "purpose": "implementation_parity_only_not_candidate_selection",
+  "role": "DEVELOPMENT",
+  "sample_count": 48,
+  "samples": [
+    {
+      "development_index": 6704,
+      "fixture_position": 0,
+      "sample_id": "sdt:validation:06704",
+      "selection_reason": "class_0_typical_high_true_probability",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6563,
+      "fixture_position": 1,
+      "sample_id": "sdt:validation:06563",
+      "selection_reason": "class_0_typical_high_true_probability",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6555,
+      "fixture_position": 2,
+      "sample_id": "sdt:validation:06555",
+      "selection_reason": "class_0_typical_high_true_probability",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6664,
+      "fixture_position": 3,
+      "sample_id": "sdt:validation:06664",
+      "selection_reason": "class_0_typical_high_true_probability",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6751,
+      "fixture_position": 4,
+      "sample_id": "sdt:validation:06751",
+      "selection_reason": "class_0_typical_high_true_probability",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6708,
+      "fixture_position": 5,
+      "sample_id": "sdt:validation:06708",
+      "selection_reason": "class_0_typical_high_true_probability",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6987,
+      "fixture_position": 6,
+      "sample_id": "sdt:validation:06987",
+      "selection_reason": "class_0_typical_high_true_probability",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6654,
+      "fixture_position": 7,
+      "sample_id": "sdt:validation:06654",
+      "selection_reason": "class_0_typical_high_true_probability",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 7468,
+      "fixture_position": 8,
+      "sample_id": "sdt:validation:07468",
+      "selection_reason": "class_0_boundary_small_top1_margin",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 7543,
+      "fixture_position": 9,
+      "sample_id": "sdt:validation:07543",
+      "selection_reason": "class_0_boundary_small_top1_margin",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6647,
+      "fixture_position": 10,
+      "sample_id": "sdt:validation:06647",
+      "selection_reason": "class_0_boundary_small_top1_margin",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6739,
+      "fixture_position": 11,
+      "sample_id": "sdt:validation:06739",
+      "selection_reason": "class_0_boundary_small_top1_margin",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 7018,
+      "fixture_position": 12,
+      "sample_id": "sdt:validation:07018",
+      "selection_reason": "class_0_boundary_small_top1_margin",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6612,
+      "fixture_position": 13,
+      "sample_id": "sdt:validation:06612",
+      "selection_reason": "class_0_boundary_small_top1_margin",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 6911,
+      "fixture_position": 14,
+      "sample_id": "sdt:validation:06911",
+      "selection_reason": "class_0_boundary_small_top1_margin",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 7108,
+      "fixture_position": 15,
+      "sample_id": "sdt:validation:07108",
+      "selection_reason": "class_0_boundary_small_top1_margin",
+      "target_class": "NOT_HUMAN",
+      "target_class_index": 0
+    },
+    {
+      "development_index": 5198,
+      "fixture_position": 16,
+      "sample_id": "sdt:validation:05198",
+      "selection_reason": "class_1_typical_high_true_probability",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 5200,
+      "fixture_position": 17,
+      "sample_id": "sdt:validation:05200",
+      "selection_reason": "class_1_typical_high_true_probability",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 3440,
+      "fixture_position": 18,
+      "sample_id": "sdt:validation:03440",
+      "selection_reason": "class_1_typical_high_true_probability",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 5182,
+      "fixture_position": 19,
+      "sample_id": "sdt:validation:05182",
+      "selection_reason": "class_1_typical_high_true_probability",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 3939,
+      "fixture_position": 20,
+      "sample_id": "sdt:validation:03939",
+      "selection_reason": "class_1_typical_high_true_probability",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 5025,
+      "fixture_position": 21,
+      "sample_id": "sdt:validation:05025",
+      "selection_reason": "class_1_typical_high_true_probability",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 3679,
+      "fixture_position": 22,
+      "sample_id": "sdt:validation:03679",
+      "selection_reason": "class_1_typical_high_true_probability",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 3411,
+      "fixture_position": 23,
+      "sample_id": "sdt:validation:03411",
+      "selection_reason": "class_1_typical_high_true_probability",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 2939,
+      "fixture_position": 24,
+      "sample_id": "sdt:validation:02939",
+      "selection_reason": "class_1_boundary_small_top1_margin",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 2426,
+      "fixture_position": 25,
+      "sample_id": "sdt:validation:02426",
+      "selection_reason": "class_1_boundary_small_top1_margin",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 5181,
+      "fixture_position": 26,
+      "sample_id": "sdt:validation:05181",
+      "selection_reason": "class_1_boundary_small_top1_margin",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 2159,
+      "fixture_position": 27,
+      "sample_id": "sdt:validation:02159",
+      "selection_reason": "class_1_boundary_small_top1_margin",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 2692,
+      "fixture_position": 28,
+      "sample_id": "sdt:validation:02692",
+      "selection_reason": "class_1_boundary_small_top1_margin",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 5652,
+      "fixture_position": 29,
+      "sample_id": "sdt:validation:05652",
+      "selection_reason": "class_1_boundary_small_top1_margin",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 5751,
+      "fixture_position": 30,
+      "sample_id": "sdt:validation:05751",
+      "selection_reason": "class_1_boundary_small_top1_margin",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 3589,
+      "fixture_position": 31,
+      "sample_id": "sdt:validation:03589",
+      "selection_reason": "class_1_boundary_small_top1_margin",
+      "target_class": "HUMAN_NORMAL",
+      "target_class_index": 1
+    },
+    {
+      "development_index": 1451,
+      "fixture_position": 32,
+      "sample_id": "sdt:validation:01451",
+      "selection_reason": "class_2_typical_high_true_probability",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1353,
+      "fixture_position": 33,
+      "sample_id": "sdt:validation:01353",
+      "selection_reason": "class_2_typical_high_true_probability",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1317,
+      "fixture_position": 34,
+      "sample_id": "sdt:validation:01317",
+      "selection_reason": "class_2_typical_high_true_probability",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 859,
+      "fixture_position": 35,
+      "sample_id": "sdt:validation:00859",
+      "selection_reason": "class_2_typical_high_true_probability",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1077,
+      "fixture_position": 36,
+      "sample_id": "sdt:validation:01077",
+      "selection_reason": "class_2_typical_high_true_probability",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 915,
+      "fixture_position": 37,
+      "sample_id": "sdt:validation:00915",
+      "selection_reason": "class_2_typical_high_true_probability",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1235,
+      "fixture_position": 38,
+      "sample_id": "sdt:validation:01235",
+      "selection_reason": "class_2_typical_high_true_probability",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1308,
+      "fixture_position": 39,
+      "sample_id": "sdt:validation:01308",
+      "selection_reason": "class_2_typical_high_true_probability",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 309,
+      "fixture_position": 40,
+      "sample_id": "sdt:validation:00309",
+      "selection_reason": "class_2_boundary_small_top1_margin",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1783,
+      "fixture_position": 41,
+      "sample_id": "sdt:validation:01783",
+      "selection_reason": "class_2_boundary_small_top1_margin",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1991,
+      "fixture_position": 42,
+      "sample_id": "sdt:validation:01991",
+      "selection_reason": "class_2_boundary_small_top1_margin",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 271,
+      "fixture_position": 43,
+      "sample_id": "sdt:validation:00271",
+      "selection_reason": "class_2_boundary_small_top1_margin",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 156,
+      "fixture_position": 44,
+      "sample_id": "sdt:validation:00156",
+      "selection_reason": "class_2_boundary_small_top1_margin",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1022,
+      "fixture_position": 45,
+      "sample_id": "sdt:validation:01022",
+      "selection_reason": "class_2_boundary_small_top1_margin",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 151,
+      "fixture_position": 46,
+      "sample_id": "sdt:validation:00151",
+      "selection_reason": "class_2_boundary_small_top1_margin",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    },
+    {
+      "development_index": 1835,
+      "fixture_position": 47,
+      "sample_id": "sdt:validation:01835",
+      "selection_reason": "class_2_boundary_small_top1_margin",
+      "target_class": "HUMAN_FALL_PROXY",
+      "target_class_index": 2
+    }
+  ],
+  "schema_version": "safenest.thermal.b6r_p2.parity_manifest.v1",
+  "selection_policy": "per_class_8_highest_true_class_probability_plus_8_smallest_top1_margin",
+  "stage_id": "B6R-P2"
+}

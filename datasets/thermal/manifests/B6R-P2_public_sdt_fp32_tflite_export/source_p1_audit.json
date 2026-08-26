@@ -1,0 +1,54 @@
+{
+  "checks": {
+    "architecture_id": true,
+    "class_order": true,
+    "dataset_id": true,
+    "default_activation_false": true,
+    "input_shape": true,
+    "label_mapping_id": true,
+    "locked_test_access_zero": true,
+    "model_id": true,
+    "p1_status": true,
+    "parameter_count": true,
+    "preprocessing_id": true,
+    "safety_authority_false": true,
+    "training_seed": true
+  },
+  "development_metrics": {
+    "accuracy": 0.907,
+    "loss": 0.3495067358016968,
+    "macro_f1": 0.901326741104394,
+    "predictions_sha256": "65efe9df3da592c9c01a4da0d1ab2709815009fe803a8b1f319d97fc1c3d7223",
+    "probabilities_sha256": "3b00401e800513bdc9b93f4e8eb5123060dfcc5ee380bb0d24f62ec46f7aab7f"
+  },
+  "locked_public_test_access_count": 0,
+  "p1_metadata_sha256": "e510fa234b95c3cad5fc080e89adf316bff95e0535581fbc2ce063900d4e6fbc",
+  "p1_model_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+  "p1_status": "PASS_WITH_LIMITATIONS",
+  "schema_version": "safenest.thermal.b6r_p2.source_p1_audit.v1",
+  "stage_id": "B6R-P2",
+  "status": "PASS",
+  "training_seed": 42,
+  "weight_sha256": {
+    "bias_1": "d2e40650b26bbd085ec51b4f8463b66b28309f83e2130b9f00da662dbbb53f23",
+    "bias_2": "04d83e0d133cf4792a39e47e1f94b41c9aa2f62b0ec4c1b1660e451bcfbecbb4",
+    "weights_1": "22bcf139213db349c867baca380919a820745fd9c00ec3981272b254b21001d0",
+    "weights_2": "7db0cde1959f26806f90984f9daa49e528e7402ecf675ccfb81e8a21dcd8f589"
+  },
+  "weight_shapes": {
+    "bias_1": [
+      32
+    ],
+    "bias_2": [
+      3
+    ],
+    "weights_1": [
+      80,
+      32
+    ],
+    "weights_2": [
+      32,
+      3
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "environment_policy": "project-local ignored .venv; no global package modification",
+  "numpy": "2.5.2",
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.13",
+  "reproduction_install": "python -m venv .venv && .venv/Scripts/python.exe -m pip install tensorflow==2.20.0",
+  "schema_version": "safenest.thermal.b6r_p2.environment.v1",
+  "tensorflow": "2.20.0",
+  "tflite_interpreter": "tensorflow.lite.Interpreter"
+}

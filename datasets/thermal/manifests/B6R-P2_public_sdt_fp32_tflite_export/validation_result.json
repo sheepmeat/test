@@ -1,0 +1,430 @@
+{
+  "checks": [
+    {
+      "check": "p1_source_identity",
+      "detail": {
+        "checks": {
+          "architecture_id": true,
+          "class_order": true,
+          "dataset_id": true,
+          "default_activation_false": true,
+          "input_shape": true,
+          "label_mapping_id": true,
+          "locked_test_access_zero": true,
+          "model_id": true,
+          "p1_status": true,
+          "parameter_count": true,
+          "preprocessing_id": true,
+          "safety_authority_false": true,
+          "training_seed": true
+        },
+        "development_metrics": {
+          "accuracy": 0.907,
+          "loss": 0.3495067358016968,
+          "macro_f1": 0.901326741104394,
+          "predictions_sha256": "65efe9df3da592c9c01a4da0d1ab2709815009fe803a8b1f319d97fc1c3d7223",
+          "probabilities_sha256": "3b00401e800513bdc9b93f4e8eb5123060dfcc5ee380bb0d24f62ec46f7aab7f"
+        },
+        "locked_public_test_access_count": 0,
+        "p1_metadata_sha256": "e510fa234b95c3cad5fc080e89adf316bff95e0535581fbc2ce063900d4e6fbc",
+        "p1_model_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+        "p1_status": "PASS_WITH_LIMITATIONS",
+        "training_seed": 42,
+        "weight_sha256": {
+          "bias_1": "d2e40650b26bbd085ec51b4f8463b66b28309f83e2130b9f00da662dbbb53f23",
+          "bias_2": "04d83e0d133cf4792a39e47e1f94b41c9aa2f62b0ec4c1b1660e451bcfbecbb4",
+          "weights_1": "22bcf139213db349c867baca380919a820745fd9c00ec3981272b254b21001d0",
+          "weights_2": "7db0cde1959f26806f90984f9daa49e528e7402ecf675ccfb81e8a21dcd8f589"
+        },
+        "weight_shapes": {
+          "bias_1": [
+            32
+          ],
+          "bias_2": [
+            3
+          ],
+          "weights_1": [
+            80,
+            32
+          ],
+          "weights_2": [
+            32,
+            3
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "source_audit_manifest",
+      "detail": {
+        "checks": {
+          "architecture_id": true,
+          "class_order": true,
+          "dataset_id": true,
+          "default_activation_false": true,
+          "input_shape": true,
+          "label_mapping_id": true,
+          "locked_test_access_zero": true,
+          "model_id": true,
+          "p1_status": true,
+          "parameter_count": true,
+          "preprocessing_id": true,
+          "safety_authority_false": true,
+          "training_seed": true
+        },
+        "development_metrics": {
+          "accuracy": 0.907,
+          "loss": 0.3495067358016968,
+          "macro_f1": 0.901326741104394,
+          "predictions_sha256": "65efe9df3da592c9c01a4da0d1ab2709815009fe803a8b1f319d97fc1c3d7223",
+          "probabilities_sha256": "3b00401e800513bdc9b93f4e8eb5123060dfcc5ee380bb0d24f62ec46f7aab7f"
+        },
+        "locked_public_test_access_count": 0,
+        "p1_metadata_sha256": "e510fa234b95c3cad5fc080e89adf316bff95e0535581fbc2ce063900d4e6fbc",
+        "p1_model_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+        "p1_status": "PASS_WITH_LIMITATIONS",
+        "schema_version": "safenest.thermal.b6r_p2.source_p1_audit.v1",
+        "stage_id": "B6R-P2",
+        "status": "PASS",
+        "training_seed": 42,
+        "weight_sha256": {
+          "bias_1": "d2e40650b26bbd085ec51b4f8463b66b28309f83e2130b9f00da662dbbb53f23",
+          "bias_2": "04d83e0d133cf4792a39e47e1f94b41c9aa2f62b0ec4c1b1660e451bcfbecbb4",
+          "weights_1": "22bcf139213db349c867baca380919a820745fd9c00ec3981272b254b21001d0",
+          "weights_2": "7db0cde1959f26806f90984f9daa49e528e7402ecf675ccfb81e8a21dcd8f589"
+        },
+        "weight_shapes": {
+          "bias_1": [
+            32
+          ],
+          "bias_2": [
+            3
+          ],
+          "weights_1": [
+            80,
+            32
+          ],
+          "weights_2": [
+            32,
+            3
+          ]
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "tflite_artifact_identity",
+      "detail": {
+        "path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+        "sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+        "size_bytes": 70592
+      },
+      "passed": true
+    },
+    {
+      "check": "numpy_tensorflow_intermediate_parity",
+      "detail": {
+        "hidden": {
+          "max_abs_difference": 3.5762786865234375e-07,
+          "max_abs_tolerance": 1e-05,
+          "mean_abs_difference": 1.1276871880738781e-08,
+          "mean_abs_tolerance": null,
+          "mismatch_count": 0,
+          "mismatch_fixture_positions": [],
+          "passed": true,
+          "prediction_agreement": 1.0
+        },
+        "logits": {
+          "max_abs_difference": 1.430511474609375e-06,
+          "max_abs_tolerance": 1e-05,
+          "mean_abs_difference": 2.3634896706425934e-07,
+          "mean_abs_tolerance": null,
+          "mismatch_count": 0,
+          "mismatch_fixture_positions": [],
+          "passed": true,
+          "prediction_agreement": 1.0
+        },
+        "pooled": {
+          "max_abs_difference": 1.1920928955078125e-07,
+          "max_abs_tolerance": 1e-05,
+          "mean_abs_difference": 4.340714898631859e-09,
+          "mean_abs_tolerance": null,
+          "mismatch_count": 0,
+          "mismatch_fixture_positions": [],
+          "passed": true,
+          "prediction_agreement": 1.0
+        },
+        "probabilities": {
+          "max_abs_difference": 1.4901161193847656e-07,
+          "max_abs_tolerance": 1e-05,
+          "mean_abs_difference": 2.6310114975558463e-08,
+          "mean_abs_tolerance": 1e-06,
+          "mismatch_count": 0,
+          "mismatch_fixture_positions": [],
+          "passed": true,
+          "prediction_agreement": 1.0
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "tensorflow_tflite_parity",
+      "detail": {
+        "max_abs_difference": 2.980232238769531e-07,
+        "max_abs_tolerance": 1e-05,
+        "mean_abs_difference": 3.2731595211998865e-08,
+        "mean_abs_tolerance": 1e-06,
+        "mismatch_count": 0,
+        "mismatch_fixture_positions": [],
+        "passed": true,
+        "prediction_agreement": 1.0
+      },
+      "passed": true
+    },
+    {
+      "check": "numpy_tflite_parity",
+      "detail": {
+        "max_abs_difference": 3.5762786865234375e-07,
+        "max_abs_tolerance": 1e-05,
+        "mean_abs_difference": 3.800631276362765e-08,
+        "mean_abs_tolerance": 1e-06,
+        "mismatch_count": 0,
+        "mismatch_fixture_positions": [],
+        "passed": true,
+        "prediction_agreement": 1.0
+      },
+      "passed": true
+    },
+    {
+      "check": "tflite_inference_determinism",
+      "detail": {
+        "metadata_equal": true,
+        "outputs_equal": true
+      },
+      "passed": true
+    },
+    {
+      "check": "tensor_metadata_live",
+      "detail": {
+        "input": {
+          "dtype": "float32",
+          "index": 0,
+          "name": "serving_default_thermal_frame:0",
+          "quantization": {
+            "quantized_dimension": 0,
+            "scale": 0.0,
+            "scales": [],
+            "zero_point": 0,
+            "zero_points": []
+          },
+          "shape": [
+            1,
+            62,
+            80,
+            1
+          ],
+          "shape_signature": [
+            -1,
+            62,
+            80,
+            1
+          ]
+        },
+        "interpreter": "tensorflow.lite.Interpreter",
+        "output": {
+          "dtype": "float32",
+          "index": 330,
+          "name": "StatefulPartitionedCall_1:0",
+          "quantization": {
+            "quantized_dimension": 0,
+            "scale": 0.0,
+            "scales": [],
+            "zero_point": 0,
+            "zero_points": []
+          },
+          "shape": [
+            1,
+            3
+          ],
+          "shape_signature": [
+            -1,
+            3
+          ]
+        },
+        "unexpected_quantization": false
+      },
+      "passed": true
+    },
+    {
+      "check": "recorded_parity_summary",
+      "detail": "PASS",
+      "passed": true
+    },
+    {
+      "check": "fixture_contract",
+      "detail": {
+        "role": "DEVELOPMENT",
+        "sample_count": 48,
+        "selection_policy": "per_class_8_highest_true_class_probability_plus_8_smallest_top1_margin"
+      },
+      "passed": true
+    },
+    {
+      "check": "locked_public_test_access_zero",
+      "detail": {
+        "array_open_count": 0,
+        "metrics_computed": false,
+        "path_configured": false,
+        "role": "LOCKED_PUBLIC_TEST",
+        "sample_read_count": 0,
+        "schema_version": "safenest.thermal.b6r_p2.locked_test_access_audit.v1",
+        "status": "PASS",
+        "used_for_selection_or_tuning": false
+      },
+      "passed": true
+    },
+    {
+      "check": "legacy_default_runtime_unchanged",
+      "detail": {
+        "inference/thermal_interpreter.py": {
+          "exists": true,
+          "sha256": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+          "size_bytes": 8742
+        },
+        "models/model_manifest.json": {
+          "exists": true,
+          "sha256": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+          "size_bytes": 7624
+        },
+        "models/thermal/thermal_fall_int8_v0.1.0.tflite": {
+          "exists": true,
+          "sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+          "size_bytes": 318184
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "export_determinism",
+      "detail": {
+        "export_byte_level_determinism": true,
+        "first_export_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+        "inference_determinism": true,
+        "inference_repeat_outputs_sha256": [
+          "481a6cc9b3b770a0da454fd4568ea9eff7c58982b2d2b579cc4a66848530dd07",
+          "481a6cc9b3b770a0da454fd4568ea9eff7c58982b2d2b579cc4a66848530dd07"
+        ],
+        "schema_version": "safenest.thermal.b6r_p2.determinism_audit.v1",
+        "second_export_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+        "status": "PASS",
+        "weight_determinism": true
+      },
+      "passed": true
+    },
+    {
+      "check": "artifact_checksums",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "no_absolute_path_persistence",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "deployment_boundary",
+      "detail": {
+        "competition_lock_claim": false,
+        "default_activation": false,
+        "deployment_mode": "SHADOW_ONLY",
+        "legacy_model_overwrite": false,
+        "mi48_claim": false,
+        "model_manifest_default_update": false,
+        "physical_validation_claim": false,
+        "raspberry_pi_validation_claim": false,
+        "runtime_selector_update": false,
+        "safety_authority": false
+      },
+      "passed": true
+    }
+  ],
+  "default_activation": false,
+  "limitations": [
+    "PUBLIC_SDT_ONLY; no MI48 or physical sensor validation.",
+    "HUMAN_FALL_PROXY is a posture proxy, not a real-fall or safety decision.",
+    "No Raspberry Pi latency, memory, replay stability, or runtime integration was executed.",
+    "The TensorFlow export environment is project-local and is not a production Raspberry Pi environment."
+  ],
+  "locked_public_test_access_count": 0,
+  "next_stage_executed": false,
+  "next_stage_proposal_only": "B6R-P3 Raspberry Pi FP32 TFLite Replay & Shadow Benchmark",
+  "recomputed_parity": {
+    "numpy_vs_tensorflow": {
+      "hidden": {
+        "max_abs_difference": 3.5762786865234375e-07,
+        "max_abs_tolerance": 1e-05,
+        "mean_abs_difference": 1.1276871880738781e-08,
+        "mean_abs_tolerance": null,
+        "mismatch_count": 0,
+        "mismatch_fixture_positions": [],
+        "passed": true,
+        "prediction_agreement": 1.0
+      },
+      "logits": {
+        "max_abs_difference": 1.430511474609375e-06,
+        "max_abs_tolerance": 1e-05,
+        "mean_abs_difference": 2.3634896706425934e-07,
+        "mean_abs_tolerance": null,
+        "mismatch_count": 0,
+        "mismatch_fixture_positions": [],
+        "passed": true,
+        "prediction_agreement": 1.0
+      },
+      "pooled": {
+        "max_abs_difference": 1.1920928955078125e-07,
+        "max_abs_tolerance": 1e-05,
+        "mean_abs_difference": 4.340714898631859e-09,
+        "mean_abs_tolerance": null,
+        "mismatch_count": 0,
+        "mismatch_fixture_positions": [],
+        "passed": true,
+        "prediction_agreement": 1.0
+      },
+      "probabilities": {
+        "max_abs_difference": 1.4901161193847656e-07,
+        "max_abs_tolerance": 1e-05,
+        "mean_abs_difference": 2.6310114975558463e-08,
+        "mean_abs_tolerance": 1e-06,
+        "mismatch_count": 0,
+        "mismatch_fixture_positions": [],
+        "passed": true,
+        "prediction_agreement": 1.0
+      }
+    },
+    "numpy_vs_tflite": {
+      "max_abs_difference": 3.5762786865234375e-07,
+      "max_abs_tolerance": 1e-05,
+      "mean_abs_difference": 3.800631276362765e-08,
+      "mean_abs_tolerance": 1e-06,
+      "mismatch_count": 0,
+      "mismatch_fixture_positions": [],
+      "passed": true,
+      "prediction_agreement": 1.0
+    },
+    "tensorflow_vs_tflite": {
+      "max_abs_difference": 2.980232238769531e-07,
+      "max_abs_tolerance": 1e-05,
+      "mean_abs_difference": 3.2731595211998865e-08,
+      "mean_abs_tolerance": 1e-06,
+      "mismatch_count": 0,
+      "mismatch_fixture_positions": [],
+      "passed": true,
+      "prediction_agreement": 1.0
+    }
+  },
+  "safety_authority": false,
+  "schema_version": "safenest.thermal.b6r_p2.validation_result.v1",
+  "stage_id": "B6R-P2",
+  "status": "PASS"
+}

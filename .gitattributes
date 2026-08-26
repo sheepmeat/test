@@ -4,3 +4,5 @@ config/thermal/b6r_p0_public_sdt_contract.json text eol=lf
 datasets/thermal/manifests/B6R-P0_public_sdt_materialization/* text eol=lf
 config/thermal/b6r_p1_public_sdt_training_contract.json text eol=lf
 datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/* text eol=lf
+config/thermal/b6r_p2_public_sdt_fp32_tflite_contract.json text eol=lf
+datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/* text eol=lf

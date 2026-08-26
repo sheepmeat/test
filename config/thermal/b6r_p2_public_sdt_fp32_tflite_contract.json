@@ -1,0 +1,128 @@
+{
+  "schema_version": "safenest.thermal.b6r_p2.fp32_tflite_contract.v1",
+  "stage_id": "B6R-P2",
+  "stage_name": "Public SDT FP32 TFLite Export & Offline Parity",
+  "source_stage": "B6R-P1",
+  "source_model": {
+    "model_id": "thermal_public_sdt_pooled_mlp_v1",
+    "architecture_id": "PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1",
+    "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz",
+    "artifact_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+    "metadata_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.json",
+    "metadata_sha256": "e510fa234b95c3cad5fc080e89adf316bff95e0535581fbc2ce063900d4e6fbc",
+    "input_shape": [
+      62,
+      80,
+      1
+    ],
+    "input_dtype": "float32",
+    "class_order": [
+      "NOT_HUMAN",
+      "HUMAN_NORMAL",
+      "HUMAN_FALL_PROXY"
+    ],
+    "parameter_count": 2691,
+    "training_seed": 42
+  },
+  "required_inheritance": {
+    "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+    "preprocessing_id": "PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1",
+    "label_mapping_id": "SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1",
+    "split_roles": {
+      "train": "TRAIN",
+      "validation": "DEVELOPMENT",
+      "test": "LOCKED_PUBLIC_TEST"
+    }
+  },
+  "adaptive_mean_pool": {
+    "input_hw": [
+      62,
+      80
+    ],
+    "output_hw": [
+      8,
+      10
+    ],
+    "edge_policy": "numpy_linspace_integer_boundaries",
+    "height_edges": [
+      0,
+      7,
+      15,
+      23,
+      31,
+      38,
+      46,
+      54,
+      62
+    ],
+    "width_edges": [
+      0,
+      8,
+      16,
+      24,
+      32,
+      40,
+      48,
+      56,
+      64,
+      72,
+      80
+    ],
+    "accumulation_dtype": "float32",
+    "flatten_order": "row_major_output_cell_order"
+  },
+  "parity_fixture": {
+    "role": "DEVELOPMENT",
+    "images_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/images.npy",
+    "labels_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/labels.npy",
+    "sample_index_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/sample_index.jsonl",
+    "selection_policy": "per_class_8_highest_true_class_probability_plus_8_smallest_top1_margin",
+    "samples_per_class": 16,
+    "total_samples": 48,
+    "purpose": "implementation_parity_only_not_candidate_selection"
+  },
+  "predefined_tolerances": {
+    "definition_timing": "defined_before_B6R-P2_export_and_parity_execution",
+    "pooling_max_abs": 1e-05,
+    "hidden_max_abs": 1e-05,
+    "logits_max_abs": 1e-05,
+    "probabilities_max_abs": 1e-05,
+    "probabilities_mean_abs": 1e-06,
+    "prediction_agreement_min": 1.0,
+    "mismatch_count_max": 0,
+    "rationale": "FP32 reconstruction and built-in TFLite kernels may change operation ordering while preserving float32 semantics. These fixed limits are strict enough to expose graph or weight-transfer errors and are not tuned after observing P2 results."
+  },
+  "output": {
+    "model_id": "thermal_public_sdt_pooled_mlp_fp32_tflite_v1",
+    "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+    "manifest_dir": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export",
+    "format": "TFLITE_FP32",
+    "conversion": {
+      "optimizations": [],
+      "supported_ops": [
+        "TFLITE_BUILTINS"
+      ],
+      "inference_input_type": "float32",
+      "inference_output_type": "float32",
+      "quantization": "NONE"
+    }
+  },
+  "locked_test_policy": {
+    "path_configured": false,
+    "access_count_required": 0,
+    "metrics_allowed": false,
+    "selection_or_tuning_allowed": false
+  },
+  "deployment_boundary": {
+    "deployment_mode": "SHADOW_ONLY",
+    "default_activation": false,
+    "safety_authority": false,
+    "legacy_model_overwrite": false,
+    "model_manifest_default_update": false,
+    "runtime_selector_update": false,
+    "mi48_claim": false,
+    "raspberry_pi_validation_claim": false,
+    "physical_validation_claim": false,
+    "competition_lock_claim": false
+  }
+}
