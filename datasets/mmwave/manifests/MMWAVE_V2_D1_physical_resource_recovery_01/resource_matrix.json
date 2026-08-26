@@ -1,0 +1,82 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-RESOURCE-MATRIX-V1",
+  "id_namespace": "POSTPUBABS_MUST_HAVE_B01_B07",
+  "rows": [
+    {
+      "id": "B-01",
+      "requirement": "supported mmWave + raw/timestamp/health interface",
+      "evidence": [
+        "Adapter connect() fails closed with HardwareBackendUnavailable",
+        "No non-excluded serial port resembling target mmWave UART was detected",
+        "Prior frozen preflight reason TARGET_MMWAVE_INTERFACE_NOT_DETECTED remains applicable"
+      ],
+      "status": "INACCESSIBLE_FROM_THIS_ENVIRONMENT",
+      "blocking": true,
+      "action_required": "Provide accessible designated MR60 (or approved) interface; run SW-01 live non-campaign check"
+    },
+    {
+      "id": "B-02",
+      "requirement": "rigid mount + measured target-zone geometry",
+      "evidence": [
+        "No measured placement/target-zone geometry artifact for the governed ABSENT campaign was located; dimensions were not invented."
+      ],
+      "status": "NOT_EVIDENCED",
+      "blocking": true,
+      "action_required": "Owner/custodian provide measured mount + zone geometry evidence before preflight can clear EMPTY_ZONE / SLOT lock prerequisites."
+    },
+    {
+      "id": "B-03",
+      "requirement": "authoritative occupancy + sealed-zone proof",
+      "evidence": [
+        "Checklist and preflight require independent occupancy reference; none configured as live preflight evidence in this audit environment."
+      ],
+      "status": "NOT_EVIDENCED",
+      "blocking": true,
+      "action_required": "PP-04 approve occupancy mechanism; PP-01/PP-03 configure and demonstrate continuous synchronized hashable coverage (non-campaign)."
+    },
+    {
+      "id": "B-04",
+      "requirement": "host storage + clock for immutable receipts",
+      "evidence": [
+        "audit_host free_gib≈16.75",
+        "hashlib/shasum available",
+        "designated capture host NOT_EVIDENCED"
+      ],
+      "status": "AVAILABLE_VERIFIED_AUDIT_HOST__DESIGNATED_CAPTURE_HOST_NOT_EVIDENCED",
+      "blocking": true,
+      "action_required": "Identify and evidence the designated capture host (e.g. Pi) with storage/clock/hash tooling"
+    },
+    {
+      "id": "B-05",
+      "requirement": "non-campaign interface checker (raw/timestamps/health)",
+      "evidence": [
+        "SW-01 live checker absent",
+        "artifact validator executed as COMPONENT_CHECK_ONLY"
+      ],
+      "status": "TOOLING_DEFINED_LIVE_CHECK_MISSING",
+      "blocking": true,
+      "action_required": "Implement/obtain SW-01 live checker and execute only after B-01 reachable"
+    },
+    {
+      "id": "B-06",
+      "requirement": "nine-slot predeclaration + SHA receipt tooling demonstration",
+      "evidence": [
+        "fixture Stage1/Stage2 demo executed",
+        "real_slot_consumed=false"
+      ],
+      "status": "AVAILABLE_VERIFIED_FIXTURE_ONLY",
+      "blocking": true,
+      "action_required": "After other prerequisites clear, generate real campaign_predeclaration under Sol capture authorization only"
+    },
+    {
+      "id": "B-07",
+      "requirement": "assigned PP-01..PP-04 roles",
+      "evidence": [
+        "all four roles unassigned"
+      ],
+      "status": "BLOCKED_OWNER_OR_ACCESS",
+      "blocking": true,
+      "action_required": "Owner assign PP-01..PP-04; agent must not invent assignees"
+    }
+  ]
+}

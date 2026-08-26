@@ -1,0 +1,63 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-CONTRACT-MAP-V1",
+  "phase": "MMWAVE-V2-D1-RESREC-01",
+  "note_id_collision": {
+    "post_pubabs_B01_B07": "must-have inventory (operational for this audit)",
+    "checklist_local_B01_B04": "different meanings (access/tooling blocker classes); do not conflate",
+    "authority": "This audit uses post-PUBABS B-01..B-07 IDs as required by Sol RESREC prompt."
+  },
+  "contracts": [
+    {
+      "requirement": "Physical ABSENT acquisition plan (57 / 3x3 / Stage1-2)",
+      "canonical_source": "datasets/mmwave/manifests/M-PV3_8_absent_acquisition_planning/acquisition_plan.json",
+      "identity": "MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_PLAN_V1",
+      "sha256": "797cb281b1d7be9ba3946e34fa0b824df44b44dc436474d63b4d4d472f87c18a",
+      "required_evidence": "unchanged plan; no quota/lineage/slot mutation",
+      "current_status": "AVAILABLE_VERIFIED"
+    },
+    {
+      "requirement": "Membership acquisition gate + checksum lifecycle",
+      "canonical_source": "config/mmwave/m_pv38_absent_membership_acquisition_gate.json",
+      "identity": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+      "sha256": "b85a3736b5bb34942ef2f3455f6dd896be2e17dd407b411811dddbb417a03a52",
+      "required_evidence": "Stage1 predeclaration + Stage2 SHA receipts schemas",
+      "current_status": "AVAILABLE_VERIFIED"
+    },
+    {
+      "requirement": "Resource readiness checklist (HW/SW/EV/PP)",
+      "canonical_source": "datasets/mmwave/manifests/M-PV3_8_absent_resource_readiness_checklist/readiness_requirements.json",
+      "identity": "MMWAVE_V2_M_PV38_ABSENT_RESOURCE_READINESS_CHECKLIST_V1",
+      "sha256": "586260d74763145ab00b19cedddb5d0685be67fba158d3fbdb295c4804ba2ba6",
+      "required_evidence": "HW-01..04 SW-01..04 EV-01..04 PP-01..04 acceptance evidence",
+      "current_status": "AVAILABLE_VERIFIED"
+    },
+    {
+      "requirement": "Capture preflight contract",
+      "canonical_source": "datasets/mmwave/manifests/M-PV3_8_absent_capture_preflight/preflight_readiness.json",
+      "identity": "MMWAVE_V2_M_PV38_ABSENT_CAPTURE_PREFLIGHT_V1",
+      "sha256": "56f4bfd69974c8fcce1202e133f99c218d01307ee86f05ce3835dc4f58f69a66",
+      "required_evidence": "canonical result vocabulary CAPTURE_BLOCKED (CAPTURE_READY not defined)",
+      "current_status": "AVAILABLE_VERIFIED",
+      "frozen_result": "CAPTURE_BLOCKED"
+    },
+    {
+      "requirement": "Lifecycle closure",
+      "canonical_source": "datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/lifecycle_closure_state.json",
+      "identity": "M-PV3.8_LIFECYCLE_CLOSURE_V1",
+      "sha256": "c6469a58018f18bd7c756cfa07cd770eab868edfe9c73ef45fad3e72bc06567d",
+      "required_evidence": "RESOURCE_BLOCKED_CLOSED / ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+      "current_status": "AVAILABLE_VERIFIED",
+      "closure_status": "RESOURCE_BLOCKED_CLOSED",
+      "reason": "ACQUISITION_REQUIRES_RESOURCE_ACCESS"
+    },
+    {
+      "requirement": "Post-PUBABS blocker registry B-01..B-07",
+      "canonical_source": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/blocker_registry.json",
+      "identity": "MMWAVE-V2-POSTPUBABS-BLOCKER-REGISTRY-V1",
+      "sha256": "62ee3982be620f9b85a71f6046056b3de237ee47fc64ba76395e242ddb70eb92",
+      "required_evidence": "must-have inventory for resource recovery",
+      "current_status": "AVAILABLE_VERIFIED"
+    }
+  ],
+  "ambiguity": "NONE_FOR_PLAN_ID"
+}

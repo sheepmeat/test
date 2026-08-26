@@ -1,0 +1,43 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-DEVICE-INTERFACE-V1",
+  "probe_class": "NON_CAMPAIGN_INTERFACE_PROBE",
+  "dataset_admissible": false,
+  "d1_admissible": false,
+  "campaign_slot_consumed": false,
+  "repository_adapter": {
+    "path": "sensors/mmwave/mmwave_adapter.py",
+    "sha256": "0704053d46357fde2148791ee4e19851a463b3df1a7f09e928a915b58048ca6a",
+    "default_port": "EXTERNAL_SENSOR_PROVIDER_REQUIRED",
+    "connect_result": "HardwareBackendUnavailable: Real MR60BHA2 UART backend is not installed",
+    "interpretation": "Repository MR60BHA2 UART adapter raises HardwareBackendUnavailable; real UART backend not installed in this environment."
+  },
+  "serial_inventory": {
+    "non_excluded_candidate_ports": [],
+    "excluded_examples": [
+      "Bluetooth",
+      "debug-console",
+      "Razer audio"
+    ],
+    "mmwave_uart_detected": false
+  },
+  "required_fields_assessment": {
+    "device_identity": "NOT_EVIDENCED",
+    "sensor_interface_identity": "NOT_EVIDENCED",
+    "raw_or_near_raw_waveform": "NOT_EVIDENCED",
+    "sample_timing_timestamps": "NOT_EVIDENCED",
+    "sensor_health": "NOT_EVIDENCED",
+    "session_continuity_reset": "NOT_EVIDENCED",
+    "configuration_identity": "NOT_EVIDENCED"
+  },
+  "live_check": "NOT_EXECUTED_NO_TARGET_INTERFACE",
+  "status": "INACCESSIBLE_FROM_THIS_ENVIRONMENT",
+  "blocking": true,
+  "evidence": [
+    "Adapter connect() fails closed with HardwareBackendUnavailable",
+    "No non-excluded serial port resembling target mmWave UART was detected",
+    "Prior frozen preflight reason TARGET_MMWAVE_INTERFACE_NOT_DETECTED remains applicable"
+  ],
+  "model_panel_loaded": false,
+  "role_l_candidates_evaluated": false,
+  "note": "MMWaveSensorAdapter.__init__ constructs MMWaveInterpreter for runtime wiring; ROLE_L B11..C47 checkpoints were not loaded or evaluated in this phase."
+}

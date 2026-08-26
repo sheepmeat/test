@@ -1,0 +1,18 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-PREFLIGHT-EXECUTION-V1",
+  "preflight_contract_id": "MMWAVE_V2_M_PV38_ABSENT_CAPTURE_PREFLIGHT_V1",
+  "preflight_prerequisites_complete": false,
+  "preflight_executed": false,
+  "reason_not_executed": "PREFLIGHT_PREREQUISITES_INCOMPLETE — must-haves B-01..B-05 and B-07 remain blocking; frozen contract forbids inventing a partial PASS.",
+  "component_checks_only": true,
+  "component_checks": [
+    {
+      "name": "validate_mmwave_m_pv38_absent_capture_preflight",
+      "exit_code": 0,
+      "result": "ARTIFACT_CONSISTENT"
+    }
+  ],
+  "canonical_frozen_preflight_result_unchanged": "CAPTURE_BLOCKED",
+  "capture_authorized": false,
+  "note": "Even a future CAPTURE preflight pass would NOT authorize the 57-session campaign without separate Sol authorization."
+}
