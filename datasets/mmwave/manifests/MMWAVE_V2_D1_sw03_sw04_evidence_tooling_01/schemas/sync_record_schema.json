@@ -1,0 +1,129 @@
+{
+  "$id": "MMWAVE-V2-D1-SW03-SYNC-RECORD-V1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "alignment_method": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "alignment_status": {
+      "const": "ALIGNMENT_MEASURABLE"
+    },
+    "clock_identity": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "evidence_scope": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "LIVE_DEBUG_NON_CAMPAIGN"
+      ]
+    },
+    "fixture_semantics": {
+      "const": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "type": "array"
+    },
+    "host_marker_observed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "host_timestamp": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "live_evidence_status": {
+      "enum": [
+        "NOT_LIVE_EVIDENCE",
+        "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED"
+      ]
+    },
+    "measured_offset_delta_ms": {
+      "type": "number"
+    },
+    "method": {
+      "enum": [
+        "EXPLICIT_SYNC_MARKER",
+        "SHARED_CLOCK"
+      ]
+    },
+    "schema_version": {
+      "const": "MMWAVE-V2-D1-SW03-SYNC-RECORD-V1"
+    },
+    "scope_semantics": {
+      "type": "array"
+    },
+    "scope_version": {
+      "const": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+    },
+    "source_identity": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "source_marker_observed": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "source_timestamp": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "sync_marker_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sync_record_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "threshold_status": {
+      "const": "THRESHOLD_NOT_GOVERNED"
+    },
+    "uncertainty_ms": {
+      "minimum": 0,
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "validation_status": {
+      "enum": [
+        "FIXTURE_ONLY_ALIGNMENT_RECORDED",
+        "ALIGNMENT_MEASURABLE",
+        "LIVE_NON_CAMPAIGN_ALIGNMENT_OBSERVED"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "sync_record_id",
+    "method",
+    "source_identity",
+    "clock_identity",
+    "source_timestamp",
+    "alignment_method",
+    "measured_offset_delta_ms",
+    "alignment_status",
+    "validation_status",
+    "threshold_status",
+    "live_evidence_status",
+    "evidence_scope",
+    "scope_version",
+    "scope_semantics"
+  ],
+  "title": "SafeNest mmWave V2 SW-03 synchronization record",
+  "type": "object"
+}

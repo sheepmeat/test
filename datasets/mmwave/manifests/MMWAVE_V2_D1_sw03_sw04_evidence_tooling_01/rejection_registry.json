@@ -1,0 +1,45 @@
+{
+  "records": [
+    {
+      "acceptance_state": "REJECTED",
+      "decision_source": "SW04_FIXTURE_VALIDATOR",
+      "eligible_for_absent": false,
+      "evidence_references": [
+        "EVIDENCE-SENSOR-001",
+        "EVIDENCE-REJECTION-001"
+      ],
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
+      "fixture_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "immutable_candidate_recording_reference": {
+        "candidate_id": "SYNTHETIC-CANDIDATE-001",
+        "recording_id": "ACTUAL-FIXTURE-RECORDING-002",
+        "reference": "fixtures/non_campaign/recordings/rejected_recording_002"
+      },
+      "physiology_label": null,
+      "reason_code": "OCCUPANCY_EVIDENCE_MISSING",
+      "reason_detail": "Authoritative occupancy and sealed-access references are missing; retain the observation for audit.",
+      "rejection_record_id": "REJECTION-FIXTURE-001",
+      "retained": true,
+      "schema_version": "MMWAVE-V2-D1-SW04-REJECTION-REGISTRY-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:02:15Z",
+        "start": "2026-08-27T00:02:00Z"
+      }
+    }
+  ],
+  "registry_kind": "rejection",
+  "schema_version": "MMWAVE-V2-D1-SW04-REJECTION-REGISTRY-V1-BUNDLE"
+}

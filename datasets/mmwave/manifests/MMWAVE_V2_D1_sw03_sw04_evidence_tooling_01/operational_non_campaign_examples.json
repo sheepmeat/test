@@ -1,0 +1,551 @@
+{
+  "d1_membership_status": "NOT_D1_MEMBERSHIP",
+  "dataset_admissibility": "NOT_DATASET_ADMISSIBLE_BY_DEFAULT",
+  "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+  "example_origin": "SYNTHETIC_CALLER_SUPPLIED_OPERATIONAL_RECORD_SHAPE",
+  "final_evaluation_status": "NOT_FINAL_EVALUATION",
+  "hash_receipts": [
+    {
+      "evidence_id": "DEBUG-EVIDENCE-SENSOR-001",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "evidence_type": "SENSOR_OBSERVATION",
+      "file_reference": "operational/non_campaign/evidence/sensor_001.bin",
+      "hash_algorithm": "SHA-256",
+      "identifier_semantics": "IMMUTABLE",
+      "immutable_evidence_id": "DEBUG-EVIDENCE-SENSOR-001",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "reference_identity": "DEBUG_SENSOR_REF_001",
+      "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "sha256": "a4bfe30845d86bcf76af32a4ce21b672b482ff38f96c939fa9a5357447b78db0",
+      "size_bytes": 41,
+      "source_identity": "DEBUG_SENSOR_SOURCE_001",
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    },
+    {
+      "evidence_id": "DEBUG-EVIDENCE-OCCUPANCY-001",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "evidence_type": "OCCUPANCY_REFERENCE",
+      "file_reference": "operational/non_campaign/evidence/occupancy_001.bin",
+      "hash_algorithm": "SHA-256",
+      "identifier_semantics": "IMMUTABLE",
+      "immutable_evidence_id": "DEBUG-EVIDENCE-OCCUPANCY-001",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "reference_identity": "DEBUG_OCCUPANCY_REF_001",
+      "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "sha256": "b40d4b1aef170a670f58e0333de4c31eb6846e871e2bb93e404482b1fd10217a",
+      "size_bytes": 44,
+      "source_identity": "DEBUG_OCCUPANCY_SOURCE_001",
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    },
+    {
+      "evidence_id": "DEBUG-EVIDENCE-ACCESS-001",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "evidence_type": "ACCESS_CONTROL_EVIDENCE",
+      "file_reference": "operational/non_campaign/evidence/access_001.bin",
+      "hash_algorithm": "SHA-256",
+      "identifier_semantics": "IMMUTABLE",
+      "immutable_evidence_id": "DEBUG-EVIDENCE-ACCESS-001",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "reference_identity": "DEBUG_ACCESS_REF_001",
+      "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "sha256": "de605d9f35b4e85f806d5f9abc9582be9e591d62f04b744cf901c836e0423585",
+      "size_bytes": 41,
+      "source_identity": "DEBUG_ACCESS_SOURCE_001",
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    },
+    {
+      "evidence_id": "DEBUG-EVIDENCE-HEALTH-001",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "evidence_type": "SENSOR_HEALTH",
+      "file_reference": "operational/non_campaign/evidence/health_001.bin",
+      "hash_algorithm": "SHA-256",
+      "identifier_semantics": "IMMUTABLE",
+      "immutable_evidence_id": "DEBUG-EVIDENCE-HEALTH-001",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "reference_identity": "DEBUG_HEALTH_REF_001",
+      "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "sha256": "f31a4e112a6264c8365336fd8c5f75dbc18f4ec91e35624ab9109271a3bda381",
+      "size_bytes": 41,
+      "source_identity": "DEBUG_HEALTH_SOURCE_001",
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    },
+    {
+      "evidence_id": "DEBUG-EVIDENCE-TIMING-001",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "evidence_type": "TIMING_ALIGNMENT",
+      "file_reference": "operational/non_campaign/evidence/timing_001.bin",
+      "hash_algorithm": "SHA-256",
+      "identifier_semantics": "IMMUTABLE",
+      "immutable_evidence_id": "DEBUG-EVIDENCE-TIMING-001",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "reference_identity": "DEBUG_TIMING_REF_001",
+      "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "sha256": "ba3e00efe026ce2e8fed94e733dc97a49f8a72797eb0e859940d6f872a19eb05",
+      "size_bytes": 41,
+      "source_identity": "DEBUG_TIMING_SOURCE_001",
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    },
+    {
+      "evidence_id": "DEBUG-EVIDENCE-PROVENANCE-001",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "evidence_type": "RECORDING_PROVENANCE",
+      "file_reference": "operational/non_campaign/evidence/provenance_001.bin",
+      "hash_algorithm": "SHA-256",
+      "identifier_semantics": "IMMUTABLE",
+      "immutable_evidence_id": "DEBUG-EVIDENCE-PROVENANCE-001",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "reference_identity": "DEBUG_PROVENANCE_REF_001",
+      "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "sha256": "afe10be45a80250714ca2c76c6dfc942bbd8800c78e4e2ea84d79e7fdd46f57d",
+      "size_bytes": 45,
+      "source_identity": "DEBUG_PROVENANCE_SOURCE_001",
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    },
+    {
+      "evidence_id": "DEBUG-EVIDENCE-REJECTION-001",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "evidence_type": "REJECTION_EVIDENCE",
+      "file_reference": "operational/non_campaign/evidence/rejection_001.bin",
+      "hash_algorithm": "SHA-256",
+      "identifier_semantics": "IMMUTABLE",
+      "immutable_evidence_id": "DEBUG-EVIDENCE-REJECTION-001",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "reference_identity": "DEBUG_REJECTION_REF_001",
+      "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "sha256": "9c2fee3f51ee504071c32aaea563d98a3bd87acbd85a81fc62c9fa603f31341f",
+      "size_bytes": 44,
+      "source_identity": "DEBUG_REJECTION_SOURCE_001",
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    }
+  ],
+  "live_hardware_evidence_status": "NOT_EXECUTED",
+  "registries": {
+    "health": [
+      {
+        "continuity_status": "CONTINUOUS",
+        "device_connected": true,
+        "evidence_ids": [
+          "DEBUG-EVIDENCE-HEALTH-001"
+        ],
+        "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+        "fault_code": null,
+        "health_state": "OBSERVED_UNREVIEWED",
+        "physiology_interpretation": "NOT_PROVIDED",
+        "registry_record_id": "HEALTH-DEBUG-001",
+        "reported_device_health": "DEVICE_REPORTED_HEALTH_UNREVIEWED",
+        "reset_restart_observed": false,
+        "review_status": "UNREVIEWED",
+        "schema_version": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1",
+        "scope_semantics": [
+          "NON_CAMPAIGN",
+          "NOT_D1_MEMBERSHIP",
+          "NOT_FINAL_EVALUATION",
+          "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+        ],
+        "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+        "sensor_identity": "DEBUG_SENSOR_001",
+        "stream_valid": true,
+        "timestamp_valid": true
+      },
+      {
+        "continuity_status": "FREEZE_DETECTED",
+        "device_connected": true,
+        "evidence_ids": [
+          "DEBUG-EVIDENCE-HEALTH-001"
+        ],
+        "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+        "fault_code": "DEBUG_STREAM_FREEZE",
+        "health_state": "FAULT_RETAINED",
+        "physiology_interpretation": "NOT_PROVIDED",
+        "registry_record_id": "HEALTH-DEBUG-FAULT-001",
+        "reported_device_health": "DEVICE_REPORTED_FAULT_UNREVIEWED",
+        "reset_restart_observed": true,
+        "review_status": "FAULT_RETAINED_UNREVIEWED",
+        "schema_version": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1",
+        "scope_semantics": [
+          "NON_CAMPAIGN",
+          "NOT_D1_MEMBERSHIP",
+          "NOT_FINAL_EVALUATION",
+          "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+        ],
+        "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+        "sensor_identity": "DEBUG_SENSOR_002",
+        "stream_valid": false,
+        "timestamp_valid": true
+      }
+    ],
+    "occupancy": [
+      {
+        "absent_eligibility": "NOT_ELIGIBLE",
+        "authoritative_occupancy_reference": {
+          "identity": "DEBUG_OCCUPANCY_REF_001",
+          "source_identity": "DEBUG_OCCUPANCY_SOURCE_001",
+          "status": "REFERENCE_PRESENT_UNREVIEWED"
+        },
+        "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+        "hash_receipt_ids": [
+          "DEBUG-EVIDENCE-OCCUPANCY-001",
+          "DEBUG-EVIDENCE-ACCESS-001",
+          "DEBUG-EVIDENCE-TIMING-001"
+        ],
+        "no_human_evidence_reference": "DEBUG-EVIDENCE-OCCUPANCY-001",
+        "occupancy_state": "REFERENCE_PRESENT_UNREVIEWED",
+        "physiology_label": null,
+        "registry_record_id": "OCCUPANCY-DEBUG-PRESENT-001",
+        "review_status": "UNREVIEWED",
+        "schema_version": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1",
+        "scope_semantics": [
+          "NON_CAMPAIGN",
+          "NOT_D1_MEMBERSHIP",
+          "NOT_FINAL_EVALUATION",
+          "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+        ],
+        "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+        "sealed_access_evidence_reference": "DEBUG-EVIDENCE-ACCESS-001",
+        "sync_evidence_ids": [
+          "SYNC-DEBUG-EXPLICIT-MARKER-001"
+        ],
+        "target_zone_coverage": {
+          "authoritative": true,
+          "coverage_status": "UNREVIEWED",
+          "zone_id": "DEBUG_TARGET_ZONE_001"
+        },
+        "time_interval": {
+          "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+          "end": "2026-08-27T00:10:15Z",
+          "start": "2026-08-27T00:10:00Z"
+        }
+      },
+      {
+        "absent_eligibility": "NOT_ELIGIBLE",
+        "authoritative_occupancy_reference": null,
+        "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+        "hash_receipt_ids": [],
+        "no_human_evidence_reference": null,
+        "occupancy_state": "REFERENCE_MISSING",
+        "physiology_label": null,
+        "registry_record_id": "OCCUPANCY-DEBUG-MISSING-001",
+        "review_status": "INCOMPLETE",
+        "schema_version": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1",
+        "scope_semantics": [
+          "NON_CAMPAIGN",
+          "NOT_D1_MEMBERSHIP",
+          "NOT_FINAL_EVALUATION",
+          "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+        ],
+        "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+        "sealed_access_evidence_reference": null,
+        "sync_evidence_ids": [
+          "SYNC-DEBUG-SHARED-CLOCK-001"
+        ],
+        "target_zone_coverage": {
+          "authoritative": false,
+          "coverage_status": "REFERENCE_MISSING",
+          "zone_id": "DEBUG_TARGET_ZONE_002"
+        },
+        "time_interval": {
+          "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+          "end": "2026-08-27T00:12:15Z",
+          "start": "2026-08-27T00:12:00Z"
+        }
+      }
+    ],
+    "provenance": [
+      {
+        "acceptance_state": "DEBUG_RETAINED_UNREVIEWED",
+        "configuration_identity": {
+          "config_hash_receipt_id": "DEBUG-EVIDENCE-PROVENANCE-001",
+          "config_id": "DEBUG_CONFIG_001"
+        },
+        "evidence_references": {
+          "access_control": [
+            "DEBUG-EVIDENCE-ACCESS-001"
+          ],
+          "health": [
+            "DEBUG-EVIDENCE-HEALTH-001"
+          ],
+          "occupancy_reference": [
+            "DEBUG-EVIDENCE-OCCUPANCY-001"
+          ],
+          "recording_provenance": [
+            "DEBUG-EVIDENCE-PROVENANCE-001"
+          ],
+          "rejection": [],
+          "sensor_observation": [
+            "DEBUG-EVIDENCE-SENSOR-001"
+          ],
+          "timing_alignment": [
+            "SYNC-DEBUG-SHARED-CLOCK-001",
+            "SYNC-DEBUG-EXPLICIT-MARKER-001"
+          ]
+        },
+        "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+        "health_registry_record_id": "HEALTH-DEBUG-001",
+        "placement_zone": {
+          "coverage_status": "UNREVIEWED",
+          "placement_id": "DEBUG_PLACEMENT_001",
+          "zone_id": "DEBUG_TARGET_ZONE_001"
+        },
+        "recording_identity": {
+          "actual_recording_id": "ACTUAL-DEBUG-001",
+          "actual_recording_reference": "operational/non_campaign/recordings/debug_001",
+          "planned_recording_id": "PLANNED-DEBUG-001"
+        },
+        "registry_record_id": "PROVENANCE-DEBUG-001",
+        "rejection_registry_record_id": null,
+        "schema_version": "MMWAVE-V2-D1-SW04-RECORDING-PROVENANCE-REGISTRY-V1",
+        "scope_semantics": [
+          "NON_CAMPAIGN",
+          "NOT_D1_MEMBERSHIP",
+          "NOT_FINAL_EVALUATION",
+          "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+        ],
+        "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+        "sensor_identity": {
+          "device_family": "MMWAVE_DEBUG_DEVICE",
+          "sensor_id": "DEBUG_SENSOR_001",
+          "source_identity": "DEBUG_SENSOR_SOURCE_001"
+        },
+        "time_coverage": {
+          "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+          "end": "2026-08-27T00:10:15Z",
+          "start": "2026-08-27T00:10:00Z"
+        }
+      },
+      {
+        "acceptance_state": "REJECTED_RETAINED_DEBUG",
+        "configuration_identity": {
+          "config_hash_receipt_id": "DEBUG-EVIDENCE-PROVENANCE-001",
+          "config_id": "DEBUG_CONFIG_002"
+        },
+        "evidence_references": {
+          "access_control": [],
+          "health": [
+            "DEBUG-EVIDENCE-HEALTH-001"
+          ],
+          "occupancy_reference": [],
+          "recording_provenance": [
+            "DEBUG-EVIDENCE-PROVENANCE-001"
+          ],
+          "rejection": [
+            "DEBUG-EVIDENCE-REJECTION-001"
+          ],
+          "sensor_observation": [
+            "DEBUG-EVIDENCE-SENSOR-001"
+          ],
+          "timing_alignment": [
+            "SYNC-DEBUG-SHARED-CLOCK-001"
+          ]
+        },
+        "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+        "health_registry_record_id": "HEALTH-DEBUG-FAULT-001",
+        "placement_zone": {
+          "coverage_status": "UNREVIEWED",
+          "placement_id": "DEBUG_PLACEMENT_002",
+          "zone_id": "DEBUG_TARGET_ZONE_001"
+        },
+        "recording_identity": {
+          "actual_recording_id": "ACTUAL-DEBUG-REJECTED-001",
+          "actual_recording_reference": "operational/non_campaign/recordings/debug_rejected_001",
+          "planned_recording_id": "PLANNED-DEBUG-REJECTED-001"
+        },
+        "registry_record_id": "PROVENANCE-DEBUG-REJECTED-001",
+        "rejection_registry_record_id": "REJECTION-DEBUG-001",
+        "schema_version": "MMWAVE-V2-D1-SW04-RECORDING-PROVENANCE-REGISTRY-V1",
+        "scope_semantics": [
+          "NON_CAMPAIGN",
+          "NOT_D1_MEMBERSHIP",
+          "NOT_FINAL_EVALUATION",
+          "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+        ],
+        "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+        "sensor_identity": {
+          "device_family": "MMWAVE_DEBUG_DEVICE",
+          "sensor_id": "DEBUG_SENSOR_002",
+          "source_identity": "DEBUG_SENSOR_SOURCE_001"
+        },
+        "time_coverage": {
+          "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+          "end": "2026-08-27T00:11:15Z",
+          "start": "2026-08-27T00:11:00Z"
+        }
+      }
+    ],
+    "rejection": [
+      {
+        "acceptance_state": "REJECTED",
+        "decision_source": "OPERATIONAL_NON_CAMPAIGN_VALIDATOR",
+        "eligible_for_absent": false,
+        "evidence_references": [
+          "DEBUG-EVIDENCE-SENSOR-001",
+          "DEBUG-EVIDENCE-REJECTION-001"
+        ],
+        "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+        "immutable_candidate_recording_reference": {
+          "candidate_id": "DEBUG-CANDIDATE-001",
+          "recording_id": "ACTUAL-DEBUG-REJECTED-001",
+          "reference": "operational/non_campaign/recordings/debug_rejected_001"
+        },
+        "physiology_label": null,
+        "reason_code": "OCCUPANCY_REFERENCE_MISSING",
+        "reason_detail": "Operational debug record is retained because authoritative occupancy evidence is unavailable.",
+        "rejection_record_id": "REJECTION-DEBUG-001",
+        "retained": true,
+        "schema_version": "MMWAVE-V2-D1-SW04-REJECTION-REGISTRY-V1",
+        "scope_semantics": [
+          "NON_CAMPAIGN",
+          "NOT_D1_MEMBERSHIP",
+          "NOT_FINAL_EVALUATION",
+          "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+        ],
+        "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+        "time_coverage": {
+          "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+          "end": "2026-08-27T00:11:15Z",
+          "start": "2026-08-27T00:11:00Z"
+        }
+      }
+    ]
+  },
+  "schema_version": "MMWAVE-V2-D1-SW03-SW04-OPERATIONAL-EXAMPLES-V1",
+  "scope_semantics": [
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_FINAL_EVALUATION",
+    "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+  ],
+  "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+  "sync_records": [
+    {
+      "alignment_method": "SAME_HOST_COMMON_CLOCK",
+      "alignment_status": "ALIGNMENT_MEASURABLE",
+      "clock_identity": "DEBUG_HOST_COMMON_CLOCK_V1",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "host_marker_observed": null,
+      "host_timestamp": "2026-08-27T00:10:00.000Z",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "measured_offset_delta_ms": 0.0,
+      "method": "SHARED_CLOCK",
+      "schema_version": "MMWAVE-V2-D1-SW03-SYNC-RECORD-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "source_identity": "DEBUG_SENSOR_SOURCE_001",
+      "source_marker_observed": null,
+      "source_timestamp": "2026-08-27T00:10:00.000Z",
+      "sync_marker_id": null,
+      "sync_record_id": "SYNC-DEBUG-SHARED-CLOCK-001",
+      "threshold_status": "THRESHOLD_NOT_GOVERNED",
+      "uncertainty_ms": 0.8,
+      "validation_status": "LIVE_NON_CAMPAIGN_ALIGNMENT_OBSERVED"
+    },
+    {
+      "alignment_method": "EXPLICIT_MARKER_ON_BOTH_TIMELINES",
+      "alignment_status": "ALIGNMENT_MEASURABLE",
+      "clock_identity": "DEBUG_INDEPENDENT_CLOCK_PAIR_V1",
+      "evidence_scope": "LIVE_DEBUG_NON_CAMPAIGN",
+      "host_marker_observed": true,
+      "host_timestamp": "2026-08-27T00:10:05.008Z",
+      "live_evidence_status": "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED",
+      "measured_offset_delta_ms": 8.0,
+      "method": "EXPLICIT_SYNC_MARKER",
+      "schema_version": "MMWAVE-V2-D1-SW03-SYNC-RECORD-V1",
+      "scope_semantics": [
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_FINAL_EVALUATION",
+        "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "source_identity": "DEBUG_OCCUPANCY_SOURCE_001",
+      "source_marker_observed": true,
+      "source_timestamp": "2026-08-27T00:10:05.000Z",
+      "sync_marker_id": "SYNC-MARKER-DEBUG-001",
+      "sync_record_id": "SYNC-DEBUG-EXPLICIT-MARKER-001",
+      "threshold_status": "THRESHOLD_NOT_GOVERNED",
+      "uncertainty_ms": 1.0,
+      "validation_status": "LIVE_NON_CAMPAIGN_ALIGNMENT_OBSERVED"
+    }
+  ]
+}

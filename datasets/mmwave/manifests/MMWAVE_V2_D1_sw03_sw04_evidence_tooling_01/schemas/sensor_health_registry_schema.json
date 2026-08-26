@@ -1,0 +1,100 @@
+{
+  "$id": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "continuity_status": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "device_connected": {
+      "type": "boolean"
+    },
+    "evidence_ids": {
+      "type": "array"
+    },
+    "evidence_scope": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "LIVE_DEBUG_NON_CAMPAIGN"
+      ]
+    },
+    "fault_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "fixture_semantics": {
+      "const": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "type": "array"
+    },
+    "health_state": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "physiology_interpretation": {
+      "const": "NOT_PROVIDED"
+    },
+    "registry_record_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reported_device_health": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reset_restart_observed": {
+      "type": "boolean"
+    },
+    "review_status": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1"
+    },
+    "scope_semantics": {
+      "type": "array"
+    },
+    "scope_version": {
+      "const": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+    },
+    "sensor_identity": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "stream_valid": {
+      "type": "boolean"
+    },
+    "timestamp_valid": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "evidence_scope",
+    "scope_version",
+    "scope_semantics",
+    "schema_version",
+    "registry_record_id",
+    "sensor_identity",
+    "device_connected",
+    "stream_valid",
+    "timestamp_valid",
+    "continuity_status",
+    "reported_device_health",
+    "reset_restart_observed",
+    "fault_code",
+    "evidence_ids",
+    "health_state",
+    "physiology_interpretation",
+    "review_status"
+  ],
+  "title": "SafeNest mmWave V2 SW-04 sensor health registry record",
+  "type": "object"
+}

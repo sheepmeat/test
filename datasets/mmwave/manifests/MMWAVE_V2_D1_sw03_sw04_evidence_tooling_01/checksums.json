@@ -1,0 +1,30 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/bundle_metadata.json": "8b8fdbf434ea4c3fee54ffaebfcf1dfddbefc1625767b23cb7cf19f0d9d8eaf9",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/fixtures/duplicate_evidence_id_rejected.json": "7506f5cf28bbda8c3e84f696e8bdeab2096d1e01bfdd7c7095e817bdf1b60838",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/fixtures/explicit_sync_marker_evidence_set.json": "8b1dab0fcc98627803e1a63f619aed66773984d0883c8d2224dc833b0078d7b3",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/fixtures/hash_mismatch_rejected.json": "b63d26347c8942c8c1e33b8a50c25d576af7915ce2965c754446eab573c678fa",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/fixtures/hash_verification.json": "cc107376562e293e9242e310e8e415a5b1c5f996e28257dcab32b153b9ce78bd",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/fixtures/occupancy_evidence_missing.json": "7c03249dcd0fcd9e937decbeb78200caa6a628eaa0fa957551d8e988755ce111",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/fixtures/rejected_observation_retained.json": "e50d893be3611976a756ccfc6f4a5820953de9d0acaab3de265b628db09852fe",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/fixtures/sensor_health_fault.json": "9ec4bce69a5b114c272cac6ec3a04736e811ecc5aa1f1c91c7ec73b8b2d9d743",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/fixtures/valid_synchronized_evidence_set.json": "ef0bdd2bc67edf4ed107e806770fd4429908df5f7ae9363886448983981db95d",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/hash_receipts.json": "5951253455a7d4473e1a02f6c5bb8a340695573b50b355ae942aef1db9bc3938",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/occupancy_evidence_registry.json": "bcb82fc567aacebc5dc2e368ddf00bd801cd8166730401df45157086f01e167d",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/operational_non_campaign_examples.json": "dd308be4a6d06491da0f897af7a2a87f2b1eaac32d57822816fba1553ac1a4de",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/recording_provenance_registry.json": "ff6379afd4c7e30b5cd78e7fb7009274eee343f028f329086b272e86aa130d4c",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/rejection_registry.json": "cd05e592863c2e431881a396a0c8e416ebd591c9985176fe4b5353b0cec08a07",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/schemas/evidence_scope_schema.json": "892ff5c82308acd3e40f5ba4d432295cd6fa8995f278a8500b8f0528bbb42315",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/schemas/hash_receipt_schema.json": "469b4a0a342bf2a34e7a42f933f973f6e9a67f42da7521961cdd8a5e36e2e25f",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/schemas/occupancy_evidence_registry_schema.json": "c1a7192f61e28899c124199b5a432f2abe2760321521655a04c17d54697ca190",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/schemas/recording_provenance_registry_schema.json": "7deb873af1582582675c9440c94374fba06bcc9df175baba1244806a7a7caf7b",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/schemas/rejection_registry_schema.json": "1158b595b130335165c9661f8cb9b6b9d7fb09730ac44b12b7b7d1c422be26a2",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/schemas/sensor_health_registry_schema.json": "fab2bebfbd2f7ce4af80eb90a8058a481159488acbd26b4f4a2be19b8f818f73",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/schemas/sync_record_schema.json": "7c35b0ed85e1408161fde9a327f2cd73b9ed9e3698c2727dd735f5e4eebd3b19",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/sensor_health_registry.json": "01f8bd54648783a4dabd287d4938dae80a5998c76530f103d45d927e05238d75",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/sync_records.json": "8394747ce21658adfb89b32c83cb619bfc275bdc678354c2f3a99b8f17c098fd",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/validation_result.json": "713629221ef72159e2dab389db831d5ad8fd00d5f8056cebf2be5eec82a7257f"
+  },
+  "schema_version": "MMWAVE-V2-D1-SW03-SW04-CHECKSUMS-V1"
+}

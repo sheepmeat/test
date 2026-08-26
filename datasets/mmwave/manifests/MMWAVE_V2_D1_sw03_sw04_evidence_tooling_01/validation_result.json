@@ -1,0 +1,149 @@
+{
+  "actual_file_hash_pipeline_status": "COMPLETE",
+  "base_commit": "13a56b7e41e9519ad61238a74861ef4ad6ea16ab",
+  "checks": [
+    {
+      "detail": [],
+      "name": "required_artifacts_present",
+      "ok": true
+    },
+    {
+      "detail": {
+        "operational_default": [
+          "NON_CAMPAIGN",
+          "NOT_D1_MEMBERSHIP",
+          "NOT_FINAL_EVALUATION",
+          "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+        ],
+        "supported": [
+          "FIXTURE_NON_CAMPAIGN",
+          "LIVE_DEBUG_NON_CAMPAIGN"
+        ],
+        "version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+      },
+      "name": "versioned_evidence_scope_model",
+      "ok": true
+    },
+    {
+      "detail": {
+        "capture_executed": false,
+        "d1_membership_created": false,
+        "scope": "SOFTWARE_ONLY_FIXTURE_AND_OPERATIONAL_NON_CAMPAIGN"
+      },
+      "name": "fixture_and_operational_scope_isolation",
+      "ok": true
+    },
+    {
+      "detail": {
+        "d2_accessed": false,
+        "model_evaluation": false,
+        "model_training": false,
+        "mr60_supervised_physiology_used": false,
+        "sw01_implemented": false,
+        "sw02_implemented": false
+      },
+      "name": "safety_prohibitions_preserved",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "versioned_schema_documents",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "sync_records_semantics",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "hash_receipts_semantics_and_verification",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "separate_registry_semantics_and_cross_registry_integrity",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "synthetic_fixture_demonstrations",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "operational_non_campaign_examples",
+      "ok": true
+    },
+    {
+      "detail": {
+        "create_hash_receipt_from_file": true,
+        "verify_hash_receipt_from_file": true
+      },
+      "name": "actual_file_hash_api_available",
+      "ok": true
+    },
+    {
+      "detail": {
+        "counts": {
+          "absent_sessions_created_this_phase": 0,
+          "d1_campaign_dir_exists": false,
+          "expected_absent": 57,
+          "expected_present": 57,
+          "observed_absent": 0,
+          "observed_present": 57,
+          "snapshot_absent_expected": 0,
+          "snapshot_present_expected": 57
+        },
+        "d2": "LOCKED",
+        "m_pv38_status": "RESOURCE_BLOCKED_CLOSED",
+        "m_pv4": "UNAUTHORIZED",
+        "membership_created": false,
+        "resource_recovery_snapshot": "datasets/mmwave/manifests/MMWAVE_V2_D1_physical_resource_recovery_01/d1_membership_unchanged.json",
+        "source": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/critical_path_state.json",
+        "unchanged": true
+      },
+      "name": "d1_membership_count_unchanged",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "machine_readable_artifacts_are_portable",
+      "ok": true
+    }
+  ],
+  "cross_registry_integrity_status": "COMPLETE",
+  "d1_membership_snapshot": {
+    "counts": {
+      "absent_sessions_created_this_phase": 0,
+      "d1_campaign_dir_exists": false,
+      "expected_absent": 57,
+      "expected_present": 57,
+      "observed_absent": 0,
+      "observed_present": 57,
+      "snapshot_absent_expected": 0,
+      "snapshot_present_expected": 57
+    },
+    "d2": "LOCKED",
+    "m_pv38_status": "RESOURCE_BLOCKED_CLOSED",
+    "m_pv4": "UNAUTHORIZED",
+    "membership_created": false,
+    "resource_recovery_snapshot": "datasets/mmwave/manifests/MMWAVE_V2_D1_physical_resource_recovery_01/d1_membership_unchanged.json",
+    "source": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/critical_path_state.json",
+    "unchanged": true
+  },
+  "failed_checks": [],
+  "fixture_pipeline_status": "COMPLETE",
+  "live_execution": {
+    "capture_executed": false,
+    "live_occupancy_evidence": "NOT_PRODUCED",
+    "live_sensor_health_evidence": "NOT_PRODUCED"
+  },
+  "live_hardware_evidence_status": "NOT_EXECUTED",
+  "manifest_id": "MMWAVE_V2_D1_SW03_SW04_EVIDENCE_TOOLING_V1",
+  "ok": true,
+  "operational_non_campaign_pipeline_status": "COMPLETE",
+  "phase": "MMWAVE-V2-D1-SWPREP-03-04",
+  "schema_version": "MMWAVE-V2-D1-SW03-SW04-VALIDATION-V1",
+  "terminal_verdict": "SW03_SW04_SOFTWARE_COMPLETE_LIVE_EVIDENCE_PENDING"
+}
