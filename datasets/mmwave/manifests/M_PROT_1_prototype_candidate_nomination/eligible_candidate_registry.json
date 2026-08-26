@@ -1,0 +1,255 @@
+{
+  "schema_version": "M-PROT-1-ELIGIBLE-CANDIDATE-REGISTRY-V1",
+  "phase": "M-PROT-1",
+  "date": "2026-08-27",
+  "base_sha": "7659a988fad7ab92f6a2a09f42da74544cbe0f52",
+  "pr172_merge_commit": "7659a988fad7ab92f6a2a09f42da74544cbe0f52",
+  "m_prot_0_authority": "PROTOTYPE_MODEL_LANE_READY",
+  "purpose": "Inventory every inspected mmWave artifact for provisional prototype nomination. This is not a winner table.",
+  "mandatory_semantics": [
+    "PROTOTYPE_INTEGRATION_ONLY",
+    "NOT_FINAL_SELECTED_MODEL",
+    "NOT_DEPLOYMENT_VALIDATED",
+    "NOT_SAFETY_VALIDATED",
+    "NOT_CLINICAL_VALIDATION",
+    "SUBJECT_TO_REPLACEMENT"
+  ],
+  "vocabulary_allowed": [
+    "PROTOTYPE_NOMINATED",
+    "INTEGRATION_BASELINE",
+    "PROVISIONAL"
+  ],
+  "vocabulary_forbidden": [
+    "WINNER",
+    "BEST_MODEL",
+    "FINAL_SELECTED",
+    "M-PV3.8_SELECTED",
+    "DEPLOYMENT_READY"
+  ],
+  "primary_panel_policy": "ALL_SIX_NO_CHERRY_PICK",
+  "primary_panel_fixed_order": [
+    "B11",
+    "B23",
+    "B47",
+    "C11",
+    "C23",
+    "C47"
+  ],
+  "role": "ROLE_L_FULL_TASK",
+  "source_evidence": [
+    "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/role_l_full_task_evaluation_manifest.json",
+    "datasets/mmwave/manifests/PUBABS_A7_c1_external_stress_inference_contract/candidate_panel_contract.json"
+  ],
+  "eligible_primary_panel": [
+    {
+      "panel_id": "B11",
+      "candidate_key": "family_b/seed_11",
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "family": "family_b",
+      "family_task": "TRACE_TCN_BREATHING_RR_QUALITY",
+      "seed": 11,
+      "m_prot_eligibility": "ELIGIBLE",
+      "semantic_class": "ROLE_COMPATIBLE",
+      "heads": [
+        "breathing",
+        "rr",
+        "quality"
+      ],
+      "representation": "PROFILE_B_TRACE_F3_R1_V1",
+      "input_dim": 621,
+      "parameter_count": 17915,
+      "checkpoint_path": "models/mmwave/m_pv2/family_b/candidate_seed_11.pt",
+      "checkpoint_sha256": "5633a7eefa83544cd33a251b0016b40f37e28039f985b31c98bdcfa37aa8b1a6",
+      "canonical_parameter_sha256": "84bb325bb2fa8054b39ac7c30f3aadf6acc1ed5886b79f93352d77b1fb5d4aba",
+      "m_pv38_panel_member": true
+    },
+    {
+      "panel_id": "B23",
+      "candidate_key": "family_b/seed_23",
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "family": "family_b",
+      "family_task": "TRACE_TCN_BREATHING_RR_QUALITY",
+      "seed": 23,
+      "m_prot_eligibility": "ELIGIBLE",
+      "semantic_class": "ROLE_COMPATIBLE",
+      "heads": [
+        "breathing",
+        "rr",
+        "quality"
+      ],
+      "representation": "PROFILE_B_TRACE_F3_R1_V1",
+      "input_dim": 621,
+      "parameter_count": 17915,
+      "checkpoint_path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+      "checkpoint_sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+      "canonical_parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+      "m_pv38_panel_member": true
+    },
+    {
+      "panel_id": "B47",
+      "candidate_key": "family_b/seed_47",
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "family": "family_b",
+      "family_task": "TRACE_TCN_BREATHING_RR_QUALITY",
+      "seed": 47,
+      "m_prot_eligibility": "ELIGIBLE",
+      "semantic_class": "ROLE_COMPATIBLE",
+      "heads": [
+        "breathing",
+        "rr",
+        "quality"
+      ],
+      "representation": "PROFILE_B_TRACE_F3_R1_V1",
+      "input_dim": 621,
+      "parameter_count": 17915,
+      "checkpoint_path": "models/mmwave/m_pv2/family_b/candidate_seed_47.pt",
+      "checkpoint_sha256": "ed3da35adb0837426065cc575b7e4ff6f41ef9a8fb295bb29f7eb8bcff4db280",
+      "canonical_parameter_sha256": "1ef93f709d2f23f6c92f0ed235287f422cae2675eb06fb958d286903fd75d40e",
+      "m_pv38_panel_member": true
+    },
+    {
+      "panel_id": "C11",
+      "candidate_key": "family_c/seed_11",
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "family": "family_c",
+      "family_task": "HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "seed": 11,
+      "m_prot_eligibility": "ELIGIBLE",
+      "semantic_class": "ROLE_COMPATIBLE",
+      "heads": [
+        "breathing",
+        "rr",
+        "quality"
+      ],
+      "representation": "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1",
+      "input_dim": 671,
+      "parameter_count": 21115,
+      "checkpoint_path": "models/mmwave/m_pv2/family_c/candidate_seed_11.pt",
+      "checkpoint_sha256": "539bd6021d10a9abd35a22b49c0db728a122b60356f59609fead9280d82f7768",
+      "canonical_parameter_sha256": "5e1aefa8a4affca778649814e60efed05d0b8812094013555dfac6b21e90d79b",
+      "m_pv38_panel_member": true
+    },
+    {
+      "panel_id": "C23",
+      "candidate_key": "family_c/seed_23",
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "family": "family_c",
+      "family_task": "HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "seed": 23,
+      "m_prot_eligibility": "ELIGIBLE",
+      "semantic_class": "ROLE_COMPATIBLE",
+      "heads": [
+        "breathing",
+        "rr",
+        "quality"
+      ],
+      "representation": "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1",
+      "input_dim": 671,
+      "parameter_count": 21115,
+      "checkpoint_path": "models/mmwave/m_pv2/family_c/candidate_seed_23.pt",
+      "checkpoint_sha256": "ce99a6534928138bc5e2d271123185f93aceb6386b8a24b0ecb3679c7d6d70de",
+      "canonical_parameter_sha256": "de0352416c32703195c9a218bc915ef949351882304dd8668a5957527a91eaae",
+      "m_pv38_panel_member": true
+    },
+    {
+      "panel_id": "C47",
+      "candidate_key": "family_c/seed_47",
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "family": "family_c",
+      "family_task": "HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "seed": 47,
+      "m_prot_eligibility": "ELIGIBLE",
+      "semantic_class": "ROLE_COMPATIBLE",
+      "heads": [
+        "breathing",
+        "rr",
+        "quality"
+      ],
+      "representation": "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1",
+      "input_dim": 671,
+      "parameter_count": 21115,
+      "checkpoint_path": "models/mmwave/m_pv2/family_c/candidate_seed_47.pt",
+      "checkpoint_sha256": "2f1b446c808cfb90d02dc6cce754311ade19cf2e3bb03b20814a1268934cb5a1",
+      "canonical_parameter_sha256": "e57c1fc56933f15b654697dcdae5e098c8c7154620974357795a280dff0b250d",
+      "m_pv38_panel_member": true
+    }
+  ],
+  "other_existing_mmwave_artifacts": [
+    {
+      "identity": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "paths": [
+        "models/mmwave/m_pv2/family_a/candidate_seed_11.pt",
+        "models/mmwave/m_pv2/family_a/candidate_seed_23.pt",
+        "models/mmwave/m_pv2/family_a/candidate_seed_47.pt"
+      ],
+      "semantic_class": "ROLE_INCOMPATIBLE",
+      "m_prot_eligibility": "NOT_ELIGIBLE",
+      "reason": "F2_BREATHING_HEAD_NOT_SUPPORTED; Family A is ROLE_L_RR_QUALITY only and was excluded from the frozen ROLE_L full-task panel."
+    },
+    {
+      "identity": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_BREATHING_CANDIDATE_V1",
+      "paths": [
+        "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_11.pt",
+        "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_23.pt",
+        "models/mmwave/m_pv2_short_context_15s_candidate/candidate_seed_47.pt"
+      ],
+      "semantic_class": "ROLE_PARTIALLY_COMPATIBLE",
+      "m_prot_eligibility": "NOT_ELIGIBLE",
+      "reason": "Breathing-only 15 s Conv1D ([B,150,1]); no RR head; no quality head; excluded from ROLE_L_FULL_TASK."
+    },
+    {
+      "identity": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+      "paths": [
+        "models/mmwave/m_pv35_context_isolation/context_15s/seed_11.pt",
+        "models/mmwave/m_pv35_context_isolation/context_15s/seed_23.pt",
+        "models/mmwave/m_pv35_context_isolation/context_15s/seed_47.pt",
+        "models/mmwave/m_pv35_context_isolation/context_30s/seed_11.pt",
+        "models/mmwave/m_pv35_context_isolation/context_30s/seed_23.pt",
+        "models/mmwave/m_pv35_context_isolation/context_30s/seed_47.pt"
+      ],
+      "semantic_class": "ROLE_INCOMPATIBLE",
+      "m_prot_eligibility": "NOT_ELIGIBLE",
+      "reason": "ROLE_L_ISOLATION parity CNN is breathing-only; no RR or quality head; selection_result NOT_APPLICABLE_NO_MODEL_SELECTION."
+    },
+    {
+      "identity": "MMWAVE_M_N9_FULL_INT8_V1",
+      "paths": [
+        "models/mmwave/m_n9/MMWAVE_M_N9_FULL_INT8_V1.tflite"
+      ],
+      "semantic_class": "ROLE_INCOMPATIBLE",
+      "m_prot_eligibility": "NOT_ELIGIBLE",
+      "reason": "V1 TFLite 3-class NORMAL / RAPID_OR_ABNORMAL / APNEA. I1 forbids this identity as the V2 runtime model. Deployability of an existing TFLite file does not replace ROLE_L."
+    },
+    {
+      "identity": "M-B3_CONV1D_GAP_BASELINE_AND_M_B5_M_B6_M_B11_TFLITE",
+      "paths": [
+        "models/mmwave/experiments/M-B3_architecture_comparison/",
+        "models/mmwave/experiments/M-B5_representative_calibration/",
+        "models/mmwave/experiments/M-B6_stage_equivalence/",
+        "datasets/mmwave/manifests/M-B11_artifact_lock/runtime_contract_lock.json"
+      ],
+      "semantic_class": "ROLE_INCOMPATIBLE",
+      "m_prot_eligibility": "NOT_ELIGIBLE",
+      "reason": "Locked V1 3-class int8/float32 TFLite contract (NORMAL / RAPID_OR_ABNORMAL / APNEA) on [1,300,1] resp_phase. Materially different output contract from breathing / RR / quality."
+    },
+    {
+      "identity": "models/model_manifest.json mmwave_resp_int8_v0.1.0_and_v0.2.0_candidate",
+      "paths": [
+        "models/mmwave/mmwave_resp_int8_v0.1.0.tflite",
+        "models/mmwave/mmwave_resp_int8_v0.2.0_candidate.tflite"
+      ],
+      "semantic_class": "ROLE_INCOMPATIBLE",
+      "m_prot_eligibility": "NOT_ELIGIBLE",
+      "reason": "Same 3-class respiration-anomaly contract. v0.1.0 is blocked CLASS_COLLAPSE_ON_REPOSITORY_NPZ. v0.2.0 is SYNTHETIC_SMOKE_ONLY. Neither implements ROLE_L."
+    }
+  ],
+  "inspected_primary_count": 6,
+  "inspected_other_artifact_families": 6,
+  "cherry_pick": false,
+  "m_pv38_panel_changed": false,
+  "final_model_selected": false,
+  "c1_used_for_ranking": false,
+  "d1_final_used": false,
+  "d2_accessed": false
+}

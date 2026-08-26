@@ -1,0 +1,218 @@
+{
+  "schema_version": "M-PROT-1-PROTOTYPE-NOMINATION-V1",
+  "phase": "M-PROT-1",
+  "date": "2026-08-27",
+  "base_sha": "7659a988fad7ab92f6a2a09f42da74544cbe0f52",
+  "pr172_merge_commit": "7659a988fad7ab92f6a2a09f42da74544cbe0f52",
+  "identity": "M_PROT_1_PROTOTYPE_NOMINATED",
+  "status_tags": [
+    "PROTOTYPE_NOMINATED",
+    "INTEGRATION_BASELINE",
+    "PROVISIONAL",
+    "PROTOTYPE_INTEGRATION_ONLY",
+    "NOT_FINAL_SELECTED_MODEL",
+    "NOT_DEPLOYMENT_VALIDATED",
+    "NOT_SAFETY_VALIDATED",
+    "NOT_CLINICAL_VALIDATION",
+    "SUBJECT_TO_REPLACEMENT"
+  ],
+  "forbidden_tags_not_applied": [
+    "WINNER",
+    "BEST_MODEL",
+    "FINAL_SELECTED",
+    "M-PV3.8_SELECTED",
+    "DEPLOYMENT_READY"
+  ],
+  "nominated": {
+    "panel_id": "B23",
+    "candidate_key": "family_b/seed_23",
+    "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+    "family": "family_b",
+    "family_task": "TRACE_TCN_BREATHING_RR_QUALITY",
+    "seed": 23,
+    "artifact_path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+    "artifact_sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+    "canonical_parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+    "artifact_bytes": 76473,
+    "parameter_count": 17915,
+    "input_dim": 621,
+    "construction_class": "TraceModel",
+    "construction_script": "scripts/mmwave_m_pv2_candidate_training.py",
+    "current_runtime_format": "PYTORCH_FLOAT32_STATE_DICT",
+    "direct_runtime_feasibility": "Torch CPU load of compact float32 state_dict; Raspberry Pi format is not frozen in this phase",
+    "tflite_conversion": "NOT_YET_PROVEN",
+    "int8_quantization": "NOT_YET_PROVEN",
+    "semantic_compatibility": "ROLE_COMPATIBLE",
+    "input_contract": {
+      "window_duration_s": 30.0,
+      "sample_rate_hz": 10.0,
+      "conceptual_trace_shape": [
+        "B",
+        300,
+        1
+      ],
+      "assembled_feature_dim": 621,
+      "dtype": "float32",
+      "layout": "concat(trace[300], trace_mask[300], scale[12], quality[9])",
+      "scale_names": [
+        "native_mad_about_median",
+        "native_robust_rms_about_median",
+        "native_robust_range_p05_p95",
+        "native_peak_to_peak",
+        "common_trace_mad_about_median",
+        "common_trace_robust_rms_about_median",
+        "total_signal_energy",
+        "total_signal_mean_square",
+        "log_total_signal_energy",
+        "respiratory_band_energy",
+        "respiratory_band_power",
+        "log_respiratory_band_energy"
+      ],
+      "quality_names": [
+        "trace_sample_count",
+        "trace_duration_s",
+        "trace_mad_about_median",
+        "trace_robust_rms_about_median",
+        "trace_robust_range_p05_p95",
+        "trace_mean_square",
+        "trace_is_exact_flat",
+        "valid_sample_fraction",
+        "source_quality_flag_count"
+      ]
+    },
+    "preprocessing_identity": {
+      "r1_waveform": "common_trace respiratory_motion_trace at 10 Hz",
+      "trace_zscore": "TRAIN global mean/std from scaler_statistics.json; apply once inside _feature_matrix",
+      "double_zscore": "FORBIDDEN",
+      "feature_scaler": "TRAIN-only per-feature z-score for scale and quality descriptors",
+      "invalid_policy": "finite mask plus deterministic zero fill; mask retained as input",
+      "scaler_content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "c1_or_live_refit": "FORBIDDEN"
+    },
+    "output_contract": {
+      "breathing": "sigmoid(breathing_logit); PRESENT if probability >= 0.5 else ABSENT; ABSENT is no-human, not apnea",
+      "rr": "linear head; rr_bpm = rr_raw * 8.948729232744911 + 17.12899193548387",
+      "quality": "sigmoid(quality_logit); historical Q2 diagnostic cutoff 0.5",
+      "runtime_precedence": [
+        "PRESENCE",
+        "QUALITY_OR_AVAILABILITY",
+        "PHYSIOLOGY"
+      ]
+    },
+    "prototype_threshold": {
+      "breathing_decision": 0.5,
+      "quality_historical_diagnostic": 0.5,
+      "source": "datasets/mmwave/manifests/M-PV2_candidate_training/contract_snapshot.json fixed_breathing_threshold",
+      "retuned_in_m_prot_1": false,
+      "m_prot_2_action": "Freeze these existing development thresholds into the deployable contract; do not invent new values"
+    }
+  },
+  "why_nominated": [
+    "All six frozen ROLE_L candidates are semantically compatible; Family A and all reviewed TFLite/V1 3-class artifacts are not.",
+    "Family B implements breathing / RR / quality without live F2 reconstruction, so it is the smaller coherent first-wiring surface (hierarchy steps 3-4).",
+    "Inside Family B, B11 is the high-loss / high-Brier seed and is treated as obviously fragile for a provisional baseline.",
+    "B47 has a D1_DEV_VAL PRESENT false-negative and a large negative RR minimum. B23 does not have the FN and has the lower Family B Brier / RR MAE on the same non-final card.",
+    "B23 remains a complete, loadable float32 state_dict with matching SHA and canonical parameter hash."
+  ],
+  "why_not_final_selection": [
+    "M-PV3 selection_result remains NO_SELECTION_READY.",
+    "M-PV3.6 produced no winner, best-seed, or combined score.",
+    "D1 ABSENT eligible count remains 0; both-class final membership is BLOCKED_INVALID_FINAL_MEMBERSHIP.",
+    "M-PV3.8 remains RESOURCE_BLOCKED_CLOSED and evaluation is NOT_EXECUTED.",
+    "No D1 final test, no D2, no Pi measurement, no safety/clinical validation.",
+    "C1 A8 was not used to rank or eliminate anyone."
+  ],
+  "candidates_not_dropped": [
+    "B11",
+    "B47",
+    "C11",
+    "C23",
+    "C47"
+  ],
+  "m_pv38_panel_changed": false,
+  "final_model_selected": false,
+  "c1_used_for_ranking": false,
+  "d1_used": false,
+  "d2_accessed": false,
+  "training_executed": false,
+  "inference_on_eval_data_executed": false,
+  "offline_evidence_used": [
+    {
+      "source": "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json",
+      "class": "TRAIN"
+    },
+    {
+      "source": "datasets/mmwave/manifests/M-PV2_candidate_training/contract_snapshot.json",
+      "class": "historical_evaluation"
+    },
+    {
+      "source": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+      "class": "TRAIN"
+    },
+    {
+      "source": "datasets/mmwave/manifests/M-PV2_candidate_training/seed_sensitivity.json",
+      "class": "TRAIN"
+    },
+    {
+      "source": "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/",
+      "class": "VALIDATION"
+    },
+    {
+      "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/selection_decision.json",
+      "class": "historical_evaluation"
+    },
+    {
+      "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/determinism_audit.json",
+      "class": "historical_evaluation"
+    },
+    {
+      "source": "datasets/mmwave/manifests/PUBABS_A7_c1_external_stress_inference_contract/",
+      "class": "historical_evaluation",
+      "use": "contracts and thresholds only; C1 A8 ranking forbidden"
+    }
+  ],
+  "evidence_forbidden_and_unused": [
+    "C1_A8_external_stress_ranking",
+    "D1_FINAL_SELECTION_BOTH_CLASS_V1 results",
+    "M-PV3.8 evaluation outputs",
+    "D2 semantic access",
+    "new training / fine-tune / threshold retune / TFLite conversion"
+  ],
+  "major_limitations": [
+    "No governed ABSENT class in D1_DEV_VAL; absent discrimination is NOT_APPLICABLE, not zero.",
+    "D1_DEV_VAL metrics are non-final development validation, not locked final-test scores.",
+    "B23 D1_DEV_VAL RR prediction minimum was slightly negative (-0.34 bpm); clamp/policy is M-PROT-2 work.",
+    "TFLITE_CONVERSION = NOT_YET_PROVEN.",
+    "No Raspberry Pi latency or live MR60 measurement.",
+    "Quality head is Q2 synthetic diagnostic, not live-device quality GT.",
+    "Prototype remains SUBJECT_TO_REPLACEMENT."
+  ],
+  "handoff_to_m_prot_2": {
+    "phase": "M-PROT-2",
+    "name": "Deployable Artifact / Runtime Contract Freeze",
+    "must_receive": [
+      "candidate identity B23 / family_b / seed 23",
+      "artifact SHA 8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+      "source checkpoint format PYTORCH_FLOAT32_STATE_DICT",
+      "model construction identity TraceModel family_b",
+      "input contract 30 s / 10 Hz / 621-d assembled vector",
+      "preprocessing identity TRAIN scaler 5a2583b5... applied once",
+      "output contract breathing/RR/quality + I1 fail-closed",
+      "current threshold evidence 0.5 / 0.5",
+      "runtime dependency torch (Pi representation not frozen)",
+      "conversion/packaging gap TFLITE_CONVERSION=NOT_YET_PROVEN"
+    ],
+    "do_not_execute_in_m_prot_1": true
+  },
+  "unchanged_final_lane": {
+    "D1_PRESENT": 57,
+    "D1_ABSENT": 0,
+    "D1_MEMBERSHIP": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "M_PV3_8": "RESOURCE_BLOCKED_CLOSED",
+    "M_PV3_8_evaluation": "NOT_EXECUTED",
+    "M_PV4": "UNAUTHORIZED",
+    "D2": "LOCKED"
+  },
+  "terminal_verdict": "M_PROT_1_PROTOTYPE_NOMINATED",
+  "next_phase": "M-PROT-2"
+}
