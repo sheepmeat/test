@@ -1,0 +1,39 @@
+{
+  "schema_version": "PUBABS-A2-C1-PAYLOAD-RECEIPT-V1",
+  "phase": "PUBABS-A2",
+  "status": "VERIFIED",
+  "date": "2026-08-26",
+  "base_sha": "e2b50aa93bd3b37e91e6e3d455acfc65ed925464",
+  "primary_source": {
+    "candidate_id": "C1",
+    "official_title": "Victim Detection Using a Robot-Mounted UWB-Radar Platform",
+    "doi": "10.5281/zenodo.15032859",
+    "zenodo_record": "15032859",
+    "host": "Zenodo",
+    "license": "CC-BY-4.0",
+    "access_url": "https://zenodo.org/records/15032859",
+    "file_name": "Data.zip",
+    "official_size_bytes": 3372690765,
+    "official_md5": "99067ac569e419fc122eef49635d72d0",
+    "download_api_url": "https://zenodo.org/api/records/15032859/files/Data.zip/content"
+  },
+  "local_payload": {
+    "path_note": "temporary external cache only; NOT committed",
+    "local_path_example": "/tmp/pubabs-a2-c1-raw/Data.zip",
+    "download_or_transfer_provenance": "direct_zenodo_api_download_with_resumes_on_execution_machine",
+    "download_started_utc": "2026-08-26T10:24:48Z",
+    "download_completed_utc": "2026-08-26T11:55:44Z",
+    "local_size_bytes": 3372690765,
+    "local_md5": "99067ac569e419fc122eef49635d72d0",
+    "local_sha256": "bc120db7fb7ba8143dfd6499f7d80788d1d965e6a6ebf3e402fc34cb2870aa85",
+    "official_md5_match": true,
+    "alternate_machine_copy_allowed": true,
+    "transfer_reverify_required": true
+  },
+  "reference_lineage_record": {
+    "role": "REFERENCE_ONLY_EXTENDED_LINEAGE",
+    "zenodo_record": "16533267",
+    "doi": "10.5281/zenodo.16533267",
+    "payload_mixed_into_a2": false
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "PUBABS-A2-CHECKSUMS-V1",
+  "status": "COMPLETE",
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_source_payload_receipt.json": "be415bc4cb98e2862b8d1c0dd55aad75d459f84be7ed29229f77ec7bf3f6ef6b",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_session_inventory.json": "b71d342e13952cfa0a09729cf1d3e3e07ebc9c9fe9b05209f5ddc388378a7022",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_empty_semantics_validation.json": "c9d0396a210cfd0412cb14e2f629003c567d672561dd3a2aa962f200177bf728",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_sensor_health_audit.json": "925b12db8ed608c82914c43c07b5b1bd2854fe0bed2f5f1ab8fbef6eef6dc5bc",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_acquisition_comparability.json": "5dab490cb233dae62b4a31de8408944a05f20a040dc907ae8ad4fbecb0e2ff75",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_position_mapping.json": "7261e0819c4d3d7349c2c870b5f65dcffa86388b222bbffd1597f2e647f5f66d",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_temporal_integrity.json": "8ef0380015e91fd59735373b24d5eb32a259942366efe91616b88f4ab57737c8",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_confound_audit.json": "4af617a397528d1421f4f47ef8fbfa782aa3bc7294cccec76c1026c508fb83f6",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/c1_reference_lineage_16533267.json": "37d63f0fa31dd3920b7b18fc4acb71919f6cb1957b5b8f2cf7502c592010094c",
+    "datasets/mmwave/manifests/PUBABS_A2_c1_validation/validation_result.json": "f425613c54c805a8308bcdedd14829713eb6dc84183a2c2df521d9c0034a6d02",
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md": "09a0dcc9249b640e3c10df0dc86464e513b8524b054f9fb46459896d4ce9c0f5"
+  }
+}
