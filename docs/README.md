@@ -28,6 +28,7 @@
 - [PUBABS-A0A1 public ABSENT source validation (PASS_STRONG_PUBLIC_SOURCE_FOUND; M-PV3.8 unchanged)](mmwave/20260826_SafeNest_mmWave_PUBABS_A0A1_Public_Source_Validation_01.md)
 - [PUBABS-A2 C1 semantics/sensor-health/acquisition comparability (A2_STRONG_INTERNAL_BOTH_CLASS_SOURCE; A3 recommend only)](mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md)
 - [PUBABS-A3 C1 canonical ROLE_L conversion feasibility (A3_CORRECTIVE_REQUIRED)](mmwave/20260826_SafeNest_mmWave_PUBABS_A3_C1_Canonical_Conversion_Feasibility_01.md)
+- [PUBABS-A6 C1 external stress contract population freeze (A6_EXTERNAL_STRESS_CONTRACT_FROZEN_WITH_LIMITATIONS)](mmwave/20260826_SafeNest_mmWave_PUBABS_A6_C1_External_Stress_Contract_Population_Freeze_01.md)
 - [PUBABS-A5 C1 public membership governance design (A5_EXTERNAL_STRESS_GOVERNANCE_READY; construction not executed)](mmwave/20260826_SafeNest_mmWave_PUBABS_A5_C1_Public_Membership_Governance_Design_01.md)
 - [PUBABS-A4 C1 availability/domain/leakage stress audit (A4_CLEAR_WITH_LIMITATIONS_FOR_A5; A5 recommend only)](mmwave/20260826_SafeNest_mmWave_PUBABS_A4_C1_Availability_Domain_Leakage_Stress_Audit_01.md)
 - [PUBABS-A3R C1 frozen adapter structural re-validation (A3R_PASS_WITH_LIMITATIONS; A4 recommend only)](mmwave/20260826_SafeNest_mmWave_PUBABS_A3R_C1_Frozen_Adapter_Revalidation_01.md)

@@ -1,0 +1,18 @@
+{
+  "schema_version": "PUBABS-A6-EXTERNAL-STRESS-CONTRACT-RECEIPT-V1",
+  "contract_id": "PUBABS_C1_EXTERNAL_STRESS_V1",
+  "contract_sha256": "d0353c9bf7837a2520364903b53075bde44cddf10b88c3fef58aa4054bbb3310",
+  "population_manifest_sha256": {
+    "layer1_all77_population.json": "cefc7a3820ebb644a9553b3eaad9f4ec600ea555bc25ed891f236cc50c6632f5",
+    "layer2_valid34_population.json": "01a1db3ef56e1071896f054a5baad397035ca6d989f42f2d1129d250b6867c7c"
+  },
+  "layer1_count": 77,
+  "layer2_count": 34,
+  "source_data_receipt": {
+    "doi": "10.5281/zenodo.15032859",
+    "official_data_zip_md5": "99067ac569e419fc122eef49635d72d0",
+    "payload_committed": false
+  },
+  "frozen_adapter_sha256": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+  "post_A5_base": "e794c00cf8e13effc9ca89dbb1f6c34e5ddc397e"
+}

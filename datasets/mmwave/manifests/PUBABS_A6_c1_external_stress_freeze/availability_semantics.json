@@ -1,0 +1,13 @@
+{
+  "schema_version": "PUBABS-A6-AVAILABILITY-SEMANTICS-V1",
+  "layer1_denominator": 77,
+  "layer2_denominator": 34,
+  "layer2_metric_label_required": "CONDITIONAL_ON_ADAPTER_VALID",
+  "fail_closed_count": 43,
+  "adapter_status_as_model_feature": "FORBIDDEN",
+  "UNAVAILABLE_NE_ABSENT": true,
+  "UNAVAILABLE_NE_NORMAL": true,
+  "UNAVAILABLE_NE_PHYSIOLOGICAL_NEGATIVE": true,
+  "silent_drop_of_fail_closed": "FORBIDDEN",
+  "later_window_rescue": "FORBIDDEN"
+}

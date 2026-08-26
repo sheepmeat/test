@@ -1,0 +1,11 @@
+{
+  "schema_version": "PUBABS-A6-POPULATION-FREEZE-RECEIPT-V1",
+  "contract_id": "PUBABS_C1_EXTERNAL_STRESS_V1",
+  "layer1_identity": "PUBABS_C1_EXTERNAL_STRESS_V1__L1_AVAILABILITY_ALL77",
+  "layer2_identity": "PUBABS_C1_EXTERNAL_STRESS_V1__L2_CONDITIONAL_VALID34",
+  "layer1_manifest_sha256": "cefc7a3820ebb644a9553b3eaad9f4ec600ea555bc25ed891f236cc50c6632f5",
+  "layer2_manifest_sha256": "01a1db3ef56e1071896f054a5baad397035ca6d989f42f2d1129d250b6867c7c",
+  "layer1_count": 77,
+  "layer2_count": 34,
+  "ordering_key": "external_stress_session_id"
+}

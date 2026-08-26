@@ -1,0 +1,12 @@
+{
+  "schema_version": "PUBABS-A6-FUTURE-AUTHORITY-V1",
+  "future_external_model_inference": "REQUIRES_SEPARATE_SOL_AUTHORIZATION",
+  "eligible_for_D1": false,
+  "eligible_for_M_PV3_8_final_selection": false,
+  "eligible_for_model_selection": false,
+  "eligible_for_threshold_selection": false,
+  "eligible_for_calibration_selection": false,
+  "domain_role": "EXTERNAL_SAFETY_DOMAIN_STRESS_ONLY",
+  "scale_risk": "HIGH",
+  "TRAIN_zscore_refit_on_c1": "FORBIDDEN"
+}
