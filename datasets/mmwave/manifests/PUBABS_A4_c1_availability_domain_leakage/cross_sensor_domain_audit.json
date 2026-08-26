@@ -1,0 +1,61 @@
+{
+  "schema_version": "PUBABS-A4-CROSS-SENSOR-DOMAIN-V1",
+  "items": [
+    {
+      "aspect": "carrier_radar_architecture",
+      "c1": "UWB SLMX4/Novelda X4 lineage",
+      "target": "MR60 mmWave",
+      "class": "MISMATCH"
+    },
+    {
+      "aspect": "through_wall_geometry",
+      "c1": "robot through-wall",
+      "target": "indoor SafeNest geometry",
+      "class": "MISMATCH"
+    },
+    {
+      "aspect": "range_bin_semantics",
+      "c1": "180 bins @ 0.0512 m",
+      "target": "MR60/D0 profiles",
+      "class": "PARTIAL_MATCH"
+    },
+    {
+      "aspect": "robot_mounting",
+      "c1": "robot-mounted",
+      "target": "fixed/room install",
+      "class": "MISMATCH"
+    },
+    {
+      "aspect": "subject_geometry",
+      "c1": "Scenario_A face-toward-wall positions",
+      "target": "bed/room occupancy",
+      "class": "PARTIAL_MATCH"
+    },
+    {
+      "aspect": "phase_amplitude_scale",
+      "c1": "small unwrapped phase dynamic range",
+      "target": "TRAIN phase-like scale",
+      "class": "MISMATCH"
+    },
+    {
+      "aspect": "environment_clutter",
+      "c1": "wall/clutter UWB",
+      "target": "MR60 indoor",
+      "class": "MISMATCH"
+    },
+    {
+      "aspect": "sampling_acquisition",
+      "c1": "~18.8 Hz irregular measured timestamps",
+      "target": "ROLE_L 10 Hz after R1T",
+      "class": "PARTIAL_MATCH"
+    },
+    {
+      "aspect": "label_semantics_empty",
+      "c1": "Empty_space ABSENT proxy",
+      "target": "SafeNest ABSENT membership",
+      "class": "PARTIAL_MATCH"
+    }
+  ],
+  "CROSS_SENSOR_DOMAIN_RISK": "HIGH_RISK",
+  "domain_equivalence_claimed": false
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "PUBABS-A4-METADATA-LEAKAGE-V1",
+  "adapter_signature": "(timestamps_s: 'np.ndarray', complex_frames: 'np.ndarray', *, recording_id: 'str' = 'c1_session', require_frozen_proposal_sha256: 'str | None' = 'cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446') -> 'C1AdapterResult'",
+  "adapter_source_mentions_Empty_space_or_Nx": false,
+  "adapter_api_parameters": [
+    "timestamps_s",
+    "complex_frames",
+    "recording_id",
+    "require_frozen_proposal_sha256"
+  ],
+  "class_allowed_in_audit_manifests_only": true,
+  "PATH_METADATA_LEAKAGE": "LOW_RISK",
+  "findings": [
+    "adapt_c1_raw accepts timestamps_s, complex_frames, recording_id, require_frozen_proposal_sha256 only.",
+    "recording_id may contain path strings for provenance; must not be parsed for branching (currently unused for decisions).",
+    "Audit manifests intentionally retain Empty_space / N1..N6 / position as metadata."
+  ],
+  "recording_id_path_exposure": "PROVENANCE_ONLY_MUST_NOT_BECOME_MODEL_INPUT",
+  "adapter_source_uses_class_for_branching": false,
+  "adapter_source_string_mentions": false
+}
