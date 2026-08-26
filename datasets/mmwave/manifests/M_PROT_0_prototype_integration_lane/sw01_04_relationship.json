@@ -1,0 +1,41 @@
+{
+  "schema_version": "M-PROT-0-SW01-04-RELATIONSHIP-V1",
+  "status": "PARALLEL_INFRASTRUCTURE_PRESERVED",
+  "items": [
+    {
+      "id": "SW-01",
+      "role": "non-campaign mmWave interface checker",
+      "supports": [
+        "prototype live debugging",
+        "future final capture"
+      ]
+    },
+    {
+      "id": "SW-02",
+      "role": "nine-slot identity / SHA artifact tooling",
+      "supports": [
+        "capture provenance",
+        "future final validation"
+      ]
+    },
+    {
+      "id": "SW-03",
+      "role": "time synchronization / evidence hashing",
+      "supports": [
+        "debug capture lineage",
+        "future final validation"
+      ]
+    },
+    {
+      "id": "SW-04",
+      "role": "provenance / occupancy / health / rejection registries",
+      "supports": [
+        "debug capture lineage",
+        "future final validation"
+      ]
+    }
+  ],
+  "must_complete_before_offline_nomination": false,
+  "do_not_invalidate": true,
+  "do_not_modify_running_sw_branches_in_this_pr": true
+}

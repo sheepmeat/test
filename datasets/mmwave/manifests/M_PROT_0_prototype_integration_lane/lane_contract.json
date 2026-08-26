@@ -1,0 +1,101 @@
+{
+  "schema_version": "M-PROT-0-PROTOTYPE-INTEGRATION-LANE-V1",
+  "lane_id": "M_PROT",
+  "phase": "M-PROT-0",
+  "date": "2026-08-27",
+  "base_sha": "13a56b7e41e9519ad61238a74861ef4ad6ea16ab",
+  "owner_constraint": "Integrated system must exist before sufficient real-device measurement and debugging evidence can be accumulated.",
+  "purpose": "PROTOTYPE_INTEGRATION_ONLY",
+  "namespace_forbidden_aliases": [
+    "M-PV3.8_SELECTED",
+    "M-PV4",
+    "FINAL_SELECTED_MODEL",
+    "DEPLOYMENT_VALIDATED_MODEL"
+  ],
+  "mandatory_semantics": [
+    "PROTOTYPE_INTEGRATION_ONLY",
+    "NOT_FINAL_SELECTED_MODEL",
+    "NOT_DEPLOYMENT_VALIDATED",
+    "NOT_SAFETY_VALIDATED",
+    "NOT_CLINICAL_VALIDATION",
+    "SUBJECT_TO_REPLACEMENT"
+  ],
+  "track_split": {
+    "Track_P_Prototype_Integration": {
+      "status": "READY",
+      "requires_d1_final_membership": false,
+      "may_use": [
+        "TRAIN_evidence",
+        "validation_evidence",
+        "offline_public_derivative_canonical_evidence",
+        "frozen_candidate_artifacts",
+        "synthetic_fixtures"
+      ]
+    },
+    "Track_F_Final_Validation": {
+      "status": "BLOCKED",
+      "requires_d1_final_membership": true,
+      "d1_identity": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+      "d1_observed": {
+        "PRESENT": 57,
+        "ABSENT": 0
+      },
+      "m_pv38": "RESOURCE_BLOCKED_CLOSED",
+      "m_pv38_evaluation": "NOT_EXECUTED",
+      "m_pv4": "UNAUTHORIZED"
+    }
+  },
+  "interpretation_correction": {
+    "historical_phrase": "MODEL_READY_WORK=NO",
+    "historical_source": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/",
+    "clarified_meaning": "FINAL_SELECTION_MODEL_WORK=BLOCKED under M-PV3.8 / D1 gates",
+    "does_not_mean": "all model packaging/integration development is forbidden",
+    "owner_authorized_parallel": "PROTOTYPE_INTEGRATION_MODEL_WORK=READY",
+    "rewrite_history": "FORBIDDEN — clarify by additive contract only"
+  },
+  "lifecycle": [
+    {
+      "id": "M-PROT-0",
+      "name": "Prototype Integration Contract",
+      "status": "THIS_PHASE_PROPOSAL"
+    },
+    {
+      "id": "M-PROT-1",
+      "name": "Prototype Candidate Nomination",
+      "status": "NEXT_EXECUTABLE_AFTER_SOL_FREEZE"
+    },
+    {
+      "id": "M-PROT-2",
+      "name": "Deployable Artifact / Runtime Contract Freeze",
+      "status": "BLOCKED_ON_M_PROT_1"
+    },
+    {
+      "id": "M-PROT-3",
+      "name": "Integration Runtime Wiring",
+      "status": "BLOCKED_ON_M_PROT_2"
+    },
+    {
+      "id": "M-PROT-4",
+      "name": "System-Level Offline / Replay / Synthetic Smoke",
+      "status": "BLOCKED_ON_M_PROT_3"
+    },
+    {
+      "id": "M-PROT-5",
+      "name": "Live Device Debug & Capture",
+      "status": "HARDWARE_DEPENDENT"
+    },
+    {
+      "id": "M-PROT-6",
+      "name": "Device-Domain Evaluation / Revision Decision",
+      "status": "BLOCKED_ON_M_PROT_5"
+    }
+  ],
+  "parallel_to_final": true,
+  "does_not_weaken": [
+    "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+    "M-PV3.8 RESOURCE_BLOCKED_CLOSED",
+    "M-PV4 UNAUTHORIZED"
+  ],
+  "report": "docs/mmwave/20260827_SafeNest_mmWave_V2_Prototype_Integration_Lane_M_PROT_0_01.md",
+  "manifest_dir": "datasets/mmwave/manifests/M_PROT_0_prototype_integration_lane/"
+}

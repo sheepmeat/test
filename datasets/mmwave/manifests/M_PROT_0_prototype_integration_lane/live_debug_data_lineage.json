@@ -1,0 +1,34 @@
+{
+  "schema_version": "M-PROT-0-LIVE-DEBUG-DATA-LINEAGE-V1",
+  "classes": {
+    "DEBUG_CAPTURE": {
+      "use": [
+        "transport",
+        "timing",
+        "windowing",
+        "preprocess_verify",
+        "model_load",
+        "latency",
+        "fail_closed",
+        "output_sanity",
+        "device_domain_gap_discovery"
+      ],
+      "final_eval": "FORBIDDEN_SILENT_PROMOTION"
+    },
+    "DEVICE_DOMAIN_DEVELOPMENT": {
+      "use": [
+        "prototype_revision_evidence"
+      ],
+      "admission_to_train_val": "REQUIRES_SEPARATE_GOVERNED_DATASET_ADMISSION"
+    },
+    "FINAL_GOVERNED_EVALUATION": {
+      "use": [
+        "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+        "M-PV3.8 final evaluation"
+      ],
+      "requires": "governed membership + Sol authorization",
+      "prototype_lane_authority": "NONE"
+    }
+  },
+  "rule": "A live session used to modify model/preprocess/threshold/windowing must not silently become locked final-test evidence."
+}
