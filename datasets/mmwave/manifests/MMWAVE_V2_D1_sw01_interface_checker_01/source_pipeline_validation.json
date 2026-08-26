@@ -1,0 +1,16 @@
+{
+  "schema_version": "MMWAVE_V2_D1_SW01_SOURCE_PIPELINE_V1",
+  "external_stream_valid": {
+    "overall_status": "PASS_NON_CAMPAIGN_INTERFACE_CHECK",
+    "mode": "EXTERNAL_STREAM_NON_CAMPAIGN_CHECK",
+    "software_pipeline_validated": true,
+    "live_hardware_verified": false,
+    "receipt_sha256": "16f9dc228decb85b1c8d614b6ed3324c1ac63eeb7f285ec1f1e7413fac18936e"
+  },
+  "stdin_stream_valid": {
+    "overall_status": "PASS_NON_CAMPAIGN_INTERFACE_CHECK",
+    "mode": "EXTERNAL_STREAM_NON_CAMPAIGN_CHECK",
+    "receipt_sha256": "4937613baa60b827bb0a5af60ccdf587b79c44c4209e1660dbff8ce85a27196b"
+  },
+  "source_decode_faults_fail_closed": true
+}

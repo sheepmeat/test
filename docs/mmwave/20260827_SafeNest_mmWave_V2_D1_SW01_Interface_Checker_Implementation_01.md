@@ -5,7 +5,7 @@
 - Base SHA (post-PR #170): `13a56b7e41e9519ad61238a74861ef4ad6ea16ab`
 - Branch: `feature/mmwave-d1-sw01-interface-checker`
 - Mode: **software-only** — no governed capture, no D1 membership, no model inference
-- Terminal verdict: **`SW01_IMPLEMENTED_OFFLINE_VALIDATED_LIVE_PENDING`**
+- Terminal verdict: **`SW01_SOFTWARE_COMPLETE_LIVE_HARDWARE_PENDING`**
 - Manifest: `datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/`
 
 ---
@@ -89,3 +89,53 @@ python3 scripts/mmwave/check_m_pv38_mmwave_interface.py \
 
 python3 scripts/mmwave/check_m_pv38_mmwave_interface.py --live
 ```
+
+
+---
+
+## Corrective 01C — live-source bridge
+
+Sol review required completing the software acquisition→validation pipeline before hardware arrival.
+
+### Source abstraction
+
+```text
+MR60 / ESP32 / Pi transport
+        ↓
+source-specific parser (future; UART binary parser NOT implemented here)
+        ↓
+versioned SW01 source records (`MMWAVE_V2_D1_SW01_SOURCE_RECORD_V1`)
+        ↓
+MMWaveSW01Source (`adapters/mmwave_sw01_source.py`)
+        ↓
+StreamBundle / Sample
+        ↓
+evaluate_stream()  (unchanged validation semantics)
+```
+
+### Backends
+
+| Backend | Status |
+|---|---|
+| `JSONL_STREAM_SOURCE` (`--stream-jsonl`) | IMPLEMENTED |
+| `STDIN_STREAM_SOURCE` (`--stdin-jsonl`) | IMPLEMENTED |
+| `MR60_UART_SOURCE` | PLUGGABLE_NOT_IMPLEMENTED (`MR60_UART_PROTOCOL_UNPROVEN`) |
+
+Why UART not implemented: repository mentions `0x0A13 breath_phase` semantics but does **not** contain a proven frame/CRC/command parser; inventing bytes would be unsafe.
+
+### Modes
+
+| Mode | Meaning |
+|---|---|
+| `FIXTURE_OFFLINE_VALIDATION` | Offline fixture only |
+| `EXTERNAL_STREAM_NON_CAMPAIGN_CHECK` | Full source→receipt software pipeline |
+| `LIVE_HARDWARE_NON_CAMPAIGN_CHECK` | Hardware probe; distinguishes transport vs parser |
+
+`--live` with a present serial path reports `SERIAL_TRANSPORT_PRESENT` + `PARSER_BACKEND_UNAVAILABLE` rather than a single opaque failure.
+
+### Software-complete claim
+
+`validation_engine_status=COMPLETE`, `source_pipeline_status=COMPLETE`.
+`hardware_backend_status=PENDING_PROVEN_PROTOCOL_OR_HARDWARE`, `hardware_validation_status=NOT_EXECUTED`.
+
+External JSONL PASS proves **SOFTWARE_PIPELINE_VALIDATED**, not live hardware.

@@ -7,7 +7,8 @@
   "library": "adapters/mmwave_sw01_interface_checker.py",
   "modes": [
     "FIXTURE_OFFLINE_VALIDATION",
-    "LIVE_NON_CAMPAIGN_CHECK"
+    "EXTERNAL_STREAM_NON_CAMPAIGN_CHECK",
+    "LIVE_HARDWARE_NON_CAMPAIGN_CHECK"
   ],
   "reuses_stream_semantics_from": "adapters/mmwave_stream_adapter.py",
   "does_not_import": [
@@ -27,5 +28,27 @@
     "BACKEND_UNAVAILABLE"
   ],
   "campaign_data_created": false,
-  "d1_admissible_by_design": false
+  "d1_admissible_by_design": false,
+  "corrective_phase": "MMWAVE-V2-D1-SWPREP-01C",
+  "source_module": "adapters/mmwave_sw01_source.py",
+  "source_record_schema": "MMWAVE_V2_D1_SW01_SOURCE_RECORD_V1",
+  "backends": {
+    "JSONL_STREAM_SOURCE": {
+      "status": "IMPLEMENTED",
+      "description": "Versioned JSONL external stream (file)"
+    },
+    "STDIN_STREAM_SOURCE": {
+      "status": "IMPLEMENTED",
+      "description": "Versioned JSONL external stream (stdin)"
+    },
+    "MR60_UART_SOURCE": {
+      "status": "PLUGGABLE_NOT_IMPLEMENTED",
+      "protocol": "MR60_UART_PROTOCOL_UNPROVEN",
+      "description": "MR60 UART binary parser not implemented: repository documents 0x0A13 breath_phase semantics but does not contain a proven frame/CRC/command parser safe to reimplement without guessing."
+    }
+  },
+  "integration_handoff": [
+    "MR60/ESP32/Pi transport \u2192 source-specific parser \u2192 versioned SW01 source records",
+    "\u2192 MMWaveSW01Source \u2192 StreamBundle \u2192 evaluate_stream()"
+  ]
 }

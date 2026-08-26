@@ -3,7 +3,10 @@
   "live_target_available": false,
   "live_check_executed": true,
   "live_result": "LIVE_TARGET_UNAVAILABLE",
-  "receipt_sha256": "59487f8673e2cf0ccbe290cd0c803d8a85ca9b871e05f9dd62053500c9dc0da8",
-  "note": "Software live probe executed; no target UART / backend \u2014 not a live PASS.",
-  "pass_non_campaign": false
+  "transport_status": "SERIAL_TRANSPORT_ABSENT",
+  "source_backend_status": "MR60_UART_PROTOCOL_UNPROVEN",
+  "parser_status": "PARSER_BACKEND_UNAVAILABLE",
+  "receipt_sha256": "3be379a8396a6afa3f361278cc75eadb12cfa3795895434d7873aad80a3bf2d7",
+  "pass_non_campaign_hardware": false,
+  "note": "UART transport discovery may run; MR60 binary parser remains unproven/unimplemented."
 }

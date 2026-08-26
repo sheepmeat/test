@@ -30,6 +30,11 @@ STATUS_FAIL_RAW = "FAIL_RAW_OR_NEAR_RAW_UNAVAILABLE"
 STATUS_LIVE_UNAVAILABLE = "LIVE_TARGET_UNAVAILABLE"
 STATUS_BACKEND = "BACKEND_UNAVAILABLE"
 STATUS_SCALAR_ONLY = "FAIL_SCALAR_TELEMETRY_ONLY"
+STATUS_SOURCE_DECODE = "FAIL_SOURCE_DECODE"
+MODE_FIXTURE = "FIXTURE_OFFLINE_VALIDATION"
+MODE_EXTERNAL_STREAM = "EXTERNAL_STREAM_NON_CAMPAIGN_CHECK"
+MODE_LIVE_HARDWARE = "LIVE_HARDWARE_NON_CAMPAIGN_CHECK"
+
 
 FIELD_OK = "VERIFIED"
 FIELD_MISSING = "MISSING"
@@ -59,6 +64,7 @@ class StreamBundle:
     observation_kind: str | None = None  # near_raw_phase | scalar_vendor_rr | unknown
     samples: list[Sample] = field(default_factory=list)
     backend_error: str | None = None
+    source_faults: list[str] = field(default_factory=list)
 
 
 def _finite(x: Any) -> bool:
@@ -109,10 +115,22 @@ def evaluate_stream(
     resets: list[dict[str, Any]] = []
 
     if bundle.backend_error:
+        err = bundle.backend_error
+        if err == "MR60_UART_PROTOCOL_UNPROVEN":
+            overall = STATUS_BACKEND
+        elif str(err).startswith("SOURCE_") or err in (
+            "SOURCE_RECORD_INVALID",
+            "SOURCE_STREAM_TRUNCATED",
+            "SOURCE_REQUIRED_FIELD_MISSING",
+            "SOURCE_SCHEMA_MISMATCH",
+        ):
+            overall = STATUS_SOURCE_DECODE
+        else:
+            overall = STATUS_BACKEND
         return _receipt(
             mode=mode,
             check_source=check_source,
-            overall=STATUS_BACKEND,
+            overall=overall,
             device=FIELD_UNAVAIL,
             interface=FIELD_UNAVAIL,
             config=FIELD_UNAVAIL,
@@ -122,13 +140,14 @@ def evaluate_stream(
             cont=FIELD_UNAVAIL,
             drop=FIELD_UNAVAIL,
             health=FIELD_UNAVAIL,
-            sample_count=0,
+            sample_count=len(bundle.samples),
             duration=None,
             delta_summary=None,
-            faults=[bundle.backend_error],
+            faults=[err] + list(bundle.source_faults or []),
             dropouts=[],
             resets=[],
             observed_fields=[],
+            source_faults=list(bundle.source_faults or []),
         )
 
     device_status = FIELD_OK if bundle.device_identity else FIELD_MISSING
@@ -394,6 +413,11 @@ def _receipt(
     observed_fields: list[str],
     observation_kind: str | None = None,
     identities: dict | None = None,
+    source_faults: list[str] | None = None,
+    transport_status: str | None = None,
+    source_backend_status: str | None = None,
+    parser_status: str | None = None,
+    pipeline_semantics: dict | None = None,
 ) -> dict[str, Any]:
     receipt = {
         "schema_version": SCHEMA_VERSION,
@@ -419,6 +443,11 @@ def _receipt(
         "faults": faults,
         "dropouts": dropouts,
         "resets": resets,
+        "source_faults": list(source_faults or []),
+        "transport_status": transport_status,
+        "source_backend_status": source_backend_status,
+        "parser_status": parser_status,
+        "pipeline_semantics": pipeline_semantics or {},
         "campaign_data_created": False,
         "d1_admissible": False,
         "campaign_slot_consumed": False,
@@ -436,7 +465,7 @@ def _receipt(
 
 def live_target_unavailable_receipt(*, reason: str, serial_candidates: Sequence[str] | None = None) -> dict[str, Any]:
     return _receipt(
-        mode="LIVE_NON_CAMPAIGN_CHECK",
+        mode=MODE_LIVE_HARDWARE,
         check_source="live_probe",
         overall=STATUS_LIVE_UNAVAILABLE,
         device=FIELD_UNAVAIL,
@@ -470,3 +499,83 @@ def inventory_serial_ports() -> list[str]:
             continue
         ports.append(p)
     return ports
+
+
+def annotate_receipt(
+    receipt: dict[str, Any],
+    *,
+    transport_status: str | None = None,
+    source_backend_status: str | None = None,
+    parser_status: str | None = None,
+    pipeline_semantics: dict | None = None,
+    mode: str | None = None,
+) -> dict[str, Any]:
+    if mode is not None:
+        receipt["mode"] = mode
+    if transport_status is not None:
+        receipt["transport_status"] = transport_status
+    if source_backend_status is not None:
+        receipt["source_backend_status"] = source_backend_status
+    if parser_status is not None:
+        receipt["parser_status"] = parser_status
+    if pipeline_semantics is not None:
+        receipt["pipeline_semantics"] = pipeline_semantics
+    receipt.pop("receipt_sha256", None)
+    receipt["receipt_sha256"] = hashlib.sha256(
+        json.dumps(receipt, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+    return receipt
+
+
+def run_source_pipeline(source, *, mode: str, check_source: str | None = None) -> dict[str, Any]:
+    """Open source → StreamBundle → evaluate_stream (shared external/live path)."""
+    opened = False
+    try:
+        source.open()
+        opened = True
+    except Exception as exc:
+        # UART stub raises on open
+        from adapters.mmwave_sw01_source import SourceDecodeError
+
+        if isinstance(exc, SourceDecodeError):
+            bundle = StreamBundle(
+                backend_error=exc.code,
+                source_faults=[f"{exc.code}:{exc.detail}" if exc.detail else exc.code],
+            )
+            receipt = evaluate_stream(bundle, mode=mode, check_source=check_source)
+            ident = source.source_identity()
+            return annotate_receipt(
+                receipt,
+                transport_status=None,
+                source_backend_status=ident.get("status"),
+                parser_status="PARSER_BACKEND_UNAVAILABLE",
+                pipeline_semantics={
+                    "software_pipeline_validated": False,
+                    "live_hardware_verified": False,
+                    "source_backend": ident.get("backend"),
+                },
+            )
+        raise
+    try:
+        bundle = source.read_bundle()
+        receipt = evaluate_stream(bundle, mode=mode, check_source=check_source)
+        ident = source.source_identity()
+        soft_ok = (
+            mode == MODE_EXTERNAL_STREAM
+            and receipt.get("overall_status") == STATUS_PASS
+            and not bundle.backend_error
+        )
+        return annotate_receipt(
+            receipt,
+            source_backend_status=ident.get("status"),
+            parser_status="PARSER_APPLIED" if not bundle.backend_error else "PARSER_BACKEND_UNAVAILABLE",
+            pipeline_semantics={
+                "software_pipeline_validated": soft_ok,
+                "live_hardware_verified": False,
+                "source_backend": ident.get("backend"),
+                "d1_admissible": False,
+            },
+        )
+    finally:
+        if opened:
+            source.close()
