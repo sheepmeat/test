@@ -2,6 +2,7 @@
 
 현재 개발·팀 연동은 아래 문서를 기준으로 합니다.
 
+- [Thermal B6-R 현재 상태 및 Gate 재조정 보고서 (2026-08-26, BLOCKED)](reports/20260826_Codex_Thermal_B6R_CURRENT_STATE_AND_GATE_RECONCILIATION_Report_KO_01.md)
 - [Thermal B6-R robust-relative FP32 로드맵 (B6R-2 BLOCKED, B6R-RC0 non-gating, B6R-P2 PUBLIC AUX PASS)](20260822_Codex_Thermal_B6R_Robust_Relative_FP32_Parallel_Roadmap_KO_01.md)
 - [Thermal B6-R 개발 인덱스 (본선·public 보조 흐름 상태)](thermal/B6R_DEVELOPMENT_INDEX.md)
 - [B6R-P0 Public SDT materialization 실행 보고서 (2026-08-26)](reports/20260826_Codex_Thermal_B6R_B6R-P0_Public_SDT_Materialization_Report_KO_01.md)

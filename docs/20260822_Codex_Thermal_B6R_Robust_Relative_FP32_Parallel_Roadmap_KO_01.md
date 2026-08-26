@@ -1,6 +1,6 @@
 # SafeNest Thermal B6-R robust-relative FP32 병렬 개발 로드맵
 
-문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P2 실행 + Desktop 실제 capture 파일럿 evidence 반영**
+문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P2 실행 + Desktop 실제 capture 파일럿 evidence + 현재 환경 gate 재조정 반영**
 
 대상 후보: `B6-R robust-relative FP32`
 
@@ -8,7 +8,7 @@
 
 작성일: `2026-08-22`
 
-실행 개정일: `2026-08-26` (`B6R-P0~P2` 완료; `B6R-RC0` Desktop sessions read-only assessment 반영)
+실행 개정일: `2026-08-26` (`B6R-P0~P2` 완료; `B6R-RC0` Desktop sessions read-only assessment 및 current-state reconciliation 반영)
 
 > 이 문서는 코드, 모델, 데이터, 임계값 또는 runtime을 구현하거나 변경하지 않는다. 향후 실행은 사용자가 명시적으로 승인한 **한 stage 또는 한 parallel wave**만 수행하고, 검증·증거 요약 후 반드시 멈춘다.
 
@@ -61,6 +61,18 @@ Desktop sessions evidence
 ```
 
 현재 자료로 다음 에이전트가 바로 실행할 수 있는 것은 read-only capture-contract remediation/acquisition plan 작성뿐이다. B6R-2 이후 학습이나 holdout을 자동 실행하지 않는다. 자세한 수치와 판정은 `docs/reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md`를 기준으로 한다.
+
+### 2026-08-26 실행 개정 — 현재 validation capability와 B6R-0 blocker 재조정
+
+이번 `CURRENT_STATE_AND_GATE_RECONCILIATION`에서 historical B6R-0 실행 당시 환경과 현재 active checkout의 실행 환경이 달라진 사실을 확인했다.
+
+- 이전 가정: B6R-0 당시 environment evidence는 TensorFlow, `ai_edge_litert`, `tflite_runtime`이 없어 desktop model load/parity를 검증할 수 없다고 기록했다.
+- 새 evidence: 현재 저장소 `.venv`에는 Python `3.12.13`, NumPy `2.5.2`, TensorFlow `2.20.0`, Pillow `12.3.0`이 있다. 이 환경에서 B6R-P2 validator `16/16` checks와 focused unittest `5/5`를 재실행해 통과했다.
+- 여전히 미충족: `ai_edge_litert`, `tflite_runtime`, `pytest`, Raspberry Pi evidence, B5 exact checkpoint/FP32/FULL INT8 bytes, 권위 MI48 snapshot과 group/holdout evidence.
+- 해석: desktop TensorFlow validation capability는 보완되었지만 historical B6R-0 `FAIL`은 소급 변경하지 않는다. B5 asset identity, LiteRT/Pi capability와 hardware measurement, MI48 data gate는 별도 조건이다.
+- 영향: B6R-0 blocker 문구와 current index를 정교화했지만 B6R-1 `INCONCLUSIVE`, B6R-2 `BLOCKED`, B6R-3 이후 `NOT_STARTED`, RC0 non-gating, P0/P1/P2 claim boundary는 변경하지 않았다. 새 `B6R-P3`도 정의하거나 실행하지 않았다.
+
+이 개정은 환경 capability drift를 기록하기 위한 문서 변경이며 model, runtime, dataset, split, holdout을 변경하지 않는다. 상세 근거는 `docs/reports/20260826_Codex_Thermal_B6R_CURRENT_STATE_AND_GATE_RECONCILIATION_Report_KO_01.md`를 따른다.
 
 ### 현재 작업 PC의 Thermal 데이터 위치 (사람용 참고)
 

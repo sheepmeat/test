@@ -16,11 +16,21 @@
 
 `docs/README.md`
 
+## Latest Current-State Reconciliation
+
+- Report: `docs/reports/20260826_Codex_Thermal_B6R_CURRENT_STATE_AND_GATE_RECONCILIATION_Report_KO_01.md`
+- Date: `2026-08-26`
+- Unit: `CURRENT_STATE_AND_GATE_RECONCILIATION`
+- Status: `BLOCKED`
+- Verified HEAD: `1f43d5f48e591bc3d7290f351ff7201e22f6b1f0` on `feature/thermal-b6r-development`, equal to `origin/feature/thermal-b6r-development`
+- Conclusion: current `.venv` has TensorFlow `2.20.0`, so public P2 desktop parity is revalidated; this does not resolve B5 exact assets, LiteRT/Pi evidence, authoritative MI48 provenance, B6R-2 group/label evidence, or independent holdout.
+- No formal next stage is authorized. Wait for new MI48/owner evidence or user instruction; do not define or execute `B6R-P3`.
+
 ## Stage Status
 
 | Stage | Status | Report | Artifact | Commit | Notes |
 |---|---|---|---|---|---|
-| B6R-0 | `FAIL` | `docs/reports/20260822_LunaMax_Agent2_Thermal_B6R0_Asset_Baseline_Verification_01.md` | `datasets/thermal/manifests/B6R-0_asset_baseline_verification/` | source `ee966f9186915a2364e81f944f45aabf22b7b71c`; merge `c70d994ecd4be666dd46e0b7b06872ee8f97f0f2` | B5 checkpoint와 B5 candidate binary가 materialize되지 않았고 TensorFlow/LiteRT 및 Pi 증거가 없다. |
+| B6R-0 | `FAIL` | `docs/reports/20260822_LunaMax_Agent2_Thermal_B6R0_Asset_Baseline_Verification_01.md` | `datasets/thermal/manifests/B6R-0_asset_baseline_verification/` | source `ee966f9186915a2364e81f944f45aabf22b7b71c`; merge `c70d994ecd4be666dd46e0b7b06872ee8f97f0f2` | B5 exact checkpoint/binary와 Pi evidence는 여전히 없다. 당시 TensorFlow 부재는 현재 `.venv`의 TensorFlow `2.20.0`으로 부분 정정됐지만 LiteRT/Pi·asset gate는 미충족이다. |
 | B6R-1 | `INCONCLUSIVE` | `docs/reports/20260822_LunaMax_Agent1_Thermal_B6R1_MI48_Inventory_01.md` | `datasets/thermal/manifests/B6R-1_mi48_inventory/` | source `d87d452372cc890e85ec6c4d5ec117052be865df`; merge `d0c0c911eb2e27cf91d8f057d1cc9f9360c7fb6a` | authoritative MI48 snapshot을 찾지 못했고 MI48 eligible frame은 0이다. profiler와 focused test는 보존했다. |
 | B6R-2 | `BLOCKED` | `docs/reports/20260826_Codex_Thermal_B6R_B6R-2_Retry_Execution_Report_KO_02.md` (이전: `docs/reports/20260826_Codex_Thermal_B6R_B6R-2_Execution_Report_KO_01.md`) | `datasets/thermal/manifests/B6R-2_dataset_contract_retry_02/` (이전: `datasets/thermal/manifests/B6R-2_dataset_contract/`) | 이전 `ab77885`; retry delivery commit은 `git log` 참조 | archive 6/6 SHA 동일, checksum 실패는 CRLF 원인으로 진단. MI48/group/label/holdout evidence 부재는 해소되지 않아 안전 중단했다. |
 | B6R-3 | `NOT_STARTED` | - | - | - | - |
@@ -84,7 +94,7 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 ## Current Blockers
 
 - B6R-0: B5 FLOAT checkpoint와 B5 FP32/FULL INT8 binary가 현재 환경에 materialize되지 않았다.
-- B6R-0: TensorFlow/LiteRT runtime과 Raspberry Pi 하드웨어 증거가 없어 load, parity, latency, memory, stability를 검증할 수 없다.
+- B6R-0: 현재 `.venv`의 TensorFlow `2.20.0`으로 desktop validation은 가능하지만, B5 exact checkpoint/binary, `ai_edge_litert`/`tflite_runtime`, Raspberry Pi 하드웨어 증거가 없어 B6R-0의 asset·Pi/runtime gate는 미충족이다.
 - B6R-1: authoritative MI48 raw snapshot이 접근 가능한 경로에 없고 외부 `SafeNestssd`가 mount되지 않았다.
 - B6R-1: 후보 archive의 MI48 identity가 해소되지 않았으며 식별된 eligible MI48 frame은 0이다.
 - B6R-1: 외부 `Desktop/sessions` 실제 capture 파일럿은 존재하지만 metadata sensor model이 `Thermal-90`이고 권위 MI48 identity mapping이 없다. `B6R-RC0`는 non-gating assessment로만 기록했다.
@@ -92,23 +102,27 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 - B6R-1: 현재 checkout에서 standalone validator가 generated evidence 10개의 checksum mismatch로 실패한다. CRLF→LF 정규화 시 10/10 registry와 일치하여 cross-platform line-ending 원인으로 진단됐다.
 - B6R-2: session/label/split/holdout 계약을 만들 data gate가 충족되지 않았고 independent holdout이 없다. Desktop sessions도 `NOT_LOCKED_TEST`, `split_frozen_at=null`, `model_use_eligibility=NOT_AUTHORIZED_BY_CAPTURE_VALIDATOR`다.
 - B6R-P0의 성공은 public-data 경로만 개방하며 위 MI48 blocker를 해소하지 않는다.
+- 2026-08-26 current-state reconciliation에서 위 환경 capability drift를 기록했지만 본선 stage 판정과 public claim boundary는 변경하지 않았다.
 
 ## Next Authorized Stage
 
 `DATA_EVIDENCE_TRIAGE_WAITING_FOR_USER_INSTRUCTION`
+
+최신 상태 보고서: `docs/reports/20260826_Codex_Thermal_B6R_CURRENT_STATE_AND_GATE_RECONCILIATION_Report_KO_01.md` (`BLOCKED`)
 
 - MI48 본선: B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 provenance를 복구하고 B6R-1을 새 revision으로 재검증한 뒤 B6R-2를 다시 실행해야 한다.
 - External capture: `B6R-RC0` read-only assessment는 완료되었지만 비게이팅이다. 현재 `Desktop/sessions`만으로는 학습·holdout을 시작하지 않는다. 다음 행동은 Thermal-90/MI48 identity 승인, unit/orientation/quality 보완, 다인 재수집을 위한 acquisition/contract plan이며 새 사용자 승인이 필요하다.
 - Public 보조: `B6R-P2`는 2026-08-26 사용자 승인으로 완료됐다. P0/P1의 split 역할, preprocessing, label mapping, architecture, trained parameter를 그대로 상속했다.
 - B6R-P2 결과도 legacy 기본 모델·manifest를 덮어쓰거나 safety authority를 부여하지 않는다. locked public test read count는 `0`이다.
 - 다음 public 작업 후보는 Raspberry Pi FP32 replay/shadow benchmark 성격이지만 아직 stage로 정의·승인·실행하지 않았다.
+- 이번 reconciliation은 환경·gate 상태 확인만 수행했다. 권위 MI48/owner evidence 또는 새 사용자 지시 없이 B6R-1 재실행, training, holdout, `B6R-P3` 정의·실행을 시작하지 않는다.
 
 ## Required Reading Order for Future Agents
 
 1. `docs/README.md`
 2. `docs/20260822_Codex_Thermal_B6R_Robust_Relative_FP32_Parallel_Roadmap_KO_01.md`
 3. `docs/thermal/B6R_DEVELOPMENT_INDEX.md`
-4. 실행하려는 stage의 직접 선행 stage 보고서
+4. 최신 current-state reconciliation report 또는 실행하려는 stage의 직접 선행 stage 보고서
 5. 직접 선행 stage의 manifest와 artifact
 6. roadmap이 요구하는 stage-specific source, test, runtime 파일
 
