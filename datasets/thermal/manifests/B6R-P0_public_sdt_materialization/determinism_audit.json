@@ -1,0 +1,46 @@
+{
+  "all_stream_hashes_match": true,
+  "first_pass_logical_stream_hashes": {
+    "test": {
+      "sample_index_jsonl": "d16778d32f65f2842cb37bb13002decc53f8286a29e49b7aa4b8335125f8c774",
+      "source_labels_uint8": "4c223618a9537263d4d3ce9bdb16c4711243b33d799937f77bdfe916590a3e84",
+      "target_labels_int8": "66a27a05c5be9b6a90ca8b1aad6dc90b2b5c77bfd3c9dfbed4b249f5360c92df",
+      "tensor_float32_le": "d9e2febe1d9f262b1ab18056056d7d99105eade5d14938896c7ac88138319cfa"
+    },
+    "train": {
+      "sample_index_jsonl": "39df45a02909e9003ca5ec7d3285182185d228a620d62af4ab1c7b7aca3b4251",
+      "source_labels_uint8": "cc0e407e9b69ef7c70fb23986236008f70471e64394d4e2d46680b0499e517eb",
+      "target_labels_int8": "2edf4abdfc4b7a2f8b229b9bf7ed8685b61ad72aec968e16258d6cf93720f683",
+      "tensor_float32_le": "4077d73c81a02da9a59f282e43fce306fbc8680a28d60c0a56b9309d70d978fb"
+    },
+    "validation": {
+      "sample_index_jsonl": "f1da406ad1a248f191ad9796ac61b7cc507e16ebefd23aeb19c4ecd281511dde",
+      "source_labels_uint8": "4c223618a9537263d4d3ce9bdb16c4711243b33d799937f77bdfe916590a3e84",
+      "target_labels_int8": "66a27a05c5be9b6a90ca8b1aad6dc90b2b5c77bfd3c9dfbed4b249f5360c92df",
+      "tensor_float32_le": "2a3f1bd1143355144caf96ec85c9b0f35b72b28799dd518d02f570161b250273"
+    }
+  },
+  "repeat_audit_executed": true,
+  "repeat_pass_logical_stream_hashes": {
+    "test": {
+      "sample_index_jsonl": "d16778d32f65f2842cb37bb13002decc53f8286a29e49b7aa4b8335125f8c774",
+      "source_labels_uint8": "4c223618a9537263d4d3ce9bdb16c4711243b33d799937f77bdfe916590a3e84",
+      "target_labels_int8": "66a27a05c5be9b6a90ca8b1aad6dc90b2b5c77bfd3c9dfbed4b249f5360c92df",
+      "tensor_float32_le": "d9e2febe1d9f262b1ab18056056d7d99105eade5d14938896c7ac88138319cfa"
+    },
+    "train": {
+      "sample_index_jsonl": "39df45a02909e9003ca5ec7d3285182185d228a620d62af4ab1c7b7aca3b4251",
+      "source_labels_uint8": "cc0e407e9b69ef7c70fb23986236008f70471e64394d4e2d46680b0499e517eb",
+      "target_labels_int8": "2edf4abdfc4b7a2f8b229b9bf7ed8685b61ad72aec968e16258d6cf93720f683",
+      "tensor_float32_le": "4077d73c81a02da9a59f282e43fce306fbc8680a28d60c0a56b9309d70d978fb"
+    },
+    "validation": {
+      "sample_index_jsonl": "f1da406ad1a248f191ad9796ac61b7cc507e16ebefd23aeb19c4ecd281511dde",
+      "source_labels_uint8": "4c223618a9537263d4d3ce9bdb16c4711243b33d799937f77bdfe916590a3e84",
+      "target_labels_int8": "66a27a05c5be9b6a90ca8b1aad6dc90b2b5c77bfd3c9dfbed4b249f5360c92df",
+      "tensor_float32_le": "2a3f1bd1143355144caf96ec85c9b0f35b72b28799dd518d02f570161b250273"
+    }
+  },
+  "schema_version": "safenest.thermal.b6r_p0.determinism_audit.v1",
+  "status": "PASS"
+}

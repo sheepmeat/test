@@ -36,6 +36,15 @@
 | B6R-13 | `NOT_STARTED` | - | - | - | - |
 | B6R-14 | `NOT_STARTED` | - | - | - | - |
 
+## Public-data Auxiliary Stage Status
+
+이 보조 흐름은 사용자의 2026-08-26 model-first 승인으로 추가되었으며, 기존 B6R-0~14의 판정과 선행 gate를 변경하지 않는다.
+
+| Stage | Status | Report | Artifact | Commit | Notes |
+|---|---|---|---|---|---|
+| B6R-P0 | `PASS_WITH_LIMITATIONS` | `docs/reports/20260826_Codex_Thermal_B6R_B6R-P0_Public_SDT_Materialization_Report_KO_01.md` | `datasets/thermal/manifests/B6R-P0_public_sdt_materialization/`; local payload `datasets/thermal/materialized/B6R-P0_public_sdt_v1/` | delivery commit은 `git log` 참조 | public SDT 48,000개를 원본 split 그대로 materialize하고 전수 provenance·결정론·원본 불변 검증을 통과했다. MI48/physical/safety 근거는 아니다. |
+| B6R-P1 | `NOT_STARTED` | - | - | - | P0 exact identity를 상속하는 controlled training. 별도 사용자 승인이 필요하다. |
+
 ## Historical Source Branches
 
 | Branch | Original tip SHA | Related PR | Unified branch preservation | Deletion status |
@@ -56,12 +65,15 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 - B6R-1: 후보 archive의 MI48 identity가 해소되지 않았으며 식별된 eligible MI48 frame은 0이다.
 - B6R-1: 현재 checkout에서 standalone validator가 generated evidence 10개의 checksum mismatch로 실패한다. CRLF→LF 정규화 시 10/10 registry와 일치하여 cross-platform line-ending 원인으로 진단됐다.
 - B6R-2: session/label/split/holdout 계약을 만들 data gate가 충족되지 않았고 independent holdout이 없다.
+- B6R-P0의 성공은 public-data 경로만 개방하며 위 MI48 blocker를 해소하지 않는다.
 
 ## Next Authorized Stage
 
-`WAITING_FOR_USER_INSTRUCTION — B6R-2 RETRY REQUIRES AUTHORITATIVE MI48/GROUP/HOLDOUT EVIDENCE`
+`DUAL_PATH_WAITING_FOR_USER_INSTRUCTION`
 
-B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 provenance를 복구하고 B6R-1을 새 revision으로 재검증한 뒤 B6R-2를 다시 실행해야 한다. 기존 B6R-1 checksum mismatch의 line-ending 원인은 확인됐지만 dataset gate를 대체하지 않는다.
+- MI48 본선: B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 provenance를 복구하고 B6R-1을 새 revision으로 재검증한 뒤 B6R-2를 다시 실행해야 한다.
+- Public 보조: 다음 후보는 `B6R-P1`이지만 자동 승인되지 않는다. 사용자가 한 stage로 명시적으로 승인해야 하며 P0의 train/validation/test 역할, preprocessing, label mapping, checksum을 그대로 상속해야 한다.
+- B6R-P1이 실행되더라도 legacy 기본 모델·manifest를 덮어쓰거나 safety authority를 부여할 수 없고 test split은 모델 선택·튜닝에 사용할 수 없다.
 
 ## Required Reading Order for Future Agents
 
@@ -72,6 +84,8 @@ B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 prov
 5. 직접 선행 stage의 manifest와 artifact
 6. roadmap이 요구하는 stage-specific source, test, runtime 파일
 
+Public 보조 흐름을 수행하는 agent는 위 순서에 더해 `B6R-P0` 보고서, contract, validation result를 읽고 `PUBLIC_SDT_ONLY_NOT_MI48` 경계를 상속한다.
+
 ## Working Rules
 
 1. `git fetch origin` 후 `feature/thermal-b6r-development`로 진입하고 `git pull --ff-only origin feature/thermal-b6r-development`를 수행한다.
@@ -80,3 +94,5 @@ B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 prov
 4. stage별 전용 보고서를 `docs/reports/`에 생성하고 명시적 경로만 stage한다.
 5. stage 결과와 정확한 commit SHA를 이 인덱스에 반영한 뒤 같은 활성 브랜치에 push하고 멈춘다.
 6. `main` 통합 PR은 사용자가 milestone 범위를 명시적으로 승인할 때만 준비한다.
+7. `B6R-P*`는 기존 B6R-0~14와 별도 identity를 사용한다. public dataset/model을 MI48로 재명명하지 않고 legacy model/default manifest를 수정하지 않는다.
+8. `B6R-P1` 이후 학습은 TRAIN만 fit하고 DEVELOPMENT만 선택에 사용하며 `LOCKED_PUBLIC_TEST`는 명시적으로 승인된 최종 public 평가 전까지 metric·선택·튜닝 경로에서 열지 않는다.

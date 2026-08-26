@@ -10,6 +10,9 @@ tmp/
 # checksums in tracked manifests; do not commit the source payloads.
 /datasets/raw_archives/
 /datasets/thermal/
+# B6R-P0 materialized arrays/provenance remain local; only the explicitly
+# force-added contract and manifest evidence are versioned.
+/datasets/thermal/materialized/B6R-P0_public_sdt_v1/
 /datasets/mmwave/raw/
 
 # D2 LOCKED_PUBLIC_CROSS_DEVICE_TEST payload. Opaque blob only; never Git-track.

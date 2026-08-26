@@ -1,0 +1,44 @@
+{
+  "label_mapping": {
+    "mapping_id": "SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1",
+    "semantic_limit": "Source token 0 is a lying/fallen posture proxy and is not evidence of a real fall event.",
+    "source_token_to_target": {
+      "0": 2,
+      "1": 1,
+      "2": 1,
+      "3": 0
+    },
+    "target_classes": {
+      "0": "NOT_HUMAN",
+      "1": "HUMAN_NORMAL",
+      "2": "HUMAN_FALL_PROXY"
+    }
+  },
+  "normalization": "per-frame (x-min)/(max-min); zero tensor when max==min",
+  "output_dtype": "float32",
+  "output_range": [
+    0.0,
+    1.0
+  ],
+  "output_shape": [
+    62,
+    80,
+    1
+  ],
+  "preprocessing_id": "PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1",
+  "resize_geometry_hw": [
+    62,
+    80
+  ],
+  "resize_kernel": "PIL_BILINEAR",
+  "schema_version": "safenest.thermal.b6r_p0.preprocessing_contract.v1",
+  "source_geometry_hw": [
+    480,
+    640
+  ],
+  "source_selection": {
+    "excluded_member_family": "image_d",
+    "included_member_family": "image_t",
+    "label_field_index": 0
+  }
+}

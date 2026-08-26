@@ -1,0 +1,131 @@
+{
+  "schema_version": "safenest.thermal.b6r_p0.public_sdt_contract.v1",
+  "stage_id": "B6R-P0",
+  "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+  "dataset_authority": "PUBLIC_SDT_ONLY_NOT_MI48",
+  "source_location_id": "WORKSPACE_THERMAL_DATASET_ARCHIVES",
+  "source_payload_policy": {
+    "read_only": true,
+    "extract_to_source_directory": false,
+    "persist_absolute_paths": false,
+    "git_track_source_or_materialized_payload": false
+  },
+  "splits": {
+    "train": {
+      "role": "TRAIN",
+      "sample_count": 32000,
+      "archive_parts": [
+        "train.zip.001",
+        "train.zip.002",
+        "train.zip.003",
+        "train.zip.004"
+      ],
+      "label_member": "train/labels.txt",
+      "image_member_template": "train/image_t_{index}.png"
+    },
+    "validation": {
+      "role": "DEVELOPMENT",
+      "sample_count": 8000,
+      "archive_parts": [
+        "validation.zip"
+      ],
+      "label_member": "validation/labels.txt",
+      "image_member_template": "validation/image_t_{index}.png"
+    },
+    "test": {
+      "role": "LOCKED_PUBLIC_TEST",
+      "sample_count": 8000,
+      "archive_parts": [
+        "test.zip"
+      ],
+      "label_member": "test/labels.txt",
+      "image_member_template": "test/image_t_{index}.png"
+    }
+  },
+  "source_archive_registry": {
+    "test.zip": {
+      "size_bytes": 1740348425,
+      "sha256": "3a838bd70835e579ecfaa820a6c0b4cbc6ba7b76729417c73845f0c959281449"
+    },
+    "train.zip.001": {
+      "size_bytes": 4194304000,
+      "sha256": "9dd2f944f43209dd44463956b7b34030daecc22bf49050478e77aae27c48dbc4"
+    },
+    "train.zip.002": {
+      "size_bytes": 4194304000,
+      "sha256": "91be187a432e21c6020928d115d1394ccf540cc6addac8f064a7b181cabe2259"
+    },
+    "train.zip.003": {
+      "size_bytes": 4194304000,
+      "sha256": "a2e263e0a9024363d787a335ad8641d2a73ee61129d7cb2eb1cffa32b16e1187"
+    },
+    "train.zip.004": {
+      "size_bytes": 1408015891,
+      "sha256": "406160460568f387b9a84e392430ed2afe57aeb055d073ba93f722c3b0d3b071"
+    },
+    "validation.zip": {
+      "size_bytes": 3492475558,
+      "sha256": "06d52e24163d1fe243ebfbdb7d2dcef33fcc0a5ed0531ad81621ec1490af4f8f"
+    }
+  },
+  "source_selection": {
+    "included_member_family": "image_t",
+    "excluded_member_family": "image_d",
+    "label_field_index": 0
+  },
+  "label_mapping": {
+    "mapping_id": "SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1",
+    "source_token_to_target": {
+      "0": 2,
+      "1": 1,
+      "2": 1,
+      "3": 0
+    },
+    "target_classes": {
+      "0": "NOT_HUMAN",
+      "1": "HUMAN_NORMAL",
+      "2": "HUMAN_FALL_PROXY"
+    },
+    "semantic_limit": "Source token 0 is a lying/fallen posture proxy and is not evidence of a real fall event."
+  },
+  "preprocessing": {
+    "preprocessing_id": "PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1",
+    "source_geometry_hw": [
+      480,
+      640
+    ],
+    "resize_geometry_hw": [
+      62,
+      80
+    ],
+    "resize_kernel": "PIL_BILINEAR",
+    "normalization": "per-frame (x-min)/(max-min); zero tensor when max==min",
+    "output_dtype": "float32",
+    "output_shape": [
+      62,
+      80,
+      1
+    ],
+    "output_range": [
+      0.0,
+      1.0
+    ]
+  },
+  "role_policy": {
+    "preserve_source_splits": true,
+    "random_resplit": false,
+    "train_can_fit_parameters": true,
+    "validation_can_select_or_tune": true,
+    "test_can_select_or_tune": false,
+    "test_materialization_access": "INTEGRITY_AND_PROVENANCE_ONLY",
+    "test_metric_access_in_b6r_p0": false
+  },
+  "claim_boundary": {
+    "mi48_identity": false,
+    "physical_validation": false,
+    "competition_lock": false,
+    "default_runtime_activation": false,
+    "safety_authority": false,
+    "permitted_use": "public-data development, offline testing, and shadow-only integration"
+  }
+}

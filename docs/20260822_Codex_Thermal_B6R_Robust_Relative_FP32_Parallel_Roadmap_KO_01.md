@@ -1,6 +1,6 @@
 # SafeNest Thermal B6-R robust-relative FP32 병렬 개발 로드맵
 
-문서 상태: **실행 전 설계·승인용 로드맵**
+문서 상태: **B6R-0~14 설계·승인용 로드맵 + 2026-08-26 public-data 보조 흐름 실행 개정**
 
 대상 후보: `B6-R robust-relative FP32`
 
@@ -8,7 +8,34 @@
 
 작성일: `2026-08-22`
 
+실행 개정일: `2026-08-26` (`B6R-P0` 추가·실행)
+
 > 이 문서는 코드, 모델, 데이터, 임계값 또는 runtime을 구현하거나 변경하지 않는다. 향후 실행은 사용자가 명시적으로 승인한 **한 stage 또는 한 parallel wave**만 수행하고, 검증·증거 요약 후 반드시 멈춘다.
+
+### 2026-08-26 실행 개정 — public-data 보조 흐름을 추가한 이유
+
+권위 있는 `RP-X0_O2.6_MI48_FIELD_SNAPSHOT`을 현재 저장소·workspace·Git 원격에서 찾지 못해 `B6R-1`은 `INCONCLUSIVE`, `B6R-2`는 `BLOCKED` 상태다. 반면 workspace의 public SDT archive 6개는 source checksum과 구조를 확인할 수 있었고, 사용자는 physical/MI48 C 계열을 당장 수행하지 않고 public data로 모델을 먼저 만드는 별도 경로를 명시적으로 승인했다.
+
+이에 기존 `B6R-0`~`B6R-14`의 순서·gate·판정을 변경하지 않고 `B6R-P*` 보조 흐름을 추가한다. 이 흐름의 성공은 MI48 gate를 통과시키지 않으며, physical 성능·competition lock·기본 runtime 교체·안전 권한의 근거가 되지 않는다.
+
+```text
+MI48 본선: B6R-1 INCONCLUSIVE → B6R-2 BLOCKED → 신규 MI48 근거 필요
+
+public 보조: B6R-P0 dataset materialization/split lock
+             → 사용자 별도 승인 시 B6R-P1 controlled training
+             → offline/shadow-only 후보
+```
+
+`B6R-P0`에서 실제 수행된 내용은 다음과 같다.
+
+- archive를 압축 해제하거나 수정하지 않고 read-only stream으로 `image_t`와 label만 처리했다.
+- 원본 split을 섞지 않고 train `32,000`, validation `8,000`, test `8,000`을 각각 `TRAIN`, `DEVELOPMENT`, `LOCKED_PUBLIC_TEST`로 고정했다.
+- `480×640` 16-bit PNG를 PIL bilinear로 `(62,80)`에 resize하고 frame-wise min-max `[0,1]` float32 tensor를 materialize했다.
+- 48,000개 모두에 source archive/member, label record, source PNG SHA-256, derived tensor SHA-256을 연결했다.
+- 전수 재실행 stream hash 일치와 원본 archive 6개의 처리 전·후 size·mtime·SHA-256 불변을 확인했다.
+- test는 materialization·무결성·provenance 확인에만 접근했고 모델 선택·튜닝·metric 계산에는 사용하지 않았다.
+
+앞으로 public-data 모델 작업은 반드시 `B6R-P0`의 dataset/preprocessing/label/split identity를 상속해야 한다. 기존 `thermal_prep.py`처럼 세 split을 병합하거나 `thermal_train.py`처럼 재무작위 분할해서는 안 되며, 기존 legacy model·manifest를 덮어쓰면 안 된다.
 
 ## A. Executive Roadmap
 
@@ -83,6 +110,31 @@ P1 TRAIN-global z-score
 | `B6R-12` Sensor-Fusion Safety Narrow Patch | thermal-only emergency authority를 필요한 만큼만 제한 | 현재 risk path가 `HUMAN_FALL_PROXY` 하나로 strongest danger를 만들 수 있는가? | `B6R-11` usable 판정; read-only risk/API audit | `B6R-12_safety_integration`, narrow patch, fusion truth table, regression evidence | thermal supporting-evidence 원칙, mmWave/temporal 조건, fail-closed 회귀 검증 PASS |
 | `B6R-13` Physical MI48 End-to-End Validation | physical sensor, Pi, B6-R, temporal, risk 경계를 실제로 검증 | raw capture부터 telemetry/risk까지 장시간 안정적이며 fault injection에 안전한가? | Thermal44 backend usable; `B6R-10`~`B6R-12` | `B6R-13_physical_e2e`, session manifests, latency/health logs, fault results | scenario accounting 완료; crash/memory/fail-closed gate 판정; hardware 미검증 없음 또는 제한 명시 |
 | `B6R-14` Competition Candidate Lock | 재현·rollback 가능한 최종 후보를 고정 | 모든 artifact와 증거가 하나의 release identity로 연결되는가? | `B6R-11`~`B6R-13` 승인 결과 | `B6R-14_candidate_lock`, release manifest, checksums, rollback bundle, limitations | 모든 필수 gate PASS 또는 승인된 제한; legacy rollback 보존; owner 승인 |
+
+### B.0 Public-data 전용 보조 Stage Map
+
+아래 stage는 본선 `B6R-0`~`B6R-14`의 번호, 선행 조건 또는 gate를 대체하지 않는다.
+
+| Stage | 상태 | 목적 | 선행 조건 | 주요 산출물 | 다음 단계 진입 조건 |
+|---|---|---|---|---|---|
+| `B6R-P0` Public SDT Dataset Materialization & Split Contract | `PASS_WITH_LIMITATIONS` | 공개 SDT thermal frame을 재현 가능한 학습 입력으로 만들고 source split 역할을 잠금 | archive 6개 read-only 접근, 승인된 public-data 보조 흐름 | `PUBLIC_SDT_48000_THERMAL_ONLY_V1`, split별 NPY/provenance, contract, source/determinism audit | validator 통과; test tuning 금지; public-only claim boundary 고정 |
+| `B6R-P1` Public SDT Controlled Training | `NOT_STARTED` | P0의 TRAIN/DEVELOPMENT만으로 별도 실험 모델을 학습하고 후보 identity를 생성 | 사용자의 별도 stage 승인, P0 exact contract/checksum, training runtime | 별도 model/checkpoint/run manifest; legacy와 분리된 selector identity | validation 기반 결과와 limitation 기록; test·MI48 미사용; default activation `false` |
+
+#### `B6R-P0` — Public SDT Dataset Materialization & Split Contract
+
+- **Entry Conditions:** source archive 6개가 registry checksum과 일치하고 read-only로 접근 가능하며, public-data 보조 흐름이 사용자에게 승인됨.
+- **Tasks:** multipart ZIP stream 처리, `image_t`·label 정렬, source split 보존, `(62,80)` resize와 normalization identity 동결, sample-level provenance 생성.
+- **Artifacts:** `config/thermal/b6r_p0_public_sdt_contract.json`, `datasets/thermal/manifests/B6R-P0_public_sdt_materialization/`, local-only `datasets/thermal/materialized/B6R-P0_public_sdt_v1/`.
+- **Validation:** 48,000 sample 전수 accounting, tensor↔provenance hash 1:1, split sample ID 비중복, deterministic 전수 재실행, source 전후 불변, machine artifact 절대경로 미포함.
+- **Exit Criteria:** public-data materialization validator `PASS_WITH_LIMITATIONS`; test role이 `LOCKED_PUBLIC_TEST`; `PUBLIC_SDT_ONLY_NOT_MI48` claim boundary가 명시됨.
+- **STOP Condition:** archive hash 변경, source/target label 불일치, random resplit, test tuning/selection 사용, MI48/physical/safety 성능으로의 승격.
+
+#### `B6R-P1` — Public SDT Controlled Training
+
+- **Entry Conditions:** 사용자의 별도 승인과 exact P0 contract/checksum. 이 roadmap 개정만으로 자동 승인되지 않는다.
+- **Required Inheritance:** train만 parameter fitting, validation만 개발 선택, test 접근 금지. `PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1`과 `SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1`을 변경하려면 새 public-data preprocessing stage가 필요하다.
+- **Deployment Boundary:** 새 model ID와 artifact 경로를 사용하고 legacy model·`models/model_manifest.json` default를 덮어쓰지 않는다. 생성 후보는 offline/shadow-only이며 `default_activation=false`, `safety_authority=false`다.
+- **STOP Condition:** 기존 `thermal_train.py`의 combined random split 또는 legacy model overwrite 경로 사용, test metric으로 epoch/threshold/model 선택, MI48·실제 낙상·physical 검증 주장.
 
 ### B.1 Stage별 실행 계약
 

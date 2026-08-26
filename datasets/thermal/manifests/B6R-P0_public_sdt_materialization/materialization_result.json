@@ -1,0 +1,31 @@
+{
+  "claim_boundary": {
+    "competition_lock": false,
+    "default_runtime_activation": false,
+    "mi48_identity": false,
+    "permitted_use": "public-data development, offline testing, and shadow-only integration",
+    "physical_validation": false,
+    "safety_authority": false
+  },
+  "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+  "environment": {
+    "numpy": "2.3.5",
+    "pillow": "12.3.0",
+    "platform": "Windows",
+    "python": "3.12.13"
+  },
+  "excluded_member_family": "image_d",
+  "payload_git_tracked": false,
+  "schema_version": "safenest.thermal.b6r_p0.materialization_result.v1",
+  "selected_member_family": "image_t",
+  "source_archives_extracted": false,
+  "source_archives_modified": false,
+  "split_sample_counts": {
+    "test": 8000,
+    "train": 32000,
+    "validation": 8000
+  },
+  "stage_id": "B6R-P0",
+  "status": "PASS",
+  "total_sample_count": 48000
+}

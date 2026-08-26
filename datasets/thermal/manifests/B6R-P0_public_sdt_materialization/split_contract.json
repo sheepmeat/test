@@ -1,0 +1,36 @@
+{
+  "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+  "random_resplit_performed": false,
+  "schema_version": "safenest.thermal.b6r_p0.split_contract.v1",
+  "source_splits_preserved": true,
+  "split_roles": {
+    "test": {
+      "role": "LOCKED_PUBLIC_TEST",
+      "sample_count": 8000,
+      "source_archive_parts": [
+        "test.zip"
+      ]
+    },
+    "train": {
+      "role": "TRAIN",
+      "sample_count": 32000,
+      "source_archive_parts": [
+        "train.zip.001",
+        "train.zip.002",
+        "train.zip.003",
+        "train.zip.004"
+      ]
+    },
+    "validation": {
+      "role": "DEVELOPMENT",
+      "sample_count": 8000,
+      "source_archive_parts": [
+        "validation.zip"
+      ]
+    }
+  },
+  "subject_or_session_group_isolation_claimed": false,
+  "test_access_in_stage": "MATERIALIZATION_INTEGRITY_PROVENANCE_ONLY",
+  "test_metrics_computed": false,
+  "test_selection_or_tuning_allowed": false
+}
