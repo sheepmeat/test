@@ -1,0 +1,20 @@
+{
+  "schema_version": "PUBABS-A5-FUTURE-AUTHORITY-MATRIX-V1",
+  "MODEL_INFERENCE_AUTHORITY": "MODEL_INFERENCE_ELIGIBLE_FOR_FUTURE_SEPARATE_PHASE",
+  "MODEL_INFERENCE_SCOPE_IF_AUTHORIZED": {
+    "allowed_role": "external_stress_or_domain_audit_only",
+    "forbidden_role": "final_selection_or_M_PV38_reopen_evidence",
+    "requires_separate_sol_authorization": true
+  },
+  "MEMBERSHIP_CONSTRUCTION_AUTHORITY": "MEMBERSHIP_CONSTRUCTION_ELIGIBLE_FOR_SEPARATE_PHASE",
+  "MEMBERSHIP_CONSTRUCTION_SCOPE_IF_AUTHORIZED": {
+    "identity": "PUBABS_C1_EXTERNAL_STRESS_V1",
+    "must_implement_two_layer_contract": true,
+    "must_not_construct_D1": true,
+    "requires_separate_sol_authorization": true
+  },
+  "M_PV38": "RESOURCE_BLOCKED_CLOSED_UNCHANGED",
+  "M_PV4": "UNAUTHORIZED",
+  "D2": "LOCKED",
+  "A5_executes_neither": true
+}

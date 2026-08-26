@@ -1,0 +1,34 @@
+{
+  "schema_version": "PUBABS-A5-SUBJECT-COVERAGE-POLICY-V1",
+  "route": "A5_ROUTE_EXTERNAL_SAFETY_STRESS_ONLY",
+  "source_present_subjects": {
+    "N1": 11,
+    "N2": 11,
+    "N3": 11,
+    "N4": 11,
+    "N5": 11,
+    "N6": 11
+  },
+  "valid_present_subset_counts": {
+    "N1": 1,
+    "N2": 1,
+    "N3": 9,
+    "N4": 8,
+    "N5": 6,
+    "N6": 0
+  },
+  "final_selection_subject_requirements": {
+    "applicable": false,
+    "reason": "Route A rejected; final-selection subject thresholds not authorized for C1"
+  },
+  "external_stress_subject_requirements": {
+    "applicable": true,
+    "report_all_source_subjects_N1_to_N6": true,
+    "report_zero_valid_subjects_explicitly": true,
+    "minimum_subjects_with_ge1_valid_for_layer2_descriptive_tables": null,
+    "note": "No model-utility-derived quotas. Layer-2 tables MUST show N6=0 and N1/N2 singleton VALID counts as coverage limitations, not as repaired populations.",
+    "concentration_disclosure_required": true,
+    "blocking_for_final_selection_if_any_subject_zero_valid": true
+  },
+  "governance_principle": "VALID_34 subject skew (esp. N6=0) is BLOCKING for final-selection membership; for external stress it is a mandatory disclosed limitation, not a fix target."
+}

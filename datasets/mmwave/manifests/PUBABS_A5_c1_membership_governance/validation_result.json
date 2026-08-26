@@ -1,0 +1,31 @@
+{
+  "schema_version": "PUBABS-A5-VALIDATION-RESULT-V1",
+  "phase": "PUBABS-A5",
+  "date": "2026-08-26",
+  "base_sha": "70886357a859bd46b8b1cd77da1c9d0837188975",
+  "frozen_contract_hash": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+  "selected_primary_route": "A5_ROUTE_EXTERNAL_SAFETY_STRESS_ONLY",
+  "proposed_identity": "PUBABS_C1_EXTERNAL_STRESS_V1",
+  "a5_governance_verdict": "A5_EXTERNAL_STRESS_GOVERNANCE_READY",
+  "next_phase_recommendation": "RECOMMEND_EXTERNAL_STRESS_CONTRACT_IMPLEMENTATION",
+  "membership_constructed": false,
+  "model_inference": "NOT_EXECUTED",
+  "adapter_rules_unchanged": true,
+  "historical_r1_unchanged": true,
+  "d1_unchanged": true,
+  "m_pv38_status": "RESOURCE_BLOCKED_CLOSED",
+  "m_pv4": "UNAUTHORIZED",
+  "d2": "LOCKED",
+  "a4_axes_accepted_without_downgrade": {
+    "AVAILABILITY_CLASS_NEUTRALITY": "NOT_SUPPORTED",
+    "VALID_SUBSET_REPRESENTATIVENESS": "NOT_SUPPORTED",
+    "TEMPORAL_ACQUISITION_COMPARABILITY": "NOT_SUPPORTED",
+    "ADAPTER_AVAILABILITY_LEAKAGE": "HIGH_RISK",
+    "PATH_METADATA_LEAKAGE": "LOW_RISK",
+    "SELECTED_BIN_CONFOUND_RISK": "MEDIUM_RISK",
+    "TRAIN_ZSCORE_SCALE_RISK": "HIGH",
+    "CROSS_SENSOR_DOMAIN_RISK": "HIGH_RISK"
+  },
+  "report": "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A5_C1_Public_Membership_Governance_Design_01.md",
+  "manifest_dir": "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/"
+}

@@ -1,0 +1,15 @@
+{
+  "schema_version": "PUBABS-A5-DOMAIN-ROLE-POLICY-V1",
+  "c1_domain": "robot-mounted through-wall UWB (SLMX4/Novelda X4 lineage)",
+  "target_domain": "SafeNest MR60-derived ROLE_L",
+  "eligibility": {
+    "final_selection_evidence": "NOT_ELIGIBLE",
+    "external_domain_evidence": "ELIGIBLE_WITH_LIMITATIONS",
+    "negative_control_evidence": "ELIGIBLE_WITH_LIMITATIONS",
+    "availability_stress_evidence": "ELIGIBLE",
+    "research_only_evidence": "ALWAYS_PERMITTED_NON_DECISION"
+  },
+  "domain_equivalence_claimed": false,
+  "CROSS_SENSOR_DOMAIN_RISK": "HIGH_RISK",
+  "disclaimer_required_on_all_downstream_reports": "C1 is out-of-domain relative to MR60 ROLE_L; external stress results are not in-domain SafeNest selection evidence."
+}
