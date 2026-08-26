@@ -118,7 +118,7 @@ P1 TRAIN-global z-score
 | Stage | 상태 | 목적 | 선행 조건 | 주요 산출물 | 다음 단계 진입 조건 |
 |---|---|---|---|---|---|
 | `B6R-P0` Public SDT Dataset Materialization & Split Contract | `PASS_WITH_LIMITATIONS` | 공개 SDT thermal frame을 재현 가능한 학습 입력으로 만들고 source split 역할을 잠금 | archive 6개 read-only 접근, 승인된 public-data 보조 흐름 | `PUBLIC_SDT_48000_THERMAL_ONLY_V1`, split별 NPY/provenance, contract, source/determinism audit | validator 통과; test tuning 금지; public-only claim boundary 고정 |
-| `B6R-P1` Public SDT Controlled Training | `NOT_STARTED` | P0의 TRAIN/DEVELOPMENT만으로 별도 실험 모델을 학습하고 후보 identity를 생성 | 사용자의 별도 stage 승인, P0 exact contract/checksum, training runtime | 별도 model/checkpoint/run manifest; legacy와 분리된 selector identity | validation 기반 결과와 limitation 기록; test·MI48 미사용; default activation `false` |
+| `B6R-P1` Public SDT Controlled Training | `PASS_WITH_LIMITATIONS` | P0의 TRAIN/DEVELOPMENT만으로 별도 실험 모델을 학습하고 후보 identity를 생성 | 사용자의 2026-08-26 별도 승인, P0 exact contract/checksum | `thermal_public_sdt_pooled_mlp_v1` NumPy model, metadata, run/history/validation manifest | development-only 결과와 limitation 기록; test·MI48 미사용; default activation `false`; TFLite/Pi는 새 stage |
 
 #### `B6R-P0` — Public SDT Dataset Materialization & Split Contract
 
@@ -131,9 +131,10 @@ P1 TRAIN-global z-score
 
 #### `B6R-P1` — Public SDT Controlled Training
 
-- **Entry Conditions:** 사용자의 별도 승인과 exact P0 contract/checksum. 이 roadmap 개정만으로 자동 승인되지 않는다.
+- **Entry Conditions:** 사용자가 2026-08-26 이 stage를 별도로 승인했고 exact P0 contract/checksum이 일치한다.
 - **Required Inheritance:** train만 parameter fitting, validation만 개발 선택, test 접근 금지. `PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1`과 `SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1`을 변경하려면 새 public-data preprocessing stage가 필요하다.
-- **Deployment Boundary:** 새 model ID와 artifact 경로를 사용하고 legacy model·`models/model_manifest.json` default를 덮어쓰지 않는다. 생성 후보는 offline/shadow-only이며 `default_activation=false`, `safety_authority=false`다.
+- **2026-08-26 Result:** TensorFlow/PyTorch가 없는 환경에서 NumPy-only `PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1`을 학습했다. adaptive mean pool `(8,10)` → 32-unit ReLU → 3-class softmax, parameter `2,691`, best epoch `40`, DEVELOPMENT accuracy `0.9070`, macro-F1 `0.9013`이다. seed `42`로 두 번 학습한 weight/history가 일치했고 test read count는 `0`이다.
+- **Deployment Boundary:** 새 model ID와 artifact 경로를 사용하고 legacy model·`models/model_manifest.json` default를 덮어쓰지 않는다. 생성 후보는 offline/shadow-only이며 `default_activation=false`, `safety_authority=false`다. TFLite export, Pi benchmark, runtime selector 변경은 이 stage의 결과가 아니다.
 - **STOP Condition:** 기존 `thermal_train.py`의 combined random split 또는 legacy model overwrite 경로 사용, test metric으로 epoch/threshold/model 선택, MI48·실제 낙상·physical 검증 주장.
 
 ### B.1 Stage별 실행 계약

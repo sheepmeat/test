@@ -43,7 +43,7 @@
 | Stage | Status | Report | Artifact | Commit | Notes |
 |---|---|---|---|---|---|
 | B6R-P0 | `PASS_WITH_LIMITATIONS` | `docs/reports/20260826_Codex_Thermal_B6R_B6R-P0_Public_SDT_Materialization_Report_KO_01.md` | `datasets/thermal/manifests/B6R-P0_public_sdt_materialization/`; local payload `datasets/thermal/materialized/B6R-P0_public_sdt_v1/` | delivery commit은 `git log` 참조 | public SDT 48,000개를 원본 split 그대로 materialize하고 전수 provenance·결정론·원본 불변 검증을 통과했다. MI48/physical/safety 근거는 아니다. |
-| B6R-P1 | `NOT_STARTED` | - | - | - | P0 exact identity를 상속하는 controlled training. 별도 사용자 승인이 필요하다. |
+| B6R-P1 | `PASS_WITH_LIMITATIONS` | `docs/reports/20260826_Codex_Thermal_B6R_B6R-P1_Public_SDT_Training_Report_KO_01.md` | `models/thermal/public_sdt/`; `datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/` | delivery commit은 `git log` 참조 | P0 exact identity의 TRAIN/DEVELOPMENT만 사용해 NumPy pooled-MLP 실험 모델을 생성했다. test read 0, legacy manifest 불변. TFLite/Pi/safety 권한은 별도 단계다. |
 
 ## Historical Source Branches
 
@@ -72,8 +72,9 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 `DUAL_PATH_WAITING_FOR_USER_INSTRUCTION`
 
 - MI48 본선: B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 provenance를 복구하고 B6R-1을 새 revision으로 재검증한 뒤 B6R-2를 다시 실행해야 한다.
-- Public 보조: 다음 후보는 `B6R-P1`이지만 자동 승인되지 않는다. 사용자가 한 stage로 명시적으로 승인해야 하며 P0의 train/validation/test 역할, preprocessing, label mapping, checksum을 그대로 상속해야 한다.
-- B6R-P1이 실행되더라도 legacy 기본 모델·manifest를 덮어쓰거나 safety authority를 부여할 수 없고 test split은 모델 선택·튜닝에 사용할 수 없다.
+- Public 보조: `B6R-P1`은 2026-08-26 사용자 승인으로 완료됐다. P0의 train/validation/test 역할, preprocessing, label mapping, checksum을 그대로 상속했다.
+- B6R-P1 결과도 legacy 기본 모델·manifest를 덮어쓰거나 safety authority를 부여하지 않는다. test split은 모델 선택·튜닝에 사용하지 않았다.
+- 다음 public 작업(TFLite export, Pi benchmark, runtime selector)은 P1 보고서 검토 후 별도 stage 승인 대상이다.
 
 ## Required Reading Order for Future Agents
 

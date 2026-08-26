@@ -1,0 +1,79 @@
+{
+  "schema_version": "safenest.thermal.b6r_p1.public_sdt_training_contract.v1",
+  "stage_id": "B6R-P1",
+  "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+  "dataset_authority": "PUBLIC_SDT_ONLY_NOT_MI48",
+  "predecessor_stage": "B6R-P0",
+  "predecessor_validation_artifact": "datasets/thermal/manifests/B6R-P0_public_sdt_materialization/validation_result.json",
+  "predecessor_validation_sha256": "7e7ff6d2b84c1ffe8feaa0379b36dcf07afabee7459ea8f9be7eaee7e819835b",
+  "input_policy": {
+    "train_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/train/images.npy",
+    "train_labels_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/train/labels.npy",
+    "development_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/images.npy",
+    "development_labels_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/labels.npy",
+    "test_path": null,
+    "test_access_policy": "FORBIDDEN_IN_B6R_P1",
+    "source_provenance_policy": "inherit_exact_P0_contract",
+    "random_resplit": false
+  },
+  "model": {
+    "model_id": "thermal_public_sdt_pooled_mlp_v1",
+    "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz",
+    "metadata_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.json",
+    "architecture_id": "PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1",
+    "input_shape": [
+      62,
+      80,
+      1
+    ],
+    "feature_contract": {
+      "operation": "adaptive_mean_pool",
+      "output_shape": [
+        8,
+        10
+      ],
+      "feature_count": 80,
+      "edge_policy": "integer_linspace_boundaries"
+    },
+    "hidden_units": 32,
+    "activation": "relu",
+    "output_units": 3,
+    "output_activation": "softmax",
+    "class_order": [
+      "NOT_HUMAN",
+      "HUMAN_NORMAL",
+      "HUMAN_FALL_PROXY"
+    ],
+    "parameter_count": 2691
+  },
+  "training": {
+    "optimizer": "deterministic_minibatch_sgd",
+    "seed": 42,
+    "epochs_max": 40,
+    "batch_size": 512,
+    "learning_rate": 0.05,
+    "l2": 0.0001,
+    "early_stopping_monitor": "development_loss",
+    "early_stopping_patience": 8,
+    "early_stopping_min_delta": 0.00001,
+    "shuffle_policy": "one_seeded_permutation_reused_each_epoch",
+    "initialization": "numpy_rng_seeded_normal_std_0.02_zero_bias"
+  },
+  "selection_policy": {
+    "development_can_select_best_epoch": true,
+    "test_can_select_or_tune": false,
+    "test_metrics_in_stage": false,
+    "selection_metric": "development_loss"
+  },
+  "deployment_boundary": {
+    "deployment_mode": "SHADOW_ONLY",
+    "default_activation": false,
+    "safety_authority": false,
+    "legacy_model_overwrite": false,
+    "model_manifest_default_update": false,
+    "mi48_claim": false,
+    "physical_validation_claim": false,
+    "competition_lock_claim": false,
+    "semantic_limit": "HUMAN_FALL_PROXY is a public posture proxy, not a real-fall or safety decision."
+  }
+}

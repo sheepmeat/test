@@ -1,0 +1,9 @@
+{
+  "best_epoch_equal": true,
+  "history_equal": true,
+  "history_sha256": "fbb6bb5242a9c0383093f826349c88812786fc2880447b59aa81b071c2ccaf07",
+  "schema_version": "safenest.thermal.b6r_p1.determinism_audit.v1",
+  "seed": 42,
+  "status": "PASS",
+  "weights_equal": true
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "safenest.thermal.b6r_p1.test_access_audit.v1",
+  "status": "PASS",
+  "test_array_open_count": 0,
+  "test_metrics_computed": false,
+  "test_path_configured": false,
+  "test_sample_count_read": 0,
+  "test_used_for_selection_or_tuning": false
+}

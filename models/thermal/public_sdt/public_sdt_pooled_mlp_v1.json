@@ -1,0 +1,73 @@
+{
+  "architecture": {
+    "activation": "relu",
+    "architecture_id": "PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1",
+    "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz",
+    "class_order": [
+      "NOT_HUMAN",
+      "HUMAN_NORMAL",
+      "HUMAN_FALL_PROXY"
+    ],
+    "feature_contract": {
+      "edge_policy": "integer_linspace_boundaries",
+      "feature_count": 80,
+      "operation": "adaptive_mean_pool",
+      "output_shape": [
+        8,
+        10
+      ]
+    },
+    "hidden_units": 32,
+    "input_shape": [
+      62,
+      80,
+      1
+    ],
+    "metadata_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.json",
+    "model_id": "thermal_public_sdt_pooled_mlp_v1",
+    "output_activation": "softmax",
+    "output_units": 3,
+    "parameter_count": 2691
+  },
+  "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz",
+  "artifact_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+  "best_epoch": 40,
+  "dataset_authority": "PUBLIC_SDT_ONLY_NOT_MI48",
+  "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+  "deployment_boundary": {
+    "competition_lock_claim": false,
+    "default_activation": false,
+    "deployment_mode": "SHADOW_ONLY",
+    "legacy_model_overwrite": false,
+    "mi48_claim": false,
+    "model_manifest_default_update": false,
+    "physical_validation_claim": false,
+    "safety_authority": false,
+    "semantic_limit": "HUMAN_FALL_PROXY is a public posture proxy, not a real-fall or safety decision."
+  },
+  "development_metrics": {
+    "accuracy": 0.907,
+    "loss": 0.3495067358016968,
+    "macro_f1": 0.901326741104394,
+    "predictions_sha256": "65efe9df3da592c9c01a4da0d1ab2709815009fe803a8b1f319d97fc1c3d7223",
+    "probabilities_sha256": "3b00401e800513bdc9b93f4e8eb5123060dfcc5ee380bb0d24f62ec46f7aab7f"
+  },
+  "development_sample_count": 8000,
+  "label_mapping_id": "SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1",
+  "legacy_model_overwrite": false,
+  "model_id": "thermal_public_sdt_pooled_mlp_v1",
+  "model_manifest_default_update": false,
+  "preprocessing_id": "PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1",
+  "schema_version": "safenest.thermal.b6r_p1.public_sdt_model_metadata.v1",
+  "stage_id": "B6R-P1",
+  "test_access_count": 0,
+  "test_metrics_computed": false,
+  "train_metrics": {
+    "accuracy": 0.9051875,
+    "loss": 0.341361939907074,
+    "macro_f1": 0.8992181110338578,
+    "predictions_sha256": "ff7f08891334d0abbe68aa91718048bb7cdeb9dcea321ce25ac410bcff0a3e8f",
+    "probabilities_sha256": "11c5b189aa6a50d6da2c5e02d4fc8e99d4824fce6b57f60e943c940888912cc0"
+  },
+  "train_sample_count": 32000
+}
