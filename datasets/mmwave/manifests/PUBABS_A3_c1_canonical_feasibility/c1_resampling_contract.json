@@ -1,0 +1,26 @@
+{
+  "schema_version": "PUBABS-A3-C1-RESAMPLING-V1",
+  "status": "TIMING_CONTRACT_INCOMPATIBLE",
+  "c1_timing": {
+    "timestamp_source": "MEASURED_TIMESTAMP_NS",
+    "measured_hz_approx": 18.8,
+    "regular_grid": false,
+    "note": "Irregular sample spacing; median cadence ~18.8 Hz"
+  },
+  "frozen_r1_requirements": {
+    "integer_source_rate_hz": true,
+    "integer_multiple_of_10_for_downsample": true,
+    "method": "scipy.signal.resample_poly Kaiser beta 8.6",
+    "large_gap": "FAIL_CLOSED if delta > 2.5/fs_source"
+  },
+  "probe_results_summary": {
+    "r1_with_measured_rate": "UNRESOLVABLE_TIME_GAP on all probed sessions",
+    "r1_with_integer_19hz": "UNRESOLVABLE_TIME_GAP on all probed sessions",
+    "noncanonical_linear_interp_then_r1": "ACCEPT structurally but NOT frozen-path compatible"
+  },
+  "corrective_needed": [
+    "Sol-authorized C1\u219210Hz timestamp resampling rule (anti-alias policy explicit)",
+    "OR Sol-authorized R1 extension for non-integer / irregular timestamp sources",
+    "Document max gap, edge handling, window start, determinism"
+  ]
+}
