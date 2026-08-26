@@ -1,0 +1,48 @@
+{
+  "schema_version": "PUBABS-A0A1-DOMAIN-CONFLICT-V1",
+  "phase": "PUBABS-A0A1",
+  "date": "2026-08-26",
+  "safenest_reference_domain": "Indoor MR60-like mmWave presence/respiration (SafeNest V2); M-PV3.8 ABSENT remains RESOURCE_BLOCKED_CLOSED",
+  "sources": [
+    {
+      "candidate_id": "C1",
+      "domain_conflict": "MEDIUM",
+      "factors": [
+        "Robot-mounted UWB through-wall classroom SAR",
+        "Complex 180-bin range profiles ~18.85 Hz vs SafeNest MR60 device domain",
+        "Not sealed SafeNest empty-zone capture"
+      ],
+      "sensor_independent_trace": "UNVERIFIED"
+    },
+    {
+      "candidate_id": "C2",
+      "domain_conflict": "MEDIUM",
+      "factors": [
+        "X4M200 UWB signs-of-life behind obstacles",
+        "17 Hz metadata cadence; amplitude/phase CSVs",
+        "Lab/outdoor no-presence mixes"
+      ],
+      "sensor_independent_trace": "UNVERIFIED"
+    },
+    {
+      "candidate_id": "C3",
+      "domain_conflict": "HIGH",
+      "factors": [
+        "Through-foliage outdoor SAR",
+        "Explicit wind/anemometer confound co-collected",
+        "Foliage motion vs human absence hard to separate without deep analysis"
+      ],
+      "sensor_independent_trace": "UNVERIFIED"
+    },
+    {
+      "candidate_id": "C4",
+      "domain_conflict": "HIGH",
+      "factors": [
+        "Automotive mmWave FMCW walking classification domain",
+        "Background as calibration/empty analysis in paper, not SafeNest sealed ABSENT",
+        "Single MAT file; not range-bin CSV contract aligned"
+      ],
+      "sensor_independent_trace": "UNVERIFIED"
+    }
+  ]
+}

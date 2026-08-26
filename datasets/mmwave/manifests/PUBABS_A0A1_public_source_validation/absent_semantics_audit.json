@@ -1,0 +1,53 @@
+{
+  "schema_version": "PUBABS-A0A1-ABSENT-SEMANTICS-V1",
+  "phase": "PUBABS-A0A1",
+  "date": "2026-08-26",
+  "sources": [
+    {
+      "candidate_id": "C1",
+      "no_human_semantics": "VERIFIED",
+      "evidence": [
+        "Zip folder Data/Empty_space/ with 11 plot_data.csv sessions",
+        "Zenodo metadata: 11 human-absence sessions; N0 described as subject absence (folder named Empty_space in this record)",
+        "CSV prefix opened: valid complex radar observations without human-presence folder co-location"
+      ],
+      "sealed_empty_zone_contract_for_m_pv38": false,
+      "notes": "Strong public ABSENT-class source candidate; does not reopen or satisfy M-PV3.8 sealed empty-zone capture contract."
+    },
+    {
+      "candidate_id": "C2",
+      "no_human_semantics": "VERIFIED",
+      "prior_status": "PARTIALLY_VERIFIED",
+      "evidence": [
+        "Zip path class No human Presence/ (28 entries)",
+        "Metadata: includes case where no human is present within radar detection area",
+        "Opened full amplitude CSV: clean amplitude_NoPresence Out 15mins4.csv (8818x109 floats)"
+      ],
+      "sealed_empty_zone_contract_for_m_pv38": false,
+      "notes": "Path+file open upgrades no_human from PARTIALLY_VERIFIED to VERIFIED for source-validation gate."
+    },
+    {
+      "candidate_id": "C3",
+      "no_human_semantics": "VERIFIED_BY_ARCHIVE_NAME_AND_METADATA",
+      "evidence": [
+        "Explicit Absence.zip on Zenodo",
+        "Metadata: 127 human-absence sessions × 150 s"
+      ],
+      "sealed_empty_zone_contract_for_m_pv38": false,
+      "notes": "Semantics explicit, but foliage/wind confound keeps gate at research-only; no deep payload open."
+    },
+    {
+      "candidate_id": "C4",
+      "no_human_semantics": "UNVERIFIED",
+      "membership_use": "REJECT",
+      "evidence": [
+        "Background.zip contains only Background/adc_Data.mat",
+        "Companion paper quotes 'background in absence of subjects' / 'background without any subject' (PARTIAL)",
+        "Zenodo record text does not seal Background.zip as empty-zone ABSENT contract evidence",
+        "MAT contents not opened"
+      ],
+      "sealed_empty_zone_contract_for_m_pv38": false,
+      "notes": "PARTIAL paper support is insufficient for ABSENT membership source."
+    }
+  ]
+}

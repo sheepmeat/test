@@ -1,0 +1,76 @@
+{
+  "schema_version": "PUBABS-A0A1-SOURCE-REGISTRY-V1",
+  "phase": "PUBABS-A0A1",
+  "date": "2026-08-26",
+  "base_sha": "d89a0c598eebce488d98cfadfac00f9aa68e0348",
+  "gate": "SOURCE_VALIDATION_ONLY",
+  "m_pv38_status": "RESOURCE_BLOCKED_CLOSED",
+  "candidates": [
+    {
+      "candidate_id": "C1",
+      "short_name": "UniWA_robot_mounted_uwb_zenodo_15032859",
+      "title": "Victim Detection Using a Robot-Mounted UWB-Radar Platform",
+      "doi": "10.5281/zenodo.15032859",
+      "zenodo_record": "15032859",
+      "institution": "University of West Attica (UniWA)",
+      "sensor": "UWB pulsed radar (robot-mounted, through-wall SAR classroom)",
+      "primary_files": [
+        "Data.zip",
+        "CNN_Model.zip"
+      ],
+      "absent_path_label": "Data/Empty_space/",
+      "presence_path_label": "Data/N1..N6/",
+      "gate": "A_STRONG_SAME_DATASET_BOTH_CLASS",
+      "repo_leakage": "UNSEEN"
+    },
+    {
+      "candidate_id": "C2",
+      "short_name": "UniWA_X4M200_signs_of_life_zenodo_7679165",
+      "title": "Signs of life detection behind obstacles using an UWB radar sensor",
+      "doi": "10.5281/zenodo.7679165",
+      "zenodo_record": "7679165",
+      "institution": "University of West Attica (UniWA)",
+      "sensor": "Novelda X4M200 UWB",
+      "primary_files": [
+        "Signs of life detection behind obstacles using an UWB radar sensor.zip"
+      ],
+      "absent_path_label": "No human Presence/",
+      "presence_path_label": "Human Presence/",
+      "gate": "B_USABLE_WITH_LIMITATIONS",
+      "repo_leakage": "UNSEEN"
+    },
+    {
+      "candidate_id": "C3",
+      "short_name": "UniWA_foliage_zenodo_10815247",
+      "title": "A UWB Radar and Machine Learning-Based Tool for Detecting Victims Through Foliage in Search and Rescue Operations",
+      "doi": "10.5281/zenodo.10815247",
+      "zenodo_record": "10815247",
+      "institution": "University of West Attica (UniWA)",
+      "sensor": "UWB pulsed radar (through-foliage field)",
+      "primary_files": [
+        "Presence.zip",
+        "Absence.zip"
+      ],
+      "absent_path_label": "Absence.zip (explicit archive name)",
+      "presence_path_label": "Presence.zip",
+      "gate": "C_RESEARCH_ONLY",
+      "repo_leakage": "UNSEEN"
+    },
+    {
+      "candidate_id": "C4",
+      "short_name": "Gambi_mmwave_walking_background_zenodo_3824534",
+      "title": "Millimeter Wave Radar data of different people walking_part1",
+      "doi": "10.5281/zenodo.3824534",
+      "zenodo_record": "3824534",
+      "institution": "UNVERIFIED (Gambi et al. companion paper Electronics 2020)",
+      "sensor": "Automotive mmWave FMCW",
+      "primary_files": [
+        "Background.zip"
+      ],
+      "absent_path_label": "Background/adc_Data.mat",
+      "presence_path_label": "Fast/Slow walking RAR parts (not inspected as ABSENT source)",
+      "gate": "D_REJECT",
+      "repo_leakage": "UNSEEN"
+    }
+  ]
+}

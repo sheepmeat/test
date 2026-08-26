@@ -1,0 +1,39 @@
+{
+  "schema_version": "PUBABS-A0A1-SAME-DATASET-BOTH-CLASS-V1",
+  "phase": "PUBABS-A0A1",
+  "date": "2026-08-26",
+  "sources": [
+    {
+      "candidate_id": "C1",
+      "same_dataset_both_class": "YES",
+      "absent_class": "Empty_space (11 sessions)",
+      "presence_class": "N1–N6 (66 presence sessions per metadata)",
+      "shared_sensor_setup": true,
+      "notes": "Same Zenodo Data.zip; absence and presence under one release."
+    },
+    {
+      "candidate_id": "C2",
+      "same_dataset_both_class": "YES",
+      "absent_class": "No human Presence",
+      "presence_class": "Human Presence",
+      "shared_sensor_setup": true,
+      "notes": "Same Signs.zip; both classes in one archive."
+    },
+    {
+      "candidate_id": "C3",
+      "same_dataset_both_class": "YES",
+      "absent_class": "Absence.zip (127 sessions)",
+      "presence_class": "Presence.zip (141 sessions)",
+      "shared_sensor_setup": true,
+      "notes": "Paired archives from same UniWA foliage campaign."
+    },
+    {
+      "candidate_id": "C4",
+      "same_dataset_both_class": "UNVERIFIED",
+      "absent_class": "Background.zip (adc_Data.mat) — semantics UNVERIFIED/REJECT for membership",
+      "presence_class": "Fast/Slow walking RAR parts (not used as ABSENT evidence)",
+      "shared_sensor_setup": "UNVERIFIED",
+      "notes": "Even if walking classes exist, Background.zip is rejected as ABSENT membership source."
+    }
+  ]
+}
