@@ -1,0 +1,16 @@
+{
+  "schema_version": "MMWAVE-V2-POSTPUBABS-NEXT-ACTION-V1",
+  "verdict": "POSTPUBABS_ONLY_RESOURCE_BLOCKED_PATHS",
+  "primary_recommendation": "RECOMMEND_PHYSICAL_D1_RESOURCE_RECOVERY",
+  "why_primary": [
+    "Only Route A directly unblocks M-PV3.8 by supplying governed ABSENT for D1_FINAL_SELECTION_BOTH_CLASS_V1.",
+    "Repository evidence after C1 closure does not change ACQUISITION_REQUIRES_RESOURCE_ACCESS.",
+    "Existing public shortlist (C1b/C2/C3) remains UWB / non-MR60 and does not unlock final membership without inventing unauthorized governance.",
+    "C2 deep validation is not defaulted: expected critical-path value is low given C1 lessons."
+  ],
+  "why_not_c2_now": "C2 is UWB / behind-obstacle / different platform; C1 already showed same-dataset both-class UWB can be useful for external stress but was REJECTED for D1. Starting C2 would likely repeat an OFF_CRITICAL_PATH lane.",
+  "why_not_discovery_as_primary": "Target-domain public discovery is NOT_CURRENTLY_EVIDENCED and may help only if a new membership contract is later justified; it does not replace the frozen physical ABSENT requirement as the canonical unblocker.",
+  "option4_rejected": "RECOMMEND_NO_NEW_EVIDENCE_WORK is false as primary because resource recovery itself is the required critical-path action class (checklist/access), even though capture remains unauthorized.",
+  "execution_this_phase": "NOT_EXECUTED",
+  "sol_must_authorize_separately": true
+}

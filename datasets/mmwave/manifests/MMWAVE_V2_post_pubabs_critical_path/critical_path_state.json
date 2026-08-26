@@ -1,0 +1,62 @@
+{
+  "schema_version": "MMWAVE-V2-POSTPUBABS-CRITICAL-PATH-V1",
+  "phase": "MMWAVE-V2-POSTPUBABS-R0",
+  "date": "2026-08-27",
+  "base_sha": "d7f2421808a79e75afccb8f08b3a29c0f5a1f1fa",
+  "pr168_merge_commit": "d7f2421808a79e75afccb8f08b3a29c0f5a1f1fa",
+  "pr168_reviewed_head": "4ffe42fdd4c2b1e9017e89962ddf88daf14c8248",
+  "pubabs_c1": {
+    "closure_id": "PUBABS_C1_EXTERNAL_STRESS_TERMINAL_CLOSURE_V1",
+    "status": "CLOSED_WITH_LIMITATIONS",
+    "next_c1_phase": "NONE",
+    "authority": {
+      "candidate_lifecycle": "NONE",
+      "d1": "NONE",
+      "m_pv38": "NONE",
+      "m_pv4": "NONE"
+    }
+  },
+  "m_pv38": {
+    "status": "RESOURCE_BLOCKED_CLOSED",
+    "reason": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+    "membership_status": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "evaluation_status": "NOT_EXECUTED",
+    "exact_blocker": "D1_FINAL_SELECTION_BOTH_CLASS_V1 requires 57 PRESENT + 57 governed ABSENT; observed governed ABSENT = 0; physical ABSENT campaign remains RESOURCE_BLOCKED (sensor interface, occupancy evidence, and live preflight not available)."
+  },
+  "d1": {
+    "identity": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+    "expected": {
+      "PRESENT": 57,
+      "ABSENT": 57
+    },
+    "observed_governed": {
+      "PRESENT": 57,
+      "ABSENT": 0
+    },
+    "status": "UNCHANGED",
+    "c1_substitution": "FORBIDDEN"
+  },
+  "frozen_role_l_panel": [
+    "B11",
+    "B23",
+    "B47",
+    "C11",
+    "C23",
+    "C47"
+  ],
+  "panel_mutation_from_c1": "FORBIDDEN",
+  "m_pv4": "UNAUTHORIZED",
+  "d2": "LOCKED",
+  "pv4_pv3x_order": "ORDER_UNRESOLVED",
+  "model_ready_work": "NO",
+  "model_ready_rationale": "Final ROLE_L evaluation and selection require valid both-class membership; membership is blocked; C1 has no candidate lifecycle authority; no training/selection task satisfies prerequisites.",
+  "verdict": "POSTPUBABS_ONLY_RESOURCE_BLOCKED_PATHS",
+  "primary_recommendation": "RECOMMEND_PHYSICAL_D1_RESOURCE_RECOVERY",
+  "secondary_contingency": {
+    "action": "TARGET_DOMAIN_PUBLIC_SOURCE_DISCOVERY",
+    "status": "DEFER_OFF_CRITICAL_PATH_UNTIL_SOL_AUTHORIZES",
+    "note": "Justified only as contingency if physical resources remain unavailable; must target MR60/60GHz/FMCW-like same-system both-class evidence for possible NEW membership governance — not another UWB external-stress lane."
+  },
+  "report": "docs/mmwave/20260827_SafeNest_mmWave_V2_Post_PUBABS_Critical_Path_Reconciliation_01.md",
+  "manifest_dir": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/"
+}

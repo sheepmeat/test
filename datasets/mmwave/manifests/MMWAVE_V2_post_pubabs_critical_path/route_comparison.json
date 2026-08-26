@@ -1,0 +1,109 @@
+{
+  "schema_version": "MMWAVE-V2-POSTPUBABS-ROUTE-COMPARISON-V1",
+  "routes": [
+    {
+      "id": "ROUTE_A_PHYSICAL_D1_ABSENT",
+      "task": "Physical D1 ABSENT acquisition under frozen M-PV3.8.4 plan (3×3 slots → 57 ABSENT)",
+      "status": "RESOURCE_BLOCKED",
+      "dependency": "HW-01..04 sensor/mount/occupancy/host; SW tooling; EV occupancy proof; PP roles; live preflight PASS",
+      "unblocks_m_pv38": true,
+      "recommended_now": true,
+      "recommended_form": "resource recovery / readiness unlock — NOT capture authorization"
+    },
+    {
+      "id": "ROUTE_B_PUBLIC_AS_D1_REPLACEMENT",
+      "task": "Use existing public UWB sources (C1b/C2/C3) as silent D1 replacement",
+      "status": "UNAUTHORIZED",
+      "dependency": "would require NEW separately governed membership contract + Sol approval",
+      "unblocks_m_pv38": false,
+      "recommended_now": false,
+      "note": "C1 already REJECTED for D1 replacement; A9 forbids retroactive C1 merge"
+    },
+    {
+      "id": "ROUTE_C_PUBLIC_EXTERNAL_STRESS_ONLY",
+      "task": "Another C1-like external OOD stress lane (e.g. C2)",
+      "status": "OFF_CRITICAL_PATH",
+      "dependency": "separate Sol authorization",
+      "unblocks_m_pv38": false,
+      "recommended_now": false,
+      "note": "Scientifically possible as supplementary evidence; does not populate D1 or reopen M-PV3.8"
+    },
+    {
+      "id": "ROUTE_D_TARGET_DOMAIN_PUBLIC",
+      "task": "Public evidence closer to MR60 / 60 GHz FMCW same-system both-class",
+      "status": "NOT_CURRENTLY_EVIDENCED",
+      "dependency": "new Sol-authorized discovery phase if chosen",
+      "unblocks_m_pv38": "CONDITIONAL_ONLY_IF_NEW_MEMBERSHIP_CONTRACT_LATER",
+      "recommended_now": false,
+      "recommended_as": "secondary contingency DEFER"
+    },
+    {
+      "id": "ROUTE_E_MPV4_D2",
+      "task": "Advance M-PV4 or open D2",
+      "status": "UNAUTHORIZED",
+      "dependency": "valid M-PV3.8 selection first",
+      "unblocks_m_pv38": false,
+      "recommended_now": false
+    },
+    {
+      "id": "ROUTE_F_PV4_PV3X_ORDER",
+      "task": "Resolve PV4↔PV3X ordering",
+      "status": "DEFER",
+      "dependency": "valid M-PV3.8 selection exists",
+      "unblocks_m_pv38": false,
+      "recommended_now": false
+    }
+  ],
+  "known_public_sources": [
+    {
+      "id": "C1",
+      "doi": "10.5281/zenodo.15032859",
+      "post_a9_status": "CLOSED_WITH_LIMITATIONS",
+      "role": "EXTERNAL_STRESS_SUPPLEMENTARY_ONLY",
+      "d1_eligibility": "REJECTED",
+      "critical_path_value": "NONE_FURTHER"
+    },
+    {
+      "id": "C1b",
+      "doi": "10.5281/zenodo.16533267",
+      "prior_role": "REFERENCE_ONLY_EXTENDED_LINEAGE",
+      "relation_to_c1": "SAME_BROADER_ROBOT_MOUNTED_UWB_FAMILY_NOT_INDEPENDENT",
+      "status": "DEFER",
+      "likely_role_if_opened": "EXTERNAL_STRESS_OR_REFERENCE_ONLY",
+      "unblocks_m_pv38": false,
+      "recommended_now": false
+    },
+    {
+      "id": "C2",
+      "doi": "10.5281/zenodo.7679165",
+      "prior_gate": "B_USABLE_WITH_LIMITATIONS",
+      "domain": "Novelda X4M200 UWB behind-obstacle",
+      "license": "CC BY-NC-SA 4.0",
+      "status": "OFF_CRITICAL_PATH",
+      "possible_roles_if_authorized": [
+        "external_stress_only",
+        "research_only",
+        "new_membership_governance_investigation_unlikely_without_target_domain_fit"
+      ],
+      "unblocks_m_pv38": false,
+      "recommended_now": false,
+      "why_not_default": "Same class of cross-sensor UWB domain risk that led C1 to final-selection REJECTED; deep validation would likely yield supplementary stress, not D1 membership."
+    },
+    {
+      "id": "C3",
+      "doi": "10.5281/zenodo.10815247",
+      "prior_gate": "C_RESEARCH_ONLY",
+      "status": "DEFER",
+      "reason": "foliage/wind confounding",
+      "unblocks_m_pv38": false,
+      "recommended_now": false
+    },
+    {
+      "id": "C4",
+      "doi": "10.5281/zenodo.3824534",
+      "prior_gate": "D_REJECT",
+      "status": "REJECT",
+      "recommended_now": false
+    }
+  ]
+}

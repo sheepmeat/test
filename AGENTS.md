@@ -25,6 +25,8 @@
 
 - Follow `docs/20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md` as the active master roadmap for CO₂, Thermal, and integration sequencing.
 - Current mmWave V2 freeze/reopen/M-PV4 authority is `datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/lifecycle_closure_state.json`: `M-PV3.8=RESOURCE_BLOCKED_CLOSED`; this pointer overrides historical/future mmWave routing below.
+- PUBABS C1 public external-stress lane is terminal: `datasets/mmwave/manifests/PUBABS_A9_c1_external_stress_terminal_closure/` = `CLOSED_WITH_LIMITATIONS`; `NEXT_C1_PHASE=NONE`; do not create `PUBABS-A10` or reopen C1 except under the frozen A9 reopen policy. C1 has no D1 / M-PV3.8 / candidate-lifecycle authority.
+- Post-C1 critical-path reconciliation: `datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/` — primary next recommendation is physical D1 ABSENT **resource recovery** (`RECOMMEND_PHYSICAL_D1_RESOURCE_RECOVERY`); known UWB public shortlist (C1b/C2/C3) is not default next critical-path work; `MODEL_READY_WORK=NO`.
 - While frozen, do not start `M-N0` as the next V2 work; keep `M-N10` `KEEP_BLOCKED/OFF_V2_CRITICAL_PATH`; keep `D3` and `Q3` `DEFER`; do not reopen M-PV3.8, authorize capture, construct membership, or evaluate candidates.
 - `M-PV4` and D2 semantic use remain `UNAUTHORIZED`; `PV4↔PV3X` order remains `ORDER_UNRESOLVED`.
 - `docs/20260822_SafeNest_mmWave_Public_Multidomain_V2_Development_Roadmap_01.md` remains the active child roadmap for V2 structure but does not override the lifecycle closure.

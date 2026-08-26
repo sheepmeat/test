@@ -28,6 +28,7 @@
 - [PUBABS-A0A1 public ABSENT source validation (PASS_STRONG_PUBLIC_SOURCE_FOUND; M-PV3.8 unchanged)](mmwave/20260826_SafeNest_mmWave_PUBABS_A0A1_Public_Source_Validation_01.md)
 - [PUBABS-A2 C1 semantics/sensor-health/acquisition comparability (A2_STRONG_INTERNAL_BOTH_CLASS_SOURCE; A3 recommend only)](mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md)
 - [PUBABS-A3 C1 canonical ROLE_L conversion feasibility (A3_CORRECTIVE_REQUIRED)](mmwave/20260826_SafeNest_mmWave_PUBABS_A3_C1_Canonical_Conversion_Feasibility_01.md)
+- [Post-PUBABS V2 critical-path reconciliation (POSTPUBABS_ONLY_RESOURCE_BLOCKED_PATHS; RECOMMEND_PHYSICAL_D1_RESOURCE_RECOVERY; no C2 default)](mmwave/20260827_SafeNest_mmWave_V2_Post_PUBABS_Critical_Path_Reconciliation_01.md)
 - [PUBABS-A9 C1 external-stress evidence terminal closure (A9_C1_EXTERNAL_STRESS_LANE_CLOSED_WITH_LIMITATIONS; no next C1 phase; M-PV3.8 unchanged)](mmwave/20260827_SafeNest_mmWave_PUBABS_A9_C1_External_Stress_Evidence_Terminal_Closure_01.md)
 - [PUBABS-A8 C1 external stress inference 보고용 요약(KO) (DESCRIPTIVE_ONLY; Sol 리뷰용)](mmwave/20260827_SafeNest_mmWave_PUBABS_A8_C1_External_Stress_Inference_Reporting_KO_01.md)
 - [PUBABS-A8 C1 external stress inference execution (EXECUTION_COMPLETE; DESCRIPTIVE_ONLY; no ranking/winner)](mmwave/20260827_SafeNest_mmWave_PUBABS_A8_C1_External_Stress_Inference_Execution_01.md)
