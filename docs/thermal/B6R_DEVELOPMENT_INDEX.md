@@ -22,7 +22,7 @@
 |---|---|---|---|---|---|
 | B6R-0 | `FAIL` | `docs/reports/20260822_LunaMax_Agent2_Thermal_B6R0_Asset_Baseline_Verification_01.md` | `datasets/thermal/manifests/B6R-0_asset_baseline_verification/` | source `ee966f9186915a2364e81f944f45aabf22b7b71c`; merge `c70d994ecd4be666dd46e0b7b06872ee8f97f0f2` | B5 checkpoint와 B5 candidate binary가 materialize되지 않았고 TensorFlow/LiteRT 및 Pi 증거가 없다. |
 | B6R-1 | `INCONCLUSIVE` | `docs/reports/20260822_LunaMax_Agent1_Thermal_B6R1_MI48_Inventory_01.md` | `datasets/thermal/manifests/B6R-1_mi48_inventory/` | source `d87d452372cc890e85ec6c4d5ec117052be865df`; merge `d0c0c911eb2e27cf91d8f057d1cc9f9360c7fb6a` | authoritative MI48 snapshot을 찾지 못했고 MI48 eligible frame은 0이다. profiler와 focused test는 보존했다. |
-| B6R-2 | `NOT_STARTED` | - | - | - | B6R-1 data gate가 충족되지 않았다. |
+| B6R-2 | `BLOCKED` | `docs/reports/20260826_Codex_Thermal_B6R_B6R-2_Execution_Report_KO_01.md` | `datasets/thermal/manifests/B6R-2_dataset_contract/` | 이번 stage delivery commit (`git log` 및 최종 실행 결과 참조) | 권위 MI48/group/label/holdout evidence 부재와 B6R-1 checksum validator 실패로 계약·split 생성을 안전 중단했다. |
 | B6R-3 | `NOT_STARTED` | - | - | - | - |
 | B6R-4 | `NOT_STARTED` | - | - | - | - |
 | B6R-5 | `NOT_STARTED` | - | - | - | - |
@@ -54,13 +54,14 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 - B6R-0: TensorFlow/LiteRT runtime과 Raspberry Pi 하드웨어 증거가 없어 load, parity, latency, memory, stability를 검증할 수 없다.
 - B6R-1: authoritative MI48 raw snapshot이 접근 가능한 경로에 없고 외부 `SafeNestssd`가 mount되지 않았다.
 - B6R-1: 후보 archive의 MI48 identity가 해소되지 않았으며 식별된 eligible MI48 frame은 0이다.
-- B6R-2: session/label/split/holdout 계약을 만들 data gate가 충족되지 않았다.
+- B6R-1: 현재 checkout에서 standalone validator가 generated evidence 10개의 checksum mismatch로 실패한다.
+- B6R-2: session/label/split/holdout 계약을 만들 data gate가 충족되지 않았고 independent holdout이 없다.
 
 ## Next Authorized Stage
 
-`WAITING_FOR_USER_INSTRUCTION`
+`WAITING_FOR_USER_INSTRUCTION — B6R-2 RETRY REQUIRES B6R-1 DATA/CHECKSUM RECOVERY`
 
-통합 작업은 B6R-2 또는 이후 stage를 승인하지 않는다.
+B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 provenance를 복구하고 B6R-1을 새 revision으로 재검증한 뒤 B6R-2를 재실행해야 한다.
 
 ## Required Reading Order for Future Agents
 

@@ -1,0 +1,44 @@
+{
+  "artifact_id": "B6R-2_dataset_contract_prerequisite_blocker",
+  "schema_version": "safenest.thermal.b6r2.validation_result.v1",
+  "stage_id": "B6R-2",
+  "status": "BLOCKED",
+  "entry_gate": "FAIL",
+  "artifact_json_parse": "PASS",
+  "artifact_checksum_coverage": "PASS",
+  "b6r1_standalone_validator": {
+    "status": "FAIL",
+    "error_count": 10,
+    "error_code": "CHECKSUM_MISMATCH",
+    "b6r1_dataset_status": "INCONCLUSIVE"
+  },
+  "b6r1_profiler_synthetic_direct_harness": {
+    "status": "PASS",
+    "passed": 4,
+    "failed": 0,
+    "physical_mi48_evidence": false
+  },
+  "python_compile": "PASS",
+  "source_stat_comparison": {
+    "status": "PASS",
+    "registered_files": 6,
+    "current_files": 6,
+    "size_matches": 6,
+    "mtime_matches": 6
+  },
+  "holdout_access_count": 0,
+  "raw_source_modification_count": 0,
+  "historical_artifact_modification_count": 0,
+  "claims_allowed": [
+    "B6R-2 entry conditions are not satisfied in the current environment.",
+    "No group split, contamination metric, or independent holdout result was produced.",
+    "The current candidate archive set has the same six file names, sizes, and mtimes recorded by B6R-1."
+  ],
+  "claims_not_allowed": [
+    "The workspace candidate archives are authoritative MI48 data.",
+    "Subject-level or session-level isolation has passed.",
+    "An independent holdout exists or has been sealed.",
+    "B6R-3 preprocessing work is authorized.",
+    "Any MI48 accuracy, recall, F1, latency, or fall-event performance."
+  ]
+}
