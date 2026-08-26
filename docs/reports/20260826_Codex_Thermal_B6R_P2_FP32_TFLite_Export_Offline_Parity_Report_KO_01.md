@@ -142,7 +142,7 @@ metric computed: false
 selection/tuning use: false
 ```
 
-P2 contract와 구현은 test path를 받지 않는다. 사용한 데이터는 P0의 `DEVELOPMENT` validation split과 P1 artifact뿐이다. workspace의 `열화상_dataset` MI48/현장 후보는 사용하거나 변경하지 않았다.
+P2 contract와 구현은 test path를 받지 않는다. 사용한 데이터는 P0의 `DEVELOPMENT` validation split과 P1 artifact뿐이다. P0 source provenance의 현재 PC 위치는 `C:\Users\KIMTAEGYUN\Documents\ChatGPT\Thermal_AI\열화상_dataset`이며, 이 폴더는 public SDT source archive이지 MI48/현장 후보가 아니다. P2는 source archive를 직접 재처리하거나 변경하지 않았고 `Desktop/sessions`도 사용하지 않았다. source·derived payload·경로 정책의 전체 설명은 `docs/reports/20260826_Codex_Thermal_B6R_B6R-P0_Public_SDT_Materialization_Report_KO_01.md`와 B6R roadmap의 current PC path registry를 따른다.
 
 ## 12. Legacy / Runtime 변경 Audit
 

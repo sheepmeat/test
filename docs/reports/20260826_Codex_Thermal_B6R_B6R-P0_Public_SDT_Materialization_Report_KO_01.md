@@ -38,6 +38,21 @@
 | test policy | materialization·무결성·provenance 확인만 허용; model selection·tuning·metric 금지 |
 | Git policy | contract·검증 evidence만 추적; 약 1GB materialized payload는 local-only |
 
+### 3.1 현재 작업 PC 경로
+
+이번 보고서의 `source_location_id=WORKSPACE_THERMAL_DATASET_ARCHIVES`는 현재 PC에서 다음 source directory로 확인된다.
+
+- public SDT source archive: `C:\Users\KIMTAEGYUN\Documents\ChatGPT\Thermal_AI\열화상_dataset`
+- source files: `test.zip`, `train.zip.001~.004`, `validation.zip`
+- B6R 저장소 root: `C:\Users\KIM TAEGYUN\Documents\ChatGPT\Thermal_AI\test`
+- local materialized output: `<B6R 저장소 root>\datasets\thermal\materialized\B6R-P0_public_sdt_v1`
+- tracked evidence: `<B6R 저장소 root>\datasets\thermal\manifests\B6R-P0_public_sdt_materialization`
+- contract: `<B6R 저장소 root>\config\thermal\b6r_p0_public_sdt_contract.json`
+
+source directory의 6개 archive는 현재 파일 크기와 P0 contract의 SHA-256이 `6/6` 일치한다. 절대 경로는 사람용 실행 안내로만 기록하며, contract·manifest에는 절대 경로를 저장하지 않는다. `열화상_dataset`은 public SDT source이지 MI48 field snapshot이나 `Desktop/sessions` 실제 capture가 아니다.
+
+현재 Codex 환경에서는 사용자 profile 표기가 `KIMTAEGYUN`과 `KIM TAEGYUN` 두 형태로 노출되므로, source path가 없는 환경에서는 문자열을 바꾸어 추측하지 말고 `Test-Path`와 archive checksum을 확인한다.
+
 ## 4. 수행한 작업
 
 1. 기존 B6R roadmap, B6R-0~2 보고서·manifest, runtime과 legacy `thermal_prep.py`/`thermal_train.py`를 재검토했다.

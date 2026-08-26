@@ -8,6 +8,7 @@
 - 외부 원본: `Desktop/sessions/` (원본은 저장소에 복사하지 않음)
 - 목적: 실제 센서 수집 폴더가 B6R 본선과 B6R-P public 보조 흐름의 어떤 조건을 충족하는지 read-only로 판단
 - 최종 상태: `INCONCLUSIVE / NON-GATING`
+- 이번 보완: 현재 작업 PC의 `sessions`·`열화상_dataset`·P0 materialized payload 실제 위치와 source identity를 문서화
 - 변경 범위: 원본 센서 파일과 runtime/model을 수정하지 않았고, 저장소에는 이 보고서와 roadmap/index 문서만 반영
 
 이 package는 새로운 B6R 본선 stage를 통과시키는 실행이 아니다. 외부에서 전달된 실제 수집 기록을 다음 에이전트가 잘못 학습·holdout·physical 증거로 승격하지 않도록 현재 gate와 재개 조건을 기록하는 목적이다.
@@ -177,7 +178,39 @@ P2의 FP32 TFLite parity 성공은 export 기술 위험을 줄였지만, `sessio
 - 세션별 validation JSON에는 checksum, frame validity, raw integrity, temporal provenance, model-use eligibility가 기록되어 있다.
 - 이 보고서 작성에서는 외부 원본을 저장소로 복사하거나 변경하지 않았다.
 
-## 10. Exit Criteria와 STOP
+## 10. 현재 작업 PC 경로 registry
+
+아래 절대 경로는 다음 에이전트가 현재 작업 PC에서 파일을 찾기 위한 **사람용 참고 정보**다. portable contract·manifest에는 절대 경로를 저장하지 않고, 아래의 저장소 상대 경로와 logical source ID를 계속 사용한다.
+
+| 역할 | 현재 PC에서 확인한 위치 | 상태·용도 |
+|---|---|---|
+| 실제 센서 capture | `C:\Users\KIMTAEGYUN\Desktop\sessions` | 5개 `Thermal-90` pilot session, raw/native/annotation/checksum/validation. 학습·final holdout용 아님 |
+| public SDT 원본 archive | `C:\Users\KIMTAEGYUN\Documents\ChatGPT\Thermal_AI\열화상_dataset` | `test.zip`, `train.zip.001~.004`, `validation.zip` 6개. P0 contract의 size·SHA-256과 `6/6` 일치 |
+| 현재 B6R 저장소 root | `C:\Users\KIM TAEGYUN\Documents\ChatGPT\Thermal_AI\test` | active Git checkout, `feature/thermal-b6r-development` |
+| P0 파생 local payload | `<B6R 저장소 root>\datasets\thermal\materialized\B6R-P0_public_sdt_v1` | 48,000개 `(62,80,1)` float32 배열. `.gitignore` 대상 local-only |
+| P0 tracked evidence | `<B6R 저장소 root>\datasets\thermal\manifests\B6R-P0_public_sdt_materialization` | contract snapshot, source immutability, split/provenance/checksum/validation evidence |
+| P0 contract | `<B6R 저장소 root>\config\thermal\b6r_p0_public_sdt_contract.json` | source logical ID `WORKSPACE_THERMAL_DATASET_ARCHIVES`, archive names·hash·split·claim boundary |
+
+현재 Codex 환경에서는 사용자 profile 표기가 `KIMTAEGYUN`과 `KIM TAEGYUN` 두 형태로 노출된다. 위 source/capture 경로의 space 표기 variant도 `Test-Path`로 확인되므로, 다음 agent는 문자열을 추측해 바꾸지 말고 현재 process에서 존재하는 경로를 사용한다.
+
+### 10.1 `열화상_dataset` source 상세
+
+실제 source directory에는 다음 6개 파일이 있고 총 크기는 `19,223,751,874 bytes`다.
+
+| 파일 | 크기(bytes) | P0 source registry SHA-256 일치 |
+|---|---:|---|
+| `test.zip` | 1,740,348,425 | `PASS` |
+| `train.zip.001` | 4,194,304,000 | `PASS` |
+| `train.zip.002` | 4,194,304,000 | `PASS` |
+| `train.zip.003` | 4,194,304,000 | `PASS` |
+| `train.zip.004` | 1,408,015,891 | `PASS` |
+| `validation.zip` | 3,492,473,558 | `PASS` |
+
+이 폴더는 **public SDT source**이지 MI48 field snapshot이나 실제 Thermal-90 capture가 아니다. P0는 이를 read-only stream으로 처리해 TRAIN `32,000`, DEVELOPMENT `8,000`, LOCKED_PUBLIC_TEST `8,000`을 만들었고, P1/P2는 그중 TRAIN/DEVELOPMENT와 derived artifact를 사용했다. `LOCKED_PUBLIC_TEST`는 P2에서 열지 않았다.
+
+다음 에이전트는 `열화상_dataset`을 MI48로 재명명하거나 `sessions`와 합치지 않는다. source path가 보이지 않는 환경에서는 경로를 추측하지 말고 `B6R-P0` contract의 archive identity와 `Test-Path`/checksum을 먼저 확인한다.
+
+## 11. Exit Criteria와 STOP
 
 - 최종 판정: `INCONCLUSIVE / NON-GATING`
 - `B6R-1`: `INCONCLUSIVE` 유지

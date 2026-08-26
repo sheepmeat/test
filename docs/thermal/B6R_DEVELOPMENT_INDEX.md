@@ -42,6 +42,23 @@
 |---|---|---|---|---|
 | `B6R-RC0` Desktop `sessions` pilot evidence review | `INCONCLUSIVE / NON-GATING` | `docs/reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md` | external `Desktop/sessions/` (not copied into Git) | 5 Thermal-90 sessions, all subject `S000`; raw/native/checksum evidence exists, but 3 sessions are `CAPTURE_INVALID`, unit/orientation are unverified, no locked holdout, and validator model-use eligibility is not authorized. This package does not open B6R-1/2 or training. |
 
+## Current PC Thermal Data Paths
+
+아래 절대 경로는 현재 작업 PC에서 다음 agent가 파일을 찾기 위한 사람용 참고다. portable contract·manifest에는 절대 경로를 저장하지 않는다.
+
+| 역할 | 현재 PC 위치 | 상태·경계 |
+|---|---|---|
+| 실제 센서 capture | `C:\Users\KIMTAEGYUN\Desktop\sessions` | `Thermal-90` 5세션, B6R-RC0 non-gating pilot; 학습·holdout 금지 |
+| public SDT source archive | `C:\Users\KIMTAEGYUN\Documents\ChatGPT\Thermal_AI\열화상_dataset` | 6개 archive, P0 contract size/SHA `6/6` 일치; MI48 아님 |
+| active checkout | `C:\Users\KIM TAEGYUN\Documents\ChatGPT\Thermal_AI\test` | 현재 feature branch root |
+| P0 derived local payload | `<active checkout>\datasets\thermal\materialized\B6R-P0_public_sdt_v1` | 48,000개 float32, `.gitignore` local-only |
+| P0 tracked evidence | `<active checkout>\datasets\thermal\manifests\B6R-P0_public_sdt_materialization` | split/provenance/source immutability/validation |
+| P0 contract | `<active checkout>\config\thermal\b6r_p0_public_sdt_contract.json` | `WORKSPACE_THERMAL_DATASET_ARCHIVES`, public-only claim boundary |
+
+현재 Codex 환경에서는 사용자 profile 표기가 `KIMTAEGYUN`과 `KIM TAEGYUN` 두 형태로 노출된다. 두 표기의 source/capture 경로가 모두 보이므로, 다음 agent는 `Test-Path`와 checksum으로 현재 process의 실제 위치를 확인한다.
+
+`열화상_dataset`은 P0/P1/P2 public-data source이고 `sessions`는 실제 `Thermal-90` capture pilot이다. 두 폴더는 서로 다른 evidence 계보이며 합치거나 MI48로 재명명하지 않는다. 경로가 보이지 않는 환경에서는 추측하지 말고 `Test-Path`와 P0 source hash를 먼저 확인한다.
+
 ## Public-data Auxiliary Stage Status
 
 이 보조 흐름은 사용자의 2026-08-26 model-first 승인으로 추가되었으며, 기존 B6R-0~14의 판정과 선행 gate를 변경하지 않는다.

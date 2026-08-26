@@ -14,7 +14,7 @@
 
 ### 2026-08-26 실행 개정 — public-data 보조 흐름을 추가한 이유
 
-권위 있는 `RP-X0_O2.6_MI48_FIELD_SNAPSHOT`을 현재 저장소·workspace·Git 원격에서 찾지 못해 `B6R-1`은 `INCONCLUSIVE`, `B6R-2`는 `BLOCKED` 상태다. 반면 workspace의 public SDT archive 6개는 source checksum과 구조를 확인할 수 있었고, 사용자는 physical/MI48 C 계열을 당장 수행하지 않고 public data로 모델을 먼저 만드는 별도 경로를 명시적으로 승인했다.
+권위 있는 `RP-X0_O2.6_MI48_FIELD_SNAPSHOT`을 현재 저장소·workspace·Git 원격에서 찾지 못해 `B6R-1`은 `INCONCLUSIVE`, `B6R-2`는 `BLOCKED` 상태다. 반면 현재 PC의 `C:\Users\KIMTAEGYUN\Documents\ChatGPT\Thermal_AI\열화상_dataset`에는 public SDT archive 6개가 있고 P0 source registry의 size·SHA-256과 `6/6` 일치한다. 사용자는 physical/MI48 C 계열을 당장 수행하지 않고 public data로 모델을 먼저 만드는 별도 경로를 명시적으로 승인했다.
 
 이에 기존 `B6R-0`~`B6R-14`의 순서·gate·판정을 변경하지 않고 `B6R-P*` 보조 흐름을 추가한다. 이 흐름의 성공은 MI48 gate를 통과시키지 않으며, physical 성능·competition lock·기본 runtime 교체·안전 권한의 근거가 되지 않는다.
 
@@ -61,6 +61,23 @@ Desktop sessions evidence
 ```
 
 현재 자료로 다음 에이전트가 바로 실행할 수 있는 것은 read-only capture-contract remediation/acquisition plan 작성뿐이다. B6R-2 이후 학습이나 holdout을 자동 실행하지 않는다. 자세한 수치와 판정은 `docs/reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md`를 기준으로 한다.
+
+### 현재 작업 PC의 Thermal 데이터 위치 (사람용 참고)
+
+아래 절대 경로는 현재 PC에서 다음 에이전트가 source와 derived payload를 찾을 때만 사용한다. JSON contract·manifest에는 portability를 위해 절대 경로를 기록하지 않고 `WORKSPACE_THERMAL_DATASET_ARCHIVES`와 저장소 상대 경로를 사용한다.
+
+| 역할 | 현재 PC 위치 | 역할·주의 |
+|---|---|---|
+| 실제 센서 capture | `C:\Users\KIMTAEGYUN\Desktop\sessions` | `Thermal-90` 5세션 pilot; B6R-RC0 non-gating evidence, 학습·holdout 금지 |
+| public SDT source | `C:\Users\KIMTAEGYUN\Documents\ChatGPT\Thermal_AI\열화상_dataset` | `test.zip`, `train.zip.001~.004`, `validation.zip`; 6개 size/SHA registry 일치 |
+| active B6R checkout | `C:\Users\KIM TAEGYUN\Documents\ChatGPT\Thermal_AI\test` | 현재 `feature/thermal-b6r-development` 작업 root |
+| P0 local materialized payload | `<active B6R checkout>\datasets\thermal\materialized\B6R-P0_public_sdt_v1` | 48,000개 derived float32; local-only/ignored, source archive가 아님 |
+| P0 tracked evidence | `<active B6R checkout>\datasets\thermal\manifests\B6R-P0_public_sdt_materialization` | split·provenance·source immutability·validation evidence |
+| P0 contract | `<active B6R checkout>\config\thermal\b6r_p0_public_sdt_contract.json` | archive names/hash, split role, `PUBLIC_SDT_ONLY_NOT_MI48` 경계 |
+
+현재 Codex 환경에서는 사용자 profile 표기가 `KIMTAEGYUN`과 `KIM TAEGYUN` 두 형태로 노출된다. 위 source/capture 경로의 space 표기 variant도 `Test-Path`로 확인되므로, 다음 agent는 문자열을 추측해 바꾸지 말고 현재 process에서 존재하는 경로를 사용한다.
+
+`열화상_dataset`은 P0/P1/P2의 public SDT source이고 `sessions`는 별도의 실제 `Thermal-90` capture pilot이다. 두 폴더를 합치거나 어느 하나를 MI48로 재명명하지 않는다. 경로가 없는 환경에서는 추측하지 말고 path existence와 source hash를 먼저 확인한다.
 
 ## A. Executive Roadmap
 
