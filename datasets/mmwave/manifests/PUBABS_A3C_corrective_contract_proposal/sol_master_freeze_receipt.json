@@ -1,0 +1,27 @@
+{
+  "schema_version": "PUBABS-A3C-SOL-MASTER-FREEZE-RECEIPT-V1",
+  "receipt_id": "MMWAVE_V2_PUBABS_A3C_SOL_MASTER_FREEZE_RECEIPT_V1",
+  "date": "2026-08-26",
+  "authority": "SOL_MASTER",
+  "mode": "AUTHORITY_RECEIPT_ONLY_NO_CONTRACT_REDESIGN",
+  "freeze_status": "A3C_FINAL_FREEZE_GRANTED_WITH_LIMITATIONS",
+  "reviewed_pr": 161,
+  "reviewed_head": "789272b7b9eb5077dd53ef41cabfca15ae9687a5",
+  "canonical_base_at_reviewed_head": "78c7d741f5f8d6b1cf0e7f08952e9810b2bf1d8d",
+  "frozen_proposal_path": "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/proposed_adapter_contract.json",
+  "frozen_proposal_sha256": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+  "timestamp_contract": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+  "range_contract": "C1_ROI_EXCLUDE_NEARFIELD28_DYNENERGY_UNWRAP_V1",
+  "range_policy": "RG-S1",
+  "historical_r1": "UNCHANGED",
+  "pubabs_a3r": "AUTHORIZED_AFTER_PR161_MERGE",
+  "pubabs_a4": "BLOCKED_ON_A3R",
+  "membership": "UNAUTHORIZED",
+  "m_pv38_reopen": "UNAUTHORIZED",
+  "model_inference": "UNAUTHORIZED",
+  "notes": [
+    "This receipt grants Sol Master final freeze over the exact reviewed #161 proposal head.",
+    "proposed_adapter_contract.json is intentionally left untouched; proposal_status may remain PROPOSAL_ONLY_NOT_AUTHORITATIVE in that file.",
+    "Authority for freeze and A3R authorization-after-merge is this receipt, not a redesign of the scientific contract."
+  ]
+}
