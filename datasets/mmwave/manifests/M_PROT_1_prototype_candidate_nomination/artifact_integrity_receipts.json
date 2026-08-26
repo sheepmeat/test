@@ -1,0 +1,131 @@
+{
+  "schema_version": "M-PROT-1-ARTIFACT-INTEGRITY-RECEIPTS-V1",
+  "phase": "M-PROT-1",
+  "date": "2026-08-27",
+  "base_sha": "7659a988fad7ab92f6a2a09f42da74544cbe0f52",
+  "inspection_mode": "READ_ONLY_CHECKPOINT_STRUCTURE",
+  "evaluation_data_fed": false,
+  "new_benchmark_run": false,
+  "torch_version_inspection": "2.8.0",
+  "construction_class": "TraceModel",
+  "construction_script": "scripts/mmwave_m_pv2_candidate_training.py",
+  "payload_schema": {
+    "keys": [
+      "family",
+      "seed",
+      "state_dict",
+      "metadata"
+    ],
+    "state_dict_dtype": "torch.float32",
+    "heads_present": [
+      "breathing_head",
+      "rr_head",
+      "quality_head"
+    ]
+  },
+  "scaler": {
+    "path": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+    "file_sha256": "9555c8c954078b80e26fbcd3bc5d5a70b9a2e04620946118709ec95418b2ac36",
+    "content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+    "content_sha256_matches_registry": true,
+    "file_sha256_matches_m_pv2_checksums": true,
+    "fit_scope": "TRAIN_CLEAN_ONLY",
+    "rr": {
+      "mean": 17.12899193548387,
+      "std": 8.948729232744911
+    },
+    "trace": {
+      "mean": 0.5681105335535223,
+      "std": 10.976509586515288
+    }
+  },
+  "receipts": [
+    {
+      "panel_id": "B11",
+      "path": "models/mmwave/m_pv2/family_b/candidate_seed_11.pt",
+      "bytes": 76473,
+      "sha256_observed": "5633a7eefa83544cd33a251b0016b40f37e28039f985b31c98bdcfa37aa8b1a6",
+      "sha256_registry_match": true,
+      "strict_load": true,
+      "parameter_count_loaded": 17915,
+      "canonical_parameter_sha256": "84bb325bb2fa8054b39ac7c30f3aadf6acc1ed5886b79f93352d77b1fb5d4aba",
+      "canonical_parameter_sha256_match": true,
+      "family_metadata_match": true,
+      "seed_metadata_match": true,
+      "eval_data_used": false
+    },
+    {
+      "panel_id": "B23",
+      "path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+      "bytes": 76473,
+      "sha256_observed": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+      "sha256_registry_match": true,
+      "strict_load": true,
+      "parameter_count_loaded": 17915,
+      "canonical_parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+      "canonical_parameter_sha256_match": true,
+      "family_metadata_match": true,
+      "seed_metadata_match": true,
+      "eval_data_used": false
+    },
+    {
+      "panel_id": "B47",
+      "path": "models/mmwave/m_pv2/family_b/candidate_seed_47.pt",
+      "bytes": 76473,
+      "sha256_observed": "ed3da35adb0837426065cc575b7e4ff6f41ef9a8fb295bb29f7eb8bcff4db280",
+      "sha256_registry_match": true,
+      "strict_load": true,
+      "parameter_count_loaded": 17915,
+      "canonical_parameter_sha256": "1ef93f709d2f23f6c92f0ed235287f422cae2675eb06fb958d286903fd75d40e",
+      "canonical_parameter_sha256_match": true,
+      "family_metadata_match": true,
+      "seed_metadata_match": true,
+      "eval_data_used": false
+    },
+    {
+      "panel_id": "C11",
+      "path": "models/mmwave/m_pv2/family_c/candidate_seed_11.pt",
+      "bytes": 89337,
+      "sha256_observed": "539bd6021d10a9abd35a22b49c0db728a122b60356f59609fead9280d82f7768",
+      "sha256_registry_match": true,
+      "strict_load": true,
+      "parameter_count_loaded": 21115,
+      "canonical_parameter_sha256": "5e1aefa8a4affca778649814e60efed05d0b8812094013555dfac6b21e90d79b",
+      "canonical_parameter_sha256_match": true,
+      "family_metadata_match": true,
+      "seed_metadata_match": true,
+      "eval_data_used": false
+    },
+    {
+      "panel_id": "C23",
+      "path": "models/mmwave/m_pv2/family_c/candidate_seed_23.pt",
+      "bytes": 89337,
+      "sha256_observed": "ce99a6534928138bc5e2d271123185f93aceb6386b8a24b0ecb3679c7d6d70de",
+      "sha256_registry_match": true,
+      "strict_load": true,
+      "parameter_count_loaded": 21115,
+      "canonical_parameter_sha256": "de0352416c32703195c9a218bc915ef949351882304dd8668a5957527a91eaae",
+      "canonical_parameter_sha256_match": true,
+      "family_metadata_match": true,
+      "seed_metadata_match": true,
+      "eval_data_used": false
+    },
+    {
+      "panel_id": "C47",
+      "path": "models/mmwave/m_pv2/family_c/candidate_seed_47.pt",
+      "bytes": 89337,
+      "sha256_observed": "2f1b446c808cfb90d02dc6cce754311ade19cf2e3bb03b20814a1268934cb5a1",
+      "sha256_registry_match": true,
+      "strict_load": true,
+      "parameter_count_loaded": 21115,
+      "canonical_parameter_sha256": "e57c1fc56933f15b654697dcdae5e098c8c7154620974357795a280dff0b250d",
+      "canonical_parameter_sha256_match": true,
+      "family_metadata_match": true,
+      "seed_metadata_match": true,
+      "eval_data_used": false
+    }
+  ],
+  "all_six_sha_match": true,
+  "all_six_strict_load": true,
+  "all_six_parameter_count_match": true
+}

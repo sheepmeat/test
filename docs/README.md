@@ -28,6 +28,7 @@
 - [PUBABS-A0A1 public ABSENT source validation (PASS_STRONG_PUBLIC_SOURCE_FOUND; M-PV3.8 unchanged)](mmwave/20260826_SafeNest_mmWave_PUBABS_A0A1_Public_Source_Validation_01.md)
 - [PUBABS-A2 C1 semantics/sensor-health/acquisition comparability (A2_STRONG_INTERNAL_BOTH_CLASS_SOURCE; A3 recommend only)](mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md)
 - [PUBABS-A3 C1 canonical ROLE_L conversion feasibility (A3_CORRECTIVE_REQUIRED)](mmwave/20260826_SafeNest_mmWave_PUBABS_A3_C1_Canonical_Conversion_Feasibility_01.md)
+- [M-PROT-1 prototype candidate nomination (M_PROT_1_PROTOTYPE_NOMINATED; B23 Family B seed 23 INTEGRATION_BASELINE; not a winner; M-PV3.8 unchanged)](mmwave/20260827_SafeNest_mmWave_V2_M_PROT_1_Prototype_Candidate_Nomination_01.md)
 - [M-PROT-0 prototype integration lane (PROTOTYPE_MODEL_LANE_READY; FINAL blocked / PROTOTYPE READY; no winner)](mmwave/20260827_SafeNest_mmWave_V2_Prototype_Integration_Lane_M_PROT_0_01.md)
 - [Post-PUBABS V2 critical-path reconciliation (POSTPUBABS_ONLY_RESOURCE_BLOCKED_PATHS; RECOMMEND_PHYSICAL_D1_RESOURCE_RECOVERY; no C2 default)](mmwave/20260827_SafeNest_mmWave_V2_Post_PUBABS_Critical_Path_Reconciliation_01.md)
 - [PUBABS-A9 C1 external-stress evidence terminal closure (A9_C1_EXTERNAL_STRESS_LANE_CLOSED_WITH_LIMITATIONS; no next C1 phase; M-PV3.8 unchanged)](mmwave/20260827_SafeNest_mmWave_PUBABS_A9_C1_External_Stress_Evidence_Terminal_Closure_01.md)

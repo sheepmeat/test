@@ -1,0 +1,515 @@
+{
+  "schema_version": "M-PROT-1-CANDIDATE-COMPARISON-MATRIX-V1",
+  "phase": "M-PROT-1",
+  "date": "2026-08-27",
+  "panel_order": [
+    "B11",
+    "B23",
+    "B47",
+    "C11",
+    "C23",
+    "C47"
+  ],
+  "dimension_order": [
+    "semantic_contract_compatibility",
+    "artifact_completeness",
+    "input_contract_clarity",
+    "preprocessing_clarity",
+    "output_contract_clarity",
+    "existing_offline_validation_behavior",
+    "cross_seed_stability",
+    "architecture_complexity",
+    "parameter_resource_footprint",
+    "deterministic_execution_evidence",
+    "packaging_path",
+    "integration_gap"
+  ],
+  "decision_hierarchy": [
+    "ROLE / semantic compatibility",
+    "Complete artifact + reproducible lineage",
+    "Clear preprocessing / input / output contracts",
+    "Practical runtime integration feasibility",
+    "Existing non-final offline behavior / stability",
+    "Cross-seed architecture stability",
+    "Resource footprint / implementation simplicity"
+  ],
+  "silent_metric_weighting": false,
+  "c1_used_for_ranking": false,
+  "d1_final_used": false,
+  "d2_accessed": false,
+  "winner_language": "FORBIDDEN",
+  "offline_evidence_class_legend": {
+    "TRAIN": "M-PV2 training process metadata (epochs, parameter count, TRAIN-fitted scaler)",
+    "DEV": "D1_DEV_TRAIN used only as authorized training membership; not used as nomination score",
+    "VALIDATION": "D1_DEV_VAL ROLE_L cards (57 PRESENT / 0 eligible ABSENT). Non-final development validation.",
+    "historical_evaluation": "M-PV3 NO_SELECTION_READY and M-PV3.6 PASS_WITH_LIMITATIONS cards",
+    "external_OOD": "C1 A8 — domain-risk context only; forbidden as ranking",
+    "locked_final_like": "D1_FINAL_SELECTION / M-PV3.8 evaluation / D2 — unused and unavailable"
+  },
+  "shared_contracts": {
+    "window_duration_s": 30.0,
+    "sample_rate_hz": 10.0,
+    "trace_shape": [
+      "B",
+      300,
+      1
+    ],
+    "dtype": "float32",
+    "waveform": "R1 common_trace respiratory_motion_trace (offset-centered phase-like); model consumes TRAIN z-scored trace inside frozen _feature_matrix",
+    "breathing_target_anchor": "final 5 s of causal 30 s context (indices 250:300)",
+    "scaler_path": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+    "scaler_content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+    "scaler_file_sha256": "9555c8c954078b80e26fbcd3bc5d5a70b9a2e04620946118709ec95418b2ac36",
+    "construction_script": "scripts/mmwave_m_pv2_candidate_training.py",
+    "construction_class": "TraceModel",
+    "runtime_format_current": "PYTORCH_FLOAT32_STATE_DICT",
+    "tflite_conversion": "NOT_YET_PROVEN",
+    "fixed_breathing_threshold": 0.5,
+    "quality_cutoff": 0.5,
+    "rr_decode": "rr_bpm = rr_raw * 8.948729232744911 + 17.12899193548387",
+    "fail_closed_precedence": [
+      "PRESENCE",
+      "QUALITY_OR_AVAILABILITY",
+      "PHYSIOLOGY"
+    ]
+  },
+  "candidates": [
+    {
+      "panel_id": "B11",
+      "semantic_contract_compatibility": {
+        "status": "ROLE_COMPATIBLE",
+        "implements": [
+          "breathing",
+          "RR",
+          "quality"
+        ]
+      },
+      "artifact_completeness": {
+        "status": "COMPLETE",
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_11.pt",
+        "sha256": "5633a7eefa83544cd33a251b0016b40f37e28039f985b31c98bdcfa37aa8b1a6",
+        "bytes": 76473,
+        "strict_state_dict_load": true,
+        "lineage": "M-PV2 candidate_registry + M-PV3 determinism representative replay"
+      },
+      "input_contract_clarity": {
+        "status": "CLEAR",
+        "assembled_dim": 621,
+        "layout": "concat(trace[300], trace_mask[300], scale[12], quality[9])"
+      },
+      "preprocessing_clarity": {
+        "status": "CLEAR",
+        "requires_f2": false,
+        "notes": "R1 10 Hz 30 s trace + R2 F3 scale/quality + TRAIN-only z-score; no C1/D1 refit"
+      },
+      "output_contract_clarity": {
+        "status": "CLEAR",
+        "heads": {
+          "breathing": "sigmoid(logit); PRESENT if >= 0.5 else ABSENT",
+          "rr": "linear TRAIN z-score inverse to bpm",
+          "quality": "sigmoid(logit); historical Q2 diagnostic at 0.5"
+        }
+      },
+      "existing_offline_validation_behavior": {
+        "evidence_class": "VALIDATION",
+        "source": "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/",
+        "selection_use": false,
+        "d1_dev_val": {
+          "present_n": 57,
+          "absent_n": 0,
+          "absent_metrics": "NOT_APPLICABLE",
+          "breathing_brier": 0.09854056768808094,
+          "breathing_recall": 1.0,
+          "breathing_fn": 0,
+          "rr_mae_bpm": 4.564752260843913,
+          "rr_within_2": 0.3333333333333333,
+          "rr_within_6": 0.7719298245614035,
+          "rr_pred_min_bpm": 9.825277328491211
+        },
+        "notes": "Highest Family B Brier on D1_DEV_VAL. Not treated as a scientific rank."
+      },
+      "cross_seed_stability": {
+        "evidence_class": "TRAIN",
+        "family_b_best_validation_loss": {
+          "seed_11": 0.46978557109832764,
+          "seed_23": 0.1633485108613968,
+          "seed_47": 0.2469666302204132,
+          "std": 0.1293333084990297
+        },
+        "notes": "Seed 11 is the high-loss Family B outlier. Avoid as obviously fragile provisional choice."
+      },
+      "architecture_complexity": {
+        "status": "LOWER_THAN_FAMILY_C",
+        "trace_branch": "Conv1d(1,16,k=5,pad=2)-ReLU-Conv1d(16,24,k=5,pad=2)-ReLU-AdaptiveAvgPool1d(8)",
+        "scalar_dim": 21
+      },
+      "parameter_resource_footprint": {
+        "parameter_count": 17915,
+        "checkpoint_bytes": 76473,
+        "parameter_bytes_float32": 71660,
+        "hardware_latency": "NOT_MEASURED",
+        "raspberry_pi_claim": false
+      },
+      "deterministic_execution_evidence": {
+        "training_env_deterministic": true,
+        "family_representative_replay": true,
+        "replay_source": "datasets/mmwave/manifests/M-PV3_candidate_selection/determinism_audit.json",
+        "notes": "B11 is the family-level determinism representative. This does not make it the prototype baseline."
+      },
+      "packaging_path": {
+        "current_format": "PYTORCH_FLOAT32_STATE_DICT",
+        "direct_runtime_feasibility": "Requires torch CPU load of compact state_dict payload",
+        "tflite_conversion": "NOT_YET_PROVEN"
+      },
+      "integration_gap": {
+        "new_runtime_code": "Feature assembly (621) + TraceModel load + I1 fail-closed wrapper. No F2.",
+        "relative_burden": "LOWER_THAN_FAMILY_C"
+      }
+    },
+    {
+      "panel_id": "B23",
+      "semantic_contract_compatibility": {
+        "status": "ROLE_COMPATIBLE",
+        "implements": [
+          "breathing",
+          "RR",
+          "quality"
+        ]
+      },
+      "artifact_completeness": {
+        "status": "COMPLETE",
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+        "sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+        "bytes": 76473,
+        "strict_state_dict_load": true,
+        "lineage": "M-PV2 candidate_registry; shares scaler/script/schedule with B11 replay"
+      },
+      "input_contract_clarity": {
+        "status": "CLEAR",
+        "assembled_dim": 621,
+        "layout": "concat(trace[300], trace_mask[300], scale[12], quality[9])"
+      },
+      "preprocessing_clarity": {
+        "status": "CLEAR",
+        "requires_f2": false,
+        "notes": "Same Family B reconstruction as B11/B47. Live F2 spectral/autocorr reconstruction is not required."
+      },
+      "output_contract_clarity": {
+        "status": "CLEAR",
+        "heads": {
+          "breathing": "sigmoid(logit); PRESENT if >= 0.5 else ABSENT",
+          "rr": "linear TRAIN z-score inverse to bpm",
+          "quality": "sigmoid(logit); historical Q2 diagnostic at 0.5"
+        }
+      },
+      "existing_offline_validation_behavior": {
+        "evidence_class": "VALIDATION",
+        "source": "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/",
+        "selection_use": false,
+        "d1_dev_val": {
+          "present_n": 57,
+          "absent_n": 0,
+          "absent_metrics": "NOT_APPLICABLE",
+          "breathing_brier": 0.0064572784995837705,
+          "breathing_recall": 1.0,
+          "breathing_fn": 0,
+          "rr_mae_bpm": 4.1938734389188,
+          "rr_within_2": 0.49122807017543857,
+          "rr_within_6": 0.7017543859649122,
+          "rr_pred_min_bpm": -0.3417701721191406
+        },
+        "notes": "Non-final D1_DEV_VAL: no FN; Family B lowest Brier and RR MAE. Slightly negative RR min is an integration-policy gap, not a retune. Frozen M-PV3 within_6 guard 0.75 is not a prototype ranking gate."
+      },
+      "cross_seed_stability": {
+        "evidence_class": "TRAIN",
+        "family_b_best_validation_loss": {
+          "seed_11": 0.46978557109832764,
+          "seed_23": 0.1633485108613968,
+          "seed_47": 0.2469666302204132
+        },
+        "notes": "Lowest Family B validation loss. Not a winner claim."
+      },
+      "architecture_complexity": {
+        "status": "LOWER_THAN_FAMILY_C",
+        "trace_branch": "Conv1d(1,16,k=5,pad=2)-ReLU-Conv1d(16,24,k=5,pad=2)-ReLU-AdaptiveAvgPool1d(8)",
+        "scalar_dim": 21
+      },
+      "parameter_resource_footprint": {
+        "parameter_count": 17915,
+        "checkpoint_bytes": 76473,
+        "parameter_bytes_float32": 71660,
+        "hardware_latency": "NOT_MEASURED",
+        "raspberry_pi_claim": false
+      },
+      "deterministic_execution_evidence": {
+        "training_env_deterministic": true,
+        "family_representative_replay": "shared_pipeline_via_B11_representative",
+        "dedicated_prediction_replay": false
+      },
+      "packaging_path": {
+        "current_format": "PYTORCH_FLOAT32_STATE_DICT",
+        "direct_runtime_feasibility": "Requires torch CPU load of compact state_dict payload",
+        "tflite_conversion": "NOT_YET_PROVEN"
+      },
+      "integration_gap": {
+        "new_runtime_code": "Feature assembly (621) + TraceModel load + I1 fail-closed wrapper. No F2. RR clamp/policy TBD in M-PROT-2.",
+        "relative_burden": "LOWER_THAN_FAMILY_C"
+      }
+    },
+    {
+      "panel_id": "B47",
+      "semantic_contract_compatibility": {
+        "status": "ROLE_COMPATIBLE",
+        "implements": [
+          "breathing",
+          "RR",
+          "quality"
+        ]
+      },
+      "artifact_completeness": {
+        "status": "COMPLETE",
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_47.pt",
+        "sha256": "ed3da35adb0837426065cc575b7e4ff6f41ef9a8fb295bb29f7eb8bcff4db280",
+        "bytes": 76473,
+        "strict_state_dict_load": true,
+        "lineage": "M-PV2 candidate_registry"
+      },
+      "input_contract_clarity": {
+        "status": "CLEAR",
+        "assembled_dim": 621,
+        "layout": "concat(trace[300], trace_mask[300], scale[12], quality[9])"
+      },
+      "preprocessing_clarity": {
+        "status": "CLEAR",
+        "requires_f2": false
+      },
+      "output_contract_clarity": {
+        "status": "CLEAR"
+      },
+      "existing_offline_validation_behavior": {
+        "evidence_class": "VALIDATION",
+        "d1_dev_val": {
+          "breathing_brier": 0.025080918907178347,
+          "breathing_recall": 0.9824561403508771,
+          "breathing_fn": 1,
+          "rr_mae_bpm": 4.900417813083582,
+          "rr_within_2": 0.45614035087719296,
+          "rr_within_6": 0.7368421052631579,
+          "rr_pred_min_bpm": -11.513181686401367
+        },
+        "notes": "One PRESENT FN on D1_DEV_VAL. Large negative RR min is a stronger runtime-policy gap than B23."
+      },
+      "cross_seed_stability": {
+        "evidence_class": "TRAIN",
+        "notes": "Middle Family B seed on validation loss."
+      },
+      "architecture_complexity": {
+        "status": "LOWER_THAN_FAMILY_C"
+      },
+      "parameter_resource_footprint": {
+        "parameter_count": 17915,
+        "checkpoint_bytes": 76473
+      },
+      "deterministic_execution_evidence": {
+        "training_env_deterministic": true,
+        "dedicated_prediction_replay": false
+      },
+      "packaging_path": {
+        "current_format": "PYTORCH_FLOAT32_STATE_DICT",
+        "tflite_conversion": "NOT_YET_PROVEN"
+      },
+      "integration_gap": {
+        "relative_burden": "LOWER_THAN_FAMILY_C"
+      }
+    },
+    {
+      "panel_id": "C11",
+      "semantic_contract_compatibility": {
+        "status": "ROLE_COMPATIBLE",
+        "implements": [
+          "breathing",
+          "RR",
+          "quality"
+        ]
+      },
+      "artifact_completeness": {
+        "status": "COMPLETE",
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_11.pt",
+        "sha256": "539bd6021d10a9abd35a22b49c0db728a122b60356f59609fead9280d82f7768",
+        "bytes": 89337,
+        "strict_state_dict_load": true
+      },
+      "input_contract_clarity": {
+        "status": "CLEAR",
+        "assembled_dim": 671,
+        "layout": "concat(trace[300], trace_mask[300], scale[12], quality[9], f2[25], f2_mask[25])"
+      },
+      "preprocessing_clarity": {
+        "status": "CLEAR_BUT_HEAVIER",
+        "requires_f2": true,
+        "notes": "Live runtime must reconstruct frozen R2 F2 25-name spectral/autocorr vector plus 25-dim mask."
+      },
+      "output_contract_clarity": {
+        "status": "CLEAR"
+      },
+      "existing_offline_validation_behavior": {
+        "evidence_class": "VALIDATION",
+        "d1_dev_val": {
+          "breathing_brier": 0.02115794692809779,
+          "breathing_recall": 0.9824561403508771,
+          "breathing_fn": 1,
+          "rr_mae_bpm": 4.539816287525913,
+          "rr_within_2": 0.3333333333333333,
+          "rr_within_6": 0.7894736842105263,
+          "rr_pred_min_bpm": 5.076687812805176
+        }
+      },
+      "cross_seed_stability": {
+        "evidence_class": "TRAIN",
+        "family_c_best_validation_loss_std": 0.031238469403534887,
+        "notes": "Family C seed losses are tighter than Family B. Hierarchy still prefers Family B wiring surface first."
+      },
+      "architecture_complexity": {
+        "status": "HIGHER_THAN_FAMILY_B",
+        "scalar_dim": 71
+      },
+      "parameter_resource_footprint": {
+        "parameter_count": 21115,
+        "checkpoint_bytes": 89337,
+        "parameter_bytes_float32": 84460
+      },
+      "deterministic_execution_evidence": {
+        "training_env_deterministic": true,
+        "dedicated_prediction_replay": false
+      },
+      "packaging_path": {
+        "current_format": "PYTORCH_FLOAT32_STATE_DICT",
+        "tflite_conversion": "NOT_YET_PROVEN"
+      },
+      "integration_gap": {
+        "new_runtime_code": "Family B path plus F2 reconstruction at live sample rate",
+        "relative_burden": "HIGHER_THAN_FAMILY_B"
+      }
+    },
+    {
+      "panel_id": "C23",
+      "semantic_contract_compatibility": {
+        "status": "ROLE_COMPATIBLE"
+      },
+      "artifact_completeness": {
+        "status": "COMPLETE",
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_23.pt",
+        "sha256": "ce99a6534928138bc5e2d271123185f93aceb6386b8a24b0ecb3679c7d6d70de",
+        "bytes": 89337,
+        "strict_state_dict_load": true
+      },
+      "input_contract_clarity": {
+        "status": "CLEAR",
+        "assembled_dim": 671
+      },
+      "preprocessing_clarity": {
+        "status": "CLEAR_BUT_HEAVIER",
+        "requires_f2": true
+      },
+      "output_contract_clarity": {
+        "status": "CLEAR"
+      },
+      "existing_offline_validation_behavior": {
+        "evidence_class": "VALIDATION",
+        "d1_dev_val": {
+          "breathing_brier": 0.01791962580955174,
+          "breathing_recall": 0.9824561403508771,
+          "breathing_fn": 1,
+          "rr_mae_bpm": 4.541094194378769,
+          "rr_within_2": 0.3684210526315789,
+          "rr_within_6": 0.8070175438596491,
+          "rr_pred_min_bpm": -2.7044448852539062
+        }
+      },
+      "cross_seed_stability": {
+        "evidence_class": "TRAIN"
+      },
+      "architecture_complexity": {
+        "status": "HIGHER_THAN_FAMILY_B"
+      },
+      "parameter_resource_footprint": {
+        "parameter_count": 21115,
+        "checkpoint_bytes": 89337
+      },
+      "deterministic_execution_evidence": {
+        "training_env_deterministic": true
+      },
+      "packaging_path": {
+        "current_format": "PYTORCH_FLOAT32_STATE_DICT",
+        "tflite_conversion": "NOT_YET_PROVEN"
+      },
+      "integration_gap": {
+        "relative_burden": "HIGHER_THAN_FAMILY_B"
+      }
+    },
+    {
+      "panel_id": "C47",
+      "semantic_contract_compatibility": {
+        "status": "ROLE_COMPATIBLE"
+      },
+      "artifact_completeness": {
+        "status": "COMPLETE",
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_47.pt",
+        "sha256": "2f1b446c808cfb90d02dc6cce754311ade19cf2e3bb03b20814a1268934cb5a1",
+        "bytes": 89337,
+        "strict_state_dict_load": true
+      },
+      "input_contract_clarity": {
+        "status": "CLEAR",
+        "assembled_dim": 671
+      },
+      "preprocessing_clarity": {
+        "status": "CLEAR_BUT_HEAVIER",
+        "requires_f2": true
+      },
+      "output_contract_clarity": {
+        "status": "CLEAR"
+      },
+      "existing_offline_validation_behavior": {
+        "evidence_class": "VALIDATION",
+        "d1_dev_val": {
+          "breathing_brier": 0.0012677252259954447,
+          "breathing_recall": 1.0,
+          "breathing_fn": 0,
+          "rr_mae_bpm": 4.460836209748921,
+          "rr_within_2": 0.45614035087719296,
+          "rr_within_6": 0.7368421052631579,
+          "rr_pred_min_bpm": 8.32497787475586
+        },
+        "notes": "Descriptively strongest Family C D1_DEV_VAL Brier. Not used to outrank Family B on hierarchy steps 3-4. Not a winner."
+      },
+      "cross_seed_stability": {
+        "evidence_class": "TRAIN"
+      },
+      "architecture_complexity": {
+        "status": "HIGHER_THAN_FAMILY_B"
+      },
+      "parameter_resource_footprint": {
+        "parameter_count": 21115,
+        "checkpoint_bytes": 89337
+      },
+      "deterministic_execution_evidence": {
+        "training_env_deterministic": true
+      },
+      "packaging_path": {
+        "current_format": "PYTORCH_FLOAT32_STATE_DICT",
+        "tflite_conversion": "NOT_YET_PROVEN"
+      },
+      "integration_gap": {
+        "relative_burden": "HIGHER_THAN_FAMILY_B"
+      }
+    }
+  ],
+  "family_engineering_contrast": {
+    "family_b": "Same ROLE_L heads; 621-d input; no live F2; 17915 parameters.",
+    "family_c": "Same ROLE_L heads plus F2 25+mask 25; 671-d input; 21115 parameters; extra live spectral/autocorr reconstruction.",
+    "hierarchy_application": "After equal ROLE compatibility and complete artifacts, Family B is the smaller coherent integration surface. Seed choice is then inside Family B."
+  },
+  "tie_break_used": false,
+  "tie_break_policy_if_needed": "fixed frozen panel order B11 → B23 → B47 → C11 → C23 → C47; never performance evidence"
+}

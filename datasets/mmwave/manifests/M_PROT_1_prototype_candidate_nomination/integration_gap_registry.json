@@ -1,0 +1,95 @@
+{
+  "schema_version": "M-PROT-1-INTEGRATION-GAP-REGISTRY-V1",
+  "phase": "M-PROT-1",
+  "date": "2026-08-27",
+  "nominated_panel_id": "B23",
+  "runtime_wiring_implemented": false,
+  "m_prot_2_not_executed": true,
+  "m_prot_3_not_executed": true,
+  "gaps": [
+    {
+      "id": "G01_WINDOWING",
+      "item": "window duration / sample rate / waveform",
+      "known_contract": "30 s causal context, 10 Hz, 300 samples, R1 common_trace respiratory_motion_trace",
+      "gap": "Live MR60 capture must be adapted to this window without inventing a new rate. Native MR60 cadence vs 10 Hz resample is M-PROT-2/3 work.",
+      "owner_phase": "M-PROT-2/M-PROT-3"
+    },
+    {
+      "id": "G02_FEATURE_ASSEMBLY",
+      "item": "preprocessing / tensor layout",
+      "known_contract": "concat(trace[300], trace_mask[300], scale[12], quality[9]) = 621 float32; TRAIN z-score once",
+      "gap": "No integrated runtime currently builds this 621-d vector from live samples. Must reuse frozen scaler; forbid refit and double z-score.",
+      "owner_phase": "M-PROT-2/M-PROT-3"
+    },
+    {
+      "id": "G03_MODEL_RUNTIME",
+      "item": "model runtime dependency",
+      "known_contract": "PyTorch float32 state_dict payload with TraceModel family_b",
+      "gap": "Pi/runtime format is not frozen. Torch-on-device vs later conversion is M-PROT-2. TFLITE_CONVERSION=NOT_YET_PROVEN.",
+      "owner_phase": "M-PROT-2"
+    },
+    {
+      "id": "G04_OUTPUT_HEADS",
+      "item": "output heads",
+      "known_contract": "breathing logit, rr linear, quality logit",
+      "gap": "Integrated SafeNest must map these heads through I1 precedence. Do not emit NORMAL/RAPID/APNEA from this model.",
+      "owner_phase": "M-PROT-2/M-PROT-3"
+    },
+    {
+      "id": "G05_THRESHOLD",
+      "item": "threshold",
+      "known_contract": "breathing 0.5 and quality 0.5 already frozen in M-PV2 / PUBABS-A7",
+      "gap": "M-PROT-2 must copy these into the deployable contract. Do not retune on live debug samples.",
+      "owner_phase": "M-PROT-2"
+    },
+    {
+      "id": "G06_FAIL_CLOSED",
+      "item": "fail-closed semantics",
+      "known_contract": "I1: presence → quality/availability → physiology; unavailable must not emit PRESENT/ABSENT/NORMAL/APNEA",
+      "gap": "Runtime wrapper does not yet bind B23. High model confidence must not override invalid availability.",
+      "owner_phase": "M-PROT-3"
+    },
+    {
+      "id": "G07_RR_RANGE_POLICY",
+      "item": "RR decode range",
+      "known_contract": "rr_bpm = rr_raw * 8.948729232744911 + 17.12899193548387",
+      "gap": "D1_DEV_VAL B23 RR min was -0.3418 bpm. Freeze a decode clamp/fail-closed policy in M-PROT-2 without changing weights.",
+      "owner_phase": "M-PROT-2"
+    },
+    {
+      "id": "G08_PACKAGING",
+      "item": "deployable representation",
+      "known_contract": "compact float32 state_dict first",
+      "gap": "No INT8/TFLite artifact exists for Family B/C. Do not treat M-N9 or M-B11 TFLite as a substitute.",
+      "owner_phase": "M-PROT-2"
+    },
+    {
+      "id": "G09_TEMPORAL_COMPOSER",
+      "item": "temporal hold / application state",
+      "known_contract": "Breathing neural head is last-5s evidence only; temporal hold is deterministic post-model composition",
+      "gap": "Runtime application-state composer is not wired to B23.",
+      "owner_phase": "M-PROT-3"
+    },
+    {
+      "id": "G10_LIVE_DOMAIN",
+      "item": "device-domain evidence",
+      "known_contract": "M-PROT live sessions are DEBUG_CAPTURE, not final eval",
+      "gap": "No live MR60 debug capture yet. Domain gap vs D0/D1 public-derivative training remains unknown.",
+      "owner_phase": "M-PROT-5"
+    },
+    {
+      "id": "G11_ABSENT_CLASS",
+      "item": "ABSENT discrimination",
+      "known_contract": "ROLE_L breathing ABSENT is no-human, not apnea",
+      "gap": "Governed eligible ABSENT remains 0. Prototype may emit ABSENT but cannot claim both-class validation.",
+      "owner_phase": "Track F (not M-PROT authority)"
+    },
+    {
+      "id": "G12_PI_DEPENDENCY_RISK",
+      "item": "Pi/runtime dependency risk",
+      "known_contract": "Trained with torch 2.8.0 / numpy 1.26.4 / deterministic CPU",
+      "gap": "Team Pi image torch version, operator support, and latency are unmeasured. Conversion path unproven.",
+      "owner_phase": "M-PROT-2"
+    }
+  ]
+}
