@@ -1,0 +1,18 @@
+{
+  "schema_version": "PUBABS-A3-C1-ADAPTER-CONTRACT-V1",
+  "status": "NOT_FROZEN_CORRECTIVE_REQUIRED",
+  "primary_doi": "10.5281/zenodo.15032859",
+  "canonical_adapter_implemented": false,
+  "reason": [
+    "Frozen R1 rejects C1 measured timestamps (UNRESOLVABLE_TIME_GAP under declared source rate)",
+    "C1 native rate ~18.8 Hz is non-integer and not an integer multiple of 10 Hz",
+    "No Sol-frozen C1 range-bin extraction registration exists (D0 PROFILE_001 search region is for different radar geometry)",
+    "Multiple label-independent bin rules remain without a unique preferred registration"
+  ],
+  "probe_only_noncanonical_path": {
+    "description": "timestamp linear interpolation to 10 Hz then R1 (already-at-target) \u2014 PROBE ONLY",
+    "canonical": false,
+    "bypasses": "R1 Kaiser anti-alias resample_poly integer-ratio path",
+    "authorized_for_membership_or_evaluation": false
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "PUBABS-A3-C1-CROSS-DOMAIN-V1",
+  "status": "ASSESSED",
+  "fields": {
+    "conceptual_physical_quantity": "PARTIAL_MATCH",
+    "polarity_relevance": "UNVERIFIED",
+    "temporal_units": "COMPATIBLE_WITH_FIXED_TRANSFORM",
+    "sampling": "INCOMPATIBLE",
+    "preprocessing": "INCOMPATIBLE",
+    "normalization_semantics": "UNVERIFIED",
+    "expected_amplitude_semantics": "PARTIAL_MATCH"
+  },
+  "notes": {
+    "conceptual_physical_quantity": "Both target phase-like respiratory motion, but C1 is UWB through-wall complex range-bin; D0/D1 are different RF front-ends",
+    "sampling": "C1 ~18.8 Hz irregular vs R1 integer-multiple\u219210 Hz requirement",
+    "preprocessing": "Frozen R1 path not traversable without corrective resampling/grid rule",
+    "cross_sensor_domain_risk": "HIGH"
+  },
+  "structural_compatibility": "NOT_ACHIEVED_VIA_FROZEN_PATH",
+  "semantic_domain_compatibility": "HIGH_RISK_EVEN_IF_SHAPE_MATCHED"
+}

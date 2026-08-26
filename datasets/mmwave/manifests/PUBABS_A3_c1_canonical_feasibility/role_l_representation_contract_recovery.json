@@ -1,0 +1,54 @@
+{
+  "schema_version": "PUBABS-A3-ROLE-L-CONTRACT-RECOVERY-V1",
+  "status": "RECOVERED",
+  "date": "2026-08-26",
+  "base_sha": "eae5948f3359079dc4dc0135e6ffd11793e88910",
+  "role": "ROLE_L_FULL_TASK",
+  "six_candidates": "Family B + Family C seeds 11/23/47",
+  "expected_trace_semantics": "OFFSET_CENTERED_NATIVE_PHASE_LIKE_RELATIVE_MOTION",
+  "waveform_name": "respiratory_motion_trace",
+  "units": "phase_like_radian (absolute displacement equivalence not claimed)",
+  "shape_conceptual": "[B,300,1]",
+  "rate_hz": 10.0,
+  "context_s": 30.0,
+  "context_samples": 300,
+  "context_derivation": "R1_FULL_RECORDING_OUTPUT_THEN_FIXED_FIRST_300_SAMPLES",
+  "r1_profile": "R1-A_NATIVE_CENTERED_RELATIVE_MOTION_10HZ_V1",
+  "r1_operations": [
+    "fail-closed finite 1D check",
+    "strictly increasing time; gap>2.5/fs_source => fail",
+    "small jitter<=0.25/fs => optional linear regrid",
+    "resample_poly to 10 Hz only if integer source rate and integer multiple of 10; Kaiser beta 8.6",
+    "full-recording median centering only"
+  ],
+  "not_expected": [
+    "derivative waveform",
+    "magnitude waveform",
+    "BPF_ZSCORE",
+    "window-local MAD divide",
+    "displacement-as-R1-input"
+  ],
+  "train_fitted_after_r1": {
+    "trace_global_zscore": true,
+    "scaler_sha_prefix": "5a2583b5",
+    "note": "Must not refit on C1"
+  },
+  "authoritative_paths": [
+    "datasets/mmwave/manifests/M-PV0_R1_sensor_independent_trace/common_trace_contract.json",
+    "adapters/mmwave_r1_sensor_independent_trace.py",
+    "datasets/mmwave/manifests/a2_phase_pilot/extraction_profiles.json",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/contract_snapshot.json",
+    "config/mmwave/m_pv36_role_based_evaluation_contract.json"
+  ],
+  "d0_complex_to_phase": {
+    "profile": "MMWAVE_PHASE_EXTRACTION_PROFILE_001",
+    "phase_method": "numpy_angle + numpy_unwrap",
+    "bin_method": "B_MEDIAN_CHANNEL_STATIC_COMPONENT_REDUCED_DYNAMIC_ENERGY",
+    "search_region_m": [
+      0.3,
+      2.0
+    ],
+    "label_independent": true,
+    "applies_to_c1_without_new_registration": false
+  }
+}

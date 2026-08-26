@@ -1,0 +1,12 @@
+{
+  "schema_version": "PUBABS-A3-C1-PREPROC-V1",
+  "status": "CONDITIONAL_AFTER_R1",
+  "median_centering": "R1 full-recording median \u2014 applicable if native phase trace reaches R1",
+  "train_global_zscore": {
+    "required_for_family_bc_tensors": true,
+    "refit_on_c1": "FORBIDDEN",
+    "usable_if_trace_semantics_match": "UNVERIFIED_DUE_TO_DOMAIN_SCALE"
+  },
+  "fitted_parameter_from_c1": false,
+  "blocked_because": "Canonical native phase@10Hz via frozen R1 not obtained"
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "PUBABS-A3-C1-DETERMINISM-V1",
+  "status": "N_A_NO_CANONICAL_ADAPTER",
+  "note": "No canonical C1\u2192ROLE_L adapter was frozen or committed; determinism of a non-existent converter is not claimed.",
+  "probe_script": "scripts/mmwave/pubabs_a3_c1_r1_compatibility_probe.py",
+  "r1_rejection_codes_stable_across_probed_sessions": [
+    "UNRESOLVABLE_TIME_GAP"
+  ]
+}
