@@ -1,0 +1,33 @@
+{
+  "schema_version": "PUBABS-A7-LAYER1-REPORTING-CONTRACT-V1",
+  "identity": "PUBABS_C1_EXTERNAL_STRESS_V1__L1_AVAILABILITY_ALL77",
+  "denominator": 77,
+  "semantics": "AVAILABILITY_INGRESS_SAFETY_ALL77",
+  "counts": {
+    "ABSENT": 11,
+    "PRESENT": 66,
+    "VALID": 34,
+    "FAIL_CLOSED": 43
+  },
+  "allowed": [
+    "availability_counts",
+    "fail_closed_code_counts",
+    "VALID_vs_FAIL_CLOSED_by_class",
+    "UNAVAILABLE_retention_in_denominator"
+  ],
+  "forbidden": [
+    "fabricate_model_predictions_for_FAIL_CLOSED",
+    "map_UNAVAILABLE_to_ABSENT",
+    "map_UNAVAILABLE_to_NORMAL",
+    "map_UNAVAILABLE_to_physiological_negative",
+    "silent_drop_of_fail_closed",
+    "corpus_wide_physiology_metrics_on_all77_including_unavailable"
+  ],
+  "fail_closed_codes": {
+    "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 42,
+    "INPUT_UNAVAILABLE_TOO_SHORT_FOR_30S": 1
+  },
+  "unavailable_ne_absent": true,
+  "unavailable_ne_normal": true,
+  "layer2_generalization_to_77": "FORBIDDEN"
+}

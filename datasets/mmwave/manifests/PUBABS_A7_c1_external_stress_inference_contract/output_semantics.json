@@ -1,0 +1,53 @@
+{
+  "schema_version": "PUBABS-A7-OUTPUT-SEMANTICS-V1",
+  "runtime_precedence": [
+    "PRESENCE_OR_AVAILABILITY",
+    "QUALITY_OR_AVAILABILITY",
+    "PHYSIOLOGY"
+  ],
+  "i1_invariants": {
+    "input_unavailable_must_not_emit": [
+      "PRESENT",
+      "ABSENT",
+      "NORMAL",
+      "APNEA"
+    ],
+    "unavailable_suppresses_physiology": true,
+    "no_person_is_not_apnea": true
+  },
+  "heads": {
+    "breathing": {
+      "meaning_on_c1_layer2": "model PRESENT/ABSENT emission vs C1 empty-space vs human-present labels",
+      "absent_is_no_human_target": true,
+      "absent_is_not_apnea": true,
+      "false_present_on_empty_space": "DESCRIPTIVE_EXTERNAL_STRESS_OBSERVATION",
+      "canonical_safety_threshold": "NONE"
+    },
+    "rr": {
+      "may_emit_numeric_value": true,
+      "scored": false,
+      "accuracy_claim": "FORBIDDEN",
+      "reason": "C1 has no RR ground truth"
+    },
+    "quality": {
+      "may_emit_probability": true,
+      "scored": false,
+      "reason": "C1 has no Q2 synthetic quality overlay GT"
+    }
+  },
+  "layer1_fail_closed": {
+    "prediction": "MUST_NOT_FABRICATE",
+    "report_as": "UNAVAILABLE",
+    "not_equal_to": [
+      "ABSENT",
+      "NORMAL",
+      "PHYSIOLOGICAL_NEGATIVE"
+    ]
+  },
+  "physiology_claims": {
+    "present_rr_accuracy": "FORBIDDEN",
+    "clinical_apnea": "FORBIDDEN",
+    "mr60_equivalence": "FORBIDDEN",
+    "in_domain_selection_evidence": "FORBIDDEN"
+  }
+}

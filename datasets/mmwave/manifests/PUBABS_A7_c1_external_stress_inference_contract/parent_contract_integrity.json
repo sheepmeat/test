@@ -1,0 +1,43 @@
+{
+  "schema_version": "PUBABS-A7-PARENT-CONTRACT-INTEGRITY-V1",
+  "status": "MATCH",
+  "required": {
+    "contract_id": "PUBABS_C1_EXTERNAL_STRESS_V1",
+    "contract_sha256": "d0353c9bf7837a2520364903b53075bde44cddf10b88c3fef58aa4054bbb3310",
+    "frozen_adapter_hash": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+    "layer1_manifest_sha256": "cefc7a3820ebb644a9553b3eaad9f4ec600ea555bc25ed891f236cc50c6632f5",
+    "layer2_manifest_sha256": "01a1db3ef56e1071896f054a5baad397035ca6d989f42f2d1129d250b6867c7c"
+  },
+  "observed": {
+    "contract_id": "PUBABS_C1_EXTERNAL_STRESS_V1",
+    "contract_sha256": "d0353c9bf7837a2520364903b53075bde44cddf10b88c3fef58aa4054bbb3310",
+    "frozen_adapter_hash": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+    "layer1_manifest_sha256": "cefc7a3820ebb644a9553b3eaad9f4ec600ea555bc25ed891f236cc50c6632f5",
+    "layer2_manifest_sha256": "01a1db3ef56e1071896f054a5baad397035ca6d989f42f2d1129d250b6867c7c",
+    "layer1_count": 77,
+    "layer2_count": 34,
+    "layer1_class": {
+      "ABSENT": 11,
+      "PRESENT": 66
+    },
+    "layer2_class": {
+      "ABSENT": 9,
+      "PRESENT": 25
+    },
+    "layer1_adapter": {
+      "VALID": 34,
+      "FAIL_CLOSED": 43
+    },
+    "layer2_present_subjects_valid": {
+      "N1": 1,
+      "N2": 1,
+      "N3": 9,
+      "N4": 8,
+      "N5": 6,
+      "N6": 0
+    }
+  },
+  "drift": false,
+  "a6_gate": "A6_EXTERNAL_STRESS_CONTRACT_FROZEN_WITH_LIMITATIONS",
+  "abort_if_future_drift": "A8_ABORT_A6_CONTRACT_SHA_DRIFT"
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": "PUBABS-A7-CANDIDATE-PANEL-CONTRACT-V1",
+  "contract_id": "PUBABS_C1_EXTERNAL_STRESS_INFERENCE_V1",
+  "role": "ROLE_L_FULL_TASK",
+  "membership": "M_PV3_FAMILY_B_AND_FAMILY_C_ONLY",
+  "panel_policy": "ALL_SIX_NO_CHERRY_PICK",
+  "fixed_order": [
+    "B11",
+    "B23",
+    "B47",
+    "C11",
+    "C23",
+    "C47"
+  ],
+  "excluded": [
+    "family_a/*",
+    "ROLE_L_RR_QUALITY",
+    "ROLE_L_ISOLATION",
+    "ROLE_S_SHORT_CONTEXT",
+    "M-PV3.5 isolation CNN"
+  ],
+  "seed_or_family_selection": "FORBIDDEN",
+  "winner_selection": "FORBIDDEN",
+  "ranking": "FORBIDDEN",
+  "composite_score": "FORBIDDEN",
+  "drop_any_panel_member": "FORBIDDEN",
+  "candidates": [
+    {
+      "panel_id": "B11",
+      "candidate_key": "family_b/seed_11",
+      "family": "family_b",
+      "seed": 11,
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "input_dim": 621,
+      "parameter_count": 17915
+    },
+    {
+      "panel_id": "B23",
+      "candidate_key": "family_b/seed_23",
+      "family": "family_b",
+      "seed": 23,
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "input_dim": 621,
+      "parameter_count": 17915
+    },
+    {
+      "panel_id": "B47",
+      "candidate_key": "family_b/seed_47",
+      "family": "family_b",
+      "seed": 47,
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "input_dim": 621,
+      "parameter_count": 17915
+    },
+    {
+      "panel_id": "C11",
+      "candidate_key": "family_c/seed_11",
+      "family": "family_c",
+      "seed": 11,
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "input_dim": 671,
+      "parameter_count": 21115
+    },
+    {
+      "panel_id": "C23",
+      "candidate_key": "family_c/seed_23",
+      "family": "family_c",
+      "seed": 23,
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "input_dim": 671,
+      "parameter_count": 21115
+    },
+    {
+      "panel_id": "C47",
+      "candidate_key": "family_c/seed_47",
+      "family": "family_c",
+      "seed": 47,
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "input_dim": 671,
+      "parameter_count": 21115
+    }
+  ],
+  "evidence": [
+    "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_selection_inventory.json",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json",
+    "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/role_l_full_task_evaluation_manifest.json",
+    "config/mmwave/m_pv36_role_based_evaluation_contract.json"
+  ]
+}

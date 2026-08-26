@@ -1,0 +1,80 @@
+{
+  "schema_version": "PUBABS-A7-MODEL-RUNTIME-CONTRACT-V1",
+  "status": "RECOVERED",
+  "runtime_format": "PYTORCH_FLOAT32_STATE_DICT",
+  "framework": "torch",
+  "torch_version_trained": "2.8.0",
+  "numpy_version_trained": "1.26.4",
+  "torch_deterministic_algorithms": true,
+  "torch_num_threads": 1,
+  "device": "CPU",
+  "tflite": "NOT_AUTHORIZED_NOT_PRESENT",
+  "int8_quantization": "NOT_AUTHORIZED_NOT_PRESENT",
+  "evidence_forbidden_in_m_pv2": [
+    "INT8_QUANTIZATION",
+    "TFLITE_CONVERSION",
+    "CALIBRATION_FITTING",
+    "FINAL_THRESHOLD_TUNING",
+    "PI_DEPLOYMENT"
+  ],
+  "architecture": {
+    "family_b": {
+      "class": "TraceModel",
+      "trace_branch": "Conv1d(1,16,k=5,pad=2)-ReLU-Conv1d(16,24,k=5,pad=2)-ReLU-AdaptiveAvgPool1d(8)",
+      "scalar_dim": 21,
+      "input_layout": "concat(trace[300], trace_mask[300], scale[12], quality[9]) = 621",
+      "heads": [
+        "breathing",
+        "rr",
+        "quality"
+      ]
+    },
+    "family_c": {
+      "class": "TraceModel",
+      "trace_branch": "same as family_b",
+      "scalar_dim": 71,
+      "input_layout": "concat(trace[300], trace_mask[300], scale[12], quality[9], f2[25], f2_mask[25]) = 671",
+      "heads": [
+        "breathing",
+        "rr",
+        "quality"
+      ]
+    }
+  },
+  "output_decode": {
+    "breathing": "sigmoid(logit); decision at frozen threshold 0.5; PRESENT if >= 0.5 else ABSENT",
+    "rr": "linear; inverse TRAIN z-score: rr_bpm = rr_raw * 8.948729232744911 + 17.12899193548387",
+    "quality": "sigmoid(logit); historical Q2 diagnostic at 0.5; C1 quality GT UNSCORED"
+  },
+  "conceptual_role_l_shape": "[B,300,1]",
+  "actual_family_input_dims": {
+    "family_b": 621,
+    "family_c": 671
+  },
+  "feature_vector_materialization": "A8_REQUIRED_FROZEN_R2_RECONSTRUCTION_NOT_EXECUTED_IN_A7",
+  "feature_vector_recipe": {
+    "trace_source": "Layer2 r1_centered (NOT train_zscore_trace)",
+    "trace_identity_hash_field": "r1_centered_sha256",
+    "zscore_once": "apply TRAIN trace mean/std inside frozen M-PV2 _feature_matrix only",
+    "double_zscore": "FORBIDDEN",
+    "verify_after_zscore_hash_field": "train_zscore_trace_sha256",
+    "scale_descriptors": "frozen R2 F3 / native_scale_descriptors order, 12 names",
+    "quality_descriptors": "frozen R2 F3 quality sidecar, 9 names",
+    "f2_family_c_only": "frozen R2 F2, 25 names plus 25-dim mask",
+    "scaler": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+    "c1_refit": "FORBIDDEN",
+    "c1_adapter_does_not_emit_621_or_671": true,
+    "abort_if_r2_requires_c1_specific_change": "A8_ABORT_FEATURE_VECTOR_CONTRACT_GAP"
+  },
+  "preprocessing_double_application_guard": {
+    "c1_adapter_already_emits_train_zscore_trace": true,
+    "m_pv2_feature_matrix_zscores_r1_centered": true,
+    "rule": "A8 must feed r1_centered into _feature_matrix and must not feed train_zscore_trace into the trace z-score step",
+    "abort_code": "A8_ABORT_DOUBLE_TRACE_ZSCORE"
+  },
+  "source_scripts": [
+    "scripts/mmwave_m_pv2_candidate_training.py",
+    "adapters/mmwave_pubabs_c1_frozen_adapter.py",
+    "scripts/run_mmwave_r2_spectral_autocorr_features.py"
+  ]
+}
