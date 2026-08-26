@@ -1,0 +1,78 @@
+{
+  "schema_version": "PUBABS-A9-FORBIDDEN-CLAIMS-V1",
+  "closure_id": "PUBABS_C1_EXTERNAL_STRESS_TERMINAL_CLOSURE_V1",
+  "claims": [
+    {
+      "id": "FC-01",
+      "claim": "C1 replaces D1_FINAL_SELECTION_BOTH_CLASS_V1."
+    },
+    {
+      "id": "FC-02",
+      "claim": "C1 provides the missing ~57 ABSENT sessions required for final-selection membership."
+    },
+    {
+      "id": "FC-03",
+      "claim": "C1 completes M-PV3.8."
+    },
+    {
+      "id": "FC-04",
+      "claim": "C1 selects the final SafeNest model."
+    },
+    {
+      "id": "FC-05",
+      "claim": "C1 identifies the best seed."
+    },
+    {
+      "id": "FC-06",
+      "claim": "C1 proves Family B or Family C superiority."
+    },
+    {
+      "id": "FC-07",
+      "claim": "C1 estimates MR60 deployment accuracy."
+    },
+    {
+      "id": "FC-08",
+      "claim": "C1 validates deployment safety."
+    },
+    {
+      "id": "FC-09",
+      "claim": "C1 provides RR accuracy."
+    },
+    {
+      "id": "FC-10",
+      "claim": "C1 provides apnea accuracy."
+    },
+    {
+      "id": "FC-11",
+      "claim": "C1 provides quality accuracy."
+    },
+    {
+      "id": "FC-12",
+      "claim": "VALID34 represents all 77 C1 sessions."
+    },
+    {
+      "id": "FC-13",
+      "claim": "FAIL_CLOSED means ABSENT."
+    },
+    {
+      "id": "FC-14",
+      "claim": "A8 PASS / EXECUTION_COMPLETE authorizes M-PV4."
+    },
+    {
+      "id": "FC-15",
+      "claim": "A8 validated or invalidated any named candidate."
+    },
+    {
+      "id": "FC-16",
+      "claim": "A8 reopens M-PV3.8 or changes candidate lifecycle status."
+    },
+    {
+      "id": "FC-17",
+      "claim": "C1 test accuracy (unqualified shorthand for A8 Layer-2 metrics)."
+    },
+    {
+      "id": "FC-18",
+      "claim": "The SafeNest candidates are intrinsically unstable (overgeneralization beyond C1 OOD stress)."
+    }
+  ]
+}

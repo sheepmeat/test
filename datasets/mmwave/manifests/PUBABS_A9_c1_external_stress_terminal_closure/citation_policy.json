@@ -1,0 +1,23 @@
+{
+  "schema_version": "PUBABS-A9-CITATION-POLICY-V1",
+  "closure_id": "PUBABS_C1_EXTERNAL_STRESS_TERMINAL_CLOSURE_V1",
+  "layer1_required_qualifiers": [
+    "ALL77",
+    "availability / fail-closed evidence"
+  ],
+  "layer2_required_qualifiers": [
+    "external",
+    "out-of-domain",
+    "conditional-on-adapter-valid",
+    "descriptive-only"
+  ],
+  "forbidden_shorthand": [
+    "C1 test accuracy",
+    "C1 validation accuracy",
+    "C1 deployment accuracy"
+  ],
+  "a8_execution_note": {
+    "A8_R2_TIME_ORIGIN_NORMALIZATION": "ACCEPTED_EQUIVALENT_IMPLEMENTATION",
+    "meaning": "R2 time axis normalized to 0.0..29.9 s to avoid float64 absolute-time grid tolerance artifact; does not alter sample spacing, trace values, R2 spectral/autocorrelation result, or frozen input hashes; not an adapter-contract change."
+  }
+}

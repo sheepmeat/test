@@ -1,0 +1,50 @@
+{
+  "schema_version": "PUBABS-A9-ALLOWED-CLAIMS-V1",
+  "closure_id": "PUBABS_C1_EXTERNAL_STRESS_TERMINAL_CLOSURE_V1",
+  "claims": [
+    {
+      "id": "AC-01",
+      "claim": "C1 (DOI 10.5281/zenodo.15032859) is a verified same-dataset human-PRESENT / no-human ABSENT external UWB radar source."
+    },
+    {
+      "id": "AC-02",
+      "claim": "The frozen SafeNest C1 adapter produces canonical ROLE_L-compatible inputs for a subset of sessions and fails closed for others."
+    },
+    {
+      "id": "AC-03",
+      "claim": "Adapter availability on C1 is strongly class-correlated (ABSENT VALID ≈81.8%; PRESENT VALID ≈37.9%)."
+    },
+    {
+      "id": "AC-04",
+      "claim": "VALID34 is not representative of the complete C1 source population of 77 sessions."
+    },
+    {
+      "id": "AC-05",
+      "claim": "Under current frozen governance, C1 is unsuitable as replacement final-selection membership for D1_FINAL_SELECTION_BOTH_CLASS_V1."
+    },
+    {
+      "id": "AC-06",
+      "claim": "C1 may serve as external availability / domain stress evidence only (EXTERNAL_SAFETY_DOMAIN_STRESS_ONLY)."
+    },
+    {
+      "id": "AC-07",
+      "claim": "All six frozen ROLE_L panel candidates (B11,B23,B47,C11,C23,C47) were executed deterministically on the exact A6 VALID34 population (204/204 outputs; 0 non-finite)."
+    },
+    {
+      "id": "AC-08",
+      "claim": "Descriptive out-of-domain C1 breathing-decision behavior differs substantially across the frozen six-candidate panel."
+    },
+    {
+      "id": "AC-09",
+      "claim": "A8 Layer-2 results are CONDITIONAL_ON_ADAPTER_VALID, OUT_OF_DOMAIN_EXTERNAL_STRESS, and DESCRIPTIVE_ONLY."
+    },
+    {
+      "id": "AC-10",
+      "claim": "FAIL_CLOSED adapter outcomes are availability/ingress failures and must not be reinterpreted as ABSENT, NORMAL, or negative physiology."
+    },
+    {
+      "id": "AC-11",
+      "claim": "C1 stresses domain/scale sensitivity; it does not estimate SafeNest MR60 deployment performance."
+    }
+  ]
+}
