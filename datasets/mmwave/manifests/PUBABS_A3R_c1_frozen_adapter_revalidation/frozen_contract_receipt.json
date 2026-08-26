@@ -1,0 +1,14 @@
+{
+  "schema_version": "PUBABS-A3R-FROZEN-CONTRACT-RECEIPT-V1",
+  "phase": "PUBABS-A3R",
+  "frozen_proposal_path": "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/proposed_adapter_contract.json",
+  "frozen_proposal_sha256": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+  "sol_master_freeze_receipt": "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/sol_master_freeze_receipt.json",
+  "timestamp_contract": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+  "range_contract": "C1_ROI_EXCLUDE_NEARFIELD28_DYNENERGY_UNWRAP_V1",
+  "range_policy": "RG-S1",
+  "historical_r1": "UNCHANGED",
+  "historical_r1_file": "adapters/mmwave_r1_sensor_independent_trace.py",
+  "historical_r1_sha256": "2d5f34feef524e18f9b9e5b5d8c9ef4223fa133c55fb48ee4703f7e31a54e102",
+  "post_pr161_base_sha": "cac5141d1ffe3b9204dd11ae295df8fedc940677"
+}

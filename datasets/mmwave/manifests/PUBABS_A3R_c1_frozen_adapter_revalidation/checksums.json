@@ -1,0 +1,20 @@
+{
+  "schema_version": "PUBABS-A3R-CHECKSUMS-V1",
+  "status": "COMPLETE",
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/frozen_contract_receipt.json": "549ae55ffcfe1be0eda7b92e1a4731079d12465aaf797cd584a2e84d12406be7",
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/implementation_identity.json": "c3307f43f83ec21a0467641f8e75faf689d1b5fb35d0c3931594f90900d9afb6",
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/session_results.json": "6805c3f56455b91a3c9ac83b650ea08c195ad2a8c4adaf3cf09a00465e6598c5",
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/timing_validation_summary.json": "0d55b777e8eefbc8a93326a6893d824e892a5ea82fb30c3687bd3f03966118dc",
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/range_selection_summary.json": "2a2f34ee96fd027903a097da52ad16c228de2b52fc08a0deca1f9c7cec7147fc",
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/determinism_receipt.json": "b16f0d5a45b157d7a0225f4bad5ee16f70b06b7ae438e824859013711551c9bf",
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/preprocessing_structural_audit.json": "d4a06073bd9d3fc9758a957831c76e2b95ab8e8b6fc51760b082e03777a46acf",
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/fail_closed_summary.json": "d6f5adbe92ebed39c450464f63db22a4812922db28dcc2db87f6f44ee9ee5f31",
+    "datasets/mmwave/manifests/PUBABS_A3R_c1_frozen_adapter_revalidation/validation_result.json": "19f6874da66ad4ef8d46f90865bc0becef408d6af2a87375b7ac85a0990e05b8",
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A3R_C1_Frozen_Adapter_Revalidation_01.md": "eb4f867d9c32732eaf0cbec1b0c0fff7a7bb838aca212bf1af6d520bc1ebb13d",
+    "adapters/mmwave_pubabs_c1_frozen_adapter.py": "7f590a01bce22c62dad56aec8ec7221c4210772e900da0fc91971fd843859330",
+    "scripts/mmwave/pubabs_a3r_run_all_sessions.py": "e59e2f81707849b048ddb5dad04a40fbbda0bc8c406c7624aba77825fd88fb5d",
+    "tests/test_mmwave_pubabs_a3r_c1_frozen_adapter.py": "9e047d89a037026a60a86f9637625cd3da0d46be2b2ef72899a99c30203a9dfc"
+  }
+}
