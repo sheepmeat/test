@@ -1,0 +1,50 @@
+{
+  "schema_version": "PUBABS-A2-C1-ACQ-COMPARABILITY-V1",
+  "phase": "PUBABS-A2",
+  "status": "VERIFIED",
+  "same_radar_hardware": "YES",
+  "same_operating_mode": "YES_INFERRED_SAME_PIPELINE",
+  "same_robot_platform": "YES",
+  "same_acquisition_pipeline": "YES",
+  "same_output_schema": "YES",
+  "same_range_bin_count": "YES_180",
+  "same_complex_representation": "YES_python_complex_list",
+  "compatible_cadence": "YES_approx_18_8_hz_both",
+  "same_position_framework": "YES_positions_-5_to_5",
+  "same_preprocessing_state": "YES_same_csv_schema_no_extra_fields",
+  "same_file_schema": "YES_2_columns_timestamp_plus_complex_list",
+  "duration_asymmetry": {
+    "empty_approx_s": 900,
+    "present_approx_s": 180,
+    "note": "Absence sessions systematically longer; mitigated by fixed 30s windowing in A3, but is an acquisition-domain difference."
+  },
+  "schema_compare": {
+    "empty_range_bins": [
+      180
+    ],
+    "present_range_bins": [
+      180
+    ],
+    "empty_column_counts": [
+      2
+    ],
+    "present_column_counts": [
+      2
+    ],
+    "empty_encoding": [
+      "python_complex_list_in_quoted_csv_field"
+    ],
+    "present_encoding": [
+      "python_complex_list_in_quoted_csv_field"
+    ],
+    "same_bins": true,
+    "same_cols": true,
+    "same_encoding": true
+  },
+  "present_duration_s_min": 179.67256704000002,
+  "present_duration_s_max": 180.79331993600002,
+  "present_hz_min": 18.777791130873695,
+  "present_hz_max": 22.95620030441758,
+  "empty_hz_min": 18.774045797857895,
+  "empty_hz_max": 18.848282484185535
+}

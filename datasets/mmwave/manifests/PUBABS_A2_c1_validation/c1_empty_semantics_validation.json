@@ -1,0 +1,100 @@
+{
+  "schema_version": "PUBABS-A2-C1-EMPTY-SEMANTICS-V1",
+  "phase": "PUBABS-A2",
+  "status": "VERIFIED",
+  "no_human_target": "VERIFIED",
+  "no_target_physiological_source": "VERIFIED",
+  "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE",
+  "documentation_support": {
+    "zenodo_15032859_description": "11 absence sessions across same robot positions as presence",
+    "scidata_companion": "10.1038/s41597-026-07314-z: Absence = no subject in FoV (N0)",
+    "folder_label": "Data/Empty_space/",
+    "payload_confirmation": "all_11_sessions_parsed"
+  },
+  "per_session": [
+    {
+      "position": "-5",
+      "zip_member": "Data/Empty_space/-5/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "-4",
+      "zip_member": "Data/Empty_space/-4/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "-3",
+      "zip_member": "Data/Empty_space/-3/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "-2",
+      "zip_member": "Data/Empty_space/-2/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "-1",
+      "zip_member": "Data/Empty_space/-1/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "0",
+      "zip_member": "Data/Empty_space/0/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "1",
+      "zip_member": "Data/Empty_space/1/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "2",
+      "zip_member": "Data/Empty_space/2/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "3",
+      "zip_member": "Data/Empty_space/3/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "4",
+      "zip_member": "Data/Empty_space/4/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    },
+    {
+      "position": "5",
+      "zip_member": "Data/Empty_space/5/plot_data.csv",
+      "no_human_label_source": "folder_Empty_space_plus_official_metadata",
+      "parse_success": true,
+      "valid_radar_observation": "VERIFIED_FROM_SIGNAL_STRUCTURE"
+    }
+  ],
+  "rejected_interpretations": [
+    "human breath-hold",
+    "apnea-labelled human",
+    "motionless human",
+    "low SNR as absence",
+    "algorithm-predicted absence"
+  ]
+}

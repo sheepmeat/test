@@ -1,0 +1,54 @@
+{
+  "role": "REFERENCE_ONLY_EXTENDED_LINEAGE",
+  "primary_c1_doi": "10.5281/zenodo.15032859",
+  "primary_c1_zenodo_record": "15032859",
+  "reference_zenodo_record": "16533267",
+  "reference_doi": "10.5281/zenodo.16533267",
+  "reference_title": "A Comprehensive Dataset for Victim Detection in SAR Operations Using Robot-Mounted UWB-Radar Sensors",
+  "license": "cc-by-4.0",
+  "publication_date": "2025-07-28",
+  "creators": [
+    "Michalopoulos, Antonios Periklis",
+    "Paliodimos, Efstratios",
+    "Papadopoulos, Fotios",
+    "Nikolaou, Grigoris",
+    "Patrikakis, Charalampos",
+    "Mitilineos, Stelios A."
+  ],
+  "companion_scidata_doi": "10.1038/s41597-026-07314-z",
+  "payload_downloaded": false,
+  "mixed_into_c1_a2": false,
+  "facts_useful_for_c1_crosscheck": {
+    "sensor": "SLMX4 (Novelda X4 lineage)",
+    "robot_positions": 11,
+    "absence_sessions_stated": 11,
+    "absence_session_duration_stated_min": 30,
+    "presence_sessions_stated": 528,
+    "presence_session_duration_stated_min": 3,
+    "refresh_rate_fps_approx": 19,
+    "range_bins": 180,
+    "range_bin_spacing_m": 0.0512,
+    "absence_subject_id": "N0",
+    "presence_subject_ids": [
+      "N1",
+      "N2",
+      "N3",
+      "N4",
+      "N5",
+      "N6"
+    ],
+    "absence_semantics_stated": "human absence / no subject present; varies by robot position only",
+    "wall_thickness_cm": 27,
+    "environment": "Antenna Laboratory UniWA office-classroom; through-wall"
+  },
+  "explicit_non_use": [
+    "Do not download N0.csv..N6.csv for PUBABS-A2",
+    "Do not mix 16533267 rows into C1 Empty_space / N1..N6 inventory",
+    "Primary identity for A2 remains zenodo.15032859 Data.zip"
+  ],
+  "inspected_at_utc": "2026-08-26T11:37:28Z",
+  "inspection_method": "Zenodo API metadata JSON only",
+  "schema_version": "PUBABS-A2-C1-REFERENCE-LINEAGE-V1",
+  "phase": "PUBABS-A2",
+  "status": "REFERENCE_METADATA_ONLY"
+}

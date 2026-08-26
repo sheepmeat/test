@@ -1,0 +1,51 @@
+{
+  "schema_version": "PUBABS-A2-C1-CONFOUND-V1",
+  "phase": "PUBABS-A2",
+  "status": "VERIFIED",
+  "semantic_label_difference": "YES_Empty_space_vs_Ni_human_subjects",
+  "acquisition_domain_difference": "PARTIAL_DURATION_ASYMMETRY_SAME_SCHEMA",
+  "acquisition_confound_risk": "MEDIUM",
+  "blocking": false,
+  "environmental_notes": {
+    "domain": "robot-mounted through-wall UWB classroom/lab",
+    "wall_thickness_cm_from_docs": 27,
+    "not_mr60": true,
+    "cross_sensor_canonicalization": "deferred_to_A3",
+    "a2_focus": "internal same-dataset negative-control validity"
+  },
+  "checks": [
+    {
+      "item": "file_schema",
+      "result": "SAME"
+    },
+    {
+      "item": "range_bins",
+      "result": "SAME_180"
+    },
+    {
+      "item": "complex_encoding",
+      "result": "SAME"
+    },
+    {
+      "item": "cadence",
+      "result": "COMPATIBLE_~18.8Hz"
+    },
+    {
+      "item": "position_set",
+      "result": "SAME_-5_to_5"
+    },
+    {
+      "item": "session_duration",
+      "result": "ASYMMETRIC_empty~900s_present~180s"
+    },
+    {
+      "item": "present_condition_breadth_in_archive",
+      "result": "ONLY_Scenario_A_1m_face_toward_wall"
+    },
+    {
+      "item": "filename_only_leakage_if_paths_exposed",
+      "result": "PRESENT_risk_if_path_features_used_mitigate_in_A3/A5"
+    }
+  ],
+  "a3_precaution": "Use fixed-length windows; do not expose path/class folder names as features; do not fit range-bin by class performance."
+}
