@@ -5,7 +5,7 @@ Executing agent: Luna Max Fast
 Phase: MMWAVE-V2-D1-SWPREP-03-04
 Base: post-PR #170 `origin/main` at `13a56b7e41e9519ad61238a74861ef4ad6ea16ab`
 Branch: `feature/mmwave-d1-sw03-sw04-evidence-tooling`
-PR: pending creation
+PR: [#174](https://github.com/sheepmeat/test/pull/174)
 
 ## Scope and outcome
 
@@ -24,8 +24,8 @@ The result is a deterministic, non-campaign fixture bundle with versioned schema
 PHASE: MMWAVE-V2-D1-SWPREP-03-04
 BASE: 13a56b7e41e9519ad61238a74861ef4ad6ea16ab
 BRANCH: feature/mmwave-d1-sw03-sw04-evidence-tooling
-COMMIT: pending
-PR: pending creation
+COMMIT: 77edc4ba (implementation commit)
+PR: #174 (open; not merged)
 
 SW03_IMPLEMENTED: YES
 SW04_IMPLEMENTED: YES
@@ -45,6 +45,8 @@ CAPTURE_EXECUTED: NO
 TESTS: 13 focused tests passed; CLI validators passed; Python compile check passed
 TERMINAL_VERDICT: SW03_SW04_IMPLEMENTED_FIXTURE_VALIDATED
 ```
+
+The report was updated after PR creation. PR #174 is open for review and was not merged.
 
 ## SW-03 implementation
 
