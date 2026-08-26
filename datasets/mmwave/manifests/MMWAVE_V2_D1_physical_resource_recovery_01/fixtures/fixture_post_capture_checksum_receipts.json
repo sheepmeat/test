@@ -1,0 +1,55 @@
+{
+  "schema_version": "FIXTURE_ONLY_POST_CAPTURE_CHECKSUM_RECEIPTS_V1",
+  "semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP"
+  ],
+  "receipts": [
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_01",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_01",
+      "sha256": "ed8c66eb0decab5bafd01ceec39ded815efb561263643ad853e1aa5bff20fcf9"
+    },
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_02",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_02",
+      "sha256": "6cfca695660602491b272161548bdf4ac3ead42940c787b4632f3580f5957238"
+    },
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_03",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_03",
+      "sha256": "8ad178ee84331b7ef3e7c97dc86ec47d0057f536b371e828f64eeffda5622d73"
+    },
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_04",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_04",
+      "sha256": "cc18a61159019fe0e1c3d10cdec126cdeac28729737e8131c354b26a88c04cd9"
+    },
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_05",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_05",
+      "sha256": "8d86f7bdd0b6af1af40f89102bdea28988d22e460fb4df09436e13d265cea99c"
+    },
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_06",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_06",
+      "sha256": "c06d8f0246e8081fee85f30821884f88c5d40d25372e0d2dfdbd0b2e8488490e"
+    },
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_07",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_07",
+      "sha256": "712793501d6e242375caec2524601ddf6ed8bd713557d4cefa287b2867efca71"
+    },
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_08",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_08",
+      "sha256": "bab0464e2f2bf1ead5844035351f47b478a312753b1a304c3a7c9407d00491b6"
+    },
+    {
+      "planned_recording_id": "FIXTURE_PLANNED_09",
+      "actual_recording_identifier": "FIXTURE_ACTUAL_09",
+      "sha256": "5ea8cf295b151984ae4136fde50df794575da263c7f819cd109aacbcaa0568d8"
+    }
+  ]
+}

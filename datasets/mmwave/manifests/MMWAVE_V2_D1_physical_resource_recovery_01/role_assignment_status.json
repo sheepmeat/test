@@ -1,0 +1,37 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-ROLES-V1",
+  "status": "BLOCKED_OWNER_OR_ACCESS",
+  "blocking": true,
+  "canonical_source": "datasets/mmwave/manifests/M-PV3_8_absent_resource_readiness_checklist/readiness_requirements.json#required_personnel_and_process",
+  "roles": [
+    {
+      "id": "PP-01",
+      "role": "sensor custodian",
+      "assigned": false
+    },
+    {
+      "id": "PP-02",
+      "role": "capture operator",
+      "assigned": false
+    },
+    {
+      "id": "PP-03",
+      "role": "independent evidence reviewer",
+      "assigned": false
+    },
+    {
+      "id": "PP-04",
+      "role": "campaign authority",
+      "assigned": false
+    }
+  ],
+  "unassigned_roles": [
+    "PP-01",
+    "PP-02",
+    "PP-03",
+    "PP-04"
+  ],
+  "owner_action_required": true,
+  "agent_assigned_people": false,
+  "evidence": "Canonical role semantics recovered; no named assignee artifacts found. Agent did not invent assignments."
+}

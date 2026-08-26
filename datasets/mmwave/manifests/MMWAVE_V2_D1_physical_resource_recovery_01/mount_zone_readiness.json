@@ -1,0 +1,16 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-MOUNT-ZONE-V1",
+  "status": "NOT_EVIDENCED",
+  "blocking": true,
+  "canonical_requirements_source": "datasets/mmwave/manifests/M-PV3_8_absent_resource_readiness_checklist/readiness_requirements.json#HW-02",
+  "required": [
+    "rigid mount",
+    "measured position/height/azimuth/elevation",
+    "target-zone polygon or bounded geometry",
+    "photographic or measured mounting evidence if authorized"
+  ],
+  "measured_geometry_found_in_repo": false,
+  "live_measurement_performed": false,
+  "evidence": "No measured placement/target-zone geometry artifact for the governed ABSENT campaign was located; dimensions were not invented.",
+  "remaining_action": "Owner/custodian provide measured mount + zone geometry evidence before preflight can clear EMPTY_ZONE / SLOT lock prerequisites."
+}

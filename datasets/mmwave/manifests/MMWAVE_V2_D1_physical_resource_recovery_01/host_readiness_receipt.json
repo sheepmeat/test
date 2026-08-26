@@ -1,0 +1,41 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-HOST-V1",
+  "status": "AVAILABLE_VERIFIED",
+  "scope": "AUDIT_ENVIRONMENT_HOST_ONLY",
+  "caveat": "This verifies the audit Mac host, not a designated Raspberry Pi capture host. Designated campaign capture host identity remains NOT_EVIDENCED.",
+  "designated_capture_host_status": "NOT_EVIDENCED",
+  "blocking_for_campaign_preflight": true,
+  "host": {
+    "host_id": "Junwooui-MacBookAir.local",
+    "host_id_sha256": "6c9e276db4a5568acff7b2cb44064becf2bceb93d829c2b00e35e724847c7c68",
+    "os": "macOS-26.5.2-arm64-arm-64bit",
+    "system": "Darwin",
+    "release": "25.5.0",
+    "arch": "arm64",
+    "python": "3.9.6"
+  },
+  "storage": {
+    "free_bytes": 17984737280,
+    "free_gib_approx": 16.75,
+    "writable_evidence_dir": "datasets/mmwave/manifests/MMWAVE_V2_D1_physical_resource_recovery_01",
+    "writable_check": true
+  },
+  "clock": {
+    "wall_clock_utc": "2026-08-26T17:09:07.850098+00:00",
+    "time_time": 1787764147.850764,
+    "monotonic_available": true,
+    "monotonic_sample": 16.796759083,
+    "timezone_name": [
+      "KST",
+      "KST"
+    ],
+    "ntp_status": "NOT_QUERIED_NON_DESTRUCTIVE"
+  },
+  "hash_tooling": {
+    "hashlib_sha256": true,
+    "shasum_path": "/usr/bin/shasum",
+    "sha256sum_path": "/sbin/sha256sum"
+  },
+  "destructive_cleanup": false,
+  "campaign_data_written": false
+}
