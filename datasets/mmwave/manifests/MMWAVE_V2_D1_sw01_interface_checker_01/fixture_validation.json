@@ -1,0 +1,58 @@
+{
+  "schema_version": "MMWAVE_V2_D1_SW01_FIXTURE_VALIDATION_V1",
+  "deterministic": true,
+  "results": {
+    "backend_unavailable.json": {
+      "overall_status": "BACKEND_UNAVAILABLE",
+      "receipt_sha256": "a54e832d1ed21aef106865f6fda8e37fdd498ba678894dc77c81f888d55aa429"
+    },
+    "dropout_sequence_gap.json": {
+      "overall_status": "FAIL_CONTINUITY_UNOBSERVABLE",
+      "receipt_sha256": "b876a2b05a8ffa6b7b7d18ccaebf4a5139b3f35ec02440e2b178b8afdf6259ab"
+    },
+    "health_fault.json": {
+      "overall_status": "FAIL_HEALTH_UNAVAILABLE",
+      "receipt_sha256": "05d6f65c725095fbfe53c5b562464d15eeab08e8fdad3c4fdf566726cf337040"
+    },
+    "missing_identities.json": {
+      "overall_status": "FAIL_REQUIRED_FIELD_MISSING",
+      "receipt_sha256": "70c81bb55a2c866227d46167edec9383a9410fdd2150fceaa921590a912b733a"
+    },
+    "missing_raw.json": {
+      "overall_status": "FAIL_RAW_OR_NEAR_RAW_UNAVAILABLE",
+      "receipt_sha256": "eb5a69d3a3f3a9192726dfe2e550eee6b3fb4216ab7f4895f6ee3af1a90299d7"
+    },
+    "missing_timestamp.json": {
+      "overall_status": "FAIL_REQUIRED_FIELD_MISSING",
+      "receipt_sha256": "8467b2d5c29cb6ad5fa55714a2f754a5845c955fbdce806ae1b054c3182a0145"
+    },
+    "non_monotonic.json": {
+      "overall_status": "FAIL_NON_MONOTONIC_TIMESTAMP",
+      "receipt_sha256": "7a634c4a375667c312dbf9e17bc881406372171261eddfd0f847c4a011eba736"
+    },
+    "scalar_only.json": {
+      "overall_status": "FAIL_SCALAR_TELEMETRY_ONLY",
+      "receipt_sha256": "05bd8ecdbeee915995f7622d19fda268bfe0c3b9e6ce87b0d4bee1b6cd6bd416"
+    },
+    "session_reset.json": {
+      "overall_status": "PASS_NON_CAMPAIGN_INTERFACE_CHECK",
+      "receipt_sha256": "8b9cf142e6bed29a20ee06f9d5c7d2abd4bc9569ddf7fd5972072dd890b53876"
+    },
+    "valid_stream.json": {
+      "overall_status": "PASS_NON_CAMPAIGN_INTERFACE_CHECK",
+      "receipt_sha256": "e99e185860de116e7d224f829ac355f08601b1db79e2829582c03e083bf998f0"
+    }
+  },
+  "expected": {
+    "valid_stream.json": "PASS_NON_CAMPAIGN_INTERFACE_CHECK",
+    "missing_raw.json": "FAIL_RAW_OR_NEAR_RAW_UNAVAILABLE",
+    "missing_timestamp.json": "FAIL_REQUIRED_FIELD_MISSING",
+    "non_monotonic.json": "FAIL_NON_MONOTONIC_TIMESTAMP",
+    "dropout_sequence_gap.json": "FAIL_CONTINUITY_UNOBSERVABLE",
+    "health_fault.json": "FAIL_HEALTH_UNAVAILABLE",
+    "backend_unavailable.json": "BACKEND_UNAVAILABLE",
+    "scalar_only.json": "FAIL_SCALAR_TELEMETRY_ONLY",
+    "missing_identities.json": "FAIL_REQUIRED_FIELD_MISSING",
+    "session_reset.json": "PASS_NON_CAMPAIGN_INTERFACE_CHECK"
+  }
+}

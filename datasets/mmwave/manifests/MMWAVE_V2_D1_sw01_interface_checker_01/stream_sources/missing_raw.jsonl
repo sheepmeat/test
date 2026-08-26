@@ -1,0 +1,3 @@
+{"record_type":"stream_header","schema_version":"MMWAVE_V2_D1_SW01_SOURCE_RECORD_V1","device_identity":"STREAM_DEVICE_001","interface_identity":"jsonl:external","configuration_identity":"STREAM_CFG_001","observation_kind":"unknown"}
+{"record_type":"sample","t":0.0,"seq":0,"health":{"ok":true}}
+{"record_type":"sample","t":0.1,"seq":1,"health":{"ok":true}}
