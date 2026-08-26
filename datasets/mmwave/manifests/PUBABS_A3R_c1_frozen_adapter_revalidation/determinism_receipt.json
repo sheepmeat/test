@@ -1,0 +1,7 @@
+{
+  "schema_version": "PUBABS-A3R-DETERMINISM-RECEIPT-V1",
+  "runs": 2,
+  "sessions_compared": 77,
+  "identical_selected_bin_status_hashes": true,
+  "hash_serialization": "sha256(float64 contiguous tobytes) for r1t_10hz / r1_centered / train_zscore_trace"
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "PUBABS-A3R-FAIL-CLOSED-SUMMARY-V1",
+  "sessions_fail_closed": 43,
+  "by_code": {
+    "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 42,
+    "INPUT_UNAVAILABLE_TOO_SHORT_FOR_30S": 1
+  },
+  "by_reporting_class": {
+    "ABSENT": 2,
+    "PRESENT": 41
+  },
+  "interpretation": "Failures are frozen R1T fail-closed outcomes on the first 30 s interval only; no later-interval search; no rule lowering."
+}

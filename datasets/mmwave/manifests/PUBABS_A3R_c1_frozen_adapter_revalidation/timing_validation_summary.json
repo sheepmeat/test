@@ -1,0 +1,18 @@
+{
+  "schema_version": "PUBABS-A3R-TIMING-SUMMARY-V1",
+  "rule": "first [t0,t0+30]; median_hz>=12; gap>2.5*median_dt fail-closed; 20Hz\u00d7599; butter N4 fc4 padlen15 odd; even decimation \u2192 300",
+  "sessions_total": 77,
+  "sessions_valid": 34,
+  "fail_closed_codes": {
+    "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 42,
+    "INPUT_UNAVAILABLE_TOO_SHORT_FOR_30S": 1
+  },
+  "valid_median_source_hz": {
+    "min": 18.783773858679588,
+    "median": 18.912429263893586,
+    "max": 19.61384934812293
+  },
+  "r1_resampling_methods_on_valid": [
+    "NONE_SOURCE_ALREADY_AT_TARGET_RATE"
+  ]
+}
