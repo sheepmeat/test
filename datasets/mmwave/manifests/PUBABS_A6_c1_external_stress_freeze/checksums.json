@@ -1,0 +1,21 @@
+{
+  "schema_version": "PUBABS-A6-CHECKSUMS-V1",
+  "status": "COMPLETE",
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/availability_semantics.json": "5214b203b22bb9ea779e46637b19ebc6d061e3be2d4edb70fe86ed08bc88deea",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/external_stress_contract.json": "d0353c9bf7837a2520364903b53075bde44cddf10b88c3fef58aa4054bbb3310",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/external_stress_contract_receipt.json": "09772c1d39c050e783544e2821240145d3c99e62b1a5a341455849ffdab8476b",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/future_authority.json": "4289d37da9544e24259765065986979b406c66f9694369c85f73f2daac219505",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/layer1_all77_population.json": "cefc7a3820ebb644a9553b3eaad9f4ec600ea555bc25ed891f236cc50c6632f5",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/layer2_valid34_population.json": "01a1db3ef56e1071896f054a5baad397035ca6d989f42f2d1129d250b6867c7c",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/population_composition.json": "800884933e5b16f996c99859a974c03f9e20c3ce11e7fa37d35f382281b5c807",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/population_freeze_receipt.json": "ae8692d4badba054578584dd720538e617f4333967dfdcc68faa8ed147447178",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/reproducibility_receipt.json": "c81d1569e14dc4c1b37acd2e9ce5a9e7ddd2020d4114c2fadb0ea9e4a6239b6e",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/terminal_guards.json": "378e3a6d5c9b111e321b9c4eb2ab48903bf1b4b202acb1dac3b49b0f0a681c09",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/validation_result.json": "026b23ee7424b22730fc5eaa67476db09e8559f4635ff8a8c207abf18265f4d2",
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A6_C1_External_Stress_Contract_Population_Freeze_01.md": "1cfda25f39a19c44ddd95f97883deacd174adc03debb4c1c614865f31598d4db",
+    "scripts/mmwave/pubabs_a6_freeze_external_stress_population.py": "09d86d243e6bca7e9d792540b0b3b78a79834780dcdf5b2dfc61f3d39809fae0",
+    "tests/test_mmwave_pubabs_a6_external_stress_freeze.py": "0bfcdc3eea7ef89e50ef650128bf9edeb7ea10dd133e667c444ab178b5eea27e"
+  }
+}
