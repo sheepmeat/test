@@ -1,0 +1,48 @@
+{
+  "schema_version": "PUBABS-A5-SOURCE-ROLE-DECISION-V1",
+  "phase": "PUBABS-A5",
+  "date": "2026-08-26",
+  "base_sha": "70886357a859bd46b8b1cd77da1c9d0837188975",
+  "a4_gate_accepted": "A4_CLEAR_WITH_LIMITATIONS_FOR_A5",
+  "frozen_adapter": {
+    "timestamp_contract": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+    "range_contract": "C1_ROI_EXCLUDE_NEARFIELD28_DYNENERGY_UNWRAP_V1",
+    "range_policy": "RG-S1",
+    "historical_r1": "UNCHANGED",
+    "frozen_proposal_sha256": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+    "adapter_retuning": "FORBIDDEN"
+  },
+  "route_comparison": {
+    "ROUTE_A_FINAL_SELECTION_MEMBERSHIP": {
+      "status": "REJECTED",
+      "blocking_reasons": [
+        "AVAILABILITY_CLASS_NEUTRALITY=NOT_SUPPORTED",
+        "VALID_SUBSET_REPRESENTATIVENESS=NOT_SUPPORTED",
+        "PRESENT_VALID subject counts N1=1,N2=1,N3=9,N4=8,N5=6,N6=0",
+        "N6_ZERO_VALID blocks both-class subject coverage for selection",
+        "TRAIN_ZSCORE_SCALE_RISK=HIGH",
+        "CROSS_SENSOR_DOMAIN_RISK=HIGH_RISK",
+        "TEMPORAL_ACQUISITION_COMPARABILITY=NOT_SUPPORTED"
+      ],
+      "conclusion": "Cannot prove A4 risks are non-blocking for model-selection membership."
+    },
+    "ROUTE_B_EXTERNAL_SAFETY_DOMAIN_STRESS": {
+      "status": "SELECTED",
+      "rationale": [
+        "ALL_77 availability outcomes remain first-class evidence",
+        "VALID_34 usable only as CONDITIONAL_ON_ADAPTER_VALID structural/domain stress",
+        "Separates ingress/availability safety from ROLE_L final-selection membership",
+        "Preserves fail-closed UNAVAILABLE semantics without ABSENT substitution"
+      ]
+    },
+    "ROUTE_C_RESEARCH_ONLY_OR_REJECT": {
+      "status": "NOT_SELECTED",
+      "why_not_research_only": "Governed external stress contract is scientifically useful and A4 authorized A5 with limitations.",
+      "why_not_full_reject": "C1 adapter is structurally deterministic for 34 sessions; availability bias itself is actionable safety evidence."
+    }
+  },
+  "selected_primary_route": "A5_ROUTE_EXTERNAL_SAFETY_STRESS_ONLY",
+  "proposed_membership_identity": "PUBABS_C1_EXTERNAL_STRESS_V1",
+  "membership_constructed_in_a5": false,
+  "session_ids_selected_in_a5": false
+}

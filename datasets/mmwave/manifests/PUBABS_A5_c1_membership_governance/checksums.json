@@ -1,0 +1,20 @@
+{
+  "schema_version": "PUBABS-A5-CHECKSUMS-V1",
+  "status": "COMPLETE",
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/availability_governance.json": "e950344f5ce03caddd63604b9b71b7ba71459b0e809f311b08718e91c0e4fe76",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/class_balance_policy.json": "987ef8b6dbd41c5d45f2aae3ae1a0225bca4c0d12bd4d2e86d59235ffe47a469",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/d1_non_substitution_contract.json": "406e8374832dee9bb2d983facd3acd7fcb5345906056e371c2fb01cb3fce8fb1",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/domain_role_policy.json": "3bd3d884ef85337d0979e20db0def012b27ea00b72984fa27319a22df8843b38",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/external_stress_contract_proposal.json": "b052d08c62409c5c5fd5bd7537f2c00d3140e25b546c2cc76bf8822c966eecef",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/future_authority_matrix.json": "655e55648219a901f88f24b8c5a0cf2d6e90dc3333906ca4de4efd4c629a624b",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/position_coverage_policy.json": "761b88ace2a737af2d6ef13ae28409bea668ba84365a88961f798649f62fd591",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/scale_risk_policy.json": "e4373ea82521e1f084a187c25e1f6af3626ef68165baf93fda3679e25d7b26c4",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/source_role_decision.json": "79ab48e7f756e09a948faa7088854d0e5f7ac79acc40778aa82f47fe5924e205",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/subject_coverage_policy.json": "f30a3f47d323be9b55810941b82eb166962424122f13decd2eb6432127639fbc",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/terminal_guards.json": "f9a58148b4d6519ae73544503dd7d051d3f4437928bf3b9a674a9012fc5e66a1",
+    "datasets/mmwave/manifests/PUBABS_A5_c1_membership_governance/validation_result.json": "a34d64634a0834568ca1328253c8f34880288b41e1051a24e83bc9c9294fb311",
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A5_C1_Public_Membership_Governance_Design_01.md": "5b2bb55b506a6d0f5d75452d1c99608a691ea290b54766f04d380e126e21a819"
+  }
+}
