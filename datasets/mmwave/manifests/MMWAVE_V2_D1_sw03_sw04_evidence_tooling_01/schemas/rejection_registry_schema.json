@@ -1,0 +1,80 @@
+{
+  "$id": "MMWAVE-V2-D1-SW04-REJECTION-REGISTRY-V1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "acceptance_state": {
+      "const": "REJECTED"
+    },
+    "decision_source": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "eligible_for_absent": {
+      "const": false
+    },
+    "evidence_references": {
+      "type": "array"
+    },
+    "fixture_semantics": {
+      "const": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "type": "array"
+    },
+    "immutable_candidate_recording_reference": {
+      "type": "object"
+    },
+    "physiology_label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "reason_code": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reason_detail": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "registry_record_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "rejection_record_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "retained": {
+      "const": true
+    },
+    "schema_version": {
+      "const": "MMWAVE-V2-D1-SW04-REJECTION-REGISTRY-V1"
+    },
+    "time_coverage": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "rejection_record_id",
+    "immutable_candidate_recording_reference",
+    "reason_code",
+    "reason_detail",
+    "evidence_references",
+    "time_coverage",
+    "decision_source",
+    "retained",
+    "acceptance_state",
+    "eligible_for_absent",
+    "physiology_label",
+    "fixture_semantics"
+  ],
+  "title": "SafeNest mmWave V2 SW-04 rejection registry record",
+  "type": "object"
+}

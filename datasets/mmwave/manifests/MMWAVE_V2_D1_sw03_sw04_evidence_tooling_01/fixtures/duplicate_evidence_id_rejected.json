@@ -1,0 +1,19 @@
+{
+  "campaign_status": "NON_CAMPAIGN",
+  "d1_membership_status": "NOT_D1_MEMBERSHIP",
+  "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
+  "duplicate_evidence_ids": [
+    "EVIDENCE-SENSOR-001",
+    "EVIDENCE-SENSOR-001"
+  ],
+  "expected_validation": "REJECTED_DUPLICATE_IMMUTABLE_ID",
+  "fixture_id": "FIXTURE-SW0304-DUPLICATE-ID-001",
+  "fixture_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "live_evidence_status": "NOT_LIVE_EVIDENCE",
+  "scenario": "DUPLICATE_IMMUTABLE_EVIDENCE_ID"
+}

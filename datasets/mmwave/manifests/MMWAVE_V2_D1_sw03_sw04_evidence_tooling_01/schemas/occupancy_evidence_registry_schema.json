@@ -1,0 +1,89 @@
+{
+  "$id": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "absent_eligibility": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "authoritative_occupancy_reference": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "fixture_semantics": {
+      "const": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "type": "array"
+    },
+    "hash_receipt_ids": {
+      "type": "array"
+    },
+    "no_human_evidence_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "occupancy_state": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "physiology_label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "registry_record_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "review_status": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1"
+    },
+    "sealed_access_evidence_reference": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "sync_evidence_ids": {
+      "type": "array"
+    },
+    "target_zone_coverage": {
+      "type": "object"
+    },
+    "time_interval": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "registry_record_id",
+    "authoritative_occupancy_reference",
+    "target_zone_coverage",
+    "no_human_evidence_reference",
+    "sealed_access_evidence_reference",
+    "time_interval",
+    "sync_evidence_ids",
+    "hash_receipt_ids",
+    "occupancy_state",
+    "review_status",
+    "absent_eligibility",
+    "physiology_label",
+    "fixture_semantics"
+  ],
+  "title": "SafeNest mmWave V2 SW-04 occupancy evidence registry record",
+  "type": "object"
+}

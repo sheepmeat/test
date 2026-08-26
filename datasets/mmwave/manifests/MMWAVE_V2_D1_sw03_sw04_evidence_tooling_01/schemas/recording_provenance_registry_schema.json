@@ -1,0 +1,70 @@
+{
+  "$id": "MMWAVE-V2-D1-SW04-RECORDING-PROVENANCE-REGISTRY-V1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "acceptance_state": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "configuration_identity": {
+      "type": "object"
+    },
+    "evidence_references": {
+      "type": "object"
+    },
+    "fixture_semantics": {
+      "const": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "type": "array"
+    },
+    "health_registry_record_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "placement_zone": {
+      "type": "object"
+    },
+    "recording_identity": {
+      "type": "object"
+    },
+    "registry_record_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "rejection_registry_record_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "schema_version": {
+      "const": "MMWAVE-V2-D1-SW04-RECORDING-PROVENANCE-REGISTRY-V1"
+    },
+    "sensor_identity": {
+      "type": "object"
+    },
+    "time_coverage": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "registry_record_id",
+    "recording_identity",
+    "sensor_identity",
+    "configuration_identity",
+    "placement_zone",
+    "evidence_references",
+    "time_coverage",
+    "health_registry_record_id",
+    "acceptance_state",
+    "fixture_semantics"
+  ],
+  "title": "SafeNest mmWave V2 SW-04 recording provenance registry record",
+  "type": "object"
+}

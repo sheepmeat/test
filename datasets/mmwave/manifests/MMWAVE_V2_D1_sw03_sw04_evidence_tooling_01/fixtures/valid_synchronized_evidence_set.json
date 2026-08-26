@@ -1,0 +1,23 @@
+{
+  "alignment_status": "ALIGNMENT_MEASURABLE",
+  "campaign_status": "NON_CAMPAIGN",
+  "d1_membership_status": "NOT_D1_MEMBERSHIP",
+  "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
+  "fixture_id": "FIXTURE-SW0304-VALID-SHARED-CLOCK-001",
+  "fixture_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "hash_receipt_ids": [
+    "EVIDENCE-SENSOR-001",
+    "EVIDENCE-TIMING-001"
+  ],
+  "live_evidence_status": "NOT_LIVE_EVIDENCE",
+  "scenario": "VALID_SYNCHRONIZED_EVIDENCE_SET",
+  "sync_record_ids": [
+    "SYNC-FIXTURE-SHARED-CLOCK-001"
+  ],
+  "threshold_status": "THRESHOLD_NOT_GOVERNED"
+}

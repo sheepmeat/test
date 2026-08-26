@@ -1,0 +1,54 @@
+{
+  "records": [
+    {
+      "continuity_status": "CONTINUOUS_FIXTURE_STREAM",
+      "device_connected": true,
+      "evidence_ids": [
+        "EVIDENCE-HEALTH-001"
+      ],
+      "fault_code": null,
+      "fixture_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "health_state": "HEALTH_OBSERVED_FIXTURE_ONLY",
+      "physiology_interpretation": "NOT_PROVIDED",
+      "registry_record_id": "HEALTH-FIXTURE-VALID-001",
+      "reported_device_health": "REPORTED_OK_FIXTURE_ONLY",
+      "reset_restart_observed": false,
+      "review_status": "FIXTURE_REVIEWED_ONLY",
+      "schema_version": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1",
+      "sensor_identity": "SYNTHETIC_SENSOR_001",
+      "stream_valid": true,
+      "timestamp_valid": true
+    },
+    {
+      "continuity_status": "FREEZE_DETECTED",
+      "device_connected": true,
+      "evidence_ids": [
+        "EVIDENCE-HEALTH-001"
+      ],
+      "fault_code": "SYNTHETIC_STREAM_FREEZE",
+      "fixture_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "health_state": "FAULT_RETAINED",
+      "physiology_interpretation": "NOT_PROVIDED",
+      "registry_record_id": "HEALTH-FIXTURE-FAULT-001",
+      "reported_device_health": "FAULT_REPORTED_FIXTURE_ONLY",
+      "reset_restart_observed": true,
+      "review_status": "FIXTURE_FAULT_RETAINED",
+      "schema_version": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1",
+      "sensor_identity": "SYNTHETIC_SENSOR_002",
+      "stream_valid": false,
+      "timestamp_valid": true
+    }
+  ],
+  "registry_kind": "health",
+  "schema_version": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1-BUNDLE"
+}

@@ -1,0 +1,18 @@
+{
+  "absent_eligibility": "NOT_ELIGIBLE",
+  "campaign_status": "NON_CAMPAIGN",
+  "d1_membership_status": "NOT_D1_MEMBERSHIP",
+  "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
+  "fixture_id": "FIXTURE-SW0304-OCCUPANCY-MISSING-001",
+  "fixture_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "live_evidence_status": "NOT_LIVE_EVIDENCE",
+  "occupancy_registry_record_id": "OCCUPANCY-FIXTURE-MISSING-001",
+  "physiology_label": null,
+  "scenario": "OCCUPANCY_EVIDENCE_MISSING",
+  "status": "INCOMPLETE"
+}

@@ -1,0 +1,81 @@
+{
+  "$id": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "evidence_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "evidence_type": {
+      "enum": [
+        "ACCESS_CONTROL_EVIDENCE",
+        "OCCUPANCY_REFERENCE",
+        "RECORDING_PROVENANCE",
+        "REJECTION_EVIDENCE",
+        "SENSOR_HEALTH",
+        "SENSOR_OBSERVATION",
+        "TIMING_ALIGNMENT"
+      ]
+    },
+    "file_reference": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "fixture_semantics": {
+      "const": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "type": "array"
+    },
+    "hash_algorithm": {
+      "const": "SHA-256"
+    },
+    "identifier_semantics": {
+      "const": "IMMUTABLE"
+    },
+    "immutable_evidence_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "reference_identity": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema_version": {
+      "const": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "size_bytes": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "source_identity": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "time_coverage": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "evidence_id",
+    "immutable_evidence_id",
+    "identifier_semantics",
+    "evidence_type",
+    "source_identity",
+    "reference_identity",
+    "hash_algorithm",
+    "sha256",
+    "fixture_semantics"
+  ],
+  "title": "SafeNest mmWave V2 SW-03 immutable SHA-256 evidence receipt",
+  "type": "object"
+}

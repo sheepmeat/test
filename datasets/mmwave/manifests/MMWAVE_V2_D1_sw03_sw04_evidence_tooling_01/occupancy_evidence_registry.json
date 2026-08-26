@@ -1,0 +1,76 @@
+{
+  "records": [
+    {
+      "absent_eligibility": "NOT_ELIGIBLE_FROM_FIXTURE",
+      "authoritative_occupancy_reference": {
+        "identity": "SYNTHETIC_OCCUPANCY_REF_001",
+        "source_identity": "SYNTHETIC_OCCUPANCY_SOURCE_001",
+        "status": "FIXTURE_REFERENCE_PRESENT"
+      },
+      "fixture_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "hash_receipt_ids": [
+        "EVIDENCE-OCCUPANCY-001",
+        "EVIDENCE-ACCESS-001",
+        "EVIDENCE-TIMING-001"
+      ],
+      "no_human_evidence_reference": "EVIDENCE-OCCUPANCY-001",
+      "occupancy_state": "OCCUPANCY_REFERENCE_PRESENT_SYNTHETIC",
+      "physiology_label": null,
+      "registry_record_id": "OCCUPANCY-FIXTURE-VALID-001",
+      "review_status": "FIXTURE_REVIEWED_ONLY",
+      "schema_version": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1",
+      "sealed_access_evidence_reference": "EVIDENCE-ACCESS-001",
+      "sync_evidence_ids": [
+        "SYNC-FIXTURE-EXPLICIT-MARKER-001"
+      ],
+      "target_zone_coverage": {
+        "authoritative": true,
+        "coverage_status": "FIXTURE_DECLARED_ONLY",
+        "zone_id": "SYNTHETIC_TARGET_ZONE_001"
+      },
+      "time_interval": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    },
+    {
+      "absent_eligibility": "NOT_ELIGIBLE",
+      "authoritative_occupancy_reference": null,
+      "fixture_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "hash_receipt_ids": [],
+      "no_human_evidence_reference": null,
+      "occupancy_state": "UNKNOWN_REFERENCE_MISSING",
+      "physiology_label": null,
+      "registry_record_id": "OCCUPANCY-FIXTURE-MISSING-001",
+      "review_status": "INCOMPLETE_REVIEW_REQUIRED",
+      "schema_version": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1",
+      "sealed_access_evidence_reference": null,
+      "sync_evidence_ids": [
+        "SYNC-FIXTURE-SHARED-CLOCK-001"
+      ],
+      "target_zone_coverage": {
+        "authoritative": false,
+        "coverage_status": "MISSING_AUTHORITATIVE_REFERENCE",
+        "zone_id": "SYNTHETIC_TARGET_ZONE_002"
+      },
+      "time_interval": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:01:15Z",
+        "start": "2026-08-27T00:01:00Z"
+      }
+    }
+  ],
+  "registry_kind": "occupancy",
+  "schema_version": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1-BUNDLE"
+}

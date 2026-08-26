@@ -1,0 +1,18 @@
+{
+  "actual_sha256": "158a18d089325f04a4e69614e1c208d54f8c7ebca13ab590abefb3d9f56d7e99",
+  "campaign_status": "NON_CAMPAIGN",
+  "d1_membership_status": "NOT_D1_MEMBERSHIP",
+  "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
+  "evidence_id": "EVIDENCE-SENSOR-001",
+  "expected_sha256": "158a18d089325f04a4e69614e1c208d54f8c7ebca13ab590abefb3d9f56d7e99",
+  "fixture_id": "FIXTURE-SW0304-HASH-VERIFICATION-001",
+  "fixture_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "live_evidence_status": "NOT_LIVE_EVIDENCE",
+  "scenario": "HASH_VERIFICATION",
+  "verification_status": "VERIFIED_FIXTURE_PAYLOAD_ONLY"
+}
