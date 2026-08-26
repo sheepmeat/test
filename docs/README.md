@@ -28,6 +28,7 @@
 - [PUBABS-A0A1 public ABSENT source validation (PASS_STRONG_PUBLIC_SOURCE_FOUND; M-PV3.8 unchanged)](mmwave/20260826_SafeNest_mmWave_PUBABS_A0A1_Public_Source_Validation_01.md)
 - [PUBABS-A2 C1 semantics/sensor-health/acquisition comparability (A2_STRONG_INTERNAL_BOTH_CLASS_SOURCE; A3 recommend only)](mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md)
 - [PUBABS-A3 C1 canonical ROLE_L conversion feasibility (A3_CORRECTIVE_REQUIRED)](mmwave/20260826_SafeNest_mmWave_PUBABS_A3_C1_Canonical_Conversion_Feasibility_01.md)
+- [PUBABS-A3C C1 corrective adapter contract proposal (A3C_FREEZE_READY_WITH_LIMITATIONS; proposal only, not Sol-frozen)](mmwave/20260826_SafeNest_mmWave_PUBABS_A3C_C1_Corrective_Contract_Proposal_01.md)
 - [D0 V2 subject split·label eligibility audit (CURRENT)](mmwave/20260822_SafeNest_mmWave_D0_V2_Subject_Split_Label_Eligibility_Audit_01.md)
 - [D2 locked acquisition·cryptographic seal (CURRENT, payload auth-blocked)](mmwave/20260822_SafeNest_mmWave_D2_Locked_Acquisition_Cryptographic_Seal_01.md)
 - [Q1 MR60-like cadence/jitter/duplicate synthetic corruption profile (CURRENT)](mmwave/20260822_SafeNest_mmWave_Q1_MR60_Timing_Corruption_Profile_01.md)
