@@ -3,8 +3,8 @@
   "status": "PROPOSAL",
   "algorithm": "sha256",
   "files": {
-    "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/proposed_adapter_contract.json": "593fa824e7df637ac075cf666a396555b178871231f1c9f2111562e93deae426",
-    "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/decision_summary.json": "6c08857bc8634e39fcc1acbc5fccf4bd5078ae78aa7f0d8dd5ac05cad05631a9",
-    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A3C_C1_Corrective_Contract_Proposal_01.md": "d8a2a3ad6357586b78a1cc350bd0392ebc7de77dccd2a14a7908b7fc2961a326"
+    "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/proposed_adapter_contract.json": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+    "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/decision_summary.json": "3caa19f73a29ce4b90a2ca81fcfa3b9caff8f8c57d0a3751914687a2795417b7",
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A3C_C1_Corrective_Contract_Proposal_01.md": "7c0ee10be3ff16f0c746ebe09f9b182f931e28b713fd80d0d6671fe0c6e0774e"
   }
 }
