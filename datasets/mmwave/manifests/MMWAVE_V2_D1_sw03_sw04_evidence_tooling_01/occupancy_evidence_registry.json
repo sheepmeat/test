@@ -7,6 +7,7 @@
         "source_identity": "SYNTHETIC_OCCUPANCY_SOURCE_001",
         "status": "FIXTURE_REFERENCE_PRESENT"
       },
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "fixture_semantics": [
         "FIXTURE_ONLY",
         "NON_CAMPAIGN",
@@ -24,6 +25,13 @@
       "registry_record_id": "OCCUPANCY-FIXTURE-VALID-001",
       "review_status": "FIXTURE_REVIEWED_ONLY",
       "schema_version": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sealed_access_evidence_reference": "EVIDENCE-ACCESS-001",
       "sync_evidence_ids": [
         "SYNC-FIXTURE-EXPLICIT-MARKER-001"
@@ -42,6 +50,7 @@
     {
       "absent_eligibility": "NOT_ELIGIBLE",
       "authoritative_occupancy_reference": null,
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "fixture_semantics": [
         "FIXTURE_ONLY",
         "NON_CAMPAIGN",
@@ -55,6 +64,13 @@
       "registry_record_id": "OCCUPANCY-FIXTURE-MISSING-001",
       "review_status": "INCOMPLETE_REVIEW_REQUIRED",
       "schema_version": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sealed_access_evidence_reference": null,
       "sync_evidence_ids": [
         "SYNC-FIXTURE-SHARED-CLOCK-001"

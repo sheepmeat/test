@@ -28,6 +28,7 @@
           "SYNC-FIXTURE-EXPLICIT-MARKER-001"
         ]
       },
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "fixture_semantics": [
         "FIXTURE_ONLY",
         "NON_CAMPAIGN",
@@ -48,6 +49,13 @@
       "registry_record_id": "PROVENANCE-FIXTURE-001",
       "rejection_registry_record_id": null,
       "schema_version": "MMWAVE-V2-D1-SW04-RECORDING-PROVENANCE-REGISTRY-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sensor_identity": {
         "device_family": "SYNTHETIC_MMWAVE_FIXTURE",
         "sensor_id": "SYNTHETIC_SENSOR_001",

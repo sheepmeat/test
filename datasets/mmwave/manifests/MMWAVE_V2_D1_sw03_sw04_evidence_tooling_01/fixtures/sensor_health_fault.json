@@ -2,6 +2,7 @@
   "campaign_status": "NON_CAMPAIGN",
   "d1_membership_status": "NOT_D1_MEMBERSHIP",
   "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
+  "evidence_scope": "FIXTURE_NON_CAMPAIGN",
   "fault_code": "SYNTHETIC_STREAM_FREEZE",
   "fixture_id": "FIXTURE-SW0304-HEALTH-FAULT-001",
   "fixture_semantics": [
@@ -14,5 +15,12 @@
   "live_evidence_status": "NOT_LIVE_EVIDENCE",
   "physiology_interpretation": "NOT_PROVIDED",
   "retained": true,
-  "scenario": "SENSOR_HEALTH_FAULT"
+  "scenario": "SENSOR_HEALTH_FAULT",
+  "scope_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
 }

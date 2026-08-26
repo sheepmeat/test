@@ -13,6 +13,12 @@
     "evidence_ids": {
       "type": "array"
     },
+    "evidence_scope": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "LIVE_DEBUG_NON_CAMPAIGN"
+      ]
+    },
     "fault_code": {
       "type": [
         "string",
@@ -53,6 +59,12 @@
     "schema_version": {
       "const": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1"
     },
+    "scope_semantics": {
+      "type": "array"
+    },
+    "scope_version": {
+      "const": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+    },
     "sensor_identity": {
       "minLength": 1,
       "type": "string"
@@ -65,6 +77,9 @@
     }
   },
   "required": [
+    "evidence_scope",
+    "scope_version",
+    "scope_semantics",
     "schema_version",
     "registry_record_id",
     "sensor_identity",
@@ -78,8 +93,7 @@
     "evidence_ids",
     "health_state",
     "physiology_interpretation",
-    "review_status",
-    "fixture_semantics"
+    "review_status"
   ],
   "title": "SafeNest mmWave V2 SW-04 sensor health registry record",
   "type": "object"

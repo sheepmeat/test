@@ -3,6 +3,7 @@
   "campaign_status": "NON_CAMPAIGN",
   "d1_membership_status": "NOT_D1_MEMBERSHIP",
   "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
+  "evidence_scope": "FIXTURE_NON_CAMPAIGN",
   "fixture_id": "FIXTURE-SW0304-VALID-SHARED-CLOCK-001",
   "fixture_semantics": [
     "FIXTURE_ONLY",
@@ -16,6 +17,13 @@
   ],
   "live_evidence_status": "NOT_LIVE_EVIDENCE",
   "scenario": "VALID_SYNCHRONIZED_EVIDENCE_SET",
+  "scope_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
   "sync_record_ids": [
     "SYNC-FIXTURE-SHARED-CLOCK-001"
   ],

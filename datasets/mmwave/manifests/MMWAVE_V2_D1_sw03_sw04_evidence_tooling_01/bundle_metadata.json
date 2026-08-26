@@ -1,24 +1,36 @@
 {
+  "actual_file_hash_pipeline_status": "COMPLETE",
   "base_commit": "13a56b7e41e9519ad61238a74861ef4ad6ea16ab",
   "capture_executed": false,
+  "cross_registry_integrity_status": "COMPLETE",
   "d1_membership_created": false,
   "d1_membership_source_read_only": [
     "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/critical_path_state.json",
     "datasets/mmwave/manifests/MMWAVE_V2_D1_physical_resource_recovery_01/d1_membership_unchanged.json"
   ],
   "d2_accessed": false,
+  "evidence_scope_model_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+  "fixture_pipeline_status": "COMPLETE",
   "fixture_semantics": [
     "FIXTURE_ONLY",
     "NON_CAMPAIGN",
     "NOT_D1_MEMBERSHIP",
     "NOT_DATASET_ADMISSIBLE"
   ],
+  "live_hardware_evidence_status": "NOT_EXECUTED",
   "live_occupancy_evidence": "NOT_PRODUCED",
   "live_sensor_health_evidence": "NOT_PRODUCED",
   "manifest_id": "MMWAVE_V2_D1_SW03_SW04_EVIDENCE_TOOLING_V1",
   "model_evaluation": false,
   "model_training": false,
   "mr60_supervised_physiology_used": false,
+  "operational_non_campaign_default": [
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_FINAL_EVALUATION",
+    "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+  ],
+  "operational_non_campaign_pipeline_status": "COMPLETE",
   "phase": "MMWAVE-V2-D1-SWPREP-03-04",
   "physiology_label_generation": "FORBIDDEN_FROM_SENSOR_QUALITY_OR_OCCUPANCY_GAPS",
   "provenance_channels": [
@@ -31,7 +43,11 @@
     "rejection_reason"
   ],
   "schema_version": "MMWAVE-V2-D1-SW03-SW04-EVIDENCE-TOOLING-V1",
-  "scope": "SOFTWARE_AND_SYNTHETIC_FIXTURE_ONLY",
+  "scope": "SOFTWARE_ONLY_FIXTURE_AND_OPERATIONAL_NON_CAMPAIGN",
+  "supported_evidence_scopes": [
+    "FIXTURE_NON_CAMPAIGN",
+    "LIVE_DEBUG_NON_CAMPAIGN"
+  ],
   "sw01_implemented": false,
   "sw02_implemented": false,
   "timing_threshold_status": "THRESHOLD_NOT_GOVERNED"

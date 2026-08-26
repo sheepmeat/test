@@ -3,6 +3,7 @@
   "campaign_status": "NON_CAMPAIGN",
   "d1_membership_status": "NOT_D1_MEMBERSHIP",
   "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
+  "evidence_scope": "FIXTURE_NON_CAMPAIGN",
   "fixture_id": "FIXTURE-SW0304-OCCUPANCY-MISSING-001",
   "fixture_semantics": [
     "FIXTURE_ONLY",
@@ -14,5 +15,12 @@
   "occupancy_registry_record_id": "OCCUPANCY-FIXTURE-MISSING-001",
   "physiology_label": null,
   "scenario": "OCCUPANCY_EVIDENCE_MISSING",
+  "scope_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
   "status": "INCOMPLETE"
 }

@@ -4,18 +4,28 @@
       "alignment_method": "SAME_HOST_COMMON_CLOCK",
       "alignment_status": "ALIGNMENT_MEASURABLE",
       "clock_identity": "SYNTHETIC_HOST_COMMON_CLOCK_V1",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "fixture_semantics": [
         "FIXTURE_ONLY",
         "NON_CAMPAIGN",
         "NOT_D1_MEMBERSHIP",
         "NOT_DATASET_ADMISSIBLE"
       ],
+      "host_marker_observed": null,
       "host_timestamp": "2026-08-27T00:00:00.000Z",
       "live_evidence_status": "NOT_LIVE_EVIDENCE",
       "measured_offset_delta_ms": 0.0,
       "method": "SHARED_CLOCK",
       "schema_version": "MMWAVE-V2-D1-SW03-SYNC-RECORD-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "source_identity": "SYNTHETIC_SENSOR_SOURCE_001",
+      "source_marker_observed": null,
       "source_timestamp": "2026-08-27T00:00:00.000Z",
       "sync_marker_id": null,
       "sync_record_id": "SYNC-FIXTURE-SHARED-CLOCK-001",
@@ -27,6 +37,7 @@
       "alignment_method": "EXPLICIT_MARKER_ON_BOTH_TIMELINES",
       "alignment_status": "ALIGNMENT_MEASURABLE",
       "clock_identity": "SYNTHETIC_INDEPENDENT_CLOCK_PAIR_V1",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "fixture_semantics": [
         "FIXTURE_ONLY",
         "NON_CAMPAIGN",
@@ -39,6 +50,13 @@
       "measured_offset_delta_ms": 12.0,
       "method": "EXPLICIT_SYNC_MARKER",
       "schema_version": "MMWAVE-V2-D1-SW03-SYNC-RECORD-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "source_identity": "SYNTHETIC_OCCUPANCY_SOURCE_001",
       "source_marker_observed": true,
       "source_timestamp": "2026-08-27T00:00:05.000Z",

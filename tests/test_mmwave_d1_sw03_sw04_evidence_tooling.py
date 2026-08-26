@@ -1,8 +1,9 @@
-"""Focused tests for the fixture-only SW-03/SW-04 evidence tooling."""
+"""Focused tests for fixture and operational non-campaign SW-03/SW-04 tooling."""
 
 from __future__ import annotations
 
 import copy
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -10,6 +11,7 @@ from pathlib import Path
 from scripts.mmwave.m_pv38_evidence_registry import (
     DEFAULT_MANIFEST_DIR,
     FIXTURE_FILES,
+    OPERATIONAL_EXAMPLES_FILE,
     REGISTRY_FILES,
     SCHEMA_FILES,
     _hash_receipts,
@@ -23,14 +25,22 @@ from scripts.mmwave.m_pv38_evidence_registry import (
 )
 from scripts.mmwave.m_pv38_evidence_sync_hash import (
     FIXTURE_SEMANTICS,
+    LIVE_DEBUG_NON_CAMPAIGN,
+    OPERATIONAL_SEMANTICS,
     _find_forbidden_keys,
     create_hash_receipt,
+    create_hash_receipt_from_file,
+    create_sync_record,
+    evidence_scope_schema_document,
     hash_receipt_schema_document,
     sha256_bytes,
     sync_record_schema_document,
+    validate_hash_receipt,
     validate_hash_receipts,
     validate_sync_records,
     verify_hash_receipt,
+    verify_hash_receipt_from_file,
+    _main as sync_cli_main,
 )
 
 
@@ -49,8 +59,14 @@ def _bundle_records() -> tuple[list[dict], list[dict], dict[str, list[dict]]]:
 def test_bundle_schema_validation_is_green() -> None:
     result = validate_bundle(DEFAULT_MANIFEST_DIR)
     assert result["ok"] is True
-    assert result["terminal_verdict"] == "SW03_SW04_IMPLEMENTED_FIXTURE_VALIDATED"
-    assert set(SCHEMA_FILES) == set(registry_schema_documents()) | {"sync", "hash"}
+    assert result["terminal_verdict"] == "SW03_SW04_SOFTWARE_COMPLETE_LIVE_EVIDENCE_PENDING"
+    assert result["fixture_pipeline_status"] == "COMPLETE"
+    assert result["operational_non_campaign_pipeline_status"] == "COMPLETE"
+    assert result["actual_file_hash_pipeline_status"] == "COMPLETE"
+    assert result["cross_registry_integrity_status"] == "COMPLETE"
+    assert result["live_hardware_evidence_status"] == "NOT_EXECUTED"
+    assert set(SCHEMA_FILES) == set(registry_schema_documents()) | {"scope", "sync", "hash"}
+    assert read_json(DEFAULT_MANIFEST_DIR / SCHEMA_FILES["scope"]) == evidence_scope_schema_document()
     assert read_json(DEFAULT_MANIFEST_DIR / SCHEMA_FILES["sync"]) == sync_record_schema_document()
     assert read_json(DEFAULT_MANIFEST_DIR / SCHEMA_FILES["hash"]) == hash_receipt_schema_document()
 
@@ -78,6 +94,193 @@ def test_hashing_is_deterministic_and_does_not_store_payload() -> None:
         file_reference="fixtures/non_campaign/test_payload.bin",
         fixture_semantics=FIXTURE_SEMANTICS,
     ) == receipt
+
+
+def test_live_debug_hash_receipt_is_non_campaign_without_fixture_lock() -> None:
+    payload = b"live-debug-operational-shape"
+    receipt = create_hash_receipt(
+        "DEBUG-TEST-EVIDENCE-001",
+        "SENSOR_OBSERVATION",
+        "DEBUG-TEST-SOURCE-001",
+        "DEBUG-TEST-REFERENCE-001",
+        payload=payload,
+        file_reference="operational/non_campaign/evidence/debug_001.bin",
+        scope=LIVE_DEBUG_NON_CAMPAIGN,
+    )
+    assert receipt["evidence_scope"] == LIVE_DEBUG_NON_CAMPAIGN
+    assert receipt["scope_semantics"] == OPERATIONAL_SEMANTICS
+    assert "fixture_semantics" not in receipt
+    assert receipt["live_evidence_status"] == "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED"
+    assert validate_hash_receipt(receipt) == []
+    assert validate_hash_receipts([receipt], actual_digests={receipt["evidence_id"]: sha256_bytes(payload)}) == []
+
+
+def test_real_temporary_file_hash_path_is_complete_without_payload_copy() -> None:
+    with tempfile.TemporaryDirectory() as temp_dir:
+        source = Path(temp_dir) / "debug_evidence.bin"
+        source.write_bytes(b"temporary operational evidence")
+        receipt = create_hash_receipt_from_file(
+            source,
+            "DEBUG-TEST-FILE-EVIDENCE-001",
+            "SENSOR_OBSERVATION",
+            "DEBUG-TEST-FILE-SOURCE-001",
+            scope=LIVE_DEBUG_NON_CAMPAIGN,
+        )
+        assert receipt["sha256"] == sha256_bytes(source.read_bytes())
+        assert receipt["size_bytes"] == source.stat().st_size
+        assert str(source) not in json.dumps(receipt)
+        assert verify_hash_receipt_from_file(receipt, source) is True
+        source.write_bytes(b"changed")
+        assert verify_hash_receipt_from_file(receipt, source) is False
+
+
+def test_caller_supplied_live_debug_sync_records_validate() -> None:
+    shared = create_sync_record(
+        "SYNC-DEBUG-TEST-SHARED-001",
+        "SHARED_CLOCK",
+        "DEBUG-TEST-SENSOR",
+        "DEBUG-TEST-CLOCK",
+        "2026-08-27T00:20:00.000Z",
+        2.0,
+        host_timestamp="2026-08-27T00:20:00.002Z",
+        uncertainty_ms=1.0,
+        scope=LIVE_DEBUG_NON_CAMPAIGN,
+    )
+    marker = create_sync_record(
+        "SYNC-DEBUG-TEST-MARKER-001",
+        "EXPLICIT_SYNC_MARKER",
+        "DEBUG-TEST-REFERENCE",
+        "DEBUG-TEST-CLOCK-PAIR",
+        "2026-08-27T00:20:05.000Z",
+        4.0,
+        host_timestamp="2026-08-27T00:20:05.004Z",
+        sync_marker_id="DEBUG-TEST-MARKER-001",
+        source_marker_observed=True,
+        host_marker_observed=True,
+        uncertainty_ms=1.0,
+        scope=LIVE_DEBUG_NON_CAMPAIGN,
+    )
+    assert validate_sync_records([shared, marker]) == []
+    assert shared["validation_status"] == "LIVE_NON_CAMPAIGN_ALIGNMENT_OBSERVED"
+    assert marker["method"] == "EXPLICIT_SYNC_MARKER"
+    assert marker["scope_semantics"] == OPERATIONAL_SEMANTICS
+
+
+def test_operational_hash_and_sync_cli_paths_are_usable() -> None:
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp = Path(temp_dir)
+        source = temp / "debug_payload.bin"
+        receipt_file = temp / "receipt.json"
+        sync_file = temp / "sync.json"
+        source.write_bytes(b"cli operational evidence")
+        assert sync_cli_main([
+            "hash-file",
+            "--scope",
+            LIVE_DEBUG_NON_CAMPAIGN,
+            "--evidence-id",
+            "CLI-DEBUG-EVIDENCE-001",
+            "--evidence-type",
+            "SENSOR_OBSERVATION",
+            "--source-id",
+            "CLI-SOURCE-001",
+            "--file",
+            str(source),
+            "--output",
+            str(receipt_file),
+        ]) == 0
+        receipt = json.loads(receipt_file.read_text(encoding="utf-8"))
+        assert receipt["evidence_scope"] == LIVE_DEBUG_NON_CAMPAIGN
+        assert str(source) not in receipt_file.read_text(encoding="utf-8")
+        assert sync_cli_main(["verify-hash-receipt", "--receipt-file", str(receipt_file), "--file", str(source)]) == 0
+        assert sync_cli_main([
+            "create-sync-record",
+            "--scope",
+            LIVE_DEBUG_NON_CAMPAIGN,
+            "--sync-record-id",
+            "CLI-DEBUG-SYNC-001",
+            "--method",
+            "EXPLICIT_SYNC_MARKER",
+            "--source-id",
+            "CLI-SOURCE-001",
+            "--clock-identity",
+            "CLI-CLOCK-001",
+            "--source-timestamp",
+            "2026-08-27T00:30:00.000Z",
+            "--host-timestamp",
+            "2026-08-27T00:30:00.005Z",
+            "--sync-marker-id",
+            "CLI-MARKER-001",
+            "--source-marker-observed",
+            "--host-marker-observed",
+            "--measured-offset-delta-ms",
+            "5",
+            "--uncertainty-ms",
+            "1",
+            "--output",
+            str(sync_file),
+        ]) == 0
+        assert validate_sync_records([json.loads(sync_file.read_text(encoding="utf-8"))]) == []
+
+
+def _operational_examples() -> dict:
+    return read_json(DEFAULT_MANIFEST_DIR / OPERATIONAL_EXAMPLES_FILE)
+
+
+def test_operational_registries_validate_and_keep_non_final_states() -> None:
+    examples = _operational_examples()
+    known_types = {record["evidence_id"]: record["evidence_type"] for record in examples["hash_receipts"]}
+    known_ids = set(known_types)
+    sync_ids = {record["sync_record_id"] for record in examples["sync_records"]}
+    health_ids = {record["registry_record_id"] for record in examples["registries"]["health"]}
+    rejection_ids = {record["rejection_record_id"] for record in examples["registries"]["rejection"]}
+    for kind, records in examples["registries"].items():
+        assert validate_registry_records(
+            kind,
+            records,
+            known_evidence_ids=known_ids,
+            known_sync_ids=sync_ids,
+            known_evidence_types=known_types,
+            known_health_registry_ids=health_ids,
+            known_rejection_registry_ids=rejection_ids,
+        ) == []
+    assert all(record["evidence_scope"] == LIVE_DEBUG_NON_CAMPAIGN for records in examples["registries"].values() for record in records)
+    assert next(record for record in examples["registries"]["occupancy"] if record["occupancy_state"] == "REFERENCE_MISSING")["absent_eligibility"] == "NOT_ELIGIBLE"
+
+
+def test_dangling_health_and_rejection_registry_links_are_rejected() -> None:
+    examples = _operational_examples()
+    known_types = {record["evidence_id"]: record["evidence_type"] for record in examples["hash_receipts"]}
+    common = {
+        "known_evidence_ids": set(known_types),
+        "known_sync_ids": {record["sync_record_id"] for record in examples["sync_records"]},
+        "known_evidence_types": known_types,
+        "known_health_registry_ids": {record["registry_record_id"] for record in examples["registries"]["health"]},
+        "known_rejection_registry_ids": {record["rejection_record_id"] for record in examples["registries"]["rejection"]},
+    }
+    provenance = copy.deepcopy(examples["registries"]["provenance"][0])
+    provenance["health_registry_record_id"] = "HEALTH-DEBUG-MISSING"
+    assert any("dangling health registry reference" in error for error in validate_registry_records("provenance", [provenance], **common))
+    provenance = copy.deepcopy(examples["registries"]["provenance"][0])
+    provenance["rejection_registry_record_id"] = "REJECTION-DEBUG-MISSING"
+    assert any("dangling rejection registry reference" in error for error in validate_registry_records("provenance", [provenance], **common))
+
+
+def test_unknown_hash_and_sync_references_are_rejected() -> None:
+    examples = _operational_examples()
+    known_types = {record["evidence_id"]: record["evidence_type"] for record in examples["hash_receipts"]}
+    common = {
+        "known_evidence_ids": set(known_types),
+        "known_sync_ids": {record["sync_record_id"] for record in examples["sync_records"]},
+        "known_evidence_types": known_types,
+        "known_health_registry_ids": {record["registry_record_id"] for record in examples["registries"]["health"]},
+        "known_rejection_registry_ids": {record["rejection_record_id"] for record in examples["registries"]["rejection"]},
+    }
+    occupancy = copy.deepcopy(next(record for record in examples["registries"]["occupancy"] if record["occupancy_state"] == "REFERENCE_PRESENT_UNREVIEWED"))
+    occupancy["hash_receipt_ids"].append("DEBUG-EVIDENCE-UNKNOWN")
+    assert any("unknown evidence reference DEBUG-EVIDENCE-UNKNOWN" in error for error in validate_registry_records("occupancy", [occupancy], **common))
+    occupancy = copy.deepcopy(next(record for record in examples["registries"]["occupancy"] if record["occupancy_state"] == "REFERENCE_PRESENT_UNREVIEWED"))
+    occupancy["sync_evidence_ids"].append("SYNC-DEBUG-UNKNOWN")
+    assert any("sync evidence references are invalid" in error for error in validate_registry_records("occupancy", [occupancy], **common))
 
 
 def test_duplicate_immutable_evidence_id_is_rejected() -> None:
@@ -217,6 +420,27 @@ class TestMmwaveD1Sw0304EvidenceTooling(unittest.TestCase):
 
     def test_hashing_is_deterministic_and_does_not_store_payload(self) -> None:
         test_hashing_is_deterministic_and_does_not_store_payload()
+
+    def test_live_debug_hash_receipt_is_non_campaign_without_fixture_lock(self) -> None:
+        test_live_debug_hash_receipt_is_non_campaign_without_fixture_lock()
+
+    def test_real_temporary_file_hash_path_is_complete_without_payload_copy(self) -> None:
+        test_real_temporary_file_hash_path_is_complete_without_payload_copy()
+
+    def test_caller_supplied_live_debug_sync_records_validate(self) -> None:
+        test_caller_supplied_live_debug_sync_records_validate()
+
+    def test_operational_hash_and_sync_cli_paths_are_usable(self) -> None:
+        test_operational_hash_and_sync_cli_paths_are_usable()
+
+    def test_operational_registries_validate_and_keep_non_final_states(self) -> None:
+        test_operational_registries_validate_and_keep_non_final_states()
+
+    def test_dangling_health_and_rejection_registry_links_are_rejected(self) -> None:
+        test_dangling_health_and_rejection_registry_links_are_rejected()
+
+    def test_unknown_hash_and_sync_references_are_rejected(self) -> None:
+        test_unknown_hash_and_sync_references_are_rejected()
 
     def test_duplicate_immutable_evidence_id_is_rejected(self) -> None:
         test_duplicate_immutable_evidence_id_is_rejected()

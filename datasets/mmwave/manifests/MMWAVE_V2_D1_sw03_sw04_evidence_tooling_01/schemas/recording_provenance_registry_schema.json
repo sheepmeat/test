@@ -13,6 +13,12 @@
     "evidence_references": {
       "type": "object"
     },
+    "evidence_scope": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "LIVE_DEBUG_NON_CAMPAIGN"
+      ]
+    },
     "fixture_semantics": {
       "const": [
         "FIXTURE_ONLY",
@@ -45,6 +51,12 @@
     "schema_version": {
       "const": "MMWAVE-V2-D1-SW04-RECORDING-PROVENANCE-REGISTRY-V1"
     },
+    "scope_semantics": {
+      "type": "array"
+    },
+    "scope_version": {
+      "const": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+    },
     "sensor_identity": {
       "type": "object"
     },
@@ -53,6 +65,9 @@
     }
   },
   "required": [
+    "evidence_scope",
+    "scope_version",
+    "scope_semantics",
     "schema_version",
     "registry_record_id",
     "recording_identity",
@@ -62,8 +77,7 @@
     "evidence_references",
     "time_coverage",
     "health_registry_record_id",
-    "acceptance_state",
-    "fixture_semantics"
+    "acceptance_state"
   ],
   "title": "SafeNest mmWave V2 SW-04 recording provenance registry record",
   "type": "object"

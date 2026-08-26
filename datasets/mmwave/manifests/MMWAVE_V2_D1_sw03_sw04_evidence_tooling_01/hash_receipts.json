@@ -2,6 +2,7 @@
   "receipts": [
     {
       "evidence_id": "EVIDENCE-SENSOR-001",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "evidence_type": "SENSOR_OBSERVATION",
       "file_reference": "fixtures/non_campaign/evidence/sensor_observation_001.bin",
       "fixture_semantics": [
@@ -13,8 +14,16 @@
       "hash_algorithm": "SHA-256",
       "identifier_semantics": "IMMUTABLE",
       "immutable_evidence_id": "EVIDENCE-SENSOR-001",
+      "live_evidence_status": "NOT_LIVE_EVIDENCE",
       "reference_identity": "SYNTHETIC_SENSOR_REF_001",
       "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sha256": "158a18d089325f04a4e69614e1c208d54f8c7ebca13ab590abefb3d9f56d7e99",
       "size_bytes": 43,
       "source_identity": "SYNTHETIC_SENSOR_SOURCE_001",
@@ -26,6 +35,7 @@
     },
     {
       "evidence_id": "EVIDENCE-OCCUPANCY-001",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "evidence_type": "OCCUPANCY_REFERENCE",
       "file_reference": "fixtures/non_campaign/evidence/occupancy_reference_001.bin",
       "fixture_semantics": [
@@ -37,8 +47,16 @@
       "hash_algorithm": "SHA-256",
       "identifier_semantics": "IMMUTABLE",
       "immutable_evidence_id": "EVIDENCE-OCCUPANCY-001",
+      "live_evidence_status": "NOT_LIVE_EVIDENCE",
       "reference_identity": "SYNTHETIC_OCCUPANCY_REF_001",
       "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sha256": "dea3ea9bb21ccfa8173c8156e8e73c2e3826f355c04a2cc9faa4661cf83ac9a9",
       "size_bytes": 44,
       "source_identity": "SYNTHETIC_OCCUPANCY_SOURCE_001",
@@ -50,6 +68,7 @@
     },
     {
       "evidence_id": "EVIDENCE-ACCESS-001",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "evidence_type": "ACCESS_CONTROL_EVIDENCE",
       "file_reference": "fixtures/non_campaign/evidence/sealed_access_001.bin",
       "fixture_semantics": [
@@ -61,8 +80,16 @@
       "hash_algorithm": "SHA-256",
       "identifier_semantics": "IMMUTABLE",
       "immutable_evidence_id": "EVIDENCE-ACCESS-001",
+      "live_evidence_status": "NOT_LIVE_EVIDENCE",
       "reference_identity": "SYNTHETIC_ACCESS_REF_001",
       "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sha256": "9201ea5235c42960ce263efa727c44b38939c38a72b7ecbbe01b0e276cf91c7f",
       "size_bytes": 47,
       "source_identity": "SYNTHETIC_ACCESS_SOURCE_001",
@@ -74,6 +101,7 @@
     },
     {
       "evidence_id": "EVIDENCE-HEALTH-001",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "evidence_type": "SENSOR_HEALTH",
       "file_reference": "fixtures/non_campaign/evidence/sensor_health_001.bin",
       "fixture_semantics": [
@@ -85,8 +113,16 @@
       "hash_algorithm": "SHA-256",
       "identifier_semantics": "IMMUTABLE",
       "immutable_evidence_id": "EVIDENCE-HEALTH-001",
+      "live_evidence_status": "NOT_LIVE_EVIDENCE",
       "reference_identity": "SYNTHETIC_HEALTH_REF_001",
       "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sha256": "5c54ce03674ef90a7da64dbbe390ce151d83f8a071f2df0da7cf6e3cb687c25a",
       "size_bytes": 38,
       "source_identity": "SYNTHETIC_HEALTH_SOURCE_001",
@@ -98,6 +134,7 @@
     },
     {
       "evidence_id": "EVIDENCE-TIMING-001",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "evidence_type": "TIMING_ALIGNMENT",
       "file_reference": "fixtures/non_campaign/evidence/timing_alignment_001.bin",
       "fixture_semantics": [
@@ -109,8 +146,16 @@
       "hash_algorithm": "SHA-256",
       "identifier_semantics": "IMMUTABLE",
       "immutable_evidence_id": "EVIDENCE-TIMING-001",
+      "live_evidence_status": "NOT_LIVE_EVIDENCE",
       "reference_identity": "SYNTHETIC_TIMING_REF_001",
       "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sha256": "dd489a3467036ae8e224702f62abd879ca7e8704ac0363a9a1db78a7d112f028",
       "size_bytes": 41,
       "source_identity": "SYNTHETIC_TIMING_SOURCE_001",
@@ -122,6 +167,7 @@
     },
     {
       "evidence_id": "EVIDENCE-PROVENANCE-001",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "evidence_type": "RECORDING_PROVENANCE",
       "file_reference": "fixtures/non_campaign/evidence/recording_provenance_001.bin",
       "fixture_semantics": [
@@ -133,8 +179,16 @@
       "hash_algorithm": "SHA-256",
       "identifier_semantics": "IMMUTABLE",
       "immutable_evidence_id": "EVIDENCE-PROVENANCE-001",
+      "live_evidence_status": "NOT_LIVE_EVIDENCE",
       "reference_identity": "SYNTHETIC_PROVENANCE_REF_001",
       "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sha256": "9cdf76505e4e94abb923aea3f1c949751045a91063ce9d4f4c1382b6b2eebc40",
       "size_bytes": 45,
       "source_identity": "SYNTHETIC_PROVENANCE_SOURCE_001",
@@ -146,6 +200,7 @@
     },
     {
       "evidence_id": "EVIDENCE-REJECTION-001",
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "evidence_type": "REJECTION_EVIDENCE",
       "file_reference": "fixtures/non_campaign/evidence/rejection_001.bin",
       "fixture_semantics": [
@@ -157,8 +212,16 @@
       "hash_algorithm": "SHA-256",
       "identifier_semantics": "IMMUTABLE",
       "immutable_evidence_id": "EVIDENCE-REJECTION-001",
+      "live_evidence_status": "NOT_LIVE_EVIDENCE",
       "reference_identity": "SYNTHETIC_REJECTION_REF_001",
       "schema_version": "MMWAVE-V2-D1-SW03-HASH-RECEIPT-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sha256": "c2f5e4f9ce0604df726a58e09d1e06ee65286aa50333b4921a0bfdd742c1c3e7",
       "size_bytes": 43,
       "source_identity": "SYNTHETIC_REJECTION_SOURCE_001",

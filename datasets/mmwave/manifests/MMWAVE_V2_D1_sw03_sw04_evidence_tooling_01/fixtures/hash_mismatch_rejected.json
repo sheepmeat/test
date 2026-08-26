@@ -4,6 +4,7 @@
   "d1_membership_status": "NOT_D1_MEMBERSHIP",
   "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
   "evidence_id": "EVIDENCE-SENSOR-001",
+  "evidence_scope": "FIXTURE_NON_CAMPAIGN",
   "expected_sha256": "158a18d089325f04a4e69614e1c208d54f8c7ebca13ab590abefb3d9f56d7e99",
   "expected_validation": "REJECTED_HASH_MISMATCH",
   "fixture_id": "FIXTURE-SW0304-HASH-MISMATCH-001",
@@ -14,5 +15,12 @@
     "NOT_DATASET_ADMISSIBLE"
   ],
   "live_evidence_status": "NOT_LIVE_EVIDENCE",
-  "scenario": "HASH_MISMATCH"
+  "scenario": "HASH_MISMATCH",
+  "scope_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
 }

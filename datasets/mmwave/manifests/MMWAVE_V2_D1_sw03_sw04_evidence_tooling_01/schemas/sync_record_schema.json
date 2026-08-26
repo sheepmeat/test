@@ -14,6 +14,12 @@
       "minLength": 1,
       "type": "string"
     },
+    "evidence_scope": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "LIVE_DEBUG_NON_CAMPAIGN"
+      ]
+    },
     "fixture_semantics": {
       "const": [
         "FIXTURE_ONLY",
@@ -24,7 +30,10 @@
       "type": "array"
     },
     "host_marker_observed": {
-      "type": "boolean"
+      "type": [
+        "boolean",
+        "null"
+      ]
     },
     "host_timestamp": {
       "type": [
@@ -33,7 +42,10 @@
       ]
     },
     "live_evidence_status": {
-      "const": "NOT_LIVE_EVIDENCE"
+      "enum": [
+        "NOT_LIVE_EVIDENCE",
+        "LIVE_DEBUG_NON_CAMPAIGN_OBSERVED"
+      ]
     },
     "measured_offset_delta_ms": {
       "type": "number"
@@ -47,12 +59,21 @@
     "schema_version": {
       "const": "MMWAVE-V2-D1-SW03-SYNC-RECORD-V1"
     },
+    "scope_semantics": {
+      "type": "array"
+    },
+    "scope_version": {
+      "const": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+    },
     "source_identity": {
       "minLength": 1,
       "type": "string"
     },
     "source_marker_observed": {
-      "type": "boolean"
+      "type": [
+        "boolean",
+        "null"
+      ]
     },
     "source_timestamp": {
       "minLength": 1,
@@ -73,12 +94,16 @@
     },
     "uncertainty_ms": {
       "minimum": 0,
-      "type": "number"
+      "type": [
+        "number",
+        "null"
+      ]
     },
     "validation_status": {
       "enum": [
         "FIXTURE_ONLY_ALIGNMENT_RECORDED",
-        "ALIGNMENT_MEASURABLE"
+        "ALIGNMENT_MEASURABLE",
+        "LIVE_NON_CAMPAIGN_ALIGNMENT_OBSERVED"
       ]
     }
   },
@@ -95,7 +120,9 @@
     "validation_status",
     "threshold_status",
     "live_evidence_status",
-    "fixture_semantics"
+    "evidence_scope",
+    "scope_version",
+    "scope_semantics"
   ],
   "title": "SafeNest mmWave V2 SW-03 synchronization record",
   "type": "object"

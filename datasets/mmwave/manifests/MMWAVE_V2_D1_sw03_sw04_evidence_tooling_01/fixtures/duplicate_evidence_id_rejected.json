@@ -6,6 +6,7 @@
     "EVIDENCE-SENSOR-001",
     "EVIDENCE-SENSOR-001"
   ],
+  "evidence_scope": "FIXTURE_NON_CAMPAIGN",
   "expected_validation": "REJECTED_DUPLICATE_IMMUTABLE_ID",
   "fixture_id": "FIXTURE-SW0304-DUPLICATE-ID-001",
   "fixture_semantics": [
@@ -15,5 +16,12 @@
     "NOT_DATASET_ADMISSIBLE"
   ],
   "live_evidence_status": "NOT_LIVE_EVIDENCE",
-  "scenario": "DUPLICATE_IMMUTABLE_EVIDENCE_ID"
+  "scenario": "DUPLICATE_IMMUTABLE_EVIDENCE_ID",
+  "scope_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
 }

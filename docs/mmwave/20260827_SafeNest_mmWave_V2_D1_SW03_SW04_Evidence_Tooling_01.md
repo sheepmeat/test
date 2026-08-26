@@ -1,121 +1,181 @@
-# SafeNest mmWave V2 — D1 SW-03/SW-04 Evidence Tooling Report
+# SafeNest mmWave V2 — D1 SW-03/SW-04 Evidence Tooling Corrective Report
 
 Date: 2026-08-27
-Executing agent: Luna Max Fast
-Phase: MMWAVE-V2-D1-SWPREP-03-04
-Base: post-PR #170 `origin/main` at `13a56b7e41e9519ad61238a74861ef4ad6ea16ab`
+Executing agent: Luna Max Fast 2
+Phase: `MMWAVE-V2-D1-SWPREP-03-04C`
 Branch: `feature/mmwave-d1-sw03-sw04-evidence-tooling`
 PR: [#174](https://github.com/sheepmeat/test/pull/174)
+Manifest: `datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/`
 
-## Scope and outcome
+## Purpose and scope
 
-This change implements software-only evidence plumbing for SW-03 Time Synchronization / Evidence Hashing and SW-04 Evidence Registries. No live campaign, sensor collection, D1 membership construction, model training, model evaluation, D2 access, or MR60 supervised physiology was performed.
+This report records the corrective completion of SW-03 Time Sync/Hash and SW-04 Evidence Registries. The original fixture-only implementation in PR #174 was generalized into explicit, versioned non-campaign scopes without authorizing a campaign or changing any frozen contract.
 
-The result is a deterministic, non-campaign fixture bundle with versioned schemas, validators, and focused automated tests. The four evidence registries remain logically distinct:
+The supported scopes are:
+
+- `FIXTURE_NON_CAMPAIGN`: the existing deterministic fixture lane, retained for regression coverage.
+- `LIVE_DEBUG_NON_CAMPAIGN`: an operational record shape for local debug evidence. It is not D1 membership, not final evaluation, and not dataset-admissible by default.
+
+No governed campaign scope was enabled or used. No live hardware evidence was collected. The corrective work does not modify SW-02, D0/D1 governance, D2, M-PV3/M-PV4 authority, or any sensor runtime contract.
+
+The original PR #174 source base was post-PR #170 commit `13a56b7e41e9519ad61238a74861ef4ad6ea16ab`. The reviewed pre-corrective head was `0b7c5babd70e8da37fb227b923a3142b13b7cf42`. `origin/main` subsequently advanced to `7659a988fad7ab92f6a2a09f42da74544cbe0f52` through the unrelated merged M-PROT-0 work; that advancement was not treated as corrective scope or contamination. Corrective commits were appended to PR #174; no new PR was created and PR #174 was not merged.
+
+## Required return
+
+```text
+PHASE: MMWAVE-V2-D1-SWPREP-03-04C
+CORRECTIVE: GENERALIZE_FIXTURE_TO_OPERATIONAL_NON_CAMPAIGN
+ORIGINAL_PR_BASE: 13a56b7e41e9519ad61238a74861ef4ad6ea16ab
+OLD_REVIEWED_HEAD: 0b7c5babd70e8da37fb227b923a3142b13b7cf42
+CORRECTIVE_HEAD: PENDING_FINAL_CORRECTIVE_COMMIT
+BRANCH: feature/mmwave-d1-sw03-sw04-evidence-tooling
+PR: #174 (open; not merged)
+
+FIXTURE_PIPELINE: COMPLETE
+OPERATIONAL_NON_CAMPAIGN_PIPELINE: COMPLETE
+SYNC_GENERATOR: COMPLETE
+HASH_FILE_PIPELINE: COMPLETE
+HASH_RECEIPT_PIPELINE: COMPLETE
+PROVENANCE_REGISTRY: COMPLETE
+OCCUPANCY_REGISTRY: COMPLETE
+HEALTH_REGISTRY: COMPLETE
+REJECTION_REGISTRY: COMPLETE
+CROSS_REGISTRY_INTEGRITY: COMPLETE
+
+LIVE_HARDWARE_USED: NO
+LIVE_HARDWARE_EVIDENCE_STATUS: NOT_EXECUTED
+LIVE_OCCUPANCY_EVIDENCE: NOT_PRODUCED
+LIVE_SENSOR_HEALTH_EVIDENCE: NOT_PRODUCED
+D1_MEMBERSHIP_CREATED: NO
+CAPTURE_EXECUTED: NO
+D2_ACCESSED: NO
+MR60_SUPERVISED_PHYSIOLOGY_USED: NO
+SW02_MODIFIED: NO
+
+TESTS: 20 focused tests passed; compile and focused CLI validators passed
+TERMINAL_VERDICT: SW03_SW04_SOFTWARE_COMPLETE_LIVE_EVIDENCE_PENDING
+REMAINING_HARDWARE_DEPENDENCY: live evidence collection/debug only
+```
+
+## Corrective implementation
+
+### Versioned scope semantics
+
+The new `evidence_scope_schema.json` defines the explicit scope model:
+
+- `FIXTURE_NON_CAMPAIGN` retains the exact legacy fixture semantics: `FIXTURE_ONLY`, `NON_CAMPAIGN`, `NOT_D1_MEMBERSHIP`, and `NOT_DATASET_ADMISSIBLE`.
+- `LIVE_DEBUG_NON_CAMPAIGN` requires `NON_CAMPAIGN`, `NOT_D1_MEMBERSHIP`, `NOT_FINAL_EVALUATION`, and `NOT_DATASET_ADMISSIBLE_BY_DEFAULT`.
+
+Operational records no longer require fixture-only fields or fixture-only status strings. The default live-debug status is `LIVE_DEBUG_NON_CAMPAIGN_OBSERVED`; it does not imply live hardware execution, D1 admissibility, or campaign approval.
+
+### SW-03 synchronization and hashing
+
+`scripts/mmwave/m_pv38_evidence_sync_hash.py` now supports caller-supplied synchronization records for both supported scopes. Records preserve source identity, clock identity, source timestamp, optional host timestamp, marker identity and observed states, measured offset/delta, uncertainty when supplied, and the locked non-governed statuses:
+
+- `alignment_status: ALIGNMENT_MEASURABLE`
+- `threshold_status: THRESHOLD_NOT_GOVERNED`
+
+Explicit-marker records require the marker to be observed on both timelines. Shared-clock and explicit-marker methods remain distinguishable. No tolerance, maximum clock-error limit, pass threshold, or governed synchronization PASS was introduced.
+
+The actual local-file path is implemented by `hash-file` and `create-hash-receipt`. It hashes the supplied file with SHA-256 without copying the payload into the manifest. Only a portable reference, digest, size, and caller-supplied metadata are persisted; absolute workstation paths are rejected. `verify-hash-receipt` validates the receipt and recomputes the digest against the supplied local file.
+
+### SW-04 registries
+
+The four registries accept both scopes while retaining their logical separation:
 
 - recording provenance;
 - occupancy evidence;
 - sensor health; and
 - rejection retention.
 
-### Required return fields
+Operational examples use statuses such as `UNREVIEWED`, `REFERENCE_PRESENT_UNREVIEWED`, `REFERENCE_MISSING`, `OBSERVED_UNREVIEWED`, and `FAULT_RETAINED`. They are synthetic caller-supplied record shapes only and are marked `live_hardware_evidence_status: NOT_EXECUTED`.
+
+The validators enforce the following fail-closed behavior:
+
+- missing occupancy remains `NOT_ELIGIBLE` and never becomes `ABSENT`;
+- stale, freeze, gap, flat-signal, sensor-fault, and other quality conditions remain quality/availability evidence;
+- a health fault is retained with `physiology_interpretation: NOT_PROVIDED`;
+- a rejected record remains retained as `REJECTED`, with `eligible_for_absent: false` and no physiology label;
+- no non-detection, weak periodicity, low SNR, sensor fault, missing occupancy, or operator statement is converted into a physiological label.
+
+Cross-registry references are checked against known IDs and classes. Provenance health links must resolve to the health registry; optional provenance rejection links must resolve to the rejection registry; hash receipt and synchronization references must resolve to the correct evidence class; dangling, unknown, and class-mismatched references are rejected.
+
+## CLI and validator surface
+
+The required CLI paths are available:
+
+- `validate-sync-record`
+- `create-sync-record`
+- `create-hash-receipt` / `hash-file`
+- `verify-hash-receipt`
+- `validate-provenance`
+- `validate-occupancy`
+- `validate-health`
+- `validate-rejection`
+- `validate-evidence-bundle`
+
+The bundle validator reports the required pipeline fields:
 
 ```text
-PHASE: MMWAVE-V2-D1-SWPREP-03-04
-BASE: 13a56b7e41e9519ad61238a74861ef4ad6ea16ab
-BRANCH: feature/mmwave-d1-sw03-sw04-evidence-tooling
-COMMIT: 77edc4ba (implementation commit)
-PR: #174 (open; not merged)
-
-SW03_IMPLEMENTED: YES
-SW04_IMPLEMENTED: YES
-
-SYNC_METHODS_SUPPORTED: SHARED_CLOCK, EXPLICIT_SYNC_MARKER
-HASH_RECEIPT_IMPLEMENTED: YES
-REGISTRIES_IMPLEMENTED: recording provenance, occupancy evidence, sensor health, rejection
-REJECTION_RETENTION_TESTED: YES
-
-FIXTURE_ONLY: YES
-LIVE_OCCUPANCY_EVIDENCE: NOT_PRODUCED
-LIVE_SENSOR_HEALTH_EVIDENCE: NOT_PRODUCED
-
-D1_MEMBERSHIP_CREATED: NO
-CAPTURE_EXECUTED: NO
-
-TESTS: 13 focused tests passed; CLI validators passed; Python compile check passed
-TERMINAL_VERDICT: SW03_SW04_IMPLEMENTED_FIXTURE_VALIDATED
+fixture_pipeline_status = COMPLETE
+operational_non_campaign_pipeline_status = COMPLETE
+actual_file_hash_pipeline_status = COMPLETE
+cross_registry_integrity_status = COMPLETE
+live_hardware_evidence_status = NOT_EXECUTED
 ```
 
-The report was updated after PR creation. PR #174 is open for review and was not merged.
+The manifest is regenerated deterministically. Its checksum files cover all bundle artifacts other than the checksum files themselves. The operational examples remain synthetic and do not constitute collected live evidence.
 
-## SW-03 implementation
+## Governance and immutability checks
 
-`m_pv38_evidence_sync_hash.py` supports the canonical synchronization alternatives:
+The corrective validator confirms:
 
-1. `SHARED_CLOCK`, recording the source and host timestamps, common clock identity, measured offset/delta, uncertainty when available, and fixture-only validation status.
-2. `EXPLICIT_SYNC_MARKER`, requiring a marker identity and explicit observation on both timelines.
+- D2 was not accessed;
+- MR60 supervised physiology was not used;
+- SW-02 was not modified;
+- no D1 membership was created;
+- no capture was executed;
+- M-PV3.8 remains `RESOURCE_BLOCKED_CLOSED`;
+- M-PV4 remains `UNAUTHORIZED`;
+- fixture records retain their prior semantics and validation behavior;
+- no absolute or machine-specific path is present in active machine-readable artifacts;
+- no new synchronization threshold or physiological interpretation was added.
 
-The validator emits `ALIGNMENT_MEASURABLE` and `THRESHOLD_NOT_GOVERNED`. No maximum clock error, timing tolerance, or pass threshold was introduced. Fixture values are never promoted to live synchronization evidence.
+The intended handoff remains: an actual recording/evidence file is hashed by SW-03, the immutable receipt is verified and referenced by SW-04, and any future SW-02 stage-2 planned-to-actual binding remains a separate governed step. This phase does not perform that future binding.
 
-Hash receipts use lowercase SHA-256 and preserve an immutable evidence ID, evidence type, source identity, reference identity, optional portable file reference, optional size, and optional time coverage. Receipt creation and verification accept sensitive payload bytes only in memory for synthetic tests; payloads are not stored in the manifest. Malformed hashes, duplicate immutable IDs, and mismatches are rejected.
+## Verification evidence
 
-## SW-04 implementation
+Executed checks:
 
-`m_pv38_evidence_registry.py` provides versioned schemas and validation for:
+- `python3 -m py_compile scripts/mmwave/m_pv38_evidence_sync_hash.py scripts/mmwave/m_pv38_evidence_registry.py tests/test_mmwave_d1_sw03_sw04_evidence_tooling.py` — passed.
+- `python3 -m unittest tests/test_mmwave_d1_sw03_sw04_evidence_tooling.py -v` — 20 passed.
+- `python3 scripts/mmwave/m_pv38_evidence_sync_hash.py validate` — passed.
+- `python3 scripts/mmwave/m_pv38_evidence_registry.py validate-evidence-bundle` — passed.
+- Individual provenance, occupancy, health, and rejection validators — passed on the generated fixture registry inputs.
+- Operational CLI test — actual temporary-file hash, receipt verification, and explicit-marker sync record creation/validation passed.
+- `git diff --check` — required before final commit/push.
 
-- recording provenance: planned recording → actual recording/reference → sensor/configuration → placement/zone → separate evidence channels → health → acceptance/rejection state;
-- occupancy evidence: authoritative occupancy identity, target-zone coverage, no-human reference, sealed/access reference, interval, synchronization references, hash receipts, and review state;
-- sensor health: connection, stream validity, timestamp validity, continuity, device-reported health, restart/reset, fault code, and health review state;
-- rejection: immutable candidate/recording reference, reason code/detail, evidence references, time coverage, decision source, and mandatory retention.
-
-An occupancy reference gap remains `UNKNOWN_REFERENCE_MISSING` / `INCOMPLETE_REVIEW_REQUIRED` and `NOT_ELIGIBLE`; it is not converted to `ABSENT`. A sensor freeze is retained as `FAULT_RETAINED` with `physiology_interpretation: NOT_PROVIDED`. A rejected observation remains `REJECTED`, retained, and `eligible_for_absent: false`.
-
-The registries preserve separate sensor observation, occupancy reference, sealed/access evidence, sensor health, timing alignment, recording identity, and rejection-reason channels. They do not infer `ABSENT` from non-detection, weak periodicity, no respiration, low SNR, sensor failure, or an operator statement.
-
-## Fixture evidence
-
-Manifest: `datasets/mmwave/manifests/MMWAVE_V2_D1_sw03_sw04_evidence_tooling_01/`
-
-The bundle includes positive fixtures for shared-clock synchronization, explicit sync markers, and deterministic hash verification. It also includes negative/retention fixtures for sensor-health fault, missing occupancy evidence, retained rejection, duplicate immutable evidence ID, and hash mismatch. Every fixture states:
-
-```text
-FIXTURE_ONLY
-NON_CAMPAIGN
-NOT_D1_MEMBERSHIP
-NOT_DATASET_ADMISSIBLE
-```
-
-`checksums.json` and `checksums.sha256` cover all bundle artifacts except the checksum files themselves. The bundle was generated twice in isolated temporary directories and compared byte-for-byte; both generations validated successfully.
-
-## Governance checks
-
-The validator reads the canonical D1 state and the resource-recovery snapshot without modifying either. It observed:
-
-- expected D1: 57 PRESENT and 57 governed ABSENT;
-- current governed D1: 57 PRESENT and 0 governed ABSENT;
-- absent sessions created in this phase: 0;
-- D1 campaign directory: absent;
-- membership construction: not performed;
-- M-PV3.8: `RESOURCE_BLOCKED_CLOSED`;
-- D2: `LOCKED`; M-PV4: `UNAUTHORIZED`.
-
-The D1 counts and upstream source bytes were unchanged after fixture generation. SW-01 and SW-02 were not implemented or modified. `AGENTS.md` and `docs/README.md` were not modified.
-
-## Verification
-
-Commands and results:
-
-- `python3 -m py_compile scripts/mmwave/m_pv38_evidence_sync_hash.py scripts/mmwave/m_pv38_evidence_registry.py` — passed.
-- `python3 scripts/mmwave/m_pv38_evidence_sync_hash.py validate` — passed; 2 sync records and 7 hash receipts.
-- `python3 scripts/mmwave/m_pv38_evidence_registry.py validate` — passed.
-- `python3 -m unittest tests/test_mmwave_d1_sw03_sw04_evidence_tooling.py -v` — 13 passed.
+Focused tests retain the original fixture coverage and add operational coverage for live-debug scope semantics, actual temporary-file hashing, shared-clock and explicit-marker records, non-fixture operational registry states, missing occupancy, retained health faults/rejections, dangling cross-registry references, unknown hash/sync references, and unchanged D1/no-threshold/no-SW-02 behavior.
 
 ## Limitations and non-claims
 
-This is software readiness evidence only. It does not establish live occupancy readiness, live sensor-health readiness, physical clock performance, D1 admissibility, dataset membership, physiological accuracy, clinical validity, Raspberry Pi latency, or campaign authorization. No real payloads, live timestamps, MR60 supervised physiology, D2 data, or hardware measurements were used.
+This is software evidence tooling readiness, not live evidence readiness. It does not claim:
+
+- live hardware synchronization or sensor performance;
+- live occupancy evidence or live sensor-health evidence;
+- D1 dataset admissibility or campaign membership;
+- final evaluation or threshold validity;
+- physiological accuracy or clinical validity;
+- MR60 supervised physiology validation;
+- D2 access;
+- Raspberry Pi performance;
+- hardware latency or throughput;
+- any benefit over another implementation.
+
+No live hardware evidence was available in this phase. Future live-debug collection must remain explicitly `LIVE_DEBUG_NON_CAMPAIGN` unless separately governed, and must not be silently promoted to D1 or final evaluation evidence.
 
 ## Final verdict
 
-`SW03_SW04_IMPLEMENTED_FIXTURE_VALIDATED`
+`SW03_SW04_SOFTWARE_COMPLETE_LIVE_EVIDENCE_PENDING`
 
-This verdict means the SW-03/SW-04 schemas, validators, deterministic hashing, registry separation, and fixture demonstrations are implemented and validated. It does not authorize a live campaign, create D1 membership, or claim live evidence readiness.
+This verdict means that SW-03/SW-04 software plumbing is complete for the retained fixture lane and the explicitly versioned operational non-campaign lane, including actual local-file hashing, caller-supplied synchronization records, registry validation, and cross-registry integrity checks. Live evidence collection remains pending. It does not authorize a campaign, create D1 membership, modify SW-02, or establish live hardware readiness.

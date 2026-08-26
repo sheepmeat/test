@@ -6,6 +6,7 @@
       "evidence_ids": [
         "EVIDENCE-HEALTH-001"
       ],
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "fault_code": null,
       "fixture_semantics": [
         "FIXTURE_ONLY",
@@ -20,6 +21,13 @@
       "reset_restart_observed": false,
       "review_status": "FIXTURE_REVIEWED_ONLY",
       "schema_version": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sensor_identity": "SYNTHETIC_SENSOR_001",
       "stream_valid": true,
       "timestamp_valid": true
@@ -30,6 +38,7 @@
       "evidence_ids": [
         "EVIDENCE-HEALTH-001"
       ],
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "fault_code": "SYNTHETIC_STREAM_FREEZE",
       "fixture_semantics": [
         "FIXTURE_ONLY",
@@ -44,6 +53,13 @@
       "reset_restart_observed": true,
       "review_status": "FIXTURE_FAULT_RETAINED",
       "schema_version": "MMWAVE-V2-D1-SW04-SENSOR-HEALTH-REGISTRY-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "sensor_identity": "SYNTHETIC_SENSOR_002",
       "stream_valid": false,
       "timestamp_valid": true

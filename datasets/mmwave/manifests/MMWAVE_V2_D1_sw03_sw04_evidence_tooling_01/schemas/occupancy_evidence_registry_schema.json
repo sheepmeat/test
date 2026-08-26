@@ -13,6 +13,12 @@
         "null"
       ]
     },
+    "evidence_scope": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "LIVE_DEBUG_NON_CAMPAIGN"
+      ]
+    },
     "fixture_semantics": {
       "const": [
         "FIXTURE_ONLY",
@@ -52,6 +58,12 @@
     "schema_version": {
       "const": "MMWAVE-V2-D1-SW04-OCCUPANCY-EVIDENCE-REGISTRY-V1"
     },
+    "scope_semantics": {
+      "type": "array"
+    },
+    "scope_version": {
+      "const": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+    },
     "sealed_access_evidence_reference": {
       "type": [
         "string",
@@ -69,6 +81,9 @@
     }
   },
   "required": [
+    "evidence_scope",
+    "scope_version",
+    "scope_semantics",
     "schema_version",
     "registry_record_id",
     "authoritative_occupancy_reference",
@@ -81,8 +96,7 @@
     "occupancy_state",
     "review_status",
     "absent_eligibility",
-    "physiology_label",
-    "fixture_semantics"
+    "physiology_label"
   ],
   "title": "SafeNest mmWave V2 SW-04 occupancy evidence registry record",
   "type": "object"

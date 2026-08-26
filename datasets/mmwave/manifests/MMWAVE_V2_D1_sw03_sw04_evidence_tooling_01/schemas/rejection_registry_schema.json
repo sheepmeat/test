@@ -16,6 +16,12 @@
     "evidence_references": {
       "type": "array"
     },
+    "evidence_scope": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "LIVE_DEBUG_NON_CAMPAIGN"
+      ]
+    },
     "fixture_semantics": {
       "const": [
         "FIXTURE_ONLY",
@@ -56,11 +62,20 @@
     "schema_version": {
       "const": "MMWAVE-V2-D1-SW04-REJECTION-REGISTRY-V1"
     },
+    "scope_semantics": {
+      "type": "array"
+    },
+    "scope_version": {
+      "const": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+    },
     "time_coverage": {
       "type": "object"
     }
   },
   "required": [
+    "evidence_scope",
+    "scope_version",
+    "scope_semantics",
     "schema_version",
     "rejection_record_id",
     "immutable_candidate_recording_reference",
@@ -72,8 +87,7 @@
     "retained",
     "acceptance_state",
     "eligible_for_absent",
-    "physiology_label",
-    "fixture_semantics"
+    "physiology_label"
   ],
   "title": "SafeNest mmWave V2 SW-04 rejection registry record",
   "type": "object"

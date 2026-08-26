@@ -8,6 +8,7 @@
         "EVIDENCE-SENSOR-001",
         "EVIDENCE-REJECTION-001"
       ],
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
       "fixture_semantics": [
         "FIXTURE_ONLY",
         "NON_CAMPAIGN",
@@ -25,6 +26,13 @@
       "rejection_record_id": "REJECTION-FIXTURE-001",
       "retained": true,
       "schema_version": "MMWAVE-V2-D1-SW04-REJECTION-REGISTRY-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
       "time_coverage": {
         "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
         "end": "2026-08-27T00:02:15Z",
