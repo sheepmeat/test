@@ -1,0 +1,94 @@
+{
+  "schema_version": "PUBABS-A7-METRIC-REGISTRY-V1",
+  "post_hoc_primary_metric": "FORBIDDEN",
+  "m_pv38_utility_guards_as_c1_pass_fail": "NOT_APPLICABLE",
+  "layer2_metric_label_required": "CONDITIONAL_ON_ADAPTER_VALID",
+  "layer2_denominator": 34,
+  "absent_n_layer2": 9,
+  "present_n_layer2": 25,
+  "primary": [
+    {
+      "id": "L2_ABSENT_EMISSION_COUNT",
+      "task": "breathing_evidence",
+      "definition": "count of Layer2 ABSENT sessions (n=9) where sigmoid(breathing) >= 0.5 at frozen threshold",
+      "population": "L2_VALID34_ABSENT9",
+      "interpretation": "DESCRIPTIVE_ONLY",
+      "safety_threshold": "NONE_CANONICAL_FOR_EXTERNAL_STRESS"
+    },
+    {
+      "id": "L2_ABSENT_EMISSION_RATE",
+      "task": "breathing_evidence",
+      "definition": "L2_ABSENT_EMISSION_COUNT / 9; denominator 9 must remain visible",
+      "population": "L2_VALID34_ABSENT9",
+      "interpretation": "DESCRIPTIVE_ONLY"
+    },
+    {
+      "id": "L2_PRESENT_RECALL",
+      "task": "breathing_evidence",
+      "definition": "Layer2 PRESENT sessions (n=25) with sigmoid(breathing) >= 0.5 / 25",
+      "population": "L2_VALID34_PRESENT25",
+      "interpretation": "DESCRIPTIVE_ONLY"
+    }
+  ],
+  "secondary": [
+    {
+      "id": "L2_CONFUSION_COUNTS",
+      "definition": "TP/FP/TN/FN on VALID34 PRESENT/ABSENT at frozen 0.5; report raw counts with n_ABSENT=9 n_PRESENT=25"
+    },
+    {
+      "id": "L2_PRESENT_PRECISION",
+      "definition": "TP / (TP+FP) on VALID34; undefined if TP+FP=0 then NOT_APPLICABLE not zero"
+    },
+    {
+      "id": "L2_F1_WHERE_DEFINED",
+      "definition": "F1 on VALID34 PRESENT/ABSENT; NOT_APPLICABLE if undefined; never impute zero"
+    },
+    {
+      "id": "L2_BRIER_WHERE_DEFINED",
+      "definition": "Brier on VALID34 breathing probabilities vs PRESENT/ABSENT; diagnostic only; no calibration fit"
+    },
+    {
+      "id": "PER_CANDIDATE_SEED_TABLE",
+      "definition": "report every panel member in fixed order B11,B23,B47,C11,C23,C47; include mean/sd/min/max across six as DESCRIPTIVE_ONLY; no winner"
+    },
+    {
+      "id": "PER_SUBJECT_PRESENT_STRATA",
+      "definition": "PRESENT VALID counts by N1..N6 with N6=0 disclosed; no post-hoc subject drop"
+    },
+    {
+      "id": "PER_POSITION_STRATA",
+      "definition": "Layer2 position counts as frozen in A6; descriptive only"
+    },
+    {
+      "id": "L1_AVAILABILITY_TABLE",
+      "definition": "ALL77 VALID/FAIL_CLOSED by class; no physiology metrics on FAIL_CLOSED"
+    }
+  ],
+  "forbidden": [
+    "RR_MAE",
+    "RR_within_2_bpm",
+    "RR_within_4_bpm",
+    "RR_within_6_bpm",
+    "RR_accuracy_claim",
+    "clinical_apnea_metric",
+    "quality_AUROC_without_C1_Q2_GT",
+    "winner_score",
+    "composite_utility",
+    "normalized_ranking",
+    "best_seed_selection",
+    "family_selection",
+    "M_PV3_present_recall_min_0.95_as_C1_gate",
+    "M_PV3_brier_max_0.05_as_C1_gate",
+    "M_PV3_rr_mae_max_5_as_C1_gate",
+    "corpus_wide_metrics_from_VALID34_alone_labeled_as_all77",
+    "UNAVAILABLE_scored_as_ABSENT_or_NORMAL",
+    "threshold_sweep_on_C1",
+    "ECE_after_C1_calibration_fit"
+  ],
+  "undefined_metric_representation": "NOT_APPLICABLE",
+  "undefined_must_not_be": [
+    "ZERO",
+    "FAILURE",
+    "MISSING_AS_ERROR"
+  ]
+}

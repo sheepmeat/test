@@ -1,0 +1,50 @@
+{
+  "schema_version": "PUBABS-A7-REFERENCE-LABEL-MATRIX-V1",
+  "rule": "SCORE_ONLY_WHAT_C1_ACTUALLY_HAS",
+  "c1_canonical_labels": {
+    "PRESENT": {
+      "available": true,
+      "layer1_n": 66,
+      "layer2_n": 25,
+      "semantics": "human-present Scenario_A 1m face-toward-wall"
+    },
+    "ABSENT": {
+      "available": true,
+      "layer1_n": 11,
+      "layer2_n": 9,
+      "semantics": "NO_HUMAN_TARGET Empty_space; not breath-hold, not apnea, not motionless human",
+      "small_n_must_remain_visible_in_denominators": true
+    }
+  },
+  "tasks": {
+    "breathing_evidence_present_absent": {
+      "layer1": "NOT_SCORED_AVAILABILITY_ONLY",
+      "layer2": "SCORABLE_CONDITIONAL_ON_ADAPTER_VALID",
+      "positive_class": "PRESENT",
+      "negative_class": "ABSENT",
+      "absent_n_layer2": 9
+    },
+    "rr": {
+      "ground_truth": "NOT_AVAILABLE_ON_C1",
+      "status": "UNSCORED",
+      "accuracy_claim": "FORBIDDEN"
+    },
+    "apnea_or_breath_hold": {
+      "ground_truth": "NOT_AVAILABLE_ON_C1",
+      "status": "UNSCORED",
+      "clinical_apnea_claim": "FORBIDDEN"
+    },
+    "quality_q2_invalid": {
+      "ground_truth": "NOT_AVAILABLE_ON_C1_AS_Q2_SYNTHETIC_OVERLAY",
+      "status": "UNSCORED"
+    },
+    "sensor_health_telemetry": {
+      "ground_truth": "NOT_AVAILABLE",
+      "status": "UNSCORED"
+    }
+  },
+  "evidence": [
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md",
+    "datasets/mmwave/manifests/PUBABS_A6_c1_external_stress_freeze/population_composition.json"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "schema_version": "PUBABS-A7-ANTI-SELECTION-GUARDS-V1",
+  "NO_WINNER": true,
+  "NO_RANKING": true,
+  "NO_COMPOSITE": true,
+  "NO_SEED_OR_FAMILY_SELECTION": true,
+  "NO_CHERRY_PICK": true,
+  "NO_PANEL_MEMBER_DROP": true,
+  "NO_THRESHOLD_TUNING_ON_C1": true,
+  "NO_CALIBRATION_TUNING_ON_C1": true,
+  "NO_SCALER_REFIT_ON_C1": true,
+  "NO_ADAPTER_RETUNING": true,
+  "NO_D1_SUBSTITUTION": true,
+  "NO_M_PV38_REOPEN": true,
+  "NO_M_PV38_FINAL_SELECTION_USE": true,
+  "NO_POSTHOC_PRIMARY_METRIC": true,
+  "NO_POSTHOC_SUBJECT_OR_POSITION_SELECTION_BY_MODEL_RESULTS": true,
+  "USE_FROZEN_THRESHOLD_ONLY": true,
+  "FINAL_SELECTION_USE": "FORBIDDEN",
+  "panel_level_interpretation": "side-by-side DESCRIPTIVE_ONLY tables in fixed order; agreement/disagreement may be counted but must not select"
+}
