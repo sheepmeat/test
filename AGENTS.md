@@ -24,8 +24,13 @@
 ## Multisensor phase workflow
 
 - Follow `docs/20260810_ChatGPT_SafeNest_Multisensor_Parallel_Execution_Roadmap_01.md` as the active master roadmap for CO₂, Thermal, and integration sequencing.
-- For mmWave **future** model development after the 2026-08-17 signal-contract mismatch, follow `docs/20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md`. Historical `M-A`/`M-B` remain as documented in `docs/20260806_ChatGPT_SafeNest_mmWave_Execution_Sequence_01.md` and `docs/MMWAVE_PHASE_B_OVERVIEW.md`. The previous mmWave future path (frozen-B live correspondence → `M-C2` → optional `M-D`) is paused/superseded for future execution; do not reopen the historical B live gate.
-- Run mmWave M-B, CO₂ C-A, Thermal T-A, and integration contract inventory I-0 in parallel when their files and evidence are independent; preserve the required phase order inside each sensor track.
+- Current mmWave V2 freeze/reopen/M-PV4 authority is `datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/lifecycle_closure_state.json`: `M-PV3.8=RESOURCE_BLOCKED_CLOSED`; this pointer overrides historical/future mmWave routing below.
+- While frozen, do not start `M-N0` as the next V2 work; keep `M-N10` `KEEP_BLOCKED/OFF_V2_CRITICAL_PATH`; keep `D3` and `Q3` `DEFER`; do not reopen M-PV3.8, authorize capture, construct membership, or evaluate candidates.
+- `M-PV4` and D2 semantic use remain `UNAUTHORIZED`; `PV4↔PV3X` order remains `ORDER_UNRESOLVED`.
+- `docs/20260822_SafeNest_mmWave_Public_Multidomain_V2_Development_Roadmap_01.md` remains the active child roadmap for V2 structure but does not override the lifecycle closure.
+- `docs/20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md` and historical M-N/A–B documents are V1 lineage / `OBSERVE_ONLY` context, not current V2 execution authority.
+- The generic mmWave M-B sequencing below is conditional and is not current execution authority while M-PV3.8 is `RESOURCE_BLOCKED_CLOSED`.
+- Run CO₂ C-A, Thermal T-A, and integration contract inventory I-0 in parallel when their files and evidence are independent; preserve the required phase order inside each sensor track.
 - For each sensor track, complete and validate its A0 through A6 before starting that sensor's Phase B model selection.
 - A4 voluntary breath-hold labels are derived SafeNest APNEA proxies and must never be described as clinical apnea.
 - A5 uses subject-level grouping. All recordings and windows from one subject must remain in exactly one split.
