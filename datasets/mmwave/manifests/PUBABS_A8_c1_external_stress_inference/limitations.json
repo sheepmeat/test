@@ -1,0 +1,15 @@
+{
+  "HIGH_SCALE_MISMATCH_LIMITATION": true,
+  "HIGH_CROSS_SENSOR_DOMAIN_RISK": true,
+  "VALID34_NOT_CORPUS_REPRESENTATIVE": true,
+  "LAYER2_ABSENT_N9_SMALL": true,
+  "N6_ZERO_VALID_PRESENT": true,
+  "present_subject_counts": {
+    "N1": 1,
+    "N2": 1,
+    "N3": 9,
+    "N4": 8,
+    "N5": 6,
+    "N6": 0
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "layer2_sessions": 34,
+  "family_b_vectors": 34,
+  "family_c_vectors": 34,
+  "b_dim": 621,
+  "c_dim": 671,
+  "trace_hash_match": true,
+  "zscore_hash_match": true,
+  "double_zscore": "FORBIDDEN_NOT_APPLIED"
+}
