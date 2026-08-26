@@ -1,0 +1,6 @@
+{
+  "base": "positive_valid_621.json",
+  "overrides": {
+    "availability_state": "INPUT_UNAVAILABLE"
+  }
+}

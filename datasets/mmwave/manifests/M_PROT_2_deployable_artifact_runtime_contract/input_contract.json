@@ -1,0 +1,39 @@
+{
+  "schema_version": "M-PROT-2-B23-INPUT-V1",
+  "contract_version": "M-PROT-2-B23-INPUT-V1",
+  "window_duration_s": 30.0,
+  "sample_rate_hz": 10.0,
+  "trace_samples": 300,
+  "time_axis": "oldest_to_newest",
+  "waveform": "R1 common_trace respiratory_motion_trace",
+  "assembled_dtype": "float32",
+  "assembled_dimension": 621,
+  "layout": "concat(trace[300], trace_mask[300], scale[12], quality[9])",
+  "scale_names": [
+    "native_mad_about_median",
+    "native_robust_rms_about_median",
+    "native_robust_range_p05_p95",
+    "native_peak_to_peak",
+    "common_trace_mad_about_median",
+    "common_trace_robust_rms_about_median",
+    "total_signal_energy",
+    "total_signal_mean_square",
+    "log_total_signal_energy",
+    "respiratory_band_energy",
+    "respiratory_band_power",
+    "log_respiratory_band_energy"
+  ],
+  "quality_names": [
+    "trace_sample_count",
+    "trace_duration_s",
+    "trace_mad_about_median",
+    "trace_robust_rms_about_median",
+    "trace_robust_range_p05_p95",
+    "trace_mean_square",
+    "trace_is_exact_flat",
+    "valid_sample_fraction",
+    "source_quality_flag_count"
+  ],
+  "f2_reconstruction": "NOT_REQUIRED",
+  "family_c_features": "NOT_PART_OF_B23"
+}

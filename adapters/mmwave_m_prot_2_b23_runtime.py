@@ -1,0 +1,435 @@
+"""Isolated M-PROT-2 B23 prototype runtime (not the integrated application).
+
+This module freezes the B23 packaging/runtime contract. It does not train,
+retune thresholds, convert TFLite, wire live sensors, or select a final model.
+Wrong artifact or scaler identity fails closed. There is no fallback model.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import math
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, Mapping
+
+import numpy as np
+import torch
+
+from scripts.mmwave_m_pv2_candidate_training import (
+    QUALITY_NAMES,
+    SCALE_NAMES,
+    TraceModel,
+    _sha256_json,
+)
+
+CONTRACT_ID = "MMWAVE_V2_M_PROT_2_B23_DEPLOYABLE_RUNTIME_V1"
+PROTOTYPE_VERSION_ID = "M_PROT_2_B23_PYTORCH_FLOAT32_V1"
+INPUT_CONTRACT_VERSION = "M-PROT-2-B23-INPUT-V1"
+PREPROCESS_CONTRACT_VERSION = "M-PROT-2-B23-PREPROCESS-V1"
+OUTPUT_CONTRACT_VERSION = "M-PROT-2-B23-OUTPUT-V1"
+FAIL_CLOSED_CONTRACT_VERSION = "M-PROT-2-B23-FAIL-CLOSED-V1"
+
+PANEL_ID = "B23"
+CANDIDATE_ID = "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY"
+FAMILY = "family_b"
+SEED = 23
+CONSTRUCTION_CLASS = "TraceModel"
+CONSTRUCTION_SCRIPT = "scripts/mmwave_m_pv2_candidate_training.py"
+SOURCE_ARTIFACT_REL = "models/mmwave/m_pv2/family_b/candidate_seed_23.pt"
+SOURCE_ARTIFACT_SHA256 = "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c"
+CANONICAL_PARAMETER_SHA256 = "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e"
+SOURCE_ARTIFACT_BYTES = 76473
+PARAMETER_COUNT = 17915
+INPUT_DIM = 621
+WINDOW_DURATION_S = 30.0
+SAMPLE_RATE_HZ = 10.0
+TRACE_SAMPLES = 300
+SCALE_DIM = 12
+QUALITY_DIM = 9
+ASSEMBLED_DTYPE = np.float32
+
+SCALER_REL = "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json"
+SCALER_CONTENT_SHA256 = "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c"
+SCALER_FILE_SHA256 = "9555c8c954078b80e26fbcd3bc5d5a70b9a2e04620946118709ec95418b2ac36"
+
+BREATHING_THRESHOLD = 0.5
+QUALITY_THRESHOLD = 0.5
+RR_MEAN = 17.12899193548387
+RR_STD = 8.948729232744911
+
+PRIMARY_REPRESENTATION = "PYTORCH_FLOAT32_STATE_DICT"
+TFLITE_CONVERSION = "NOT_YET_PROVEN"
+INT8 = "NOT_AUTHORIZED_IN_M_PROT_2"
+
+MANDATORY_SEMANTICS = (
+    "PROTOTYPE_INTEGRATION_ONLY",
+    "NOT_FINAL_SELECTED_MODEL",
+    "NOT_DEPLOYMENT_VALIDATED",
+    "NOT_SAFETY_VALIDATED",
+    "NOT_CLINICAL_VALIDATION",
+    "SUBJECT_TO_REPLACEMENT",
+)
+
+SCALE_FEATURE_NAMES = tuple(SCALE_NAMES)
+QUALITY_FEATURE_NAMES = tuple(QUALITY_NAMES)
+
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+
+
+class PrototypeFailClosed(RuntimeError):
+    def __init__(self, code: str, message: str) -> None:
+        super().__init__(f"{code}: {message}")
+        self.code = code
+        self.message = message
+
+
+@dataclass(frozen=True)
+class PrototypeReceipt:
+    status: str
+    fail_closed_code: str | None
+    breathing_logit: float | None
+    breathing_probability: float | None
+    breathing_decision: str | None
+    rr_raw: float | None
+    rr_bpm: float | None
+    rr_status: str | None
+    quality_logit: float | None
+    quality_probability: float | None
+    quality_decision: str | None
+    artifact_sha256: str
+    scaler_content_sha256: str
+    representation: str
+    prototype_version_id: str
+    mandatory_semantics: tuple[str, ...]
+    apnea_emitted: bool
+
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "schema_version": "M-PROT-2-INFERENCE-RECEIPT-V1",
+            "status": self.status,
+            "fail_closed_code": self.fail_closed_code,
+            "panel_id": PANEL_ID,
+            "candidate_id": CANDIDATE_ID,
+            "prototype_version_id": self.prototype_version_id,
+            "representation": self.representation,
+            "artifact_sha256": self.artifact_sha256,
+            "scaler_content_sha256": self.scaler_content_sha256,
+            "breathing_logit": self.breathing_logit,
+            "breathing_probability": self.breathing_probability,
+            "breathing_decision": self.breathing_decision,
+            "rr_raw": self.rr_raw,
+            "rr_bpm": self.rr_bpm,
+            "rr_status": self.rr_status,
+            "quality_logit": self.quality_logit,
+            "quality_probability": self.quality_probability,
+            "quality_decision": self.quality_decision,
+            "apnea_emitted": self.apnea_emitted,
+            "mandatory_semantics": list(self.mandatory_semantics),
+            "lineage_class": "DEBUG_CAPTURE",
+            "PROTOTYPE_INTEGRATION_ONLY": True,
+            "FINAL_GOVERNED_EVALUATION": False,
+        }
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def verify_scaler(root: Path | None = None, scaler_path: Path | None = None) -> dict[str, Any]:
+    root = Path(root or _REPO_ROOT)
+    path = Path(scaler_path) if scaler_path is not None else root / SCALER_REL
+    if not path.is_file():
+        raise PrototypeFailClosed("SCALER_MISSING", f"missing scaler: {path.as_posix()}")
+    file_sha = sha256_file(path)
+    if file_sha != SCALER_FILE_SHA256:
+        raise PrototypeFailClosed(
+            "SCALER_SHA_MISMATCH",
+            f"scaler file sha {file_sha} != {SCALER_FILE_SHA256}",
+        )
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    content = {key: value for key, value in payload.items() if key != "sha256"}
+    content_sha = _sha256_json(content)
+    if content_sha != SCALER_CONTENT_SHA256 or payload.get("sha256") != SCALER_CONTENT_SHA256:
+        raise PrototypeFailClosed(
+            "SCALER_SHA_MISMATCH",
+            f"scaler content sha {content_sha} != {SCALER_CONTENT_SHA256}",
+        )
+    if tuple(payload["scale"]["names"]) != SCALE_FEATURE_NAMES:
+        raise PrototypeFailClosed("SCALER_SHA_MISMATCH", "scale feature order drifted")
+    if tuple(payload["quality"]["names"]) != QUALITY_FEATURE_NAMES:
+        raise PrototypeFailClosed("SCALER_SHA_MISMATCH", "quality feature order drifted")
+    return payload
+
+
+def verify_artifact(root: Path | None = None, artifact_path: Path | None = None) -> bytes:
+    root = Path(root or _REPO_ROOT)
+    path = Path(artifact_path) if artifact_path is not None else root / SOURCE_ARTIFACT_REL
+    if not path.is_file():
+        raise PrototypeFailClosed("ARTIFACT_MISSING", f"missing artifact: {path.as_posix()}")
+    data = path.read_bytes()
+    digest = hashlib.sha256(data).hexdigest()
+    if digest != SOURCE_ARTIFACT_SHA256:
+        raise PrototypeFailClosed(
+            "ARTIFACT_SHA_MISMATCH",
+            f"artifact sha {digest} != {SOURCE_ARTIFACT_SHA256}",
+        )
+    if len(data) != SOURCE_ARTIFACT_BYTES:
+        raise PrototypeFailClosed(
+            "ARTIFACT_SHA_MISMATCH",
+            f"artifact bytes {len(data)} != {SOURCE_ARTIFACT_BYTES}",
+        )
+    return data
+
+
+def load_b23_model(root: Path | None = None, artifact_path: Path | None = None) -> torch.nn.Module:
+    root = Path(root or _REPO_ROOT)
+    path = Path(artifact_path) if artifact_path is not None else root / SOURCE_ARTIFACT_REL
+    verify_artifact(root, path)
+    payload = torch.load(path, map_location="cpu", weights_only=False)
+    if not isinstance(payload, dict) or "state_dict" not in payload:
+        raise PrototypeFailClosed("ARTIFACT_SHA_MISMATCH", "payload is not a B23 state_dict package")
+    if payload.get("family") != FAMILY or int(payload.get("seed", -1)) != SEED:
+        raise PrototypeFailClosed("ARTIFACT_SHA_MISMATCH", "payload family/seed is not B23")
+    model = TraceModel(INPUT_DIM, FAMILY)
+    model.load_state_dict(payload["state_dict"], strict=True)
+    model.eval()
+    for parameter in model.parameters():
+        parameter.requires_grad_(False)
+    return model
+
+
+def _as_float32_vector(name: str, value: Any, expected: int, code: str) -> np.ndarray:
+    if value is None:
+        raise PrototypeFailClosed("INCOMPLETE_INPUT", f"missing {name}")
+    try:
+        array = np.asarray(value)
+        if array.dtype.kind not in {"b", "i", "u", "f"}:
+            raise PrototypeFailClosed("WRONG_DTYPE", f"{name} dtype {array.dtype} is not numeric")
+        array = np.asarray(array, dtype=np.float32).reshape(-1)
+    except PrototypeFailClosed:
+        raise
+    except (TypeError, ValueError) as exc:
+        raise PrototypeFailClosed("WRONG_DTYPE", f"{name} is not safely convertible to float32") from exc
+    if array.size != expected:
+        raise PrototypeFailClosed(code, f"{name} length {array.size} != {expected}")
+    return array
+
+
+def assemble_family_b_vector(
+    *,
+    trace: Any,
+    trace_mask: Any,
+    scale: Any,
+    quality: Any,
+    scaler: Mapping[str, Any],
+    already_zscored: bool = False,
+) -> np.ndarray:
+    if already_zscored:
+        raise PrototypeFailClosed("DOUBLE_ZSCORE_FORBIDDEN", "runtime must apply the TRAIN scaler once")
+    trace_v = _as_float32_vector("trace", trace, TRACE_SAMPLES, "WRONG_DIMENSION")
+    mask_v = _as_float32_vector("trace_mask", trace_mask, TRACE_SAMPLES, "MISSING_TRACE_MASK")
+    scale_v = _as_float32_vector("scale", scale, SCALE_DIM, "WRONG_SCALE_DIM")
+    quality_v = _as_float32_vector("quality", quality, QUALITY_DIM, "WRONG_QUALITY_DIM")
+    if np.any(~np.isfinite(trace_v)) or np.any(~np.isfinite(mask_v)) or np.any(~np.isfinite(scale_v)) or np.any(~np.isfinite(quality_v)):
+        raise PrototypeFailClosed("NON_FINITE_INPUT", "non-finite values before scaler")
+    if np.any((mask_v != 0.0) & (mask_v != 1.0)):
+        raise PrototypeFailClosed("MISSING_TRACE_MASK", "trace_mask must be 0/1")
+    trace_z = (trace_v - np.float32(scaler["trace"]["mean"])) / np.float32(scaler["trace"]["std"])
+    scale_z = (scale_v - np.asarray(scaler["scale"]["mean"], dtype=np.float32)) / np.asarray(
+        scaler["scale"]["std"], dtype=np.float32
+    )
+    quality_z = (quality_v - np.asarray(scaler["quality"]["mean"], dtype=np.float32)) / np.asarray(
+        scaler["quality"]["std"], dtype=np.float32
+    )
+    vector = np.concatenate([trace_z, mask_v, scale_z, quality_z]).astype(np.float32, copy=False)
+    if vector.size != INPUT_DIM:
+        raise PrototypeFailClosed("WRONG_DIMENSION", f"assembled dim {vector.size} != {INPUT_DIM}")
+    if np.any(~np.isfinite(vector)):
+        raise PrototypeFailClosed("NON_FINITE_INPUT", "non-finite values after TRAIN scaler")
+    return vector
+
+
+def sigmoid(logit: float) -> float:
+    return float(1.0 / (1.0 + math.exp(-float(logit))))
+
+
+def decode_rr(rr_raw: float) -> tuple[float | None, str]:
+    if not math.isfinite(rr_raw):
+        return None, "UNAVAILABLE_INVALID_DECODE"
+    rr_bpm = float(rr_raw) * RR_STD + RR_MEAN
+    if not math.isfinite(rr_bpm) or rr_bpm <= 0.0:
+        return None, "UNAVAILABLE_INVALID_DECODE"
+    return rr_bpm, "EMITTED"
+
+
+def _unavailable_receipt(code: str, artifact_sha: str, scaler_sha: str) -> PrototypeReceipt:
+    return PrototypeReceipt(
+        status="UNAVAILABLE",
+        fail_closed_code=code,
+        breathing_logit=None,
+        breathing_probability=None,
+        breathing_decision=None,
+        rr_raw=None,
+        rr_bpm=None,
+        rr_status="UNAVAILABLE",
+        quality_logit=None,
+        quality_probability=None,
+        quality_decision=None,
+        artifact_sha256=artifact_sha,
+        scaler_content_sha256=scaler_sha,
+        representation=PRIMARY_REPRESENTATION,
+        prototype_version_id=PROTOTYPE_VERSION_ID,
+        mandatory_semantics=MANDATORY_SEMANTICS,
+        apnea_emitted=False,
+    )
+
+
+def run_prototype_inference(
+    fixture: Mapping[str, Any],
+    *,
+    root: Path | None = None,
+    model: torch.nn.Module | None = None,
+    scaler: Mapping[str, Any] | None = None,
+    artifact_path: Path | None = None,
+    scaler_path: Path | None = None,
+) -> PrototypeReceipt:
+    root = Path(root or _REPO_ROOT)
+    try:
+        scaler_payload = scaler if scaler is not None else verify_scaler(root, scaler_path)
+        verify_artifact(root, artifact_path)
+        if bool(fixture.get("already_zscored")):
+            raise PrototypeFailClosed("DOUBLE_ZSCORE_FORBIDDEN", "do not pass z-scored tensors into the assembler")
+        if fixture.get("window_valid") is False:
+            raise PrototypeFailClosed("INCOMPLETE_INPUT", "window_valid is false")
+        sample_count = fixture.get("sample_count")
+        if sample_count is not None and int(sample_count) < TRACE_SAMPLES:
+            raise PrototypeFailClosed("INCOMPLETE_INPUT", "fewer than 300 required samples")
+        if fixture.get("presence_available") is False:
+            return _unavailable_receipt("PRESENCE_UNAVAILABLE", SOURCE_ARTIFACT_SHA256, SCALER_CONTENT_SHA256)
+        if fixture.get("availability_state") in {"INPUT_UNAVAILABLE", "PRESENCE_SUPPRESSED"}:
+            return _unavailable_receipt(str(fixture["availability_state"]), SOURCE_ARTIFACT_SHA256, SCALER_CONTENT_SHA256)
+        vector = assemble_family_b_vector(
+            trace=fixture.get("trace"),
+            trace_mask=fixture.get("trace_mask"),
+            scale=fixture.get("scale"),
+            quality=fixture.get("quality"),
+            scaler=scaler_payload,
+            already_zscored=bool(fixture.get("already_zscored", False)),
+        )
+        loaded = model if model is not None else load_b23_model(root, artifact_path)
+        with torch.no_grad():
+            tensor = torch.from_numpy(vector[None, :])
+            outputs = loaded(tensor)
+        breathing_logit = float(outputs["breathing"].reshape(-1)[0].cpu())
+        rr_raw = float(outputs["rr"].reshape(-1)[0].cpu())
+        quality_logit = float(outputs["quality"].reshape(-1)[0].cpu())
+        breathing_probability = sigmoid(breathing_logit)
+        quality_probability = sigmoid(quality_logit)
+        if not math.isfinite(breathing_probability) or not math.isfinite(quality_probability):
+            raise PrototypeFailClosed("NON_FINITE_INPUT", "non-finite head outputs")
+        breathing_decision = "PRESENT" if breathing_probability >= BREATHING_THRESHOLD else "ABSENT"
+        if breathing_decision == "ABSENT":
+            quality_decision = "BELOW_PROTOTYPE_THRESHOLD" if quality_probability < QUALITY_THRESHOLD else "ABOVE_PROTOTYPE_THRESHOLD"
+            return PrototypeReceipt(
+                status="ABSENT",
+                fail_closed_code=None,
+                breathing_logit=breathing_logit,
+                breathing_probability=breathing_probability,
+                breathing_decision="ABSENT",
+                rr_raw=None,
+                rr_bpm=None,
+                rr_status="SUPPRESSED_ABSENT",
+                quality_logit=quality_logit,
+                quality_probability=quality_probability,
+                quality_decision=quality_decision,
+                artifact_sha256=SOURCE_ARTIFACT_SHA256,
+                scaler_content_sha256=SCALER_CONTENT_SHA256,
+                representation=PRIMARY_REPRESENTATION,
+                prototype_version_id=PROTOTYPE_VERSION_ID,
+                mandatory_semantics=MANDATORY_SEMANTICS,
+                apnea_emitted=False,
+            )
+        if quality_probability < QUALITY_THRESHOLD:
+            return PrototypeReceipt(
+                status="QUALITY_SUPPRESSED",
+                fail_closed_code="QUALITY_FAIL",
+                breathing_logit=breathing_logit,
+                breathing_probability=breathing_probability,
+                breathing_decision="PRESENT",
+                rr_raw=None,
+                rr_bpm=None,
+                rr_status="SUPPRESSED_QUALITY",
+                quality_logit=quality_logit,
+                quality_probability=quality_probability,
+                quality_decision="BELOW_PROTOTYPE_THRESHOLD",
+                artifact_sha256=SOURCE_ARTIFACT_SHA256,
+                scaler_content_sha256=SCALER_CONTENT_SHA256,
+                representation=PRIMARY_REPRESENTATION,
+                prototype_version_id=PROTOTYPE_VERSION_ID,
+                mandatory_semantics=MANDATORY_SEMANTICS,
+                apnea_emitted=False,
+            )
+        rr_bpm, rr_status = decode_rr(rr_raw)
+        if rr_status != "EMITTED":
+            return PrototypeReceipt(
+                status="RR_UNAVAILABLE",
+                fail_closed_code="UNAVAILABLE_INVALID_DECODE",
+                breathing_logit=breathing_logit,
+                breathing_probability=breathing_probability,
+                breathing_decision="PRESENT",
+                rr_raw=rr_raw,
+                rr_bpm=None,
+                rr_status=rr_status,
+                quality_logit=quality_logit,
+                quality_probability=quality_probability,
+                quality_decision="ABOVE_PROTOTYPE_THRESHOLD",
+                artifact_sha256=SOURCE_ARTIFACT_SHA256,
+                scaler_content_sha256=SCALER_CONTENT_SHA256,
+                representation=PRIMARY_REPRESENTATION,
+                prototype_version_id=PROTOTYPE_VERSION_ID,
+                mandatory_semantics=MANDATORY_SEMANTICS,
+                apnea_emitted=False,
+            )
+        return PrototypeReceipt(
+            status="PHYSIOLOGY_ELIGIBLE",
+            fail_closed_code=None,
+            breathing_logit=breathing_logit,
+            breathing_probability=breathing_probability,
+            breathing_decision="PRESENT",
+            rr_raw=rr_raw,
+            rr_bpm=rr_bpm,
+            rr_status="EMITTED",
+            quality_logit=quality_logit,
+            quality_probability=quality_probability,
+            quality_decision="ABOVE_PROTOTYPE_THRESHOLD",
+            artifact_sha256=SOURCE_ARTIFACT_SHA256,
+            scaler_content_sha256=SCALER_CONTENT_SHA256,
+            representation=PRIMARY_REPRESENTATION,
+            prototype_version_id=PROTOTYPE_VERSION_ID,
+            mandatory_semantics=MANDATORY_SEMANTICS,
+            apnea_emitted=False,
+        )
+    except PrototypeFailClosed as exc:
+        return _unavailable_receipt(exc.code, SOURCE_ARTIFACT_SHA256, SCALER_CONTENT_SHA256)
+
+
+def valid_fixture_from_scaler(scaler: Mapping[str, Any], *, seed: int = 23) -> dict[str, Any]:
+    rng = np.random.default_rng(seed)
+    t = np.arange(TRACE_SAMPLES, dtype=np.float32) / np.float32(SAMPLE_RATE_HZ)
+    trace = np.sin(2.0 * np.pi * np.float32(0.25) * t).astype(np.float32)
+    return {
+        "trace": trace.tolist(),
+        "trace_mask": np.ones(TRACE_SAMPLES, dtype=np.float32).tolist(),
+        "scale": [float(x) for x in scaler["scale"]["mean"]],
+        "quality": [float(x) for x in scaler["quality"]["mean"]],
+        "window_valid": True,
+        "presence_available": True,
+        "sample_count": TRACE_SAMPLES,
+        "already_zscored": False,
+    }

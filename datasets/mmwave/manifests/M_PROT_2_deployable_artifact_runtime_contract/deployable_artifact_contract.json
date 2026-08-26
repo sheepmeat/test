@@ -1,0 +1,41 @@
+{
+  "schema_version": "M-PROT-2-DEPLOYABLE-ARTIFACT-CONTRACT-V1",
+  "prototype_version_id": "M_PROT_2_B23_PYTORCH_FLOAT32_V1",
+  "model_artifact_path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+  "model_artifact_sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+  "runtime_format": "PYTORCH_FLOAT32_STATE_DICT",
+  "input_shape": [
+    1,
+    621
+  ],
+  "input_dtype": "float32",
+  "window_duration_s": 30.0,
+  "sample_rate_hz": 10.0,
+  "preprocessing_identity": "M-PROT-2-B23-PREPROCESS-V1",
+  "feature_order_or_tensor_layout": "concat(trace[300], trace_mask[300], scale[12], quality[9])",
+  "output_mapping": {
+    "breathing": "sigmoid(logit); PRESENT if >= 0.5 else ABSENT; ABSENT is not apnea",
+    "rr": "rr_bpm = rr_raw * 8.948729232744911 + 17.12899193548387; <=0 or nonfinite -> UNAVAILABLE_INVALID_DECODE",
+    "quality": "sigmoid(logit); prototype cutoff 0.5 suppresses RR"
+  },
+  "prototype_threshold": {
+    "breathing": 0.5,
+    "quality": 0.5,
+    "class": "PROTOTYPE_THRESHOLD",
+    "retuned": false
+  },
+  "fail_closed_behavior": "PRESENCE -> QUALITY/AVAILABILITY -> PHYSIOLOGY; no fallback model",
+  "mandatory_semantics_tags": [
+    "PROTOTYPE_INTEGRATION_ONLY",
+    "NOT_FINAL_SELECTED_MODEL",
+    "NOT_DEPLOYMENT_VALIDATED",
+    "NOT_SAFETY_VALIDATED",
+    "NOT_CLINICAL_VALIDATION",
+    "SUBJECT_TO_REPLACEMENT"
+  ],
+  "device": "CPU",
+  "hardware_latency": "NOT_MEASURED",
+  "freeze_class": "REPRODUCIBILITY_FREEZE_NOT_FINAL_SCIENTIFIC_FREEZE",
+  "reference_module": "adapters/mmwave_m_prot_2_b23_runtime.py",
+  "reference_harness": "scripts/mmwave/run_m_prot_2_reference_harness.py"
+}

@@ -1,0 +1,36 @@
+{
+  "schema_version": "M-PROT-2-SOURCE-ARTIFACT-IDENTITY-V1",
+  "phase": "M-PROT-2",
+  "date": "2026-08-27",
+  "base_sha": "0def5c7cb22cc6a15866ac5737fc5865bb016974",
+  "source_of_truth": true,
+  "panel_id": "B23",
+  "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+  "family": "family_b",
+  "seed": 23,
+  "path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+  "sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+  "canonical_parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+  "bytes": 76473,
+  "parameter_count": 17915,
+  "construction_class": "TraceModel",
+  "construction_script": "scripts/mmwave_m_pv2_candidate_training.py",
+  "format": "PYTORCH_FLOAT32_STATE_DICT",
+  "copied_under_new_name": false,
+  "mandatory_semantics": [
+    "PROTOTYPE_INTEGRATION_ONLY",
+    "NOT_FINAL_SELECTED_MODEL",
+    "NOT_DEPLOYMENT_VALIDATED",
+    "NOT_SAFETY_VALIDATED",
+    "NOT_CLINICAL_VALIDATION",
+    "SUBJECT_TO_REPLACEMENT"
+  ],
+  "not": [
+    "WINNER",
+    "BEST_MODEL",
+    "FINAL_SELECTED",
+    "M-PV3.8_SELECTED",
+    "DEPLOYMENT_READY"
+  ],
+  "m_pv38_panel_changed": false
+}

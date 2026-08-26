@@ -1,0 +1,28 @@
+{
+  "schema_version": "M-PROT-2-RUNTIME-DEPENDENCY-MATRIX-V1",
+  "PRIMARY_PROTOTYPE_DEPLOYABLE_REPRESENTATION": "PYTORCH_FLOAT32_STATE_DICT",
+  "loader": "torch.load compact payload; TraceModel.load_state_dict(strict=True)",
+  "model_constructor": "scripts.mmwave_m_pv2_candidate_training.TraceModel(621, 'family_b')",
+  "device": "CPU",
+  "torch_version_trained": "2.8.0",
+  "numpy_version_trained": "1.26.4",
+  "inspection_python": "3.9.6",
+  "inspection_torch": "2.8.0",
+  "this_repository_requirements_txt": "tflite-runtime/tensorflow; torch not declared",
+  "this_repository_requirements_pi_txt": "ai-edge-litert>=2.1,<2.2; torch not declared",
+  "existing_mmwave_interpreter": "inference/mmwave_interpreter.py is V1 3-class TFLite with heuristic fallback; NOT used by M-PROT-2",
+  "pi_package_availability": "TARGET_RUNTIME_DEPENDENCY_NOT_LIVE_VERIFIED",
+  "pi_runtime_validated": false,
+  "hardware_latency": "NOT_MEASURED",
+  "integration_repository": {
+    "url": "https://github.com/yuname121/integration.git",
+    "commit": "c759205bfae0adbbd3a33235718801a8e476b28c",
+    "branch": "main",
+    "consulted_read_only": true,
+    "modified": false,
+    "mmwave_adapter": "ai/runtime.py LazyModel mmwave -> mmwave_m_n9_interpreter.MN9Interpreter",
+    "live_model": "M-N9 INT8 TFLite 3-class, ROLE_INCOMPATIBLE with B23",
+    "backend_requirements": "fastapi/uvicorn only; no torch"
+  },
+  "TARGET_RUNTIME_DEPENDENCY_NOT_LIVE_VERIFIED": true
+}

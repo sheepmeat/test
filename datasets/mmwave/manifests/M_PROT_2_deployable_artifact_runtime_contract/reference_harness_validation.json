@@ -1,0 +1,25 @@
+{
+  "schema_version": "M-PROT-2-REFERENCE-HARNESS-VALIDATION-V1",
+  "module": "adapters/mmwave_m_prot_2_b23_runtime.py",
+  "harness": "scripts/mmwave/run_m_prot_2_reference_harness.py",
+  "tests": "tests/test_mmwave_m_prot_2_deployable_contract.py",
+  "positive_fixture": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/positive_valid_621.json",
+  "positive_path_status": "PHYSIOLOGY_ELIGIBLE",
+  "fail_closed_fixtures_covered": [
+    "wrong model SHA",
+    "artifact missing",
+    "wrong scaler SHA",
+    "wrong assembled dimension",
+    "missing trace mask",
+    "wrong scale dimension",
+    "wrong quality dimension",
+    "NaN / Inf",
+    "incomplete input",
+    "negative decoded RR",
+    "presence unavailable",
+    "INPUT_UNAVAILABLE"
+  ],
+  "source_vs_deployed_parity": "NOT_APPLICABLE_SOURCE_IS_DEPLOYABLE",
+  "live_hardware_required": false,
+  "pytest": "18 passed"
+}

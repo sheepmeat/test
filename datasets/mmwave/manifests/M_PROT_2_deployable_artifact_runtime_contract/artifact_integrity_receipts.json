@@ -1,0 +1,18 @@
+{
+  "schema_version": "M-PROT-2-ARTIFACT-INTEGRITY-RECEIPTS-V1",
+  "source_artifact": {
+    "path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+    "sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+    "bytes": 76473,
+    "canonical_parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+    "strict_load": true,
+    "eval_data_used": false
+  },
+  "scaler": {
+    "path": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+    "content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+    "file_sha256": "9555c8c954078b80e26fbcd3bc5d5a70b9a2e04620946118709ec95418b2ac36"
+  },
+  "wrong_sha_fails_closed": true,
+  "no_silent_alternate_checkpoint": true
+}

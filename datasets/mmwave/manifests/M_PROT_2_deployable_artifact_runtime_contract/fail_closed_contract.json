@@ -1,0 +1,33 @@
+{
+  "schema_version": "M-PROT-2-B23-FAIL-CLOSED-V1",
+  "contract_version": "M-PROT-2-B23-FAIL-CLOSED-V1",
+  "precedence": [
+    "PRESENCE",
+    "QUALITY_OR_AVAILABILITY",
+    "PHYSIOLOGY"
+  ],
+  "rules": [
+    "invalid window/preprocess/SHA -> no physiology, no PRESENT/ABSENT/APNEA",
+    "presence unavailable -> no physiology",
+    "breathing ABSENT -> no RR; ABSENT is not apnea",
+    "quality < 0.5 or availability fail -> suppress RR",
+    "invalid RR decode -> RR unavailable",
+    "only PRESENT + valid quality + valid RR decode may emit RR"
+  ],
+  "must_fail_closed": [
+    "fewer than 300 samples",
+    "wrong assembled dimension",
+    "wrong dtype if not safely convertible",
+    "non-finite after preprocessing",
+    "invalid/missing scaler",
+    "wrong scaler checksum",
+    "wrong model checksum",
+    "missing trace mask",
+    "malformed scale vector",
+    "malformed quality vector",
+    "artifact missing"
+  ],
+  "no_fallback_model": true,
+  "no_synthetic_physiology_fill": true,
+  "implementation": "adapters/mmwave_m_prot_2_b23_runtime.py"
+}

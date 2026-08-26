@@ -1,0 +1,7 @@
+{
+  "base": "positive_valid_621.json",
+  "overrides": {
+    "sample_count": 12,
+    "window_valid": false
+  }
+}
