@@ -1,14 +1,14 @@
 # SafeNest Thermal B6-R robust-relative FP32 병렬 개발 로드맵
 
-문서 상태: **B6R-0~14 설계·승인용 로드맵 + 2026-08-26 public-data 보조 흐름 B6R-P2 실행 개정**
+문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P2 실행 + Desktop 실제 capture 파일럿 evidence 반영**
 
 대상 후보: `B6-R robust-relative FP32`
 
-기준 저장소 HEAD: `e74e54736d5cde1773d530b8398a630486270785`
+문서 기준 증거 commit: `bc072eb7bb997d9a07aedccefe2f30273bef5648`
 
 작성일: `2026-08-22`
 
-실행 개정일: `2026-08-26` (`B6R-P0`, `B6R-P1` 완료; `B6R-P2` 정의·실행)
+실행 개정일: `2026-08-26` (`B6R-P0~P2` 완료; `B6R-RC0` Desktop sessions read-only assessment 반영)
 
 > 이 문서는 코드, 모델, 데이터, 임계값 또는 runtime을 구현하거나 변경하지 않는다. 향후 실행은 사용자가 명시적으로 승인한 **한 stage 또는 한 parallel wave**만 수행하고, 검증·증거 요약 후 반드시 멈춘다.
 
@@ -37,6 +37,30 @@ public 보조: B6R-P0 dataset materialization/split lock
 - test는 materialization·무결성·provenance 확인에만 접근했고 모델 선택·튜닝·metric 계산에는 사용하지 않았다.
 
 앞으로 public-data 모델 작업은 반드시 `B6R-P0`의 dataset/preprocessing/label/split identity를 상속해야 한다. 기존 `thermal_prep.py`처럼 세 split을 병합하거나 `thermal_train.py`처럼 재무작위 분할해서는 안 되며, 기존 legacy model·manifest를 덮어쓰면 안 된다.
+
+### 2026-08-26 실행 개정 — 외부 `Desktop/sessions` 실제 센서 파일럿 evidence 반영
+
+외부 `Desktop/sessions/`에는 `Thermal-90` 센서의 실제 UDP capture 5세션이 있다. raw UDP chunks, 재조립 raw, `62×80` `uint16` native decode, `session.json`, `frames.jsonl`, `annotations.jsonl`, checksum과 validation JSON이 보존되어 있어 “실제 수집 파일이 전혀 없음”이라는 판단은 갱신한다. 그러나 이 자료는 B6R 본선용 권위 MI48 snapshot으로 승격되지 않았다.
+
+- 모든 세션의 `subject_id`는 `S000` 하나다.
+- labels는 operator-declared static `EMPTY`, `STANDING`, `SITTING`, `LYING` posture proxy이며 fall event/독립 ground truth가 아니다.
+- `S000_004`는 `129/130`, `S000_013`은 `174/175` frame이 구조 검증에 제한적으로 성공했다.
+- `S000_011`, `S000_012`, `S000_014`는 packet/counter gap으로 각각 `171/810`, `173/1882`, `173/787`만 유효하고 `CAPTURE_INVALID`다.
+- `raw_unit_claim`, unit verification, orientation은 미검증이고 FPS는 `CONFIGURED_ONLY`다.
+- 모든 validation JSON은 `model_use_eligibility=NOT_AUTHORIZED_BY_CAPTURE_VALIDATOR`, `locked_test_status=NOT_LOCKED_TEST`, `split_frozen_at=null`이다.
+
+이 결과를 문서상 비게이팅 `B6R-RC0 — Real-Capture Pilot Evidence Review`로 기록한다. `B6R-RC0`은 B6R-1/2를 대체하지 않으며, 이 폴더만으로 학습·final holdout·실제 낙상·MI48 physical 성능·Pi runtime을 주장할 수 없다. 현재 본선 상태는 `B6R-1=INCONCLUSIVE`, `B6R-2=BLOCKED`, `B6R-3~14=NOT_STARTED`를 유지한다.
+
+```text
+Desktop sessions evidence
+  → B6R-RC0 (non-gating, recorded)
+  → sensor identity/unit/quality 보완 및 다인 재수집 또는 권위 MI48 payload 확보
+  → B6R-1 MI48 inventory (새 evidence가 있을 때만)
+  → B6R-2 group split/holdout
+  → B6R-3 이후
+```
+
+현재 자료로 다음 에이전트가 바로 실행할 수 있는 것은 read-only capture-contract remediation/acquisition plan 작성뿐이다. B6R-2 이후 학습이나 holdout을 자동 실행하지 않는다. 자세한 수치와 판정은 `docs/reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md`를 기준으로 한다.
 
 ## A. Executive Roadmap
 
@@ -112,7 +136,17 @@ P1 TRAIN-global z-score
 | `B6R-13` Physical MI48 End-to-End Validation | physical sensor, Pi, B6-R, temporal, risk 경계를 실제로 검증 | raw capture부터 telemetry/risk까지 장시간 안정적이며 fault injection에 안전한가? | Thermal44 backend usable; `B6R-10`~`B6R-12` | `B6R-13_physical_e2e`, session manifests, latency/health logs, fault results | scenario accounting 완료; crash/memory/fail-closed gate 판정; hardware 미검증 없음 또는 제한 명시 |
 | `B6R-14` Competition Candidate Lock | 재현·rollback 가능한 최종 후보를 고정 | 모든 artifact와 증거가 하나의 release identity로 연결되는가? | `B6R-11`~`B6R-13` 승인 결과 | `B6R-14_candidate_lock`, release manifest, checksums, rollback bundle, limitations | 모든 필수 gate PASS 또는 승인된 제한; legacy rollback 보존; owner 승인 |
 
-### B.0 Public-data 전용 보조 Stage Map
+### B.0 Real-capture pilot evidence (non-gating)
+
+`B6R-RC0`은 외부 실제 capture 폴더의 구조·무결성·provenance·B6R gate 영향을 정리하는 evidence package다. 정식 B6R-0~14 stage 번호와 선행 조건을 바꾸지 않는다.
+
+| Package | 상태 | 목적 | 현재 결과 | 다음 진입 조건 |
+|---|---|---|---|---|
+| `B6R-RC0` Real-Capture Pilot Evidence Review | `INCONCLUSIVE / NON-GATING` | 실제 세션의 raw/native/annotation/quality와 B6R 적합성을 read-only로 판단 | 5 sessions, all `S000`, 약 820 validator-valid frame; 3 sessions invalid; Thermal-90 identity·unit·orientation·holdout 미충족 | owner가 Thermal-90/MI48 관계를 승인하고 보완된 다인 capture 또는 권위 MI48 payload를 제공할 때 B6R-1 재판정 |
+
+**금지:** `B6R-RC0` 결과로 B6R-2 split을 만들거나, model training/locked test/실제 낙상/physical MI48 성능을 주장하거나, raw를 저장소에 복사하지 않는다.
+
+### B.1 Public-data 전용 보조 Stage Map
 
 아래 stage는 본선 `B6R-0`~`B6R-14`의 번호, 선행 조건 또는 gate를 대체하지 않는다.
 
@@ -168,12 +202,12 @@ P1 TRAIN-global z-score
 
 #### `B6R-1` — MI48 Snapshot Inventory & Abnormal-Pixel Profiler
 
-- **Entry Conditions:** snapshot read-only 접근, 출력용 새 artifact 경로, standard Python/numpy 범위.
+- **Entry Conditions:** 권위 MI48 snapshot의 read-only 접근, 출력용 새 artifact 경로, standard Python/numpy 범위. 외부 `Desktop/sessions`만 존재하면 먼저 `B6R-RC0` evidence를 읽고, sensor identity가 승인되기 전에는 MI48 inventory로 승격하지 않는다.
 - **Tasks:** NPZ key·dtype·shape·readability·frame 수 조사, per-frame p2/p98/span, exact `0`/`65535`, non-finite 가능성, repeated-coordinate anomaly candidate, filename/session/label metadata 후보 조사.
 - **Artifacts:** inventory summary, file ledger, schema families, corrupt exception registry, coordinate-frequency profile, checksums.
 - **Validation:** 같은 입력에서 deterministic 재실행, readable+corrupt+excluded 전체 accounting, 원본 mtime/hash 불변 확인.
-- **Exit Criteria:** 실제 schema와 품질 분포를 설명할 수 있고 `USABLE`, `PARTIALLY_USABLE`, `UNUSABLE`, `INCONCLUSIVE` 중 하나로 판정 가능.
-- **STOP Condition:** snapshot 없음, 원본 변경 감지, schema를 guessing해야만 진행 가능, extreme value를 근거 없이 invalid로 분류하려는 경우.
+- **Exit Criteria:** 실제 schema와 품질 분포를 설명할 수 있고 `USABLE`, `PARTIALLY_USABLE`, `UNUSABLE`, `INCONCLUSIVE` 중 하나로 판정 가능. `Thermal-90` pilot 결과는 `PARTIALLY_USABLE` evidence일 수 있지만 MI48 gate PASS가 아니다.
+- **STOP Condition:** snapshot 없음, 원본 변경 감지, schema를 guessing해야만 진행 가능, sensor identity/unit/orientation 불명, extreme value를 근거 없이 invalid로 분류하려는 경우.
 
 #### `B6R-2` — Session / Label / Split / Holdout Contract
 
@@ -182,7 +216,7 @@ P1 TRAIN-global z-score
 - **Artifacts:** dataset contract, provenance table, split manifest, contamination report, holdout access policy.
 - **Validation:** 한 group은 한 role에만 존재, hash 중복·near-duplicate 교차 검사, 모든 sample role accounting.
 - **Exit Criteria:** subject-level 또는 정당화된 session-level split PASS; independent holdout 존재 또는 acquisition 필요 판정.
-- **STOP Condition:** random frame split, label source 불명, train/holdout contamination, holdout 표본 부족을 숨긴 진행.
+- **STOP Condition:** random frame split, label source 불명, train/holdout contamination, holdout 표본 부족을 숨긴 진행, 모든 sample이 한 subject(`S000`)이거나 `NOT_LOCKED_TEST`인 상태에서 일반화·최종 성능을 주장하는 경우.
 
 #### `B6R-3` — Robust-Relative Preprocessing Contract
 
@@ -591,9 +625,14 @@ crash, memory growth, fail-open
 | Stop trigger | 계속하면 안 되는 이유 | 재개에 필요한 증거 또는 수정 |
 |---|---|---|
 | required MI48 data unavailable | schema·품질·domain을 추측하게 됨 | snapshot mount/read 증거 또는 승인된 acquisition 결과 |
+| external capture가 `DEVICE_CONTRACT_PILOT`뿐임 | capture 구조가 보존되어도 B6R 학습·holdout 권한이 생기지 않음 | owner 승인, sensor identity mapping, clean multi-subject capture와 별도 eligibility 판정 |
+| 모든 capture subject가 하나(`S000`)임 | subject-level 일반화와 독립 holdout을 계산할 수 없음 | 추가 subject/session 수집 및 group split/holdout seal |
+| capture validator가 `NOT_AUTHORIZED_BY_CAPTURE_VALIDATOR`임 | 구조 검증 성공을 model-use 승인으로 오해할 수 있음 | validator가 요구한 quality/contract 보완 후 명시적 model-use 승인 |
+| packet/counter gap으로 `CAPTURE_INVALID`임 | 인접 frame·시간 순서·학습 표본 수가 왜곡됨 | 재수집 또는 원인 분석·제외 accounting·재검증 |
 | checkpoint hash mismatch | 다른 모델을 B5로 잘못 계승할 위험 | authoritative registry와 일치하는 SHA 또는 provenance 재승인 |
 | dataset schema unknown | 잘못된 key/shape/unit 해석으로 모든 후속 결과가 무효 | schema family inventory와 readable/corrupt accounting |
 | dtype/shape/unit/orientation 불명 | percentile과 모델 입력 의미가 달라짐 | device/capture contract 및 reference frame 검증 |
+| static posture proxy만 있고 event/independent label이 없음 | posture frame을 실제 낙상·일반화 성능으로 과장할 수 있음 | label provenance review, 안전한 ordered proxy protocol, 독립 검토 |
 | label provenance 불명 또는 label leakage | metric이 실제 일반화를 나타내지 않음 | 독립 label 근거, provenance audit, 새 split |
 | train/validation/holdout contamination | 선택 정보가 최종 평가에 유입됨 | group/hash/near-duplicate audit PASS, 필요하면 새 holdout |
 | final holdout 조기 접근 | temporal/threshold 튜닝이 final evidence를 오염 | access log 조사, 해당 holdout 개발용 강등, 새 독립 holdout |
@@ -618,9 +657,17 @@ crash, memory growth, fail-open
 
 ## G. Recommended Immediate Next Stage
 
-### 정확히 하나의 권고: `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`
+### 현재 결론: 정식 B6R stage는 조건부로만 `B6R-1`
 
-`B6R-1`이 첫 실행 stage로 맞다. checkpoint가 있더라도 실제 MI48 데이터의 key, dtype, shape, session, label, pixel distribution을 모르면 robust-relative preprocessing과 split을 과학적으로 설계할 수 없다. 반대로 checkpoint가 없어도 inventory는 수행할 수 있으며 fresh initialization 경로의 기반이 된다. 따라서 현재 가장 큰 공통 blocker를 가장 먼저 제거한다.
+`Desktop/sessions`의 `B6R-RC0` assessment는 이미 완료된 비게이팅 evidence다. 이 자료만으로 `B6R-2` 또는 training을 시작할 수 없다. 따라서 다음 에이전트는 아래 결정 규칙을 따른다.
+
+| 입력 상태 | 허용되는 다음 작업 | 금지되는 작업 |
+|---|---|---|
+| 권위 MI48 snapshot이 read-only로 확보됨 | `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler` 새 revision | 바로 B6R-2, preprocessing, training |
+| `Desktop/sessions`만 있고 Thermal-90/MI48 관계·unit·orientation·quality가 미해결 | capture-contract remediation/acquisition plan 작성 또는 사용자에게 보완 수집 승인 요청 | B6R-2 split, model training, final/locked holdout, safety/physical claim |
+| 보완된 다인 capture와 owner 승인·eligibility가 확보됨 | B6R-1 inventory 재판정 후 조건 충족 시 B6R-2 | 한 subject frame random split, 조기 holdout 개방 |
+
+즉, **권위 MI48 payload가 있으면 정확히 하나의 권고는 `B6R-1`**이고, 현재 Desktop 폴더만으로는 training이 아니라 acquisition/contract 보완이 다음 행동이다. B6R-0은 기술적으로 병렬 가능하지만, 사용자가 별도로 `Wave F`를 승인할 때만 허용한다.
 
 이 stage가 반드시 밝혀야 하는 항목은 다음과 같다.
 
@@ -647,8 +694,6 @@ crash, memory growth, fail-open
 필수 출력은 `datasets/thermal/manifests/B6R-1_mi48_inventory/`와 같은 새 identity 아래의 inventory summary, file/frame ledger, schema report, anomaly-candidate profile, exception registry, checksum registry, standalone validation result이다. 원시 snapshot은 변환하거나 Git에 추가하지 않는다.
 
 `B6R-2`로 진입하려면 전체 snapshot이 readable/corrupt/unsupported로 계수되고, schema family·frame geometry·metadata availability를 설명할 수 있으며, 원본이 변경되지 않았다는 검증이 통과해야 한다. 데이터가 없거나 holdout 구성이 불가능한 경우 다음 단계는 training이 아니라 asset recovery 또는 acquisition 계획이다.
-
-`B6R-0`은 기술적으로 병렬 가능하지만, 이 문서의 **즉시 실행 권고는 B6R-1 하나뿐**이다. 병렬 실행은 사용자가 별도로 `Wave F`를 승인할 때만 허용한다.
 
 ## H. Scope Boundary
 
@@ -692,6 +737,6 @@ crash, memory growth, fail-open
 
 우선순위는 data reliability → split integrity → preprocessing clarity → real MI48 domain performance → reproducibility → FP32 runtime stability → temporal stabilization → sensor-fusion safety → optimization 순서다.
 
-**권고 다음 작업: `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`**
+**권고 다음 작업:** 권위 MI48 payload가 확보된 경우에만 `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`; 현재 `Desktop/sessions`만으로는 capture-contract remediation/acquisition plan.
 
 **사용자가 별도의 실행 지시를 제공하기 전에는 저장소를 더 변경하거나 B6R-1을 구현하지 않는다.**

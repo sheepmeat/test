@@ -36,6 +36,12 @@
 | B6R-13 | `NOT_STARTED` | - | - | - | - |
 | B6R-14 | `NOT_STARTED` | - | - | - | - |
 
+## External Real-Capture Pilot Evidence (Non-Gating)
+
+| Package | Status | Report | Source | Notes |
+|---|---|---|---|---|
+| `B6R-RC0` Desktop `sessions` pilot evidence review | `INCONCLUSIVE / NON-GATING` | `docs/reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md` | external `Desktop/sessions/` (not copied into Git) | 5 Thermal-90 sessions, all subject `S000`; raw/native/checksum evidence exists, but 3 sessions are `CAPTURE_INVALID`, unit/orientation are unverified, no locked holdout, and validator model-use eligibility is not authorized. This package does not open B6R-1/2 or training. |
+
 ## Public-data Auxiliary Stage Status
 
 이 보조 흐름은 사용자의 2026-08-26 model-first 승인으로 추가되었으며, 기존 B6R-0~14의 판정과 선행 gate를 변경하지 않는다.
@@ -64,15 +70,18 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 - B6R-0: TensorFlow/LiteRT runtime과 Raspberry Pi 하드웨어 증거가 없어 load, parity, latency, memory, stability를 검증할 수 없다.
 - B6R-1: authoritative MI48 raw snapshot이 접근 가능한 경로에 없고 외부 `SafeNestssd`가 mount되지 않았다.
 - B6R-1: 후보 archive의 MI48 identity가 해소되지 않았으며 식별된 eligible MI48 frame은 0이다.
+- B6R-1: 외부 `Desktop/sessions` 실제 capture 파일럿은 존재하지만 metadata sensor model이 `Thermal-90`이고 권위 MI48 identity mapping이 없다. `B6R-RC0`는 non-gating assessment로만 기록했다.
+- B6R-1: sessions 5개 모두 subject `S000`; `S000_011`, `S000_012`, `S000_014`는 packet/counter gap으로 `CAPTURE_INVALID`, unit/orientation/FPS도 완전히 검증되지 않았다.
 - B6R-1: 현재 checkout에서 standalone validator가 generated evidence 10개의 checksum mismatch로 실패한다. CRLF→LF 정규화 시 10/10 registry와 일치하여 cross-platform line-ending 원인으로 진단됐다.
-- B6R-2: session/label/split/holdout 계약을 만들 data gate가 충족되지 않았고 independent holdout이 없다.
+- B6R-2: session/label/split/holdout 계약을 만들 data gate가 충족되지 않았고 independent holdout이 없다. Desktop sessions도 `NOT_LOCKED_TEST`, `split_frozen_at=null`, `model_use_eligibility=NOT_AUTHORIZED_BY_CAPTURE_VALIDATOR`다.
 - B6R-P0의 성공은 public-data 경로만 개방하며 위 MI48 blocker를 해소하지 않는다.
 
 ## Next Authorized Stage
 
-`DUAL_PATH_WAITING_FOR_USER_INSTRUCTION`
+`DATA_EVIDENCE_TRIAGE_WAITING_FOR_USER_INSTRUCTION`
 
 - MI48 본선: B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 provenance를 복구하고 B6R-1을 새 revision으로 재검증한 뒤 B6R-2를 다시 실행해야 한다.
+- External capture: `B6R-RC0` read-only assessment는 완료되었지만 비게이팅이다. 현재 `Desktop/sessions`만으로는 학습·holdout을 시작하지 않는다. 다음 행동은 Thermal-90/MI48 identity 승인, unit/orientation/quality 보완, 다인 재수집을 위한 acquisition/contract plan이며 새 사용자 승인이 필요하다.
 - Public 보조: `B6R-P2`는 2026-08-26 사용자 승인으로 완료됐다. P0/P1의 split 역할, preprocessing, label mapping, architecture, trained parameter를 그대로 상속했다.
 - B6R-P2 결과도 legacy 기본 모델·manifest를 덮어쓰거나 safety authority를 부여하지 않는다. locked public test read count는 `0`이다.
 - 다음 public 작업 후보는 Raspberry Pi FP32 replay/shadow benchmark 성격이지만 아직 stage로 정의·승인·실행하지 않았다.
@@ -85,6 +94,8 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 4. 실행하려는 stage의 직접 선행 stage 보고서
 5. 직접 선행 stage의 manifest와 artifact
 6. roadmap이 요구하는 stage-specific source, test, runtime 파일
+
+실제 센서 파일럿을 검토하는 agent는 위 순서에 더해 `docs/reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md`를 읽고, 외부 `Desktop/sessions/`를 raw/native/checksum/validation evidence로만 취급한다.
 
 Public 보조 흐름을 수행하는 agent는 위 순서에 더해 `B6R-P0` 보고서, contract, validation result를 읽고 `PUBLIC_SDT_ONLY_NOT_MI48` 경계를 상속한다.
 
@@ -99,3 +110,4 @@ Public 보조 흐름을 수행하는 agent는 위 순서에 더해 `B6R-P0` 보�
 7. `B6R-P*`는 기존 B6R-0~14와 별도 identity를 사용한다. public dataset/model을 MI48로 재명명하지 않고 legacy model/default manifest를 수정하지 않는다.
 8. `B6R-P1` 이후 학습은 TRAIN만 fit하고 DEVELOPMENT만 선택에 사용하며 `LOCKED_PUBLIC_TEST`는 명시적으로 승인된 최종 public 평가 전까지 metric·선택·튜닝 경로에서 열지 않는다.
 9. `B6R-P2` artifact는 shadow-only deployment-format 후보다. Raspberry Pi·MI48·physical·latency·runtime integration 또는 safety 검증으로 승격하지 않는다.
+10. `B6R-RC0` Desktop sessions evidence는 non-gating capture pilot이다. `Thermal-90`을 MI48로 재명명하지 않고, 단일 subject·invalid capture·미검증 unit/orientation·정적 posture proxy를 final training/holdout/낙상 성능 근거로 사용하지 않는다.
