@@ -1,0 +1,49 @@
+{
+  "schema_version": "M-PROT-0-READINESS-MATRIX-V1",
+  "rows": [
+    {
+      "work": "model_nomination",
+      "prototype_lane": "READY",
+      "final_validation_lane": "BLOCKED"
+    },
+    {
+      "work": "model_packaging",
+      "prototype_lane": "READY_AFTER_NOMINATION",
+      "final_validation_lane": "N/A"
+    },
+    {
+      "work": "integration_wiring",
+      "prototype_lane": "READY_AFTER_ARTIFACT",
+      "final_validation_lane": "N/A"
+    },
+    {
+      "work": "offline_smoke",
+      "prototype_lane": "READY_AFTER_WIRING",
+      "final_validation_lane": "N/A"
+    },
+    {
+      "work": "live_debugging",
+      "prototype_lane": "HARDWARE_DEPENDENT",
+      "final_validation_lane": "NOT_FINAL_EVAL"
+    },
+    {
+      "work": "D1_ABSENT_capture",
+      "prototype_lane": "OPTIONAL_PARALLEL",
+      "final_validation_lane": "REQUIRED"
+    },
+    {
+      "work": "final_candidate_selection",
+      "prototype_lane": "FORBIDDEN",
+      "final_validation_lane": "BLOCKED"
+    },
+    {
+      "work": "M_PV4",
+      "prototype_lane": "FORBIDDEN",
+      "final_validation_lane": "UNAUTHORIZED"
+    }
+  ],
+  "corrected_state": {
+    "FINAL_SELECTION_MODEL_WORK": "BLOCKED",
+    "PROTOTYPE_INTEGRATION_MODEL_WORK": "READY"
+  }
+}

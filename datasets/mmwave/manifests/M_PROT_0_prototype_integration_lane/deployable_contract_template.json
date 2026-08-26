@@ -1,0 +1,29 @@
+{
+  "schema_version": "M-PROT-0-DEPLOYABLE-CONTRACT-TEMPLATE-V1",
+  "applies_at": "M-PROT-2",
+  "freeze_class": "REPRODUCIBILITY_FREEZE_NOT_FINAL_SCIENTIFIC_FREEZE",
+  "required_fields": [
+    "prototype_version_id",
+    "model_artifact_path",
+    "model_artifact_sha256",
+    "runtime_format",
+    "input_shape",
+    "input_dtype",
+    "window_duration_s",
+    "sample_rate_hz",
+    "preprocessing_identity",
+    "feature_order_or_tensor_layout",
+    "output_mapping",
+    "prototype_threshold",
+    "fail_closed_behavior",
+    "mandatory_semantics_tags"
+  ],
+  "runtime_format_default_expectation": "PyTorch float32 state_dict first; TFLite only if separately evidenced and frozen",
+  "threshold_policy": {
+    "may_freeze_from_non_final_dev_val_evidence": true,
+    "requires_d1_final": false,
+    "live_retune_on_same_debug_samples_as_validation": "FORBIDDEN",
+    "live_driven_change": "REQUIRES_NEW_PROTOTYPE_VERSION"
+  },
+  "replacement": "SUBJECT_TO_REPLACEMENT under new M-PROT version"
+}
