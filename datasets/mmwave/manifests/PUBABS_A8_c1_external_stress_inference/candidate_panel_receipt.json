@@ -1,0 +1,48 @@
+{
+  "panel_order": [
+    "B11",
+    "B23",
+    "B47",
+    "C11",
+    "C23",
+    "C47"
+  ],
+  "artifacts": [
+    {
+      "panel_id": "B11",
+      "path": "models/mmwave/m_pv2/family_b/candidate_seed_11.pt",
+      "sha256": "5633a7eefa83544cd33a251b0016b40f37e28039f985b31c98bdcfa37aa8b1a6",
+      "verified": true
+    },
+    {
+      "panel_id": "B23",
+      "path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+      "sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+      "verified": true
+    },
+    {
+      "panel_id": "B47",
+      "path": "models/mmwave/m_pv2/family_b/candidate_seed_47.pt",
+      "sha256": "ed3da35adb0837426065cc575b7e4ff6f41ef9a8fb295bb29f7eb8bcff4db280",
+      "verified": true
+    },
+    {
+      "panel_id": "C11",
+      "path": "models/mmwave/m_pv2/family_c/candidate_seed_11.pt",
+      "sha256": "539bd6021d10a9abd35a22b49c0db728a122b60356f59609fead9280d82f7768",
+      "verified": true
+    },
+    {
+      "panel_id": "C23",
+      "path": "models/mmwave/m_pv2/family_c/candidate_seed_23.pt",
+      "sha256": "ce99a6534928138bc5e2d271123185f93aceb6386b8a24b0ecb3679c7d6d70de",
+      "verified": true
+    },
+    {
+      "panel_id": "C47",
+      "path": "models/mmwave/m_pv2/family_c/candidate_seed_47.pt",
+      "sha256": "2f1b446c808cfb90d02dc6cce754311ade19cf2e3bb03b20814a1268934cb5a1",
+      "verified": true
+    }
+  ]
+}

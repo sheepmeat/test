@@ -1,0 +1,8 @@
+{
+  "python": "3.9.6",
+  "pytorch": "2.8.0",
+  "numpy": "1.26.4",
+  "device": "cpu",
+  "deterministic_algorithms": true,
+  "threads": 1
+}

@@ -1,0 +1,17 @@
+{
+  "TOTAL": 77,
+  "ABSENT": 11,
+  "PRESENT": 66,
+  "VALID": 34,
+  "FAIL_CLOSED": 43,
+  "GAP_FAIL": 42,
+  "TOO_SHORT": 1,
+  "by_class_status": {
+    "ABSENT|VALID": 9,
+    "ABSENT|FAIL_CLOSED": 2,
+    "PRESENT|FAIL_CLOSED": 41,
+    "PRESENT|VALID": 25
+  },
+  "semantics": "AVAILABILITY_INGRESS_SAFETY_ONLY",
+  "model_predictions_on_fail_closed": "NOT_FABRICATED"
+}
