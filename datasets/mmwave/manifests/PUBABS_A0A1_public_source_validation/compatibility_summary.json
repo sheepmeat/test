@@ -1,0 +1,58 @@
+{
+  "schema_version": "PUBABS-A0A1-COMPATIBILITY-SUMMARY-V1",
+  "phase": "PUBABS-A0A1",
+  "date": "2026-08-26",
+  "overall_verdict": "PASS_STRONG_PUBLIC_SOURCE_FOUND",
+  "per_source": [
+    {
+      "candidate_id": "C1",
+      "gate": "A_STRONG_SAME_DATASET_BOTH_CLASS",
+      "license": "LICENSE_OK_FOR_RESEARCH",
+      "same_dataset_both_class": "YES",
+      "no_human_semantics": "VERIFIED",
+      "valid_radar_observation": "VERIFIED",
+      "domain_conflict": "MEDIUM",
+      "sessions_ge_30s": true,
+      "native_hz_approx": 18.85,
+      "downsample_to_10Hz": "YES_STRUCTURAL",
+      "sensor_independent_trace": "UNVERIFIED",
+      "repo_leakage": "UNSEEN",
+      "recommended_next": "PUBABS-A2 then PUBABS-A3 (not authorized by this package)"
+    },
+    {
+      "candidate_id": "C2",
+      "gate": "B_USABLE_WITH_LIMITATIONS",
+      "license": "LICENSE_NONCOMMERCIAL_SHAREALIKE",
+      "same_dataset_both_class": "YES",
+      "no_human_semantics": "VERIFIED",
+      "valid_radar_observation": "VERIFIED",
+      "domain_conflict": "MEDIUM",
+      "metadata_hz": 17,
+      "opened_shape": "8818x109",
+      "sensor_independent_trace": "UNVERIFIED",
+      "repo_leakage": "UNSEEN",
+      "recommended_next": "Optional parallel PUBABS-A2 (not authorized)"
+    },
+    {
+      "candidate_id": "C3",
+      "gate": "C_RESEARCH_ONLY",
+      "license": "LICENSE_NONCOMMERCIAL_SHAREALIKE",
+      "same_dataset_both_class": "YES",
+      "no_human_semantics": "VERIFIED_BY_ARCHIVE_NAME_AND_METADATA",
+      "domain_conflict": "HIGH",
+      "structure": "FULL_PAYLOAD_REQUIRED",
+      "repo_leakage": "UNSEEN",
+      "recommended_next": "Hold; research-only; no A2 authorization"
+    },
+    {
+      "candidate_id": "C4",
+      "gate": "D_REJECT",
+      "license": "LICENSE_OK_FOR_RESEARCH",
+      "same_dataset_both_class": "UNVERIFIED",
+      "no_human_semantics": "UNVERIFIED",
+      "membership_source": "REJECT",
+      "repo_leakage": "UNSEEN",
+      "recommended_next": "Do not pursue as ABSENT membership source"
+    }
+  ]
+}

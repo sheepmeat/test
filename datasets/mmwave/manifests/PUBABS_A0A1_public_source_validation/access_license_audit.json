@@ -1,0 +1,47 @@
+{
+  "schema_version": "PUBABS-A0A1-ACCESS-LICENSE-V1",
+  "phase": "PUBABS-A0A1",
+  "date": "2026-08-26",
+  "sources": [
+    {
+      "candidate_id": "C1",
+      "doi": "10.5281/zenodo.15032859",
+      "access_right": "open",
+      "license_id": "cc-by-4.0",
+      "license_assessment": "LICENSE_OK_FOR_RESEARCH",
+      "commercial_friendly": true,
+      "sharealike": false,
+      "notes": "CC-BY-4.0; attribution required; research-compatible."
+    },
+    {
+      "candidate_id": "C2",
+      "doi": "10.5281/zenodo.7679165",
+      "access_right": "open",
+      "license_id": "cc-by-nc-sa-4.0",
+      "license_assessment": "LICENSE_NONCOMMERCIAL_SHAREALIKE",
+      "commercial_friendly": false,
+      "sharealike": true,
+      "notes": "NC + SA constraints; usable for research with redistribution/share-alike limitations."
+    },
+    {
+      "candidate_id": "C3",
+      "doi": "10.5281/zenodo.10815247",
+      "access_right": "open",
+      "license_id": "cc-by-nc-sa-4.0",
+      "license_assessment": "LICENSE_NONCOMMERCIAL_SHAREALIKE",
+      "commercial_friendly": false,
+      "sharealike": true,
+      "notes": "NC-SA; research-only track even if technically useful."
+    },
+    {
+      "candidate_id": "C4",
+      "doi": "10.5281/zenodo.3824534",
+      "access_right": "open",
+      "license_id": "cc-by-4.0",
+      "license_assessment": "LICENSE_OK_FOR_RESEARCH",
+      "commercial_friendly": true,
+      "sharealike": false,
+      "notes": "License OK, but ABSENT membership semantics REJECT for other reasons."
+    }
+  ]
+}

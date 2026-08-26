@@ -1,0 +1,15 @@
+{
+  "schema_version": "PUBABS-A0A1-CHECKSUMS-V1",
+  "algorithm": "sha256",
+  "files": {
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A0A1_Public_Source_Validation_01.md": "acb2253b78717769f873e4e956a65d5ac893cd36c65c7e7d91058ab80dcf8a69",
+    "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/source_registry.json": "5845325a0fc09b7e883deb1ea5ea3f2d9fdf3c195996e830c0322526ed08fb30",
+    "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/access_license_audit.json": "787b49e63f5b9488188b9b68949063558503ed2e004384bcf1fc8d48016d53a2",
+    "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/payload_structure_audit.json": "f92cbf18e755269da908cac75f2202b153d3bb8be181f3a9df035ff00ba4f54c",
+    "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/absent_semantics_audit.json": "c53893ad8238c0763299662f3e69adea674a081c36616c8060f3430ec0a23aa1",
+    "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/same_dataset_both_class_audit.json": "0136df1acdc92342a67439cea617e90cf0d537b28fa5d55eb4c60bfebc182905",
+    "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/domain_conflict_audit.json": "553c675f9203d8bf3bfd24787510c7da8068d1f0a68fc12570dbf1093ef76094",
+    "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/compatibility_summary.json": "209f2f03f8afd1b56c7e73fe830243eae0cb78c71b5efea37d690d104858fac6",
+    "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/validation_result.json": "32c60e276e21eca239449d5c36a43bca81972d5120e2a420a7aa6a94cf3def04"
+  }
+}
