@@ -1,0 +1,13 @@
+{
+  "phase": "PUBABS-A3C",
+  "date": "2026-08-26",
+  "a3c_verdict": "A3C_FREEZE_READY_WITH_LIMITATIONS",
+  "recommended_timestamp_rule": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+  "recommended_range_rule": "C1_ROI_EXCLUDE_NEARFIELD28_DYNENERGY_UNWRAP_V1",
+  "modify_frozen_r1": false,
+  "pubabs_a3r_status": "NOT_READY_PENDING_SOL_FREEZE",
+  "pubabs_a4_status": "NOT_READY",
+  "pr160_merged": false,
+  "model_inference": "NOT_EXECUTED",
+  "labels_used": false
+}

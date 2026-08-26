@@ -1,0 +1,107 @@
+{
+  "contract_id": "PUBABS_C1_R1T_ADAPTER_PROPOSAL_V1",
+  "proposal_status": "PROPOSAL_ONLY_NOT_AUTHORITATIVE",
+  "a3c_verdict": "A3C_FREEZE_READY_WITH_LIMITATIONS",
+  "created_utc": "2026-08-26T13:13:10Z",
+  "prerequisites": {
+    "pubabs_a3_pr160": "OPEN_NOT_MERGED",
+    "reviewed_a3_head": "e1ffdd63608fd5732d46d890b3e1dcba1b04c8c5",
+    "origin_main_at_proposal": "eae5948f3359079dc4dc0135e6ffd11793e88910",
+    "note": "Treat A3 evidence as reviewed-on-branch until #160 merges; do not treat proposal as frozen until Sol authorizes."
+  },
+  "authority_boundary": {
+    "modify_frozen_r1": false,
+    "new_ingress_contract_id": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+    "r1_historical_behavior": "UNCHANGED",
+    "r1t_output_feeds": "existing R1 median-centering path only when already_at_10Hz regular grid"
+  },
+  "source_identity": {
+    "candidate_id": "C1",
+    "doi": "10.5281/zenodo.15032859",
+    "file": "Data.zip",
+    "input_schema": "timestamp_ns + quoted python-complex list length 180"
+  },
+  "recommended_timestamp_rule": {
+    "id": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+    "selected_option": "T4_plus_T2_elements",
+    "target_rate_hz": 10.0,
+    "grid_origin": "t0 = first valid sample timestamp after validation; t[k]=t0 + k/10",
+    "pipeline": [
+      "validate timestamps: finite, strictly increasing after duplicate policy",
+      "duplicate timestamps: KEEP_FIRST then require strict increase",
+      "compute median_dt; require source_median_hz = 1/median_dt >= 12.0 (Nyquist headroom vs 5 Hz)",
+      "fail if any consecutive gap > max(0.25 s, 2.5*median_dt)",
+      "linear interpolate onto fixed intermediate regular grid at 20.0 Hz over [t0, t_last]",
+      "zero-phase Butterworth order=4, cutoff_hz=4.0 (filtfilt) on intermediate series",
+      "decimate 2:1 -> exactly 10.0 Hz",
+      "emit NativeTraceInput sampling_rate_hz=10.0 with exact grid for frozen R1 median centering"
+    ],
+    "anti_alias_rule": {
+      "family": "Butterworth",
+      "order": 4,
+      "cutoff_hz": 4.0,
+      "implementation": "scipy.signal.butter + filtfilt",
+      "parameter_justification_without_c1_labels": [
+        "ROLE_L/R2 respiratory band upper bound 0.7 Hz << 4 Hz",
+        "target 10 Hz Nyquist = 5 Hz; cutoff 4 Hz provides fixed anti-alias margin",
+        "intermediate 20 Hz is fixed integer multiple of 10 and >= documented C1 ~19 fps"
+      ]
+    },
+    "interpolation_method": "numpy.interp linear between bracketing measured samples",
+    "edge_behavior": "no extrapolation beyond [t0,t_last]; output length = floor((t_last-t0)*10)+1 truncated to samples fully covered",
+    "fail_closed_codes": [
+      "SOURCE_INVALID_TIMESTAMP_NONFINITE",
+      "SOURCE_INVALID_TIMESTAMP_NOT_INCREASING",
+      "SOURCE_INVALID_MEDIAN_RATE_TOO_LOW",
+      "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP",
+      "INPUT_UNAVAILABLE_TOO_SHORT_FOR_30S"
+    ]
+  },
+  "recommended_range_rule": {
+    "id": "C1_ROI_EXCLUDE_NEARFIELD28_DYNENERGY_UNWRAP_V1",
+    "selected_option": "RGE2_with_documented_nearfield_cut",
+    "range_resolution_m": 0.0512,
+    "n_bins": 180,
+    "range_roi_bins_inclusive": [
+      28,
+      179
+    ],
+    "range_roi_justification": [
+      "SciData documents excluding first 28 range columns to remove near-field reflections and direct-path artifacts",
+      "28 * 0.0512 m \u2248 1.4336 m aligns with published d_offset=1.44 m near-field accounting",
+      "Same cut applies to Presence and Absence (authors state absence follows same setup)",
+      "Does NOT use PRESENT/ABSENT labels or model scores"
+    ],
+    "static_suppression": "subtract per-bin complex temporal mean over the full recording (or full window source series)",
+    "bin_reducer_rule": "argmax of mean(|dyn|^2) over time within ROI; tie-break lowest bin index",
+    "complex_to_phase_rule": "numpy.angle radians on selected bin",
+    "phase_unwrap_rule": "numpy.unwrap default",
+    "centering": "deferred to frozen R1 full-recording median subtract after R1T yields 10 Hz",
+    "same_rule_both_classes": true,
+    "forbidden_inputs": [
+      "class_label",
+      "model_output",
+      "PRESENT_only_target_distance_switch"
+    ]
+  },
+  "window_rule": {
+    "after_r1_median_center": "fixed first 300 samples at 10 Hz (30.0 s); no re-center after slice",
+    "membership": "NOT_CREATED_BY_THIS_CONTRACT"
+  },
+  "downstream_frozen_preprocessing": {
+    "train_global_zscore": "APPLY_FROZEN_CONSTANTS_ONLY_NO_REFIT",
+    "compatibility_class": "SCALE_RISK_REMAINS"
+  },
+  "forbidden_fitting": [
+    "fit cutoff/ROI/bin rule on C1 labels",
+    "fit TRAIN z-score on C1",
+    "choose parameters by candidate metrics"
+  ],
+  "forbidden_label_use": true,
+  "limitations": [
+    "Through-wall electrical range \u2260 free-space meters; ROI is near-field exclusion not calibrated permittivity mapping",
+    "Robot angular positions change path length; single-bin argmax may move across -5..+5 without being class-driven",
+    "Cross-sensor domain risk vs MR60/D0 remains HIGH",
+    "TRAIN z-score amplitude semantics may mismatch UWB phase scale"
+  ]
+}

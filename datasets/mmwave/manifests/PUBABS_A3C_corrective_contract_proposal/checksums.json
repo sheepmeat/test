@@ -1,0 +1,10 @@
+{
+  "schema_version": "PUBABS-A3C-CHECKSUMS-V1",
+  "status": "PROPOSAL",
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/proposed_adapter_contract.json": "593fa824e7df637ac075cf666a396555b178871231f1c9f2111562e93deae426",
+    "datasets/mmwave/manifests/PUBABS_A3C_corrective_contract_proposal/decision_summary.json": "6c08857bc8634e39fcc1acbc5fccf4bd5078ae78aa7f0d8dd5ac05cad05631a9",
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A3C_C1_Corrective_Contract_Proposal_01.md": "d8a2a3ad6357586b78a1cc350bd0392ebc7de77dccd2a14a7908b7fc2961a326"
+  }
+}
