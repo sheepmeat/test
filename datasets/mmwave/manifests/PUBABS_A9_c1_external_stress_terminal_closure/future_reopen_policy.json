@@ -1,0 +1,20 @@
+{
+  "schema_version": "PUBABS-A9-FUTURE-REOPEN-POLICY-V1",
+  "closure_id": "PUBABS_C1_EXTERNAL_STRESS_TERMINAL_CLOSURE_V1",
+  "default": "CLOSED",
+  "automatic_a10": "FORBIDDEN",
+  "justified_reopen_conditions": [
+    "Material new source metadata changes C1 semantics or empty-scene definition.",
+    "Integrity/hash defect discovered in A6 population, A7 inference contract, or A8 deterministic outputs.",
+    "Confirmed implementation bug changes frozen A8 inference outputs relative to the accepted contract.",
+    "A separately Sol-approved research question explicitly requires C1 reuse under a new governed identity."
+  ],
+  "not_justified": [
+    "Desire for more post-hoc metrics",
+    "One candidate looked interesting on C1",
+    "Threshold tuning on C1",
+    "Seed/family selection from C1",
+    "Searching for better VALID subsets after seeing outputs",
+    "Attempting to reopen M-PV3.8 or authorize M-PV4 from C1"
+  ]
+}

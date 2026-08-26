@@ -1,0 +1,137 @@
+{
+  "schema_version": "PUBABS-A9-TERMINAL-CLOSURE-V1",
+  "closure_id": "PUBABS_C1_EXTERNAL_STRESS_TERMINAL_CLOSURE_V1",
+  "phase": "PUBABS-A9",
+  "date": "2026-08-27",
+  "base_sha": "cc84f10edfb49b0dc22effbfca7b80f84335cdc1",
+  "pr167_merge_commit": "cc84f10edfb49b0dc22effbfca7b80f84335cdc1",
+  "pr167_reviewed_head": "c5ac1aa20a71218f129e2b505912a6f9f68ad017",
+  "source_id": "C1_VictimDetection_RobotMounted_UWB",
+  "source_doi": "10.5281/zenodo.15032859",
+  "source_title": "Victim Detection Using a Robot-Mounted UWB-Radar Platform",
+  "lineage": [
+    "PUBABS-A0A1",
+    "PUBABS-A2",
+    "PUBABS-A3",
+    "PUBABS-A3C",
+    "PUBABS-A3R",
+    "PUBABS-A4",
+    "PUBABS-A5",
+    "PUBABS-A6",
+    "PUBABS-A7",
+    "PUBABS-A8",
+    "PUBABS-A9"
+  ],
+  "a6_contract_id": "PUBABS_C1_EXTERNAL_STRESS_V1",
+  "a6_contract_sha256": "d0353c9bf7837a2520364903b53075bde44cddf10b88c3fef58aa4054bbb3310",
+  "frozen_adapter_sha256": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+  "layer1_identity": "PUBABS_C1_EXTERNAL_STRESS_V1__L1_AVAILABILITY_ALL77",
+  "layer1_manifest_sha256": "cefc7a3820ebb644a9553b3eaad9f4ec600ea555bc25ed891f236cc50c6632f5",
+  "layer1_population": {
+    "total": 77,
+    "absent": 11,
+    "present": 66,
+    "valid": 34,
+    "fail_closed": 43
+  },
+  "layer2_identity": "PUBABS_C1_EXTERNAL_STRESS_V1__L2_CONDITIONAL_VALID34",
+  "layer2_manifest_sha256": "01a1db3ef56e1071896f054a5baad397035ca6d989f42f2d1129d250b6867c7c",
+  "layer2_population": {
+    "total": 34,
+    "absent": 9,
+    "present": 25,
+    "semantics": "CONDITIONAL_ON_ADAPTER_VALID",
+    "subjects_present_valid": {
+      "N1": 1,
+      "N2": 1,
+      "N3": 9,
+      "N4": 8,
+      "N5": 6,
+      "N6": 0
+    }
+  },
+  "a7_inference_contract_id": "PUBABS_C1_EXTERNAL_STRESS_INFERENCE_V1",
+  "a8_execution_status": "EXECUTION_COMPLETE",
+  "a8_abort_status": "NONE",
+  "a8_output_manifest_sha256": "13e4d85591300dda5619630608e49477cd989e05095925ac9d68706147aa626c",
+  "a8_metric_manifest_sha256": "313af13d90a03bfe622e9ffc0114dcff61943ca57d69d24e516b200222c5b107",
+  "a8_outputs_created": "204/204",
+  "a8_non_finite": 0,
+  "a8_primary_results_fixed_order": [
+    {
+      "candidate": "B11",
+      "absent_emission": "0/9",
+      "present_recall": "0/25"
+    },
+    {
+      "candidate": "B23",
+      "absent_emission": "0/9",
+      "present_recall": "0/25"
+    },
+    {
+      "candidate": "B47",
+      "absent_emission": "2/9",
+      "present_recall": "0/25"
+    },
+    {
+      "candidate": "C11",
+      "absent_emission": "9/9",
+      "present_recall": "25/25"
+    },
+    {
+      "candidate": "C23",
+      "absent_emission": "7/9",
+      "present_recall": "18/25"
+    },
+    {
+      "candidate": "C47",
+      "absent_emission": "0/9",
+      "present_recall": "0/25"
+    }
+  ],
+  "a8_interpretation": {
+    "supported": "The frozen six-candidate panel exhibits substantially different decision behavior on the C1 external OOD domain.",
+    "unsupported": "The SafeNest candidates are intrinsically unstable; any named candidate is validated/invalidated; Family C/B superiority.",
+    "safe_summary": "C1 stresses domain/scale sensitivity; it does not estimate deployment performance. Divergent panel behavior is CONSISTENT_WITH documented HIGH scale and cross-sensor domain mismatch and demonstrates C1 is a meaningful external stress domain, but does not isolate which mismatch caused each candidate output pattern.",
+    "a5_role_changed_by_a8": false,
+    "a5_route_retained": "A5_ROUTE_EXTERNAL_SAFETY_STRESS_ONLY",
+    "m_pv38_changed_by_a8": false,
+    "candidates_dropped_by_a8": false,
+    "new_model_authorized_by_a8": false
+  },
+  "source_role": "EXTERNAL_SAFETY_DOMAIN_STRESS_ONLY",
+  "final_selection_eligibility": "REJECTED",
+  "final_selection_use": "FORBIDDEN",
+  "canonical_findings": {
+    "source": "Same-dataset both-class UWB through-wall robot-mounted radar (66 PRESENT / 11 ABSENT); HIGH cross-sensor domain risk vs MR60 ROLE_L.",
+    "adapter": "Frozen A3C/A3R adapter yields 34 VALID / 43 FAIL_CLOSED (42 UNRESOLVABLE_TIME_GAP, 1 TOO_SHORT_FOR_30S); FAIL_CLOSED != ABSENT/NORMAL.",
+    "availability": "Class neutrality NOT_SUPPORTED; ABSENT VALID≈81.8% vs PRESENT VALID≈37.9%; availability leakage HIGH_RISK.",
+    "representation": "VALID34 not corpus-representative; N6=0; temporal acquisition comparability NOT_SUPPORTED; TRAIN_ZSCORE_SCALE_RISK HIGH.",
+    "external_inference": "A8 executed 6×34=204 deterministic descriptive outputs; heterogeneous OOD decisions; RR/quality/apnea unscored; no ranking/winner."
+  },
+  "candidate_lifecycle_authority": "NONE",
+  "d1_authority": "NONE",
+  "m_pv38_authority": "NONE",
+  "m_pv4_authority": "NONE",
+  "global_state_after_a9_proposal": {
+    "PUBABS_C1_lane": "TERMINAL_CLOSURE_PROPOSED",
+    "D1_FINAL_SELECTION_BOTH_CLASS_V1": "UNCHANGED",
+    "final_membership": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "M_PV3_8": "RESOURCE_BLOCKED_CLOSED",
+    "M_PV3_8_evaluation": "NOT_EXECUTED",
+    "M_PV4": "UNAUTHORIZED",
+    "D2": "LOCKED",
+    "PV4_PV3X_order": "ORDER_UNRESOLVED"
+  },
+  "terminal_state": "A9_C1_EXTERNAL_STRESS_LANE_CLOSED_WITH_LIMITATIONS",
+  "next_action": "NO_NEXT_C1_PHASE_REQUIRED",
+  "next_c1_phase": "NOT_REQUIRED",
+  "meaning_of_closed_with_limitations": [
+    "Intended C1 investigation completed (A0A1→A8).",
+    "Source/adapter/availability/role/populations/inference rules/execution/interpretation boundaries frozen.",
+    "No additional C1 task required merely to continue the current lane.",
+    "Does NOT mean sensor problem solved, final model selected, deployment ready, or M-PV3.8 complete."
+  ],
+  "report": "docs/mmwave/20260827_SafeNest_mmWave_PUBABS_A9_C1_External_Stress_Evidence_Terminal_Closure_01.md",
+  "manifest_dir": "datasets/mmwave/manifests/PUBABS_A9_c1_external_stress_terminal_closure/"
+}

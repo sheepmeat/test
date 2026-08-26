@@ -1,0 +1,62 @@
+{
+  "schema_version": "PUBABS-A9-EVIDENCE-ROLE-MATRIX-V1",
+  "closure_id": "PUBABS_C1_EXTERNAL_STRESS_TERMINAL_CLOSURE_V1",
+  "rows": [
+    {
+      "evidence_use": "Source identity / provenance",
+      "c1_status": "SUPPORTED"
+    },
+    {
+      "evidence_use": "Empty-scene / ABSENT semantics",
+      "c1_status": "SUPPORTED"
+    },
+    {
+      "evidence_use": "Adapter feasibility",
+      "c1_status": "SUPPORTED_WITH_LIMITATIONS"
+    },
+    {
+      "evidence_use": "Availability stress",
+      "c1_status": "SUPPORTED"
+    },
+    {
+      "evidence_use": "External OOD breathing-decision stress",
+      "c1_status": "SUPPORTED_WITH_LIMITATIONS"
+    },
+    {
+      "evidence_use": "RR performance",
+      "c1_status": "NOT_SUPPORTED"
+    },
+    {
+      "evidence_use": "Quality performance",
+      "c1_status": "NOT_SUPPORTED"
+    },
+    {
+      "evidence_use": "Apnea / breath-hold performance",
+      "c1_status": "NOT_SUPPORTED"
+    },
+    {
+      "evidence_use": "MR60 deployment equivalence",
+      "c1_status": "NOT_SUPPORTED"
+    },
+    {
+      "evidence_use": "Final-selection membership",
+      "c1_status": "REJECTED"
+    },
+    {
+      "evidence_use": "D1 substitution",
+      "c1_status": "FORBIDDEN"
+    },
+    {
+      "evidence_use": "Candidate ranking / winner selection",
+      "c1_status": "FORBIDDEN"
+    },
+    {
+      "evidence_use": "M-PV3.8 reopen authority",
+      "c1_status": "NONE"
+    },
+    {
+      "evidence_use": "M-PV4 authorization",
+      "c1_status": "NONE"
+    }
+  ]
+}
