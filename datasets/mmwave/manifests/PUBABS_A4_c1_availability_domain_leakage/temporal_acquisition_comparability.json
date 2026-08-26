@@ -1,0 +1,23 @@
+{
+  "schema_version": "PUBABS-A4-TEMPORAL-ACQUISITION-V1",
+  "SCHEMA_COMPARABILITY": "SUPPORTED",
+  "SCHEMA_COMPARABILITY_note": "Both classes use plot_data.csv with timestamp_ns + 180 complex bins (A2).",
+  "TEMPORAL_ACQUISITION_COMPARABILITY": "NOT_SUPPORTED",
+  "ABSENT_timing": {
+    "n": 11,
+    "median_session_duration_s": 899.9171385765076,
+    "median_n_frames": 16950.0,
+    "median_median_source_hz": 18.844452431764573,
+    "median_max_gap": 0.07517027854919434,
+    "median_max_gap_over_median_dt": 1.4157857867746773
+  },
+  "PRESENT_timing": {
+    "n": 66,
+    "median_session_duration_s": 179.95582485198975,
+    "median_n_frames": 3391.0,
+    "median_median_source_hz": 18.846399948573502,
+    "median_max_gap": 0.14959371089935303,
+    "median_max_gap_over_median_dt": 2.834486411684246
+  },
+  "note": "Native cadence medians are similar (~18.8 Hz), but gap severity / fail rates differ sharply by reporting class \u2192 temporal acquisition not class-neutral."
+}

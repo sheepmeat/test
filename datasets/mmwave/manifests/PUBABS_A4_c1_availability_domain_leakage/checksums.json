@@ -1,0 +1,24 @@
+{
+  "schema_version": "PUBABS-A4-CHECKSUMS-V1",
+  "status": "COMPLETE",
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/adapter_availability_leakage.json": "ddb37ae89c179247604df7df25e84b4d6802145d175010b5bcf03b4e8febf7a8",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/all77_availability_audit.json": "a1b586c0a1b4b0669fe18f13e94b5770419a4ab3fcbf83e8124c7e3c42d8e052",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/class_availability_analysis.json": "89e4c05491b1194128a816f4626630e72a5e01888ab2e18c53de6fb6196fd3a7",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/cross_sensor_domain_audit.json": "7d63c9f727e86899d06992dc107fe0e93bd273eddb6eb900a1a0a766f4d5915b",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/metadata_leakage_audit.json": "3c153c781e8f37a93d838e68329c55c1c8a5d91569123596ac6e50c40a4a1d05",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/position_availability_analysis.json": "1a47233afdb302ff92c8b9cdf652f5a5e8e2008f0b98c6ab8c94a190b5bca179",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/preprocessing_scale_risk.json": "bd8aa1f09c101982ef9cdc0a158cc33a984d551c4ae4d8e50211d4d6940ff00d",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/selected_bin_confound_audit.json": "64e270d2e9ebdb3514f2f41a74caff68e03f67744b2748520873c1c7b0aa0e71",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/startup_timing_audit.json": "21afdec92c65f805556249037f94aa9971276adfdf34f8fc85fef9c432261959",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/subject_availability_analysis.json": "5b32380e12c26f3f9f28dc638eaa2ad712d7d1f7873397fb252f6ea9a649e5ea",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/temporal_acquisition_comparability.json": "cf2fec67fa92d5b124a51242966b8e347c3473b8bb3eb1a4cde6e80f7ea8fa6c",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/timing_failure_mechanism.json": "c4863003ac444b3062307de2666202da42c2cb2afc8f6765183203b04edbd4a2",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/valid_subset_representativeness.json": "2351cc52c0586fd622382e74b1ddba30e7b31737e4e3f9dfdef13b6582ffa67a",
+    "datasets/mmwave/manifests/PUBABS_A4_c1_availability_domain_leakage/validation_result.json": "13f36cfd168abb66a1a7392349948ffae960b7b2607e86a3edb08e5e1b36adbc",
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A4_C1_Availability_Domain_Leakage_Stress_Audit_01.md": "63933a2e1eb825d9c966765787cacf53ba3000cb34440e682a68c7123f389778",
+    "scripts/mmwave/pubabs_a4_availability_domain_leakage_audit.py": "16492ba613665cc5a21108784720576699bb6a1f50ecff5909a0bf18bde9a29d",
+    "tests/test_mmwave_pubabs_a4_availability_domain_leakage.py": "0fa96d803bcb00ee3d038dd5e26afb94bb98e44faa7063723a5195406bfcdfbd"
+  }
+}

@@ -1,0 +1,508 @@
+{
+  "schema_version": "PUBABS-A4-POSITION-AVAILABILITY-V1",
+  "positions": {
+    "-5": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 3,
+        "fail_closed": 3,
+        "valid_rate": 0.5,
+        "fail_rate": 0.5,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 3
+        },
+        "median_max_gap": 0.14315271377563477,
+        "median_median_dt": 0.052573978900909424
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 0,
+        "fail_closed": 1,
+        "valid_rate": 0.0,
+        "fail_rate": 1.0,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 1
+        },
+        "median_max_gap": 0.16990160942077637,
+        "median_median_dt": 0.053317904472351074
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 3,
+        "fail_closed": 4,
+        "valid_rate": 0.42857142857142855,
+        "fail_rate": 0.5714285714285714,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.15762543678283691,
+        "median_median_dt": 0.053017616271972656
+      }
+    },
+    "-4": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 2,
+        "fail_closed": 4,
+        "valid_rate": 0.3333333333333333,
+        "fail_rate": 0.6666666666666666,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.14429771900177002,
+        "median_median_dt": 0.052573561668395996
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.0648653507232666,
+        "median_median_dt": 0.05311095714569092
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 3,
+        "fail_closed": 4,
+        "valid_rate": 0.42857142857142855,
+        "fail_rate": 0.5714285714285714,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.13634967803955078,
+        "median_median_dt": 0.05303478240966797
+      }
+    },
+    "-3": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 3,
+        "fail_closed": 3,
+        "valid_rate": 0.5,
+        "fail_rate": 0.5,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 3
+        },
+        "median_max_gap": 0.13339555263519287,
+        "median_median_dt": 0.05305624008178711
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.08374214172363281,
+        "median_median_dt": 0.05312645435333252
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 4,
+        "fail_closed": 3,
+        "valid_rate": 0.5714285714285714,
+        "fail_rate": 0.42857142857142855,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 3
+        },
+        "median_max_gap": 0.10750794410705566,
+        "median_median_dt": 0.053061485290527344
+      }
+    },
+    "-2": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 2,
+        "fail_closed": 4,
+        "valid_rate": 0.3333333333333333,
+        "fail_rate": 0.6666666666666666,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.14814400672912598,
+        "median_median_dt": 0.05262351036071777
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.07517027854919434,
+        "median_median_dt": 0.05309438705444336
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 3,
+        "fail_closed": 4,
+        "valid_rate": 0.42857142857142855,
+        "fail_rate": 0.5714285714285714,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.1388685703277588,
+        "median_median_dt": 0.05308794975280762
+      }
+    },
+    "-1": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 3,
+        "fail_closed": 3,
+        "valid_rate": 0.5,
+        "fail_rate": 0.5,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 3
+        },
+        "median_max_gap": 0.12637710571289062,
+        "median_median_dt": 0.05311399698257446
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.0613100528717041,
+        "median_median_dt": 0.05306243896484375
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 4,
+        "fail_closed": 3,
+        "valid_rate": 0.5714285714285714,
+        "fail_rate": 0.42857142857142855,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 3
+        },
+        "median_max_gap": 0.11690735816955566,
+        "median_median_dt": 0.053104519844055176
+      }
+    },
+    "0": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 1,
+        "fail_closed": 5,
+        "valid_rate": 0.16666666666666666,
+        "fail_rate": 0.8333333333333334,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4,
+          "INPUT_UNAVAILABLE_TOO_SHORT_FOR_30S": 1
+        },
+        "median_max_gap": 0.16602551937103271,
+        "median_median_dt": 0.05314946174621582
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 0,
+        "fail_closed": 1,
+        "valid_rate": 0.0,
+        "fail_rate": 1.0,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 1
+        },
+        "median_max_gap": 0.20786237716674805,
+        "median_median_dt": 0.05305325984954834
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 1,
+        "fail_closed": 6,
+        "valid_rate": 0.14285714285714285,
+        "fail_rate": 0.8571428571428571,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 5,
+          "INPUT_UNAVAILABLE_TOO_SHORT_FOR_30S": 1
+        },
+        "median_max_gap": 0.16655564308166504,
+        "median_median_dt": 0.05307459831237793
+      }
+    },
+    "1": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 2,
+        "fail_closed": 4,
+        "valid_rate": 0.3333333333333333,
+        "fail_rate": 0.6666666666666666,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.15835833549499512,
+        "median_median_dt": 0.0530887246131897
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.10604190826416016,
+        "median_median_dt": 0.053134918212890625
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 3,
+        "fail_closed": 4,
+        "valid_rate": 0.42857142857142855,
+        "fail_rate": 0.5714285714285714,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.1580040454864502,
+        "median_median_dt": 0.05311846733093262
+      }
+    },
+    "2": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 1,
+        "fail_closed": 5,
+        "valid_rate": 0.16666666666666666,
+        "fail_rate": 0.8333333333333334,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 5
+        },
+        "median_max_gap": 0.15138983726501465,
+        "median_median_dt": 0.05304610729217529
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.061455726623535156,
+        "median_median_dt": 0.053045034408569336
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 2,
+        "fail_closed": 5,
+        "valid_rate": 0.2857142857142857,
+        "fail_rate": 0.7142857142857143,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 5
+        },
+        "median_max_gap": 0.1469416618347168,
+        "median_median_dt": 0.053045034408569336
+      }
+    },
+    "3": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 2,
+        "fail_closed": 4,
+        "valid_rate": 0.3333333333333333,
+        "fail_rate": 0.6666666666666666,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.15789151191711426,
+        "median_median_dt": 0.05315542221069336
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.08135676383972168,
+        "median_median_dt": 0.05306601524353027
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 3,
+        "fail_closed": 4,
+        "valid_rate": 0.42857142857142855,
+        "fail_rate": 0.5714285714285714,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.1466677188873291,
+        "median_median_dt": 0.05307340621948242
+      }
+    },
+    "4": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 2,
+        "fail_closed": 4,
+        "valid_rate": 0.3333333333333333,
+        "fail_rate": 0.6666666666666666,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.15019655227661133,
+        "median_median_dt": 0.05306273698806763
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.0613245964050293,
+        "median_median_dt": 0.0530545711517334
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 3,
+        "fail_closed": 4,
+        "valid_rate": 0.42857142857142855,
+        "fail_rate": 0.5714285714285714,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 4
+        },
+        "median_max_gap": 0.14582037925720215,
+        "median_median_dt": 0.0530545711517334
+      }
+    },
+    "5": {
+      "PRESENT": {
+        "total": 6,
+        "valid": 4,
+        "fail_closed": 2,
+        "valid_rate": 0.6666666666666666,
+        "fail_rate": 0.3333333333333333,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 2
+        },
+        "median_max_gap": 0.11130404472351074,
+        "median_median_dt": 0.05269360542297363
+      },
+      "ABSENT": {
+        "total": 1,
+        "valid": 1,
+        "fail_closed": 0,
+        "valid_rate": 1.0,
+        "fail_rate": 0.0,
+        "failure_codes": {},
+        "median_max_gap": 0.061205148696899414,
+        "median_median_dt": 0.05304694175720215
+      },
+      "COMBINED": {
+        "total": 7,
+        "valid": 5,
+        "fail_closed": 2,
+        "valid_rate": 0.7142857142857143,
+        "fail_rate": 0.2857142857142857,
+        "failure_codes": {
+          "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP": 2
+        },
+        "median_max_gap": 0.1089475154876709,
+        "median_median_dt": 0.05304694175720215
+      }
+    }
+  },
+  "matched_position_pairs": [
+    {
+      "position": "-5",
+      "ABSENT_status": "FAIL_CLOSED",
+      "ABSENT_code": "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP",
+      "PRESENT_fail_rate": 0.5,
+      "PRESENT_valid": 3,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "-4",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.6666666666666666,
+      "PRESENT_valid": 2,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "-3",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.5,
+      "PRESENT_valid": 3,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "-2",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.6666666666666666,
+      "PRESENT_valid": 2,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "-1",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.5,
+      "PRESENT_valid": 3,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "0",
+      "ABSENT_status": "FAIL_CLOSED",
+      "ABSENT_code": "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP",
+      "PRESENT_fail_rate": 0.8333333333333334,
+      "PRESENT_valid": 1,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "1",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.6666666666666666,
+      "PRESENT_valid": 2,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "2",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.8333333333333334,
+      "PRESENT_valid": 1,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "3",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.6666666666666666,
+      "PRESENT_valid": 2,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "4",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.6666666666666666,
+      "PRESENT_valid": 2,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    },
+    {
+      "position": "5",
+      "ABSENT_status": "VALID",
+      "ABSENT_code": null,
+      "PRESENT_fail_rate": 0.3333333333333333,
+      "PRESENT_valid": 4,
+      "PRESENT_total": 6,
+      "same_outcome_all_present_match_absent": false
+    }
+  ]
+}

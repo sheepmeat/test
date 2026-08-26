@@ -1,0 +1,15 @@
+{
+  "schema_version": "PUBABS-A4-ADAPTER-AVAILABILITY-LEAKAGE-V1",
+  "adapter_consumes_class_label": false,
+  "availability_is_class_correlated_observable": true,
+  "ABSENT_valid_rate": 0.8181818181818182,
+  "PRESENT_valid_rate": 0.3787878787878788,
+  "hard_safety_rules": {
+    "UNAVAILABLE_NE_ABSENT": true,
+    "UNAVAILABLE_NE_NORMAL": true,
+    "UNAVAILABLE_NE_PHYSIOLOGICAL_NEGATIVE": true,
+    "fail_closed_must_not_become_ABSENT_label": true
+  },
+  "ADAPTER_AVAILABILITY_LEAKAGE": "HIGH_RISK",
+  "note": "Downstream logic that conditions on VALID vs UNAVAILABLE could partially infer reporting class. Future membership/runtime must treat UNAVAILABLE as non-informative fail-closed, never as ABSENT evidence."
+}

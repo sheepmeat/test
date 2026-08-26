@@ -1,0 +1,35 @@
+{
+  "schema_version": "PUBABS-A4-CLASS-AVAILABILITY-V1",
+  "contingency_ABSENT_PRESENT_x_VALID_FAIL": [
+    [
+      9,
+      2
+    ],
+    [
+      25,
+      41
+    ]
+  ],
+  "ABSENT": {
+    "total": 11,
+    "valid": 9,
+    "fail_closed": 2,
+    "valid_rate": 0.8181818181818182,
+    "fail_rate": 0.18181818181818182
+  },
+  "PRESENT": {
+    "total": 66,
+    "valid": 25,
+    "fail_closed": 41,
+    "valid_rate": 0.3787878787878788,
+    "fail_rate": 0.6212121212121212
+  },
+  "absolute_fail_rate_difference_PRESENT_minus_ABSENT": 0.4393939393939394,
+  "fail_risk_ratio_PRESENT_over_ABSENT": 3.4166666666666665,
+  "fisher_exact": {
+    "odds_ratio": 7.38,
+    "p_value_two_sided": 0.008836106123491248,
+    "note": "Small ABSENT n=11; p-value is not causal. Effect sizes (rate difference, risk ratio, OR) are primary."
+  },
+  "interpretation": "Adapter API does not consume class; availability still class-correlated via acquisition/timing properties."
+}
