@@ -1,0 +1,31 @@
+{
+  "schema_version": "MMWAVE_V2_D1_SW01_IMPLEMENTATION_CONTRACT_V1",
+  "check_id": "MMWAVE_V2_D1_SW01_NON_CAMPAIGN_INTERFACE_CHECKER",
+  "phase": "MMWAVE-V2-D1-SWPREP-01",
+  "parent_sw01_requirement": "datasets/mmwave/manifests/M-PV3_8_absent_resource_readiness_checklist/readiness_requirements.json#SW-01",
+  "cli": "scripts/mmwave/check_m_pv38_mmwave_interface.py",
+  "library": "adapters/mmwave_sw01_interface_checker.py",
+  "modes": [
+    "FIXTURE_OFFLINE_VALIDATION",
+    "LIVE_NON_CAMPAIGN_CHECK"
+  ],
+  "reuses_stream_semantics_from": "adapters/mmwave_stream_adapter.py",
+  "does_not_import": [
+    "sensors.mmwave.mmwave_adapter",
+    "MMWaveInterpreter",
+    "ROLE_L checkpoints"
+  ],
+  "fail_closed_statuses": [
+    "PASS_NON_CAMPAIGN_INTERFACE_CHECK",
+    "FAIL_REQUIRED_FIELD_MISSING",
+    "FAIL_NON_MONOTONIC_TIMESTAMP",
+    "FAIL_CONTINUITY_UNOBSERVABLE",
+    "FAIL_HEALTH_UNAVAILABLE",
+    "FAIL_RAW_OR_NEAR_RAW_UNAVAILABLE",
+    "FAIL_SCALAR_TELEMETRY_ONLY",
+    "LIVE_TARGET_UNAVAILABLE",
+    "BACKEND_UNAVAILABLE"
+  ],
+  "campaign_data_created": false,
+  "d1_admissible_by_design": false
+}

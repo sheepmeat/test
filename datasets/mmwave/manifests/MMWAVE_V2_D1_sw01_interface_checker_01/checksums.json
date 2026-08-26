@@ -1,0 +1,23 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixture_validation.json": "787a47b698dd332500721d4a8b8c1cc81b5d4c089b165fd97298ff3ed8ef7036",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/backend_unavailable.json": "3d23f799404fb2a4e05e663151f329b95ed949fc2b5e59ff770f8ef32db28e6a",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/dropout_sequence_gap.json": "2acad5294aa1e57fee49626e0007e196572dec8672e582478c8c781e320ec1ef",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/health_fault.json": "55c2bfd2a3fbb8f0d2c7ffde87eaf706bd065925737e1b181529f93313e93407",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/missing_identities.json": "c19f9518b2b4858d1b2b14afdfff3671b4551581d9ab56beffe53d697c7933ba",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/missing_raw.json": "46a57de836f4b68d4546cd11a5c5a089b383cadebbcb5b464e008a0f9d782fc9",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/missing_timestamp.json": "41e0d6624ec481650b263472ce582287217fa370a9cb274ddf71507db300c216",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/non_monotonic.json": "188e995176ae862c4a857f5cfa8265f3f68d46346c003fc0875aece706193b9e",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/scalar_only.json": "9df41db29c981fa899ac9a49aa2c2981602c240e3051ae52d9bc35c484a0b879",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/session_reset.json": "651caf6e4a745cdfd1bc95efc45b4b432edc87be268cde189ffeda6a28a01b81",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/fixtures/valid_stream.json": "b14470c151779c677215942458c92576ca73d2ee8724b1b67a36810077e4a27c",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/implementation_contract.json": "3aeecd6d7d023ea45ead13e4514b1b283e9d6449cee6425f8ed170423823d023",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/live_validation_status.json": "ff7307aab12bd8bd7dbc8cf3149f10df5ef97bcffe9c477101b825eb23348430",
+    "datasets/mmwave/manifests/MMWAVE_V2_D1_sw01_interface_checker_01/validation_result.json": "40eea889ce7605d874751294f77c28f679dd6a0b0c2fea5df230c3f72a9d88e0",
+    "adapters/mmwave_sw01_interface_checker.py": "a5035a7445c97ab8a1f72bd441a65156014d50e7837cf335e37de3be5c3da944",
+    "scripts/mmwave/check_m_pv38_mmwave_interface.py": "33e7f35e86305dd036fdf5253ea28061e212201b343f26fa7df8be77046f8433",
+    "docs/mmwave/20260827_SafeNest_mmWave_V2_D1_SW01_Interface_Checker_Implementation_01.md": "b8bcfa8f1f4c32fb259ed3e36e9b8dd3a3a672f6ac604af29ef054f78c0ae241",
+    "tests/test_mmwave_sw01_interface_checker.py": "db2ca85913e76d70f550ddfa18a7c0af84c50c4b27e68fa22cd978374cda5baf"
+  }
+}

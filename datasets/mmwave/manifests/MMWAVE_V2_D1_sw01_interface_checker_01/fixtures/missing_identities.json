@@ -1,0 +1,23 @@
+{
+  "metadata": {
+    "observation_kind": "near_raw_phase"
+  },
+  "samples": [
+    {
+      "t": 0.0,
+      "phase": 1.0,
+      "seq": 0,
+      "health": {
+        "ok": true
+      }
+    },
+    {
+      "t": 0.1,
+      "phase": 1.1,
+      "seq": 1,
+      "health": {
+        "ok": true
+      }
+    }
+  ]
+}

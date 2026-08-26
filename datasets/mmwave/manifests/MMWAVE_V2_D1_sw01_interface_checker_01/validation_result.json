@@ -1,0 +1,20 @@
+{
+  "schema_version": "MMWAVE_V2_D1_SW01_VALIDATION_RESULT_V1",
+  "phase": "MMWAVE-V2-D1-SWPREP-01",
+  "base_sha": "13a56b7e41e9519ad61238a74861ef4ad6ea16ab",
+  "sw01_implemented": true,
+  "fixture_tests": true,
+  "live_target_available": false,
+  "live_check_executed": true,
+  "live_result": "LIVE_TARGET_UNAVAILABLE",
+  "raw_observation_check": "IMPLEMENTED",
+  "timestamp_check": "IMPLEMENTED",
+  "continuity_check": "IMPLEMENTED",
+  "health_check": "IMPLEMENTED",
+  "campaign_data_created": false,
+  "d1_membership_created": false,
+  "model_inference": false,
+  "terminal_verdict": "SW01_IMPLEMENTED_OFFLINE_VALIDATED_LIVE_PENDING",
+  "remaining_hardware_dependency": true,
+  "report": "docs/mmwave/20260827_SafeNest_mmWave_V2_D1_SW01_Interface_Checker_Implementation_01.md"
+}

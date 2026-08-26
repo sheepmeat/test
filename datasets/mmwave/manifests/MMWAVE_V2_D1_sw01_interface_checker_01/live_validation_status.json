@@ -1,0 +1,9 @@
+{
+  "schema_version": "MMWAVE_V2_D1_SW01_LIVE_VALIDATION_STATUS_V1",
+  "live_target_available": false,
+  "live_check_executed": true,
+  "live_result": "LIVE_TARGET_UNAVAILABLE",
+  "receipt_sha256": "59487f8673e2cf0ccbe290cd0c803d8a85ca9b871e05f9dd62053500c9dc0da8",
+  "note": "Software live probe executed; no target UART / backend \u2014 not a live PASS.",
+  "pass_non_campaign": false
+}
