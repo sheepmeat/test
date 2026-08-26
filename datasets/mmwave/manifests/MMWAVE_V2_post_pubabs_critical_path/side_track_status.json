@@ -1,0 +1,15 @@
+{
+  "schema_version": "MMWAVE-V2-POSTPUBABS-SIDE-TRACKS-V1",
+  "tracks": {
+    "C1b": "DEFER / REFERENCE_ONLY_EXTENDED_LINEAGE / NOT independent of C1",
+    "C2": "OFF_CRITICAL_PATH / do not deep-validate by default",
+    "C3": "DEFER / C_RESEARCH_ONLY",
+    "C4": "REJECT",
+    "D3": "DEFER",
+    "Q3": "DEFER",
+    "M-N10": "KEEP_BLOCKED / OFF_V2_CRITICAL_PATH",
+    "PV4_PV3X": "ORDER_UNRESOLVED / DEFER until M-PV3.8 selection exists",
+    "PUBABS_A10": "NOT_CREATED",
+    "MR60_like_public_source": "NOT_CURRENTLY_EVIDENCED"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "MMWAVE-V2-POSTPUBABS-VALIDATION-V1",
+  "phase": "MMWAVE-V2-POSTPUBABS-R0",
+  "date": "2026-08-27",
+  "base_sha": "d7f2421808a79e75afccb8f08b3a29c0f5a1f1fa",
+  "a9_status": "CLOSED_WITH_LIMITATIONS",
+  "c1_reopened": false,
+  "pubabs_a10_created": false,
+  "new_public_download": false,
+  "new_model_inference": false,
+  "model_training": false,
+  "model_selection": false,
+  "d1_unchanged": true,
+  "final_membership": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "m_pv38": "RESOURCE_BLOCKED_CLOSED",
+  "m_pv4": "UNAUTHORIZED",
+  "d2": "LOCKED",
+  "verdict": "POSTPUBABS_ONLY_RESOURCE_BLOCKED_PATHS",
+  "primary_recommendation": "RECOMMEND_PHYSICAL_D1_RESOURCE_RECOVERY",
+  "model_ready_work": "NO",
+  "report": "docs/mmwave/20260827_SafeNest_mmWave_V2_Post_PUBABS_Critical_Path_Reconciliation_01.md"
+}

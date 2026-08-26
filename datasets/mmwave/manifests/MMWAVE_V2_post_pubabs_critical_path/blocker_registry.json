@@ -1,0 +1,67 @@
+{
+  "schema_version": "MMWAVE-V2-POSTPUBABS-BLOCKER-REGISTRY-V1",
+  "primary_blocker": {
+    "id": "B-MEMBERSHIP-ABSENT-0",
+    "description": "Governed eligible ABSENT contexts required = 57; observed = 0 under D1_FINAL_SELECTION_BOTH_CLASS_V1.",
+    "effect": "BLOCKED_INVALID_FINAL_MEMBERSHIP → M-PV3.8 evaluation NOT_EXECUTED → M-PV4 UNAUTHORIZED"
+  },
+  "physical_resource_blockers": [
+    {
+      "id": "B-01",
+      "item": "supported mmWave sensor + raw/timestamp/health interface",
+      "status": "MISSING",
+      "class": "must-have"
+    },
+    {
+      "id": "B-02",
+      "item": "rigid mount + measured target-zone geometry",
+      "status": "MISSING",
+      "class": "must-have"
+    },
+    {
+      "id": "B-03",
+      "item": "authoritative occupancy-reference + sealed-zone/access proof",
+      "status": "MISSING",
+      "class": "must-have"
+    },
+    {
+      "id": "B-04",
+      "item": "host storage + clock for immutable receipts",
+      "status": "UNKNOWN_NOT_EVIDENCED_LIVE",
+      "class": "must-have"
+    },
+    {
+      "id": "B-05",
+      "item": "non-campaign interface checker (raw/timestamps/health)",
+      "status": "TOOLING_DEFINED_LIVE_CHECK_MISSING",
+      "class": "must-have"
+    },
+    {
+      "id": "B-06",
+      "item": "nine-slot predeclaration + SHA receipt tooling demonstration",
+      "status": "SCHEMAS_DEFINED_FIXTURE_DEMO_NOT_CAMPAIGN_READY",
+      "class": "must-have"
+    },
+    {
+      "id": "B-07",
+      "item": "assigned PP-01..PP-04 roles",
+      "status": "MISSING",
+      "class": "must-have"
+    }
+  ],
+  "already_available": [
+    "Frozen acquisition plan MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_PLAN_V1 (3 lineage × 3 slots, 57 ABSENT, no replacement/top-up)",
+    "Frozen acquisition gate + checksum lifecycle M-PV3.8.4",
+    "Resource readiness checklist + capture preflight schemas",
+    "PRESENT evidence path for final membership (57) already exists in D1 lineage",
+    "Frozen ROLE_L six-candidate panel (B/C seeds 11/23/47)"
+  ],
+  "nice_to_have": [
+    "Photographic mounting evidence if authorized",
+    "Redundant occupancy sensors",
+    "Extended environmental logs"
+  ],
+  "can_start_capture_now": false,
+  "canonical_physical_plan_unchanged": true,
+  "preflight_result_unchanged": "CAPTURE_BLOCKED"
+}

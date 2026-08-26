@@ -1,0 +1,33 @@
+{
+  "schema_version": "MMWAVE-V2-POSTPUBABS-CHECKSUMS-V1",
+  "files": [
+    {
+      "path": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/blocker_registry.json",
+      "sha256": "62ee3982be620f9b85a71f6046056b3de237ee47fc64ba76395e242ddb70eb92"
+    },
+    {
+      "path": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/critical_path_state.json",
+      "sha256": "e8b086abcb00a26789929c9a73f3719440b1a468231120da325d80e73a66ad4e"
+    },
+    {
+      "path": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/next_action_decision.json",
+      "sha256": "6fe95aad2089e329166a120270f2db99f00b7c6158471b43d09f19f65185d6fa"
+    },
+    {
+      "path": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/route_comparison.json",
+      "sha256": "cc7b242c9973a20d4fa10948a752e4013fc7179acfd3c4cea8ec63e0472f2a1f"
+    },
+    {
+      "path": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/side_track_status.json",
+      "sha256": "95592d028820c3f8ff9b061e644e957195cb7ea34aba6e97b41a477c0253d18c"
+    },
+    {
+      "path": "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/validation_result.json",
+      "sha256": "0604cbd7331adc1c99dbd9b165837b9e8dcd9b20df1698d5c74797506d7cd8eb"
+    },
+    {
+      "path": "docs/mmwave/20260827_SafeNest_mmWave_V2_Post_PUBABS_Critical_Path_Reconciliation_01.md",
+      "sha256": "6ad814002f3b64d8bfcdd1eb51996e4144eaa5c62026a018f6ec0e8880f75782"
+    }
+  ]
+}
