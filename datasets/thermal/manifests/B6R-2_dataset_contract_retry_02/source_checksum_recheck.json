@@ -1,0 +1,48 @@
+{
+  "artifact_id": "B6R-2_dataset_contract_retry_02",
+  "schema_version": "safenest.thermal.b6r2.source_checksum_recheck.v1",
+  "logical_source_id": "WORKSPACE_CANDIDATE_THERMAL_ARCHIVES",
+  "raw_source_modified": false,
+  "registered_file_count": 6,
+  "current_file_count": 6,
+  "sha256_match_count": 6,
+  "status": "PASS",
+  "files": [
+    {
+      "relative_path": "test.zip",
+      "size_bytes": 1740348425,
+      "sha256": "3a838bd70835e579ecfaa820a6c0b4cbc6ba7b76729417c73845f0c959281449",
+      "matches_b6r1_registry": true
+    },
+    {
+      "relative_path": "train.zip.001",
+      "size_bytes": 4194304000,
+      "sha256": "9dd2f944f43209dd44463956b7b34030daecc22bf49050478e77aae27c48dbc4",
+      "matches_b6r1_registry": true
+    },
+    {
+      "relative_path": "train.zip.002",
+      "size_bytes": 4194304000,
+      "sha256": "91be187a432e21c6020928d115d1394ccf540cc6addac8f064a7b181cabe2259",
+      "matches_b6r1_registry": true
+    },
+    {
+      "relative_path": "train.zip.003",
+      "size_bytes": 4194304000,
+      "sha256": "a2e263e0a9024363d787a335ad8641d2a73ee61129d7cb2eb1cffa32b16e1187",
+      "matches_b6r1_registry": true
+    },
+    {
+      "relative_path": "train.zip.004",
+      "size_bytes": 1408015891,
+      "sha256": "406160460568f387b9a84e392430ed2afe57aeb055d073ba93f722c3b0d3b071",
+      "matches_b6r1_registry": true
+    },
+    {
+      "relative_path": "validation.zip",
+      "size_bytes": 3492475558,
+      "sha256": "06d52e24163d1fe243ebfbdb7d2dcef33fcc0a5ed0531ad81621ec1490af4f8f",
+      "matches_b6r1_registry": true
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "artifact_id": "B6R-2_dataset_contract_retry_02",
+  "schema_version": "safenest.thermal.b6r2.prerequisite_reassessment.v1",
+  "stage_id": "B6R-2",
+  "revision": 2,
+  "start_head": "ab7788546c8f1c9fa143d997e3081737d08d7dab",
+  "branch": "feature/thermal-b6r-development",
+  "stage_contract": {
+    "purpose": "Freeze a leakage-resistant session, label, split, and independent-holdout contract for authoritative MI48 data.",
+    "core_question": "Can subject, session, recording, and label provenance be trusted sufficiently to create group-isolated roles and seal an independent holdout?",
+    "required_predecessor": "A B6R-1 package with authoritative or approved MI48 identity, supported frame schema, full accounting, and usable group/label provenance.",
+    "allowed_inputs": [
+      "read-only B6R-1 machine-readable evidence",
+      "read-only historical T-A5 split and holdout evidence",
+      "read-only workspace candidate archive inspection"
+    ],
+    "forbidden_inputs": [
+      "promotion of the workspace archives to MI48 by directory name or resize target",
+      "random or adjacent-frame split",
+      "synthetic fixtures represented as physical evidence",
+      "REAL_EVAL_DEVELOPMENT relabeled as an independent holdout",
+      "independent holdout contents"
+    ],
+    "required_outputs_if_entry_passes": [
+      "dataset contract",
+      "provenance map",
+      "group split manifest",
+      "contamination report",
+      "holdout seal and access policy"
+    ],
+    "completion_gate": "One group belongs to exactly one role, cross-role duplicate audit passes, every sample is accounted for, and an independent holdout is sealed.",
+    "next_stage_condition": "B6R-2 completion gate PASS before any B6R-3 work."
+  },
+  "predecessor_evidence": {
+    "b6r1_dataset_status": "INCONCLUSIVE",
+    "candidate_source_identity": "UNRESOLVED",
+    "total_discovered_files": 6,
+    "identified_mi48_files": 0,
+    "identified_mi48_frames": 0,
+    "explicitly_excluded_files": 6,
+    "subject_id_status": "ABSENT",
+    "session_id_status": "ABSENT",
+    "recording_id_status": "ABSENT",
+    "split_role_status": "AMBIGUOUS",
+    "historical_pristine_locked_test_available": false,
+    "real_eval_development_is_independent_holdout": false
+  },
+  "retry_observations": {
+    "workspace_candidate_file_count": 6,
+    "source_sha256_matches_b6r1_registry": "6/6",
+    "test_archive": {
+      "member_count": 16002,
+      "png_count": 16000,
+      "label_record_count": 8000,
+      "source_class_token_counts": {
+        "0": 2000,
+        "1": 2000,
+        "2": 2000,
+        "3": 2000
+      },
+      "sample_png_shape_height_width": [
+        480,
+        640
+      ],
+      "sample_png_bit_depth": 16,
+      "sample_png_color_type": 0
+    },
+    "validation_archive": {
+      "member_count": 16002,
+      "png_count": 16000,
+      "label_record_count": 8000,
+      "source_class_token_counts": {
+        "0": 2000,
+        "1": 2000,
+        "2": 2000,
+        "3": 2000
+      },
+      "sample_png_shape_height_width": [
+        480,
+        640
+      ],
+      "sample_png_bit_depth": 16,
+      "sample_png_color_type": 0
+    },
+    "multipart_train_archive_parts": 4,
+    "native_mi48_geometry_established": false,
+    "model_input_axis_relationship": "Observed source PNG is HxW 480x640. Historical thermal_prep.py resizes to PIL WxH 80x62, producing NumPy HxW 62x80 and then model input 62x80x1. This is a resize path, not evidence that the raw source is MI48 80x62 or 62x80.",
+    "label_provenance_assessment": "Class tokens are observable, but no authoritative MI48 source contract, subject/session/recording identity, or SafeNest group provenance is available.",
+    "b6r1_checksum_diagnostic": {
+      "standalone_validator_raw_checkout": "FAIL",
+      "raw_byte_matches": "0/10",
+      "matches_after_crlf_to_lf_normalization": "10/10",
+      "interpretation": "Checkout line-ending conversion explains the generated-artifact mismatch; it does not provide missing MI48 provenance or make the dataset gate pass."
+    }
+  },
+  "entry_gate": {
+    "status": "FAIL",
+    "failed_conditions": [
+      "No owner-authorized or approved replacement MI48 source is materialized.",
+      "No eligible MI48 frame or supported MI48 schema family is available.",
+      "Subject, session, and recording identities are absent.",
+      "Observed class tokens lack authoritative MI48 and group provenance.",
+      "No pristine independent holdout is available.",
+      "The predecessor standalone validator still fails on raw checkout bytes, although the mismatch is diagnosed as CRLF conversion."
+    ]
+  },
+  "execution_decision": {
+    "status": "BLOCKED",
+    "dataset_contract_created": false,
+    "provenance_map_created": false,
+    "split_manifest_created": false,
+    "contamination_report_created": false,
+    "holdout_created_or_opened": false,
+    "reason": "A split would require inventing MI48 identity, group identity, or holdout independence."
+  },
+  "unblock_requirements": [
+    "Materialize an owner-authorized MI48 snapshot or explicitly approved replacement as read-only input.",
+    "Run a new B6R-1 revision and pass its standalone validator in the target checkout.",
+    "Provide trustworthy subject/session/recording and label provenance.",
+    "Provide a tuning-naive independent holdout or approve a new acquisition plan."
+  ]
+}
