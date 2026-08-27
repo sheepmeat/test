@@ -41,6 +41,26 @@ PI_DEPLOYMENT = DEFERRED
 
 Stale AGENTS wording `M-PROT-4_IMPLEMENTED_PENDING_SOL_REVIEW` is corrected in the current overlay only. Historical M-PROT-2/3/4 evidence files are not rewritten.
 
+## PR cleanup scope correction
+
+mmWave M-PROT-5A may close only mmWave / Sol-authorized superseded integration-governance PRs. Unrelated Thermal / CO₂ / other-sensor PRs must not be closed to reduce open-PR count.
+
+| PR | Action |
+|---|---|
+| `#180` | CLOSED_WITHOUT_MERGE (acceptable mmWave optional tooling) |
+| `#181` | CLOSED_WITHOUT_MERGE (acceptable mmWave evidence-schema fork) |
+| `#65` | CLOSED_WITHOUT_MERGE (superseded Pi integration roadmap) |
+| `#124` Thermal B6R-1 | TEMPORARILY_CLOSED_BY_MMWAVE_CLEANUP_SCOPE_ERROR_THEN_REOPENED_UNCHANGED |
+| `#125` Thermal B6R-0 | TEMPORARILY_CLOSED_BY_MMWAVE_CLEANUP_SCOPE_ERROR_THEN_REOPENED_UNCHANGED |
+
+```text
+THERMAL_TRACK_TOUCHED = PR_STATE_ONLY_CORRECTED; NO_THERMAL_CONTENT_CHANGED
+PR124_HEAD = d87d452372cc890e85ec6c4d5ec117052be865df
+PR125_HEAD = ee966f9186915a2364e81f944f45aabf22b7b71c
+```
+
+Thermal files and historical Thermal evidence were not rewritten.
+
 ## Portable deployment handoff
 
 Schema: `M_PROT_5A_PREDEPLOYMENT_HANDOFF_V1`

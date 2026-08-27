@@ -12,10 +12,14 @@
   "legacy_pr_cleanup": {
     "180": "CLOSED_WITHOUT_MERGE",
     "181": "CLOSED_WITHOUT_MERGE",
-    "124": "CLOSED_WITHOUT_MERGE",
-    "125": "CLOSED_WITHOUT_MERGE",
+    "124": "TEMPORARILY_CLOSED_BY_MMWAVE_CLEANUP_SCOPE_ERROR_THEN_REOPENED_UNCHANGED",
+    "125": "TEMPORARILY_CLOSED_BY_MMWAVE_CLEANUP_SCOPE_ERROR_THEN_REOPENED_UNCHANGED",
     "65": "CLOSED_WITHOUT_MERGE"
   },
+  "thermal_track_touched": "PR_STATE_ONLY_CORRECTED; NO_THERMAL_CONTENT_CHANGED",
+  "pr124_head_after_reopen": "d87d452372cc890e85ec6c4d5ec117052be865df",
+  "pr125_head_after_reopen": "ee966f9186915a2364e81f944f45aabf22b7b71c",
+  "pr_cleanup_boundary": "M-PROT/mmWave workers may close only mmWave or Sol-authorized superseded integration-governance PRs; never Thermal, CO2, autonomous-driving, other-sensor, or unrelated-track PRs merely to reduce open-PR count.",
   "m_prot_5a_tests": {
     "command": "python3 -m pytest tests/test_mmwave_m_prot_5a_predeployment.py -q",
     "exit_code": 0,
