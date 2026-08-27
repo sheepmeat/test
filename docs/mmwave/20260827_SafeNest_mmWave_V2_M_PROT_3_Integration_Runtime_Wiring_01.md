@@ -5,10 +5,10 @@
 - Base SHA (post-PR #176 / M-PROT-2): `97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa`
 - Branch: `research/mmwave-m-prot-3-integration-runtime-wiring`
 - Worker terminal: **`M_PROT_3_INTEGRATION_RUNTIME_WIRING_COMPLETE`**
-- Corrective round 1: **worker CLOSED / Sol review PENDING**
+- Corrective round 2: **worker CLOSED / Sol review PENDING**
 - Sol review: **required** (`M-PROT-4 = NOT_AUTHORIZED_PENDING_M_PROT_3_SOL_REVIEW`)
 - Manifest: `datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/`
-- Previous Sol-reviewed head: `f6101abb76e2f6980565daf845b56804980978c6`
+- Previous Sol-reviewed head (round 2 base): `59c6fad0e5d3efd591b2daeab006d77760c98d58`
 
 ## Provisional freeze ≠ final scientific selection
 
@@ -118,7 +118,17 @@ Previous Sol-reviewed head: `f6101abb76e2f6980565daf845b56804980978c6`
 | 2 | Source-count windowing | `ready` when count≥300; post-R1 trim | Time-coverage suffix; R1 owns resampling; mismatch → `R1_SAMPLE_COUNT_MISMATCH` | `test_a_*`, `test_b_*`, `test_c_*`, `test_k_*` | CLOSED |
 | 3 | Eager model load | `ensure_runtime()` before window/presence | Load only after SW-01 + window + presence + R1 exact-300 | `test_m_*`, `test_n_*` | CLOSED |
 | 4 | Stale AGENTS pointer | M-PROT-2 still said Sol review of #176 / M-PROT-3 not authorized | AGENTS: M-PROT-2 COMPLETE/MERGED; current gate = M-PROT-3 pending Sol; M-PROT-4 not authorized | `AGENTS.md` | CLOSED |
-| 5 | Provenance (recommended) | Receipt lacked SW-01 identities | WiringReceipt V2 binds device/interface/config/observation/receipt SHA | `test_q_*` | CLOSED |
+| 5 | Provenance (recommended) | Receipt lacked SW-01 identities | WiringReceipt binds device/interface/config/observation/receipt SHA | `test_q_*` | CLOSED |
+
+## Sol Corrective Round 2
+
+Previous Sol-reviewed head: `59c6fad0e5d3efd591b2daeab006d77760c98d58`
+
+| # | Finding | Fix | Test evidence | Worker |
+|---|---|---|---|---|
+| A | Stale PASS ready state after subsequent SW-01 failure | Fail path calls `_invalidate_admission()` (flush buffer + clear binding + clear boundary) | `test_r2_a_pass_ready_then_sw01_fail_invalidates` | CLOSED |
+| B | Cross-bundle continuity not enforced | `StreamBoundaryCursor` checks seq/timestamp/session/gap before continuing same admission; discontinuity flushes | `test_r2_b`…`test_r2_g_*` | CLOSED |
+| C | Multi-bundle SW-01 provenance incomplete | Per-sample `receipt_sha256`; WiringReceipt V3 `sw01_receipt_sha256_chain` for selected window only; single SHA = latest contributing | `test_r2_b_*`, `test_r2_h_*` | CLOSED |
 
 ```text
 WORKER_CLAIM = CLOSED

@@ -1,15 +1,45 @@
 {
-  "schema_version": "M-PROT-3-INTEGRATION-RUNTIME-WIRING-V2",
+  "schema_version": "M-PROT-3-INTEGRATION-RUNTIME-WIRING-V3",
   "phase": "M-PROT-3",
-  "corrective_round": 1,
+  "corrective_round": 2,
   "base_sha": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
-  "previous_sol_reviewed_head": "f6101abb76e2f6980565daf845b56804980978c6",
+  "previous_sol_reviewed_head": "59c6fad0e5d3efd591b2daeab006d77760c98d58",
   "date": "2026-08-27",
-  "terminal_worker_state": "CORRECTIVE_IMPLEMENTED_PENDING_SOL_REVIEW",
+  "terminal_worker_state": "CORRECTIVE_ROUND_2_PENDING_SOL_REVIEW",
   "terminal_verdict": "M_PROT_3_INTEGRATION_RUNTIME_WIRING_COMPLETE",
   "worker_claim": "CLOSED",
   "sol_review": "PENDING",
   "m_prot_4": "NOT_AUTHORIZED_PENDING_M_PROT_3_SOL_REVIEW",
+  "stream_boundary": {
+    "subsequent_sw01_fail_invalidates_ready_state": true,
+    "cross_bundle_continuity": true,
+    "tracks_last_timestamp": true,
+    "tracks_last_seq": true,
+    "tracks_last_session": true,
+    "max_gap_s": 0.5,
+    "max_gap_source": "SW-01 DEFAULT_MAX_GAP_SECONDS",
+    "discontinuity_policy": "FLUSH_OLD_HISTORY_START_NEW_ADMISSION",
+    "cross_discontinuity_bridge_allowed": false
+  },
+  "wiring_receipt": {
+    "schema_version": "M-PROT-3-WIRING-RECEIPT-V3",
+    "sw01_receipt_sha256_semantics": "latest_contributing_PASS_receipt",
+    "sw01_receipt_sha256_chain": "ordered_unique_adjacent_collapsed_contributing_PASS_receipts_for_selected_window_only",
+    "binds": [
+      "device_identity",
+      "interface_identity",
+      "configuration_identity",
+      "observation_kind",
+      "sw01_receipt_sha256",
+      "sw01_receipt_sha256_chain",
+      "source_validation_status",
+      "session_id",
+      "window_start_s",
+      "window_end_s",
+      "source_sample_count",
+      "r1_sample_count"
+    ]
+  },
   "b23": {
     "panel_id": "B23",
     "family": "family_b",
@@ -95,22 +125,6 @@
     "api_field": "presence_gate_satisfied",
     "policy": "CALLER_MUST_SUPPLY_EXPLICIT_PRESENCE_GATE; DEFAULT PRESENCE_UNAVAILABLE",
     "no_inference_from_physiology": true
-  },
-  "wiring_receipt": {
-    "schema_version": "M-PROT-3-WIRING-RECEIPT-V2",
-    "binds": [
-      "device_identity",
-      "interface_identity",
-      "configuration_identity",
-      "observation_kind",
-      "sw01_receipt_sha256",
-      "source_validation_status",
-      "session_id",
-      "window_start_s",
-      "window_end_s",
-      "source_sample_count",
-      "r1_sample_count"
-    ]
   },
   "scaler_content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
   "scaler_apply_count": "ONCE",

@@ -53,6 +53,7 @@ def _phase_samples(
     session: str = "A",
     t0: float = 0.0,
     *,
+    seq0: int = 0,
     reset_at: int | None = None,
 ):
     samples = []
@@ -62,7 +63,7 @@ def _phase_samples(
             Sample(
                 t=t,
                 phase=float(np.sin(2 * np.pi * 0.25 * t)),
-                seq=i,
+                seq=seq0 + i,
                 health_ok=True,
                 session_id=session,
                 reset_flag=(reset_at is not None and i == reset_at),
@@ -142,7 +143,7 @@ class MProt3WiringCorrectiveTest(unittest.TestCase):
         # Composer used in isolation does not create a production inference route.
         composer = CausalTemporalComposer()
         for s in _samples_covering_span(10.0):
-            composer.push(s, admission_id=99)
+            composer.push(s, admission_id=99, receipt_sha256="fixture-sha")
         self.assertTrue(composer.ready())
         self.rt.composer = composer
         receipt2 = self.rt.try_infer(presence_gate_satisfied=True)
@@ -305,6 +306,7 @@ class MProt3WiringCorrectiveTest(unittest.TestCase):
         self.assertEqual(receipt.observation_kind, "near_raw_phase")
         self.assertEqual(receipt.source_validation_status, src["overall_status"])
         self.assertEqual(receipt.sw01_receipt_sha256, src["receipt_sha256"])
+        self.assertEqual(list(receipt.sw01_receipt_sha256_chain), [src["receipt_sha256"]])
         self.assertIsNotNone(receipt.window_start_s)
         self.assertIsNotNone(receipt.window_end_s)
         self.assertEqual(receipt.session_id, "A")
@@ -313,18 +315,109 @@ class MProt3WiringCorrectiveTest(unittest.TestCase):
     def test_composer_unit_time_coverage(self) -> None:
         composer = CausalTemporalComposer()
         for s in _phase_samples(300, rate=20.0):
-            composer.push(s, admission_id=1)
+            composer.push(s, admission_id=1, receipt_sha256="a")
         self.assertFalse(composer.ready())
-        for s in _samples_covering_span(20.0):
-            composer.push(s, admission_id=1)
-        # After gap? consecutive from t=0 again would non-monotonic flush.
-        # Fresh composer for positive case:
         composer2 = CausalTemporalComposer()
         for s in _samples_covering_span(20.0):
-            composer2.push(s, admission_id=1)
+            composer2.push(s, admission_id=1, receipt_sha256="b")
         self.assertTrue(composer2.ready())
         window = composer2.select_causal_source_suffix()
         self.assertGreaterEqual(window[-1].t - window[0].t, TARGET_SPAN_S * 0.98)
+
+    # --- Corrective Round 2 ---
+
+    def test_r2_a_pass_ready_then_sw01_fail_invalidates(self) -> None:
+        self.rt.ingest_bundle(_bundle(_samples_covering_span(10.0)))
+        ready = self.rt.try_infer(presence_gate_satisfied=True)
+        self.assertIsNotNone(ready.prototype_receipt)
+        bad = [
+            Sample(t=0.0, phase=0.1, seq=0, health_ok=True, session_id="A"),
+            Sample(t=-1.0, phase=0.2, seq=1, health_ok=True, session_id="A"),
+        ]
+        with self.assertRaises(MProt3FailClosed) as ctx:
+            self.rt.ingest_bundle(_bundle(bad))
+        self.assertEqual(ctx.exception.code, "SOURCE_VALIDATION_FAILED")
+        self.assertEqual(self.rt.composer.buffered_count, 0)
+        self.assertIsNone(self.rt._validated_binding)
+        self.assertIsNone(self.rt._boundary)
+
+        def _boom(*_a, **_k):
+            raise AssertionError("B23 must not run after subsequent SW-01 fail")
+
+        with mock.patch(
+            "adapters.mmwave_m_prot_3_integration_runtime.run_prototype_inference",
+            side_effect=_boom,
+        ):
+            after = self.rt.try_infer(presence_gate_satisfied=True)
+        self.assertEqual(after.fail_closed_code, "SW01_ADMISSION_REQUIRED")
+        self.assertIsNone(after.prototype_receipt)
+
+    def test_r2_b_cross_bundle_valid_continuation(self) -> None:
+        # Unequal chunk sizes so SW-01 receipt SHAs differ (receipt hashes metadata).
+        a = self.rt.ingest_bundle(_bundle(_phase_samples(100, t0=0.0, seq0=0)))
+        b = self.rt.ingest_bundle(_bundle(_phase_samples(120, t0=10.0, seq0=100)))
+        c = self.rt.ingest_bundle(_bundle(_phase_samples(80, t0=22.0, seq0=220)))
+        self.assertNotEqual(a["receipt_sha256"], b["receipt_sha256"])
+        self.assertNotEqual(b["receipt_sha256"], c["receipt_sha256"])
+        self.assertTrue(self.rt.composer.ready())
+        receipt = self.rt.try_infer(presence_gate_satisfied=True)
+        self.assertEqual(receipt.r1_sample_count, 300)
+        self.assertEqual(
+            list(receipt.sw01_receipt_sha256_chain),
+            [a["receipt_sha256"], b["receipt_sha256"], c["receipt_sha256"]],
+        )
+        self.assertEqual(receipt.sw01_receipt_sha256, c["receipt_sha256"])
+
+    def test_r2_c_seq_gap_no_bridge(self) -> None:
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=0.0, seq0=0)))
+        self.assertGreater(self.rt.composer.buffered_count, 100)
+        # Internally continuous B, but boundary skips seq 150,151
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=15.0, seq0=152)))
+        self.assertEqual(self.rt.composer.buffered_count, 150)
+        self.assertFalse(self.rt.composer.ready())
+
+    def test_r2_d_seq_regression_no_bridge(self) -> None:
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=0.0, seq0=0)))
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=15.0, seq0=10)))
+        self.assertEqual(self.rt.composer.buffered_count, 150)
+        self.assertFalse(self.rt.composer.ready())
+
+    def test_r2_e_timestamp_regression_no_bridge(self) -> None:
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=10.0, seq0=0)))
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=5.0, seq0=150)))
+        self.assertEqual(self.rt.composer.buffered_count, 150)
+        self.assertFalse(self.rt.composer.ready())
+
+    def test_r2_f_large_gap_no_bridge(self) -> None:
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=0.0, seq0=0)))
+        # dt from last (14.9) to first of B (20.0) = 5.1 > 0.5
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=20.0, seq0=150)))
+        self.assertEqual(self.rt.composer.buffered_count, 150)
+        self.assertFalse(self.rt.composer.ready())
+
+    def test_r2_g_session_change_no_bridge(self) -> None:
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=0.0, seq0=0, session="A")))
+        self.rt.ingest_bundle(_bundle(_phase_samples(150, t0=15.0, seq0=150, session="B")))
+        self.assertEqual(self.rt.composer.buffered_count, 150)
+        self.assertFalse(self.rt.composer.ready())
+
+    def test_r2_h_noncontributing_receipt_excluded(self) -> None:
+        early = self.rt.ingest_bundle(_bundle(_phase_samples(100, t0=0.0, seq0=0)))
+        # Continue to span well beyond 29.9 s so early samples fall outside causal suffix.
+        mid = self.rt.ingest_bundle(_bundle(_phase_samples(200, t0=10.0, seq0=100)))
+        late = self.rt.ingest_bundle(_bundle(_phase_samples(201, t0=30.0, seq0=300)))
+        receipt = self.rt.try_infer(presence_gate_satisfied=True)
+        self.assertEqual(receipt.r1_sample_count, 300)
+        chain = list(receipt.sw01_receipt_sha256_chain)
+        self.assertNotIn(early["receipt_sha256"], chain)
+        self.assertIn(late["receipt_sha256"], chain)
+        # Mid may or may not contribute depending on exact suffix start; late must.
+        self.assertTrue(len(chain) >= 1)
+        self.assertEqual(receipt.sw01_receipt_sha256, chain[-1])
+        # Absolute paths forbidden
+        self.assertNotIn("/Users/", str(receipt.to_json()))
+        # Ensure early truly outside window
+        self.assertGreater(receipt.window_start_s or 0.0, 9.9)
 
 
 if __name__ == "__main__":

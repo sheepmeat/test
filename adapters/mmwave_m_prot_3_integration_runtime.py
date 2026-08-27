@@ -42,6 +42,7 @@ from adapters.mmwave_r1_sensor_independent_trace import (
     adapt_native_trace,
 )
 from adapters.mmwave_sw01_interface_checker import (
+    DEFAULT_MAX_GAP_SECONDS,
     STATUS_PASS,
     Sample,
     StreamBundle,
@@ -62,8 +63,8 @@ MANDATORY_SEMANTICS = (
     "SUBJECT_TO_REPLACEMENT",
 )
 
-# Composer: max gap aligned with SW-01 default.
-DEFAULT_MAX_GAP_S = 0.5
+# Composer / cross-bundle boundary: reuse SW-01 governed max gap.
+DEFAULT_MAX_GAP_S = float(DEFAULT_MAX_GAP_SECONDS)
 # Nominal indexed span for 300 samples @ 10 Hz (indices 0..299).
 TARGET_SPAN_S = (TRACE_SAMPLES - 1) / SAMPLE_RATE_HZ  # 29.9 s
 
@@ -77,7 +78,7 @@ class MProt3FailClosed(RuntimeError):
 
 @dataclass
 class ValidatedSourceBinding:
-    """SW-01 PASS evidence bound to the currently admitted inference buffer."""
+    """Latest SW-01 PASS evidence for the active temporal admission epoch."""
 
     overall_status: str
     receipt_sha256: str
@@ -89,10 +90,19 @@ class ValidatedSourceBinding:
 
 
 @dataclass
+class StreamBoundaryCursor:
+    """Last admitted sample identity for cross-bundle continuity checks."""
+
+    last_t: float
+    last_seq: int | None
+    last_session_id: str | None
+
+
+@dataclass
 class WiringReceipt:
     """Portable M-PROT-3 composition receipt (one inference attempt)."""
 
-    schema_version: str = "M-PROT-3-WIRING-RECEIPT-V2"
+    schema_version: str = "M-PROT-3-WIRING-RECEIPT-V3"
     phase: str = PHASE_ID
     status: str = "UNAVAILABLE"
     fail_closed_code: str | None = None
@@ -106,7 +116,10 @@ class WiringReceipt:
     r1_profile: str = R1_PROFILE_ID
     window_contract: str = WINDOW_CONTRACT
     source_validation_status: str | None = None
+    # Latest contributing PASS receipt (compatibility); not full multi-bundle proof alone.
     sw01_receipt_sha256: str | None = None
+    # Ordered PASS receipt SHAs for samples in the selected causal window only.
+    sw01_receipt_sha256_chain: tuple[str, ...] = ()
     device_identity: str | None = None
     interface_identity: str | None = None
     configuration_identity: str | None = None
@@ -120,7 +133,6 @@ class WiringReceipt:
     session_id: str | None = None
     presence_status: str = "PRESENCE_UNAVAILABLE"
     # True only when an external governed presence signal opens the gate.
-    # Not "human present inferred from physiology".
     presence_gate_satisfied: bool = False
     lineage_class: str = "FIXTURE_NON_CAMPAIGN"
     provisional_integration_freeze: bool = True
@@ -133,10 +145,10 @@ class WiringReceipt:
     def to_json(self) -> dict[str, Any]:
         payload = asdict(self)
         payload["mandatory_semantics"] = list(self.mandatory_semantics)
+        payload["sw01_receipt_sha256_chain"] = list(self.sw01_receipt_sha256_chain)
         payload["PROTOTYPE_INTEGRATION_ONLY"] = True
         payload["NOT_FINAL_SELECTED_MODEL"] = True
         payload["FINAL_GOVERNED_EVALUATION"] = False
-        # Compatibility alias for older readers (gate semantics, not inference).
         payload["presence_available"] = self.presence_gate_satisfied
         return payload
 
@@ -147,15 +159,12 @@ class _BufferedSample:
     phase: float
     session_id: str | None
     admission_id: int
+    receipt_sha256: str
 
 
 @dataclass
 class CausalTemporalComposer:
-    """Past-only causal composer selecting source-domain time coverage for R1.
-
-    Readiness is CAUSAL TIME COVERAGE of TARGET_SPAN_S (29.9 s indexed span),
-    not raw source sample count. R1 owns resampling to exactly 300 @ 10 Hz.
-    """
+    """Past-only causal composer selecting source-domain time coverage for R1."""
 
     max_gap_s: float = DEFAULT_MAX_GAP_S
     target_rate_hz: float = SAMPLE_RATE_HZ
@@ -166,12 +175,19 @@ class CausalTemporalComposer:
 
     def flush(self) -> None:
         self._buf.clear()
+        self._session_id = None
 
     @property
     def buffered_count(self) -> int:
         return len(self._buf)
 
-    def push(self, sample: Sample, *, admission_id: int) -> str | None:
+    def push(
+        self,
+        sample: Sample,
+        *,
+        admission_id: int,
+        receipt_sha256: str,
+    ) -> str | None:
         """Push one sample already admitted under a validated SW-01 binding."""
         if sample.reset_flag:
             self.flush()
@@ -198,16 +214,27 @@ class CausalTemporalComposer:
             if dt > self.max_gap_s:
                 self.flush()
                 self._buf.append(
-                    _BufferedSample(t=t, phase=phase, session_id=sample.session_id, admission_id=admission_id)
+                    _BufferedSample(
+                        t=t,
+                        phase=phase,
+                        session_id=sample.session_id,
+                        admission_id=admission_id,
+                        receipt_sha256=receipt_sha256,
+                    )
                 )
                 return "LARGE_GAP_FLUSH"
         self._buf.append(
-            _BufferedSample(t=t, phase=phase, session_id=sample.session_id, admission_id=admission_id)
+            _BufferedSample(
+                t=t,
+                phase=phase,
+                session_id=sample.session_id,
+                admission_id=admission_id,
+                receipt_sha256=receipt_sha256,
+            )
         )
         return None
 
     def ready(self) -> bool:
-        """True when a continuous causal suffix can cover TARGET_SPAN_S ending at T_end."""
         if not self._buf:
             return False
         t_end = self._buf[-1].t
@@ -245,17 +272,27 @@ class CausalTemporalComposer:
             raise MProt3FailClosed("WINDOW_SPAN_TOO_SHORT", f"span={span}")
         return window
 
+    @staticmethod
+    def contributing_receipt_chain(window: list[_BufferedSample]) -> tuple[str, ...]:
+        """Ordered unique receipt SHAs for samples in the selected window."""
+        chain: list[str] = []
+        for sample in window:
+            if not chain or chain[-1] != sample.receipt_sha256:
+                chain.append(sample.receipt_sha256)
+        return tuple(chain)
+
     def compose_native_window(
         self,
         *,
         source_binding: ValidatedSourceBinding,
-    ) -> NativeTraceInput:
+    ) -> tuple[NativeTraceInput, tuple[str, ...]]:
         window = self.select_causal_source_suffix()
         if window[0].admission_id != source_binding.admission_id:
             raise MProt3FailClosed(
                 "VALIDATION_BINDING_MISMATCH",
                 "selected window is not bound to the active SW-01 PASS admission",
             )
+        receipt_chain = self.contributing_receipt_chain(window)
         times = np.asarray([s.t for s in window], dtype=np.float64)
         phases = np.asarray([s.phase for s in window], dtype=np.float64)
         t0 = float(times[0])
@@ -264,7 +301,8 @@ class CausalTemporalComposer:
         med_dt = float(np.median(dts)) if dts.size else (1.0 / self.target_rate_hz)
         rate = 1.0 / med_dt if med_dt > 0 else self.target_rate_hz
         session = window[-1].session_id or "UNKNOWN_SESSION"
-        return NativeTraceInput(
+        latest_receipt = receipt_chain[-1] if receipt_chain else source_binding.receipt_sha256
+        native = NativeTraceInput(
             source_id="M_PROT_3_SW01",
             dataset_id="m_prot_3_integration",
             subject_id="PROTOTYPE",
@@ -281,7 +319,8 @@ class CausalTemporalComposer:
                 "interface_identity": source_binding.interface_identity,
                 "configuration_identity": source_binding.configuration_identity,
                 "observation_kind": source_binding.observation_kind,
-                "sw01_receipt_sha256": source_binding.receipt_sha256,
+                "sw01_receipt_sha256": latest_receipt,
+                "sw01_receipt_sha256_chain": list(receipt_chain),
             },
             provenance={
                 "m_prot_3": True,
@@ -297,12 +336,14 @@ class CausalTemporalComposer:
                 "configuration_identity": source_binding.configuration_identity,
                 "observation_kind": source_binding.observation_kind,
                 "sw01_overall_status": source_binding.overall_status,
-                "sw01_receipt_sha256": source_binding.receipt_sha256,
+                "sw01_receipt_sha256": latest_receipt,
+                "sw01_receipt_sha256_chain": list(receipt_chain),
                 "admission_id": source_binding.admission_id,
             },
             validity_mask=np.ones(len(window), dtype=bool),
             source_quality_flags=("M_PROT_3_CAUSAL_WINDOW",),
         )
+        return native, receipt_chain
 
 
 class MProt3IntegrationRuntime:
@@ -315,6 +356,7 @@ class MProt3IntegrationRuntime:
         self._scaler = None
         self._validated_binding: ValidatedSourceBinding | None = None
         self._admission_seq = 0
+        self._boundary: StreamBoundaryCursor | None = None
 
     def ensure_runtime(self) -> None:
         """Resolve frozen B23 + scaler. Call only after non-model gates pass."""
@@ -330,10 +372,15 @@ class MProt3IntegrationRuntime:
                 ) from exc
 
     def reset(self) -> None:
+        self._invalidate_admission()
+
+    def _invalidate_admission(self) -> None:
+        """Flush temporal state and clear validated binding / boundary cursor."""
         self.composer.flush()
         self._validated_binding = None
+        self._boundary = None
 
-    def _compatible_validated_continuation(self, bundle: StreamBundle) -> bool:
+    def _identity_compatible(self, bundle: StreamBundle) -> bool:
         binding = self._validated_binding
         if binding is None:
             return False
@@ -344,28 +391,66 @@ class MProt3IntegrationRuntime:
             and binding.observation_kind == bundle.observation_kind
         )
 
+    def _boundary_allows_continuation(self, bundle: StreamBundle) -> bool:
+        """Cross-bundle continuity beyond per-bundle SW-01 validation."""
+        if self._boundary is None or not bundle.samples:
+            return False
+        first = bundle.samples[0]
+        if first.reset_flag:
+            return False
+        if first.session_id is not None and self._boundary.last_session_id is not None:
+            if first.session_id != self._boundary.last_session_id:
+                return False
+        if first.t is None or not np.isfinite(first.t):
+            return False
+        dt = float(first.t) - self._boundary.last_t
+        if dt <= 0:
+            return False
+        if dt > self.composer.max_gap_s:
+            return False
+        if first.seq is not None and self._boundary.last_seq is not None:
+            if int(first.seq) != int(self._boundary.last_seq) + 1:
+                return False
+        return True
+
+    def _set_boundary_from_sample(self, sample: Sample) -> None:
+        if sample.t is None or not np.isfinite(sample.t):
+            self._boundary = None
+            return
+        self._boundary = StreamBoundaryCursor(
+            last_t=float(sample.t),
+            last_seq=None if sample.seq is None else int(sample.seq),
+            last_session_id=sample.session_id,
+        )
+
     def ingest_bundle(self, bundle: StreamBundle, *, mode: str = "FIXTURE_OFFLINE_VALIDATION") -> dict[str, Any]:
         """Validate SW-01 then admit samples. Production path has no bypass."""
         source_receipt = evaluate_stream(bundle, mode=mode, check_source="m_prot_3")
         if source_receipt.get("overall_status") != STATUS_PASS:
+            # Subsequent SW-01 failure must invalidate any prior ready state.
+            self._invalidate_admission()
             raise MProt3FailClosed(
                 "SOURCE_VALIDATION_FAILED",
                 str(source_receipt.get("overall_status")),
             )
         if (bundle.observation_kind or "") == "scalar_vendor_rr":
+            self._invalidate_admission()
             raise MProt3FailClosed("SCALAR_RR_NOT_MODEL_INPUT", "scalar_rr cannot feed B23")
         for sample in bundle.samples:
             if sample.phase is None and sample.scalar_rr is not None:
+                self._invalidate_admission()
                 raise MProt3FailClosed("SCALAR_RR_NOT_MODEL_INPUT", "missing phase; scalar_rr ignored")
 
         receipt_sha = str(source_receipt.get("receipt_sha256") or "")
         if not receipt_sha:
+            self._invalidate_admission()
             raise MProt3FailClosed("SOURCE_RECEIPT_MISSING", "SW-01 receipt_sha256 required")
 
-        if self._compatible_validated_continuation(bundle):
+        continue_stream = self._identity_compatible(bundle) and self._boundary_allows_continuation(bundle)
+        if continue_stream:
             admission_id = self._validated_binding.admission_id  # type: ignore[union-attr]
         else:
-            # Unrelated source identity must not inherit prior PASS buffer state.
+            # Discontinuity or new identity: do not bridge prior temporal history.
             self.composer.flush()
             self._admission_seq += 1
             admission_id = self._admission_seq
@@ -379,8 +464,25 @@ class MProt3IntegrationRuntime:
             observation_kind=bundle.observation_kind,
             admission_id=admission_id,
         )
+
+        last_admitted: Sample | None = None
         for sample in bundle.samples:
-            self.composer.push(sample, admission_id=admission_id)
+            reason = self.composer.push(
+                sample,
+                admission_id=admission_id,
+                receipt_sha256=receipt_sha,
+            )
+            if reason in {"TIMESTAMP_INVALID", "PHASE_MISSING", "TIMESTAMP_NON_MONOTONIC"}:
+                # Internal push failure after PASS — fail closed and invalidate.
+                self._invalidate_admission()
+                raise MProt3FailClosed("SOURCE_ADMISSION_REJECTED", reason)
+            if self.composer.buffered_count > 0:
+                last_admitted = sample
+
+        if last_admitted is None or self.composer.buffered_count == 0:
+            self._boundary = None
+        else:
+            self._set_boundary_from_sample(last_admitted)
         return source_receipt
 
     def _base_receipt(self, *, lineage_class: str) -> WiringReceipt:
@@ -404,20 +506,7 @@ class MProt3IntegrationRuntime:
         presence_available: bool | None = None,
         lineage_class: str = "FIXTURE_NON_CAMPAIGN",
     ) -> WiringReceipt:
-        """Caller-triggered inference when validated window is ready.
-
-        Fail-closed order:
-          SW-01 validated admission
-          → window readiness (causal time coverage)
-          → explicit presence gate
-          → R1 mapping / exact 300
-          → runtime/model/scaler resolution
-          → M-PROT-2 quality/physiology
-
-        ``presence_gate_satisfied`` (preferred) / ``presence_available`` (alias):
-        True only when an external governed presence signal opens the gate.
-        Default False → PRESENCE_UNAVAILABLE. Never inferred from physiology.
-        """
+        """Caller-triggered inference when validated window is ready."""
         base = self._base_receipt(lineage_class=lineage_class)
 
         if self._validated_binding is None or self._validated_binding.overall_status != STATUS_PASS:
@@ -428,7 +517,6 @@ class MProt3IntegrationRuntime:
             base.status = "UNAVAILABLE"
             base.fail_closed_code = "SW01_ADMISSION_REQUIRED"
             return base
-        # Reject windows that mix admissions or lack the active binding stamp.
         if any(s.admission_id != self._validated_binding.admission_id for s in self.composer._buf):
             base.status = "UNAVAILABLE"
             base.fail_closed_code = "VALIDATION_BINDING_MISMATCH"
@@ -448,7 +536,9 @@ class MProt3IntegrationRuntime:
             return base
 
         try:
-            native = self.composer.compose_native_window(source_binding=self._validated_binding)
+            native, receipt_chain = self.composer.compose_native_window(
+                source_binding=self._validated_binding
+            )
         except MProt3FailClosed as exc:
             base.status = "UNAVAILABLE"
             base.fail_closed_code = exc.code
@@ -459,6 +549,8 @@ class MProt3IntegrationRuntime:
         base.window_end_s = float(native.provenance.get("window_end_s"))
         base.source_sample_count = int(native.provenance.get("source_sample_count"))
         base.session_id = str(native.provenance.get("session_id"))
+        base.sw01_receipt_sha256_chain = receipt_chain
+        base.sw01_receipt_sha256 = receipt_chain[-1] if receipt_chain else None
 
         if not presence_gate_satisfied:
             base.status = "UNAVAILABLE"
@@ -538,11 +630,13 @@ __all__ = [
     "CausalTemporalComposer",
     "MProt3FailClosed",
     "MProt3IntegrationRuntime",
+    "StreamBoundaryCursor",
     "ValidatedSourceBinding",
     "WiringReceipt",
     "PHASE_ID",
     "WINDOW_CONTRACT",
     "PRODUCTION_INFERENCE_CADENCE",
     "TARGET_SPAN_S",
+    "DEFAULT_MAX_GAP_S",
     "assert_no_mn9_imports",
 ]

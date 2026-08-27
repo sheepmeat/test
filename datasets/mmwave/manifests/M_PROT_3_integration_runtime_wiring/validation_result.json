@@ -1,9 +1,9 @@
 {
-  "schema_version": "M-PROT-3-VALIDATION-RESULT-V2",
+  "schema_version": "M-PROT-3-VALIDATION-RESULT-V3",
   "phase": "M-PROT-3",
-  "corrective_round": 1,
+  "corrective_round": 2,
   "base_sha": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
-  "previous_sol_reviewed_head": "f6101abb76e2f6980565daf845b56804980978c6",
+  "previous_sol_reviewed_head": "59c6fad0e5d3efd591b2daeab006d77760c98d58",
   "terminal_verdict": "M_PROT_3_INTEGRATION_RUNTIME_WIRING_COMPLETE",
   "worker_claim": "CLOSED",
   "sol_review_required": true,
@@ -14,8 +14,8 @@
     "command": "python3 -m pytest tests/test_mmwave_m_prot_3_integration_runtime.py -q",
     "exit_code": 0,
     "stdout_tail": [
-      "..................                                                       [100%]",
-      "18 passed in 2.83s"
+      "..........................                                               [100%]",
+      "26 passed in 2.16s"
     ]
   },
   "m_prot_2_regression": {
@@ -23,20 +23,21 @@
     "exit_code": 0,
     "stdout_tail": [
       "...............................                                          [100%]",
-      "31 passed (AGENTS current-gate assertion aligned post-#176 merge)"
-    ],
-    "note": "AGENTS pointer test updated for Sol corrective #4; historical M-PROT-2 validation_result.json unchanged"
+      "31 passed in 2.61s"
+    ]
   },
   "combined_focused": {
     "command": "python3 -m pytest tests/test_mmwave_m_prot_3_integration_runtime.py tests/test_mmwave_m_prot_2_deployable_contract.py -q",
-    "result": "49 passed"
+    "exit_code": 0,
+    "stdout_tail": [
+      ".........................................................                [100%]",
+      "57 passed in 2.99s"
+    ]
   },
-  "correctives": {
-    "1_sw01_admission": "CLOSED",
-    "2_duration_window_r1_resampling": "CLOSED",
-    "3_lazy_model_load": "CLOSED",
-    "4_agents_current_state": "CLOSED",
-    "5_source_provenance_binding": "CLOSED"
+  "correctives_round_2": {
+    "A_subsequent_sw01_fail_invalidates": "CLOSED",
+    "B_cross_bundle_continuity": "CLOSED",
+    "C_multi_bundle_provenance": "CLOSED"
   },
   "model_replaced": false,
   "new_training": false,
