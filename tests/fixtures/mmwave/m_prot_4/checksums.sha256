@@ -1,0 +1,3 @@
+# SHA-256 coverage for compact committed M-PROT-4 fixture artifacts.
+9faff01eb8fcde9491eed5848cec63628524c03d7a6225aa27c21ea561f8a329  tests/fixtures/mmwave/m_prot_4/fixture_catalog.json
+242b0fd113700d92dc4caae999a4cb08333dab9eddb1f6f6ac761581e5e33472  tests/fixtures/mmwave/m_prot_4/fixture_checksums.json
