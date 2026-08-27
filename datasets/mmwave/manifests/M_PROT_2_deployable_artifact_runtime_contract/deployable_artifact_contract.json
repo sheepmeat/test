@@ -19,6 +19,12 @@
   "feature_order_or_tensor_layout": "concat(trace[300], trace_mask[300], scale[12], quality[9])",
   "identity_gate": "resolve_verified_runtime verifies scaler content SHA and TraceModel canonical parameter SHA before inference",
   "reference_lineage_class_default": "FIXTURE_NON_CAMPAIGN",
+  "fixture_overlay_contract": "M-PROT-2-FIXTURE-OVERLAY-V1",
+  "REFERENCE_RECEIPT_ENVIRONMENT_BOUND": true,
+  "BIT_EXACT_OUTPUT_ACROSS_DIFFERENT_TORCH_VERSIONS": "NOT_GUARANTEED",
+  "CROSS_RUNTIME_SEMANTIC_MATCH": "DESCRIPTIVE_ONLY",
+  "reference_receipt_environment": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/reference_receipt_environment.json",
+  "m_prot_3_authorized": false,
   "output_mapping": {
     "breathing": "sigmoid(logit); PRESENT if >= 0.5 else ABSENT; ABSENT is not apnea",
     "rr": "rr_bpm = rr_raw * 8.948729232744911 + 17.12899193548387; <=0 or nonfinite -> UNAVAILABLE_INVALID_DECODE",

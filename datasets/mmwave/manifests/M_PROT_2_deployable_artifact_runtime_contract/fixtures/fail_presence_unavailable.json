@@ -2,5 +2,6 @@
   "base": "positive_valid_621.json",
   "overrides": {
     "presence_available": false
-  }
+  },
+  "expected_fail_closed_code": "PRESENCE_UNAVAILABLE"
 }

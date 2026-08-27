@@ -2,11 +2,16 @@
   "schema_version": "M-PROT-2-VALIDATION-RESULT-V1",
   "phase": "M-PROT-2",
   "corrective": "M-PROT-2-CORRECTIVE-RUNTIME-INTEGRITY",
+  "additional_corrective": "M-PROT-2-SECOND-CORRECTIVE-FIXTURES-ENV-AGENTS",
   "date": "2026-08-27",
   "base_sha": "0def5c7cb22cc6a15866ac5737fc5865bb016974",
-  "previous_sol_reviewed_head": "ed3741776b3719f51ba6cafa908251ea2d99fabd",
+  "previous_sol_reviewed_head": "3a40634e26a0e62060de400b2f768d401f53d015",
   "previous_sol_verdict": "CORRECTIVE_REQUIRED",
+  "worker_terminal_result": "M_PROT_2_DEPLOYABLE_CONTRACT_FROZEN",
   "terminal_verdict": "M_PROT_2_DEPLOYABLE_CONTRACT_FROZEN",
+  "sol_review_status": "PENDING_REVIEW",
+  "m_prot_3_authorized": false,
+  "CURRENT_TRACK_P_GATE": "M-PROT-3=NOT_AUTHORIZED_PENDING_M_PROT_2_SOL_REVIEW",
   "PRIMARY_PROTOTYPE_DEPLOYABLE_REPRESENTATION": "PYTORCH_FLOAT32_STATE_DICT",
   "nominated_panel_id": "B23",
   "source_artifact_sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
@@ -16,6 +21,11 @@
     "preprocessing_closure": "CLOSED",
     "admissibility_separation": "CLOSED",
     "fixture_provenance": "CLOSED"
+  },
+  "additional_corrective_items": {
+    "executable_negative_fixtures": "CLOSED",
+    "cross_runtime_determinism_contract": "CLOSED",
+    "agents_current_state_pointer": "CLOSED"
   },
   "thresholds_retuned": false,
   "new_training": false,
@@ -29,8 +39,9 @@
   "TFLITE_CONVERSION": "NOT_YET_PROVEN",
   "pi_runtime_validated": false,
   "sw_branches_modified": false,
-  "tests": "tests/test_mmwave_m_prot_2_deployable_contract.py 27 passed",
+  "tests": "tests/test_mmwave_m_prot_2_deployable_contract.py",
   "preprocessing_parity_max_abs": 0.0,
+  "fixture_overlay_contract": "M-PROT-2-FIXTURE-OVERLAY-V1",
   "unchanged_final_lane": {
     "D1_PRESENT": 57,
     "D1_ABSENT": 0,
@@ -40,7 +51,7 @@
     "M_PV4": "UNAUTHORIZED",
     "D2": "LOCKED"
   },
-  "next_phase": "M-PROT-3",
+  "next_phase_after_sol_approval_and_merge_only": "M-PROT-3",
   "sol_review_required": true,
   "report": "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_2_Deployable_Artifact_Runtime_Contract_01.md",
   "manifest_dir": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/"

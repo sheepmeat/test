@@ -438,5 +438,97 @@ class MProt2NegativeRRObservedMinIsNotClamped(unittest.TestCase):
         self.assertNotEqual(bpm, 1)
 
 
+class MProt2SecondCorrectiveFixturesAndPointersTest(unittest.TestCase):
+    FIXTURE_DIR = ROOT / "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures"
+
+    def test_committed_negative_fixtures_resolve_and_fail_as_named(self) -> None:
+        from adapters.mmwave_m_prot_2_b23_runtime import resolve_fixture_document
+
+        cases = [
+            ("fail_already_zscored.json", "DOUBLE_ZSCORE_FORBIDDEN"),
+            ("fail_input_unavailable.json", "INPUT_UNAVAILABLE"),
+            ("fail_presence_unavailable.json", "PRESENCE_UNAVAILABLE"),
+            ("fail_short_window.json", "INCOMPLETE_INPUT"),
+        ]
+        for name, expected in cases:
+            with self.subTest(fixture=name):
+                path = self.FIXTURE_DIR / name
+                fixture = resolve_fixture_document(path, fixture_root=self.FIXTURE_DIR)
+                self.assertIn("trace", fixture)
+                self.assertEqual(len(fixture["trace"]), 300)
+                receipt = run_prototype_inference(fixture, root=ROOT)
+                self.assertEqual(receipt.fail_closed_code, expected)
+
+    def test_overlay_missing_base_path_escape_and_cycle_fail_closed(self) -> None:
+        from adapters.mmwave_m_prot_2_b23_runtime import resolve_fixture_document
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            missing = root / "missing_overlay.json"
+            missing.write_text(json.dumps({"base": "does_not_exist.json", "overrides": {}}), encoding="utf-8")
+            with self.assertRaises(PrototypeFailClosed) as ctx:
+                resolve_fixture_document(missing, fixture_root=root)
+            self.assertEqual(ctx.exception.code, "FIXTURE_BASE_MISSING")
+
+            escape = root / "escape.json"
+            escape.write_text(json.dumps({"base": "../outside.json", "overrides": {}}), encoding="utf-8")
+            with self.assertRaises(PrototypeFailClosed) as ctx:
+                resolve_fixture_document(escape, fixture_root=root)
+            self.assertEqual(ctx.exception.code, "FIXTURE_BASE_INVALID")
+
+            a = root / "a.json"
+            b = root / "b.json"
+            a.write_text(json.dumps({"base": "b.json", "overrides": {}}), encoding="utf-8")
+            b.write_text(json.dumps({"base": "a.json", "overrides": {}}), encoding="utf-8")
+            with self.assertRaises(PrototypeFailClosed) as ctx:
+                resolve_fixture_document(a, fixture_root=root)
+            self.assertEqual(ctx.exception.code, "FIXTURE_BASE_CYCLE")
+
+    def test_runtime_environment_contract_machine_readable(self) -> None:
+        from adapters.mmwave_m_prot_2_b23_runtime import capture_runtime_environment
+
+        env = capture_runtime_environment()
+        self.assertTrue(env["REFERENCE_RECEIPT_ENVIRONMENT_BOUND"])
+        self.assertEqual(env["BIT_EXACT_OUTPUT_ACROSS_DIFFERENT_TORCH_VERSIONS"], "NOT_GUARANTEED")
+        self.assertEqual(env["CROSS_RUNTIME_SEMANTIC_MATCH"], "DESCRIPTIVE_ONLY")
+        self.assertEqual(env["device"], "CPU")
+        matrix = json.loads(
+            (
+                ROOT
+                / "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/runtime_dependency_matrix.json"
+            ).read_text()
+        )
+        self.assertEqual(matrix["BIT_EXACT_OUTPUT_ACROSS_DIFFERENT_TORCH_VERSIONS"], "NOT_GUARANTEED")
+        self.assertEqual(matrix["CROSS_RUNTIME_SEMANTIC_MATCH"], "DESCRIPTIVE_ONLY")
+        self.assertTrue(matrix["REFERENCE_RECEIPT_ENVIRONMENT_BOUND"])
+        ref = json.loads(
+            (
+                ROOT
+                / "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/reference_receipt_environment.json"
+            ).read_text()
+        )
+        for key in ("python_version", "torch_version", "numpy_version", "platform", "architecture", "device"):
+            self.assertIn(key, ref)
+
+    def test_agents_and_validation_do_not_authorize_m_prot_3(self) -> None:
+        agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+        self.assertIn("NOT_AUTHORIZED_PENDING_M_PROT_2_SOL_REVIEW", agents)
+        self.assertIn("historical nomination", agents.lower())
+        # M-PROT-1 bullet must not claim it is the current next=M-PROT-2 gate.
+        m1_line = [line for line in agents.splitlines() if line.startswith("- M-PROT-1 ")][0]
+        self.assertNotIn("Next Track P phase is M-PROT-2", m1_line)
+        m2_line = [line for line in agents.splitlines() if line.startswith("- M-PROT-2 ")][0]
+        self.assertNotIn("Next Track P phase is M-PROT-3", m2_line)
+        validation = json.loads(
+            (
+                ROOT
+                / "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/validation_result.json"
+            ).read_text()
+        )
+        self.assertEqual(validation["worker_terminal_result"], "M_PROT_2_DEPLOYABLE_CONTRACT_FROZEN")
+        self.assertEqual(validation["sol_review_status"], "PENDING_REVIEW")
+        self.assertFalse(validation["m_prot_3_authorized"])
+
+
 if __name__ == "__main__":
     unittest.main()

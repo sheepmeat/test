@@ -30,6 +30,16 @@ SUBJECT_TO_REPLACEMENT
 | Admissibility vs canonical preprocess | **CLOSED** — Stage 0 gate vs Stage 1 preprocess; runtime is stricter than historical training non-finite fill |
 | Synthetic fixture provenance | **CLOSED** — reference fixtures emit `FIXTURE_NON_CAMPAIGN`, not `DEBUG_CAPTURE` |
 
+## Sol Additional Corrective Closure
+
+| Item | Status |
+|---|---|
+| Executable committed negative fixtures | **CLOSED** — harness resolves `base+overrides` (`M-PROT-2-FIXTURE-OVERLAY-V1`); direct `fail_*.json` execution matches named fail codes |
+| Cross-runtime numerical determinism contract | **CLOSED** — reference receipt bound to Python 3.9.6 / torch 2.8.0 / numpy 1.26.4 / CPU; cross-version bit-exact `NOT_GUARANTEED`; semantic match descriptive only |
+| AGENTS current-state / M-PROT-3 authorization pointer | **CLOSED** — M-PROT-1 historical; M-PROT-2 awaiting Sol exact-head review; `M-PROT-3=NOT_AUTHORIZED_PENDING_M_PROT_2_SOL_REVIEW` |
+
+Worker evidence may record `worker_terminal_result=M_PROT_2_DEPLOYABLE_CONTRACT_FROZEN` while `sol_review_status=PENDING_REVIEW` and `m_prot_3_authorized=false`.
+
 ---
 
 ## Representation selected
@@ -110,16 +120,38 @@ Prototype receipts always keep `PROTOTYPE_INTEGRATION_ONLY=true` and `FINAL_GOVE
 - Pi latency
 - Live MR60 windowing/resampling to 10 Hz
 - Device-domain or safety performance
+- Bit-exact floating outputs across different torch/numpy/Python versions
+
+Cross-runtime semantic status is descriptive only. Do not invent an absolute float tolerance as a scientific PASS criterion.
+
+---
+
+## Reference receipt environment
+
+Canonical positive-path receipt is environment-bound:
+
+```text
+python 3.9.6
+torch 2.8.0
+numpy 1.26.4
+device CPU
+platform macOS arm64 (see reference_receipt_environment.json)
+```
+
+Same frozen runtime environment → deterministic result expected.
+Different torch versions → bit-exact identity `NOT_GUARANTEED`.
 
 ---
 
 ## Handoff to M-PROT-3
 
-M-PROT-3 should wire:
+M-PROT-3 is **not authorized** until Sol approves and merges the reviewed exact head of PR #176.
+
+After authorization, M-PROT-3 should wire:
 
 sensor/transport → SW-01 validated source → 30 s / 10 Hz R1 window → this R2/Stage0/Stage1/model/decode → prototype output → LIVE_DEBUG_NON_CAMPAIGN evidence → SW-03/SW-04.
 
-Do not call `MMWaveInterpreter` or M-N9. Do not start M-PROT-3 until Sol merges this PR.
+Do not call `MMWaveInterpreter` or M-N9.
 
 ---
 
@@ -137,7 +169,8 @@ M_PV38_PANEL_CHANGED = false
 ```
 
 ```text
-TERMINAL_VERDICT = M_PROT_2_DEPLOYABLE_CONTRACT_FROZEN
-NEXT_PHASE       = M-PROT-3
-SOL_REVIEW_REQUIRED = YES
+worker_terminal_result = M_PROT_2_DEPLOYABLE_CONTRACT_FROZEN
+sol_review_status      = PENDING_REVIEW
+m_prot_3_authorized    = false
+SOL_REVIEW_REQUIRED    = YES
 ```

@@ -802,3 +802,97 @@ def valid_r1_parity_fixture(*, seed: int = 23) -> CommonTraceOutput:
     # Mild non-stationary envelope keeps spectral descriptors well-defined.
     trace = trace * (0.85 + 0.15 * np.sin(2.0 * np.pi * 0.03 * t))
     return build_r1_common_trace_from_window(trace)
+
+
+FIXTURE_OVERLAY_CONTRACT_VERSION = "M-PROT-2-FIXTURE-OVERLAY-V1"
+GOVERNED_FIXTURE_DIR_REL = (
+    "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures"
+)
+
+
+def capture_runtime_environment() -> dict[str, Any]:
+    """Record the CPU software environment that produced a reference receipt."""
+    import platform
+    import sys
+
+    return {
+        "schema_version": "M-PROT-2-REFERENCE-RECEIPT-ENVIRONMENT-V1",
+        "python_version": sys.version.split()[0],
+        "torch_version": torch.__version__,
+        "numpy_version": np.__version__,
+        "platform": platform.platform(),
+        "architecture": platform.machine(),
+        "processor": platform.processor() or "UNAVAILABLE",
+        "device": "CPU",
+        "REFERENCE_RECEIPT_ENVIRONMENT_BOUND": True,
+        "BIT_EXACT_OUTPUT_ACROSS_DIFFERENT_TORCH_VERSIONS": "NOT_GUARANTEED",
+        "SAME_FROZEN_RUNTIME_ENVIRONMENT": "deterministic result expected",
+        "CROSS_RUNTIME_SEMANTIC_MATCH": "DESCRIPTIVE_ONLY",
+    }
+
+
+def _safe_fixture_path(path: Path, fixture_root: Path) -> Path:
+    resolved = path.resolve()
+    root = fixture_root.resolve()
+    try:
+        resolved.relative_to(root)
+    except ValueError as exc:
+        raise PrototypeFailClosed(
+            "FIXTURE_PATH_ESCAPE",
+            f"fixture path escapes governed directory: {resolved.as_posix()}",
+        ) from exc
+    return resolved
+
+
+def resolve_fixture_document(
+    fixture_path: Path,
+    *,
+    fixture_root: Path | None = None,
+    _stack: tuple[Path, ...] = (),
+) -> dict[str, Any]:
+    """Load a fixture JSON, resolving optional base+overrides overlays.
+
+    Overlay contract (``M-PROT-2-FIXTURE-OVERLAY-V1``):
+    - ``base`` is a filename relative to the governed fixtures directory only
+    - ``overrides`` shallow-merge onto the resolved base mapping
+    - missing base / path escape / cyclic base chains fail closed
+    - standalone fixtures without ``base`` load as-is
+    """
+    fixture_root = Path(fixture_root or (Path(fixture_path).resolve().parent))
+    path = _safe_fixture_path(Path(fixture_path), fixture_root)
+    if path in _stack:
+        chain = " -> ".join(item.name for item in (_stack + (path,)))
+        raise PrototypeFailClosed("FIXTURE_BASE_CYCLE", f"cyclic fixture base chain: {chain}")
+    if not path.is_file():
+        raise PrototypeFailClosed("FIXTURE_MISSING", f"missing fixture: {path.as_posix()}")
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise PrototypeFailClosed("FIXTURE_INVALID", f"cannot parse fixture JSON: {exc}") from exc
+    if not isinstance(payload, dict):
+        raise PrototypeFailClosed("FIXTURE_INVALID", "fixture root must be a JSON object")
+    if "base" not in payload:
+        return payload
+    base_name = payload.get("base")
+    if not isinstance(base_name, str) or not base_name or "/" in base_name or "\\" in base_name or base_name in {".", ".."}:
+        raise PrototypeFailClosed(
+            "FIXTURE_BASE_INVALID",
+            "base must be a plain filename inside the governed fixtures directory",
+        )
+    overrides = payload.get("overrides", {})
+    if overrides is None:
+        overrides = {}
+    if not isinstance(overrides, dict):
+        raise PrototypeFailClosed("FIXTURE_INVALID", "overrides must be a JSON object")
+    reserved = {key for key in payload if key not in {"base", "overrides", "expected_fail_closed_code", "notes"}}
+    if reserved:
+        raise PrototypeFailClosed(
+            "FIXTURE_INVALID",
+            f"overlay fixture may only contain base/overrides(+metadata); unexpected keys={sorted(reserved)}",
+        )
+    base_path = _safe_fixture_path(fixture_root / base_name, fixture_root)
+    if not base_path.is_file():
+        raise PrototypeFailClosed("FIXTURE_BASE_MISSING", f"missing base fixture: {base_name}")
+    merged = dict(resolve_fixture_document(base_path, fixture_root=fixture_root, _stack=_stack + (path,)))
+    merged.update(overrides)
+    return merged

@@ -2,5 +2,6 @@
   "base": "positive_valid_621.json",
   "overrides": {
     "already_zscored": true
-  }
+  },
+  "expected_fail_closed_code": "DOUBLE_ZSCORE_FORBIDDEN"
 }

@@ -3,10 +3,22 @@
   "module": "adapters/mmwave_m_prot_2_b23_runtime.py",
   "harness": "scripts/mmwave/run_m_prot_2_reference_harness.py",
   "tests": "tests/test_mmwave_m_prot_2_deployable_contract.py",
+  "fixture_overlay_contract": "M-PROT-2-FIXTURE-OVERLAY-V1",
+  "fixture_resolver": "adapters.mmwave_m_prot_2_b23_runtime.resolve_fixture_document",
   "positive_fixture": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/positive_valid_621.json",
   "positive_path_status": "PHYSIOLOGY_ELIGIBLE",
   "positive_path_lineage_class": "FIXTURE_NON_CAMPAIGN",
   "identities_verified_on_success": true,
+  "reference_receipt_environment": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/reference_receipt_environment.json",
+  "REFERENCE_RECEIPT_ENVIRONMENT_BOUND": true,
+  "BIT_EXACT_OUTPUT_ACROSS_DIFFERENT_TORCH_VERSIONS": "NOT_GUARANTEED",
+  "CROSS_RUNTIME_SEMANTIC_MATCH": "DESCRIPTIVE_ONLY",
+  "direct_negative_fixture_execution": {
+    "fail_already_zscored.json": "DOUBLE_ZSCORE_FORBIDDEN",
+    "fail_input_unavailable.json": "INPUT_UNAVAILABLE",
+    "fail_presence_unavailable.json": "PRESENCE_UNAVAILABLE",
+    "fail_short_window.json": "INCOMPLETE_INPUT"
+  },
   "fail_closed_fixtures_covered": [
     "wrong model SHA",
     "artifact missing",
@@ -24,10 +36,10 @@
     "negative decoded RR",
     "presence unavailable",
     "INPUT_UNAVAILABLE",
-    "FINAL_GOVERNED_EVALUATION lineage forbidden"
+    "FINAL_GOVERNED_EVALUATION lineage forbidden",
+    "committed fail_*.json via harness overlay resolver"
   ],
   "preprocessing_parity": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/preprocessing_parity_validation.json",
   "source_vs_deployed_parity": "NOT_APPLICABLE_SOURCE_IS_DEPLOYABLE",
-  "live_hardware_required": false,
-  "pytest": "27 passed"
+  "live_hardware_required": false
 }
