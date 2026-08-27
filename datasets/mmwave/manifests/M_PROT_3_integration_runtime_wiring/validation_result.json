@@ -23,8 +23,13 @@
     "exit_code": 0,
     "stdout_tail": [
       "...............................                                          [100%]",
-      "31 passed in 2.06s"
-    ]
+      "31 passed (AGENTS current-gate assertion aligned post-#176 merge)"
+    ],
+    "note": "AGENTS pointer test updated for Sol corrective #4; historical M-PROT-2 validation_result.json unchanged"
+  },
+  "combined_focused": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_3_integration_runtime.py tests/test_mmwave_m_prot_2_deployable_contract.py -q",
+    "result": "49 passed"
   },
   "correctives": {
     "1_sw01_admission": "CLOSED",
