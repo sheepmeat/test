@@ -2,6 +2,8 @@
   "schema_version": "M-PROT-2-INTEGRATION-HANDOFF-V1",
   "next_phase": "M-PROT-3",
   "next_phase_name": "Integration Runtime Wiring",
+  "next_phase_authorized": false,
+  "authorization_status": "NOT_AUTHORIZED_PENDING_M_PROT_2_SOL_REVIEW",
   "do_not_execute_in_m_prot_2": true,
   "consume": {
     "candidate": "B23",

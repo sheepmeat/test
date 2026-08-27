@@ -43,7 +43,7 @@
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/integration_handoff.json",
-      "sha256": "300b6f74cc53acb7ab536c7be08786667f159b7ad226fc2893afb8346c3a2485"
+      "sha256": "0a55e9a5302ad7992f7dc57f90a6069475abd7e5ead39203b0e45ea61ab64de9"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/output_decode_contract.json",
@@ -55,7 +55,7 @@
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/preprocessing_parity_validation.json",
-      "sha256": "c97ae01572a291de600f85bbe33049df60f043859eea09bf0fb6f0dcf12f25ce"
+      "sha256": "cef1f2e390343e8d092c2ac9df5c41735bc866aee63662595922ed3499e7c03d"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/reference_harness_validation.json",

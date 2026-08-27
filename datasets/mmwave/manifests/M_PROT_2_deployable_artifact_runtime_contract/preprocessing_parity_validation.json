@@ -40,7 +40,7 @@
     "adapters/mmwave_r1_sensor_independent_trace.py": "2d5f34feef524e18f9b9e5b5d8c9ef4223fa133c55fb48ee4703f7e31a54e102",
     "adapters/mmwave_r2_representation_features.py": "834a566d5a69176baf5ef8f4e5a56710cca110fc5092035738fc9ead8f983625",
     "scripts/mmwave_m_pv2_candidate_training.py": "87015c0accbc20d50bab5e842f86d06f7af0931a3cb28c46d5522767fd98d26e",
-    "adapters/mmwave_m_prot_2_b23_runtime.py": "93f7bb26c218cff9eba47c85166f1a1318af165fea81bf3d416bb557a8a4e52f"
+    "adapters/mmwave_m_prot_2_b23_runtime.py": "6066b40e8befb3a9b110a2a654319c656b95464fb4343114c9ec783e2d8db123"
   },
   "parity_fixture": "valid_r1_parity_fixture(seed=23)",
   "parity_max_abs_difference": 0.0,
