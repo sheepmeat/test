@@ -1,11 +1,15 @@
 {
-  "schema_version": "M-PROT-3-INTEGRATION-RUNTIME-WIRING-V1",
+  "schema_version": "M-PROT-3-INTEGRATION-RUNTIME-WIRING-V2",
   "phase": "M-PROT-3",
+  "corrective_round": 1,
   "base_sha": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
+  "previous_sol_reviewed_head": "f6101abb76e2f6980565daf845b56804980978c6",
   "date": "2026-08-27",
-  "terminal_worker_state": "IMPLEMENTED_PENDING_SOL_REVIEW",
+  "terminal_worker_state": "CORRECTIVE_IMPLEMENTED_PENDING_SOL_REVIEW",
   "terminal_verdict": "M_PROT_3_INTEGRATION_RUNTIME_WIRING_COMPLETE",
-  "m_prot_4": "NOT_AUTHORIZED_PENDING_SOL_REVIEW",
+  "worker_claim": "CLOSED",
+  "sol_review": "PENDING",
+  "m_prot_4": "NOT_AUTHORIZED_PENDING_M_PROT_3_SOL_REVIEW",
   "b23": {
     "panel_id": "B23",
     "family": "family_b",
@@ -30,22 +34,39 @@
     "module": "adapters/mmwave_m_prot_3_integration_runtime.py",
     "flow": [
       "SW-01 source",
-      "SW-01 validation",
-      "M-PROT-3 causal temporal composer",
-      "NativeTraceInput",
-      "R1 adapt_native_trace",
+      "SW-01 evaluate_stream PASS (required; no production bypass)",
+      "ValidatedSourceBinding bound to admitted buffer",
+      "M-PROT-3 causal time-coverage composer",
+      "NativeTraceInput (full source-domain suffix)",
+      "R1 adapt_native_trace (owns resampling; exact 300 gate; no trim/pad)",
+      "lazy resolve_verified_runtime / B23 load",
       "M-PROT-2 run_prototype_inference (R2/Stage0/Stage1/B23)",
-      "WiringReceipt"
+      "WiringReceipt V2 with SW-01 provenance"
     ],
     "m_prot_2_runtime": "adapters/mmwave_m_prot_2_b23_runtime.py",
     "sw01_checker": "adapters/mmwave_sw01_interface_checker.py",
     "r1": "adapters/mmwave_r1_sensor_independent_trace.py"
   },
+  "source_validation_invariant": {
+    "production_sw01_bypass_removed": true,
+    "require_sw01_pass_param": "REMOVED",
+    "public_push_sample": "REMOVED",
+    "unvalidated_sample_can_reach_inference": false,
+    "failed_sw01_populates_model_state": false,
+    "validation_state_bound_to_active_data": true
+  },
   "window_contract": {
     "id": "M_PROT_3_CAUSAL_30S_10HZ_300_V1",
-    "duration_s": 30,
+    "readiness_basis": "CAUSAL_TIME_COVERAGE",
+    "target_span_s": 29.9,
+    "duration_s_conceptual": 30,
     "target_rate_hz": 10,
-    "target_samples": 300,
+    "target_r1_samples": 300,
+    "source_count_eq_30s": false,
+    "r1_owns_resampling": true,
+    "post_r1_trim": false,
+    "post_r1_pad": false,
+    "r1_sample_count_mismatch": "R1_SAMPLE_COUNT_MISMATCH",
     "causal_past_only": true,
     "session_change_flush": true,
     "reset_flush": true,
@@ -55,10 +76,41 @@
     "no_silent_large_gap_interpolation": true,
     "production_inference_cadence": "NOT_GOVERNED_IN_M_PROT_3"
   },
+  "fail_closed_order": [
+    "SW01_ADMISSION_REQUIRED",
+    "WINDOW_NOT_READY",
+    "PRESENCE_UNAVAILABLE",
+    "R1_*",
+    "R1_SAMPLE_COUNT_MISMATCH",
+    "TARGET_RUNTIME_DEPENDENCY_UNAVAILABLE / M-PROT-2 identity",
+    "QUALITY / PHYSIOLOGY"
+  ],
+  "lazy_model_load": {
+    "window_not_ready_loads_model": false,
+    "presence_unavailable_loads_model": false,
+    "model_load_after": ["validated_sw01", "window_ready", "presence_gate", "r1_exact_300"]
+  },
   "presence": {
     "governed_source_in_sw01": false,
-    "policy": "CALLER_MUST_SUPPLY_EXPLICIT_PRESENCE; DEFAULT PRESENCE_UNAVAILABLE",
+    "api_field": "presence_gate_satisfied",
+    "policy": "CALLER_MUST_SUPPLY_EXPLICIT_PRESENCE_GATE; DEFAULT PRESENCE_UNAVAILABLE",
     "no_inference_from_physiology": true
+  },
+  "wiring_receipt": {
+    "schema_version": "M-PROT-3-WIRING-RECEIPT-V2",
+    "binds": [
+      "device_identity",
+      "interface_identity",
+      "configuration_identity",
+      "observation_kind",
+      "sw01_receipt_sha256",
+      "source_validation_status",
+      "session_id",
+      "window_start_s",
+      "window_end_s",
+      "source_sample_count",
+      "r1_sample_count"
+    ]
   },
   "scaler_content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
   "scaler_apply_count": "ONCE",

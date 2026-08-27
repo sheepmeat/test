@@ -2,11 +2,11 @@
   "algorithm": "sha256",
   "files": {
     "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/integration_repo_readonly_audit.json": "4cd2822f6ca9d81203d38a934732d9591ab23e04921fcb58b4ee03d0720881ae",
-    "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/integration_runtime_contract.json": "cdaba1880084f8830f77a0cc03c1b3e2a715125ae5bfabb7032a13a6787ea177",
+    "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/integration_runtime_contract.json": "78d441dffb33c88974dbd256709a6193e9b469c7fb818bfc3d9d1280c1be772e",
     "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/known_limitations.json": "ae3306b13bb5d1e9f3112bbd7a98345bf59fa0e76ad4aa94d28149d2fa418dd0",
-    "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/validation_result.json": "45589915dd76f30edad7d5e9209d4b40df620494ae28a61f1fed10ea00517e42",
-    "adapters/mmwave_m_prot_3_integration_runtime.py": "4cea979f187136cfe21b841d704f4a6308a2ab2d67a5c4a0d9be9121e4c2f7f9",
-    "tests/test_mmwave_m_prot_3_integration_runtime.py": "57b360605371a8b2295a31e60ef4690433784c5fd7bf4676f48065a2d5eecb2c",
-    "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_3_Integration_Runtime_Wiring_01.md": "646b1ce6c4b1f169fce1cf0bac7ee548da1f927110aaac5396b3d2e0e7a00e1c"
+    "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/validation_result.json": "739779e3a5da7eb44e0e93905e9c1ca8686821f0b6faa6d00f90f5d5006cb5a6",
+    "adapters/mmwave_m_prot_3_integration_runtime.py": "b2717d0a84d9587933eea9ef7c6f1acd0f2a7ed981a2a890aee049163d9ea059",
+    "tests/test_mmwave_m_prot_3_integration_runtime.py": "0817aa7ab921a7c76418ae98aa3a60e69920718fa705869ef4632414777b1630",
+    "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_3_Integration_Runtime_Wiring_01.md": "8829f33c351dff47672692982d991fdc9e4c0c1435a1888c57f246d8ababcabc"
   }
 }
