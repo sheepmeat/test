@@ -1,0 +1,14 @@
+{
+  "schema_version": "M-PROT-3-INTEGRATION-REPO-READONLY-AUDIT-V1",
+  "repo": "https://github.com/yuname121/integration.git",
+  "inspected_branch": "main",
+  "inspected_commit": "c759205bfae0adbbd3a33235718801a8e476b28c",
+  "modified_by_this_phase": false,
+  "notes": [
+    "Read-only discovery only; no integration-repo PR.",
+    "Historical M-N9 / MMWaveInterpreter path may exist in integration tree; M-PROT-3 must not fall back to it.",
+    "Pi torch install remains NOT LIVE VERIFIED from this standalone phase."
+  ],
+  "future_seam": "SW-01 validated source \u2192 M-PROT-3 composer \u2192 R1 \u2192 M-PROT-2 B23 \u2192 prototype runtime output",
+  "target_runtime_dependency_status": "TARGET_RUNTIME_DEPENDENCY_NOT_LIVE_VERIFIED"
+}

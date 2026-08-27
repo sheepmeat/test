@@ -511,14 +511,24 @@ class MProt2SecondCorrectiveFixturesAndPointersTest(unittest.TestCase):
             self.assertIn(key, ref)
 
     def test_agents_and_validation_do_not_authorize_m_prot_3(self) -> None:
+        """AGENTS current gate vs frozen M-PROT-2 machine-readable history.
+
+        After PR #176 merge, AGENTS must not keep the pre-merge
+        `NOT_AUTHORIZED_PENDING_M_PROT_2_SOL_REVIEW` current-state string.
+        Historical M-PROT-2 validation_result.json remains frozen evidence and
+        may still record worker-era `m_prot_3_authorized=false`.
+        """
         agents = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
-        self.assertIn("NOT_AUTHORIZED_PENDING_M_PROT_2_SOL_REVIEW", agents)
         self.assertIn("historical nomination", agents.lower())
-        # M-PROT-1 bullet must not claim it is the current next=M-PROT-2 gate.
         m1_line = [line for line in agents.splitlines() if line.startswith("- M-PROT-1 ")][0]
         self.assertNotIn("Next Track P phase is M-PROT-2", m1_line)
         m2_line = [line for line in agents.splitlines() if line.startswith("- M-PROT-2 ")][0]
+        self.assertIn("COMPLETE / MERGED", m2_line)
+        self.assertIn("97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa", m2_line)
         self.assertNotIn("Next Track P phase is M-PROT-3", m2_line)
+        m3_line = [line for line in agents.splitlines() if line.startswith("- M-PROT-3 ")][0]
+        self.assertIn("CURRENT_TRACK_P_GATE=M-PROT-3_PENDING_SOL_REVIEW", m3_line)
+        self.assertIn("NOT_AUTHORIZED_PENDING_M_PROT_3_SOL_REVIEW", m3_line)
         validation = json.loads(
             (
                 ROOT
