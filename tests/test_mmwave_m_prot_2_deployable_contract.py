@@ -525,7 +525,13 @@ class MProt2SecondCorrectiveFixturesAndPointersTest(unittest.TestCase):
         self.assertIn("M-PROT-3", agents)
         self.assertIn("COMPLETE / MERGED", agents)
         self.assertIn("M-PROT-4", agents)
-        self.assertIn("NOT_AUTHORIZED", agents)  # M-PROT-5 or equivalent remains blocked
+        self.assertIn("M-PROT-5A", agents)
+        self.assertIn("COMPLETE / TEST_REPO_PREDEPLOYMENT_COMPLETE", agents)
+        self.assertIn("M-PROT-5B_TEAM_REPO_PI_RUNTIME_PORT", agents)
+        self.assertIn("NOT STARTED", agents)
+        # Live Pi remains deferred; M-PROT-5C live hardware stays NOT_AUTHORIZED.
+        self.assertIn("M-PROT-5C", agents)
+        self.assertIn("NOT_AUTHORIZED", agents)
         validation = json.loads(
             (
                 ROOT
