@@ -18,9 +18,9 @@ This is **not** live Pi / MR60 validation and **not** team-repo integration.
 
 | Slice | Status | Scope |
 |---|---|---|
-| M-PROT-5A | **ACTIVE** | Test-repo predeployment closure |
-| M-PROT-5B | DEFERRED | Team-repo Pi runtime port |
-| M-PROT-5C | DEFERRED | Live Pi + MR60 smoke |
+| M-PROT-5A | **COMPLETE / TEST_REPO_PREDEPLOYMENT_COMPLETE** after Sol-authorized merge of `#182` | Test-repo predeployment closure |
+| M-PROT-5B | **NEXT** / NOT STARTED | Team-repo Pi runtime port |
+| M-PROT-5C | DEFERRED / LIVE_HARDWARE_NOT_EXECUTED | Live Pi + MR60 smoke |
 
 ```text
 LIVE_HARDWARE_EXECUTED = NO
@@ -35,8 +35,8 @@ PI_DEPLOYMENT = DEFERRED
 | M-PROT-4 | COMPLETE / MERGED / PASS_WITH_LIMITATIONS |
 | PR `#179` | MERGED |
 | merge / main | `8945e5912a00f9fc177408d7993126431c1a958c` |
-| M-PROT-5A | AUTHORIZED / ACTIVE / TEST_REPO_PREDEPLOYMENT_CLOSURE |
-| M-PROT-5B | DEFERRED / TEAM_REPO_NOT_YET_INSPECTED_FOR_PORT |
+| M-PROT-5A | COMPLETE / TEST_REPO_PREDEPLOYMENT_COMPLETE (PR `#182` closure; pending merge until on `main`) |
+| M-PROT-5B | NEXT / TEAM_REPO_PI_RUNTIME_PORT / NOT STARTED |
 | M-PROT-5C | DEFERRED / LIVE_HARDWARE_NOT_EXECUTED |
 
 Stale AGENTS wording `M-PROT-4_IMPLEMENTED_PENDING_SOL_REVIEW` is corrected in the current overlay only. Historical M-PROT-2/3/4 evidence files are not rewritten.
@@ -146,4 +146,4 @@ D2 LOCKED
 
 Sol exact-head review of this PR. Do not merge without Sol.
 
-Recommended next phase after merge: **`M-PROT-5B_TEAM_REPO_PI_RUNTIME_PORT`**.
+Upon Sol-authorized merge of `#182`, M-PROT-5A is **COMPLETE / TEST_REPO_PREDEPLOYMENT_COMPLETE**. Recommended next phase: **`M-PROT-5B_TEAM_REPO_PI_RUNTIME_PORT`** (`NEXT` / not started).

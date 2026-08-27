@@ -7,8 +7,10 @@
   "sol_review_required": true,
   "sol_review": "PENDING",
   "m_prot_4_status": "COMPLETE / MERGED / PASS_WITH_LIMITATIONS",
-  "m_prot_5b": "DEFERRED / TEAM_REPO_NOT_YET_INSPECTED_FOR_PORT",
-  "m_prot_5c": "DEFERRED / LIVE_HARDWARE_NOT_EXECUTED / NOT_AUTHORIZED",
+  "m_prot_5a_post_merge_state": "COMPLETE / TEST_REPO_PREDEPLOYMENT_COMPLETE",
+  "m_prot_5b": "NEXT / TEAM_REPO_PI_RUNTIME_PORT / NOT_STARTED",
+  "m_prot_5b_implementation_started": false,
+  "m_prot_5c": "DEFERRED / LIVE_HARDWARE_NOT_EXECUTED",
   "legacy_pr_cleanup": {
     "180": "CLOSED_WITHOUT_MERGE",
     "181": "CLOSED_WITHOUT_MERGE",
