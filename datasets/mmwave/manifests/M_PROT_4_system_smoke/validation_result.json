@@ -1,0 +1,53 @@
+{
+  "schema_version": "M-PROT-4-VALIDATION-RESULT-V1",
+  "phase": "M-PROT-4",
+  "base_sha": "31a4ab6803266a9bdf4a1645a4408a9d29f7333f",
+  "terminal_verdict": "M_PROT_4_SYSTEM_SMOKE_IMPLEMENTED",
+  "worker_claim": "CLOSED",
+  "sol_review_required": true,
+  "sol_review": "PENDING",
+  "m_prot_5": "NOT_AUTHORIZED",
+  "m_prot_4_tests": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_4_system_smoke.py -q",
+    "exit_code": 0,
+    "stdout_tail": [
+      "..................                                                       [100%]",
+      "18 passed in 3.88s"
+    ]
+  },
+  "m_prot_3_regression": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_3_integration_runtime.py -q",
+    "exit_code": 0,
+    "stdout_tail": [
+      "..........................                                               [100%]",
+      "26 passed in 2.41s"
+    ]
+  },
+  "m_prot_2_regression": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_2_deployable_contract.py -q",
+    "exit_code": 0,
+    "stdout_tail": [
+      "...............................                                          [100%]",
+      "31 passed in 2.00s"
+    ],
+    "note": "AGENTS pointer assertion aligned to post-#178/#M-PROT-4 current gate; historical M-PROT-2 validation_result.json unchanged"
+  },
+  "combined_focused": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_4_system_smoke.py tests/test_mmwave_m_prot_3_integration_runtime.py tests/test_mmwave_m_prot_2_deployable_contract.py -q",
+    "exit_code": 0,
+    "stdout_tail": [
+      "75 passed in 2.24s"
+    ]
+  },
+  "model_changed": false,
+  "scaler_changed": false,
+  "threshold_changed": false,
+  "training": false,
+  "tflite": "NOT_EXECUTED",
+  "int8": "NOT_AUTHORIZED",
+  "live_hardware": false,
+  "m_prot_3_changed": false,
+  "direct_b23_bypass": false,
+  "m_n9_fallback": false,
+  "pr_merged": false
+}
