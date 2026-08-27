@@ -5,10 +5,16 @@
   "tests": "tests/test_mmwave_m_prot_2_deployable_contract.py",
   "positive_fixture": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/positive_valid_621.json",
   "positive_path_status": "PHYSIOLOGY_ELIGIBLE",
+  "positive_path_lineage_class": "FIXTURE_NON_CAMPAIGN",
+  "identities_verified_on_success": true,
   "fail_closed_fixtures_covered": [
     "wrong model SHA",
     "artifact missing",
     "wrong scaler SHA",
+    "alternate model object",
+    "mutated model weights",
+    "alternate scaler mapping",
+    "scaler feature-order drift",
     "wrong assembled dimension",
     "missing trace mask",
     "wrong scale dimension",
@@ -17,9 +23,11 @@
     "incomplete input",
     "negative decoded RR",
     "presence unavailable",
-    "INPUT_UNAVAILABLE"
+    "INPUT_UNAVAILABLE",
+    "FINAL_GOVERNED_EVALUATION lineage forbidden"
   ],
+  "preprocessing_parity": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/preprocessing_parity_validation.json",
   "source_vs_deployed_parity": "NOT_APPLICABLE_SOURCE_IS_DEPLOYABLE",
   "live_hardware_required": false,
-  "pytest": "18 passed"
+  "pytest": "27 passed"
 }

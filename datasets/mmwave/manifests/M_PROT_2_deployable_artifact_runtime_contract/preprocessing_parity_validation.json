@@ -1,0 +1,55 @@
+{
+  "schema_version": "M-PROT-2-PREPROCESSING-PARITY-V1",
+  "R1_ADAPTER_MODULE": "adapters/mmwave_r1_sensor_independent_trace.py",
+  "R1_PROFILE": "R1-A_NATIVE_CENTERED_RELATIVE_MOTION_10HZ_V1",
+  "R2_EXTRACTOR_MODULE": "adapters/mmwave_r2_representation_features.py",
+  "R2_EXTRACTOR_FUNCTION": "extract_feature_candidates",
+  "TRAINING_FEATURE_MATRIX_FUNCTION": "scripts.mmwave_m_pv2_candidate_training._feature_matrix",
+  "TRAINING_FEATURE_ARRAYS_FUNCTION": "scripts.mmwave_m_pv2_candidate_training._feature_arrays",
+  "RUNTIME_ASSEMBLER_FUNCTION": "adapters.mmwave_m_prot_2_b23_runtime.assemble_family_b_vector",
+  "RUNTIME_FROM_R1_FUNCTION": "adapters.mmwave_m_prot_2_b23_runtime.assemble_from_r1_common_trace",
+  "CANONICAL_SCALE_NAMES": [
+    "native_mad_about_median",
+    "native_robust_rms_about_median",
+    "native_robust_range_p05_p95",
+    "native_peak_to_peak",
+    "common_trace_mad_about_median",
+    "common_trace_robust_rms_about_median",
+    "total_signal_energy",
+    "total_signal_mean_square",
+    "log_total_signal_energy",
+    "respiratory_band_energy",
+    "respiratory_band_power",
+    "log_respiratory_band_energy"
+  ],
+  "CANONICAL_QUALITY_NAMES": [
+    "trace_sample_count",
+    "trace_duration_s",
+    "trace_mad_about_median",
+    "trace_robust_rms_about_median",
+    "trace_robust_range_p05_p95",
+    "trace_mean_square",
+    "trace_is_exact_flat",
+    "valid_sample_fraction",
+    "source_quality_flag_count"
+  ],
+  "SCALER_PATH": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+  "SCALER_FILE_SHA256": "9555c8c954078b80e26fbcd3bc5d5a70b9a2e04620946118709ec95418b2ac36",
+  "SCALER_CONTENT_SHA256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+  "implementation_source_sha256": {
+    "adapters/mmwave_r1_sensor_independent_trace.py": "2d5f34feef524e18f9b9e5b5d8c9ef4223fa133c55fb48ee4703f7e31a54e102",
+    "adapters/mmwave_r2_representation_features.py": "834a566d5a69176baf5ef8f4e5a56710cca110fc5092035738fc9ead8f983625",
+    "scripts/mmwave_m_pv2_candidate_training.py": "87015c0accbc20d50bab5e842f86d06f7af0931a3cb28c46d5522767fd98d26e",
+    "adapters/mmwave_m_prot_2_b23_runtime.py": "93f7bb26c218cff9eba47c85166f1a1318af165fea81bf3d416bb557a8a4e52f"
+  },
+  "parity_fixture": "valid_r1_parity_fixture(seed=23)",
+  "parity_max_abs_difference": 0.0,
+  "parity_status": "BIT_EXACT_FOR_FINITE_ACCEPTED_FIXTURE",
+  "note": "Runtime Stage0 rejects non-finite inputs; training historically filled non-finite assembled values with zeros. For finite accepted inputs the Family B 621-d vectors match bit-exactly.",
+  "sections": {
+    "trace": "0:300",
+    "trace_mask": "300:600",
+    "scale": "600:612",
+    "quality": "612:621"
+  }
+}

@@ -13,6 +13,14 @@
     "content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
     "file_sha256": "9555c8c954078b80e26fbcd3bc5d5a70b9a2e04620946118709ec95418b2ac36"
   },
+  "verification_policy": {
+    "injected_model_requires_canonical_parameter_sha": true,
+    "injected_scaler_requires_content_sha_and_feature_order": true,
+    "canonical_receipt_fields_require_identities_verified": true,
+    "alternate_model_can_impersonate_b23": false,
+    "alternate_scaler_can_impersonate_canonical": false
+  },
   "wrong_sha_fails_closed": true,
-  "no_silent_alternate_checkpoint": true
+  "no_silent_alternate_checkpoint": true,
+  "no_fallback_model": true
 }

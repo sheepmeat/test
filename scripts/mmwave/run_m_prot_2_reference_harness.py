@@ -13,7 +13,6 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from adapters.mmwave_m_prot_2_b23_runtime import (  # noqa: E402
-    load_b23_model,
     run_prototype_inference,
     valid_fixture_from_scaler,
     verify_scaler,
@@ -26,23 +25,27 @@ def main() -> int:
     parser.add_argument("--positive-path", action="store_true", help="run the built-in valid synthetic fixture")
     parser.add_argument("--output", type=Path, help="write inference receipt JSON")
     args = parser.parse_args()
-    scaler = verify_scaler(ROOT)
-    model = load_b23_model(ROOT)
+    # Authoritative path always verifies scaler + B23 identities internally.
     if args.positive_path:
+        scaler = verify_scaler(ROOT)
         fixture = valid_fixture_from_scaler(scaler)
     elif args.fixture is not None:
         fixture = json.loads(args.fixture.read_text(encoding="utf-8"))
     else:
         parser.error("provide --fixture or --positive-path")
         return 2
-    receipt = run_prototype_inference(fixture, root=ROOT, model=model, scaler=scaler)
+    receipt = run_prototype_inference(
+        fixture,
+        root=ROOT,
+        lineage_class=fixture.get("lineage_class", "FIXTURE_NON_CAMPAIGN"),
+    )
     payload = receipt.to_json()
     text = json.dumps(payload, indent=2, sort_keys=True) + "\n"
     if args.output is not None:
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(text, encoding="utf-8")
     sys.stdout.write(text)
-    return 0 if receipt.status != "UNAVAILABLE" or receipt.fail_closed_code else 0
+    return 0
 
 
 if __name__ == "__main__":

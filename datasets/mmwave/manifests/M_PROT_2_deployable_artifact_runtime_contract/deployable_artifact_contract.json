@@ -12,7 +12,13 @@
   "window_duration_s": 30.0,
   "sample_rate_hz": 10.0,
   "preprocessing_identity": "M-PROT-2-B23-PREPROCESS-V1",
+  "preprocessing_stages": {
+    "stage_0": "runtime admissibility gate",
+    "stage_1": "canonical R1/R2 + TRAIN scaler once"
+  },
   "feature_order_or_tensor_layout": "concat(trace[300], trace_mask[300], scale[12], quality[9])",
+  "identity_gate": "resolve_verified_runtime verifies scaler content SHA and TraceModel canonical parameter SHA before inference",
+  "reference_lineage_class_default": "FIXTURE_NON_CAMPAIGN",
   "output_mapping": {
     "breathing": "sigmoid(logit); PRESENT if >= 0.5 else ABSENT; ABSENT is not apnea",
     "rr": "rr_bpm = rr_raw * 8.948729232744911 + 17.12899193548387; <=0 or nonfinite -> UNAVAILABLE_INVALID_DECODE",

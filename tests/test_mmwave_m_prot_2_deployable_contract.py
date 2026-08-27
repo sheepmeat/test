@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Focused M-PROT-2 B23 deployable-contract tests. No training, D1 final, D2, or C1 ranking."""
+"""Focused M-PROT-2 B23 deployable-contract tests (including Sol corrective)."""
 
 from __future__ import annotations
 
-import hashlib
+import copy
 import json
 import tempfile
 import unittest
@@ -22,6 +22,10 @@ from adapters.mmwave_m_prot_2_b23_runtime import (
     PRIMARY_REPRESENTATION,
     QUALITY_FEATURE_NAMES,
     QUALITY_THRESHOLD,
+    R1_ADAPTER_MODULE,
+    R1_PROFILE,
+    R2_EXTRACTOR_FUNCTION,
+    R2_EXTRACTOR_MODULE,
     SAMPLE_RATE_HZ,
     SCALE_FEATURE_NAMES,
     SCALER_CONTENT_SHA256,
@@ -32,13 +36,22 @@ from adapters.mmwave_m_prot_2_b23_runtime import (
     WINDOW_DURATION_S,
     PrototypeFailClosed,
     assemble_family_b_vector,
+    assemble_from_r1_common_trace,
     decode_rr,
+    extract_profile_b_descriptors,
     load_b23_model,
+    resolve_verified_runtime,
     run_prototype_inference,
     sha256_file,
+    stage0_runtime_admissibility,
+    stage1_canonical_preprocess,
+    training_side_family_b_vector,
     valid_fixture_from_scaler,
+    valid_r1_parity_fixture,
     verify_artifact,
+    verify_model_identity,
     verify_scaler,
+    verify_scaler_payload,
 )
 from scripts.mmwave_m_pv2_candidate_training import TraceModel, _canonical_parameter_sha
 
@@ -67,6 +80,7 @@ class MProt2DeployableContractTest(unittest.TestCase):
         self.assertEqual(sha256_file(ROOT / SOURCE_ARTIFACT_REL), SOURCE_ARTIFACT_SHA256)
         self.assertEqual(_canonical_parameter_sha(self.model), CANONICAL_PARAMETER_SHA256)
         self.assertIsInstance(self.model, TraceModel)
+        verify_model_identity(self.model)
 
     def test_window_rate_and_feature_contract(self) -> None:
         self.assertEqual(WINDOW_DURATION_S, 30.0)
@@ -86,6 +100,10 @@ class MProt2DeployableContractTest(unittest.TestCase):
         )
         self.assertEqual(vector.shape, (621,))
         self.assertEqual(vector.dtype, np.float32)
+        self.assertEqual(vector[0:300].shape, (300,))
+        self.assertEqual(vector[300:600].shape, (300,))
+        self.assertEqual(vector[600:612].shape, (12,))
+        self.assertEqual(vector[612:621].shape, (9,))
 
     def test_scaler_sha_frozen(self) -> None:
         self.assertEqual(
@@ -107,13 +125,13 @@ class MProt2DeployableContractTest(unittest.TestCase):
         self.assertEqual(ctx.exception.code, "DOUBLE_ZSCORE_FORBIDDEN")
         bad = dict(self.valid)
         bad["already_zscored"] = True
-        receipt = run_prototype_inference(bad, root=ROOT, model=self.model, scaler=self.scaler)
+        receipt = run_prototype_inference(bad, root=ROOT)
         self.assertEqual(receipt.fail_closed_code, "DOUBLE_ZSCORE_FORBIDDEN")
         self.assertIsNone(receipt.breathing_decision)
 
     def test_positive_path_is_deterministic(self) -> None:
-        first = run_prototype_inference(self.valid, root=ROOT, model=self.model, scaler=self.scaler)
-        second = run_prototype_inference(self.valid, root=ROOT, model=self.model, scaler=self.scaler)
+        first = run_prototype_inference(self.valid, root=ROOT)
+        second = run_prototype_inference(self.valid, root=ROOT)
         self.assertEqual(first.to_json(), second.to_json())
         self.assertIn(first.breathing_decision, {"PRESENT", "ABSENT"})
         self.assertEqual(first.artifact_sha256, SOURCE_ARTIFACT_SHA256)
@@ -121,6 +139,8 @@ class MProt2DeployableContractTest(unittest.TestCase):
         self.assertFalse(first.apnea_emitted)
         self.assertNotEqual(first.breathing_decision, "APNEA")
         self.assertIn("PROTOTYPE_INTEGRATION_ONLY", first.mandatory_semantics)
+        self.assertTrue(first.identities_verified)
+        self.assertEqual(first.lineage_class, "FIXTURE_NON_CAMPAIGN")
 
     def test_thresholds_not_retuned(self) -> None:
         self.assertEqual(BREATHING_THRESHOLD, 0.5)
@@ -137,18 +157,17 @@ class MProt2DeployableContractTest(unittest.TestCase):
         with self.assertRaises(PrototypeFailClosed) as ctx:
             verify_artifact(ROOT, other)
         self.assertEqual(ctx.exception.code, "ARTIFACT_SHA_MISMATCH")
-        receipt = run_prototype_inference(
-            self.valid, root=ROOT, model=self.model, scaler=self.scaler, artifact_path=other
-        )
+        receipt = run_prototype_inference(self.valid, root=ROOT, artifact_path=other)
         self.assertEqual(receipt.fail_closed_code, "ARTIFACT_SHA_MISMATCH")
         self.assertIsNone(receipt.rr_bpm)
+        self.assertFalse(receipt.identities_verified)
+        self.assertIsNone(receipt.artifact_sha256)
 
     def test_missing_artifact_rejected(self) -> None:
         missing = ROOT / "models/mmwave/m_pv2/family_b/does_not_exist.pt"
-        receipt = run_prototype_inference(
-            self.valid, root=ROOT, scaler=self.scaler, artifact_path=missing
-        )
+        receipt = run_prototype_inference(self.valid, root=ROOT, artifact_path=missing)
         self.assertEqual(receipt.fail_closed_code, "ARTIFACT_MISSING")
+        self.assertFalse(receipt.identities_verified)
 
     def test_wrong_scaler_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -172,7 +191,7 @@ class MProt2DeployableContractTest(unittest.TestCase):
         ]
         for fixture, code in cases:
             with self.subTest(code=code, keys=list(fixture.keys())):
-                receipt = run_prototype_inference(fixture, root=ROOT, model=self.model, scaler=self.scaler)
+                receipt = run_prototype_inference(fixture, root=ROOT)
                 self.assertEqual(receipt.fail_closed_code, code)
                 self.assertIsNone(receipt.breathing_decision)
                 self.assertIsNone(receipt.rr_bpm)
@@ -183,7 +202,7 @@ class MProt2DeployableContractTest(unittest.TestCase):
         inf_scale = list(self.valid["scale"])
         inf_scale[0] = float("inf")
         for fixture in ({**self.valid, "trace": nan_trace}, {**self.valid, "scale": inf_scale}):
-            receipt = run_prototype_inference(fixture, root=ROOT, model=self.model, scaler=self.scaler)
+            receipt = run_prototype_inference(fixture, root=ROOT)
             self.assertEqual(receipt.fail_closed_code, "NON_FINITE_INPUT")
             self.assertIsNone(receipt.rr_bpm)
 
@@ -191,8 +210,6 @@ class MProt2DeployableContractTest(unittest.TestCase):
         receipt = run_prototype_inference(
             {**self.valid, "presence_available": False},
             root=ROOT,
-            model=self.model,
-            scaler=self.scaler,
         )
         self.assertEqual(receipt.fail_closed_code, "PRESENCE_UNAVAILABLE")
         self.assertIsNone(receipt.breathing_decision)
@@ -203,15 +220,13 @@ class MProt2DeployableContractTest(unittest.TestCase):
         receipt = run_prototype_inference(
             {**self.valid, "availability_state": "INPUT_UNAVAILABLE"},
             root=ROOT,
-            model=self.model,
-            scaler=self.scaler,
         )
         self.assertEqual(receipt.fail_closed_code, "INPUT_UNAVAILABLE")
         self.assertIsNone(receipt.rr_bpm)
         self.assertFalse(receipt.apnea_emitted)
 
     def test_absent_is_never_apnea(self) -> None:
-        receipt = run_prototype_inference(self.valid, root=ROOT, model=self.model, scaler=self.scaler)
+        receipt = run_prototype_inference(self.valid, root=ROOT)
         if receipt.breathing_decision == "ABSENT":
             self.assertEqual(receipt.rr_status, "SUPPRESSED_ABSENT")
             self.assertIsNone(receipt.rr_bpm)
@@ -233,7 +248,7 @@ class MProt2DeployableContractTest(unittest.TestCase):
         self.assertEqual(status, "UNAVAILABLE_INVALID_DECODE")
 
     def test_no_fallback_model(self) -> None:
-        source = inspect_no_fallback()
+        source = (ROOT / "adapters/mmwave_m_prot_2_b23_runtime.py").read_text(encoding="utf-8")
         self.assertNotIn("mmwave_heuristic_fallback", source)
         self.assertNotIn("MN9Interpreter", source)
         self.assertNotIn("candidate_seed_11.pt", source)
@@ -276,16 +291,145 @@ class MProt2DeployableContractTest(unittest.TestCase):
         self.assertEqual(frozen["unchanged_final_lane"]["D1_ABSENT"], 0)
 
 
-def inspect_no_fallback() -> str:
-    source = (ROOT / "adapters/mmwave_m_prot_2_b23_runtime.py").read_text(encoding="utf-8")
-    return source
+class MProt2CorrectiveIntegrityTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.scaler = verify_scaler(ROOT)
+        cls.model = load_b23_model(ROOT)
+        cls.valid = valid_fixture_from_scaler(cls.scaler)
+
+    def test_alternate_model_object_rejected(self) -> None:
+        alternate = TraceModel(INPUT_DIM, FAMILY)
+        with self.assertRaises(PrototypeFailClosed) as ctx:
+            verify_model_identity(alternate)
+        self.assertEqual(ctx.exception.code, "MODEL_IDENTITY_MISMATCH")
+        receipt = run_prototype_inference(self.valid, root=ROOT, model=alternate)
+        self.assertEqual(receipt.fail_closed_code, "MODEL_IDENTITY_MISMATCH")
+        self.assertFalse(receipt.identities_verified)
+        self.assertIsNone(receipt.artifact_sha256)
+        self.assertIsNone(receipt.breathing_decision)
+
+    def test_mutated_model_weights_rejected(self) -> None:
+        mutated = TraceModel(INPUT_DIM, FAMILY)
+        mutated.load_state_dict(self.model.state_dict(), strict=True)
+        with torch.no_grad():
+            for parameter in mutated.parameters():
+                parameter.add_(0.01)
+                break
+        with self.assertRaises(PrototypeFailClosed) as ctx:
+            verify_model_identity(mutated)
+        self.assertEqual(ctx.exception.code, "MODEL_IDENTITY_MISMATCH")
+        receipt = run_prototype_inference(self.valid, root=ROOT, model=mutated)
+        self.assertEqual(receipt.fail_closed_code, "MODEL_IDENTITY_MISMATCH")
+        self.assertIsNone(receipt.artifact_sha256)
+
+    def test_canonical_model_injection_accepted_only_after_verify(self) -> None:
+        loaded, scaler = resolve_verified_runtime(root=ROOT, model=self.model, scaler=self.scaler)
+        self.assertIs(loaded, self.model)
+        receipt = run_prototype_inference(self.valid, root=ROOT, model=self.model, scaler=self.scaler)
+        self.assertTrue(receipt.identities_verified)
+        self.assertEqual(receipt.artifact_sha256, SOURCE_ARTIFACT_SHA256)
+
+    def test_alternate_scaler_mapping_rejected(self) -> None:
+        alternate = copy.deepcopy(self.scaler)
+        alternate["scale"]["mean"] = list(alternate["scale"]["mean"])
+        alternate["scale"]["mean"][0] = float(alternate["scale"]["mean"][0]) + 1.0
+        content = {key: value for key, value in alternate.items() if key != "sha256"}
+        from scripts.mmwave_m_pv2_candidate_training import _sha256_json
+
+        alternate["sha256"] = _sha256_json(content)
+        with self.assertRaises(PrototypeFailClosed) as ctx:
+            verify_scaler_payload(alternate)
+        self.assertEqual(ctx.exception.code, "SCALER_SHA_MISMATCH")
+        receipt = run_prototype_inference(self.valid, root=ROOT, scaler=alternate)
+        self.assertEqual(receipt.fail_closed_code, "SCALER_SHA_MISMATCH")
+        self.assertFalse(receipt.identities_verified)
+        self.assertIsNone(receipt.scaler_content_sha256)
+
+    def test_mutated_scaler_feature_order_rejected(self) -> None:
+        mutated = copy.deepcopy(self.scaler)
+        names = list(mutated["scale"]["names"])
+        names[0], names[1] = names[1], names[0]
+        mutated["scale"]["names"] = names
+        with self.assertRaises(PrototypeFailClosed) as ctx:
+            verify_scaler_payload(mutated)
+        self.assertIn(ctx.exception.code, {"SCALER_SHA_MISMATCH", "SCALER_FEATURE_ORDER_MISMATCH"})
+
+    def test_fixture_provenance_is_non_campaign(self) -> None:
+        receipt = run_prototype_inference(self.valid, root=ROOT)
+        payload = receipt.to_json()
+        self.assertEqual(payload["lineage_class"], "FIXTURE_NON_CAMPAIGN")
+        self.assertNotEqual(payload["lineage_class"], "DEBUG_CAPTURE")
+        self.assertTrue(payload["PROTOTYPE_INTEGRATION_ONLY"])
+        self.assertFalse(payload["FINAL_GOVERNED_EVALUATION"])
+        forbidden = run_prototype_inference(
+            {**self.valid, "lineage_class": "FINAL_GOVERNED_EVALUATION"},
+            root=ROOT,
+        )
+        self.assertEqual(forbidden.fail_closed_code, "LINEAGE_CLASS_FORBIDDEN")
+
+
+class MProt2CorrectivePreprocessingTest(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.scaler = verify_scaler(ROOT)
+
+    def test_r1_r2_lineage_identity_recorded(self) -> None:
+        self.assertEqual(R1_ADAPTER_MODULE, "adapters/mmwave_r1_sensor_independent_trace.py")
+        self.assertEqual(R1_PROFILE, "R1-A_NATIVE_CENTERED_RELATIVE_MOTION_10HZ_V1")
+        self.assertEqual(R2_EXTRACTOR_MODULE, "adapters/mmwave_r2_representation_features.py")
+        self.assertEqual(R2_EXTRACTOR_FUNCTION, "extract_feature_candidates")
+
+    def test_canonical_descriptor_extraction_parity(self) -> None:
+        common = valid_r1_parity_fixture(seed=23)
+        descriptors = extract_profile_b_descriptors(common)
+        self.assertEqual(descriptors["trace"].shape, (300,))
+        self.assertEqual(descriptors["trace_mask"].shape, (300,))
+        self.assertEqual(descriptors["scale"].shape, (12,))
+        self.assertEqual(descriptors["quality"].shape, (9,))
+        runtime = assemble_from_r1_common_trace(common, self.scaler)
+        training = training_side_family_b_vector(common, self.scaler)
+        self.assertEqual(runtime.dtype, np.float32)
+        self.assertEqual(training.dtype, np.float32)
+        self.assertEqual(runtime.shape, (621,))
+        max_abs = float(np.max(np.abs(runtime - training)))
+        self.assertEqual(max_abs, 0.0)
+        self.assertEqual(float(np.max(np.abs(runtime[0:300] - training[0:300]))), 0.0)
+        self.assertEqual(float(np.max(np.abs(runtime[300:600] - training[300:600]))), 0.0)
+        self.assertEqual(float(np.max(np.abs(runtime[600:612] - training[600:612]))), 0.0)
+        self.assertEqual(float(np.max(np.abs(runtime[612:621] - training[612:621]))), 0.0)
+
+    def test_admissibility_separated_from_canonical_preprocess(self) -> None:
+        valid = valid_fixture_from_scaler(self.scaler)
+        with self.assertRaises(PrototypeFailClosed) as ctx:
+            stage0_runtime_admissibility(
+                trace=valid["trace"],
+                trace_mask=valid["trace_mask"],
+                scale=valid["scale"],
+                quality=[float("nan")] * 9,
+            )
+        self.assertEqual(ctx.exception.code, "NON_FINITE_INPUT")
+        accepted = stage0_runtime_admissibility(
+            trace=valid["trace"],
+            trace_mask=valid["trace_mask"],
+            scale=valid["scale"],
+            quality=valid["quality"],
+        )
+        vector = stage1_canonical_preprocess(accepted, self.scaler)
+        self.assertEqual(vector.shape, (621,))
+        # Stage 1 does not invent physiology for invalid inputs; Stage 0 already gated.
+        source = (ROOT / "adapters/mmwave_m_prot_2_b23_runtime.py").read_text(encoding="utf-8")
+        self.assertIn("STAGE 0", source)
+        self.assertIn("STAGE 1", source)
+        # Runtime Stage 1 must not call nan_to_num; training-side parity helper
+        # may mention historical training nan_to_num in docs only.
+        stage1 = source.split("def stage1_canonical_preprocess", 1)[1].split("\ndef ", 1)[0]
+        self.assertNotIn("nan_to_num", stage1)
+        self.assertNotIn("np.nan_to_num", stage0_runtime_admissibility.__code__.co_names)
 
 
 class MProt2NegativeRRObservedMinIsNotClamped(unittest.TestCase):
     def test_development_negative_raw_is_not_clamped_to_zero(self) -> None:
-        # Historical B23 D1_DEV_VAL min was a decoded bpm of -0.34, which is
-        # already a decoded value. A raw that decodes to <= 0 must be unavailable,
-        # never clamped to 0/1/min-plausible.
         raw = (0.0 - 17.12899193548387) / 8.948729232744911
         bpm, status = decode_rr(raw)
         self.assertEqual(status, "UNAVAILABLE_INVALID_DECODE")

@@ -8,7 +8,8 @@
   "breathing_probability": 0.990851801907185,
   "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
   "fail_closed_code": null,
-  "lineage_class": "DEBUG_CAPTURE",
+  "identities_verified": true,
+  "lineage_class": "FIXTURE_NON_CAMPAIGN",
   "mandatory_semantics": [
     "PROTOTYPE_INTEGRATION_ONLY",
     "NOT_FINAL_SELECTED_MODEL",

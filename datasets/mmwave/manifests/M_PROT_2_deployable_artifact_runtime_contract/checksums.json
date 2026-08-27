@@ -3,15 +3,15 @@
   "files": [
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/artifact_integrity_receipts.json",
-      "sha256": "cdd38cbaecac8e8971341fa181ff2ec8c297f0e9bc3e9adb91f01f8aacd5ab53"
+      "sha256": "0e5ab940353e020d5ef359cd9285242e487275994bc0a3fa11a323af49c7f27e"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/deployable_artifact_contract.json",
-      "sha256": "82059eb63bd6c6fe21b576cd652d28d87646b00e3ff230d6a2f57cfa84975a1e"
+      "sha256": "0a8c49debc48068dae969c0913cfa59095cfcc3a8abcab2a2bfadc80763bab10"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fail_closed_contract.json",
-      "sha256": "7a80b4e1fad923535834882da84fd97e7b630a950858cc9ad7f7ab8953d7b699"
+      "sha256": "0da9ec026b86039d541798c40d8f483f1fe459c0928da140c637075d0756b768"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/fail_already_zscored.json",
@@ -31,11 +31,11 @@
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/positive_path_receipt.json",
-      "sha256": "31333dbbd69670c871855c68d72d352ca99c3ae93c1bc8f06a4fd20094cb338d"
+      "sha256": "30d553fd0d87e2eba23e120ceaf98d383ef9159fde827ed14d42eb613194c8f5"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/positive_valid_621.json",
-      "sha256": "73fb5f1749e461cffa84093bb4a14327b05a73cfd985212be344d3a7ce94b32f"
+      "sha256": "de3aa265e41e082d51e384fde9ec059e3ea8aabab05282940238753d167234d0"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/input_contract.json",
@@ -43,7 +43,7 @@
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/integration_handoff.json",
-      "sha256": "bd2d5a6249315eb0f8af294831492fd213c3bf005b949d8988c1dced72f1e5b0"
+      "sha256": "300b6f74cc53acb7ab536c7be08786667f159b7ad226fc2893afb8346c3a2485"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/output_decode_contract.json",
@@ -51,11 +51,15 @@
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/preprocessing_contract.json",
-      "sha256": "f7cd18b18185eb3628592e9e53f627255358839d8e1c133994c2e8d11d195471"
+      "sha256": "6efdf857cd0d19b260dfb10edc46a9138ca2000b90b6d1ce65af2e69f4e6bbc1"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/preprocessing_parity_validation.json",
+      "sha256": "c97ae01572a291de600f85bbe33049df60f043859eea09bf0fb6f0dcf12f25ce"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/reference_harness_validation.json",
-      "sha256": "e30bcefbc874f349dfe33a755d2f923d75114bedb001f69f93ca61307fbfc0d0"
+      "sha256": "47425600ec64e2090acfa93ac37f2adab68d343d29f28c4fa238f1955c614657"
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/runtime_dependency_matrix.json",
@@ -71,11 +75,11 @@
     },
     {
       "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/validation_result.json",
-      "sha256": "28096161e78d7c9bffb35f1ce36f28fd3c80d21a222d174351adab8ea748719d"
+      "sha256": "5e928a828ea105406280fc5eb56a215de11706804abdb1d5c3adc4e55c806d47"
     },
     {
       "path": "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_2_Deployable_Artifact_Runtime_Contract_01.md",
-      "sha256": "e848554b2a580ceba1dfe14e8695550ff506638d9118e7f3c39174d5e954982a"
+      "sha256": "c42a5832e54eecf89f0d13cda2d412396418d2ab877f0c5370417f770e27397f"
     }
   ]
 }

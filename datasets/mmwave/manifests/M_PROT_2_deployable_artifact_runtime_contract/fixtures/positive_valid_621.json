@@ -631,5 +631,6 @@
   "window_valid": true,
   "presence_available": true,
   "sample_count": 300,
-  "already_zscored": false
+  "already_zscored": false,
+  "lineage_class": "FIXTURE_NON_CAMPAIGN"
 }
