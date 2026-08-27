@@ -1,0 +1,450 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "MMWAVE_V2_M_PROT_4_SMOKE_RECEIPT_V1",
+  "title": "SafeNest mmWave V2 M-PROT-4 SmokeReceipt",
+  "description": "Portable, non-final smoke evidence for the M-PROT-3 V3 wiring seam. This schema does not authorize runtime execution or scientific evaluation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "phase",
+    "wiring_receipt_version",
+    "case_id",
+    "case_class",
+    "input_fixture_id",
+    "input_fixture_reference",
+    "input_fixture_sha256",
+    "expected_outcome",
+    "observed_outcome",
+    "source",
+    "sw01",
+    "window",
+    "r1",
+    "presence",
+    "prototype",
+    "lineage_class",
+    "flags",
+    "track_f"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "M-PROT-4-SMOKE-RECEIPT-V1"
+    },
+    "phase": {
+      "const": "M-PROT-4"
+    },
+    "wiring_receipt_version": {
+      "const": "M-PROT-3-WIRING-RECEIPT-V3"
+    },
+    "case_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}$"
+    },
+    "case_class": {
+      "enum": [
+        "FIXTURE_SMOKE",
+        "OFFLINE_REPLAY_SMOKE",
+        "SYNTHETIC_SMOKE"
+      ]
+    },
+    "input_fixture_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_fixture_reference": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!~)(?![A-Za-z]:[\\\\/])(?!file://)(?!\\.\\.?/)[^\\u0000]+$"
+    },
+    "input_fixture_sha256": {
+      "$ref": "#/$defs/sha256"
+    },
+    "expected_outcome": {
+      "$ref": "#/$defs/smokeOutcome"
+    },
+    "observed_outcome": {
+      "$ref": "#/$defs/smokeOutcome"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "sw01": {
+      "$ref": "#/$defs/sw01"
+    },
+    "window": {
+      "$ref": "#/$defs/window"
+    },
+    "r1": {
+      "$ref": "#/$defs/r1"
+    },
+    "presence": {
+      "$ref": "#/$defs/presence"
+    },
+    "prototype": {
+      "$ref": "#/$defs/prototype"
+    },
+    "lineage_class": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "OFFLINE_REPLAY_NON_CAMPAIGN",
+        "SYNTHETIC_SMOKE_NON_CAMPAIGN"
+      ]
+    },
+    "flags": {
+      "$ref": "#/$defs/flags"
+    },
+    "track_f": {
+      "$ref": "#/$defs/trackF"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "nullableNumber": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "smokeOutcome": {
+      "enum": [
+        "PROTOTYPE_REACHED",
+        "PROTOTYPE_NOT_REACHED",
+        "PHYSIOLOGY_SUCCESS",
+        "PHYSIOLOGY_ELIGIBLE",
+        "FAIL_CLOSED",
+        "UNAVAILABLE"
+      ]
+    },
+    "sw01Status": {
+      "anyOf": [
+        {
+          "const": "PASS_NON_CAMPAIGN_INTERFACE_CHECK"
+        },
+        {
+          "type": "string",
+          "pattern": "^(FAIL_|LIVE_TARGET_UNAVAILABLE$|BACKEND_UNAVAILABLE$)"
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "device_identity",
+        "interface_identity",
+        "configuration_identity",
+        "observation_kind"
+      ],
+      "properties": {
+        "device_identity": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "interface_identity": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "configuration_identity": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "observation_kind": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      }
+    },
+    "sw01": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "overall_status",
+        "source_validation_status",
+        "sw01_receipt_sha256",
+        "contributing_receipt_sha256_chain",
+        "sw01_receipt_sha256_chain",
+        "latest_receipt_semantics",
+        "chain_semantics",
+        "noncontributing_receipt_sha256",
+        "session_id"
+      ],
+      "properties": {
+        "overall_status": {
+          "$ref": "#/$defs/sw01Status"
+        },
+        "source_validation_status": {
+          "$ref": "#/$defs/sw01Status"
+        },
+        "sw01_receipt_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "contributing_receipt_sha256_chain": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sha256"
+          },
+          "uniqueItems": true
+        },
+        "sw01_receipt_sha256_chain": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sha256"
+          },
+          "uniqueItems": true
+        },
+        "latest_receipt_semantics": {
+          "const": "LATEST_CONTRIBUTING_PASS_RECEIPT"
+        },
+        "chain_semantics": {
+          "const": "ORDERED_UNIQUE_ADJACENT_COLLAPSED_CONTRIBUTING_PASS_RECEIPTS_FOR_SELECTED_WINDOW_ONLY"
+        },
+        "noncontributing_receipt_sha256": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sha256"
+          },
+          "uniqueItems": true
+        },
+        "session_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "contract",
+        "causal_past_only",
+        "ready",
+        "start",
+        "end",
+        "window_start_s",
+        "window_end_s",
+        "source_sample_count"
+      ],
+      "properties": {
+        "contract": {
+          "const": "M_PROT_3_CAUSAL_30S_10HZ_300_V1"
+        },
+        "causal_past_only": {
+          "const": true
+        },
+        "ready": {
+          "type": "boolean"
+        },
+        "start": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "end": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "window_start_s": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "window_end_s": {
+          "$ref": "#/$defs/nullableNumber"
+        },
+        "source_sample_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "r1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "profile",
+        "sample_count",
+        "r1_sample_count",
+        "status"
+      ],
+      "properties": {
+        "profile": {
+          "const": "R1-A_NATIVE_CENTERED_RELATIVE_MOTION_10HZ_V1"
+        },
+        "sample_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "r1_sample_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "enum": [
+            "PASS",
+            "READY",
+            "NOT_REACHED",
+            "UNAVAILABLE",
+            "FAIL"
+          ]
+        }
+      }
+    },
+    "presence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "gate_satisfied"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "PRESENCE_GATE_SATISFIED",
+            "PRESENCE_UNAVAILABLE",
+            "PRESENCE_UNKNOWN"
+          ]
+        },
+        "gate_satisfied": {
+          "type": "boolean"
+        }
+      }
+    },
+    "prototype": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reached",
+        "panel_id",
+        "artifact_path",
+        "artifact_sha256",
+        "parameter_sha256",
+        "scaler_path",
+        "scaler_sha256",
+        "representation",
+        "result_status",
+        "fail_closed_code"
+      ],
+      "properties": {
+        "reached": {
+          "type": "boolean"
+        },
+        "panel_id": {
+          "const": "B23"
+        },
+        "artifact_path": {
+          "const": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt"
+        },
+        "artifact_sha256": {
+          "const": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c"
+        },
+        "parameter_sha256": {
+          "const": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e"
+        },
+        "scaler_path": {
+          "const": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json"
+        },
+        "scaler_sha256": {
+          "const": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c"
+        },
+        "representation": {
+          "const": "PYTORCH_FLOAT32_STATE_DICT"
+        },
+        "result_status": {
+          "enum": [
+            "PHYSIOLOGY_ELIGIBLE",
+            "PHYSIOLOGY_SUCCESS",
+            "NOT_REACHED",
+            "UNAVAILABLE",
+            "FAIL_CLOSED"
+          ]
+        },
+        "fail_closed_code": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "flags": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "PROTOTYPE_INTEGRATION_ONLY",
+        "NOT_FINAL_SELECTED_MODEL",
+        "NOT_DEPLOYMENT_VALIDATED",
+        "NOT_SAFETY_VALIDATED",
+        "NOT_CLINICAL_VALIDATION",
+        "FINAL_GOVERNED_EVALUATION",
+        "D1_ADMISSIBLE",
+        "LIVE_HARDWARE"
+      ],
+      "properties": {
+        "PROTOTYPE_INTEGRATION_ONLY": {
+          "const": true
+        },
+        "NOT_FINAL_SELECTED_MODEL": {
+          "const": true
+        },
+        "NOT_DEPLOYMENT_VALIDATED": {
+          "const": true
+        },
+        "NOT_SAFETY_VALIDATED": {
+          "const": true
+        },
+        "NOT_CLINICAL_VALIDATION": {
+          "const": true
+        },
+        "FINAL_GOVERNED_EVALUATION": {
+          "const": false
+        },
+        "D1_ADMISSIBLE": {
+          "const": false
+        },
+        "LIVE_HARDWARE": {
+          "const": false
+        }
+      }
+    },
+    "trackF": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "d1_present",
+        "d1_absent",
+        "d1_membership",
+        "m_pv38",
+        "m_pv38_evaluation",
+        "m_pv4",
+        "d2"
+      ],
+      "properties": {
+        "d1_present": {
+          "const": 57
+        },
+        "d1_absent": {
+          "const": 0
+        },
+        "d1_membership": {
+          "const": "BLOCKED_INVALID_FINAL_MEMBERSHIP"
+        },
+        "m_pv38": {
+          "const": "RESOURCE_BLOCKED_CLOSED"
+        },
+        "m_pv38_evaluation": {
+          "const": "NOT_EXECUTED"
+        },
+        "m_pv4": {
+          "const": "UNAUTHORIZED"
+        },
+        "d2": {
+          "const": "LOCKED"
+        }
+      }
+    }
+  }
+}
