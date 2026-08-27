@@ -1,0 +1,31 @@
+{
+  "schema_version": "M-PROT-5A-LIFECYCLE-STATE-V1",
+  "phase": "M-PROT-5A",
+  "gate": "M-PROT-5A_AUTHORIZED_ACTIVE",
+  "purpose": "TEST_REPO_PREDEPLOYMENT_CLOSURE",
+  "start_main": "8945e5912a00f9fc177408d7993126431c1a958c",
+  "m_prot_4": {
+    "status": "COMPLETE / MERGED / PASS_WITH_LIMITATIONS",
+    "pr": 179,
+    "merge_commit": "8945e5912a00f9fc177408d7993126431c1a958c"
+  },
+  "m_prot_5a": "AUTHORIZED_ACTIVE",
+  "m_prot_5b": "DEFERRED / TEAM_REPO_NOT_YET_INSPECTED_FOR_PORT",
+  "m_prot_5c": "DEFERRED / LIVE_HARDWARE_NOT_EXECUTED / NOT_AUTHORIZED",
+  "team_repo_modified": false,
+  "pi_runtime_subtree_assumed": false,
+  "live_pi_executed": false,
+  "live_mr60_executed": false,
+  "model_changed": false,
+  "scaler_changed": false,
+  "thresholds_changed": false,
+  "training": false,
+  "tflite": "NOT_EXECUTED",
+  "int8": "NOT_AUTHORIZED",
+  "track_f_touched": false,
+  "handoff_schema": "M_PROT_5A_PREDEPLOYMENT_HANDOFF_V1",
+  "bundle_builder": "scripts/mmwave/build_m_prot_5a_deployment_bundle.py",
+  "recommended_next": "M-PROT-5B_TEAM_REPO_PI_RUNTIME_PORT",
+  "worker_terminal_result_target": "M_PROT_5A_TEST_REPO_PREDEPLOYMENT_COMPLETE",
+  "sol_exact_head_review_required": true
+}

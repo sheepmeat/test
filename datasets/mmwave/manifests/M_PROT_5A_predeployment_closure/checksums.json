@@ -1,0 +1,5 @@
+{
+  "datasets/mmwave/manifests/M_PROT_5A_predeployment_closure/known_limitations.json": "39a986cf11fef93596d9e760a30975ad71f40d1f8c269ba90151c1741f0c3317",
+  "datasets/mmwave/manifests/M_PROT_5A_predeployment_closure/lifecycle_state.json": "d269cc5c21fda1d3651800be5a7344e1e0fa80fe2c1b2cfdb506aaa9ac6f7d2e",
+  "datasets/mmwave/manifests/M_PROT_5A_predeployment_closure/predeployment_handoff.json": "dfbaa9e817c2e0deb0d2516e1caed19d727af6f9d109917809e720edd32a96f4"
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": "M-PROT-5A-VALIDATION-RESULT-V1",
+  "phase": "M-PROT-5A",
+  "base_sha": "8945e5912a00f9fc177408d7993126431c1a958c",
+  "terminal_verdict": "M_PROT_5A_TEST_REPO_PREDEPLOYMENT_COMPLETE",
+  "worker_claim": "CLOSED",
+  "sol_review_required": true,
+  "sol_review": "PENDING",
+  "m_prot_4_status": "COMPLETE / MERGED / PASS_WITH_LIMITATIONS",
+  "m_prot_5b": "DEFERRED / TEAM_REPO_NOT_YET_INSPECTED_FOR_PORT",
+  "m_prot_5c": "DEFERRED / LIVE_HARDWARE_NOT_EXECUTED / NOT_AUTHORIZED",
+  "legacy_pr_cleanup": {
+    "180": "CLOSED_WITHOUT_MERGE",
+    "181": "CLOSED_WITHOUT_MERGE",
+    "124": "CLOSED_WITHOUT_MERGE",
+    "125": "CLOSED_WITHOUT_MERGE",
+    "65": "CLOSED_WITHOUT_MERGE"
+  },
+  "m_prot_5a_tests": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_5a_predeployment.py -q",
+    "exit_code": 0,
+    "passed": 7
+  },
+  "m_prot_4_regression": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_4_system_smoke.py -q",
+    "exit_code": 0
+  },
+  "m_prot_3_regression": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_3_integration_runtime.py -q",
+    "exit_code": 0
+  },
+  "m_prot_2_regression": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_2_deployable_contract.py -q",
+    "exit_code": 0
+  },
+  "combined_focused": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_5a_predeployment.py tests/test_mmwave_m_prot_4_system_smoke.py tests/test_mmwave_m_prot_3_integration_runtime.py tests/test_mmwave_m_prot_2_deployable_contract.py -q",
+    "exit_code": 0,
+    "stdout_tail": [
+      "82 passed in 3.02s"
+    ]
+  },
+  "bundle": {
+    "builder": "scripts/mmwave/build_m_prot_5a_deployment_bundle.py",
+    "staging_out": "/tmp/m_prot_5a_deployment_bundle",
+    "file_count": 9,
+    "checksum_status": "PASS",
+    "determinism": "PASS",
+    "committed": false
+  },
+  "model_changed": false,
+  "scaler_changed": false,
+  "threshold_changed": false,
+  "training": false,
+  "tflite": "NOT_EXECUTED",
+  "int8": "NOT_AUTHORIZED",
+  "track_f_touched": false,
+  "team_repo_modified": false,
+  "live_hardware": false,
+  "live_mr60": false,
+  "git_diff_check": "PASS",
+  "recommended_next": "M-PROT-5B_TEAM_REPO_PI_RUNTIME_PORT"
+}
