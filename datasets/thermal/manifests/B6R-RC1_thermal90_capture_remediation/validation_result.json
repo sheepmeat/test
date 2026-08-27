@@ -1,0 +1,15 @@
+{
+  "b6r_mainline_status_changed": false,
+  "capture_execution_status": "NOT_STARTED",
+  "contract_hash_normalization": "UTF8_CRLF_TO_LF",
+  "contract_path": "config/thermal/b6r_rc1_thermal90_capture_remediation_contract.json",
+  "contract_sha256": "ec7d58ca6615be535cdd98b49ccf627310d7d0c4c7689da93b7b792b1770a6fe",
+  "error_count": 0,
+  "errors": [],
+  "identity_approval_status": "EVIDENCE_PENDING_OWNER_ACCEPTANCE",
+  "model_or_runtime_changed": false,
+  "package_id": "B6R-RC1",
+  "plan_status": "PLAN_FROZEN_EXECUTION_NOT_STARTED",
+  "schema_version": "safenest.thermal.b6r.rc1.validation.v1",
+  "status": "PASS"
+}

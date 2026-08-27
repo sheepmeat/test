@@ -26,6 +26,15 @@
 - Conclusion: current `.venv` has TensorFlow `2.20.0`, so public P2 desktop parity is revalidated; this does not resolve B5 exact assets, LiteRT/Pi evidence, authoritative MI48 provenance, B6R-2 group/label evidence, or independent holdout.
 - No formal next stage is authorized. Wait for new MI48/owner evidence or user instruction; do not define or execute `B6R-P3`.
 
+## Latest Gate-Remediation Package
+
+- Plan: `docs/thermal/20260827_SafeNest_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Plan_KO_01.md`
+- Report: `docs/reports/20260827_Codex_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Report_KO_01.md`
+- Date: `2026-08-27`
+- Unit: `B6R-RC1 — Thermal-90 Identity and Capture Remediation Plan`
+- Status: `PASS_WITH_LIMITATIONS / NON-GATING`
+- Conclusion: identity 절차와 다인 capture·unit/orientation/FPS·label·holdout 계약 및 validator는 동결·검증됐다. 실제 identity는 `EVIDENCE_PENDING_OWNER_ACCEPTANCE`, capture는 `NOT_STARTED`이며 B6R 본선 판정은 변하지 않았다.
+
 ## Stage Status
 
 | Stage | Status | Report | Artifact | Commit | Notes |
@@ -51,6 +60,7 @@
 | Package | Status | Report | Source | Notes |
 |---|---|---|---|---|
 | `B6R-RC0` Desktop `sessions` pilot evidence review | `INCONCLUSIVE / NON-GATING` | `docs/reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md` | external `Desktop/sessions/` (not copied into Git) | 5 Thermal-90 sessions, all subject `S000`; raw/native/checksum evidence exists, but 3 sessions are `CAPTURE_INVALID`, unit/orientation are unverified, no locked holdout, and validator model-use eligibility is not authorized. This package does not open B6R-1/2 or training. |
+| `B6R-RC1` Thermal-90 identity/capture remediation plan | `PASS_WITH_LIMITATIONS / NON-GATING` | `docs/reports/20260827_Codex_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Report_KO_01.md` | contract `config/thermal/b6r_rc1_thermal90_capture_remediation_contract.json`; evidence `datasets/thermal/manifests/B6R-RC1_thermal90_capture_remediation/` | plan·validator PASS, focused unittest `6/6`; identity evidence·실제 다인 capture·holdout seal은 아직 없음. 기존 `S000` holdout 승격과 MI48 self-promotion을 명시적으로 차단한다. |
 
 ## Current PC Thermal Data Paths
 
@@ -101,21 +111,22 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 - B6R-1: sessions 5개 모두 subject `S000`; `S000_011`, `S000_012`, `S000_014`는 packet/counter gap으로 `CAPTURE_INVALID`, unit/orientation/FPS도 완전히 검증되지 않았다.
 - B6R-1: 현재 checkout에서 standalone validator가 generated evidence 10개의 checksum mismatch로 실패한다. CRLF→LF 정규화 시 10/10 registry와 일치하여 cross-platform line-ending 원인으로 진단됐다.
 - B6R-2: session/label/split/holdout 계약을 만들 data gate가 충족되지 않았고 independent holdout이 없다. Desktop sessions도 `NOT_LOCKED_TEST`, `split_frozen_at=null`, `model_use_eligibility=NOT_AUTHORIZED_BY_CAPTURE_VALIDATOR`다.
+- B6R-RC1: 보완 절차는 동결됐지만 Thermal-90 vendor/part/revision/raw mapping·owner decision, unit/orientation/FPS gate, 독립 subject·dual-reviewed label, 새 holdout subject·seal은 아직 evidence가 없다.
 - B6R-P0의 성공은 public-data 경로만 개방하며 위 MI48 blocker를 해소하지 않는다.
 - 2026-08-26 current-state reconciliation에서 위 환경 capability drift를 기록했지만 본선 stage 판정과 public claim boundary는 변경하지 않았다.
 
 ## Next Authorized Stage
 
-`DATA_EVIDENCE_TRIAGE_WAITING_FOR_USER_INSTRUCTION`
+`B6R_RC1_PLAN_COMPLETE_IDENTITY_EVIDENCE_AND_CAPTURE_EXECUTION_PENDING`
 
-최신 상태 보고서: `docs/reports/20260826_Codex_Thermal_B6R_CURRENT_STATE_AND_GATE_RECONCILIATION_Report_KO_01.md` (`BLOCKED`)
+최신 보완 보고서: `docs/reports/20260827_Codex_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Report_KO_01.md` (`PASS_WITH_LIMITATIONS / NON-GATING`)
 
 - MI48 본선: B6R-3 또는 이후 stage는 승인되지 않는다. 권위 MI48 payload와 provenance를 복구하고 B6R-1을 새 revision으로 재검증한 뒤 B6R-2를 다시 실행해야 한다.
-- External capture: `B6R-RC0` read-only assessment는 완료되었지만 비게이팅이다. 현재 `Desktop/sessions`만으로는 학습·holdout을 시작하지 않는다. 다음 행동은 Thermal-90/MI48 identity 승인, unit/orientation/quality 보완, 다인 재수집을 위한 acquisition/contract plan이며 새 사용자 승인이 필요하다.
+- External capture: `B6R-RC1` plan/contract는 사용자 승인으로 완료됐다. 다음 현장 입력은 identity evidence packet과 Wave A 다인 capture이며, 저장소 작업은 새 evidence가 전달된 뒤 `B6R-RC1 CAPTURE EVIDENCE REVIEW`로만 재개한다.
 - Public 보조: `B6R-P2`는 2026-08-26 사용자 승인으로 완료됐다. P0/P1의 split 역할, preprocessing, label mapping, architecture, trained parameter를 그대로 상속했다.
 - B6R-P2 결과도 legacy 기본 모델·manifest를 덮어쓰거나 safety authority를 부여하지 않는다. locked public test read count는 `0`이다.
 - 다음 public 작업 후보는 Raspberry Pi FP32 replay/shadow benchmark 성격이지만 아직 stage로 정의·승인·실행하지 않았다.
-- 이번 reconciliation은 환경·gate 상태 확인만 수행했다. 권위 MI48/owner evidence 또는 새 사용자 지시 없이 B6R-1 재실행, training, holdout, `B6R-P3` 정의·실행을 시작하지 않는다.
+- RC1 exit criteria가 충족되기 전에는 B6R-1 재실행, training, holdout 평가, `B6R-P3` 정의·실행을 시작하지 않는다. 충족 후에도 먼저 B6R-1 새 revision으로 inventory를 재판정한다.
 
 ## Required Reading Order for Future Agents
 
@@ -126,7 +137,7 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 5. 직접 선행 stage의 manifest와 artifact
 6. roadmap이 요구하는 stage-specific source, test, runtime 파일
 
-실제 센서 파일럿을 검토하는 agent는 위 순서에 더해 `docs/reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md`를 읽고, 외부 `Desktop/sessions/`를 raw/native/checksum/validation evidence로만 취급한다.
+실제 센서 파일럿을 검토하는 agent는 위 순서에 더해 RC0 보고서와 `docs/thermal/20260827_SafeNest_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Plan_KO_01.md`를 읽고, 외부 `Desktop/sessions/`를 raw/native/checksum/validation evidence로만 취급한다.
 
 Public 보조 흐름을 수행하는 agent는 위 순서에 더해 `B6R-P0` 보고서, contract, validation result를 읽고 `PUBLIC_SDT_ONLY_NOT_MI48` 경계를 상속한다.
 
@@ -142,3 +153,4 @@ Public 보조 흐름을 수행하는 agent는 위 순서에 더해 `B6R-P0` 보�
 8. `B6R-P1` 이후 학습은 TRAIN만 fit하고 DEVELOPMENT만 선택에 사용하며 `LOCKED_PUBLIC_TEST`는 명시적으로 승인된 최종 public 평가 전까지 metric·선택·튜닝 경로에서 열지 않는다.
 9. `B6R-P2` artifact는 shadow-only deployment-format 후보다. Raspberry Pi·MI48·physical·latency·runtime integration 또는 safety 검증으로 승격하지 않는다.
 10. `B6R-RC0` Desktop sessions evidence는 non-gating capture pilot이다. `Thermal-90`을 MI48로 재명명하지 않고, 단일 subject·invalid capture·미검증 unit/orientation·정적 posture proxy를 final training/holdout/낙상 성능 근거로 사용하지 않는다.
+11. `B6R-RC1`은 보완 계획과 validator의 완료만 뜻한다. identity evidence와 owner decision 없이 sensor approval을 주장하지 않고, 기존 `S000`을 locked holdout으로 승격하지 않으며, 실제 capture 전후에 같은 contract identity를 검증한다.

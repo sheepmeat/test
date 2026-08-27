@@ -1,6 +1,6 @@
 # SafeNest Thermal B6-R robust-relative FP32 병렬 개발 로드맵
 
-문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P2 실행 + Desktop 실제 capture 파일럿 evidence + 현재 환경 gate 재조정 반영**
+문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P2 실행 + B6R-RC0/RC1 실제 capture evidence·보완 계획 + 현재 환경 gate 재조정 반영**
 
 대상 후보: `B6-R robust-relative FP32`
 
@@ -8,9 +8,34 @@
 
 작성일: `2026-08-22`
 
-실행 개정일: `2026-08-26` (`B6R-P0~P2` 완료; `B6R-RC0` Desktop sessions read-only assessment 및 current-state reconciliation 반영)
+실행 개정일: `2026-08-27` (`B6R-P0~P2` 완료; `B6R-RC0` assessment와 `B6R-RC1` Thermal-90 remediation plan 반영)
 
 > 이 문서는 코드, 모델, 데이터, 임계값 또는 runtime을 구현하거나 변경하지 않는다. 향후 실행은 사용자가 명시적으로 승인한 **한 stage 또는 한 parallel wave**만 수행하고, 검증·증거 요약 후 반드시 멈춘다.
+
+### 2026-08-27 실행 개정 — `B6R-RC1` Thermal-90 capture remediation plan
+
+사용자는 현재 external evidence가 `Desktop/sessions`뿐임을 확인하고 B6R-1보다 먼저 Thermal-90 identity 승인 절차와 다인 capture·unit/orientation/FPS·label·holdout 보완 계획을 명시적으로 승인했다. 이에 정식 B6R-0~14를 대체하지 않는 비게이팅 package `B6R-RC1`을 추가했다.
+
+- Thermal-90을 MI48로 재명명하지 않고 `DISTINCT_TARGET_SENSOR_CANDIDATE`로 관리한다.
+- identity 절차는 동결했지만 vendor/part/revision/raw mapping과 owner decision이 없어 실제 승인 상태는 `EVIDENCE_PENDING_OWNER_ACCEPTANCE`다.
+- Wave A는 T-C0 operational floor인 독립 subject 3명, subject당 2 session, empty 2 session을 상속하되 통계적 충분성으로 주장하지 않는다.
+- unit은 문서+reference measurement, orientation은 known-position marker+mount record, FPS는 counter/device-host clock과 packet accounting으로 검증한다.
+- labels는 operator+independent reviewer를 요구하고 `LYING`을 posture proxy로 제한한다.
+- locked holdout은 protocol freeze 뒤 새 subject 최소 2명, subject-isolated, custodian 분리, checksum seal/access log, B6R-11 one-time access로 고정한다. 기존 `S000`은 holdout이 될 수 없다.
+- machine-readable contract validator와 focused unittest `6/6`가 통과했다. 실제 capture·model/runtime 변경은 수행하지 않았다.
+
+현재 순서는 다음과 같다.
+
+```text
+B6R-RC0 pilot review
+  → B6R-RC1 plan frozen (현재)
+  → identity evidence + Wave A multi-subject capture
+  → B6R-RC1 capture evidence review
+  → exit criteria 충족 시 B6R-1 새 revision
+  → usable inventory일 때만 B6R-2 재검토
+```
+
+상세 계약은 `docs/thermal/20260827_SafeNest_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Plan_KO_01.md`, 실행 결과는 `docs/reports/20260827_Codex_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Report_KO_01.md`를 따른다. 본선 판정은 B6R-0 `FAIL`, B6R-1 `INCONCLUSIVE`, B6R-2 `BLOCKED`, B6R-3~14 `NOT_STARTED`를 유지한다.
 
 ### 2026-08-26 실행 개정 — public-data 보조 흐름을 추가한 이유
 
@@ -165,15 +190,16 @@ P1 TRAIN-global z-score
 | `B6R-13` Physical MI48 End-to-End Validation | physical sensor, Pi, B6-R, temporal, risk 경계를 실제로 검증 | raw capture부터 telemetry/risk까지 장시간 안정적이며 fault injection에 안전한가? | Thermal44 backend usable; `B6R-10`~`B6R-12` | `B6R-13_physical_e2e`, session manifests, latency/health logs, fault results | scenario accounting 완료; crash/memory/fail-closed gate 판정; hardware 미검증 없음 또는 제한 명시 |
 | `B6R-14` Competition Candidate Lock | 재현·rollback 가능한 최종 후보를 고정 | 모든 artifact와 증거가 하나의 release identity로 연결되는가? | `B6R-11`~`B6R-13` 승인 결과 | `B6R-14_candidate_lock`, release manifest, checksums, rollback bundle, limitations | 모든 필수 gate PASS 또는 승인된 제한; legacy rollback 보존; owner 승인 |
 
-### B.0 Real-capture pilot evidence (non-gating)
+### B.0 Real-capture evidence and remediation packages (non-gating)
 
 `B6R-RC0`은 외부 실제 capture 폴더의 구조·무결성·provenance·B6R gate 영향을 정리하는 evidence package다. 정식 B6R-0~14 stage 번호와 선행 조건을 바꾸지 않는다.
 
 | Package | 상태 | 목적 | 현재 결과 | 다음 진입 조건 |
 |---|---|---|---|---|
 | `B6R-RC0` Real-Capture Pilot Evidence Review | `INCONCLUSIVE / NON-GATING` | 실제 세션의 raw/native/annotation/quality와 B6R 적합성을 read-only로 판단 | 5 sessions, all `S000`, 약 820 validator-valid frame; 3 sessions invalid; Thermal-90 identity·unit·orientation·holdout 미충족 | owner가 Thermal-90/MI48 관계를 승인하고 보완된 다인 capture 또는 권위 MI48 payload를 제공할 때 B6R-1 재판정 |
+| `B6R-RC1` Thermal-90 Capture Remediation Plan | `PASS_WITH_LIMITATIONS / NON-GATING` | identity 승인 evidence와 다인 capture·unit/orientation/FPS·label·holdout 통제를 동결 | plan/contract/validator 동결, focused unittest `6/6`와 validator PASS; identity evidence와 실제 capture는 미완료 | identity owner decision과 Wave A capture를 검증하고 RC1 exit criteria를 모두 충족한 뒤 B6R-1 새 revision |
 
-**금지:** `B6R-RC0` 결과로 B6R-2 split을 만들거나, model training/locked test/실제 낙상/physical MI48 성능을 주장하거나, raw를 저장소에 복사하지 않는다.
+**금지:** `B6R-RC0/RC1` 결과로 B6R-2 split을 만들거나, model training/locked test 평가/실제 낙상/physical MI48 성능을 주장하거나, raw를 저장소에 복사하지 않는다.
 
 ### B.1 Public-data 전용 보조 Stage Map
 
@@ -686,17 +712,18 @@ crash, memory growth, fail-open
 
 ## G. Recommended Immediate Next Stage
 
-### 현재 결론: 정식 B6R stage는 조건부로만 `B6R-1`
+### 현재 결론: RC1 현장 evidence 대기, 정식 B6R stage는 조건부로만 `B6R-1`
 
-`Desktop/sessions`의 `B6R-RC0` assessment는 이미 완료된 비게이팅 evidence다. 이 자료만으로 `B6R-2` 또는 training을 시작할 수 없다. 따라서 다음 에이전트는 아래 결정 규칙을 따른다.
+`B6R-RC1` capture remediation plan은 2026-08-27 동결·검증됐다. 현재 저장소에서 추가 stage를 실행할 근거는 없고, 현장 identity evidence와 Wave A 다인 capture가 다음 입력이다. 이 자료만으로 `B6R-2` 또는 training을 시작할 수 없다. 따라서 다음 에이전트는 아래 결정 규칙을 따른다.
 
 | 입력 상태 | 허용되는 다음 작업 | 금지되는 작업 |
 |---|---|---|
 | 권위 MI48 snapshot이 read-only로 확보됨 | `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler` 새 revision | 바로 B6R-2, preprocessing, training |
-| `Desktop/sessions`만 있고 Thermal-90/MI48 관계·unit·orientation·quality가 미해결 | capture-contract remediation/acquisition plan 작성 또는 사용자에게 보완 수집 승인 요청 | B6R-2 split, model training, final/locked holdout, safety/physical claim |
-| 보완된 다인 capture와 owner 승인·eligibility가 확보됨 | B6R-1 inventory 재판정 후 조건 충족 시 B6R-2 | 한 subject frame random split, 조기 holdout 개방 |
+| `Desktop/sessions`만 있고 RC1 plan 외 새 evidence 없음 | 저장소 변경 중단; RC1 identity evidence packet과 Wave A 다인 capture를 현장에서 준비 | 계획 중복 작성, B6R-1/2, model training, final/locked holdout, safety/physical claim |
+| RC1 evidence 또는 capture가 일부 전달됨 | `B6R-RC1 CAPTURE EVIDENCE REVIEW`로 identity/unit/orientation/FPS/subject/label/holdout accounting | 부분 evidence를 sensor approval 또는 model-use eligibility로 승격 |
+| RC1 exit criteria를 충족한 다인 capture와 owner identity decision이 확보됨 | `B6R-1` inventory 새 revision 후 조건 충족 시 B6R-2 | 한 subject frame-random split, 조기 holdout 개방 |
 
-즉, **권위 MI48 payload가 있으면 정확히 하나의 권고는 `B6R-1`**이고, 현재 Desktop 폴더만으로는 training이 아니라 acquisition/contract 보완이 다음 행동이다. B6R-0은 기술적으로 병렬 가능하지만, 사용자가 별도로 `Wave F`를 승인할 때만 허용한다.
+즉, **권위 MI48 payload가 있으면 정확히 하나의 권고는 `B6R-1`**이고, 현재 Desktop 폴더만으로는 RC1 계획에 따른 evidence·capture 실행이 다음 행동이다. B6R-0은 기술적으로 병렬 가능하지만, 사용자가 별도로 `Wave F`를 승인할 때만 허용한다.
 
 이 stage가 반드시 밝혀야 하는 항목은 다음과 같다.
 
@@ -766,6 +793,6 @@ crash, memory growth, fail-open
 
 우선순위는 data reliability → split integrity → preprocessing clarity → real MI48 domain performance → reproducibility → FP32 runtime stability → temporal stabilization → sensor-fusion safety → optimization 순서다.
 
-**권고 다음 작업:** 권위 MI48 payload가 확보된 경우에만 `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`; 현재 `Desktop/sessions`만으로는 capture-contract remediation/acquisition plan.
+**권고 다음 작업:** 권위 MI48 payload가 확보된 경우에만 `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`; 현재 `Desktop/sessions`만으로는 동결된 RC1에 따른 identity evidence packet과 Wave A 다인 capture 준비.
 
 **사용자가 별도의 실행 지시를 제공하기 전에는 저장소를 더 변경하거나 B6R-1을 구현하지 않는다.**

@@ -1,0 +1,256 @@
+{
+  "schema_version": "safenest.thermal.b6r.rc1.capture_remediation.v1",
+  "package_id": "B6R-RC1",
+  "package_name": "Thermal-90 Identity and Capture Remediation Plan",
+  "status": "PLAN_FROZEN_EXECUTION_NOT_STARTED",
+  "authorized_scope": {
+    "authorization_date": "2026-08-27",
+    "purpose": "Define the evidence and acquisition controls required before Thermal-90 data can be reconsidered by B6R-1 and B6R-2.",
+    "actual_capture_performed": false,
+    "b6r_1_executed": false,
+    "b6r_2_executed": false,
+    "model_or_runtime_changed": false,
+    "safety_authority_changed": false
+  },
+  "inherited_evidence": {
+    "source_logical_id": "EXTERNAL_DESKTOP_THERMAL90_SESSIONS",
+    "evidence_package": "B6R-RC0",
+    "observed_sensor_name": "Thermal-90",
+    "observed_native_shape": [62, 80],
+    "observed_native_dtype": "uint16",
+    "observed_subject_ids": ["S000"],
+    "observed_session_count": 5,
+    "capture_invalid_session_count": 3,
+    "raw_unit_status": "NOT_VERIFIED",
+    "orientation_status": "NOT_VERIFIED",
+    "fps_status": "CONFIGURED_ONLY",
+    "model_use_eligibility": "NOT_AUTHORIZED_BY_CAPTURE_VALIDATOR",
+    "locked_test_status": "NOT_LOCKED_TEST"
+  },
+  "identity_decision": {
+    "candidate_name": "Thermal-90",
+    "treatment": "DISTINCT_TARGET_SENSOR_CANDIDATE",
+    "equivalent_to_mi48_claimed": false,
+    "approval_status": "EVIDENCE_PENDING_OWNER_ACCEPTANCE",
+    "allowed_final_decisions": [
+      "APPROVED_AS_DISTINCT_B6R_TARGET",
+      "APPROVED_AS_DOCUMENTED_MI48_VARIANT",
+      "REJECTED_AS_B6R_TARGET"
+    ],
+    "required_identity_fields": [
+      "sensor_vendor",
+      "commercial_model_or_module_part_number",
+      "sensor_hardware_revision",
+      "sensor_serial_or_pseudonymous_device_id",
+      "firmware_version",
+      "collector_software_version",
+      "collector_git_commit",
+      "transport_protocol",
+      "native_width",
+      "native_height",
+      "native_dtype",
+      "native_byte_order"
+    ],
+    "required_evidence": [
+      "manufacturer_or_supplier_document_reference",
+      "device_or_module_marking_record_with_sha256",
+      "one_raw_packet_and_native_decode_cross_check",
+      "owner_decision_record_with_date_and_scope"
+    ],
+    "mi48_equivalence_extra_evidence": [
+      "manufacturer_documented_part_mapping",
+      "raw_encoding_and_unit_mapping",
+      "hardware_revision_mapping",
+      "owner_explicit_equivalence_acceptance"
+    ],
+    "current_permission": "PLAN_AND_EVIDENCE_COLLECTION_ONLY"
+  },
+  "capture_waves": {
+    "wave_a_contract_verification": {
+      "role": "DEVICE_CONTRACT_PILOT",
+      "minimum_independent_subjects": 3,
+      "minimum_sessions_per_subject": 2,
+      "minimum_empty_room_sessions": 2,
+      "rationale": "Inherits the T-C0 operational floor for separating subject and session variation; it is not a statistical performance claim.",
+      "locked_holdout_created": false,
+      "required_scenarios": [
+        "EMPTY_ROOM_CONTROL",
+        "STANDING",
+        "SITTING",
+        "CROUCHING",
+        "LYING_POSTURE_PROXY",
+        "NORMAL_ENTRY_EXIT",
+        "PARTIAL_OCCLUSION",
+        "WARM_OBJECT_OR_BACKGROUND_HARD_NEGATIVE"
+      ]
+    },
+    "wave_b_role_separated_acquisition": {
+      "entry_condition": "WAVE_A_VALIDATED_AND_IDENTITY_ACCEPTED",
+      "exact_train_and_development_subject_counts": "OWNER_APPROVED_ADDENDUM_REQUIRED_AFTER_WAVE_A",
+      "minimum_new_locked_holdout_subjects": 2,
+      "holdout_subjects_must_be_new": true,
+      "holdout_capture_after_protocol_freeze": true,
+      "same_subject_cross_role": false,
+      "same_session_cross_role": false,
+      "same_event_cross_role": false,
+      "frame_random_split_allowed": false,
+      "statistical_adequacy_claimed_by_minimum": false
+    }
+  },
+  "sensor_semantic_verification": {
+    "raw_preservation": {
+      "raw_packet_or_closest_native_bytes_required": true,
+      "decoded_native_frame_required": true,
+      "resize_rotate_flip_normalize_before_raw_preservation": false,
+      "silent_bad_frame_deletion_allowed": false,
+      "sha256_registry_required": true
+    },
+    "unit": {
+      "current_status": "NOT_VERIFIED",
+      "raw_unit_must_not_be_inferred_from_sdt_or_mi48": true,
+      "required_method": "DOCUMENTED_ENCODING_PLUS_REFERENCE_MEASUREMENT_CROSS_CHECK",
+      "reference_evidence_fields": [
+        "reference_device_id",
+        "reference_calibration_status",
+        "reference_value_and_unit",
+        "sensor_raw_summary",
+        "ambient_context",
+        "measurement_time",
+        "uncertainty_or_limitations"
+      ],
+      "acceptance_tolerance": "OWNER_APPROVED_BEFORE_MEASUREMENT"
+    },
+    "orientation": {
+      "current_status": "NOT_VERIFIED",
+      "required_method": "KNOWN_POSITION_MARKER_LEFT_RIGHT_TOP_BOTTOM_AND_MOUNT_RECORD",
+      "required_fields": [
+        "native_row_axis_meaning",
+        "native_column_axis_meaning",
+        "rotation_degrees",
+        "horizontal_flip",
+        "vertical_flip",
+        "mount_height_m",
+        "mount_pitch_deg",
+        "mount_yaw_deg",
+        "sensor_to_scene_distance_m",
+        "reference_record_sha256"
+      ],
+      "transform_must_be_frozen_before_role_separated_capture": true
+    },
+    "timing_and_fps": {
+      "current_status": "CONFIGURED_ONLY",
+      "configured_fps_observed": 7.0,
+      "required_clocks": [
+        "sensor_frame_counter_or_device_sequence",
+        "device_monotonic_timestamp_when_available",
+        "host_receive_monotonic_timestamp",
+        "host_wall_time_with_timezone"
+      ],
+      "required_metrics": [
+        "received_frame_count",
+        "valid_frame_count",
+        "invalid_frame_count",
+        "effective_fps",
+        "inter_frame_interval_p50_p95_p99",
+        "counter_gap_count",
+        "duplicate_count",
+        "reversal_count",
+        "partial_or_decode_failure_count"
+      ],
+      "acceptance": {
+        "counter_reversal_count": 0,
+        "duplicate_count": 0,
+        "effective_fps_relative_error_max": 0.1,
+        "unexplained_gap_or_partial_count": 0
+      },
+      "failed_session_policy": "RETAIN_AND_MARK_CAPTURE_INVALID_NEVER_RENUMBER_OR_REPAIR_IN_PLACE"
+    }
+  },
+  "label_contract": {
+    "model_output_must_not_be_label_source": true,
+    "operator_and_independent_reviewer_required": true,
+    "source_postures": [
+      "EMPTY",
+      "STANDING",
+      "SITTING",
+      "CROUCHING",
+      "LYING",
+      "OTHER_CONTROLLED",
+      "UNKNOWN"
+    ],
+    "lying_semantics": "POSTURE_PROXY_NOT_TEMPORAL_FALL_GROUND_TRUTH",
+    "temporal_event_phases": [
+      "PRE_EVENT",
+      "FALL_TRANSITION",
+      "POST_FALL_LYING",
+      "RECOVERY"
+    ],
+    "temporal_event_requires_range_and_event_id": true,
+    "controlled_transition_requires_separate_safety_authorization": true,
+    "uncontrolled_free_fall_capture_allowed": false,
+    "ambiguous_policy": "RETAIN_PROVENANCE_EXCLUDE_FROM_PURE_CLASS_EVALUATION",
+    "revision_history_required": true
+  },
+  "holdout_contract": {
+    "assignment_unit": "SUBJECT",
+    "existing_s000_eligible_for_locked_holdout": false,
+    "preregistered_before_holdout_capture": true,
+    "custodian_separate_from_model_developer": true,
+    "role": "REAL_LOCKED_TEST",
+    "locked_test_access": "UNTOUCHED",
+    "model_training_tuning_calibration_debugging_access_allowed": false,
+    "manifest_and_raw_checksum_seal_required": true,
+    "access_log_required": true,
+    "one_time_evaluation_only_after_pipeline_freeze": true,
+    "reuse_after_tuning_allowed": false,
+    "insufficient_support_outcome": "INCONCLUSIVE_NOT_PASS",
+    "unlock_stage": "B6R-11"
+  },
+  "required_capture_artifacts": [
+    "collection.json",
+    "session.json",
+    "frames.jsonl",
+    "annotations.jsonl",
+    "raw_or_closest_native_bytes",
+    "decoded_native_frames",
+    "checksums.sha256",
+    "capture_validator_result.json",
+    "identity_evidence_registry.json",
+    "unit_verification_record.json",
+    "orientation_verification_record.json",
+    "holdout_preregistration_and_access_log"
+  ],
+  "exit_criteria": [
+    "IDENTITY_OWNER_DECISION_RECORDED",
+    "UNIT_VERIFIED_OR_EXPLICITLY_REJECTED",
+    "ORIENTATION_AND_MOUNT_FROZEN",
+    "FPS_AND_PACKET_QUALITY_GATE_PASS",
+    "WAVE_A_MULTI_SUBJECT_ACCOUNTING_COMPLETE",
+    "LABEL_DUAL_REVIEW_AND_REVISION_PROVENANCE_PASS",
+    "ROLE_SEPARATED_HOLDOUT_PREREGISTERED_AND_SEALED",
+    "STANDALONE_CAPTURE_VALIDATOR_PASS"
+  ],
+  "stop_conditions": [
+    "THERMAL90_RENAMED_AS_MI48_WITHOUT_DOCUMENTED_MAPPING",
+    "RAW_UNIT_INFERRED_FROM_PUBLIC_SDT_OR_LEGACY_CODE",
+    "ORIENTATION_GUESSED_FROM_VISUAL_APPEARANCE",
+    "FRAME_RANDOM_SPLIT_OR_SUBJECT_ROLE_LEAKAGE",
+    "EXISTING_S000_PROMOTED_TO_LOCKED_HOLDOUT",
+    "LYING_PROMOTED_TO_REAL_FALL_GROUND_TRUTH",
+    "LOCKED_HOLDOUT_OPENED_FOR_TUNING_OR_DEBUGGING",
+    "INVALID_SESSIONS_SILENTLY_REPAIRED_OR_DROPPED",
+    "MODEL_TRAINING_OR_RUNTIME_ACTIVATION_STARTED_FROM_THIS_PACKAGE"
+  ],
+  "next_formal_stage": {
+    "stage": "B6R-1",
+    "condition": "Only after the exit criteria are evidenced; B6R-1 must inventory the approved capture as a new revision before B6R-2 is reconsidered."
+  },
+  "claim_boundary": {
+    "plan_completion_claim_allowed": true,
+    "sensor_identity_approved_claim_allowed_now": false,
+    "mi48_equivalence_claim_allowed_now": false,
+    "model_training_allowed_now": false,
+    "locked_holdout_performance_claim_allowed_now": false,
+    "physical_or_safety_performance_claim_allowed_now": false
+  }
+}
