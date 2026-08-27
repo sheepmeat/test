@@ -2,12 +2,13 @@
 
 현재 개발·팀 연동은 아래 문서를 기준으로 합니다.
 
-## mmWave V2 current-state pointer (2026-08-26)
+## mmWave V2 current-state pointer (2026-08-27)
 
-- Freeze/reopen/M-PV4 authority: [`M-PV3.8 lifecycle closure`](../datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/lifecycle_closure_state.json) = `RESOURCE_BLOCKED_CLOSED`.
-- While frozen, do not start `M-N0` as next V2 work; `M-N10` remains `KEEP_BLOCKED/OFF_V2_CRITICAL_PATH`; `D3`/`Q3` remain `DEFER`.
-- Do not reopen M-PV3.8, authorize capture, construct membership, evaluate candidates, authorize M-PV4, or open D2 semantics. `PV4↔PV3X` order remains `ORDER_UNRESOLVED`.
-- The 2026-08-22 public multidomain roadmap is an active child roadmap for V2 structure, but it does not override the closure manifest.
+- Freeze/reopen/M-PV4 authority: [`M-PV3.8 lifecycle closure`](../datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/lifecycle_closure_state.json) = `RESOURCE_BLOCKED_CLOSED` (Track F).
+- Track P / Track F overlay: [`Track P/F roadmap reconciliation`](mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md) — B23 provisional integration freeze; `CURRENT_TRACK_P_GATE=M-PROT-3_PENDING_SOL_REVIEW` (PR #177 OPEN @ `59c6fad0…`); M-PROT-4 NOT_AUTHORIZED.
+- While Track F is frozen, do not start `M-N0` as final-selection work; `M-N10` remains `KEEP_BLOCKED/OFF_V2_CRITICAL_PATH`; `D3`/`Q3` remain `DEFER`.
+- Do not reopen M-PV3.8, authorize final membership construction, authorize M-PV4, or open D2 semantics. `PV4↔PV3X` remains `ORDER_UNRESOLVED`.
+- The 2026-08-22 public multidomain roadmap remains an active child for V2 structure; current Track P/F execution authority is the reconciliation report + `AGENTS.md`.
 - The 2026-08-17 MR60 roadmap and M-N/A–B entries below are historical / `OBSERVE_ONLY` V1 lineage, not current V2 execution authority.
 
 - [Thermal B6-R robust-relative FP32 병렬 개발 로드맵 (2026-08-22, EXECUTION PENDING)](20260822_Codex_Thermal_B6R_Robust_Relative_FP32_Parallel_Roadmap_KO_01.md)
@@ -28,7 +29,8 @@
 - [PUBABS-A0A1 public ABSENT source validation (PASS_STRONG_PUBLIC_SOURCE_FOUND; M-PV3.8 unchanged)](mmwave/20260826_SafeNest_mmWave_PUBABS_A0A1_Public_Source_Validation_01.md)
 - [PUBABS-A2 C1 semantics/sensor-health/acquisition comparability (A2_STRONG_INTERNAL_BOTH_CLASS_SOURCE; A3 recommend only)](mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md)
 - [PUBABS-A3 C1 canonical ROLE_L conversion feasibility (A3_CORRECTIVE_REQUIRED)](mmwave/20260826_SafeNest_mmWave_PUBABS_A3_C1_Canonical_Conversion_Feasibility_01.md)
-- [M-PROT-2 prototype deployable runtime contract (worker result: M_PROT_2_DEPLOYABLE_CONTRACT_FROZEN; Sol status: PENDING_REVIEW; M-PROT-3: NOT_AUTHORIZED; B23 PyTorch float32 state_dict; not final selection)](mmwave/20260827_SafeNest_mmWave_V2_M_PROT_2_Deployable_Artifact_Runtime_Contract_01.md)
+- [Track P / Track F roadmap reconciliation (post M-PROT-3; B23 provisional freeze; #177 PENDING_SOL_REVIEW; M-PROT-4 NOT_AUTHORIZED)](mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md)
+- [M-PROT-2 prototype deployable runtime contract (COMPLETE/MERGED via #176; historical JSON may still say PENDING_REVIEW; not final selection)](mmwave/20260827_SafeNest_mmWave_V2_M_PROT_2_Deployable_Artifact_Runtime_Contract_01.md)
 - [M-PROT-1 prototype candidate nomination (M_PROT_1_PROTOTYPE_NOMINATED; B23 Family B seed 23 INTEGRATION_BASELINE; not a winner; M-PV3.8 unchanged)](mmwave/20260827_SafeNest_mmWave_V2_M_PROT_1_Prototype_Candidate_Nomination_01.md)
 - [M-PROT-0 prototype integration lane (PROTOTYPE_MODEL_LANE_READY; FINAL blocked / PROTOTYPE READY; no winner)](mmwave/20260827_SafeNest_mmWave_V2_Prototype_Integration_Lane_M_PROT_0_01.md)
 - [Post-PUBABS V2 critical-path reconciliation (POSTPUBABS_ONLY_RESOURCE_BLOCKED_PATHS; RECOMMEND_PHYSICAL_D1_RESOURCE_RECOVERY; no C2 default)](mmwave/20260827_SafeNest_mmWave_V2_Post_PUBABS_Critical_Path_Reconciliation_01.md)

@@ -1,0 +1,17 @@
+{
+  "schema_version": "MMWAVE-V2-ROADMAP-CHECKSUMS-V1",
+  "files": [
+    {
+      "path": "datasets/mmwave/manifests/MMWAVE_V2_track_p_track_f_roadmap_state/current_state.json",
+      "sha256": "7c76e4bad2cbd631da5ae262b7280f30c2142384204ceb969a0e407b065945d1"
+    },
+    {
+      "path": "datasets/mmwave/manifests/MMWAVE_V2_track_p_track_f_roadmap_state/validation_result.json",
+      "sha256": "c6a5e475297e2be51a42cac0ec0967928110de85b97277495f227453110e9d6a"
+    },
+    {
+      "path": "docs/mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md",
+      "sha256": "19f7ff5683cb58af93e14ca9f7f78235330d526efd97e090df96a2f60fe20688"
+    }
+  ]
+}

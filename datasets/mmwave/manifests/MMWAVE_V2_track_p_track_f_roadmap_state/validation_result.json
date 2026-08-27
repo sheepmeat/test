@@ -1,0 +1,15 @@
+{
+  "schema_version": "MMWAVE-V2-ROADMAP-RECONCILIATION-VALIDATION-V1",
+  "phase": "ROADMAP_RECONCILIATION_POST_M_PROT3",
+  "base_sha": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
+  "pr177_merged": false,
+  "m_prot_3_status": "IMPLEMENTED / PENDING_SOL_REVIEW",
+  "m_prot_4_authorized": false,
+  "runtime_code_changed": false,
+  "model_changed": false,
+  "training_executed": false,
+  "live_hardware": false,
+  "historical_m_prot_2_json_rewritten": false,
+  "terminal_result": "ROADMAP_RECONCILED_PENDING_SOL_REVIEW",
+  "sol_review_required": true
+}

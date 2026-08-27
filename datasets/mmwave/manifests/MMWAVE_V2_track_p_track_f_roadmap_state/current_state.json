@@ -1,0 +1,79 @@
+{
+  "schema_version": "MMWAVE-V2-TRACK-P-TRACK-F-ROADMAP-STATE-V1",
+  "phase": "ROADMAP_RECONCILIATION_POST_M_PROT3",
+  "date": "2026-08-27",
+  "base_sha": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
+  "discovery": {
+    "pr177_state": "OPEN",
+    "pr177_head": "59c6fad0e5d3efd591b2daeab006d77760c98d58",
+    "pr177_merged": false,
+    "pr177_merge_commit": null,
+    "pr177_previous_sol_reviewed_head": "f6101abb76e2f6980565daf845b56804980978c6",
+    "pr177_worker_claim": "CORRECTIVES_CLOSED",
+    "pr177_sol_review": "PENDING",
+    "origin_main": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
+    "pr176_merge_commit": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
+    "pr176_reviewed_head": "2f361708dc242fe48fd3d4cb4fd7f79548234185"
+  },
+  "track_p": {
+    "M-PROT-0": "COMPLETE / MERGED",
+    "M-PROT-1": "COMPLETE / MERGED",
+    "M-PROT-2": "COMPLETE / MERGED",
+    "M-PROT-3": "IMPLEMENTED / PENDING_SOL_REVIEW",
+    "M-PROT-4": "NOT_AUTHORIZED",
+    "M-PROT-5": "HARDWARE_DEPENDENT / NOT_STARTED",
+    "M-PROT-6": "NOT_STARTED",
+    "CURRENT_TRACK_P_GATE": "M-PROT-3_PENDING_SOL_REVIEW"
+  },
+  "b23": {
+    "role": "PROVISIONAL_INTEGRATION_DEPLOYMENT_CANDIDATE",
+    "panel_id": "B23",
+    "family": "family_b",
+    "seed": 23,
+    "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+    "artifact": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+    "artifact_sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+    "parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+    "runtime": "PYTORCH_FLOAT32_STATE_DICT",
+    "input": "30s / 10Hz / 300 R1 \u2192 621 float32 (trace+mask+scale+quality)",
+    "provisional_integration_freeze": true,
+    "final_model_selected": false,
+    "model_churn_policy": "Sol-authorized replacement only; no ordinary worker re-ranking in M-PROT-3/4/5 loop"
+  },
+  "track_f": {
+    "D1_PRESENT": 57,
+    "D1_ABSENT": 0,
+    "D1_MEMBERSHIP": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "M_PV38": "RESOURCE_BLOCKED_CLOSED",
+    "M_PV38_EVALUATION": "NOT_EXECUTED",
+    "M_PV4": "UNAUTHORIZED",
+    "D2": "LOCKED",
+    "CURRENT_TRACK_F_GATE": "D1_ABSENT_RESOURCE_BLOCKED",
+    "frozen_role_l_panel": [
+      "B11",
+      "B23",
+      "B47",
+      "C11",
+      "C23",
+      "C47"
+    ]
+  },
+  "c1": {
+    "role": "EXTERNAL_SAFETY_DOMAIN_STRESS / DESCRIPTIVE_ONLY / OUT_OF_DOMAIN",
+    "selection_authority": "NONE"
+  },
+  "sw": {
+    "SW-01": "source/interface validation (routine inference admission)",
+    "SW-02": "governed capture campaign binding (not every inference)",
+    "SW-03_SW-04": "sync / evidence / registry infrastructure for debug/capture"
+  },
+  "dependencies": {
+    "LIVE_PRESENCE_SOURCE_NOT_PROVEN": true,
+    "PI_TORCH_NOT_LIVE_VERIFIED": true,
+    "PI_LATENCY_NOT_MEASURED": true,
+    "TFLite": "NOT_EXECUTED",
+    "INT8": "NOT_AUTHORIZED"
+  },
+  "window_ownership": "source-domain causal time coverage \u2192 R1 owns 10 Hz resampling \u2192 exactly 300 canonical R1 samples \u2192 B23",
+  "report": "docs/mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md"
+}

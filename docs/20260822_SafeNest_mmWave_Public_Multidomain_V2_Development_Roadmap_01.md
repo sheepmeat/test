@@ -11,6 +11,33 @@
 
 ---
 
+
+---
+
+## Current authority overlay (2026-08-27) — additive
+
+This child roadmap remains useful for V2 structure history. **Current Track P / Track F execution authority** is:
+
+- `AGENTS.md` mmWave pointer bullets
+- `docs/mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md`
+- `datasets/mmwave/manifests/MMWAVE_V2_track_p_track_f_roadmap_state/current_state.json`
+
+Summary now:
+
+```text
+Track P: M-PROT-0..2 COMPLETE/MERGED
+         M-PROT-3 = IMPLEMENTED / PENDING_SOL_REVIEW (PR #177 OPEN @ 59c6fad0…)
+         M-PROT-4 = NOT_AUTHORIZED
+         B23 = PROVISIONAL INTEGRATION FREEZE (≠ final selected)
+
+Track F: D1 57P/0A BLOCKED; M-PV3.8 RESOURCE_BLOCKED_CLOSED; M-PV4 UNAUTHORIZED
+
+C1: DESCRIPTIVE_ONLY external stress; selection authority NONE
+```
+
+Do not read older sections of this document as authorizing M-PROT-4 or final selection.
+
+
 ## 0. 한 줄 결정
 
 ```text
