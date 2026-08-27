@@ -1,29 +1,28 @@
 {
   "schema_version": "MMWAVE-V2-TRACK-P-TRACK-F-ROADMAP-STATE-V1",
-  "phase": "ROADMAP_RECONCILIATION_POST_M_PROT3",
+  "phase": "ROADMAP_REFRESH_POST_M_PROT_3_MERGE",
   "date": "2026-08-27",
-  "base_sha": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
+  "base_sha": "fd9420663666f40e4e7865f3d5497283c889d401",
+  "origin_main": "fd9420663666f40e4e7865f3d5497283c889d401",
   "discovery": {
-    "pr177_state": "OPEN",
-    "pr177_head": "59c6fad0e5d3efd591b2daeab006d77760c98d58",
-    "pr177_merged": false,
-    "pr177_merge_commit": null,
-    "pr177_previous_sol_reviewed_head": "f6101abb76e2f6980565daf845b56804980978c6",
-    "pr177_worker_claim": "CORRECTIVES_CLOSED",
-    "pr177_sol_review": "PENDING",
-    "origin_main": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
-    "pr176_merge_commit": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
-    "pr176_reviewed_head": "2f361708dc242fe48fd3d4cb4fd7f79548234185"
+    "pr177_state": "MERGED",
+    "pr177_merged": true,
+    "pr177_head": "fcbb6c01e792c762e1cee4912fbc454e94a01dad",
+    "pr177_merge_commit": "fd9420663666f40e4e7865f3d5497283c889d401",
+    "pr177_previous_open_head_at_prior_roadmap": "59c6fad0e5d3efd591b2daeab006d77760c98d58",
+    "pr178_refresh": true,
+    "sol_m_prot_3_verdict": "PASS_WITH_LIMITATIONS"
   },
   "track_p": {
     "M-PROT-0": "COMPLETE / MERGED",
     "M-PROT-1": "COMPLETE / MERGED",
     "M-PROT-2": "COMPLETE / MERGED",
-    "M-PROT-3": "IMPLEMENTED / PENDING_SOL_REVIEW",
-    "M-PROT-4": "NOT_AUTHORIZED",
+    "M-PROT-3": "COMPLETE / MERGED / PASS_WITH_LIMITATIONS",
+    "M-PROT-4": "AUTHORIZED / READY_TO_START",
+    "M-PROT-4_STARTED": false,
     "M-PROT-5": "HARDWARE_DEPENDENT / NOT_STARTED",
     "M-PROT-6": "NOT_STARTED",
-    "CURRENT_TRACK_P_GATE": "M-PROT-3_PENDING_SOL_REVIEW"
+    "CURRENT_TRACK_P_GATE": "M-PROT-4_AUTHORIZED_READY_TO_START"
   },
   "b23": {
     "role": "PROVISIONAL_INTEGRATION_DEPLOYMENT_CANDIDATE",
@@ -67,10 +66,13 @@
     "SW-02": "governed capture campaign binding (not every inference)",
     "SW-03_SW-04": "sync / evidence / registry infrastructure for debug/capture"
   },
+  "merged_runtime_path": "SW-01 PASS \u2192 causal source-time coverage \u2192 R1 (10 Hz / 300) \u2192 R2 \u2192 B23 \u2192 prototype outputs / WiringReceipt",
   "dependencies": {
+    "MR60_UART_PROTOCOL_UNPROVEN": true,
     "LIVE_PRESENCE_SOURCE_NOT_PROVEN": true,
     "PI_TORCH_NOT_LIVE_VERIFIED": true,
     "PI_LATENCY_NOT_MEASURED": true,
+    "PRODUCTION_INFERENCE_CADENCE_NOT_GOVERNED": true,
     "TFLite": "NOT_EXECUTED",
     "INT8": "NOT_AUTHORIZED"
   },

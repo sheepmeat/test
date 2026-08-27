@@ -25,9 +25,9 @@ This child roadmap remains useful for V2 structure history. **Current Track P / 
 Summary now:
 
 ```text
-Track P: M-PROT-0..2 COMPLETE/MERGED
-         M-PROT-3 = IMPLEMENTED / PENDING_SOL_REVIEW (PR #177 OPEN @ 59c6fad0…)
-         M-PROT-4 = NOT_AUTHORIZED
+Track P: M-PROT-0..3 COMPLETE/MERGED
+         M-PROT-3 = PASS_WITH_LIMITATIONS (#177 → fd942066)
+         M-PROT-4 = AUTHORIZED / READY_TO_START (NOT_STARTED)
          B23 = PROVISIONAL INTEGRATION FREEZE (≠ final selected)
 
 Track F: D1 57P/0A BLOCKED; M-PV3.8 RESOURCE_BLOCKED_CLOSED; M-PV4 UNAUTHORIZED

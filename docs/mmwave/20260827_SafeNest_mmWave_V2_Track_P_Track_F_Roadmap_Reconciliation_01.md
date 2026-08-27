@@ -1,39 +1,49 @@
 # SafeNest mmWave V2 — Track P / Track F Roadmap Reconciliation
 
 - Date: 2026-08-27
-- Phase: **Roadmap reconciliation after M-PROT-3 corrective work**
-- Base SHA (`origin/main`): `97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa` (merge of PR #176 / M-PROT-2)
-- Branch: `docs/mmwave-v2-roadmap-post-m-prot3-reconcile`
+- Phase: **Roadmap refresh after M-PROT-3 Sol PASS + merge**
+- Base SHA (`origin/main`): `fd9420663666f40e4e7865f3d5497283c889d401` (merge of PR #177 / M-PROT-3)
+- Branch: `docs/mmwave-v2-roadmap-post-m-prot3-reconcile` (PR #178 refresh — no new PR)
 - Role: **roadmap / lifecycle / DAG only** — no runtime, model, training, live hardware, or M-PROT-4 execution
 - Machine-readable: `datasets/mmwave/manifests/MMWAVE_V2_track_p_track_f_roadmap_state/`
 
 This document is the **current Track P / Track F execution authority overlay**.
-It does not rewrite historical M-PROT-0/1/2 evidence files. Those remain historical packages.
+It does not rewrite historical M-PROT-0/1/2/3 worker evidence files. Those remain historical packages.
 
 ---
 
-## Verified PR #177 discovery (do not invent)
+## M-PROT-3 Final Closure
 
 | Field | Value |
 |---|---|
 | PR | https://github.com/sheepmeat/test/pull/177 |
-| State | **OPEN** |
-| Base | `main` @ `97b742db…` |
-| Exact head | `59c6fad0e5d3efd591b2daeab006d77760c98d58` |
-| Prior Sol-reviewed head (initial) | `f6101abb76e2f6980565daf845b56804980978c6` |
-| Corrective commits | `99a83673…`, `59c6fad0…` |
-| Merged | **NO** |
-| Merge commit | **none** |
-| Worker claim | correctives CLOSED; wiring complete |
-| Sol review (repo-visible) | **PENDING** (no PASS / MERGE_AUTHORIZED recorded on the PR) |
-
-Therefore:
+| State | **MERGED** |
+| Sol verdict | **PASS_WITH_LIMITATIONS** |
+| Authorized exact head | `fcbb6c01e792c762e1cee4912fbc454e94a01dad` |
+| Merge commit / `origin/main` | `fd9420663666f40e4e7865f3d5497283c889d401` |
+| Parents | `97b742db…` (main) + `fcbb6c01…` (M-PROT-3) |
+| M-PROT-3 status | **COMPLETE / MERGED / PASS_WITH_LIMITATIONS** |
+| M-PROT-4 status | **AUTHORIZED / READY_TO_START** |
+| M-PROT-4 started | **NO** |
 
 ```text
-worker complete ≠ lifecycle complete
-M-PROT-3 = IMPLEMENTED / PENDING_SOL_REVIEW
-M-PROT-4 = NOT_AUTHORIZED
+authorization ≠ execution
+M-PROT-4 AUTHORIZED ≠ STARTED ≠ COMPLETE
 ```
+
+Core merged result:
+
+```text
+SW-01 validated admission
+→ causal TIME-coverage composer
+→ R1 owns resampling → exact 300 @ 10 Hz
+→ M-PROT-2 B23 runtime
+→ WiringReceipt
+```
+
+Important behaviors retained in roadmap description: no production SW-01 bypass; no stale inference after subsequent SW-01 fail; cross-bundle continuity; no cross-discontinuity bridge; multi-bundle SW-01 provenance; no post-R1 trim/pad; lazy model load; no M-N9 fallback. Not live-hardware validation.
+
+Historical note: an earlier PR #178 draft recorded #177 as OPEN @ `59c6fad0…` / M-PROT-4 NOT_AUTHORIZED. That was correct then; this refresh supersedes it as current authority.
 
 ---
 
@@ -62,8 +72,8 @@ At 10 Hz, 300 source samples ≈ 30 s; at 20 Hz, ~600 source samples over the sa
 | M-PROT-0 | Prototype integration contract | COMPLETE / MERGED (#172) |
 | M-PROT-1 | Nominate provisional baseline | COMPLETE / MERGED (#175) → B23 |
 | M-PROT-2 | Freeze deployable artifact/runtime contract | COMPLETE / MERGED (#176 @ `97b742db`) |
-| M-PROT-3 | Wire SW-01 → window → R1/R2 → B23 | **IMPLEMENTED / PENDING_SOL_REVIEW** (#177 @ `59c6fad0`) |
-| M-PROT-4 | Offline / replay / synthetic system smoke | **NOT_AUTHORIZED** |
+| M-PROT-3 | Wire SW-01 → window → R1/R2 → B23 | **COMPLETE / MERGED / PASS_WITH_LIMITATIONS** (#177 @ `fcbb6c01` → merge `fd942066`) |
+| M-PROT-4 | Offline / replay / synthetic system smoke | **AUTHORIZED / READY_TO_START** (not started) |
 | M-PROT-5 | Live device debug & capture | HARDWARE_DEPENDENT / NOT_STARTED |
 | M-PROT-6 | Device-domain eval / revision decision | NOT_STARTED |
 
@@ -214,18 +224,21 @@ Do not invent a TFLite/INT8 phase as already authorized. Target-runtime incompat
 
 ## Phase Q&A (human-readable)
 
-### M-PROT-3 (current gate)
+### M-PROT-3 (complete)
 
 - **For:** Wire provisional B23 into the SafeNest software path with fail-closed admissions.
-- **Enters:** SW-01-validated source, M-PROT-2 frozen contract.
-- **Out:** Integration wiring receipts / software path (on PR #177 until merged).
-- **Blocks next:** Sol exact-head review + merge of #177.
+- **Status:** COMPLETE / MERGED / PASS_WITH_LIMITATIONS.
 - **Does not prove:** live MR60 validation, final scientific selection, Pi latency, presence truth.
-- **Next if approved:** M-PROT-4 offline/replay/synthetic smoke (**proposed purpose only; not authorized here**).
 
-### M-PROT-4 (purpose only; NOT authorized)
+### M-PROT-4 (AUTHORIZED / READY_TO_START — not started)
 
-System-level offline / replay / synthetic smoke of source → window → R1/R2 → B23 without claiming live hardware validation. Exact execution requirements remain **PROPOSED / TO BE FROZEN BY SOL**.
+System-level offline / replay / synthetic smoke of the merged path:
+
+```text
+offline fixture/replay source → SW-01 → M-PROT-3 temporal/runtime → B23 → outputs → receipt/evidence continuity
+```
+
+plus system-level fail-closed propagation. Detailed execution requirements = **TO_BE_FROZEN_BY_SOL / EXECUTION PROMPT**. This roadmap records authorization only; it does **not** execute M-PROT-4.
 
 ### M-PROT-5 / M-PROT-6
 
@@ -247,75 +260,65 @@ No silent promotion into final test. M-PROT-6 may keep provisional candidate or 
 flowchart LR
 
     subgraph P["Track P — Prototype / Integration"]
-        P0["M-PROT-0<br/>COMPLETE / MERGED"]
-        P1["M-PROT-1<br/>B23 Nomination<br/>COMPLETE / MERGED"]
-        P2["M-PROT-2<br/>Deployable Freeze<br/>COMPLETE / MERGED"]
-        P3["M-PROT-3<br/>Runtime Wiring<br/>PENDING SOL REVIEW<br/>PR #177 OPEN"]
-        P4["M-PROT-4<br/>Offline / Replay Smoke<br/>NOT AUTHORIZED"]
-        P5["M-PROT-5<br/>Live Debug & Capture<br/>NOT STARTED"]
-        P6["M-PROT-6<br/>Device-Domain / Revision<br/>NOT STARTED"]
+        P0["M-PROT-0<br/>COMPLETE"]
+        P1["M-PROT-1<br/>COMPLETE"]
+        P2["M-PROT-2<br/>COMPLETE"]
+        P3["M-PROT-3<br/>COMPLETE / MERGED<br/>PASS_WITH_LIMITATIONS"]
+        P4["M-PROT-4<br/>AUTHORIZED / READY<br/>NOT STARTED"]
+        P5["M-PROT-5<br/>HARDWARE DEPENDENT"]
+        P6["M-PROT-6<br/>NOT STARTED"]
 
         P0 --> P1 --> P2 --> P3 --> P4 --> P5 --> P6
     end
 
-    B23["B23<br/>PROVISIONAL INTEGRATION FREEZE<br/>≠ FINAL SELECTED"]
-
-    B23 --> P2
+    B23["B23<br/>PROVISIONAL INTEGRATION FREEZE"]
     B23 --> P3
 
-    subgraph R["Runtime path"]
-        S["MR60 / SW-01-compatible source"]
-        W["Causal source-time context"]
-        R1["R1<br/>10 Hz / 300 samples"]
-        R2["R2 descriptors"]
-        M["B23"]
-        O["Breathing / RR / Quality"]
+    subgraph R["Merged Runtime Path"]
+        SRC["SW-01 validated source"]
+        WIN["Causal source-time context"]
+        R1["R1<br/>10 Hz / 300"]
+        R2["R2"]
+        MODEL["B23"]
+        OUT["Breathing / RR / Quality"]
 
-        S --> W --> R1 --> R2 --> M --> O
+        SRC --> WIN --> R1 --> R2 --> MODEL --> OUT
     end
 
-    P3 -. "implements when Sol-approved & merged" .-> R
+    P3 -. "implemented" .-> R
+    P4 -. "system-level offline/replay smoke" .-> R
 
-    SW01["SW-01 validation"]
-    SW01 --> S
-    SW34["SW-03 / SW-04<br/>debug/evidence infra"]
-    SW34 -.-> P5
+    PRES["Live presence source<br/>NOT PROVEN"]
+    TORCH["Pi torch / latency<br/>NOT LIVE VERIFIED"]
 
-    PRES["Governed live presence<br/>NOT PROVEN"]
-    PRES -. "dependency" .-> P5
-
-    TORCH["Pi PyTorch / latency<br/>NOT LIVE VERIFIED"]
-    TORCH -. "target dependency" .-> P4
+    PRES -.-> P5
+    TORCH -.-> P4
 
     subgraph F["Track F — Final Scientific Validation"]
-        D1["D1 BOTH CLASS<br/>57 PRESENT / 0 ABSENT<br/>BLOCKED"]
-        PV38["M-PV3.8<br/>RESOURCE_BLOCKED_CLOSED<br/>eval NOT_EXECUTED"]
-        FINAL["FINAL SCIENTIFIC MODEL STATUS"]
+        D1["D1<br/>57 PRESENT / 0 ABSENT<br/>BLOCKED"]
+        PV38["M-PV3.8<br/>RESOURCE_BLOCKED_CLOSED"]
+        FINAL["FINAL SCIENTIFIC MODEL"]
         PV4["M-PV4<br/>UNAUTHORIZED"]
 
         D1 --> PV38 --> FINAL
-        FINAL -. "separate authorization" .-> PV4
+        FINAL -.-> PV4
     end
 
-    P5 -. "future separately governed admission" .-> D1
-    P6 -. "prototype revision evidence only" .-> D1
+    P5 -. "future governed evidence" .-> D1
 
     C1["C1 External/OOD Stress<br/>DESCRIPTIVE_ONLY"]
     C1 -. "limitations only" .-> B23
-    C1 -. "NO selection authority" .-> PV38
 ```
-
----
 
 ## Stale pointers corrected by this reconciliation
 
-| Stale claim (on `origin/main` before this PR) | Corrected current authority |
+| Stale claim | Corrected current authority |
 |---|---|
-| M-PROT-2 still awaiting Sol #176 / M-PROT-3 NOT_AUTHORIZED pending M-PROT-2 | M-PROT-2 COMPLETE/MERGED; gate is M-PROT-3 Sol review of #177 |
+| #177 OPEN / M-PROT-3 PENDING_SOL_REVIEW / M-PROT-4 NOT_AUTHORIZED (prior #178 draft) | #177 MERGED; M-PROT-3 COMPLETE/PASS_WITH_LIMITATIONS; M-PROT-4 AUTHORIZED / READY / NOT_STARTED |
 | `MODEL_READY_WORK=NO` read as “no model work at all” | Means final-selection blocked; provisional integration continues |
 | D1 block shown as blocking first integration | D1 blocks Track F only |
 | C1 as primary model-selection path | C1 is secondary stress branch; selection authority NONE |
-| Historical M-PROT-2 JSON `PENDING_REVIEW` treated as current | Leave historical JSON; AGENTS/README carry current authority |
+| Historical M-PROT-2/3 JSON `PENDING` fields treated as current | Leave historical JSON; AGENTS/README + this report carry current authority |
 
 ---
 
@@ -327,7 +330,9 @@ MODEL_CHANGED        = NO
 TRAINING_EXECUTED    = NO
 LIVE_HARDWARE        = NO
 M_PROT_4_EXECUTED    = NO
-PR_177_MERGED        = NO
+M_PROT_4_STARTED     = NO
+M_PROT_4_AUTHORIZED  = YES
+PR_177_MERGED        = YES (already on main; not by this docs task)
 FINAL_MODEL_SELECTED = NO
 M-PV3.8_REOPENED     = NO
 M-PV4_AUTHORIZED     = NO
@@ -337,5 +342,6 @@ M-PV4_AUTHORIZED     = NO
 
 ## Sol review required
 
-This roadmap PR updates current-state pointers and Mermaid only.
-It does **not** approve PR #177 and does **not** authorize M-PROT-4.
+This roadmap PR (#178) updates current-state pointers and Mermaid only after the already-merged M-PROT-3.
+It does **not** execute M-PROT-4. Authorization is recorded; execution awaits a separate Sol prompt.
+PR #178 itself remains OPEN pending Sol exact-head review.

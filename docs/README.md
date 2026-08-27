@@ -5,7 +5,7 @@
 ## mmWave V2 current-state pointer (2026-08-27)
 
 - Freeze/reopen/M-PV4 authority: [`M-PV3.8 lifecycle closure`](../datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/lifecycle_closure_state.json) = `RESOURCE_BLOCKED_CLOSED` (Track F).
-- Track P / Track F overlay: [`Track P/F roadmap reconciliation`](mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md) — B23 provisional integration freeze; `CURRENT_TRACK_P_GATE=M-PROT-3_PENDING_SOL_REVIEW` (PR #177 OPEN @ `59c6fad0…`); M-PROT-4 NOT_AUTHORIZED.
+- Track P / Track F overlay: [`Track P/F roadmap reconciliation`](mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md) — B23 provisional integration freeze; `CURRENT_TRACK_P_GATE=M-PROT-4_AUTHORIZED_READY_TO_START`; M-PROT-3 COMPLETE (#177 MERGED @ `fd942066`); M-PROT-4 AUTHORIZED / NOT_STARTED.
 - While Track F is frozen, do not start `M-N0` as final-selection work; `M-N10` remains `KEEP_BLOCKED/OFF_V2_CRITICAL_PATH`; `D3`/`Q3` remain `DEFER`.
 - Do not reopen M-PV3.8, authorize final membership construction, authorize M-PV4, or open D2 semantics. `PV4↔PV3X` remains `ORDER_UNRESOLVED`.
 - The 2026-08-22 public multidomain roadmap remains an active child for V2 structure; current Track P/F execution authority is the reconciliation report + `AGENTS.md`.
@@ -29,7 +29,9 @@
 - [PUBABS-A0A1 public ABSENT source validation (PASS_STRONG_PUBLIC_SOURCE_FOUND; M-PV3.8 unchanged)](mmwave/20260826_SafeNest_mmWave_PUBABS_A0A1_Public_Source_Validation_01.md)
 - [PUBABS-A2 C1 semantics/sensor-health/acquisition comparability (A2_STRONG_INTERNAL_BOTH_CLASS_SOURCE; A3 recommend only)](mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md)
 - [PUBABS-A3 C1 canonical ROLE_L conversion feasibility (A3_CORRECTIVE_REQUIRED)](mmwave/20260826_SafeNest_mmWave_PUBABS_A3_C1_Canonical_Conversion_Feasibility_01.md)
-- [Track P / Track F roadmap reconciliation (post M-PROT-3; B23 provisional freeze; #177 PENDING_SOL_REVIEW; M-PROT-4 NOT_AUTHORIZED)](mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md)
+- [Track P / Track F roadmap reconciliation (post #177 merge; M-PROT-3 COMPLETE; M-PROT-4 AUTHORIZED READY; B23 provisional freeze)](mmwave/20260827_SafeNest_mmWave_V2_Track_P_Track_F_Roadmap_Reconciliation_01.md)
+- [M-PROT-3 integration runtime wiring (COMPLETE/MERGED #177; PASS_WITH_LIMITATIONS; not live validation)](mmwave/20260827_SafeNest_mmWave_V2_M_PROT_3_Integration_Runtime_Wiring_01.md)
+- [Machine-readable Track P/F roadmap state](../datasets/mmwave/manifests/MMWAVE_V2_track_p_track_f_roadmap_state/current_state.json)
 - [M-PROT-2 prototype deployable runtime contract (COMPLETE/MERGED via #176; historical JSON may still say PENDING_REVIEW; not final selection)](mmwave/20260827_SafeNest_mmWave_V2_M_PROT_2_Deployable_Artifact_Runtime_Contract_01.md)
 - [M-PROT-1 prototype candidate nomination (M_PROT_1_PROTOTYPE_NOMINATED; B23 Family B seed 23 INTEGRATION_BASELINE; not a winner; M-PV3.8 unchanged)](mmwave/20260827_SafeNest_mmWave_V2_M_PROT_1_Prototype_Candidate_Nomination_01.md)
 - [M-PROT-0 prototype integration lane (PROTOTYPE_MODEL_LANE_READY; FINAL blocked / PROTOTYPE READY; no winner)](mmwave/20260827_SafeNest_mmWave_V2_Prototype_Integration_Lane_M_PROT_0_01.md)
