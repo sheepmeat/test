@@ -1,0 +1,58 @@
+{
+  "schema_version": "M-PROT-4-SYSTEM-SMOKE-CONTRACT-V1",
+  "phase": "M-PROT-4",
+  "base_sha": "31a4ab6803266a9bdf4a1645a4408a9d29f7333f",
+  "date": "2026-08-27",
+  "terminal_worker_state": "IMPLEMENTED_PENDING_SOL_REVIEW",
+  "terminal_verdict": "M_PROT_4_SYSTEM_SMOKE_IMPLEMENTED",
+  "worker_claim": "CLOSED",
+  "sol_review": "PENDING",
+  "m_prot_5": "NOT_AUTHORIZED",
+  "composition": {
+    "module": "adapters/mmwave_m_prot_4_system_smoke.py",
+    "flow": [
+      "deterministic StreamBundle fixture",
+      "MProt3IntegrationRuntime.ingest_bundle (real public API)",
+      "try_infer",
+      "WiringReceipt V3",
+      "SmokeReceipt V1"
+    ],
+    "m_prot_3_module": "adapters/mmwave_m_prot_3_integration_runtime.py",
+    "direct_b23_bypass": false,
+    "m_n9_fallback": false,
+    "luna1_fixture_tooling": "NOT_INTEGRATED_MINIMAL_LOCAL_BUILDERS",
+    "luna2_smoke_schema_validator": "NOT_INTEGRATED_THIN_LOCAL_SMOKERECEIPT"
+  },
+  "smoke_receipt_schema": "M-PROT-4-SMOKE-RECEIPT-V1",
+  "lineage_class": "FIXTURE_NON_CAMPAIGN",
+  "not_final_evaluation": true,
+  "live_hardware": false,
+  "b23": {
+    "artifact_sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+    "parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+    "scaler_content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c"
+  },
+  "model_changed": false,
+  "scaler_changed": false,
+  "threshold_changed": false,
+  "training": false,
+  "tflite": "NOT_EXECUTED",
+  "int8": "NOT_AUTHORIZED",
+  "track_f": {
+    "d1_present": 57,
+    "d1_absent": 0,
+    "d1_membership": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "m_pv38": "RESOURCE_BLOCKED_CLOSED",
+    "m_pv38_evaluation": "NOT_EXECUTED",
+    "m_pv4": "UNAUTHORIZED",
+    "d2": "LOCKED"
+  },
+  "known_limitations": [
+    "MR60_UART_PROTOCOL_UNPROVEN",
+    "PI_TORCH_NOT_LIVE_VERIFIED",
+    "PI_LATENCY_NOT_MEASURED",
+    "LIVE_PRESENCE_SOURCE_NOT_PROVEN",
+    "PRODUCTION_INFERENCE_CADENCE_NOT_GOVERNED",
+    "LIVE_HARDWARE_NOT_EXECUTED"
+  ]
+}
