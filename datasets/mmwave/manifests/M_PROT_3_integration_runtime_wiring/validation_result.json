@@ -1,0 +1,32 @@
+{
+  "schema_version": "M-PROT-3-VALIDATION-RESULT-V1",
+  "phase": "M-PROT-3",
+  "base_sha": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
+  "terminal_verdict": "M_PROT_3_INTEGRATION_RUNTIME_WIRING_COMPLETE",
+  "sol_review_required": true,
+  "m_prot_4_started": false,
+  "m_prot_3_tests": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_3_integration_runtime.py -q",
+    "exit_code": 0,
+    "stdout_tail": [
+      "............                                                             [100%]",
+      "12 passed in 2.63s"
+    ]
+  },
+  "m_prot_2_regression": {
+    "command": "python3 -m pytest tests/test_mmwave_m_prot_2_deployable_contract.py -q",
+    "exit_code": 0,
+    "stdout_tail": [
+      "...............................                                          [100%]",
+      "31 passed in 1.88s"
+    ]
+  },
+  "model_replaced": false,
+  "new_training": false,
+  "scaler_changed": false,
+  "threshold_changed": false,
+  "tflite_conversion": "NOT_EXECUTED",
+  "int8": "NOT_AUTHORIZED",
+  "live_hardware": false,
+  "pr_merged": false
+}

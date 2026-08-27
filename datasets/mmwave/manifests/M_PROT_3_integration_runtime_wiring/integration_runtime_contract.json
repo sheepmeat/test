@@ -1,0 +1,79 @@
+{
+  "schema_version": "M-PROT-3-INTEGRATION-RUNTIME-WIRING-V1",
+  "phase": "M-PROT-3",
+  "base_sha": "97b742dbc9c23d02cf3a74e0d4134ab76b2d0eaa",
+  "date": "2026-08-27",
+  "terminal_worker_state": "IMPLEMENTED_PENDING_SOL_REVIEW",
+  "terminal_verdict": "M_PROT_3_INTEGRATION_RUNTIME_WIRING_COMPLETE",
+  "m_prot_4": "NOT_AUTHORIZED_PENDING_SOL_REVIEW",
+  "b23": {
+    "panel_id": "B23",
+    "family": "family_b",
+    "seed": 23,
+    "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+    "artifact": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+    "artifact_sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+    "parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+    "representation": "PYTORCH_FLOAT32_STATE_DICT"
+  },
+  "provisional_integration_freeze": true,
+  "replacement_requires_control_tower_decision": true,
+  "mandatory_semantics": [
+    "PROTOTYPE_INTEGRATION_ONLY",
+    "NOT_FINAL_SELECTED_MODEL",
+    "NOT_DEPLOYMENT_VALIDATED",
+    "NOT_SAFETY_VALIDATED",
+    "NOT_CLINICAL_VALIDATION",
+    "SUBJECT_TO_REPLACEMENT"
+  ],
+  "composition": {
+    "module": "adapters/mmwave_m_prot_3_integration_runtime.py",
+    "flow": [
+      "SW-01 source",
+      "SW-01 validation",
+      "M-PROT-3 causal temporal composer",
+      "NativeTraceInput",
+      "R1 adapt_native_trace",
+      "M-PROT-2 run_prototype_inference (R2/Stage0/Stage1/B23)",
+      "WiringReceipt"
+    ],
+    "m_prot_2_runtime": "adapters/mmwave_m_prot_2_b23_runtime.py",
+    "sw01_checker": "adapters/mmwave_sw01_interface_checker.py",
+    "r1": "adapters/mmwave_r1_sensor_independent_trace.py"
+  },
+  "window_contract": {
+    "id": "M_PROT_3_CAUSAL_30S_10HZ_300_V1",
+    "duration_s": 30,
+    "target_rate_hz": 10,
+    "target_samples": 300,
+    "causal_past_only": true,
+    "session_change_flush": true,
+    "reset_flush": true,
+    "large_gap_policy": "FLUSH_NO_BRIDGE",
+    "insufficient_history": "WINDOW_NOT_READY",
+    "no_zero_fill": true,
+    "no_silent_large_gap_interpolation": true,
+    "production_inference_cadence": "NOT_GOVERNED_IN_M_PROT_3"
+  },
+  "presence": {
+    "governed_source_in_sw01": false,
+    "policy": "CALLER_MUST_SUPPLY_EXPLICIT_PRESENCE; DEFAULT PRESENCE_UNAVAILABLE",
+    "no_inference_from_physiology": true
+  },
+  "scaler_content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+  "scaler_apply_count": "ONCE",
+  "assembled_dim": 621,
+  "m_n9_fallback": false,
+  "mr60_uart_parser": "NOT_IMPLEMENTED_MR60_UART_PROTOCOL_UNPROVEN",
+  "fixture_lineage": "FIXTURE_NON_CAMPAIGN",
+  "live_hardware": false,
+  "track_f": {
+    "d1_present": 57,
+    "d1_absent": 0,
+    "d1_membership": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "m_pv38": "RESOURCE_BLOCKED_CLOSED",
+    "m_pv38_evaluation": "NOT_EXECUTED",
+    "m_pv4": "UNAUTHORIZED",
+    "d2": "LOCKED"
+  }
+}
