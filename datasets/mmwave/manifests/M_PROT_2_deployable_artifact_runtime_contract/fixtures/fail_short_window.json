@@ -1,0 +1,8 @@
+{
+  "base": "positive_valid_621.json",
+  "overrides": {
+    "sample_count": 12,
+    "window_valid": false
+  },
+  "expected_fail_closed_code": "INCOMPLETE_INPUT"
+}

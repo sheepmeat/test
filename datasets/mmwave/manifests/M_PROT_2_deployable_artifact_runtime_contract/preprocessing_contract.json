@@ -1,0 +1,72 @@
+{
+  "schema_version": "M-PROT-2-B23-PREPROCESS-V1",
+  "contract_version": "M-PROT-2-B23-PREPROCESS-V1",
+  "architecture": {
+    "stage_0": "Runtime Input Admissibility Gate",
+    "stage_1": "Canonical B23 Model Preprocessing"
+  },
+  "admissibility_vs_training": {
+    "statement": "Runtime admissibility is stricter than historical training ingestion. Invalid runtime inputs are rejected before they enter the model preprocessing path. For accepted finite model-ready inputs, the B23 preprocessing semantics match the frozen training feature path.",
+    "training_historical_nonfinite_fill": "scripts.mmwave_m_pv2_candidate_training._feature_matrix filled non-finite assembled values with zeros",
+    "runtime_nonfinite_policy": "Stage 0 fail-closed NON_FINITE_INPUT; no zero-fill physiology",
+    "identical_end_to_end_claim": false,
+    "finite_accepted_input_parity": "BIT_EXACT"
+  },
+  "source_waveform_identity": "R1 common_trace respiratory_motion_trace at 10 Hz",
+  "R1_ADAPTER_MODULE": "adapters/mmwave_r1_sensor_independent_trace.py",
+  "R1_PROFILE": "R1-A_NATIVE_CENTERED_RELATIVE_MOTION_10HZ_V1",
+  "R2_EXTRACTOR_MODULE": "adapters/mmwave_r2_representation_features.py",
+  "R2_EXTRACTOR_FUNCTION": "extract_feature_candidates",
+  "TRAINING_FEATURE_MATRIX_FUNCTION": "scripts.mmwave_m_pv2_candidate_training._feature_matrix",
+  "TRAINING_FEATURE_ARRAYS_FUNCTION": "scripts.mmwave_m_pv2_candidate_training._feature_arrays",
+  "RUNTIME_ASSEMBLER_FUNCTION": "adapters.mmwave_m_prot_2_b23_runtime.assemble_family_b_vector",
+  "RUNTIME_FROM_R1_FUNCTION": "adapters.mmwave_m_prot_2_b23_runtime.assemble_from_r1_common_trace",
+  "window_construction": "fixed causal 30 s / 300 samples; fewer than 300 samples fail closed",
+  "trace_mask_semantics": "1=valid finite sample, 0=invalid; retained as model input; not interpolated",
+  "invalid_value_handling": "Stage 0 rejects non-finite required fields; no physiology fill",
+  "trace_normalization": "z-score with TRAIN trace mean/std from frozen scaler; apply once",
+  "scale_feature_computation": "canonical R2 F2-map SCALE_NAMES (12) via extract_feature_candidates / _feature_arrays; z-scored with TRAIN scale mean/std",
+  "quality_feature_computation": "canonical R2 F3 QUALITY_NAMES (9) via extract_feature_candidates / _feature_arrays; z-scored with TRAIN quality mean/std",
+  "per_feature_scaler": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+  "scaler_path": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+  "scaler_content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+  "scaler_file_sha256": "9555c8c954078b80e26fbcd3bc5d5a70b9a2e04620946118709ec95418b2ac36",
+  "feature_order": {
+    "trace": "indices 0:300 after z-score",
+    "trace_mask": "indices 300:600",
+    "scale": "indices 600:612",
+    "quality": "indices 612:621"
+  },
+  "dtype": "float32",
+  "double_zscore": "FORBIDDEN",
+  "live_refit": "FORBIDDEN",
+  "c1_refit": "FORBIDDEN",
+  "d1_refit": "FORBIDDEN",
+  "per_session_scaler_refit": "FORBIDDEN",
+  "matches_feature_matrix_layout": true,
+  "scale_names": [
+    "native_mad_about_median",
+    "native_robust_rms_about_median",
+    "native_robust_range_p05_p95",
+    "native_peak_to_peak",
+    "common_trace_mad_about_median",
+    "common_trace_robust_rms_about_median",
+    "total_signal_energy",
+    "total_signal_mean_square",
+    "log_total_signal_energy",
+    "respiratory_band_energy",
+    "respiratory_band_power",
+    "log_respiratory_band_energy"
+  ],
+  "quality_names": [
+    "trace_sample_count",
+    "trace_duration_s",
+    "trace_mad_about_median",
+    "trace_robust_rms_about_median",
+    "trace_robust_range_p05_p95",
+    "trace_mean_square",
+    "trace_is_exact_flat",
+    "valid_sample_fraction",
+    "source_quality_flag_count"
+  ]
+}

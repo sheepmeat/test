@@ -1,0 +1,14 @@
+{
+  "BIT_EXACT_OUTPUT_ACROSS_DIFFERENT_TORCH_VERSIONS": "NOT_GUARANTEED",
+  "CROSS_RUNTIME_SEMANTIC_MATCH": "DESCRIPTIVE_ONLY",
+  "REFERENCE_RECEIPT_ENVIRONMENT_BOUND": true,
+  "SAME_FROZEN_RUNTIME_ENVIRONMENT": "deterministic result expected",
+  "architecture": "arm64",
+  "device": "CPU",
+  "numpy_version": "1.26.4",
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "processor": "arm",
+  "python_version": "3.9.6",
+  "schema_version": "M-PROT-2-REFERENCE-RECEIPT-ENVIRONMENT-V1",
+  "torch_version": "2.8.0"
+}
