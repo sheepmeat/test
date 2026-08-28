@@ -1,0 +1,90 @@
+{
+  "schema_version": "safenest.thermal.false_positive_fast_track.alarm_policy_receipt.v1",
+  "roadmap_step": "P0",
+  "status": "BLOCKED",
+  "verdict": "ACTIVE_ALARM_PATH_NOT_IDENTIFIED_AND_LEGACY_CLASS_INDEX_DIRECT_ALARM_PATH_REQUIRES_RUNTIME_ISOLATION_EVIDENCE",
+  "scope": {
+    "repository_role": "standalone evidence repository",
+    "actual_raspberry_pi_runtime_available": false,
+    "actual_collector_runtime_available": false,
+    "raw_sensor_or_participant_data_committed": false,
+    "model_or_runtime_changed": false,
+    "threshold_changed": false,
+    "firmware_changed": false,
+    "safety_authority_changed": false
+  },
+  "observations": [
+    {
+      "id": "PUBLIC_SDT_SHADOW_CONTRACT_STATIC",
+      "kind": "OBSERVED_STATIC_CONTRACT",
+      "status": "NOT_RUNTIME_VERIFIED",
+      "evidence_path": "config/thermal/b6r_p3_raspberry_pi_fp32_tflite_replay_shadow_benchmark_contract.json",
+      "finding": "The B6R-P3 public-SDT contract declares SHADOW_ONLY, explicit opt-in, default_activation false, and safety_authority false.",
+      "limitation": "This is a replay-benchmark contract, not evidence of the actually loaded Pi runtime or active alarm configuration."
+    },
+    {
+      "id": "PUBLIC_SDT_SHADOW_AUDIT_STATIC",
+      "kind": "OBSERVED_STATIC_AUDIT",
+      "status": "NOT_RUNTIME_VERIFIED",
+      "evidence_path": "datasets/thermal/manifests/B6R-P3_raspberry_pi_fp32_tflite_replay_shadow_benchmark/shadow_only_audit.json",
+      "finding": "The B6R-P3 audit records deployment_mode SHADOW_ONLY, candidate_activation NOT_PERFORMED, default_activation false, production_runtime_selector_update false, and safety_authority false.",
+      "limitation": "The same stage records target evidence as unavailable; it cannot establish the current deployed alarm boundary."
+    },
+    {
+      "id": "TARGET_RUNTIME_UNAVAILABLE",
+      "kind": "OBSERVED_ACCESS_AUDIT",
+      "status": "BLOCKING_EVIDENCE_GAP",
+      "evidence_paths": [
+        "datasets/thermal/manifests/B6R-P3_raspberry_pi_fp32_tflite_replay_shadow_benchmark/target_access_audit.json",
+        "datasets/thermal/manifests/B6R-P3_raspberry_pi_fp32_tflite_replay_shadow_benchmark/run_summary.json",
+        "docs/thermal/20260829_SafeNest_Thermal_False_Positive_Fast_Track_Roadmap_KO_01.md"
+      ],
+      "finding": "The target access audit is BLOCKED_HARDWARE with target_identity NOT_AVAILABLE and target_measurement_available false. The run summary records target_evidence NOT_AVAILABLE. The fast-track roadmap states that the standalone repository does not contain the actual RaspberryPi/Runtime or ESP32 UDP implementation.",
+      "limitation": "The active model selector, active alarm route, actuator route, and external-alert route cannot be identified from this repository."
+    },
+    {
+      "id": "LEGACY_CLASS_INDEX_DIRECT_ALARM_PATH",
+      "kind": "OBSERVED_STATIC_CODE",
+      "status": "SAFETY_RISK_REQUIRES_RUNTIME_ISOLATION",
+      "evidence_paths": [
+        "inference/infer_pi_thermal.py",
+        "tests/test_v4_pipeline.py",
+        "models/model_manifest.json"
+      ],
+      "finding": "ThermalRealtimeRunner maps class_index == 2 to s4, risk_score 100, emergency_override true, and invokes alarm_sink for a single frame. The accompanying test asserts one dispatched alarm and emergency_override true. The repository default thermal manifest maps index 2 to HUMAN_FALL for the legacy 318184-byte INT8 model.",
+      "limitation": "This source is labelled a legacy test-compatibility wrapper. It proves the unsafe static behavior exists in the repository, but does not prove that it is the active deployed runtime or that its sink reaches an actuator or external alert."
+    },
+    {
+      "id": "DIAGNOSTIC_OUTPUT_BOUNDARY",
+      "kind": "INFERENCE_FROM_MISSING_RUNTIME_EVIDENCE",
+      "status": "UNVERIFIED",
+      "finding": "No actual runtime log or configuration proves that the investigation output is restricted to probability/telemetry only.",
+      "limitation": "Do not run inference experiments until the active alarm path is isolated and evidenced as shadow/telemetry only."
+    }
+  ],
+  "required_p0_conditions": {
+    "public_sdt_telemetry_or_shadow_only": "NOT_RUNTIME_VERIFIED",
+    "single_human_fall_proxy_frame_cannot_trigger_emergency": "NOT_RUNTIME_VERIFIED",
+    "single_human_fall_proxy_frame_cannot_trigger_actuator": "NOT_RUNTIME_VERIFIED",
+    "single_human_fall_proxy_frame_cannot_trigger_external_alert": "NOT_RUNTIME_VERIFIED",
+    "legacy_class_index_2_direct_emergency_investigated": "STATIC_RISK_FOUND",
+    "diagnostic_output_probability_or_telemetry_only": "NOT_RUNTIME_VERIFIED"
+  },
+  "blockers": [
+    {
+      "code": "ACTIVE_ALARM_PATH_NOT_IDENTIFIED",
+      "reason": "The actual Raspberry Pi/integration runtime and its active model selector, alarm configuration, actuator route, and external-alert route are unavailable."
+    },
+    {
+      "code": "CLASS_INDEX_2_DIRECT_ALARM_ISOLATION_UNVERIFIED",
+      "reason": "A repository legacy wrapper directly turns class_index == 2 into emergency_override and an alarm_sink call, but its deployed use and isolation are not verified."
+    }
+  ],
+  "required_to_unblock": [
+    "From the actual deployed runtime, preserve the runtime and collector commit SHAs, active model selector/config source, and active alarm-mode configuration.",
+    "Provide a reproducible runtime-level trace or test proving that one HUMAN_FALL_PROXY output cannot directly invoke emergency, an actuator, or an external alert.",
+    "If the legacy class_index == 2 wrapper is active, apply and verify the minimum shadow/telemetry isolation in the actual runtime before any inference experiment; record the exact deployed commit and configuration evidence.",
+    "Provide a runtime log/configuration demonstrating that diagnostic output remains probability/telemetry only."
+  ],
+  "next_action": "STOP_P0_ONLY; do not start TFP-0 until every required P0 condition is runtime-verified."
+}
