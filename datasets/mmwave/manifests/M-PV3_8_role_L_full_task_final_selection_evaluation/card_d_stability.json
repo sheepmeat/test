@@ -1,0 +1,70 @@
+{
+  "candidate_output_accessed": false,
+  "candidates": [
+    {
+      "candidate_key": "Family_B_seed_11",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_B_seed_23",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_B_seed_47",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_11",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_23",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_47",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    }
+  ],
+  "card_id": "CARD_D_STABILITY",
+  "evaluation_status": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "held_out_subjects": [
+    "D1_PERSON_03",
+    "D1_PERSON_09",
+    "D1_PERSON_11"
+  ],
+  "metrics": null,
+  "role_id": "ROLE_L_FULL_TASK",
+  "schema_version": "M-PV3.8.1_ROLE_L_FULL_TASK_FINAL_SELECTION",
+  "seeds_required": [
+    11,
+    23,
+    47
+  ],
+  "summary_metrics": [
+    "mean",
+    "population_std",
+    "min",
+    "max",
+    "per_subject_results"
+  ],
+  "title": "Every-seed stability"
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "M-PV3.8.4_FEASIBILITY_AUDIT_V1",
+  "audit_id": "MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_FEASIBILITY_AUDIT_V1",
+  "artifacts": {
+    "datasets/mmwave/manifests/M-PV3_8_absent_acquisition_feasibility_audit/feasibility_audit.json": "b8a5bdcca7fdd03d724084a89e1077817ea79cba459c0a2907f2ea8c60cec86c",
+    "datasets/mmwave/manifests/M-PV3_8_absent_acquisition_feasibility_audit/validation_result.json": "4655d2b3d0e4e9271bcfbbfd24324f86a92b8f151c960d40e0f19110aff0773f",
+    "docs/mmwave/20260824_SafeNest_mmWave_M-PV3_8_ABSENT_Acquisition_Feasibility_Decision_Audit_01.md": "78fd49209af4aea961207e237166da29fc18732596fa7c1db493dad0286e1f98"
+  }
+}

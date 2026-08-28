@@ -1,0 +1,8 @@
+{
+  "schema_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
+  "files": {
+    "config/mmwave/m_pv38_absent_membership_acquisition_gate.json": "b85a3736b5bb34942ef2f3455f6dd896be2e17dd407b411811dddbb417a03a52",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/acquisition_gate.json": "70016924884fa9d546492c382bffb3a4d16e2ed46f51b64cabe01b6fb8d0ecd9",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/final_lock_requirements.json": "c094c1e27f2f375362311ad943dd1ae1ad16bdf6f846ff1de15430177c8bbfa0"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "arbitrary_internal_target_interval": false,
+  "breathing_target_anchor": "FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT",
+  "breathing_target_duration_s": 5.0,
+  "breathing_target_semantics": "final fixed interval of current causal context",
+  "causal_context": true,
+  "context_duration_s": 30.0,
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "d2_used": false,
+  "evaluation_stride_s": 5.0,
+  "example_manifest": "MMWAVE_V2_M_PV1_M_PV2_EXAMPLE_MANIFEST_V1",
+  "m_pv1_ready_for_m_pv2": true,
+  "model_context_duration_s": 30.0,
+  "model_training_performed": false,
+  "mr60_supervised_use": false,
+  "phase": "M-PV1",
+  "rate_hz": 10.0,
+  "representation_profiles": [
+    "PROFILE_A_FEATURE_F2_V1",
+    "PROFILE_B_TRACE_F3_R1_V1",
+    "PROFILE_C_HYBRID_TRACE_PLUS_F2_V1"
+  ],
+  "rr_reference_interval_anchor": "FULL_CAUSAL_CONTEXT_REFERENCE_INTERVAL",
+  "rr_reference_interval_duration_s": 30.0,
+  "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT",
+  "source_balancing_contract": "MMWAVE_V2_M_PV1_SOURCE_BALANCING_CONTRACT_V1",
+  "status": "FROZEN_FOR_M_PV2",
+  "target_contract": "MMWAVE_V2_M_PV1_TARGET_MAPPING_PROFILE_V1",
+  "temporal_contract": "MMWAVE_V2_M_PV1_TEMPORAL_CONTEXT_CONTRACT_V1",
+  "temporal_hold_learning_boundary": "DETERMINISTIC_POST_BREATHING_COMPOSITION_ONLY",
+  "upstream_contracts": {
+    "D0": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+    "D1": "D1_NATIVE_SIXPORT_PHASE_DISPLACEMENT_V1",
+    "I1": "MMWAVE_V2_I1_RUNTIME_SEMANTIC_CONTRACT_V1",
+    "M-PV0": "MMWAVE_M_PV0_PUBLIC_MULTIDOMAIN_REGISTRY_V1",
+    "Q2": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+    "R1": "R1_SENSOR_INDEPENDENT_TRACE_CONTRACT_V1",
+    "R2": "MMWAVE_V2_R2_REPRESENTATION_CANDIDATE_SET_V1",
+    "R3": "MMWAVE_V2_R3_TARGET_CONTRACT_SET_V1"
+  }
+}

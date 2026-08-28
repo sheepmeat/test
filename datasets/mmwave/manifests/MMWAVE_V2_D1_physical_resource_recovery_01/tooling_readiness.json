@@ -1,0 +1,17 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-TOOLING-V1",
+  "b06_status": "AVAILABLE_VERIFIED_FIXTURE_ONLY",
+  "blocking_for_campaign": true,
+  "fixture_demo": {
+    "executed": true,
+    "fixture_predeclaration": "datasets/mmwave/manifests/MMWAVE_V2_D1_physical_resource_recovery_01/fixtures/fixture_campaign_predeclaration.json",
+    "fixture_receipts": "datasets/mmwave/manifests/MMWAVE_V2_D1_physical_resource_recovery_01/fixtures/fixture_post_capture_checksum_receipts.json",
+    "nine_slots": 9,
+    "planned_to_actual_binding_ok": true,
+    "real_slot_consumed": false,
+    "d1_membership_entries_created": 0
+  },
+  "campaign_artifact_dir_exists": false,
+  "sw02_campaign_generator": "SCHEMAS_DEFINED_NO_CAMPAIGN_GENERATOR_INVOKED",
+  "evidence": "Fixture-only Stage1/Stage2 metadata demonstration completed; governed campaign_predeclaration.json was NOT created."
+}

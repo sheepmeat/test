@@ -1,0 +1,219 @@
+{
+  "contract_id": "PUBABS_C1_R1T_ADAPTER_PROPOSAL_V1",
+  "proposal_status": "PROPOSAL_ONLY_NOT_AUTHORITATIVE",
+  "a3c_verdict": "A3C_FREEZE_READY_WITH_LIMITATIONS",
+  "created_utc": "2026-08-26T13:13:10Z",
+  "corrected_utc": "2026-08-26T13:40:00Z",
+  "correction_reason": "Sol Master PUBABS-A3C review: single-value range observation scope, session bin lock, R1T WINDOW_LOCAL filter scope, numeric provenance, post-PR160 canonical base",
+  "prerequisites": {
+    "pubabs_a3_pr160": "MERGED",
+    "pr160_merged": true,
+    "reviewed_a3_head": "e1ffdd63608fd5732d46d890b3e1dcba1b04c8c5",
+    "pr160_merge_commit": "78c7d741f5f8d6b1cf0e7f08952e9810b2bf1d8d",
+    "origin_main_at_proposal": "78c7d741f5f8d6b1cf0e7f08952e9810b2bf1d8d",
+    "a3_gate_on_merged_main": "A3_CORRECTIVE_REQUIRED",
+    "note": "A3 evidence is canonical on origin/main via merged PR #160. This A3C proposal is not Sol-frozen and does not authorize A3R."
+  },
+  "authority_boundary": {
+    "modify_frozen_r1": false,
+    "historical_r1_identity": "R1-A_NATIVE_CENTERED_RELATIVE_MOTION_10HZ_V1",
+    "new_ingress_contract_id": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+    "r1_historical_behavior": "UNCHANGED",
+    "r1t_output_feeds": "existing R1 already_at_10Hz median-centering path only; no resample_poly; no second resample"
+  },
+  "source_identity": {
+    "candidate_id": "C1",
+    "doi": "10.5281/zenodo.15032859",
+    "file": "Data.zip",
+    "input_schema": "timestamp_ns + quoted python-complex list length 180"
+  },
+  "c1_duration_asymmetry_observation": {
+    "classification": "C1_STRUCTURAL_OBSERVATION_ONLY",
+    "absent_duration_s_approx": 900.0,
+    "present_duration_s_approx": 180.0,
+    "used_to_set_numeric_parameters": false,
+    "used_as_anti_contamination_constraint": true,
+    "implication": "Whole-record energy, whole-record IIR filtfilt, or whole-record gap screening would give ABSENT a class-correlated longer observation than PRESENT. Observation scope is therefore the identical first 30.0 s for both classes."
+  },
+  "recommended_timestamp_rule": {
+    "id": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+    "selected_option": "T4_plus_T2_elements",
+    "r1t_temporal_scope": "WINDOW_LOCAL",
+    "target_rate_hz": 10.0,
+    "target_context_s": 30.0,
+    "target_samples": 300,
+    "window_start": "t0 = first remaining sample timestamp after finite check and duplicate policy KEEP_FIRST",
+    "source_observation_interval": "[t0, t0 + 30.0] inclusive, same interval as range selection",
+    "no_later_interval_search": true,
+    "grid_origin": "t0",
+    "intermediate_grid": {
+      "rate_hz": 20.0,
+      "times": "tau[m] = t0 + m/20 for m = 0,1,...,598",
+      "length": 599,
+      "span": "[t0, t0 + 29.9]"
+    },
+    "target_grid": {
+      "rate_hz": 10.0,
+      "times": "t[k] = t0 + k/10 for k = 0,1,...,299",
+      "length": 300,
+      "span": "[t0, t0 + 29.9]",
+      "end_timestamp_exclusive": "t0 + 30.0",
+      "derivation": "even indices of the 20 Hz intermediate grid after filtfilt (m = 0,2,...,598)"
+    },
+    "duplicate_policy": "KEEP_FIRST",
+    "monotonicity": "strictly increasing after KEEP_FIRST; any non-positive consecutive delta fails",
+    "median_dt_scope": "consecutive positive deltas inside the source observation interval only",
+    "min_median_source_rate_hz": 12.0,
+    "gap_rule": "fail-closed if any consecutive delta inside the observation interval is > 2.5 * median_dt",
+    "gap_rule_replaced": "max(0.25 s, 2.5 * median_dt) is REJECTED because max() is more permissive than frozen R1 for fast sources",
+    "interpolation_method": "numpy.interp linear on the native unwrapped phase, independently of labels",
+    "interpolation_support": "every 20 Hz grid point must satisfy t_obs_first <= tau[m] <= t_obs_last; numpy.interp left/right fill is forbidden",
+    "no_extrapolation": true,
+    "anti_alias_rule": {
+      "family": "Butterworth",
+      "btype": "low",
+      "analog": false,
+      "output": "ba",
+      "order": 4,
+      "cutoff_hz": 4.0,
+      "fs_hz": 20.0,
+      "implementation": "scipy.signal.butter then scipy.signal.filtfilt",
+      "filtfilt_method": "pad",
+      "filtfilt_padtype": "odd",
+      "filtfilt_padlen": 15,
+      "filtfilt_padlen_derivation": "3 * max(len(b), len(a)) for order-4 ba (len=5)",
+      "guard_interval_real_samples_s": 0.0,
+      "guard_interval_note": "No samples after t0+30.0 are consumed. Synthetic odd pad of 15 samples at 20 Hz (0.75 s) is applied to the WINDOW_LOCAL intermediate series only."
+    },
+    "decimation": "exact 2:1 even-index take after filtfilt; no second resample_poly",
+    "output_coverage": "exactly 300 finite samples or fail",
+    "edge_behavior": "no extrapolation; filtfilt odd pad on the 599-point WINDOW_LOCAL series only",
+    "r1_handoff": "NativeTraceInput sampling_rate_hz=10.0, trace length 300, time_s=target grid; R1 resampling_method=NONE_SOURCE_ALREADY_AT_TARGET_RATE; R1 median is therefore the median of these 300 samples",
+    "pipeline": [
+      "validate timestamps finite",
+      "duplicate timestamps: KEEP_FIRST",
+      "require strictly increasing remaining timestamps",
+      "t0 = first remaining timestamp; observation interval = [t0, t0+30.0]; do not search a later interval",
+      "compute median_dt on observation-interval deltas only; require 1/median_dt >= 12.0",
+      "fail if any observation-interval gap > 2.5 * median_dt",
+      "fail if no observation sample has t >= t0+29.9 (cannot cover last target sample without extrapolation)",
+      "after range lock, form native phase on observation samples: unwrap(angle(z_selected))",
+      "linear interpolate that phase onto the 599-point 20.0 Hz intermediate grid; fail if any grid point is outside [t_obs_first, t_obs_last]",
+      "Butterworth lowpass order=4, fc=4.0 Hz, fs=20.0 Hz; filtfilt padtype=odd, padlen=15",
+      "decimate even indices -> exactly 300 samples at 10.0 Hz",
+      "emit NativeTraceInput for frozen R1 median centering only"
+    ],
+    "fail_closed_codes": [
+      "SOURCE_INVALID_TIMESTAMP_NONFINITE",
+      "SOURCE_INVALID_TIMESTAMP_NOT_INCREASING",
+      "SOURCE_INVALID_MEDIAN_RATE_TOO_LOW",
+      "INPUT_UNAVAILABLE_UNRESOLVABLE_TIME_GAP",
+      "INPUT_UNAVAILABLE_TOO_SHORT_FOR_30S",
+      "INPUT_UNAVAILABLE_INTERP_EXTRAPOLATION_FORBIDDEN",
+      "INPUT_UNAVAILABLE_NONFINITE_FILTER_OUTPUT"
+    ]
+  },
+  "timing_parameter_provenance": [
+    {
+      "parameter": "min_median_source_rate_hz = 12.0",
+      "classification": "CONSERVATIVE_GOVERNANCE_CHOICE",
+      "authority": "R1 fails SOURCE_RATE_BELOW_TARGET below 10 Hz; anti-alias fc=4 Hz requires source Nyquist > 4 Hz (rate > 8 Hz). 12.0 Hz is a fixed floor strictly above both bounds. Not fitted. Not lowered or raised to change C1 file pass count."
+    },
+    {
+      "parameter": "0.25 s",
+      "classification": "FROM_EXISTING_FROZEN_CONTRACT",
+      "authority": "R1 gap rule is 2.5 source samples. At the 10 Hz target, 2.5/10 = 0.25 s. This identity explains the previous 0.25 s token. It is NOT a second source-gap threshold and is NOT applied via max() to relax the source rule."
+    },
+    {
+      "parameter": "gap_limit = 2.5 * median_dt",
+      "classification": "FROM_EXISTING_FROZEN_CONTRACT",
+      "authority": "adapters/mmwave_r1_sensor_independent_trace.py: fail if max(delta) > expected_dt * 2.5. For irregular measured time, expected_dt is replaced by median_dt computed on the observation interval. Replaces the prior max(0.25 s, 2.5*median_dt) because that max() is more permissive than R1 for sources faster than 10 Hz. Not tuned against any C1 worst-gap statistic."
+    },
+    {
+      "parameter": "intermediate_grid_hz = 20.0",
+      "classification": "FROM_TARGET_10HZ_NYQUIST",
+      "authority": "Smallest integer multiple of 10 Hz that permits exact 2:1 decimation onto the frozen 10 Hz ROLE_L grid after a digital anti-alias filter. C1 ~18.8 Hz is a structural observation that 20 Hz is near native; it is not the reason 20 Hz was chosen."
+    },
+    {
+      "parameter": "Butterworth order = 4",
+      "classification": "CONSERVATIVE_GOVERNANCE_CHOICE",
+      "authority": "R1 anti-alias is Kaiser resample_poly, not Butterworth; this new R1T ingress therefore cannot inherit an R1 Butterworth order. Order 4 is a fixed conventional IIR order, coincidentally used by historical B BPF, but is not selected from C1 files or from ROLE_L accuracy. Not fitted."
+    },
+    {
+      "parameter": "cutoff_hz = 4.0",
+      "classification": "FROM_TARGET_10HZ_NYQUIST",
+      "authority": "10 Hz Nyquist is 5 Hz, so the anti-alias cutoff must be < 5 Hz. 4.0 Hz is 0.8 * Nyquist. R2/ROLE_L respiratory band upper bound 0.7 Hz only proves that 4.0 Hz does not invade the physiological band; 4.0 Hz is not a respiratory-isolation cutoff and is not fitted on C1."
+    }
+  ],
+  "recommended_range_rule": {
+    "id": "C1_ROI_EXCLUDE_NEARFIELD28_DYNENERGY_UNWRAP_V1",
+    "selected_option": "RG-S1",
+    "rejected_option": "RG-S2",
+    "range_resolution_m": 0.0512,
+    "n_bins": 180,
+    "range_roi_bins_inclusive": [28, 179],
+    "nearfield_exclusion_bin_count": 28,
+    "range_roi_justification": [
+      "SciData documents excluding first 28 range columns to remove near-field reflections and direct-path artifacts",
+      "28 * 0.0512 m ≈ 1.4336 m aligns with published d_offset=1.44 m near-field accounting",
+      "Same cut applies to Presence and Absence (authors state absence follows same setup)",
+      "Does NOT use PRESENT/ABSENT labels or model scores"
+    ],
+    "range_selection_observation_duration_s": 30.0,
+    "range_selection_observation_duration_authority": "Frozen ROLE_L_FULL_TASK context is 30.0 s / 300 samples at 10 Hz (role_l_representation_contract_recovery.json). Duration is not derived from C1 PRESENT/ABSENT lengths.",
+    "static_suppression_interval": "the identical first VALID 30.0 s source observation interval [t0, t0+30.0]; not the full recording",
+    "static_suppression": "per-bin subtract complex temporal mean computed only on samples inside the 30.0 s observation interval",
+    "dynamic_residual": "z_b(t) - mean_interval(z_b) for t in the observation interval",
+    "argmax_formula": "selected_bin = min{ b in [28,179] : mean(|dyn_b|^2) = max_{c in [28,179]} mean(|dyn_c|^2) }",
+    "tie_rule": "lowest bin index",
+    "bin_lock": "SESSION",
+    "bin_lock_rule": "compute selected_bin once from the first 30.0 s observation interval; reuse that integer bin for any later sample of the same session; never re-run argmax per window",
+    "complex_to_phase_rule": "numpy.angle on the locked bin, radians, no derivative",
+    "phase_unwrap_rule": "numpy.unwrap default (discont=pi, period=2*pi) on the observation-interval native series of the locked bin",
+    "polarity": "preserve; no sign inversion; R1 sign alignment across sources remains unverified",
+    "centering": "deferred to frozen R1 median of the 300-sample R1T output; no re-center after slice",
+    "same_rule_both_classes": true,
+    "rg_s1_versus_rg_s2": {
+      "rg_s1": "first 30.0 s only; session lock; identical observation duration for PRESENT and ABSENT",
+      "rg_s2": "window-local argmax on each 30 s window",
+      "selection": "RG-S1",
+      "selection_without_model_metrics": [
+        "SciData states the robot is stationary per session, so one session-level bin is the physically indicated lock",
+        "RG-S2 would re-select once per window; ABSENT ~900 s could yield ~30 windows vs PRESENT ~180 s ~6 windows, a class-correlated selection-count asymmetry",
+        "For ROLE_L first-300-sample consumption, RG-S1 and RG-S2 coincide on the consumed window; RG-S2 only diverges on unused later windows, which is extra ABSENT-side freedom",
+        "Whole-record energy (neither RG-S1 nor RG-S2) is rejected because ABSENT energy averaging would span ~5x longer than PRESENT"
+      ]
+    },
+    "forbidden_inputs": [
+      "class_label",
+      "model_output",
+      "PRESENT_only_target_distance_switch",
+      "C1-fitted ROI edge",
+      "C1-fitted cutoff"
+    ]
+  },
+  "window_rule": {
+    "role_l_context": "exactly the 300-sample 10 Hz R1T output; this IS the first 300 samples; no second slice",
+    "membership": "NOT_CREATED_BY_THIS_CONTRACT"
+  },
+  "downstream_frozen_preprocessing": {
+    "train_global_zscore": "APPLY_FROZEN_CONSTANTS_ONLY_NO_REFIT",
+    "compatibility_class": "SCALE_RISK_REMAINS"
+  },
+  "forbidden_fitting": [
+    "fit cutoff/ROI/bin rule on C1 labels",
+    "fit TRAIN z-score on C1",
+    "choose parameters by candidate metrics",
+    "choose gap/rate floors to pass known C1 files"
+  ],
+  "forbidden_label_use": true,
+  "pubabs_a3r_status": "NOT_READY_PENDING_SOL_FINAL_FREEZE",
+  "pubabs_a4_status": "NOT_READY",
+  "limitations": [
+    "Through-wall electrical range ≠ free-space meters; ROI is near-field exclusion not calibrated permittivity mapping",
+    "Robot angular positions change path length; session-locked argmax may differ across -5..+5 without being class-driven",
+    "WINDOW_LOCAL R1T means frozen R1 median is the median of the 30.0 s emitted series, not of unused later C1 samples. Historical D0 R1 median used the full native recording (typically 40–60 s). This is an explicit correspondence limitation, accepted to prevent C1 900 s vs 180 s duration leakage through IIR filtfilt and through the median.",
+    "Cross-sensor domain risk vs MR60/D0 remains HIGH",
+    "TRAIN z-score amplitude semantics may mismatch UWB phase scale"
+  ]
+}

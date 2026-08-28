@@ -1,0 +1,24 @@
+{
+  "metadata": {
+    "device_identity": "FIXTURE_DEVICE_MR60_SN0001",
+    "interface_identity": "uart:FIXTURE_PORT",
+    "configuration_identity": "FIXTURE_CFG_HASH_abc",
+    "observation_kind": "unknown"
+  },
+  "samples": [
+    {
+      "t": 0.0,
+      "seq": 0,
+      "health": {
+        "ok": true
+      }
+    },
+    {
+      "t": 0.1,
+      "seq": 1,
+      "health": {
+        "ok": true
+      }
+    }
+  ]
+}

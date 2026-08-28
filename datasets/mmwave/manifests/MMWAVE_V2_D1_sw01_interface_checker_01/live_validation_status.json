@@ -1,0 +1,12 @@
+{
+  "schema_version": "MMWAVE_V2_D1_SW01_LIVE_VALIDATION_STATUS_V1",
+  "live_target_available": false,
+  "live_check_executed": true,
+  "live_result": "LIVE_TARGET_UNAVAILABLE",
+  "transport_status": "SERIAL_TRANSPORT_ABSENT",
+  "source_backend_status": "MR60_UART_PROTOCOL_UNPROVEN",
+  "parser_status": "PARSER_BACKEND_UNAVAILABLE",
+  "receipt_sha256": "3be379a8396a6afa3f361278cc75eadb12cfa3795895434d7873aad80a3bf2d7",
+  "pass_non_campaign_hardware": false,
+  "note": "UART transport discovery may run; MR60 binary parser remains unproven/unimplemented."
+}

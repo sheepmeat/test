@@ -1,0 +1,11 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/M_PROT_4_system_smoke/system_smoke_contract.json": "bf0050a52783236faa19d07daa12858ad437c968f7d0a9df0e74bbb43574075d",
+    "datasets/mmwave/manifests/M_PROT_4_system_smoke/known_limitations.json": "ae3306b13bb5d1e9f3112bbd7a98345bf59fa0e76ad4aa94d28149d2fa418dd0",
+    "datasets/mmwave/manifests/M_PROT_4_system_smoke/validation_result.json": "c96691fa8f1378750407c5e5a8152617d9d36c519d7c0b485e00940d9452acf7",
+    "adapters/mmwave_m_prot_4_system_smoke.py": "da3b83b1c688c4d46ff9c7d2df97962745123214ff889b06710103c489065134",
+    "tests/test_mmwave_m_prot_4_system_smoke.py": "8efc0cd4890e4c6f234a002e0652ae5fc3e53a4533f381320e1e9172d5abd90b",
+    "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_4_System_Smoke_01.md": "45d4fa06357b9b29d2b9d02074b3d85f987301ed8b3c279a9e2828fa6712a328"
+  }
+}

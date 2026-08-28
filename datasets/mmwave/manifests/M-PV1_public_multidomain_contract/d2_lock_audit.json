@@ -1,0 +1,16 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "custody_fields_inspected": [
+    "access_state",
+    "payload_digest_lock"
+  ],
+  "feature_extraction": "NO",
+  "lock_state": "LOCKED_BEFORE_SEMANTIC_USE",
+  "model_inference_count": 0,
+  "payload_acquired": false,
+  "role": "LOCKED_PUBLIC_CROSS_DEVICE_TEST",
+  "selection_use": "NO",
+  "semantic_access": "NO",
+  "source_id": "D2",
+  "target_use": "NO"
+}

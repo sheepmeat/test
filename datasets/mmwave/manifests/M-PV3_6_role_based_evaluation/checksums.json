@@ -1,0 +1,9 @@
+{
+  "files": {
+    "config/mmwave/m_pv36_role_based_evaluation_contract.json": "43c47360237b1d2357f6d17d8c0b7ea26c4410042698419cd8710b2fc86cbd0a",
+    "datasets/mmwave/manifests/M-PV3_6_role_based_evaluation/evaluation_matrix.json": "18b879184d198bf3835fbaed8ce3ab050b1564a72e457a2f7e55599ea0981792",
+    "datasets/mmwave/manifests/M-PV3_6_role_based_evaluation/evidence_requirements.json": "89122bbdcf3e92e104a110218760c68d61e54b6facddd0b53651dbe223785874",
+    "datasets/mmwave/manifests/M-PV3_6_role_based_evaluation/validation_result.json": "2c56ceb75096601de43bddbce4fc5b0a7e19e87a9aeb0f8e0f554a4d9319a13e"
+  },
+  "schema_version": "M-PV3.6.2_CORRECTIVE"
+}

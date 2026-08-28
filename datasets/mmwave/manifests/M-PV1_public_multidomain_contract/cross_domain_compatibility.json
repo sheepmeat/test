@@ -1,0 +1,23 @@
+{
+  "BREATHING_PRESENT_ABSENT_SAME_TARGET_DURATION": "YES",
+  "BREATHING_PRESENT_ABSENT_SAME_TARGET_SEMANTICS": "YES",
+  "BREATHING_SEMANTIC_COMPATIBILITY": {
+    "reason": "D0 and D1 use the same 5 s final target interval and anchor; D1 weak references remain AMBIGUOUS rather than fabricated ABSENT",
+    "status": "YES_FIXED_FINAL_TARGET"
+  },
+  "BREATHING_TARGET_FIXED_ANCHOR": "YES",
+  "COMMON_INPUT_SCHEMA": "YES",
+  "D0_AND_D1_FIXED_CONTEXT": "YES where duration >=30 s and Q2-compatible timing is valid",
+  "FEATURE_PROFILE_TARGET_LOCATION_AMBIGUOUS": "NO; F2 breathing task is disabled",
+  "MODEL_FAMILY_TASK_COMPATIBILITY_FROZEN": "YES",
+  "RR_INTERVAL_SEPARATE_FROM_BREATHING_INTERVAL": "YES",
+  "RR_SEMANTIC_COMPATIBILITY": {
+    "reason": "both expose rr_bpm, validity, source, method, and explicit unavailable reason",
+    "status": "YES_WITH_DOMAIN_METHODS"
+  },
+  "TEMPORAL_HOLD_SEMANTIC_COMPATIBILITY": {
+    "reason": "D0 has authoritative voluntary hold intervals; D1 has no defensible within-recording onset/offset; neither is a direct neural target",
+    "status": "COMPOSER_ONLY"
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1"
+}

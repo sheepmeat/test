@@ -1,0 +1,13 @@
+{
+  "schema_version": "PUBABS-A3-C1-WINDOWING-V1",
+  "status": "STRUCTURALLY_DEFINED_BUT_UPSTREAM_BLOCKED",
+  "role_l_window": {
+    "seconds": 30.0,
+    "samples": 300,
+    "rate_hz": 10.0,
+    "derivation_if_r1_available": "first 300 samples of R1 output; no re-center after slice"
+  },
+  "feasibility_windows": "NOT_EMITTED_AS_CANONICAL",
+  "membership": "NOT_CREATED",
+  "marking": "FEASIBILITY_ONLY would apply only after corrective adapter freeze"
+}

@@ -1,0 +1,73 @@
+{
+  "records": [
+    {
+      "acceptance_state": "RETAINED_FIXTURE_ONLY",
+      "configuration_identity": {
+        "config_hash_receipt_id": "EVIDENCE-PROVENANCE-001",
+        "config_id": "SYNTHETIC_CONFIG_001"
+      },
+      "evidence_references": {
+        "access_control": [
+          "EVIDENCE-ACCESS-001"
+        ],
+        "health": [
+          "EVIDENCE-HEALTH-001"
+        ],
+        "occupancy_reference": [
+          "EVIDENCE-OCCUPANCY-001"
+        ],
+        "recording_provenance": [
+          "EVIDENCE-PROVENANCE-001"
+        ],
+        "rejection": [],
+        "sensor_observation": [
+          "EVIDENCE-SENSOR-001"
+        ],
+        "timing_alignment": [
+          "SYNC-FIXTURE-SHARED-CLOCK-001",
+          "SYNC-FIXTURE-EXPLICIT-MARKER-001"
+        ]
+      },
+      "evidence_scope": "FIXTURE_NON_CAMPAIGN",
+      "fixture_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "health_registry_record_id": "HEALTH-FIXTURE-VALID-001",
+      "placement_zone": {
+        "coverage_status": "FIXTURE_DECLARED_ONLY",
+        "placement_id": "SYNTHETIC_PLACEMENT_001",
+        "zone_id": "SYNTHETIC_TARGET_ZONE_001"
+      },
+      "recording_identity": {
+        "actual_recording_id": "ACTUAL-FIXTURE-RECORDING-001",
+        "actual_recording_reference": "fixtures/non_campaign/recordings/actual_recording_001",
+        "planned_recording_id": "PLANNED-FIXTURE-RECORDING-001"
+      },
+      "registry_record_id": "PROVENANCE-FIXTURE-001",
+      "rejection_registry_record_id": null,
+      "schema_version": "MMWAVE-V2-D1-SW04-RECORDING-PROVENANCE-REGISTRY-V1",
+      "scope_semantics": [
+        "FIXTURE_ONLY",
+        "NON_CAMPAIGN",
+        "NOT_D1_MEMBERSHIP",
+        "NOT_DATASET_ADMISSIBLE"
+      ],
+      "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+      "sensor_identity": {
+        "device_family": "SYNTHETIC_MMWAVE_FIXTURE",
+        "sensor_id": "SYNTHETIC_SENSOR_001",
+        "source_identity": "SYNTHETIC_SENSOR_SOURCE_001"
+      },
+      "time_coverage": {
+        "clock": "SYNTHETIC_UTC_FIXTURE_CLOCK",
+        "end": "2026-08-27T00:00:15Z",
+        "start": "2026-08-27T00:00:00Z"
+      }
+    }
+  ],
+  "registry_kind": "provenance",
+  "schema_version": "MMWAVE-V2-D1-SW04-RECORDING-PROVENANCE-REGISTRY-V1-BUNDLE"
+}

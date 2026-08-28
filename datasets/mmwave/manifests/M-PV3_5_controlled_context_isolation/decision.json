@@ -1,0 +1,11 @@
+{
+  "calibration": false,
+  "gate": "PASS_WITH_LIMITATIONS",
+  "identity": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+  "m_pv4_approved": false,
+  "selected_model": null,
+  "selection_result": "NOT_APPLICABLE_NO_MODEL_SELECTION",
+  "statement": "controlled comparison completed",
+  "tflite_or_int8": false,
+  "threshold_tuning": false
+}

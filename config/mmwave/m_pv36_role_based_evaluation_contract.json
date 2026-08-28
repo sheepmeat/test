@@ -1,0 +1,207 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1",
+  "schema_version": "M-PV3.6.2_CORRECTIVE",
+  "phase": "M-PV3.6",
+  "phase_name": "Role-Based Evaluation Contract",
+  "frozen_before_future_evaluation": true,
+  "phase_mode": "CONTRACT_DESIGN_ONLY",
+  "decision_boundary": {
+    "production_model_selection": false,
+    "winning_context_length": false,
+    "m_pv4_approval": false,
+    "new_checkpoint": false,
+    "threshold_tuning": false,
+    "calibration_fitting": false,
+    "int8_or_tflite": false,
+    "raspberry_pi_benchmark": false,
+    "reserved_evaluation_set_opened": false,
+    "d2_semantic_access": false,
+    "mr60_supervised_physiology": false,
+    "cascade_or_adaptive_context_implementation": false
+  },
+  "predecessors": {
+    "m_pv3": {
+      "phase": "M-PV3",
+      "identity": "MMWV_V2_M_PV3_SELECTION_CONTRACT_V1",
+      "status": "PASS_WITH_LIMITATIONS",
+      "authoritative_selection_result": "NO_SELECTION_READY",
+      "historical_interpretation_must_not_change": true,
+      "preserved_30s_utility_guards": {
+        "present_recall_min": 0.95,
+        "brier_max": 0.05,
+        "rr_mae_bpm_max": 5.0,
+        "rr_within_2_bpm_min": 0.4,
+        "rr_within_4_bpm_min": 0.6,
+        "rr_within_6_bpm_min": 0.75
+      }
+    },
+    "m_pv2_short": {
+      "phase": "M-PV2-SHORT",
+      "status": "PASS_WITH_LIMITATIONS",
+      "role": "15S_BREATHING_ONLY_CANDIDATE",
+      "rr_training": false,
+      "temporal_hold_training": false,
+      "selection": false
+    },
+    "m_pv35": {
+      "phase": "M-PV3.5",
+      "identity": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+      "status": "PASS_WITH_LIMITATIONS",
+      "controlled_conclusion": "NO_STABLE_CONTEXT_DURATION_ADVANTAGE_ISOLATED",
+      "seed_instability_governing_requirement": true,
+      "context_only_claim_prohibited_without_stronger_evidence": true
+    }
+  },
+  "global_rules": {
+    "combined_winner_score": "PROHIBITED",
+    "weighted_aggregate_score": "PROHIBITED",
+    "normalized_utility_ranking": "PROHIBITED",
+    "accuracy_latency_scalar": "PROHIBITED",
+    "pareto_winner_selection": "PROHIBITED",
+    "safety_is_non_compensable": true,
+    "undefined_metric_representation": "NOT_APPLICABLE",
+    "undefined_metric_must_not_be": ["ZERO", "FAILURE", "MISSING_AS_ERROR"],
+    "collapsed_seed_must_not_be_dropped": true,
+    "best_seed_must_not_be_selected_post_hoc": true,
+    "context_accuracy_claim_requires_controlled_stable_evidence": true,
+    "prohibited_context_claims_without_required_evidence": [
+      "15S_IS_MORE_ACCURATE",
+      "30S_IS_MORE_ACCURATE",
+      "30S_IS_INHERENTLY_MORE_STABLE",
+      "CONTEXT_DURATION_DOES_NOT_MATTER"
+    ]
+  },
+  "metric_taxonomy": {
+    "class_a_safety": {
+      "non_compensable": true,
+      "role_eligibility_on_failure": "BLOCKED",
+      "runtime_precedence": ["PRESENCE", "QUALITY_OR_AVAILABILITY", "PHYSIOLOGY"],
+      "i1_q2_runtime_invariants": {
+        "presence_false_blocks_physiology_card": true,
+        "presence_unknown_blocks_physiology_card": true,
+        "input_unavailable_blocks_physiology_card": true,
+        "input_unavailable_must_not_emit": ["PRESENT", "ABSENT", "NORMAL", "APNEA"],
+        "q2_synthetic_evidence_scope": "SAFETY_EVIDENCE_ONLY",
+        "q2_thresholds_modified": false
+      },
+      "required_metrics": [
+        "q2_invalid_false_acceptance",
+        "invalid_to_physiology_transition",
+        "fail_closed_preservation",
+        "stale_freeze_gap_handling",
+        "clean_false_rejection_where_defined"
+      ]
+    },
+    "class_b_role_specific_physiology": {
+      "cross_role_utility_comparison": "PROHIBITED",
+      "role_s": ["breathing_evidence"],
+      "role_l_full_task": ["breathing_evidence", "rr", "quality"],
+      "role_l_rr_quality": ["rr", "quality"],
+      "role_l_isolation": ["breathing_evidence"],
+      "q2_safety_metrics_are_compensable_utility": false
+    },
+    "class_c_stability": {
+      "mean_only_summary": "PROHIBITED",
+      "required_reporting": ["every_frozen_seed", "mean", "population_standard_deviation", "minimum", "maximum", "worst_seed", "best_seed", "per_subject_results"],
+      "candidate_training_seed_definition": "seed_used_to_train_a_candidate",
+      "evaluation_seed_result_definition": "result_of_each_frozen_candidate_training_seed_on_the_same_governed_evaluation_membership",
+      "seed_selection_policy": "THRESHOLD_REQUIRES_PRE_REGISTRATION",
+      "future_stability_threshold": "THRESHOLD_REQUIRES_PRE_REGISTRATION",
+      "required_pre_registration_evidence": ["expected_use_case", "seed_count", "class_coverage", "subject_disjoint_membership", "failure_cost", "justification_before_results"]
+    },
+    "class_d_responsiveness": {
+      "required_metrics": ["context_refill_time", "first_valid_inference_time", "usable_slot_ratio_under_frozen_q2"],
+      "synthetic_q2_label": "SYNTHETIC_ONLY",
+      "live_device_latency_claim": "REQUIRES_FUTURE_GATE"
+    },
+    "class_e_footprint": {
+      "required_metrics": ["parameter_count", "model_bytes", "input_tensor_bytes", "macs_or_flops", "deterministic_memory_estimate"],
+      "raspberry_pi_speed_claim": "REQUIRES_FUTURE_GATE"
+    }
+  },
+  "roles": {
+    "ROLE_S_SHORT_CONTEXT": {
+      "context_seconds": 15,
+      "input_shape": "[B,150,1]",
+      "candidate_purpose": ["fast_breathing_evidence_screening", "faster_causal_buffer_recovery", "smaller_inference_footprint"],
+      "production_role": "NOT_AUTOMATIC",
+      "allowed_metric_cards": ["breathing", "safety", "stability", "responsiveness", "footprint"],
+      "breathing_metrics": ["present_recall", "absent_recall_where_governed", "precision", "f1", "brier", "ece_only_if_previously_valid_without_calibration_fit"],
+      "rr_metric_status": "NOT_APPLICABLE",
+      "temporal_hold_metric_status": "NOT_APPLICABLE",
+      "quality_metric_status": "NOT_APPLICABLE_UNLESS_SEPARATELY_TRAINED_AND_AUTHORIZED",
+      "rr_or_temporal_hold_future_use": "REQUIRES_SEPARATE_TRAINING_EVALUATION_AUTHORIZATION"
+    },
+    "ROLE_L_FULL_TASK": {
+      "membership": "M_PV3_FAMILY_B_AND_FAMILY_C_ONLY",
+      "context_seconds": 30,
+      "input_shape": "[B,300,1]",
+      "representation": "TRACE_TCN_OR_TRACE_FEATURE_HYBRID",
+      "tasks": ["breathing_evidence", "rr", "quality"],
+      "candidate_purpose": ["breathing_evidence", "rr", "quality", "multi_cycle_physiology_evidence", "possible_stable_confirmation_path"],
+      "production_role": "NOT_AUTOMATIC",
+      "allowed_metric_cards": ["breathing", "rr", "quality_diagnostic", "safety", "stability", "responsiveness", "footprint"],
+      "breathing_metrics": ["present_recall", "absent_recall_where_governed", "precision", "f1", "brier"],
+      "rr_metrics": ["rr_mae_bpm", "within_2_bpm", "within_4_bpm", "within_6_bpm"],
+      "m_pv3_utility_guards": "PRESERVED_UNCHANGED",
+      "quality_metrics": ["quality_head_task_support", "quality_head_diagnostic_coverage"],
+      "q2_quality_safety_metrics": "CLASS_A_ONLY_NON_COMPENSABLE",
+      "not_applicable_metrics": []
+    },
+    "ROLE_L_RR_QUALITY": {
+      "membership": "M_PV3_FAMILY_A_ONLY",
+      "context_seconds": 30,
+      "input_shape": "[B,59]",
+      "representation": "F2_VECTOR_PLUS_VALIDITY_AND_QUALITY_DESCRIPTORS",
+      "tasks": ["rr", "quality"],
+      "candidate_purpose": ["rr_and_quality_diagnostic_only"],
+      "production_role": "NOT_AUTOMATIC",
+      "allowed_metric_cards": ["rr", "quality_diagnostic", "safety", "stability", "responsiveness", "footprint"],
+      "rr_metrics": ["rr_mae_bpm", "within_2_bpm", "within_4_bpm", "within_6_bpm"],
+      "quality_metrics": ["quality_head_task_support", "quality_head_diagnostic_coverage"],
+      "breathing_metric_status": "NOT_APPLICABLE_NO_BREATHING_HEAD",
+      "breathing_metrics": [],
+      "q2_quality_safety_metrics": "CLASS_A_ONLY_NON_COMPENSABLE",
+      "not_applicable_metrics": ["present_recall", "absent_recall", "breathing_precision", "breathing_f1", "breathing_brier"]
+    },
+    "ROLE_L_ISOLATION": {
+      "membership": "M_PV35_30S_PARITY_CNN_ONLY",
+      "context_seconds": 30,
+      "input_shape": "[B,300,1]",
+      "representation": "M_PV35_PARITY_TRACE_CNN",
+      "tasks": ["breathing_evidence"],
+      "candidate_purpose": ["controlled_context_length_isolation_evidence_only"],
+      "production_role": "NOT_AUTOMATIC",
+      "allowed_metric_cards": ["breathing", "safety", "stability", "responsiveness", "footprint"],
+      "breathing_metrics": ["present_recall", "absent_recall_where_governed", "precision", "f1", "brier"],
+      "rr_metric_status": "NOT_APPLICABLE_NO_RR_HEAD",
+      "quality_metric_status": "NOT_APPLICABLE_NO_QUALITY_HEAD",
+      "not_applicable_metrics": ["rr_mae_bpm", "within_2_bpm", "within_4_bpm", "within_6_bpm", "quality_head_task_support"]
+    }
+  },
+  "evaluation_data_requirements": {
+    "breathing_both_class_evaluation_required": {
+      "state": "REQUIRES_FUTURE_GATE",
+      "required_properties": ["subject_disjoint", "eligible_present_examples", "eligible_absent_examples", "ambiguous_retained_and_excluded_from_pure_class_metrics", "no_target_regeneration", "no_leakage"],
+      "current_d1_dev_val": {"eligible_present": 57, "ambiguous": 2, "eligible_absent": 0, "present_evaluation_state": "AVAILABLE_WITH_LIMITATION", "stable_role_eligibility": "INCOMPLETE"},
+      "reserved_d0_evaluation_membership": "NOT_AUTHORIZED_TO_OPEN_IN_M_PV36",
+      "future_authorization_requirement": "EXPLICIT_GOVERNED_SPLIT_AUTHORIZATION_BEFORE_ACCESS"
+    },
+    "d0_train": "OBSERVE_ONLY_NOT_HELD_OUT_SELECTION_EVIDENCE",
+    "d2": "NOT_AUTHORIZED_LOCKED_FINAL_CROSS_DEVICE_EVIDENCE",
+    "mr60_supervised_physiology": "NOT_AUTHORIZED"
+  },
+  "future_gate_requirements": {
+    "role_eligibility": ["class_a_safety_pass", "role_applicable_class_b_evidence", "class_c_seed_and_subject_reporting", "governed_evaluation_data_sufficiency"],
+    "m_pv4_authorization": "NOT_GRANTED_BY_M_PV36",
+    "cascade_or_adaptive_context_hypothesis_only": {
+      "implementation_authorized": false,
+      "required_evidence_first": ["stable_15s_screening_behavior", "joint_confusion_error_matrix", "error_correlation", "threshold_persistence_policy", "fail_closed_composition", "buffer_state_semantics", "latency_composition"]
+    }
+  },
+  "final_gate": {
+    "allowed_values": ["PASS_WITH_LIMITATIONS", "BLOCKED"],
+    "pass_conditions": ["roles_explicit", "safety_non_compensable", "no_combined_score", "15s_rr_not_applicable", "m_pv3_guards_preserved", "seed_instability_governed", "d1_absent_deficiency_governed", "d2_locked", "no_selection"],
+    "pass_statement": "M-PV3.6 freezes the role-based evaluation framework only. No 15s or 30s model is selected, M-PV3 remains NO_SELECTION_READY, and M-PV4 remains unauthorized."
+  }
+}

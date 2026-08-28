@@ -1,0 +1,29 @@
+{
+  "15s_lane_status": "EXCLUDED_NOT_WAITED_NOT_MERGED",
+  "acceptable_full_task_candidates": [],
+  "final_production_ready": false,
+  "gate": "PASS_WITH_LIMITATIONS",
+  "lane": "30S_CANDIDATE_ONLY",
+  "limitations": [
+    "D0 TRAIN is observe-only; the frozen M-PV1 membership has no D0 VAL rows.",
+    "D1_DEV_VAL contains PRESENT and AMBIGUOUS rows but no model-ready ABSENT class, so absent-class discrimination is not established.",
+    "Q2 corruption cases are deterministic evaluation profiles, not live MR60 captures.",
+    "No calibration fitting, production threshold tuning, INT8/TFLite conversion, Pi deployment, or clinical claim was made.",
+    "The parallel 15-second lane was intentionally excluded and remains unreviewed here."
+  ],
+  "no_forced_selection": true,
+  "phase": "M-PV3",
+  "ready_for_m_pv4": false,
+  "reason": "The evidence does not support a safe unique selection.",
+  "safety_basis": {
+    "all_candidates_evaluated": true,
+    "determinism_pass": true,
+    "inventory_pass": true
+  },
+  "schema_version": "M-PV3.1",
+  "selected_candidate": null,
+  "selection_contract_id": "MMWV_V2_M_PV3_SELECTION_CONTRACT_V1",
+  "selection_result": "NO_SELECTION_READY",
+  "shortlist": [],
+  "shortlist_ready_for_m_pv4_review": false
+}

@@ -1,0 +1,66 @@
+{
+  "candidate_output_accessed": false,
+  "candidates": [
+    {
+      "candidate_key": "Family_B_seed_11",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_B_seed_23",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_B_seed_47",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_11",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_23",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    },
+    {
+      "candidate_key": "Family_C_seed_47",
+      "guard_result": null,
+      "metrics": null,
+      "reason": "D1_FINAL_SELECTION_BOTH_CLASS_V1 membership lock invalid or absent",
+      "status": "NOT_EVALUATED"
+    }
+  ],
+  "card_id": "CARD_C_RR",
+  "evaluation_status": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "frozen_guards": {
+    "mae_bpm_max": 5.0,
+    "within_2_bpm_min": 0.4,
+    "within_4_bpm_min": 0.6,
+    "within_6_bpm_min": 0.75
+  },
+  "metrics": null,
+  "metrics_required": [
+    "MAE_bpm",
+    "median_absolute_error_bpm",
+    "within_2_bpm",
+    "within_4_bpm",
+    "within_6_bpm"
+  ],
+  "role_id": "ROLE_L_FULL_TASK",
+  "schema_version": "M-PV3.8.1_ROLE_L_FULL_TASK_FINAL_SELECTION",
+  "title": "RR"
+}

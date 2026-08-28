@@ -1,0 +1,31 @@
+{
+  "frequency_resolution": {
+    "15s_delta_f_bpm_equivalent": 4.0,
+    "15s_delta_f_hz": 0.06666666666666667,
+    "30s_delta_f_bpm_equivalent": 2.0,
+    "30s_delta_f_hz": 0.03333333333333333
+  },
+  "interpretation": "ENGINEERING_CONTEXT_ONLY_NOT_A_PROOF_OF_BREATHING_ACCURACY",
+  "rows": [
+    {
+      "cycles_in_15s": 1.5,
+      "cycles_in_30s": 3.0,
+      "rr_bpm": 6
+    },
+    {
+      "cycles_in_15s": 2.0,
+      "cycles_in_30s": 4.0,
+      "rr_bpm": 8
+    },
+    {
+      "cycles_in_15s": 3.0,
+      "cycles_in_30s": 6.0,
+      "rr_bpm": 12
+    },
+    {
+      "cycles_in_15s": 5.0,
+      "cycles_in_30s": 10.0,
+      "rr_bpm": 20
+    }
+  ]
+}

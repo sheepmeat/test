@@ -1,0 +1,27 @@
+{
+  "acceptance_state": "REJECTED",
+  "campaign_status": "NON_CAMPAIGN",
+  "d1_membership_status": "NOT_D1_MEMBERSHIP",
+  "dataset_admissibility": "NOT_DATASET_ADMISSIBLE",
+  "eligible_for_absent": false,
+  "evidence_scope": "FIXTURE_NON_CAMPAIGN",
+  "fixture_id": "FIXTURE-SW0304-REJECTION-RETAINED-001",
+  "fixture_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "live_evidence_status": "NOT_LIVE_EVIDENCE",
+  "physiology_label": null,
+  "rejection_record_id": "REJECTION-FIXTURE-001",
+  "retained": true,
+  "scenario": "REJECTED_OBSERVATION_RETAINED",
+  "scope_semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "scope_version": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+}

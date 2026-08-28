@@ -1,0 +1,89 @@
+{
+  "schema_version": "M-PROT-2-CHECKSUMS-V1",
+  "files": [
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/artifact_integrity_receipts.json",
+      "sha256": "0e5ab940353e020d5ef359cd9285242e487275994bc0a3fa11a323af49c7f27e"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/deployable_artifact_contract.json",
+      "sha256": "aa61b4b3e5f647a917aafe0baaa174d08dda3972405eff95488ba1ace583bba0"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fail_closed_contract.json",
+      "sha256": "0da9ec026b86039d541798c40d8f483f1fe459c0928da140c637075d0756b768"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/fail_already_zscored.json",
+      "sha256": "f5d02eaf65e3ac61c36f404f49848fceb77c93dd046903a5a315a625a946f032"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/fail_input_unavailable.json",
+      "sha256": "ccb43c98d1f344ce762cd4a5a2ee1545e3330a1ab3a8171e5f72ffe5a44ca988"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/fail_presence_unavailable.json",
+      "sha256": "263c2116e7da3b9978a58e5566e225297504e36b5d9c239076cc12f8053ec14a"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/fail_short_window.json",
+      "sha256": "e0b4c70fb761a369914008ea6d49a3b0864f150aac8702cd25b8210de465e828"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/positive_path_receipt.json",
+      "sha256": "3aaa90eed4b6ab98128d5b4cf9bdd3c79f61dd13003f58a4ceb48fc2c9471d5f"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/fixtures/positive_valid_621.json",
+      "sha256": "de3aa265e41e082d51e384fde9ec059e3ea8aabab05282940238753d167234d0"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/input_contract.json",
+      "sha256": "aca00ff3b8b7f187bc68d913ae48792f552662e81ee8092567134772a132353b"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/integration_handoff.json",
+      "sha256": "0a55e9a5302ad7992f7dc57f90a6069475abd7e5ead39203b0e45ea61ab64de9"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/output_decode_contract.json",
+      "sha256": "803e239fcf4cd41bad347a2aa882836cab5547206dffc8cc86360ca9251e59ad"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/preprocessing_contract.json",
+      "sha256": "6efdf857cd0d19b260dfb10edc46a9138ca2000b90b6d1ce65af2e69f4e6bbc1"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/preprocessing_parity_validation.json",
+      "sha256": "cef1f2e390343e8d092c2ac9df5c41735bc866aee63662595922ed3499e7c03d"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/reference_harness_validation.json",
+      "sha256": "39dd38875cde73c6d013a01c2df410972c55ac8f3c66f0c592b39700297976d4"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/reference_receipt_environment.json",
+      "sha256": "a760429816a00f55f2aba2a2acd4dff5773118fd1b3d95893aa6a633a5daaa12"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/runtime_dependency_matrix.json",
+      "sha256": "d2279aa63d96ea9541949ca7051ce1bc793b54378cf898e7498f8fd2dc74dc03"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/runtime_representation_decision.json",
+      "sha256": "fdc3fa11c6ec1ef444212402ba82459c54565573c20580cf6887e4871401bef0"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/source_artifact_identity.json",
+      "sha256": "7d1c3a673eb774f49a2b7d879bed5740b30d7135ca383148649c185a0845e6f2"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M_PROT_2_deployable_artifact_runtime_contract/validation_result.json",
+      "sha256": "476d499794b6841f3e3e3eea1cb2ff9b20bcf4f1c37b7a037b4a1b21e988fd88"
+    },
+    {
+      "path": "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_2_Deployable_Artifact_Runtime_Contract_01.md",
+      "sha256": "4d4b25d5879c00980a7edcc23d7d8adc5af16aa88563608a3d04edddca90a6be"
+    }
+  ]
+}

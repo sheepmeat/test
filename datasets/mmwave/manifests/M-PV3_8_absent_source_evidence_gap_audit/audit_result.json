@@ -1,0 +1,11 @@
+{
+  "schema_version": "M-PV3.8.3-EVIDENCE-AUDIT",
+  "audit_id": "MMWAVE_V2_M_PV38_ABSENT_SOURCE_EVIDENCE_GAP_AUDIT_V1",
+  "phase": "M-PV3.8-ABSENT-SOURCE-EVIDENCE",
+  "mode": "EVIDENCE_AVAILABILITY_AUDIT_ONLY",
+  "status": "ABSENT_ACQUISITION_REQUIRED",
+  "membership_construction": "NOT_PERFORMED",
+  "model_evaluation": "NOT_PERFORMED",
+  "candidate_output_access": "NOT_PERFORMED",
+  "summary": "Existing D1 evidence supports governed PRESENT and retained non-ABSENT states, but provides zero verified NO_HUMAN_TARGET ABSENT windows and no predeclared negative-class recording slots."
+}

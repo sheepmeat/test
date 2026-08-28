@@ -1,0 +1,112 @@
+{
+  "schema_version": "FIXTURE_ONLY_CAMPAIGN_PREDECLARATION_V1",
+  "semantics": [
+    "FIXTURE_ONLY",
+    "NON_CAMPAIGN",
+    "NOT_D1_MEMBERSHIP",
+    "NOT_DATASET_ADMISSIBLE"
+  ],
+  "campaign_id": "FIXTURE_NON_CAMPAIGN_DEMO_V1",
+  "note": "Synthetic metadata only. Does not pre-consume a governed ABSENT slot.",
+  "slots": [
+    {
+      "recording_slot_id": "FIXTURE_SLOT_01",
+      "planned_recording_id": "FIXTURE_PLANNED_01",
+      "lineage_group": "D1_PERSON_03",
+      "order_in_group": 1,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    },
+    {
+      "recording_slot_id": "FIXTURE_SLOT_02",
+      "planned_recording_id": "FIXTURE_PLANNED_02",
+      "lineage_group": "D1_PERSON_03",
+      "order_in_group": 2,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    },
+    {
+      "recording_slot_id": "FIXTURE_SLOT_03",
+      "planned_recording_id": "FIXTURE_PLANNED_03",
+      "lineage_group": "D1_PERSON_03",
+      "order_in_group": 3,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    },
+    {
+      "recording_slot_id": "FIXTURE_SLOT_04",
+      "planned_recording_id": "FIXTURE_PLANNED_04",
+      "lineage_group": "D1_PERSON_09",
+      "order_in_group": 1,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    },
+    {
+      "recording_slot_id": "FIXTURE_SLOT_05",
+      "planned_recording_id": "FIXTURE_PLANNED_05",
+      "lineage_group": "D1_PERSON_09",
+      "order_in_group": 2,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    },
+    {
+      "recording_slot_id": "FIXTURE_SLOT_06",
+      "planned_recording_id": "FIXTURE_PLANNED_06",
+      "lineage_group": "D1_PERSON_09",
+      "order_in_group": 3,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    },
+    {
+      "recording_slot_id": "FIXTURE_SLOT_07",
+      "planned_recording_id": "FIXTURE_PLANNED_07",
+      "lineage_group": "D1_PERSON_11",
+      "order_in_group": 1,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    },
+    {
+      "recording_slot_id": "FIXTURE_SLOT_08",
+      "planned_recording_id": "FIXTURE_PLANNED_08",
+      "lineage_group": "D1_PERSON_11",
+      "order_in_group": 2,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    },
+    {
+      "recording_slot_id": "FIXTURE_SLOT_09",
+      "planned_recording_id": "FIXTURE_PLANNED_09",
+      "lineage_group": "D1_PERSON_11",
+      "order_in_group": 3,
+      "sensor_identity": "FIXTURE_SENSOR_ID",
+      "placement": "FIXTURE_PLACEMENT",
+      "target_zone": "FIXTURE_ZONE",
+      "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+      "recording_checksum": "NOT_APPLICABLE"
+    }
+  ]
+}

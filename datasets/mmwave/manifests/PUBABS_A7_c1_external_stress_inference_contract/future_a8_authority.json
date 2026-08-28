@@ -1,0 +1,33 @@
+{
+  "schema_version": "PUBABS-A7-FUTURE-A8-AUTHORITY-V1",
+  "a8_executed_in_a7": false,
+  "a8_requires_separate_sol_authorization": true,
+  "a8_scope_if_authorized": {
+    "identity": "PUBABS_C1_EXTERNAL_STRESS_INFERENCE_V1",
+    "parent": "PUBABS_C1_EXTERNAL_STRESS_V1",
+    "run_all_six_panel_members": true,
+    "layer1_availability_reporting": true,
+    "layer2_conditional_metrics_on_valid34": true,
+    "consume_exact_a6_tensor_identities": true,
+    "use_frozen_threshold_0_5": true,
+    "use_frozen_m_pv2_scaler": true,
+    "reconstruct_family_vectors_via_frozen_r2": true
+  },
+  "a8_cannot": [
+    "reopen_M_PV3_8",
+    "select_or_drop_candidates",
+    "rank_or_declare_winner",
+    "tune_thresholds_or_calibrate_on_C1",
+    "refit_scaler_on_C1",
+    "retune_adapter",
+    "construct_or_substitute_D1",
+    "authorize_M_PV4",
+    "open_D2",
+    "claim_RR_accuracy",
+    "apply_M_PV38_gates_to_C1",
+    "generalize_VALID34_to_all77",
+    "fabricate_FAIL_CLOSED_predictions"
+  ],
+  "recommendation": "RECOMMEND_A8_EXTERNAL_STRESS_INFERENCE_EXECUTION",
+  "recommendation_does_not_authorize_execution": true
+}

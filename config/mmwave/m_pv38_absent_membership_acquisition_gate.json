@@ -1,0 +1,111 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+  "schema_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
+  "phase": "M-PV3.8-ABSENT-MEMBERSHIP",
+  "mode": "CONTRACT_CORRECTION_ONLY",
+  "purpose": "Correct the ABSENT semantic definition and final-lock schema before any governed D1 negative-class acquisition or M-PV3.8 selection evaluation.",
+  "current_state": {
+    "independent_audit_result": "APPROVED",
+    "lifecycle_closure_status": "RESOURCE_BLOCKED_CLOSED",
+    "lifecycle_closure_reason": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+    "membership_construction": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "acquisition_status": "RESOURCE_BLOCKED_CLOSED",
+    "m_pv38_final_selection_result": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "available_eligible_present": 57,
+    "available_eligible_absent": 0,
+    "model_evaluation_performed": false,
+    "selection_performed": false
+  },
+  "non_negotiable_boundaries": {
+    "permitted_source_boundary": "D1_GOVERNED_NON_D2_ABSENT_EXTENSION_ONLY",
+    "d2_access": "FORBIDDEN",
+    "mr60_supervised_physiology": "FORBIDDEN",
+    "synthetic_absent_labels": "FORBIDDEN",
+    "ambiguous_relabeling": "FORBIDDEN",
+    "model_contract_modification": "FORBIDDEN",
+    "threshold_modification": "FORBIDDEN",
+    "candidate_output_access_before_final_lock": "FORBIDDEN",
+    "m_pv4_authorization": "FORBIDDEN"
+  },
+  "eligible_absent_definition": {
+    "canonical_class": "ABSENT",
+    "class_assignment_reason_code": "NO_HUMAN_TARGET_NO_TARGET_PHYSIOLOGICAL_SOURCE_VALID_SENSOR_OBSERVATION_INTENDED_NEGATIVE_CLASS",
+    "meaning": "An intended negative-class observation with no human target present and no target physiological source. It is neither a clinical state nor an inference from breathing non-detection.",
+    "all_required": ["no_human_target_present_for_entire_30_second_context_and_5_second_target", "no_target_physiological_source_exists_for_entire_30_second_context_and_5_second_target", "sensor_observation_is_valid_under_the_governing_quality_contract", "observation_belongs_to_the_predeclared_intended_negative_class", "immutable_recording_and_reference_evidence"],
+    "explicitly_forbidden_assignments": ["human_present_breath_hold", "human_present_apnea_like_interval", "human_present_no_respiration_detected", "low_snr", "radar_failure", "sensor_dropout", "missing_input", "INPUT_UNAVAILABLE", "ambiguous_presence", "AMBIGUOUS", "TARGET_UNAVAILABLE", "radar_only_inference", "model_prediction", "synthetic_generation"],
+    "ambiguity_rule": "Any uncertainty or disagreement about human presence, target physiological source, sensor validity, intended negative-class status, timing, or reference evidence is AMBIGUOUS. It remains excluded from pure-class membership and metrics and cannot be relabeled."
+  },
+  "identity_and_lineage": {
+    "accepted_window_subject_id": "NO_HUMAN_TARGET",
+    "subject_id_meaning": "The immutable target-person identity for an accepted negative-class window; it must be NO_HUMAN_TARGET because the class requires no human target.",
+    "acquisition_lineage_group_id": "A separate immutable split-provenance identifier. It may map a negative recording slot to D1_PERSON_03, D1_PERSON_09, or D1_PERSON_11, but is never evidence that the named person is present in the accepted ABSENT window.",
+    "training_disjointness_rule": "Every acquisition_lineage_group, recording, and selected window is disjoint from candidate training. No human-target identity may be inferred from a lineage-group label."
+  },
+  "pre_acquisition_deterministic_selection": {
+    "required_predeclaration_artifact": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/campaign_predeclaration.json",
+    "must_be_locked_before_acquisition": true,
+    "required_predeclared_fields": ["contract_id", "contract_version", "campaign_id", "generator_tool_version", "repository_commit_sha", "creation_timestamp", "acquisition_lineage_group_id", "recording_slot_id", "planned_recording_id", "recording_order", "context_quota", "scan_start_time", "scan_end_time", "window_length_seconds", "target_length_seconds", "selection_rule_version"],
+    "selection_rule": "For each predeclared recording slot in ascending recording_order, exhaustively scan candidate 30-second contexts in ascending context_start_time. Apply the immutable eligibility predicate to every candidate in that order and accept the first context_quota qualifying windows. Record every rejected candidate and reason in the ambiguity/exception registry. Operators must not select, skip, reorder, or substitute easier negative windows.",
+    "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1",
+    "manual_selection": "FORBIDDEN"
+  },
+  "recording_identity_lifecycle": {
+    "stage_1_pre_capture_identity_lock": {"required": ["campaign_id", "recording_slot_id", "planned_recording_id", "acquisition_lineage_group_id", "recording_order", "sensor_identity", "placement", "target_zone", "selection_rule_version", "contract_version", "repository_commit_sha", "creation_timestamp"], "recording_checksum": "NOT_APPLICABLE_BEFORE_CAPTURE", "lock_rule": "Freeze the planned identity before capture; it cannot be changed, replaced, or reallocated."},
+    "stage_2_post_capture_immutable_checksum_receipt": {"receipt_artifact": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/post_capture_checksum_receipts.json", "required": ["planned_recording_id", "actual_recording_identifier", "sha256", "file_metadata", "capture_timestamp", "source_provenance", "generator_tool_version"], "binding_rule": "The immutable receipt must bind exactly one created recording to exactly one predeclared planned_recording_id. A mismatch, duplicate binding, or absent receipt fails the slot.", "eligibility_scan": "FORBIDDEN_UNTIL_RECEIPT_IS_LOCKED"}
+  },
+  "bounded_acquisition_campaign": {
+    "campaign_id": "D1_ABSENT_COMPLEMENT_CAMPAIGN_V1",
+    "attempt_limit": 1,
+    "predeclared_lineage_groups": ["D1_PERSON_03", "D1_PERSON_09", "D1_PERSON_11"],
+    "subject_disjoint_from_candidate_training": true,
+    "required_predeclared_recording_slots_per_lineage_group": 3,
+    "eligible_absent_context_quota_per_lineage_group": 19,
+    "eligible_absent_context_quota_per_recording": [7, 6, 6],
+    "eligible_absent_context_total": 57,
+    "no_replacement_or_reallocation": ["No recording slot, recording ID, source, subject/lineage group, context quota, scan order, or selection rule may be replaced, added, topped up, reallocated, or adjusted at any time after campaign predeclaration is locked.", "No second collection attempt or alternate recording is permitted.", "A failed recording slot and every rejected candidate window remain recorded as failed; failure makes the one campaign terminally incomplete rather than creating a retry path."],
+    "recording_separation_rules": ["Each ABSENT recording ID must be distinct from every candidate-training recording ID.", "Each ABSENT recording ID must be distinct from every final-membership PRESENT recording ID for its acquisition lineage group.", "Selected 30-second input contexts must not overlap another selected final-membership input context.", "No selected target interval may be reused."],
+    "campaign_stop": "The campaign stops at the first of: all predeclared slots deterministically meet their fixed quotas; a fixed slot cannot meet its quota after its exhaustive scan; or any provenance, quality, presence, or semantic rule fails. No further collection action is authorized."
+  },
+  "quality_and_reference_requirements": {
+    "quality_state": "VALID_SENSOR_OBSERVATION_FOR_ENTIRE_30_SECOND_CONTEXT_AND_5_SECOND_TARGET",
+    "required": ["immutable_raw_sensor_recording", "immutable_presence_or_target_source_evidence_confirming_no_human_target_and_no_target_physiological_source", "monotonic_timestamps_and_resolvable_clock_alignment", "complete_observation_coverage_for_context_and_target", "no_low_snr_radar_failure_sensor_dropout_missing_input_stale_freeze_or_large_gap_condition", "no_INPUT_UNAVAILABLE_state", "independent_recorded_review_of_negative_class_assignment"],
+    "failure_rule": "Any quality, timing, presence, source, or reviewer uncertainty fails closed: record the original evidence and reason in the ambiguity/exception registry and do not count the row as ABSENT."
+  },
+  "preprocessing_and_derived_artifact_isolation": {
+    "before_final_membership_lock_forbidden": ["FIT_PREPROCESSING_STATISTICS", "REFRESH_NORMALIZATION_PARAMETERS", "REGENERATE_CACHES", "CREATE_FEATURE_OR_DERIVED_ARTIFACTS_USING_FINAL_MEMBERSHIP_DATA", "MODIFY_FEATURE_EXTRACTION_USING_FINAL_EVALUATION_DATA", "USE_FINAL_MEMBERSHIP_DATA_TO_CHOOSE_PREPROCESSING"],
+    "allowed_preprocessing_source": "Only previously authorized candidate-training artifacts may provide preprocessing parameters. Their immutable identifiers and checksums must be recorded in the final lock.",
+    "allowed_acquisition_artifacts": "Only raw/reference evidence, campaign predeclaration, membership manifest, checksum records, and ambiguity/exception records required for governance may be created; none may be used to fit or change preprocessing."
+  },
+  "final_membership_lock": {
+    "membership_id": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+    "state_before_lock": "RESOURCE_BLOCKED_CLOSED",
+    "required_counts": {"eligible_present": 57, "eligible_absent": 57, "eligible_absent_per_lineage_group": 19, "lineage_group_count": 3},
+    "membership_manifest": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/membership_manifest.json",
+    "campaign_predeclaration": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/campaign_predeclaration.json",
+    "post_capture_checksum_receipts": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/post_capture_checksum_receipts.json",
+    "exception_and_ambiguity_registry": "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/ambiguity_exception_registry.json",
+    "checksum_files": ["datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/checksums.json", "datasets/mmwave/manifests/D1_FINAL_SELECTION_BOTH_CLASS_V1/checksums.sha256"],
+    "required_membership_metadata": ["membership_id", "contract_id", "contract_version", "creation_timestamp", "generator_tool_version", "repository_commit_sha", "membership_checksum", "post_capture_checksum_receipt_checksum", "preprocessing_artifact_identifiers_and_checksums"],
+    "required_accepted_window_fields": ["window_id", "recording_id", "subject_id", "start_time", "end_time", "class", "class_assignment_reason", "acquisition_lineage_group_id", "membership_row_id", "source_dataset", "source_dataset_checksum", "session_id", "recording_checksum", "context_start_time", "context_end_time", "target_start_time", "target_end_time", "presence_source_id", "presence_evidence", "target_physiological_source_evidence", "label_mapping_id", "label_mapping_version", "label_mapping_checksum", "raw_source_state", "split", "quality_state", "quality_provenance", "deterministic_selection_order", "reviewer_decision", "reviewer_evidence_id"],
+    "label_mapping_rule": "The immutable raw source state must map to class ABSENT using the explicit no-human/no-target reason code, mapping ID, version, checksum, and source evidence. A mapping cannot be inferred, revised, or operator-decided after the predeclaration lock.",
+    "ambiguity_registry_rule": "Every scanned but rejected, uncertain, transition, incomplete, human-present, non-detection, invalid-input, or disagreement row is retained with original evidence, deterministic scan order, reason code, and exclusion decision. AMBIGUOUS is never converted to PRESENT or ABSENT.",
+    "lock_rule": "Freeze all membership metadata, accepted-window fields, predeclaration, provenance, label mapping, ambiguity registry, preprocessing-artifact identifiers, class/lineage counts, and checksums before candidate-output access. The lock must be reproducible solely from these artifacts without undocumented operator decisions."
+  },
+  "minimum_acceptable_membership": {
+    "both_class": true,
+    "eligible_present": 57,
+    "eligible_absent": 57,
+    "per_lineage_group_absent": 19,
+    "acquisition_lineage_groups": ["D1_PERSON_03", "D1_PERSON_09", "D1_PERSON_11"],
+    "accepted_window_subject_id": "NO_HUMAN_TARGET",
+    "recording_diversity": "Three predeclared qualifying ABSENT recording slots per lineage group, with the fixed 7/6/6 context allocation and chronological first-N selection.",
+    "training_disjointness": "All final-membership acquisition lineage groups, recordings, and windows are disjoint from candidate training.",
+    "acceptance_statement": "This is the complete minimum for proceeding to the already-defined M-PV3.8 final selection evaluation. It is not a model-selection result by itself."
+  },
+  "terminal_decisions": {
+    "contract_audit_approved": "The M-PV3.8.4 checksum-lifecycle clarification and corrected schema are independently audit-approved. This is not membership construction authorization.",
+    "membership_ready_after_future_authorization": "Only a separately authorized future construction that satisfies every corrected requirement may lock the membership; then the already-defined M-PV3.8 final selection evaluation may be considered once.",
+    "membership_blocked": "If any count, no-human semantic, deterministic-selection, recording separation, provenance, label mapping, ambiguity, checksum, quality, or preprocessing-isolation rule fails, final selection remains BLOCKED_INVALID_FINAL_MEMBERSHIP and no candidate output is opened.",
+    "direction_reconsideration_required": "If the one bounded campaign closes without the complete valid membership, or if an authoritative non-D2/non-MR60 ABSENT reference cannot be established, stop collection and mark ROLE_L_FULL_TASK selection direction RECONSIDERATION_REQUIRED. This contract authorizes no additional collection loop."
+  }
+}

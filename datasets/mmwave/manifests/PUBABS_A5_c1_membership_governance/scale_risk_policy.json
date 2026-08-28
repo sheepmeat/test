@@ -1,0 +1,9 @@
+{
+  "schema_version": "PUBABS-A5-SCALE-RISK-POLICY-V1",
+  "TRAIN_ZSCORE_SCALE_RISK": "HIGH",
+  "scaler_refit_on_c1": "FORBIDDEN",
+  "policy_choice": "EXTERNAL_STRESS_ALLOWED_WITH_SCALE_LIMITATION",
+  "final_selection": "FINAL_SELECTION_BLOCKED_PENDING_SCALE_VALIDATION_AND_OTHER_A4_BLOCKS",
+  "all_model_use_blocked": false,
+  "note": "External stress may later inspect structural scale descriptors only under separate Sol auth. Any Family B/C inference remains separately gated and must not claim calibrated in-domain scores."
+}

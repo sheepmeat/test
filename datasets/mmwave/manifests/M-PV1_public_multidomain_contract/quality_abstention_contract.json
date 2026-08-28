@@ -1,0 +1,29 @@
+{
+  "contract_id": "MMWAVE_V2_M_PV1_QUALITY_ABSTENTION_CONTRACT_V1",
+  "hard_pre_gate": [
+    "human_detected_raw presence gate",
+    "timestamp validity/monotonicity",
+    "source freshness/stale",
+    "source freeze",
+    "large gap",
+    "exact flat/nonfinite"
+  ],
+  "invalid_input_physiology_supervision": false,
+  "invalid_state": "INPUT_UNAVAILABLE",
+  "learned_soft_quality": "optional later score for nonperiodic/motion-contaminated uncertainty; cannot override hard invalid",
+  "no_gap_interpolation": true,
+  "presence_suppressed_state": "PRESENCE_SUPPRESSED",
+  "q2_inherited": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+  "synthetic_corruption_rewrites_physiology": false,
+  "synthetic_quality_profiles": [
+    {
+      "profile_id": "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1",
+      "target": "quality/abstain only"
+    },
+    {
+      "profile_id": "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1",
+      "target": "INPUT_UNAVAILABLE/ABSTAIN only"
+    }
+  ],
+  "valid_state": "PHYSIOLOGY_ELIGIBLE"
+}

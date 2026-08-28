@@ -1,0 +1,321 @@
+{
+  "checks": [
+    {
+      "detail": [],
+      "name": "required_contract_artifacts_present",
+      "ok": true
+    },
+    {
+      "detail": {
+        "contract": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1",
+        "evidence": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1",
+        "matrix": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1"
+      },
+      "name": "identity_and_design_only_mode",
+      "ok": true
+    },
+    {
+      "detail": {
+        "m_pv2_short": {
+          "phase": "M-PV2-SHORT",
+          "role": "15S_BREATHING_ONLY_CANDIDATE",
+          "rr_training": false,
+          "selection": false,
+          "status": "PASS_WITH_LIMITATIONS",
+          "temporal_hold_training": false
+        },
+        "m_pv3": {
+          "authoritative_selection_result": "NO_SELECTION_READY",
+          "historical_interpretation_must_not_change": true,
+          "identity": "MMWV_V2_M_PV3_SELECTION_CONTRACT_V1",
+          "phase": "M-PV3",
+          "preserved_30s_utility_guards": {
+            "brier_max": 0.05,
+            "present_recall_min": 0.95,
+            "rr_mae_bpm_max": 5.0,
+            "rr_within_2_bpm_min": 0.4,
+            "rr_within_4_bpm_min": 0.6,
+            "rr_within_6_bpm_min": 0.75
+          },
+          "status": "PASS_WITH_LIMITATIONS"
+        },
+        "m_pv35": {
+          "context_only_claim_prohibited_without_stronger_evidence": true,
+          "controlled_conclusion": "NO_STABLE_CONTEXT_DURATION_ADVANTAGE_ISOLATED",
+          "identity": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+          "phase": "M-PV3.5",
+          "seed_instability_governing_requirement": true,
+          "status": "PASS_WITH_LIMITATIONS"
+        }
+      },
+      "name": "predecessor_state_preserved",
+      "ok": true
+    },
+    {
+      "detail": {
+        "brier_max": 0.05,
+        "present_recall_min": 0.95,
+        "rr_mae_bpm_max": 5.0,
+        "rr_within_2_bpm_min": 0.4,
+        "rr_within_4_bpm_min": 0.6,
+        "rr_within_6_bpm_min": 0.75
+      },
+      "name": "m_pv3_utility_guards_preserved_unchanged",
+      "ok": true
+    },
+    {
+      "detail": {
+        "calibration_fitting": false,
+        "cascade_or_adaptive_context_implementation": false,
+        "d2_semantic_access": false,
+        "int8_or_tflite": false,
+        "m_pv4_approval": false,
+        "mr60_supervised_physiology": false,
+        "new_checkpoint": false,
+        "production_model_selection": false,
+        "raspberry_pi_benchmark": false,
+        "reserved_evaluation_set_opened": false,
+        "threshold_tuning": false,
+        "winning_context_length": false
+      },
+      "name": "no_training_selection_or_reserved_access_authorized",
+      "ok": true
+    },
+    {
+      "detail": {
+        "accuracy_latency_scalar": "PROHIBITED",
+        "best_seed_must_not_be_selected_post_hoc": true,
+        "collapsed_seed_must_not_be_dropped": true,
+        "combined_winner_score": "PROHIBITED",
+        "context_accuracy_claim_requires_controlled_stable_evidence": true,
+        "normalized_utility_ranking": "PROHIBITED",
+        "pareto_winner_selection": "PROHIBITED",
+        "prohibited_context_claims_without_required_evidence": [
+          "15S_IS_MORE_ACCURATE",
+          "30S_IS_MORE_ACCURATE",
+          "30S_IS_INHERENTLY_MORE_STABLE",
+          "CONTEXT_DURATION_DOES_NOT_MATTER"
+        ],
+        "safety_is_non_compensable": true,
+        "undefined_metric_must_not_be": [
+          "ZERO",
+          "FAILURE",
+          "MISSING_AS_ERROR"
+        ],
+        "undefined_metric_representation": "NOT_APPLICABLE",
+        "weighted_aggregate_score": "PROHIBITED"
+      },
+      "name": "no_combined_score_and_safety_non_compensable",
+      "ok": true
+    },
+    {
+      "detail": {
+        "full": "M_PV3_FAMILY_B_AND_FAMILY_C_ONLY",
+        "isolation": "M_PV35_30S_PARITY_CNN_ONLY",
+        "rr_quality": "M_PV3_FAMILY_A_ONLY",
+        "short": "[B,150,1]"
+      },
+      "name": "explicit_role_subrole_membership",
+      "ok": true
+    },
+    {
+      "detail": {
+        "allowed_metric_cards": [
+          "breathing",
+          "safety",
+          "stability",
+          "responsiveness",
+          "footprint"
+        ],
+        "breathing_metrics": [
+          "present_recall",
+          "absent_recall_where_governed",
+          "precision",
+          "f1",
+          "brier",
+          "ece_only_if_previously_valid_without_calibration_fit"
+        ],
+        "candidate_purpose": [
+          "fast_breathing_evidence_screening",
+          "faster_causal_buffer_recovery",
+          "smaller_inference_footprint"
+        ],
+        "context_seconds": 15,
+        "input_shape": "[B,150,1]",
+        "production_role": "NOT_AUTOMATIC",
+        "quality_metric_status": "NOT_APPLICABLE_UNLESS_SEPARATELY_TRAINED_AND_AUTHORIZED",
+        "rr_metric_status": "NOT_APPLICABLE",
+        "rr_or_temporal_hold_future_use": "REQUIRES_SEPARATE_TRAINING_EVALUATION_AUTHORIZATION",
+        "temporal_hold_metric_status": "NOT_APPLICABLE"
+      },
+      "name": "short_rr_and_temporal_hold_not_applicable",
+      "ok": true
+    },
+    {
+      "detail": {
+        "full": [
+          "breathing_evidence",
+          "rr",
+          "quality"
+        ],
+        "isolation": [
+          "breathing_evidence"
+        ],
+        "rr_quality": [
+          "rr",
+          "quality"
+        ]
+      },
+      "name": "long_subrole_task_applicability_is_explicit",
+      "ok": true
+    },
+    {
+      "detail": {
+        "candidate_training_seed_definition": "seed_used_to_train_a_candidate",
+        "evaluation_seed_result_definition": "result_of_each_frozen_candidate_training_seed_on_the_same_governed_evaluation_membership",
+        "future_stability_threshold": "THRESHOLD_REQUIRES_PRE_REGISTRATION",
+        "mean_only_summary": "PROHIBITED",
+        "required_pre_registration_evidence": [
+          "expected_use_case",
+          "seed_count",
+          "class_coverage",
+          "subject_disjoint_membership",
+          "failure_cost",
+          "justification_before_results"
+        ],
+        "required_reporting": [
+          "every_frozen_seed",
+          "mean",
+          "population_standard_deviation",
+          "minimum",
+          "maximum",
+          "worst_seed",
+          "best_seed",
+          "per_subject_results"
+        ],
+        "seed_selection_policy": "THRESHOLD_REQUIRES_PRE_REGISTRATION"
+      },
+      "name": "seed_instability_explicitly_governed",
+      "ok": true
+    },
+    {
+      "detail": {
+        "current_d1_dev_val": {
+          "ambiguous": 2,
+          "eligible_absent": 0,
+          "eligible_present": 57,
+          "present_evaluation_state": "AVAILABLE_WITH_LIMITATION",
+          "stable_role_eligibility": "INCOMPLETE"
+        },
+        "future_authorization_requirement": "EXPLICIT_GOVERNED_SPLIT_AUTHORIZATION_BEFORE_ACCESS",
+        "required_properties": [
+          "subject_disjoint",
+          "eligible_present_examples",
+          "eligible_absent_examples",
+          "ambiguous_retained_and_excluded_from_pure_class_metrics",
+          "no_target_regeneration",
+          "no_leakage"
+        ],
+        "reserved_d0_evaluation_membership": "NOT_AUTHORIZED_TO_OPEN_IN_M_PV36",
+        "state": "REQUIRES_FUTURE_GATE"
+      },
+      "name": "d1_present_limit_and_absent_deficiency_recorded",
+      "ok": true
+    },
+    {
+      "detail": {
+        "full": [
+          "L_FULL_BREATHING",
+          "L_FULL_FOOTPRINT",
+          "L_FULL_QUALITY_DIAGNOSTIC",
+          "L_FULL_RESPONSIVENESS",
+          "L_FULL_RR",
+          "L_FULL_SAFETY",
+          "L_FULL_STABILITY"
+        ],
+        "isolation": [
+          "L_I_BREATHING",
+          "L_I_FOOTPRINT",
+          "L_I_QUALITY",
+          "L_I_RESPONSIVENESS",
+          "L_I_RR",
+          "L_I_SAFETY",
+          "L_I_STABILITY"
+        ],
+        "rr_quality": [
+          "L_RQ_BREATHING",
+          "L_RQ_FOOTPRINT",
+          "L_RQ_QUALITY_DIAGNOSTIC",
+          "L_RQ_RESPONSIVENESS",
+          "L_RQ_RR",
+          "L_RQ_SAFETY",
+          "L_RQ_STABILITY"
+        ],
+        "short": [
+          "S_BREATHING",
+          "S_FOOTPRINT",
+          "S_RESPONSIVENESS",
+          "S_RR",
+          "S_SAFETY",
+          "S_STABILITY",
+          "S_TEMPORAL_HOLD"
+        ]
+      },
+      "name": "evaluation_matrix_has_separate_role_subrole_cards",
+      "ok": true
+    },
+    {
+      "detail": {
+        "class_a_cards": 4,
+        "class_b_cards": 12,
+        "q2_in_class_a": true,
+        "q2_not_in_class_b": true
+      },
+      "name": "i1_q2_precedence_and_quality_safety_classification",
+      "ok": true
+    },
+    {
+      "detail": {
+        "D1_ABSENT_EVALUATION": "INCOMPLETE",
+        "D1_PRESENT_EVALUATION": "AVAILABLE_WITH_LIMITATION",
+        "D2_FINAL_CROSS_DEVICE": "NOT_AUTHORIZED",
+        "I1_Q2_SAFETY_PRECEDENCE": "AVAILABLE",
+        "MR60_SUPERVISED_PHYSIOLOGY": "NOT_AUTHORIZED",
+        "RASPBERRY_PI_LATENCY": "REQUIRES_FUTURE_GATE",
+        "ROLE_L_ISOLATION_RR_AND_QUALITY": "NOT_APPLICABLE",
+        "ROLE_L_RR_QUALITY_BREATHING": "NOT_APPLICABLE",
+        "ROLE_S_RR": "NOT_APPLICABLE",
+        "SEED_STABILITY_THRESHOLD": "THRESHOLD_REQUIRES_PRE_REGISTRATION"
+      },
+      "name": "evidence_requirement_states_explicit",
+      "ok": true
+    },
+    {
+      "detail": {
+        "implementation_authorized": false,
+        "required_evidence_first": [
+          "stable_15s_screening_behavior",
+          "joint_confusion_error_matrix",
+          "error_correlation",
+          "threshold_persistence_policy",
+          "fail_closed_composition",
+          "buffer_state_semantics",
+          "latency_composition"
+        ]
+      },
+      "name": "cascade_and_adaptive_implementation_deferred",
+      "ok": true
+    },
+    {
+      "detail": [],
+      "name": "machine_readable_artifacts_use_no_machine_paths",
+      "ok": true
+    }
+  ],
+  "contract_id": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1",
+  "failed_checks": [],
+  "gate": "PASS_WITH_LIMITATIONS",
+  "ok": true,
+  "phase": "M-PV3.6",
+  "schema_version": "M-PV3.6.2_CORRECTIVE"
+}

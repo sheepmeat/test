@@ -1,0 +1,41 @@
+{
+  "$id": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "evidence_scope": {
+      "enum": [
+        "FIXTURE_NON_CAMPAIGN",
+        "LIVE_DEBUG_NON_CAMPAIGN"
+      ]
+    },
+    "scope_semantics": {
+      "minItems": 1,
+      "type": "array"
+    },
+    "scope_version": {
+      "const": "MMWAVE-V2-D1-EVIDENCE-SCOPE-V1"
+    }
+  },
+  "required": [
+    "evidence_scope",
+    "scope_version",
+    "scope_semantics"
+  ],
+  "scope_semantics_by_scope": {
+    "FIXTURE_NON_CAMPAIGN": [
+      "FIXTURE_ONLY",
+      "NON_CAMPAIGN",
+      "NOT_D1_MEMBERSHIP",
+      "NOT_DATASET_ADMISSIBLE"
+    ],
+    "LIVE_DEBUG_NON_CAMPAIGN": [
+      "NON_CAMPAIGN",
+      "NOT_D1_MEMBERSHIP",
+      "NOT_FINAL_EVALUATION",
+      "NOT_DATASET_ADMISSIBLE_BY_DEFAULT"
+    ]
+  },
+  "title": "SafeNest mmWave V2 evidence scope and mode",
+  "type": "object"
+}

@@ -1,0 +1,102 @@
+{
+  "checks": {
+    "ARBITRARY_INTERNAL_TARGET_INTERVAL": "NO",
+    "BREATHING_PRESENT_ABSENT_SAME_TARGET_DURATION": "YES",
+    "BREATHING_PRESENT_ABSENT_SAME_TARGET_SEMANTICS": "YES",
+    "BREATHING_TARGET_FIXED_ANCHOR": "YES",
+    "BREATHING_ZERO_COUNT_HIDDEN": "NO",
+    "COMMON_INPUT_SCHEMA_FROZEN": "YES",
+    "COMMON_TARGET_SCHEMA_FROZEN": "YES",
+    "D0_CONTRACT_INHERITED": "YES",
+    "D0_SPLIT_CHANGED": "NO",
+    "D1_CONTRACT_INHERITED": "YES",
+    "D1_PROTOCOL_APNEA_AUTO_TARGET": "NO",
+    "D1_RECORDING_LEVEL_LEAKAGE": "NO",
+    "D1_SUBJECT_SPLIT_VERSIONED": "YES",
+    "D2_MODEL_INFERENCE_COUNT": 0,
+    "D2_USED_FOR_SELECTION": "NO",
+    "DIRECT_THREE_CLASS_PRIMARY_TARGET": "NO",
+    "DUPLICATE_INPUT_CONTRADICTORY_BREATHING_LABELS": "NO",
+    "EVENT_TARGET_CONTEXT_CAUSAL": "YES",
+    "FEATURE_PROFILE_TARGET_LOCATION_AMBIGUOUS": "NO",
+    "I1_CONTRACT_INHERITED": "YES",
+    "INT8_WORK": "NO",
+    "INVALID_INPUT_PHYSIOLOGY_SUPERVISION": "NO",
+    "MODEL_FAMILY_TASK_COMPATIBILITY_FROZEN": "YES",
+    "MODEL_READY_TARGET_WITHOUT_VALID_INPUT_TENSOR": "NO",
+    "MODEL_SELECTION": "NO",
+    "MODEL_TRAINING": "NO",
+    "MR60_SUPERVISED_USE": "NO",
+    "M_N6_EXCLUDED_USED": "NO",
+    "ORIGINAL_SCALE_INFORMATION_PRESERVED": "YES",
+    "PARALLEL_TRACK_BRANCH_CONTAMINATION": "NO",
+    "PROBABILITY_THRESHOLD_TUNING": "NO",
+    "Q2_CONTRACT_INHERITED": "YES",
+    "QUALITY_CONTEXT_DUPLICATE_COUNTING": "NO",
+    "R1_CONTRACT_INHERITED": "YES",
+    "R2_CONTRACT_INHERITED": "YES",
+    "R3_CONTRACT_INHERITED": "YES",
+    "RR_INTERVAL_SEPARATE_FROM_BREATHING_INTERVAL": "YES",
+    "RR_UNAVAILABLE_ENCODED_AS_ZERO": "NO",
+    "SEED_SWEEP": "NO",
+    "SOURCE_BALANCING_FROZEN": "YES",
+    "SOURCE_SPECIFIC_GAIN_MATCHING": "NO",
+    "SYNTHETIC_RATIO_USES_UNIQUE_CLEAN_INPUT_COUNT": "YES",
+    "TEMPORAL_CONTEXT_FROZEN": "YES",
+    "TEMPORAL_HOLD_LEARNING_BOUNDARY_FROZEN": "YES",
+    "WHOLE_WINDOW_APNEA_DEFAULT": "NO",
+    "WINDOW_LOCAL_MAD_ONLY_NORMALIZATION": "NO"
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "coverage_summary": {
+    "D0_base_absent": 0,
+    "D0_base_present": 162,
+    "D0_corrected_absent": 116,
+    "D0_corrected_ambiguous": 40,
+    "D0_unique_model_input_contexts": 318,
+    "D1_model_ready_contexts": 244,
+    "D1_short_audit_only": 21,
+    "duplicate_target_overlays": 0,
+    "quality_clean_unique_model_inputs": 562,
+    "total_target_records": 2248,
+    "total_unique_model_input_contexts": 562
+  },
+  "deterministic_generation": true,
+  "gate": "PASS_WITH_LIMITATIONS",
+  "limitations": [
+    {
+      "detail": "The first M-PV1 manifest attached arbitrary internal 5 s event intervals to 30 s inputs. Corrective M-PV1 freezes the final 5 s causal target for every breathing state and removes duplicate event-overlay input rows.",
+      "id": "M-PV1-CORRECTIVE-TARGET-CONTEXT-MISMATCH",
+      "severity": "RESOLVED_BY_REFORMULATION"
+    },
+    {
+      "detail": "The original 133 event-relative candidates were re-evaluated; only fully contained final target intervals remain ABSENT supervision, and the remainder are audit-only.",
+      "id": "M-PV1-D0-ABSENT-RECOUNT",
+      "severity": "RESOLVED_BY_RECOUNT"
+    },
+    {
+      "detail": "D1 respiration waveform is materialized, but source protocol strings do not supply defensible onset/recovery boundaries; temporal hold remains unavailable.",
+      "id": "M-PV1-D1-TEMPORAL-HOLD-UNAVAILABLE",
+      "severity": "LIMITATION"
+    },
+    {
+      "detail": "D1 recordings shorter than 30 s remain reference/feature audit only; no fake padding.",
+      "id": "M-PV1-D1-SHORT-RECORDINGS",
+      "severity": "LIMITATION"
+    },
+    {
+      "detail": "The global F2 scalar profile cannot encode the fixed final 5 s target location, so F2 MLP is limited to RR/quality and temporal composition.",
+      "id": "M-PV1-F2-BREATHING-UNSUPPORTED",
+      "severity": "LIMITATION"
+    },
+    {
+      "detail": "No accepted D3 adapter is present.",
+      "id": "M-PV1-D3-NOT_INCLUDED",
+      "severity": "NON_BLOCKING"
+    }
+  ],
+  "m_pv1_ready_for_m_pv2": true,
+  "ok": true,
+  "phase": "M-PV1",
+  "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT"
+}

@@ -1,0 +1,68 @@
+{
+  "all_nine_evaluated": true,
+  "candidate_count": 9,
+  "d2_access": false,
+  "d2_semantic_use": false,
+  "determinism_pass": true,
+  "gate": "PASS_WITH_LIMITATIONS",
+  "int8_or_tflite": false,
+  "inventory_pass": true,
+  "limitations": [
+    "D0 TRAIN is observe-only; the frozen M-PV1 membership has no D0 VAL rows.",
+    "D1_DEV_VAL contains PRESENT and AMBIGUOUS rows but no model-ready ABSENT class, so absent-class discrimination is not established.",
+    "Q2 corruption cases are deterministic evaluation profiles, not live MR60 captures.",
+    "No calibration fitting, production threshold tuning, INT8/TFLite conversion, Pi deployment, or clinical claim was made.",
+    "The parallel 15-second lane was intentionally excluded and remains unreviewed here."
+  ],
+  "materialization_counts": {
+    "breathing_eligible": 514,
+    "breathing_states": {
+      "BREATHING_REFERENCE_ABSENT": 116,
+      "BREATHING_REFERENCE_AMBIGUOUS": 48,
+      "BREATHING_REFERENCE_PRESENT": 398
+    },
+    "by_source": {
+      "D0": 318,
+      "D1": 244
+    },
+    "by_split": {
+      "D1_DEV_TRAIN": 185,
+      "D1_DEV_VAL": 59,
+      "TRAIN": 318
+    },
+    "d0_r1_scope": {
+      "D0_SUBJECT_HELDOUT_used": false,
+      "M_N6_excluded_subjects_used": false,
+      "VAL_used": false,
+      "non_train_provenance_rows_not_used": 212,
+      "split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+      "train_source_recording_count": 264,
+      "train_subject_count": 66,
+      "train_subject_ids_sha256": "7b529da35953ece35ce72e5104632b30992b03f25e7c519ac6e7b7e1b0bb22bc",
+      "train_window_count": 318
+    },
+    "d1_r1_scope": {
+      "D1_Six_Port_logic_reimplemented_in_R1": false,
+      "D1_adapter_consumed": true,
+      "recording_count": 265,
+      "source_rates_hz": [
+        500.0,
+        2000.0
+      ]
+    },
+    "duplicate_target_overlays": 0,
+    "model_ready_unique": 562,
+    "quality_clean_unique": 562,
+    "rr_eligible": 398
+  },
+  "mr60_supervised_use": false,
+  "ok": true,
+  "phase": "M-PV3",
+  "provenance_intact": true,
+  "q2_fail_closed_all_candidates": true,
+  "retraining": false,
+  "schema_version": "M-PV3.1",
+  "selection_contract_sha256": "69bcf28e83fe070e257f8eb2bbf035d2ef0cb9dc2cb2a205bca5f95bc10e5aa8",
+  "selection_result": "NO_SELECTION_READY",
+  "training_invocations": 0
+}

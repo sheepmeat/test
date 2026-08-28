@@ -1,0 +1,66 @@
+{
+  "schema_version": "M-PROT-2-RUNTIME-REPRESENTATION-DECISION-V1",
+  "phase": "M-PROT-2",
+  "PRIMARY_PROTOTYPE_DEPLOYABLE_REPRESENTATION": "PYTORCH_FLOAT32_STATE_DICT",
+  "SOURCE_OF_TRUTH_MODEL_ARTIFACT": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+  "selected_converted_artifact": null,
+  "INT8": "NOT_AUTHORIZED_IN_M_PROT_2",
+  "TFLITE_CONVERSION": "NOT_YET_PROVEN",
+  "TORCHSCRIPT": "NOT_SELECTED",
+  "ONNX_RUNTIME": "NOT_INTRODUCED",
+  "alternatives_inspected": [
+    {
+      "id": "PYTORCH_FLOAT32_STATE_DICT",
+      "status": "SELECTED",
+      "reason": "Exact B23 source identity, SHA, TraceModel load, no conversion loss. M-PROT-0 default is PyTorch first; TFLite only if separately evidenced."
+    },
+    {
+      "id": "TFLITE_FLOAT32",
+      "status": "NOT_PROVEN",
+      "reason": "No governed B23 conversion path or equivalence criterion. Historical mmWave TFLite artifacts implement NORMAL/RAPID/APNEA, not ROLE_L."
+    },
+    {
+      "id": "TFLITE_INT8",
+      "status": "NOT_AUTHORIZED_IN_M_PROT_2",
+      "reason": "INT8 requires representative calibration data. D1/D2/C1/live calibration is forbidden."
+    },
+    {
+      "id": "TORCHSCRIPT",
+      "status": "NOT_SELECTED",
+      "reason": "Not present in requirements-pi.txt or the integration repo mmWave adapter path."
+    },
+    {
+      "id": "ONNX_RUNTIME",
+      "status": "NOT_INTRODUCED",
+      "reason": "Would add a new runtime ecosystem without repository/integration evidence."
+    },
+    {
+      "id": "MMWAVE_M_N9_FULL_INT8_V1",
+      "status": "ROLE_INCOMPATIBLE",
+      "reason": "Live integration currently loads M-N9 3-class TFLite. That is not B23 and must not replace ROLE_L."
+    }
+  ],
+  "why_selected": [
+    "semantic preservation of B23 weights and heads",
+    "reproducible SHA identity already frozen by M-PROT-1",
+    "executable TraceModel constructor already in-repo",
+    "conversion would be packaging, but conversion+parity are NOT_PROVEN",
+    "Pi LiteRT evidence applies to V1/M-N9 TFLite, not to this prototype package"
+  ],
+  "not_used_for_decision": [
+    "validation score",
+    "threshold change",
+    "candidate ranking",
+    "C1 behavior",
+    "D1 final behavior"
+  ],
+  "source_vs_deployed_parity": "NOT_APPLICABLE_SOURCE_IS_DEPLOYABLE",
+  "mandatory_semantics": [
+    "PROTOTYPE_INTEGRATION_ONLY",
+    "NOT_FINAL_SELECTED_MODEL",
+    "NOT_DEPLOYMENT_VALIDATED",
+    "NOT_SAFETY_VALIDATED",
+    "NOT_CLINICAL_VALIDATION",
+    "SUBJECT_TO_REPLACEMENT"
+  ]
+}

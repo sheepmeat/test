@@ -1,0 +1,21 @@
+{
+  "phase": "PUBABS-A3C",
+  "date": "2026-08-26",
+  "a3c_verdict": "A3C_FREEZE_READY_WITH_LIMITATIONS",
+  "proposal_status": "PROPOSAL_ONLY_NOT_AUTHORITATIVE",
+  "recommended_timestamp_rule": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+  "r1t_temporal_scope": "WINDOW_LOCAL",
+  "recommended_range_rule": "C1_ROI_EXCLUDE_NEARFIELD28_DYNENERGY_UNWRAP_V1",
+  "range_selection_policy": "RG-S1",
+  "range_selection_observation_duration_s": 30.0,
+  "bin_lock": "SESSION",
+  "modify_frozen_r1": false,
+  "pubabs_a3r_status": "NOT_READY_PENDING_SOL_FINAL_FREEZE",
+  "pubabs_a4_status": "NOT_READY",
+  "pr160_merged": true,
+  "reviewed_a3_head": "e1ffdd63608fd5732d46d890b3e1dcba1b04c8c5",
+  "pr160_merge_commit": "78c7d741f5f8d6b1cf0e7f08952e9810b2bf1d8d",
+  "origin_main_at_proposal": "78c7d741f5f8d6b1cf0e7f08952e9810b2bf1d8d",
+  "model_inference": "NOT_EXECUTED",
+  "labels_used": false
+}

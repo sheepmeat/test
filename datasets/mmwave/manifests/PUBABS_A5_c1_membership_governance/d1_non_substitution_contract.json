@@ -1,0 +1,13 @@
+{
+  "schema_version": "PUBABS-A5-D1-NON-SUBSTITUTION-V1",
+  "d1_identity": "D1_FINAL_SELECTION_BOTH_CLASS_V1",
+  "d1_status": "UNCHANGED",
+  "rules": {
+    "C1_DOES_NOT_SILENTLY_POPULATE_D1": true,
+    "no_D1_PRESENT_plus_C1_ABSENT_mix": true,
+    "no_D1_plus_C1_both_class_mix_without_separate_governance": true,
+    "no_semantic_substitution_as_D1_V2": true
+  },
+  "proposed_separate_identity_if_constructed_later": "PUBABS_C1_EXTERNAL_STRESS_V1",
+  "construction_in_a5": false
+}

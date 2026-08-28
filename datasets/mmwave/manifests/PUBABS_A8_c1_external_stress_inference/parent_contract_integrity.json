@@ -1,0 +1,9 @@
+{
+  "a6_contract_sha256": "d0353c9bf7837a2520364903b53075bde44cddf10b88c3fef58aa4054bbb3310",
+  "layer1_sha256": "cefc7a3820ebb644a9553b3eaad9f4ec600ea555bc25ed891f236cc50c6632f5",
+  "layer2_sha256": "01a1db3ef56e1071896f054a5baad397035ca6d989f42f2d1129d250b6867c7c",
+  "adapter_sha256": "cfce866f659658e772e833f64e881549a4244b8c9daaa85423b343f34c424446",
+  "scaler_embedded_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+  "a7_contract_id": "PUBABS_C1_EXTERNAL_STRESS_INFERENCE_V1",
+  "verified": true
+}

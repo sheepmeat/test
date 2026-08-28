@@ -1,0 +1,25 @@
+{
+  "schema_version": "PUBABS-A5-EXTERNAL-STRESS-CONTRACT-PROPOSAL-V1",
+  "contract_id": "PUBABS_C1_EXTERNAL_STRESS_V1",
+  "status": "PROPOSAL_ONLY_NOT_CONSTRUCTED",
+  "source_population": "ALL_77_C1_SESSIONS",
+  "availability_denominator": "ALL_77",
+  "valid_only_conditional_subset_semantics": "CONDITIONAL_ON_ADAPTER_VALID",
+  "allowed_downstream_measurements_if_later_authorized": [
+    "availability_rates_by_class_subject_position",
+    "fail_closed_code_distributions",
+    "conditional_structural_tensor_sanity_on_VALID_34",
+    "optional_future_external_stress_model_outputs_under_separate_sol_auth"
+  ],
+  "forbidden_claims": [
+    "C1_equals_MR60_domain",
+    "VALID_34_represents_all_77",
+    "external_stress_selects_Family_B_or_C",
+    "UNAVAILABLE_implies_ABSENT",
+    "C1_populates_D1_FINAL_SELECTION_BOTH_CLASS_V1"
+  ],
+  "unavailable_handling": "retain_report_fail_closed_never_label_as_class",
+  "subject_position_reporting_requirements": "mandatory_strata_including_zeros",
+  "domain_disclaimer": "C1 is out-of-domain relative to MR60 ROLE_L; external stress results are not in-domain SafeNest selection evidence.",
+  "scale_disclaimer": "HIGH scale risk; no calibrated in-domain score claim"
+}

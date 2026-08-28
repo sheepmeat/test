@@ -1,0 +1,704 @@
+{
+  "family_a/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "D1_DEV_VAL": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    }
+  },
+  "family_a/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "D1_DEV_VAL": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    }
+  },
+  "family_a/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "D1_DEV_VAL": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "status": "NOT_SUPPORTED_F2_BREATHING_LOCATION_SUPPORT_NO"
+    }
+  },
+  "family_b/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "Brier": 0.17589944287010537,
+      "F1": 0.7910447761194029,
+      "PR_AUC": 0.9132575587475198,
+      "ROC_AUC": 0.878299276287782,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 3,
+        "FP": 81,
+        "TN": 35,
+        "TP": 159
+      },
+      "eligible_count": 278,
+      "false_absent_on_PRESENT": 0.018518518518518517,
+      "false_present_on_ABSENT": 0.6982758620689655,
+      "precision": 0.6625,
+      "present_count": 162,
+      "probability_distribution": {
+        "max": 0.9999024868011475,
+        "mean": 0.7309079018267367,
+        "min": 0.0860772505402565,
+        "std": 0.2279994389944618
+      },
+      "recall": 0.9814814814814815,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "Brier": 0.0982699855901368,
+      "F1": 0.9771428571428571,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 8,
+        "FP": 0,
+        "TN": 0,
+        "TP": 171
+      },
+      "eligible_count": 179,
+      "false_absent_on_PRESENT": 0.0446927374301676,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 179,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.7118897219942935,
+        "min": 0.34763363003730774,
+        "std": 0.12354130199091838
+      },
+      "recall": 0.9553072625698324,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_VAL": {
+      "Brier": 0.09854056720607236,
+      "F1": 1.0,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 0,
+        "FP": 0,
+        "TN": 0,
+        "TP": 57
+      },
+      "eligible_count": 57,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 57,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.706508595692484,
+        "min": 0.5236203074455261,
+        "std": 0.11137038566726143
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "Brier": 0.16273688790637436,
+      "F1": 0.8372093023255814,
+      "PR_AUC": 0.9005738380755102,
+      "ROC_AUC": 0.8289245788064872,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 3,
+        "FP": 81,
+        "TN": 35,
+        "TP": 216
+      },
+      "eligible_count": 335,
+      "false_absent_on_PRESENT": 0.0136986301369863,
+      "false_present_on_ABSENT": 0.6982758620689655,
+      "precision": 0.7272727272727273,
+      "present_count": 219,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.726756378096431,
+        "min": 0.0860772505402565,
+        "std": 0.2129160186013189
+      },
+      "recall": 0.9863013698630136,
+      "status": "DEFINED",
+      "threshold": 0.5
+    }
+  },
+  "family_b/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "Brier": 0.11643031500877468,
+      "F1": 0.8702702702702703,
+      "PR_AUC": 0.9789074125678932,
+      "ROC_AUC": 0.9691890166028098,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 1,
+        "FP": 47,
+        "TN": 69,
+        "TP": 161
+      },
+      "eligible_count": 278,
+      "false_absent_on_PRESENT": 0.006172839506172839,
+      "false_present_on_ABSENT": 0.4051724137931034,
+      "precision": 0.7740384615384616,
+      "present_count": 162,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.732989197055032,
+        "min": 0.0026273608673363924,
+        "std": 0.3163558655378825
+      },
+      "recall": 0.9938271604938271,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "Brier": 0.01754553095782355,
+      "F1": 0.9943820224719101,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 2,
+        "FP": 0,
+        "TN": 0,
+        "TP": 177
+      },
+      "eligible_count": 179,
+      "false_absent_on_PRESENT": 0.0111731843575419,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 179,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9242216148855966,
+        "min": 0.3552229702472687,
+        "std": 0.10864238264727405
+      },
+      "recall": 0.9888268156424581,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_VAL": {
+      "Brier": 0.0064572784995837705,
+      "F1": 1.0,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 0,
+        "FP": 0,
+        "TN": 0,
+        "TP": 57
+      },
+      "eligible_count": 57,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 57,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9480155518180445,
+        "min": 0.6688169240951538,
+        "std": 0.061277203320658814
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "Brier": 0.09771848491616608,
+      "F1": 0.9008264462809917,
+      "PR_AUC": 0.9841436423581951,
+      "ROC_AUC": 0.9711462761769799,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 1,
+        "FP": 47,
+        "TN": 69,
+        "TP": 218
+      },
+      "eligible_count": 335,
+      "false_absent_on_PRESENT": 0.0045662100456621,
+      "false_present_on_ABSENT": 0.4051724137931034,
+      "precision": 0.8226415094339623,
+      "present_count": 219,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.7695757708505296,
+        "min": 0.0026273608673363924,
+        "std": 0.30036596574318664
+      },
+      "recall": 0.9954337899543378,
+      "status": "DEFINED",
+      "threshold": 0.5
+    }
+  },
+  "family_b/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "Brier": 0.03571776252915792,
+      "F1": 0.9671641791044776,
+      "PR_AUC": 0.9994076613269471,
+      "ROC_AUC": 0.9991485738612176,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 0,
+        "FP": 11,
+        "TN": 105,
+        "TP": 162
+      },
+      "eligible_count": 278,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": 0.09482758620689655,
+      "precision": 0.9364161849710982,
+      "present_count": 162,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.6559553591141332,
+        "min": 1.9218423403799534e-05,
+        "std": 0.41684943191588786
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "Brier": 0.018931401869587534,
+      "F1": 0.9887005649717514,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 4,
+        "FP": 0,
+        "TN": 0,
+        "TP": 175
+      },
+      "eligible_count": 179,
+      "false_absent_on_PRESENT": 0.0223463687150838,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 179,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9441751052713927,
+        "min": 0.1071215271949768,
+        "std": 0.12575763594361755
+      },
+      "recall": 0.9776536312849162,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_VAL": {
+      "Brier": 0.025080918907178347,
+      "F1": 0.9911504424778761,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 1,
+        "FP": 0,
+        "TN": 0,
+        "TP": 56
+      },
+      "eligible_count": 57,
+      "false_absent_on_PRESENT": 0.017543859649122806,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 57,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9378840243607237,
+        "min": 0.12591803073883057,
+        "std": 0.14567952662457131
+      },
+      "recall": 0.9824561403508771,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "Brier": 0.0339079115248211,
+      "F1": 0.9732142857142857,
+      "PR_AUC": 0.9980739411897981,
+      "ROC_AUC": 0.9959455203904897,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 1,
+        "FP": 11,
+        "TN": 105,
+        "TP": 218
+      },
+      "eligible_count": 335,
+      "false_absent_on_PRESENT": 0.0045662100456621,
+      "false_present_on_ABSENT": 0.09482758620689655,
+      "precision": 0.9519650655021834,
+      "present_count": 219,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.7039253111113143,
+        "min": 1.9218423403799534e-05,
+        "std": 0.3987878040768891
+      },
+      "recall": 0.9954337899543378,
+      "status": "DEFINED",
+      "threshold": 0.5
+    }
+  },
+  "family_c/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "Brier": 0.036915356939666404,
+      "F1": 0.9642857142857143,
+      "PR_AUC": 0.9989898037138971,
+      "ROC_AUC": 0.9986696466581524,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 0,
+        "FP": 12,
+        "TN": 104,
+        "TP": 162
+      },
+      "eligible_count": 278,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": 0.10344827586206896,
+      "precision": 0.9310344827586207,
+      "present_count": 162,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.659293929336466,
+        "min": 3.1344468425231753e-06,
+        "std": 0.4249942414903533
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "Brier": 0.0030306525080228837,
+      "F1": 1.0,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 0,
+        "FP": 0,
+        "TN": 0,
+        "TP": 179
+      },
+      "eligible_count": 179,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 179,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9795035776479284,
+        "min": 0.666522204875946,
+        "std": 0.05109353362988691
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_VAL": {
+      "Brier": 0.02115794692809779,
+      "F1": 0.9911504424778761,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 1,
+        "FP": 0,
+        "TN": 0,
+        "TP": 56
+      },
+      "eligible_count": 57,
+      "false_absent_on_PRESENT": 0.017543859649122806,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 57,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9567641776643301,
+        "min": 0.0957157239317894,
+        "std": 0.13888344247985857
+      },
+      "recall": 0.9824561403508771,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "Brier": 0.03423424538545922,
+      "F1": 0.9710467706013363,
+      "PR_AUC": 0.9975277886083737,
+      "ROC_AUC": 0.9949614233978901,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 1,
+        "FP": 12,
+        "TN": 104,
+        "TP": 218
+      },
+      "eligible_count": 335,
+      "false_absent_on_PRESENT": 0.0045662100456621,
+      "false_present_on_ABSENT": 0.10344827586206896,
+      "precision": 0.9478260869565217,
+      "present_count": 219,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.7099082700967294,
+        "min": 3.1344468425231753e-06,
+        "std": 0.40701857561648186
+      },
+      "recall": 0.9954337899543378,
+      "status": "DEFINED",
+      "threshold": 0.5
+    }
+  },
+  "family_c/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "Brier": 0.037046580273460625,
+      "F1": 0.9757575757575757,
+      "PR_AUC": 0.9987167801332804,
+      "ROC_AUC": 0.9981907194550873,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 1,
+        "FP": 7,
+        "TN": 109,
+        "TP": 161
+      },
+      "eligible_count": 278,
+      "false_absent_on_PRESENT": 0.006172839506172839,
+      "false_present_on_ABSENT": 0.0603448275862069,
+      "precision": 0.9583333333333334,
+      "present_count": 162,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.6496663526481138,
+        "min": 0.0005790451541543007,
+        "std": 0.3966788232168159
+      },
+      "recall": 0.9938271604938271,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "Brier": 0.016490886611300014,
+      "F1": 0.9943820224719101,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 2,
+        "FP": 0,
+        "TN": 0,
+        "TP": 177
+      },
+      "eligible_count": 179,
+      "false_absent_on_PRESENT": 0.0111731843575419,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 179,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9284623867972603,
+        "min": 0.4206126630306244,
+        "std": 0.1066454711113192
+      },
+      "recall": 0.9888268156424581,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_VAL": {
+      "Brier": 0.01791962580955174,
+      "F1": 0.9911504424778761,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 1,
+        "FP": 0,
+        "TN": 0,
+        "TP": 56
+      },
+      "eligible_count": 57,
+      "false_absent_on_PRESENT": 0.017543859649122806,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 57,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9299038240784093,
+        "min": 0.40055620670318604,
+        "std": 0.11404451731986569
+      },
+      "recall": 0.9824561403508771,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "Brier": 0.03379214324527314,
+      "F1": 0.9796839729119639,
+      "PR_AUC": 0.998499889768662,
+      "ROC_AUC": 0.9971658006613131,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 2,
+        "FP": 7,
+        "TN": 109,
+        "TP": 217
+      },
+      "eligible_count": 335,
+      "false_absent_on_PRESENT": 0.0091324200913242,
+      "false_present_on_ABSENT": 0.0603448275862069,
+      "precision": 0.96875,
+      "present_count": 219,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.6973485492795373,
+        "min": 0.0005790451541543007,
+        "std": 0.3793179950849577
+      },
+      "recall": 0.9908675799086758,
+      "status": "DEFINED",
+      "threshold": 0.5
+    }
+  },
+  "family_c/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "Brier": 0.0033077926956909956,
+      "F1": 0.9969230769230769,
+      "PR_AUC": 1.0,
+      "ROC_AUC": 1.0,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 0,
+        "FP": 1,
+        "TN": 115,
+        "TP": 162
+      },
+      "eligible_count": 278,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": 0.008620689655172414,
+      "precision": 0.9938650306748467,
+      "present_count": 162,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.5964290003742403,
+        "min": 4.2329347138547746e-08,
+        "std": 0.47844801729400366
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "Brier": 0.00013853545165185916,
+      "F1": 1.0,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 0,
+        "FP": 0,
+        "TN": 0,
+        "TP": 179
+      },
+      "eligible_count": 179,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 179,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9965080495653206,
+        "min": 0.9032610654830933,
+        "std": 0.011240183887001197
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "D1_DEV_VAL": {
+      "Brier": 0.0012677252259954447,
+      "F1": 1.0,
+      "PR_AUC": null,
+      "ROC_AUC": null,
+      "absent_count": 0,
+      "confusion": {
+        "FN": 0,
+        "FP": 0,
+        "TN": 0,
+        "TP": 57
+      },
+      "eligible_count": 57,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": null,
+      "precision": 1.0,
+      "present_count": 57,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.991727660622513,
+        "min": 0.7780320644378662,
+        "std": 0.03463081903765956
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "Brier": 0.002960676738160708,
+      "F1": 0.9977220956719818,
+      "PR_AUC": 1.0,
+      "ROC_AUC": 1.0,
+      "absent_count": 116,
+      "confusion": {
+        "FN": 0,
+        "FP": 1,
+        "TN": 115,
+        "TP": 219
+      },
+      "eligible_count": 335,
+      "false_absent_on_PRESENT": 0.0,
+      "false_present_on_ABSENT": 0.008620689655172414,
+      "precision": 0.9954545454545455,
+      "present_count": 219,
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.6636887724164837,
+        "min": 4.2329347138547746e-08,
+        "std": 0.460685460017431
+      },
+      "recall": 1.0,
+      "status": "DEFINED",
+      "threshold": 0.5
+    }
+  }
+}

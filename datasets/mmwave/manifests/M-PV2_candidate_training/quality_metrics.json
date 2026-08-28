@@ -1,0 +1,1586 @@
+{
+  "family_a/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 2.8338901756796986e-05
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.026841478422284126
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.03080655075609684
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.02660820074379444
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.028310604393482208
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0392790362238884
+        }
+      },
+      "probability_distribution": {
+        "max": 0.996185839176178,
+        "mean": 0.9749288500857621,
+        "min": 2.8338901756796986e-05,
+        "std": 0.13048103671405023
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 2.7494703317643143e-05
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.03823861479759216
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.02129277214407921
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.02907560206949711
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.017994951456785202
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.032959774136543274
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9998553991317749,
+        "mean": 0.9642315014856107,
+        "min": 2.7494703317643143e-05,
+        "std": 0.16948911796954433
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 2.5922872737282887e-05
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.030347386375069618
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.028386587277054787
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.04199489578604698
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.030917378142476082
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9959297776222229,
+        "mean": 0.9177298773498137,
+        "min": 2.5922872737282887e-05,
+        "std": 0.2596220782761532
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 2.5922872737282887e-05
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.030347386375069618
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.028386587277054787
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.04199489578604698
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.030917378142476082
+        }
+      },
+      "probability_distribution": {
+        "max": 0.996185839176178,
+        "mean": 0.9802612182427585,
+        "min": 2.5922872737282887e-05,
+        "std": 0.10993872027234619
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  },
+  "family_a/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.002094188006594777
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.07394740730524063
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.09018755704164505
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0852816179394722
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.09293890744447708
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.1203438863158226
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9960178732872009,
+        "mean": 0.975518838126632,
+        "min": 0.002094188006594777,
+        "std": 0.1234889643678434
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0020020848605781794
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.11326345801353455
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08188638836145401
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.10100442171096802
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.06665139645338058
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08075615763664246
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9998164772987366,
+        "mean": 0.9635019448758908,
+        "min": 0.0020020848605781794,
+        "std": 0.1603721455828441
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.001823481754399836
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0904005914926529
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08024226129055023
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08948814868927002
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0817103236913681
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9961953163146973,
+        "mean": 0.9187538378846511,
+        "min": 0.001823481754399836,
+        "std": 0.24786620426065012
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.001823481754399836
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0904005914926529
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08024226129055023
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08948814868927002
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0817103236913681
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9961953163146973,
+        "mean": 0.9801140199308722,
+        "min": 0.001823481754399836,
+        "std": 0.1051553660057192
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  },
+  "family_a/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0011539706028997898
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.12386790663003922
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08350985497236252
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.09748736768960953
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08814682066440582
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.1256224811077118
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9950054287910461,
+        "mean": 0.9725925744479568,
+        "min": 0.0011539706028997898,
+        "std": 0.12187328011584313
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0011168124619871378
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.09980624914169312
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.09545136988162994
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08966033160686493
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.07564079761505127
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.08571376651525497
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9997153878211975,
+        "mean": 0.9565561883046696,
+        "min": 0.0011168124619871378,
+        "std": 0.15903914015516443
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0010561560047790408
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.10593670606613159
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.09393428266048431
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.11235728859901428
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.10085940361022949
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9980831146240234,
+        "mean": 0.9177168892765621,
+        "min": 0.0010561560047790408,
+        "std": 0.24334851015844997
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0010561560047790408
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.10593670606613159
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.09393428266048431
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.11235728859901428
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.10085940361022949
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9980831146240234,
+        "mean": 0.97731436291406,
+        "min": 0.0010561560047790408,
+        "std": 0.10317841158923449
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  },
+  "family_b/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.007597275543957949
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.007362517528235912
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.003828582586720586
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.01033487543463707
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.007008615415543318
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0031299979891628027
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9999998807907104,
+        "mean": 0.980719725066727,
+        "min": 0.0031299979891628027,
+        "std": 0.13381564240172275
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.011163446120917797
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.009591696783900261
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.007315263617783785
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.008325508795678616
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00616493821144104
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.006678515579551458
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9682200902205019,
+        "min": 0.00616493821144104,
+        "std": 0.1728895064874805
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0015807368326932192
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.006753953173756599
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.009371464140713215
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.007723246235400438
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.008698978461325169
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9218426301922591,
+        "min": 0.0015807368326932192,
+        "std": 0.26637295586102544
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0015807368326932192
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.006753953173756599
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.009371464140713215
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.007723246235400438
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.008698978461325169
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9861566947367169,
+        "min": 0.0015807368326932192,
+        "std": 0.11278545151445282
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  },
+  "family_b/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0001668093609623611
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0010227160528302193
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 2.6921248718281277e-05
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 1.03877937362995e-05
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00011026029096683487
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0010313880629837513
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9811063494483077,
+        "min": 1.03877937362995e-05,
+        "std": 0.1347210378261066
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0028427515644580126
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0004202068957965821
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00027827706071548164
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00011328665277687833
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 7.347977225435898e-05
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00023873033933341503
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9685724823026648,
+        "min": 7.347977225435898e-05,
+        "std": 0.1743113305679648
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0001645584707148373
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 5.1890176109736785e-05
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00019237784727010876
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00019659723329823464
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0004162787226960063
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9218621853019044,
+        "min": 5.1890176109736785e-05,
+        "std": 0.26830497613008986
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0001645584707148373
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 5.1890176109736785e-05
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00019237784727010876
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00019659723329823464
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0004162787226960063
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9865844727690141,
+        "min": 5.1890176109736785e-05,
+        "std": 0.11360490856490532
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  },
+  "family_b/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 8.949873881647363e-05
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0006157027091830969
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 3.0682378564961255e-05
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.005437547340989113
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0003250950248911977
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 1.0814619599841535e-05
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9814130674204747,
+        "min": 1.0814619599841535e-05,
+        "std": 0.1346589534971399
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0015337361255660653
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0009297826909460127
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 2.1125219973328058e-06
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 6.276668136706576e-05
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0002473870699759573
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00037664923002012074
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9685363944511484,
+        "min": 2.1125219973328058e-06,
+        "std": 0.1743308910429338
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.015413518995046616
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 5.3215870138956234e-05
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0004441315250005573
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00017858347564470023
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 3.1513151043327525e-05
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9221113611745295,
+        "min": 3.1513151043327525e-05,
+        "std": 0.2675038251999638
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.015413518995046616
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 5.3215870138956234e-05
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0004441315250005573
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00017858349019661546
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 3.1513151043327525e-05
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9868755277973985,
+        "min": 3.1513151043327525e-05,
+        "std": 0.11328300424657657
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  },
+  "family_c/seed_11": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 1.265362259417202e-09
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0042419759556651115
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0033911948557943106
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.001152718672528863
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0016946241958066821
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.005453646648675203
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9999996423721313,
+        "mean": 0.9808315404533674,
+        "min": 1.265362259417202e-09,
+        "std": 0.13438161571802035
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 1.1797463628226978e-07
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.000535009428858757
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 8.213638648157939e-05
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0009449012577533722
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0002075533411698416
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0002537109248805791
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9677146730968023,
+        "min": 1.1797463628226978e-07,
+        "std": 0.1742240733469841
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 1.5664489150246652e-10
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00044872495345771313
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0024726020637899637
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0025274637155234814
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0013099873904138803
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9999942779541016,
+        "mean": 0.9213539673789375,
+        "min": 1.5664489150246652e-10,
+        "std": 0.26782511098863493
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 1.5664489150246652e-10
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00044872501166537404
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0024726020637899637
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.002527463948354125
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0013099873904138803
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9999996423721313,
+        "mean": 0.9862307299943464,
+        "min": 1.5664489150246652e-10,
+        "std": 0.11344148353661278
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  },
+  "family_c/seed_23": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 4.456913504924387e-09
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0024444761220365763
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.002427963772788644
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.01601710356771946
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.009897923097014427
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0005316796596162021
+        }
+      },
+      "probability_distribution": {
+        "max": 0.9999997615814209,
+        "mean": 0.9812138439615253,
+        "min": 4.456913504924387e-09,
+        "std": 0.13406813482454702
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 4.05522115443091e-07
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.03795868903398514
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00018984572670888156
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.002505068900063634
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0019456632435321808
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00309286592528224
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9682283500056974,
+        "min": 4.05522115443091e-07,
+        "std": 0.17309061391220526
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 3.8949329872473015e-11
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0012078696163371205
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00839542131870985
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0054305787198245525
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.004610762465745211
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9221471280203961,
+        "min": 3.8949329872473015e-11,
+        "std": 0.2673049894376812
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 3.8949329872473015e-11
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0012078694999217987
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00839542131870985
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0054305787198245525
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.004610762465745211
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9866475981310132,
+        "min": 3.8949329872473015e-11,
+        "std": 0.11317650146903853
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  },
+  "family_c/seed_47": {
+    "D0_TRAIN_OBSERVE": {
+      "clean_count": 318,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 324,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 1.94201952297135e-08
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00017429952276870608
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00028661213582381606
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00025331354117952287
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 9.717293141875416e-05
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0010408236412331462
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9813904477951285,
+        "min": 1.94201952297135e-08,
+        "std": 0.13476278331583486
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_TRAIN_OBSERVE": {
+      "clean_count": 185,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 191,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 1.207978357342654e-06
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00031350672361440957
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 7.264143641805276e-05
+        },
+        "REPUBLICATION_TO_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00011998557602055371
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00015244136739056557
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.000371111324056983
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9685797415285585,
+        "min": 1.207978357342654e-06,
+        "std": 0.1744006896475171
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 6
+    },
+    "D1_DEV_VAL": {
+      "clean_count": 59,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 64,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 8.391940614638216e-11
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 2.063255124085117e-05
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0002397106436546892
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00012578326277434826
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0005314782611094415
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9218843978401063,
+        "min": 8.391940614638216e-11,
+        "std": 0.2683175051275914
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    },
+    "POOLED_D0_TRAIN_PLUS_D1_VAL": {
+      "clean_count": 377,
+      "clean_false_rejection": 0.0,
+      "eligible_count": 382,
+      "hard_Q2_invalid_false_acceptance": 0.0,
+      "per_corruption_mode": {
+        "FLAT_EXACT": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 8.391940614638216e-11
+        },
+        "JITTER_PLUS_LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 2.063255124085117e-05
+        },
+        "LARGE_GAP": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0002397106436546892
+        },
+        "SOURCE_FREEZE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.00012578326277434826
+        },
+        "STALE_SOURCE": {
+          "count": 1,
+          "invalid_false_acceptance": 0.0,
+          "probability_mean": 0.0005314782611094415
+        }
+      },
+      "probability_distribution": {
+        "max": 1.0,
+        "mean": 0.9868305086549628,
+        "min": 8.391940614638216e-11,
+        "std": 0.11362642868445952
+      },
+      "status": "DEFINED",
+      "synthetic_invalid_count": 5
+    }
+  }
+}

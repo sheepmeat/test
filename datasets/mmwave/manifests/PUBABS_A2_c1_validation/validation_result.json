@@ -1,0 +1,44 @@
+{
+  "schema_version": "PUBABS-A2-VALIDATION-RESULT-V1",
+  "phase": "PUBABS-A2",
+  "mode": "C1_SEMANTICS_SENSORHEALTH_ACQUISITION_COMPARABILITY",
+  "date": "2026-08-26",
+  "base_sha": "e2b50aa93bd3b37e91e6e3d455acfc65ed925464",
+  "status": "COMPLETE",
+  "a2_gate": "A2_STRONG_INTERNAL_BOTH_CLASS_SOURCE",
+  "a3_recommendation": "RECOMMEND_A3",
+  "m_pv38_unchanged": true,
+  "m_pv38_status": "RESOURCE_BLOCKED_CLOSED",
+  "primary_doi": "10.5281/zenodo.15032859",
+  "payload": {
+    "file": "Data.zip",
+    "official_md5_match": true,
+    "local_sha256": "bc120db7fb7ba8143dfd6499f7d80788d1d965e6a6ebf3e402fc34cb2870aa85",
+    "empty_sessions_inspected": 11,
+    "present_sessions_inspected": 66
+  },
+  "authorizations": {
+    "pubabs_a3": false,
+    "membership_construction": false,
+    "m_pv38_reopen": false,
+    "m_pv4": false,
+    "d2_semantic_access": false,
+    "payload_commit": false
+  },
+  "report": "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A2_C1_Semantics_SensorHealth_AcquisitionComparability_01.md",
+  "manifest_dir": "datasets/mmwave/manifests/PUBABS_A2_c1_validation/",
+  "limitations": [
+    "DEVICE_HEALTH_TELEMETRY=NOT_AVAILABLE",
+    "PRESENT archive subset is Scenario_A/1_Meter/Face_toward_wall only",
+    "Empty vs Present duration asymmetry (~900s vs ~180s)",
+    "Cross-sensor MR60 domain gap deferred to A3+",
+    "A2 does not authorize membership or M-PV3.8 evaluation"
+  ],
+  "explicit_non_actions": [
+    "No PUBABS-A3 execution in this PR",
+    "No membership design",
+    "No model inference / range-bin class optimization",
+    "No M-PV3.8 reopen / M-PV4 / D2",
+    "No commit of Data.zip"
+  ]
+}

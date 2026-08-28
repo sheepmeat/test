@@ -1,0 +1,58 @@
+{
+  "DIRECT_THREE_CLASS_PRIMARY_TARGET": false,
+  "breathing_evidence": {
+    "arbitrary_internal_target_interval": false,
+    "causal_context": true,
+    "context_duration_s": 30.0,
+    "d0_reference": "authoritative A6/Movesense evidence plus fixed-final-interval event binding",
+    "d1_reference": "synchronized respiration waveform over the 30 s reference context with fixed-final-5 s anchor; weak periodicity is AMBIGUOUS, not ABSENT",
+    "output_semantics": "breathing evidence over final target interval of current causal context",
+    "present_absent_same_target_duration": true,
+    "present_absent_same_target_semantics": true,
+    "radar_amplitude_as_label": false,
+    "semantic_meaning": "reference-supported breathing evidence over the final fixed target interval of the causal context",
+    "source_apnea_term_auto_target": false,
+    "states": [
+      "PRESENT",
+      "ABSENT",
+      "AMBIGUOUS",
+      "TARGET_UNAVAILABLE"
+    ],
+    "target_anchor": "FINAL_FIXED_INTERVAL_OF_CAUSAL_CONTEXT",
+    "target_duration_s": 5.0,
+    "whole_window_apnea_default": false
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_TARGET_MAPPING_PROFILE_V1",
+  "rr": {
+    "d0_method": "INHERITED_A4_MOVESENSE_CHEST_ACC_SPECTRAL_PEAK_V1",
+    "d1_method": "D1_RESPIRATION_WELCH_PERIODICITY_V1",
+    "field": "rr_bpm",
+    "reference_interval_anchor": "FULL_CAUSAL_CONTEXT_REFERENCE_INTERVAL",
+    "reference_interval_duration_s": 30.0,
+    "search_band_hz": [
+      0.1,
+      0.7
+    ],
+    "separate_from_breathing_interval": true,
+    "type": "continuous_float_bpm_or_null",
+    "unavailable_reason_required": true,
+    "validity_required": true,
+    "zero_is_not_unavailable": true
+  },
+  "supervision_masks": [
+    "breathing_supervision_eligible",
+    "rr_supervision_eligible",
+    "temporal_hold_supervision_eligible",
+    "quality_supervision_eligible"
+  ],
+  "temporal_hold": {
+    "baseline_required": true,
+    "d0": "event-relative authoritative intervals plus baseline/non-event",
+    "d1": "UNAVAILABLE; source protocol strings do not define onset/offset",
+    "direct_neural_supervision": false,
+    "final_persistence_threshold": "DEFERRED_TO_POST_MODEL_DEVELOPMENT_CALIBRATION; no heldout tuning in M-PV1",
+    "learning_boundary": "DETERMINISTIC_POST_BREATHING_COMPOSITION_ONLY",
+    "onset_and_recovery_explicit": true,
+    "semantic_meaning": "event-relative voluntary breath-hold proxy; not clinical apnea"
+  }
+}

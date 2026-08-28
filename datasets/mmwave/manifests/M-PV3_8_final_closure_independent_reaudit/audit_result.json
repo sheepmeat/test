@@ -1,0 +1,50 @@
+{
+  "schema_version": "M-PV3.8-FINAL-CLOSURE-REAUDIT-V1",
+  "audit_id": "MMWAVE_V2_M_PV38_FINAL_CLOSURE_INDEPENDENT_REAUDIT_V1",
+  "phase": "M-PV3.8-FINAL-CLOSURE-INDEPENDENT-REAUDIT",
+  "mode": "REAUDIT_ONLY",
+  "date": "2026-08-25",
+  "decision": "APPROVED",
+  "blocking_findings": [],
+  "prior_closure_audit_decision": "NEEDS_CORRECTION",
+  "prior_findings_closed": [
+    "ACQUISITION_GATE_MANIFEST_LIFECYCLE_STATE_MISMATCH",
+    "CLOSURE_STATUS_NOT_UNIQUELY_FROZEN"
+  ],
+  "formal_freeze": {
+    "closure_status": "RESOURCE_BLOCKED_CLOSED",
+    "reason": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+    "statement": "M-PV3.8 is formally frozen as RESOURCE_BLOCKED_CLOSED pending external ABSENT acquisition resources."
+  },
+  "verified_state": {
+    "contract_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
+    "independent_audit": "APPROVED",
+    "acquisition": "RESOURCE_BLOCKED_CLOSED",
+    "membership": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "evaluation": "NOT_EXECUTED",
+    "m_pv4": "UNAUTHORIZED"
+  },
+  "integrity": {
+    "lifecycle_validator_ok": true,
+    "lifecycle_checksums_ok": true,
+    "acquisition_gate_checksums_ok": true,
+    "stale_current_status_strings_found": false,
+    "final_membership_directory_present": false
+  },
+  "authorizations": {
+    "capture": false,
+    "campaign_predeclaration": false,
+    "absent_creation": false,
+    "membership_construction": false,
+    "model_evaluation": false,
+    "candidate_output_inspection": false,
+    "threshold_modification": false,
+    "m_pv4": false
+  },
+  "handoff": {
+    "audience": "verification_agent",
+    "required_validator": "scripts/validate_mmwave_m_pv38_lifecycle_state_consolidation.py",
+    "authoritative_closure": "datasets/mmwave/manifests/M-PV3_8_lifecycle_closure/lifecycle_closure_state.json",
+    "report": "docs/mmwave/20260824_SafeNest_mmWave_M-PV3_8_Final_Closure_Independent_ReAudit_01.md"
+  }
+}

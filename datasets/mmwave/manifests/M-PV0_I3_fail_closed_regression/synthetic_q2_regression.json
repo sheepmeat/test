@@ -1,0 +1,93 @@
+{
+  "audit_date": "2026-08-23",
+  "failed": [],
+  "modes": {
+    "CLEAN_VALID": {
+      "availability_state": "PHYSIOLOGY_ELIGIBLE",
+      "expected_state": "PHYSIOLOGY_ELIGIBLE",
+      "interpolation_applied": false,
+      "passed": true,
+      "physiology_executed": false,
+      "primary_reason": null,
+      "reasons": []
+    },
+    "FLAT_EXACT": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "interpolation_applied": false,
+      "passed": true,
+      "physiology_executed": false,
+      "primary_reason": "SIGNAL_FLAT_EXACT",
+      "reasons": [
+        "SIGNAL_FLAT_EXACT"
+      ]
+    },
+    "JITTER_PLUS_LARGE_GAP": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "interpolation_applied": false,
+      "passed": true,
+      "physiology_executed": false,
+      "primary_reason": "LARGE_GAP",
+      "reasons": [
+        "LARGE_GAP"
+      ]
+    },
+    "LARGE_GAP": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "interpolation_applied": false,
+      "passed": true,
+      "physiology_executed": false,
+      "primary_reason": "LARGE_GAP",
+      "reasons": [
+        "LARGE_GAP"
+      ]
+    },
+    "REPUBLICATION_TO_FREEZE": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "interpolation_applied": false,
+      "passed": true,
+      "physiology_executed": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ]
+    },
+    "SOURCE_FREEZE": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "interpolation_applied": false,
+      "passed": true,
+      "physiology_executed": false,
+      "primary_reason": "SOURCE_FREEZE",
+      "reasons": [
+        "SOURCE_FREEZE"
+      ]
+    },
+    "STALE_SOURCE": {
+      "availability_state": "INPUT_UNAVAILABLE",
+      "expected_state": "INPUT_UNAVAILABLE",
+      "interpolation_applied": false,
+      "passed": true,
+      "physiology_executed": false,
+      "primary_reason": "SOURCE_STALE",
+      "reasons": [
+        "SOURCE_STALE"
+      ]
+    }
+  },
+  "passed": [
+    "CLEAN_VALID",
+    "LARGE_GAP",
+    "SOURCE_FREEZE",
+    "STALE_SOURCE",
+    "FLAT_EXACT",
+    "JITTER_PLUS_LARGE_GAP",
+    "REPUBLICATION_TO_FREEZE"
+  ],
+  "phase": "I3",
+  "profile_id": "MMWAVE_V2_Q2_INPUT_UNAVAILABLE_CORRUPTION_PROFILE_V1",
+  "q2_evaluator": "scripts.mmwave_q2_input_unavailable.evaluate_availability"
+}

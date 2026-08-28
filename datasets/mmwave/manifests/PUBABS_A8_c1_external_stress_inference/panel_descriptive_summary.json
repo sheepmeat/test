@@ -1,0 +1,44 @@
+{
+  "order": [
+    "B11",
+    "B23",
+    "B47",
+    "C11",
+    "C23",
+    "C47"
+  ],
+  "L2_PRESENT_RECALL": {
+    "values_fixed_order": [
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.72,
+      0.0
+    ],
+    "mean": 0.2866666666666667,
+    "sd": 0.41338709327806655,
+    "min": 0.0,
+    "max": 1.0,
+    "DESCRIPTIVE_ONLY": true,
+    "NO_RANKING": true,
+    "NO_SELECTION": true
+  },
+  "L2_ABSENT_EMISSION_RATE": {
+    "values_fixed_order": [
+      0.0,
+      0.0,
+      0.2222222222222222,
+      1.0,
+      0.7777777777777778,
+      0.0
+    ],
+    "mean": 0.3333333333333333,
+    "sd": 0.40572041296678973,
+    "min": 0.0,
+    "max": 1.0,
+    "DESCRIPTIVE_ONLY": true,
+    "NO_RANKING": true,
+    "NO_SELECTION": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "M-PV3.8_LIFECYCLE_CLOSURE_V1",
+  "phase_id": "M-PV3.8",
+  "closure_status": "RESOURCE_BLOCKED_CLOSED",
+  "reason": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+  "contract_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
+  "audit_state": "APPROVED",
+  "evaluation_status": "NOT_EXECUTED",
+  "membership_status": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "acquisition_status": "RESOURCE_BLOCKED_CLOSED",
+  "mpv4_authorization": "UNAUTHORIZED",
+  "authority": "M-PV3.8_LIFECYCLE_CLOSURE_STATE",
+  "supersedes": [
+    "M-PV3.8.3_CORRECTIVE_PENDING_REAUDIT_STATE",
+    "NOT_AUTHORIZED_PENDING_INDEPENDENT_REAUDIT",
+    "READY_FOR_CAPTURE_AUTHORIZATION"
+  ],
+  "source_artifacts": [
+    "config/mmwave/m_pv38_absent_membership_acquisition_gate.json",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/acquisition_gate.json",
+    "datasets/mmwave/manifests/M-PV3_8_absent_membership_acquisition_gate/final_lock_requirements.json",
+    "datasets/mmwave/manifests/M-PV3_8_absent_acquisition_planning/planning_result.json",
+    "datasets/mmwave/manifests/M-PV3_8_absent_capture_preflight/preflight_readiness.json",
+    "datasets/mmwave/manifests/M-PV3_8_absent_acquisition_feasibility_audit/feasibility_audit.json"
+  ],
+  "preserved_restrictions": [
+    "ABSENT semantics are unchanged.",
+    "No-replacement, no-top-up, no-reallocation, no-alternate-recording, and no-second-attempt rules are unchanged.",
+    "The two-stage checksum lifecycle is unchanged.",
+    "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1 remains the deterministic selection rule.",
+    "M-PV4 remains unauthorized."
+  ],
+  "non_execution_confirmation": {
+    "capture_performed": false,
+    "absent_samples_created": false,
+    "membership_constructed": false,
+    "evaluation_performed": false,
+    "candidate_outputs_inspected": false,
+    "thresholds_modified": false
+  }
+}

@@ -1,0 +1,250 @@
+{
+  "baseline_contract_immutable": true,
+  "baseline_metric_consistency": {
+    "family_b/seed_11": {
+      "differences": {
+        "breathing.Brier": 0.0,
+        "breathing.F1": 0.0,
+        "breathing.precision": 0.0,
+        "breathing.recall": 0.0,
+        "rr.MAE_bpm": 0.0,
+        "rr.median_absolute_error_bpm": 0.0,
+        "rr.within_2_bpm": 0.0,
+        "rr.within_4_bpm": 0.0,
+        "rr.within_6_bpm": 0.0
+      },
+      "max_abs_difference": 0.0,
+      "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+      "status": "PASS",
+      "tolerance": 1e-06
+    },
+    "family_b/seed_23": {
+      "differences": {
+        "breathing.Brier": 0.0,
+        "breathing.F1": 0.0,
+        "breathing.precision": 0.0,
+        "breathing.recall": 0.0,
+        "rr.MAE_bpm": 0.0,
+        "rr.median_absolute_error_bpm": 0.0,
+        "rr.within_2_bpm": 0.0,
+        "rr.within_4_bpm": 0.0,
+        "rr.within_6_bpm": 0.0
+      },
+      "max_abs_difference": 0.0,
+      "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+      "status": "PASS",
+      "tolerance": 1e-06
+    },
+    "family_b/seed_47": {
+      "differences": {
+        "breathing.Brier": 0.0,
+        "breathing.F1": 0.0,
+        "breathing.precision": 0.0,
+        "breathing.recall": 0.0,
+        "rr.MAE_bpm": 0.0,
+        "rr.median_absolute_error_bpm": 0.0,
+        "rr.within_2_bpm": 0.0,
+        "rr.within_4_bpm": 0.0,
+        "rr.within_6_bpm": 0.0
+      },
+      "max_abs_difference": 0.0,
+      "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+      "status": "PASS",
+      "tolerance": 1e-06
+    },
+    "family_c/seed_11": {
+      "differences": {
+        "breathing.Brier": 0.0,
+        "breathing.F1": 0.0,
+        "breathing.precision": 0.0,
+        "breathing.recall": 0.0,
+        "rr.MAE_bpm": 0.0,
+        "rr.median_absolute_error_bpm": 0.0,
+        "rr.within_2_bpm": 0.0,
+        "rr.within_4_bpm": 0.0,
+        "rr.within_6_bpm": 0.0
+      },
+      "max_abs_difference": 0.0,
+      "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+      "status": "PASS",
+      "tolerance": 1e-06
+    },
+    "family_c/seed_23": {
+      "differences": {
+        "breathing.Brier": 0.0,
+        "breathing.F1": 0.0,
+        "breathing.precision": 0.0,
+        "breathing.recall": 0.0,
+        "rr.MAE_bpm": 0.0,
+        "rr.median_absolute_error_bpm": 0.0,
+        "rr.within_2_bpm": 0.0,
+        "rr.within_4_bpm": 0.0,
+        "rr.within_6_bpm": 0.0
+      },
+      "max_abs_difference": 0.0,
+      "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+      "status": "PASS",
+      "tolerance": 1e-06
+    },
+    "family_c/seed_47": {
+      "differences": {
+        "breathing.Brier": 0.0,
+        "breathing.F1": 0.0,
+        "breathing.precision": 0.0,
+        "breathing.recall": 0.0,
+        "rr.MAE_bpm": 0.0,
+        "rr.median_absolute_error_bpm": 0.0,
+        "rr.within_2_bpm": 0.0,
+        "rr.within_4_bpm": 0.0,
+        "rr.within_6_bpm": 0.0
+      },
+      "max_abs_difference": 0.0,
+      "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+      "status": "PASS",
+      "tolerance": 1e-06
+    }
+  },
+  "best_seed_selected": false,
+  "calibration_fitting": false,
+  "cards": {
+    "breathing": "breathing_card.json",
+    "footprint": "footprint_card.json",
+    "limitations": "limitations.json",
+    "quality_safety": "quality_safety_card.json",
+    "rr": "rr_card.json",
+    "stability": "stability_card.json"
+  },
+  "combined_score": null,
+  "contract_id": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1",
+  "contract_schema_version": "M-PV3.6.2_CORRECTIVE",
+  "contract_source_phase_mode": "CONTRACT_DESIGN_ONLY",
+  "contract_source_sha256": "43c47360237b1d2357f6d17d8c0b7ea26c4410042698419cd8710b2fc86cbd0a",
+  "evaluation_deterministic_cpu": true,
+  "excluded_roles": [
+    "ROLE_L_RR_QUALITY / Family A",
+    "ROLE_L_ISOLATION / M-PV3.5 isolation CNN",
+    "ROLE_S_SHORT_CONTEXT / M-PV2 15s candidate"
+  ],
+  "execution_mode": "ROLE_CARD_POPULATION_ONLY",
+  "governed_membership": {
+    "ambiguous": 2,
+    "eligible_absent": 0,
+    "eligible_present": 57,
+    "label_regeneration": false,
+    "record_count": 59,
+    "source": "D1_DEV_VAL",
+    "split_change": false,
+    "subjects": [
+      "D1_PERSON_03",
+      "D1_PERSON_09",
+      "D1_PERSON_11"
+    ]
+  },
+  "included_candidates": [
+    "family_b/seed_11",
+    "family_b/seed_23",
+    "family_b/seed_47",
+    "family_c/seed_11",
+    "family_c/seed_23",
+    "family_c/seed_47"
+  ],
+  "m_pv3_baseline": {
+    "determinism_evidence": "datasets/mmwave/manifests/M-PV3_candidate_selection/determinism_audit.json",
+    "selection_evidence": "datasets/mmwave/manifests/M-PV3_candidate_selection/selection_decision.json",
+    "selection_result": "NO_SELECTION_READY",
+    "utility_guards": {
+      "guards_match_predecessor_and_selection_contract": true,
+      "m_pv3_utility_guards": {
+        "brier_max": 0.05,
+        "present_recall_min": 0.95,
+        "rr_mae_bpm_max": 5.0,
+        "rr_within_2_bpm_min": 0.4,
+        "rr_within_4_bpm_min": 0.6,
+        "rr_within_6_bpm_min": 0.75
+      },
+      "pv3_contract_utility_gates": {
+        "brier_max": 0.05,
+        "present_recall_min": 0.95,
+        "rr_mae_bpm_max": 5.0,
+        "rr_within_2_bpm_min": 0.4,
+        "rr_within_4_bpm_min": 0.6,
+        "rr_within_6_bpm_min": 0.75
+      },
+      "selection_result_preserved": true,
+      "selection_use": false,
+      "thresholds_modified": false
+    }
+  },
+  "m_pv4_recommended": false,
+  "phase": "M-PV3.6",
+  "pr134_merge_sha": "443d45d408829becc6a4e4db71bd6d9152c0d41d",
+  "provenance": {
+    "d2_lock": "datasets/mmwave/manifests/M-PV2_candidate_training/d2_lock_audit.json",
+    "m_pv2_scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+    "materialization_counts": {
+      "breathing_eligible": 514,
+      "breathing_states": {
+        "BREATHING_REFERENCE_ABSENT": 116,
+        "BREATHING_REFERENCE_AMBIGUOUS": 48,
+        "BREATHING_REFERENCE_PRESENT": 398
+      },
+      "by_source": {
+        "D0": 318,
+        "D1": 244
+      },
+      "by_split": {
+        "D1_DEV_TRAIN": 185,
+        "D1_DEV_VAL": 59,
+        "TRAIN": 318
+      },
+      "d0_r1_scope": {
+        "D0_SUBJECT_HELDOUT_used": false,
+        "M_N6_excluded_subjects_used": false,
+        "VAL_used": false,
+        "non_train_provenance_rows_not_used": 212,
+        "split_identity": "MMWAVE_V2_D0_SUBJECT_SPLIT_V1",
+        "train_source_recording_count": 264,
+        "train_subject_count": 66,
+        "train_subject_ids_sha256": "7b529da35953ece35ce72e5104632b30992b03f25e7c519ac6e7b7e1b0bb22bc",
+        "train_window_count": 318
+      },
+      "d1_r1_scope": {
+        "D1_Six_Port_logic_reimplemented_in_R1": false,
+        "D1_adapter_consumed": true,
+        "recording_count": 265,
+        "source_rates_hz": [
+          500.0,
+          2000.0
+        ]
+      },
+      "duplicate_target_overlays": 0,
+      "model_ready_unique": 562,
+      "quality_clean_unique": 562,
+      "rr_eligible": 398
+    },
+    "membership_audit": "datasets/mmwave/manifests/M-PV2_candidate_training/membership_audit.json",
+    "tensor_materialization": "datasets/mmwave/manifests/M-PV2_candidate_training/tensor_materialization_audit.json"
+  },
+  "q2_evaluation": {
+    "d2_used": false,
+    "modes": [
+      "FLAT_EXACT",
+      "SOURCE_FREEZE",
+      "STALE_SOURCE",
+      "LARGE_GAP",
+      "JITTER_PLUS_LARGE_GAP",
+      "REPUBLICATION_TO_FREEZE"
+    ],
+    "mr60_supervised_physiology": false,
+    "physiology_target_rewrite": false,
+    "record_count": 6,
+    "scope": "SYNTHETIC_ONLY"
+  },
+  "role_id": "ROLE_L_FULL_TASK",
+  "role_membership": "M_PV3_FAMILY_B_AND_FAMILY_C_ONLY",
+  "schema_version": "M-PV3.6.2_ROLE_L_FULL_TASK_EVALUATION",
+  "thresholds_modified": false,
+  "training_invocations": 0,
+  "upstream_determinism": true,
+  "winner_selected": false
+}

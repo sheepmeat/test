@@ -1,0 +1,116 @@
+{
+  "schema_version": "M-PV3.8.4_CAPTURE_PREFLIGHT_V1",
+  "preflight_id": "MMWAVE_V2_M_PV38_ABSENT_CAPTURE_PREFLIGHT_V1",
+  "mode": "PREFLIGHT_ONLY_NO_CAPTURE_NO_MEMBERSHIP_NO_EVALUATION",
+  "contract_reference": {
+    "contract_id": "MMWAVE_V2_M_PV38_ABSENT_MEMBERSHIP_ACQUISITION_GATE_V1",
+    "contract_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION",
+    "acquisition_plan_id": "MMWAVE_V2_M_PV38_ABSENT_ACQUISITION_PLAN_V1",
+    "repository_commit_sha_observed": "bbaa0b6db19326f4afd9c0c8af057caa804c27a3"
+  },
+  "preflight_observation": {
+    "observation_date": "2026-08-23",
+    "method": "READ_ONLY_LOCAL_INTERFACE_AND_ARTIFACT_INSPECTION",
+    "capture_attempted": false,
+    "target_mmwave_serial_interface_detected": false,
+    "target_sensor_identity_verified": false,
+    "raw_data_stream_verified": false,
+    "timestamp_stream_verified": false,
+    "sensor_health_telemetry_verified": false,
+    "authoritative_occupancy_reference_verified": false,
+    "no_target_physiological_source_evidence_verified": false
+  },
+  "readiness_checks": [
+    {
+      "check_id": "SENSOR_INTERFACE",
+      "status": "BLOCKED",
+      "requirement": "A connected, supported mmWave recording interface must be identified before live health, raw-stream, and timestamp checks.",
+      "evidence": "No target mmWave serial interface was detected in the read-only local interface inventory.",
+      "required_to_clear": "Connect the designated sensor and record its supported interface identifier."
+    },
+    {
+      "check_id": "SENSOR_IDENTITY_AND_CONFIGURATION",
+      "status": "NOT_VERIFIED",
+      "requirement": "Sensor serial/device identifier and firmware/configuration identity must be recorded.",
+      "evidence": "No connected target sensor was available for identity interrogation.",
+      "required_to_clear": "Read and record immutable sensor identity, firmware version, configuration identity or hash, and recording-interface settings from the connected device."
+    },
+    {
+      "check_id": "RAW_TIMESTAMP_AND_HEALTH",
+      "status": "NOT_VERIFIED",
+      "requirement": "Raw observation availability, monotonic timestamps, and sensor-health telemetry must be confirmed on the live sensor.",
+      "evidence": "The repository contains capture tooling and a historical protocol definition, but neither is proof of a live raw stream, timestamp stream, or health telemetry.",
+      "required_to_clear": "Perform a non-campaign live interface check that records no campaign data and verifies required raw, timestamp, continuity, and health fields."
+    },
+    {
+      "check_id": "EMPTY_ZONE_EVIDENCE",
+      "status": "BLOCKED",
+      "requirement": "A continuous time-synchronized authoritative occupancy reference and sealed-zone/access evidence must prove no human target and no physiological source.",
+      "evidence": "No authorized occupancy-reference device, target-zone geometry, synchronization method, or sealed-zone/access procedure is configured as live preflight evidence.",
+      "required_to_clear": "Approve and configure an authoritative occupancy reference, immutable evidence receipt, target-zone definition, access-control record, and clock-synchronization method."
+    },
+    {
+      "check_id": "SLOT_PREDECLARATION",
+      "status": "NOT_READY_TO_LOCK",
+      "requirement": "Nine fixed slots, three per each of three lineage groups, require complete pre-capture identities before the first capture.",
+      "evidence": "The approved plan defines the 3-by-3 structure, but no campaign ID, slot IDs, planned recording IDs, live sensor identity, placement, or target-zone values are available to freeze.",
+      "required_to_clear": "After all physical and evidence checks pass, create exactly one campaign_predeclaration.json with the nine complete immutable pre-capture identities."
+    },
+    {
+      "check_id": "ARTIFACT_LIFECYCLE",
+      "status": "PARTIALLY_READY",
+      "requirement": "The campaign must support a pre-capture identity lock, immediate post-capture SHA-256 receipts, and evidence, health, recording, and rejection registries.",
+      "evidence": "Schemas and lifecycle rules are defined; no campaign-specific predeclaration, receipt, or registry has been created, as required before readiness is confirmed.",
+      "required_to_clear": "Demonstrate the approved artifact generator against a non-campaign fixture, then generate campaign artifacts only after the preflight gate passes."
+    },
+    {
+      "check_id": "CAPTURE_PROTOCOL_AND_FAILURE_POLICY",
+      "status": "GOVERNED_BUT_NOT_LIVE_VERIFIED",
+      "requirement": "Each fixed slot requires a 300-second uninterrupted empty interval with fixed mounting, 30-second contexts, 5-second targets, and CHRONOLOGICAL_FIRST_N_QUALIFYING_V1 selection. A failure ends its fixed slot and the campaign; replacement, top-up, reallocation, alternate recordings, and second attempts are forbidden.",
+      "evidence": "The rule is present in the approved plan, but it has not been exercised on a ready live sensor or empty-zone evidence mechanism.",
+      "required_to_clear": "Verify the live setup can observe and record each required condition before campaign predeclaration."
+    }
+  ],
+  "campaign_structure": {
+    "required_lineage_group_count": 3,
+    "required_slots_per_group": 3,
+    "required_total_slots": 9,
+    "predeclared_slots_created": 0,
+    "slot_lock_created": false,
+    "selection_rule_version": "CHRONOLOGICAL_FIRST_N_QUALIFYING_V1"
+  },
+  "artifact_state": {
+    "campaign_predeclaration_created": false,
+    "post_capture_checksum_receipts_created": false,
+    "recording_manifest_created": false,
+    "occupancy_evidence_registry_created": false,
+    "sensor_health_registry_created": false,
+    "rejection_registry_created": false,
+    "final_membership_created": false
+  },
+  "prohibitions_preserved": {
+    "capture_performed": false,
+    "absent_samples_created": false,
+    "existing_d1_relabelled": false,
+    "membership_constructed": false,
+    "model_evaluation_performed": false,
+    "candidate_outputs_inspected": false,
+    "thresholds_changed": false,
+    "candidate_roster_modified": false,
+    "d2_accessed": false,
+    "mr60_supervised_physiology_used": false,
+    "m_pv4_authorized": false
+  },
+  "result": {
+    "status": "CAPTURE_BLOCKED",
+    "execution_authorization_prepared": false,
+    "reason_codes": [
+      "TARGET_MMWAVE_INTERFACE_NOT_DETECTED",
+      "LIVE_SENSOR_IDENTITY_RAW_TIMESTAMP_HEALTH_NOT_VERIFIED",
+      "AUTHORITATIVE_EMPTY_ZONE_EVIDENCE_NOT_CONFIGURED",
+      "NINE_SLOT_PREDECLARATION_CANNOT_BE_SAFELY_FROZEN"
+    ],
+    "next_permitted_action": "Resolve every listed preflight prerequisite and repeat this preflight before freezing campaign_predeclaration.json or starting any capture.",
+    "no_capture_confirmation": true
+  }
+}

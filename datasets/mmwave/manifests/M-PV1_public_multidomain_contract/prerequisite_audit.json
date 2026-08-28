@@ -1,0 +1,82 @@
+{
+  "base_commit": "e84d802e5b9aa28e6729a02b304f1f70043f89c3",
+  "base_ref": "origin/main",
+  "checks": {
+    "D0_ACCEPTED": "YES",
+    "D0_EVIDENCE_PRESENT": "YES",
+    "D1_ACCEPTED": "YES",
+    "D1_EVIDENCE_PRESENT": "YES",
+    "D3_STATUS": "NOT_INCLUDED_NON_BLOCKING",
+    "DIRECT_PREREQUISITES_ACCEPTED": "YES",
+    "I1_ACCEPTED": "YES",
+    "I1_EVIDENCE_PRESENT": "YES",
+    "I2_DIRECT_PREREQUISITE": "NO",
+    "I3_ANCESTOR_REQUIRED": "NO",
+    "M-PV0_ACCEPTED": "YES",
+    "M-PV0_EVIDENCE_PRESENT": "YES",
+    "Q2_ACCEPTED": "YES",
+    "Q2_EVIDENCE_PRESENT": "YES",
+    "R1_ACCEPTED": "YES",
+    "R1_CONTRACT_PRESENT": "YES",
+    "R1_EVIDENCE_PRESENT": "YES",
+    "R2_ACCEPTED": "YES",
+    "R2_CONTRACT_PRESENT": "YES",
+    "R2_EVIDENCE_PRESENT": "YES",
+    "R3_ACCEPTED": "YES",
+    "R3_EVIDENCE_PRESENT": "YES"
+  },
+  "contract_id": "MMWAVE_V2_M_PV1_PUBLIC_MULTIDOMAIN_CONTRACT_V1",
+  "d2_not_reconstructed": true,
+  "details": {
+    "D0": {
+      "gate": "PASS_WITH_LIMITATIONS",
+      "ok": true,
+      "schema_version": "D0.1",
+      "validation_path": "datasets/mmwave/manifests/M-PV0_D0_v2_split_label_audit/validation_result.json"
+    },
+    "D1": {
+      "gate": "PASS_WITH_LIMITATIONS",
+      "ok": true,
+      "schema_version": "D1.1",
+      "validation_path": "datasets/mmwave/manifests/M-PV0_D1_2417ghz_adapter/validation_result.json"
+    },
+    "I1": {
+      "gate": "PASS_WITH_LIMITATIONS",
+      "ok": true,
+      "schema_version": "I1.1",
+      "validation_path": "datasets/mmwave/manifests/M-PV0_I1_runtime_io_contract/validation_result.json"
+    },
+    "M-PV0": {
+      "gate": "PASS_WITH_LIMITATIONS",
+      "ok": true,
+      "schema_version": "M-PV0.1",
+      "validation_path": "datasets/mmwave/manifests/M-PV0_public_multidomain_registry/validation_result.json"
+    },
+    "Q2": {
+      "gate": "PASS_WITH_LIMITATIONS",
+      "ok": true,
+      "schema_version": "Q2.1",
+      "validation_path": "datasets/mmwave/manifests/M-PV0_Q2_input_unavailable_contract/validation_result.json"
+    },
+    "R1": {
+      "gate": "PASS_WITH_LIMITATIONS",
+      "ok": true,
+      "schema_version": "R1.1",
+      "validation_path": "datasets/mmwave/manifests/M-PV0_R1_sensor_independent_trace/validation_result.json"
+    },
+    "R2": {
+      "gate": "PASS_WITH_LIMITATIONS",
+      "ok": true,
+      "schema_version": "R2.1",
+      "validation_path": "datasets/mmwave/manifests/M-PV0_R2_spectral_autocorr_features/validation_result.json"
+    },
+    "R3": {
+      "gate": "PASS_WITH_LIMITATIONS",
+      "ok": true,
+      "schema_version": "R3.1",
+      "validation_path": "datasets/mmwave/manifests/M-PV0_R3_breathing_rr_temporal_hold/validation_result.json"
+    }
+  },
+  "m_pv0_registry_id": "MMWAVE_M_PV0_PUBLIC_MULTIDOMAIN_REGISTRY_V1",
+  "m_pv1_scope": "CONTRACT_FREEZE_ONLY_NO_TRAINING_NO_SELECTION"
+}

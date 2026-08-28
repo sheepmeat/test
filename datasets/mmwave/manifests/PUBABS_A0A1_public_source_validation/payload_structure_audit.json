@@ -1,0 +1,106 @@
+{
+  "schema_version": "PUBABS-A0A1-PAYLOAD-STRUCTURE-V1",
+  "phase": "PUBABS-A0A1",
+  "date": "2026-08-26",
+  "inspection_workdir": "/tmp/pubabs-a0a1-payload (NOT committed)",
+  "full_payloads_downloaded": false,
+  "sources": [
+    {
+      "candidate_id": "C1",
+      "structure_status": "VERIFIED_VIA_ZIP_CD_AND_CSV_PREFIX",
+      "full_data_zip_downloaded": false,
+      "data_zip_size_bytes": 3372690765,
+      "central_directory_entries": 77,
+      "depth2_folders": [
+        "Data/Empty_space",
+        "Data/N1",
+        "Data/N2",
+        "Data/N3",
+        "Data/N4",
+        "Data/N5",
+        "Data/N6"
+      ],
+      "cnn_model_zip_fully_opened_bytes": 86048,
+      "cnn_model_contents": [
+        "CNN_Model_Description.txt",
+        "CNN_Model_Architecture.png"
+      ],
+      "csv_member_inspected": "Data/Empty_space/0/plot_data.csv",
+      "csv_prefix_bytes_opened": 524288,
+      "csv_schema": "timestamp_ns + quoted complex range-bin vector",
+      "complex_bins": 180,
+      "implied_native_hz": 18.859253803766077,
+      "empty_space_session_uncomp_bytes_example": 138943697,
+      "empty_space_duration_est_sec": 899.7174637212631,
+      "presence_session_duration_est_sec": 179.44324654726316,
+      "sessions_ge_30s": true,
+      "downsample_to_10Hz_structural": true,
+      "bytes_opened_summary": {
+        "zenodo_api_json": "~6.7KB",
+        "data_zip_range_head": 65536,
+        "data_zip_range_tail_eocd": 262144,
+        "data_zip_central_directory": 7823,
+        "csv_prefixes_empty_and_presence": 1048576,
+        "cnn_model_zip_full": 86048
+      }
+    },
+    {
+      "candidate_id": "C2",
+      "structure_status": "VERIFIED_VIA_ZIP_CD_AND_FULL_ABSENT_CSV_OPEN",
+      "full_signs_zip_downloaded": false,
+      "signs_zip_size_bytes": 909848602,
+      "central_directory_entries": 809,
+      "depth2_classes": {
+        "Human Presence": 780,
+        "No human Presence": 28
+      },
+      "absent_csv_opened": "No human Presence/No Movement/Abs/clean amplitude_NoPresence Out 15mins4.csv",
+      "absent_csv_bytes_opened": 10047573,
+      "absent_csv_shape": {
+        "rows": 8818,
+        "cols": 109,
+        "dtype": "float64"
+      },
+      "metadata_sampling_rate_hz": 17,
+      "filename_duration_hint": "15mins",
+      "bytes_opened_summary": {
+        "zenodo_api_json": "~6.0KB",
+        "signs_zip_range_head": 65536,
+        "signs_zip_range_tail_eocd": 262144,
+        "signs_zip_central_directory": 172655,
+        "absent_amplitude_csv_full_member": 10047573
+      }
+    },
+    {
+      "candidate_id": "C3",
+      "structure_status": "API_METADATA_ONLY_FULL_PAYLOAD_REQUIRED",
+      "full_payload_downloaded": false,
+      "presence_zip_size_bytes": 2067257840,
+      "absence_zip_size_bytes": 2068567443,
+      "metadata_sessions": {
+        "presence": 141,
+        "absence": 127,
+        "session_duration_sec": 150
+      },
+      "internal_zip_listing": "NOT_ATTEMPTED",
+      "structure_gate": "FULL_PAYLOAD_REQUIRED",
+      "bytes_opened_summary": {
+        "zenodo_api_json": "~9.3KB"
+      }
+    },
+    {
+      "candidate_id": "C4",
+      "structure_status": "BACKGROUND_ZIP_CD_ONLY",
+      "background_zip_size_bytes": 480078487,
+      "central_directory_entries": 1,
+      "sole_member": "Background/adc_Data.mat",
+      "mat_payload_opened": false,
+      "companion_paper_pdf_bytes_opened": 2691249,
+      "bytes_opened_summary": {
+        "zenodo_api_json": "~6.6KB",
+        "background_zip_cd": 69,
+        "companion_paper_electronics_09_00588_pdf": 2691249
+      }
+    }
+  ]
+}

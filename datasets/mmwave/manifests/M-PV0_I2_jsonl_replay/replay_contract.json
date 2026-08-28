@@ -1,0 +1,45 @@
+{
+  "audit_date": "2026-08-23",
+  "base_sha": "38ff2466280125bb7cdd073e163348fe4a9e9ec8",
+  "contract_id": "MMWAVE_V2_I2_HISTORICAL_JSONL_REPLAY_CONTRACT_V1",
+  "d2_used": false,
+  "harness_id": "MMWAVE_V2_I2_REPLAY_HARNESS_V1",
+  "i1_dependency": {
+    "handoff_commit": "83c8045755f37bcb7bb72ab87aa56506f8603bb8",
+    "input": "MMWAVE_V2_I1_RUNTIME_INPUT_CONTRACT_V1",
+    "merged_on_main_squash": "38ff2466280125bb7cdd073e163348fe4a9e9ec8",
+    "output": "MMWAVE_V2_I1_RUNTIME_OUTPUT_CONTRACT_V1",
+    "provenance": "MMWAVE_V2_I1_PROVENANCE_CONTRACT_V1",
+    "replay_skeleton": "MMWAVE_V2_I1_REPLAY_INTERFACE_SKELETON_V1",
+    "semantic": "MMWAVE_V2_I1_RUNTIME_SEMANTIC_CONTRACT_V1"
+  },
+  "i3_regression_gate_performed": false,
+  "model_inference": false,
+  "model_training": false,
+  "mr60_supervised_use": false,
+  "phase": "I2",
+  "q1_profile_retuned": false,
+  "q2_thresholds_redefined": false,
+  "q3_false_positive_gate_performed": false,
+  "replay_modes": [
+    "AS_RECORDED",
+    "FAST",
+    "SCALED"
+  ],
+  "result_schema_id": "MMWAVE_V2_I2_REPLAY_RESULT_SCHEMA_V1",
+  "schema_compatibility_registry_id": "MMWAVE_V2_I2_SCHEMA_COMPATIBILITY_REGISTRY_V1",
+  "schema_version": "I2.1",
+  "session_unit": "one physical/logical JSONL session; no concatenation",
+  "source_classes": [
+    "PHYSICAL_MR60_JSONL",
+    "SYNTHETIC_Q1_Q2_FIXTURE",
+    "PUBLIC_OFFLINE_FIXTURE"
+  ],
+  "virtual_clock": {
+    "as_recorded": "virtual_time = evidence_ts - session_t0",
+    "evidence_timestamps_modified": false,
+    "fast": "schedule by event index; evidence timestamps unchanged",
+    "realtime_sleep_required_for_validation": false,
+    "scaled": "scale affects scheduling deltas only"
+  }
+}

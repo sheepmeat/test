@@ -1,0 +1,43 @@
+{
+  "schema_version": "GOV-MMV-01-INDEPENDENT-PR-REVIEW-V1",
+  "gate_id": "GOV-MMV-01",
+  "role": "Independent PR review gate (Grok)",
+  "date": "2026-08-26",
+  "decision": "PASS",
+  "blocking_findings": [],
+  "pr_number": 156,
+  "pr_title": "docs(mmwave): reconcile current-state pointer after M-PV3.8 freeze",
+  "base_sha": "45a16bca4421b361be3e7118b82cb1b26f207b01",
+  "head_sha": "6ce4d956a969dee1f2f2a54e3501fa47c480f564",
+  "files_changed": [
+    "AGENTS.md",
+    "docs/README.md"
+  ],
+  "checklist": {
+    "gov_mmv_01_implementation": "PASS",
+    "scope_contamination": "NONE",
+    "contract_manifest_edits": "NONE",
+    "model_evaluation_edits": "NONE",
+    "stale_m_n0_routing": "CORRECTED",
+    "current_freeze_pointer": "PRESENT",
+    "pv4_pv3x_order": "ORDER_UNRESOLVED"
+  },
+  "merge_authorized_by_this_review": false,
+  "merge_of_pr_156": "HOLD_UNTIL_ORCHESTRATION_DONE",
+  "authorizations": {
+    "merge_pr_156": false,
+    "capture": false,
+    "membership": false,
+    "evaluation": false,
+    "m_pv4": false,
+    "d2": false
+  },
+  "report": "docs/mmwave/20260826_SafeNest_mmWave_GOV_MMV_01_Independent_PR_Review_01.md",
+  "checksums": {
+    "algorithm": "sha256",
+    "files": {
+      "docs/mmwave/20260826_SafeNest_mmWave_GOV_MMV_01_Independent_PR_Review_01.md": "79845cd512ee8ecf8eac0d7337976c35f45baeea39ef07ffdffccae37f518737"
+    },
+    "sidecar": "datasets/mmwave/manifests/GOV_MMV_01_independent_pr_review/checksums.json"
+  }
+}

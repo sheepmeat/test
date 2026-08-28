@@ -1,0 +1,26 @@
+{
+  "schema_version": "PUBABS-A7-THRESHOLD-REGISTRY-V1",
+  "policy": "USE_FROZEN_THRESHOLD_ONLY",
+  "c1_tuning": "FORBIDDEN",
+  "c1_calibration_fit": "FORBIDDEN",
+  "frozen_thresholds": {
+    "breathing_decision": {
+      "value": 0.5,
+      "applies_to": "sigmoid(breathing_logit)",
+      "source": "datasets/mmwave/manifests/M-PV2_candidate_training/contract_snapshot.json fixed_breathing_threshold",
+      "c1_retune": "FORBIDDEN"
+    },
+    "quality_historical_diagnostic": {
+      "value": 0.5,
+      "applies_to": "sigmoid(quality_logit)",
+      "c1_scoring": "UNSCORED",
+      "c1_retune": "FORBIDDEN"
+    }
+  },
+  "non_thresholds": {
+    "external_stress_safety_pass_fail": "NONE_CANONICAL",
+    "m_pv3_utility_guards": "PRESERVED_FOR_HISTORICAL_D1_ROLE_L_ONLY_NOT_APPLICABLE_TO_C1",
+    "m_pv38_selection_gates": "NOT_APPLICABLE_TO_C1"
+  },
+  "interpretation": "DESCRIPTIVE_ONLY"
+}

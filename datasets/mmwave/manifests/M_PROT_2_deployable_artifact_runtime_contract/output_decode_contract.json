@@ -1,0 +1,35 @@
+{
+  "schema_version": "M-PROT-2-B23-OUTPUT-V1",
+  "contract_version": "M-PROT-2-B23-OUTPUT-V1",
+  "heads": {
+    "breathing": {
+      "decode": "sigmoid(breathing_logit)",
+      "prototype_threshold": 0.5,
+      "threshold_class": "PROTOTYPE_THRESHOLD",
+      "present": "probability >= 0.5",
+      "absent": "probability < 0.5",
+      "absent_means": "no-human / no-presence from this contract",
+      "absent_is_not_apnea": true,
+      "retuned": false
+    },
+    "rr": {
+      "decode": "rr_bpm = rr_raw * 8.948729232744911 + 17.12899193548387",
+      "retuned": false,
+      "nonfinite": "UNAVAILABLE_INVALID_DECODE",
+      "less_or_equal_zero": "UNAVAILABLE_INVALID_DECODE",
+      "clamp_to_zero_or_one_or_min_plausible": "FORBIDDEN",
+      "upper_physiological_cutoff": "NONE_CANONICAL"
+    },
+    "quality": {
+      "decode": "sigmoid(quality_logit)",
+      "prototype_threshold": 0.5,
+      "threshold_class": "PROTOTYPE_QUALITY_THRESHOLD",
+      "not": [
+        "safety validated",
+        "device validated",
+        "clinical threshold"
+      ],
+      "retuned": false
+    }
+  }
+}

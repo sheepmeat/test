@@ -1,0 +1,22 @@
+{
+  "all_authorized_families_and_seeds_present": true,
+  "candidate_count": 9,
+  "d2_semantic_use": false,
+  "final_selection": false,
+  "gate": "PASS_WITH_LIMITATIONS",
+  "limitations": [
+    "D0 TRAIN is observe-only for aggregate metrics because frozen M-PV1 membership has no D0 VAL rows.",
+    "Family A is intentionally RR/quality-only.",
+    "D1 has no model-ready ABSENT class.",
+    "No calibration, quantization, or deployment was performed."
+  ],
+  "m_pv2_ready_for_m_pv3": true,
+  "mr60_supervised_use": false,
+  "ok": true,
+  "phase": "M-PV2",
+  "primary_run_count": 9,
+  "q2_fail_closed_evaluated": true,
+  "schema_version": "M-PV2.1",
+  "selected_float_model": false,
+  "temporal_event_f1": "DEFERRED_TO_M_PV3_OR_LATER"
+}

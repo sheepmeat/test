@@ -1,0 +1,20 @@
+{
+  "schema_version": "PUBABS-A3-CHECKSUMS-V1",
+  "status": "COMPLETE",
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/role_l_representation_contract_recovery.json": "6d710f9a4142369480f46783a3eccc4c4376446e4bcd4b29edf501391ae2703f",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/c1_adapter_contract.json": "39237500e342f32643876609cc4afcd8cfc651d19503aade923c24df51d22dde",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/c1_range_extraction_rationale.json": "ad5512a6a90b4baaa05efe72b38a102d97a801d315cdeab24bdbd69578594bf1",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/c1_resampling_contract.json": "762a90d82a205a246d0542002e50446a17721e6d4bf24ce449d7315f62de92bf",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/c1_windowing_contract.json": "009254675facde6e8246e0a753cfd0e5bd91cbde87148fd0a6026c58cbb3625f",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/c1_preprocessing_compatibility.json": "c3e6d556a79422553df09b08eecca3696fc0546cca59858f6d22c900bb36068b",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/c1_structural_validation.json": "d03988f5a9ee8623b3697f9068deb8c96e4936dde5d58df693fa35effd13ece7",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/c1_determinism_receipt.json": "1366469e1a4db0c663a997b3751dff77b39cf3534e4830194d1a87caa2db4d6e",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/cross_domain_compatibility.json": "df9ac7c786b8e120d7d489a6d56b91c7bca17951dab41265483e501a8446b2c7",
+    "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/validation_result.json": "aeb4a0e366b1c6d391bfbb02280895d6b446b016e0a1e01aae435bc2c1944678",
+    "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A3_C1_Canonical_Conversion_Feasibility_01.md": "846bb3bbf5698cb11c42b49af76456e32286efd444afb4c186f741937f011dba",
+    "scripts/mmwave/pubabs_a3_c1_r1_compatibility_probe.py": "f36e2e2e60cc4d9875de797df29ddff079e36a98d0ad6de5204e63488fe48b3a",
+    "tests/test_mmwave_pubabs_a3_c1_canonical_feasibility.py": "20723b7ee716cff72992711ec205306de87ea93ce3fe60d3cd58ce20acb01b4f"
+  }
+}

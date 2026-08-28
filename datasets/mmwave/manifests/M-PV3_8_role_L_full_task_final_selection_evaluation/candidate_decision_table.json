@@ -1,0 +1,83 @@
+{
+  "candidate_count": 6,
+  "candidate_output_accessed": false,
+  "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+  "role_id": "ROLE_L_FULL_TASK",
+  "rows": [
+    {
+      "breathing": null,
+      "candidate_key": "Family_B_seed_11",
+      "candidate_output_accessed": false,
+      "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+      "evaluation_status": "NOT_EVALUATED",
+      "family": "Family_B",
+      "rr": null,
+      "safety": null,
+      "seed": 11,
+      "stability": null
+    },
+    {
+      "breathing": null,
+      "candidate_key": "Family_B_seed_23",
+      "candidate_output_accessed": false,
+      "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+      "evaluation_status": "NOT_EVALUATED",
+      "family": "Family_B",
+      "rr": null,
+      "safety": null,
+      "seed": 23,
+      "stability": null
+    },
+    {
+      "breathing": null,
+      "candidate_key": "Family_B_seed_47",
+      "candidate_output_accessed": false,
+      "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+      "evaluation_status": "NOT_EVALUATED",
+      "family": "Family_B",
+      "rr": null,
+      "safety": null,
+      "seed": 47,
+      "stability": null
+    },
+    {
+      "breathing": null,
+      "candidate_key": "Family_C_seed_11",
+      "candidate_output_accessed": false,
+      "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+      "evaluation_status": "NOT_EVALUATED",
+      "family": "Family_C",
+      "rr": null,
+      "safety": null,
+      "seed": 11,
+      "stability": null
+    },
+    {
+      "breathing": null,
+      "candidate_key": "Family_C_seed_23",
+      "candidate_output_accessed": false,
+      "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+      "evaluation_status": "NOT_EVALUATED",
+      "family": "Family_C",
+      "rr": null,
+      "safety": null,
+      "seed": 23,
+      "stability": null
+    },
+    {
+      "breathing": null,
+      "candidate_key": "Family_C_seed_47",
+      "candidate_output_accessed": false,
+      "decision": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+      "evaluation_status": "NOT_EVALUATED",
+      "family": "Family_C",
+      "rr": null,
+      "safety": null,
+      "seed": 47,
+      "stability": null
+    }
+  ],
+  "schema_version": "M-PV3.8.1_ROLE_L_FULL_TASK_FINAL_SELECTION",
+  "selected_candidate": null,
+  "selection_result": "BLOCKED_INVALID_FINAL_MEMBERSHIP"
+}

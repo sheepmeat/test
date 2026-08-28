@@ -1,0 +1,335 @@
+{
+  "candidates": [
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_b/seed_11",
+      "family": "family_b",
+      "frozen_guard_comparison": {
+        "brier": 0.09854056768808094,
+        "present_recall": 1.0,
+        "rr_mae_bpm": 4.564752260843913,
+        "selection_use": false,
+        "thresholds_modified": false,
+        "within_2_bpm": 0.3333333333333333,
+        "within_4_bpm": 0.631578947368421,
+        "within_6_bpm": 0.7719298245614035
+      },
+      "metrics": {
+        "MAE_bpm": 4.564752260843913,
+        "RMSE_bpm": 7.03833466506959,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.794027328491211,
+        "prediction_range_bpm": {
+          "max": 47.368377685546875,
+          "min": 9.825277328491211
+        },
+        "status": "DEFINED",
+        "target": "continuous_rr_bpm",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.3333333333333333,
+        "within_4_bpm": 0.631578947368421,
+        "within_6_bpm": 0.7719298245614035
+      },
+      "seed": 11,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_b/seed_23",
+      "family": "family_b",
+      "frozen_guard_comparison": {
+        "brier": 0.0064572784995837705,
+        "present_recall": 1.0,
+        "rr_mae_bpm": 4.1938734389188,
+        "selection_use": false,
+        "thresholds_modified": false,
+        "within_2_bpm": 0.49122807017543857,
+        "within_4_bpm": 0.6666666666666666,
+        "within_6_bpm": 0.7017543859649122
+      },
+      "metrics": {
+        "MAE_bpm": 4.1938734389188,
+        "RMSE_bpm": 6.276408275163277,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.0810203552246094,
+        "prediction_range_bpm": {
+          "max": 39.06822204589844,
+          "min": -0.3417701721191406
+        },
+        "status": "DEFINED",
+        "target": "continuous_rr_bpm",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.49122807017543857,
+        "within_4_bpm": 0.6666666666666666,
+        "within_6_bpm": 0.7017543859649122
+      },
+      "seed": 23,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_b/seed_47",
+      "family": "family_b",
+      "frozen_guard_comparison": {
+        "brier": 0.025080918907178347,
+        "present_recall": 0.9824561403508771,
+        "rr_mae_bpm": 4.900417813083582,
+        "selection_use": false,
+        "thresholds_modified": false,
+        "within_2_bpm": 0.45614035087719296,
+        "within_4_bpm": 0.6491228070175439,
+        "within_6_bpm": 0.7368421052631579
+      },
+      "metrics": {
+        "MAE_bpm": 4.900417813083582,
+        "RMSE_bpm": 7.830777919443116,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.3080272674560547,
+        "prediction_range_bpm": {
+          "max": 37.28302764892578,
+          "min": -11.513181686401367
+        },
+        "status": "DEFINED",
+        "target": "continuous_rr_bpm",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.45614035087719296,
+        "within_4_bpm": 0.6491228070175439,
+        "within_6_bpm": 0.7368421052631579
+      },
+      "seed": 47,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_c/seed_11",
+      "family": "family_c",
+      "frozen_guard_comparison": {
+        "brier": 0.02115794692809779,
+        "present_recall": 0.9824561403508771,
+        "rr_mae_bpm": 4.539816287525913,
+        "selection_use": false,
+        "thresholds_modified": false,
+        "within_2_bpm": 0.3333333333333333,
+        "within_4_bpm": 0.631578947368421,
+        "within_6_bpm": 0.7894736842105263
+      },
+      "metrics": {
+        "MAE_bpm": 4.539816287525913,
+        "RMSE_bpm": 6.433115257698816,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 3.1881542205810547,
+        "prediction_range_bpm": {
+          "max": 35.0087776184082,
+          "min": 5.076687812805176
+        },
+        "status": "DEFINED",
+        "target": "continuous_rr_bpm",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.3333333333333333,
+        "within_4_bpm": 0.631578947368421,
+        "within_6_bpm": 0.7894736842105263
+      },
+      "seed": 11,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_c/seed_23",
+      "family": "family_c",
+      "frozen_guard_comparison": {
+        "brier": 0.01791962580955174,
+        "present_recall": 0.9824561403508771,
+        "rr_mae_bpm": 4.541094194378769,
+        "selection_use": false,
+        "thresholds_modified": false,
+        "within_2_bpm": 0.3684210526315789,
+        "within_4_bpm": 0.631578947368421,
+        "within_6_bpm": 0.8070175438596491
+      },
+      "metrics": {
+        "MAE_bpm": 4.541094194378769,
+        "RMSE_bpm": 6.4600821452910795,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.894702911376953,
+        "prediction_range_bpm": {
+          "max": 34.00602722167969,
+          "min": -2.7044448852539062
+        },
+        "status": "DEFINED",
+        "target": "continuous_rr_bpm",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.3684210526315789,
+        "within_4_bpm": 0.631578947368421,
+        "within_6_bpm": 0.8070175438596491
+      },
+      "seed": 23,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    },
+    {
+      "baseline_consistency": {
+        "differences": {
+          "breathing.Brier": 0.0,
+          "breathing.F1": 0.0,
+          "breathing.precision": 0.0,
+          "breathing.recall": 0.0,
+          "rr.MAE_bpm": 0.0,
+          "rr.median_absolute_error_bpm": 0.0,
+          "rr.within_2_bpm": 0.0,
+          "rr.within_4_bpm": 0.0,
+          "rr.within_6_bpm": 0.0
+        },
+        "max_abs_difference": 0.0,
+        "source": "datasets/mmwave/manifests/M-PV3_candidate_selection/candidate_metrics_audit.json",
+        "status": "PASS",
+        "tolerance": 1e-06
+      },
+      "candidate_key": "family_c/seed_47",
+      "family": "family_c",
+      "frozen_guard_comparison": {
+        "brier": 0.0012677252259954447,
+        "present_recall": 1.0,
+        "rr_mae_bpm": 4.460836209748921,
+        "selection_use": false,
+        "thresholds_modified": false,
+        "within_2_bpm": 0.45614035087719296,
+        "within_4_bpm": 0.6491228070175439,
+        "within_6_bpm": 0.7368421052631579
+      },
+      "metrics": {
+        "MAE_bpm": 4.460836209748921,
+        "RMSE_bpm": 6.761024104687144,
+        "eligible_count": 57,
+        "median_absolute_error_bpm": 2.3799400329589844,
+        "prediction_range_bpm": {
+          "max": 38.126380920410156,
+          "min": 8.32497787475586
+        },
+        "status": "DEFINED",
+        "target": "continuous_rr_bpm",
+        "target_range_bpm": {
+          "max": 37.5,
+          "min": 7.03125
+        },
+        "within_2_bpm": 0.45614035087719296,
+        "within_4_bpm": 0.6491228070175439,
+        "within_6_bpm": 0.7368421052631579
+      },
+      "seed": 47,
+      "selection_use": false,
+      "validation_group": "D1_DEV_VAL"
+    }
+  ],
+  "class": "B",
+  "frozen_guards": {
+    "brier_max": 0.05,
+    "present_recall_min": 0.95,
+    "rr_mae_bpm_max": 5.0,
+    "rr_within_2_bpm_min": 0.4,
+    "rr_within_4_bpm_min": 0.6,
+    "rr_within_6_bpm_min": 0.75
+  },
+  "role_id": "ROLE_L_FULL_TASK",
+  "selection_use": false,
+  "target": "continuous_rr_bpm",
+  "validation_group": "D1_DEV_VAL"
+}

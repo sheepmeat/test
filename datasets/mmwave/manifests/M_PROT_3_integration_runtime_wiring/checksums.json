@@ -1,0 +1,12 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/integration_repo_readonly_audit.json": "4cd2822f6ca9d81203d38a934732d9591ab23e04921fcb58b4ee03d0720881ae",
+    "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/integration_runtime_contract.json": "d8e1579414b36db39cb4ef35d033f22485211836c7c2144b2b9f8f26f85c2c8b",
+    "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/known_limitations.json": "ae3306b13bb5d1e9f3112bbd7a98345bf59fa0e76ad4aa94d28149d2fa418dd0",
+    "datasets/mmwave/manifests/M_PROT_3_integration_runtime_wiring/validation_result.json": "af5cb4dd32323800b7de137ece32f3c4218befd6f109235cbb61964a2ee4859c",
+    "adapters/mmwave_m_prot_3_integration_runtime.py": "1a7aead00a1c79850d6739ad7a18c33621b51fd9d668e96b25d5912685daca9c",
+    "tests/test_mmwave_m_prot_3_integration_runtime.py": "15553a483fb53597816e6d52454c609be11b7bbb2413ddf215d6e5fdb9332cbd",
+    "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_3_Integration_Runtime_Wiring_01.md": "3aee8f57eb3810e8a8b45f0060c91c38823c3e947908a0aaf7a46ccdf1828e97"
+  }
+}

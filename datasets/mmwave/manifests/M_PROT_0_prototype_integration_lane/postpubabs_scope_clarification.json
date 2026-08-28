@@ -1,0 +1,12 @@
+{
+  "schema_version": "M-PROT-0-POSTPUBABS-SCOPE-CLARIFICATION-V1",
+  "references": [
+    "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/critical_path_state.json",
+    "datasets/mmwave/manifests/MMWAVE_V2_post_pubabs_critical_path/next_action_decision.json"
+  ],
+  "historical_MODEL_READY_WORK": "NO",
+  "clarified_as": "FINAL_SELECTION_MODEL_WORK=BLOCKED",
+  "owner_authorized_addition": "PROTOTYPE_INTEGRATION_MODEL_WORK=READY",
+  "physical_d1_resource_recovery": "REMAINS_VALID_PARALLEL_TRACK_F_SUPPORT",
+  "note": "Post-PUBABS primary recommendation for unblocking Track F remains physical D1 ABSENT resource recovery; Track P may proceed in parallel under M-PROT."
+}

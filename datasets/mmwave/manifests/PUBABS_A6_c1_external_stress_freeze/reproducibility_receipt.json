@@ -1,0 +1,13 @@
+{
+  "schema_version": "PUBABS-A6-REPRODUCIBILITY-RECEIPT-V1",
+  "builds": 2,
+  "identical_session_ordering": true,
+  "identical_session_ids": true,
+  "identical_membership_flags": true,
+  "identical_fail_codes": true,
+  "identical_tensor_hashes": true,
+  "identical_manifest_sha256": true,
+  "layer1_manifest_sha256": "cefc7a3820ebb644a9553b3eaad9f4ec600ea555bc25ed891f236cc50c6632f5",
+  "layer2_manifest_sha256": "01a1db3ef56e1071896f054a5baad397035ca6d989f42f2d1129d250b6867c7c",
+  "contract_sha256": "d0353c9bf7837a2520364903b53075bde44cddf10b88c3fef58aa4054bbb3310"
+}

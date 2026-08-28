@@ -1,0 +1,14 @@
+{
+  "schema_version": "PUBABS-A3R-IMPLEMENTATION-IDENTITY-V1",
+  "adapter_module": "adapters/mmwave_pubabs_c1_frozen_adapter.py",
+  "batch_script": "scripts/mmwave/pubabs_a3r_run_all_sessions.py",
+  "tests": "tests/test_mmwave_pubabs_a3r_c1_frozen_adapter.py",
+  "timestamp_contract": "R1T_MEASURED_TIMESTAMP_10HZ_V1",
+  "range_contract": "C1_ROI_EXCLUDE_NEARFIELD28_DYNENERGY_UNWRAP_V1",
+  "range_policy": "RG-S1",
+  "api_accepts_class_label": false,
+  "model_inference": "NOT_EXECUTED",
+  "train_scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+  "train_trace_mean": 0.5681105335535223,
+  "train_trace_std": 10.976509586515288
+}

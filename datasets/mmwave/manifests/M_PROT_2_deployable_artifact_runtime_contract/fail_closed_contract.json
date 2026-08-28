@@ -1,0 +1,41 @@
+{
+  "schema_version": "M-PROT-2-B23-FAIL-CLOSED-V1",
+  "contract_version": "M-PROT-2-B23-FAIL-CLOSED-V1",
+  "precedence": [
+    "PRESENCE",
+    "QUALITY_OR_AVAILABILITY",
+    "PHYSIOLOGY"
+  ],
+  "stages": {
+    "stage_0_admissibility": "reject invalid/non-finite/incomplete inputs before model preprocess",
+    "stage_1_canonical_preprocess": "TRAIN scaler once on accepted finite descriptors only"
+  },
+  "rules": [
+    "invalid window/preprocess/SHA -> no physiology, no PRESENT/ABSENT/APNEA",
+    "presence unavailable -> no physiology",
+    "breathing ABSENT -> no RR; ABSENT is not apnea",
+    "quality < 0.5 or availability fail -> suppress RR",
+    "invalid RR decode -> RR unavailable",
+    "only PRESENT + valid quality + valid RR decode may emit RR",
+    "alternate/mutated model cannot emit canonical B23 receipt",
+    "alternate/mutated scaler cannot emit canonical scaler receipt"
+  ],
+  "must_fail_closed": [
+    "fewer than 300 samples",
+    "wrong assembled dimension",
+    "wrong dtype if not safely convertible",
+    "non-finite before Stage 1",
+    "invalid/missing scaler",
+    "wrong scaler checksum",
+    "wrong model checksum / parameter SHA",
+    "missing trace mask",
+    "malformed scale vector",
+    "malformed quality vector",
+    "artifact missing",
+    "forbidden lineage_class promotion"
+  ],
+  "no_fallback_model": true,
+  "no_synthetic_physiology_fill": true,
+  "identity_verification_required_before_canonical_receipt": true,
+  "implementation": "adapters/mmwave_m_prot_2_b23_runtime.py"
+}

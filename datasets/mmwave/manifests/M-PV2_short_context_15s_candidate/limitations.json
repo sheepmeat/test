@@ -1,0 +1,55 @@
+{
+  "claims_not_permitted": [
+    "15 seconds replaces the existing 30-second M-PV2 contract",
+    "15 seconds is better than 30 seconds",
+    "30 seconds is better than 15 seconds",
+    "clinical apnea detection",
+    "MR60 supervised physiology performance",
+    "Raspberry Pi performance"
+  ],
+  "gate": "PASS_WITH_LIMITATIONS",
+  "identity": "MMWAVE_V2_M_PV2_SHORT_CONTEXT_15S_LIMITATIONS_V1",
+  "limitations": [
+    {
+      "code": "D0_TRAIN_OBSERVE_ONLY",
+      "detail": "D0 VAL and D0_SUBJECT_HELDOUT were not used; D0 accuracy is not held-out evidence.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "D1_ABSENT_CLASS_UNAVAILABLE",
+      "detail": "D1_DEV_VAL contains PRESENT and AMBIGUOUS rows but no supervised ABSENT rows; D1 absent recall and macro F1 are undefined.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "AMBIGUOUS_MASKED",
+      "detail": "AMBIGUOUS rows remain provenance/transition evidence and are not converted into a pure class.",
+      "severity": "INVARIANT"
+    },
+    {
+      "code": "SYNTHETIC_AVAILABILITY_ONLY",
+      "detail": "Gap/freeze/stale recovery is a Q2 quality-only synthetic timing diagnostic, not real MR60 or Pi measurement.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "NO_RR_LEARNING",
+      "detail": "RR is metadata-only because a 15-second context may contain too few cycles at low rates.",
+      "severity": "INVARIANT"
+    },
+    {
+      "code": "NO_TEMPORAL_HOLD",
+      "detail": "Temporal hold/history is excluded from this candidate.",
+      "severity": "INVARIANT"
+    },
+    {
+      "code": "NO_DEPLOYMENT_VALIDATION",
+      "detail": "No INT8/TFLite conversion, Raspberry Pi latency, or real-sensor validation was performed.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "PROXY_NOT_CLINICAL",
+      "detail": "Inherited A4 reference semantics are SafeNest breathing proxies and are not clinical apnea.",
+      "severity": "INVARIANT"
+    }
+  ],
+  "next_gate": "M-PV3_OR_LATER_SELECTION_AND_RUNTIME_EVALUATION"
+}

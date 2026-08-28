@@ -1,0 +1,36 @@
+{
+  "adapted_recording_count": 265,
+  "blocked_recording_count": 0,
+  "checksum_verified": true,
+  "common_rate_hz": 10.0,
+  "condition_labels_remain_provenance": true,
+  "limitations": [
+    "respiration native units remain unverified",
+    "source payload has no per-sample timestamps; sample index/Fs is used",
+    "D1 source protocol strings do not define SafeNest hold onset/offset",
+    "reference-side weak periodicity is AMBIGUOUS, never physiological ABSENT"
+  ],
+  "minimum_signal_duration_s": 30.0,
+  "model_ready_context_count": 244,
+  "native_rates_hz": [
+    500.0,
+    2000.0
+  ],
+  "payload_doi": "10.6084/m9.figshare.9691544.v1",
+  "payload_md5": "801c13ae6daef54584ee4ba8fbabed19",
+  "payload_path": "datasets/raw_archives/external_datasets/d1_2417ghz/datasets_scidata_vsmdb.zip",
+  "payload_sha256": "3869fb70a3dda0d810d97594399789e76d9c9e59627515c20170b83e3d915836",
+  "payload_size_bytes": 583572264,
+  "payload_source": "https://ndownloader.figshare.com/files/17357702",
+  "raw_waveforms_committed": false,
+  "recording_count": 265,
+  "reference_alignment": "same source sample index and per-recording Fs as radar_I/radar_Q",
+  "reference_channel": "respiration",
+  "reference_method": "D1_RESPIRATION_WELCH_PERIODICITY_V1",
+  "short_recording_audit_only_count": 21,
+  "source_apnea_term_used_as_target": false,
+  "status": "MATERIALIZED_COMPACT_REFERENCE_TARGETS",
+  "temporal_hold_supervision": "UNAVAILABLE",
+  "waveforms_accessed": true,
+  "waveforms_persisted": false
+}

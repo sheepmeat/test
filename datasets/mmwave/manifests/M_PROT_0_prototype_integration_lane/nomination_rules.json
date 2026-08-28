@@ -1,0 +1,57 @@
+{
+  "schema_version": "M-PROT-0-NOMINATION-RULES-V1",
+  "goal": "Choose a technically coherent provisional integration baseline — not prove the globally best final candidate.",
+  "vocabulary_allowed": [
+    "PROTOTYPE_NOMINATED",
+    "INTEGRATION_BASELINE",
+    "PROVISIONAL"
+  ],
+  "vocabulary_forbidden": [
+    "WINNER",
+    "FINAL_SELECTED",
+    "M_PV3_8_PASSED",
+    "BEST_SEED",
+    "DEPLOYMENT_READY"
+  ],
+  "requires_d1_final_test": false,
+  "eligible_panel_minimum": {
+    "role": "ROLE_L_FULL_TASK",
+    "members": [
+      "B11",
+      "B23",
+      "B47",
+      "C11",
+      "C23",
+      "C47"
+    ],
+    "source_evidence": [
+      "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json",
+      "datasets/mmwave/manifests/M-PV3_6_role_L_full_task_evaluation/role_l_full_task_evaluation_manifest.json",
+      "datasets/mmwave/manifests/PUBABS_A7_c1_external_stress_inference_contract/candidate_panel_contract.json"
+    ]
+  },
+  "may_also_consider_if_canonical": [
+    "other existing deployable mmWave artifacts with complete lineage in repository manifests"
+  ],
+  "comparison_dimensions_for_M_PROT_1": [
+    "offline_validation_behavior",
+    "architecture_stability_across_seeds",
+    "artifact_completeness_sha_path",
+    "input_contract_clarity",
+    "runtime_feasibility_pytorch_float32_first",
+    "determinism_receipts",
+    "resource_footprint",
+    "available_conversion_or_packaging_path"
+  ],
+  "must_not_use_as_decision": [
+    "C1_A8_external_stress_ranking",
+    "D1_final_test_results",
+    "live_debug_sessions_as_final_score"
+  ],
+  "output_of_M_PROT_1": {
+    "one_provisional_baseline": true,
+    "ranking_table_optional_descriptive_only": true,
+    "winner_language": "FORBIDDEN",
+    "this_roadmap_phase_selects_candidate": false
+  }
+}

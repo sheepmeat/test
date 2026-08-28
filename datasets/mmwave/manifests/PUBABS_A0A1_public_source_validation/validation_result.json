@@ -1,0 +1,43 @@
+{
+  "schema_version": "PUBABS-A0A1-VALIDATION-RESULT-V1",
+  "phase": "PUBABS-A0A1",
+  "mode": "SOURCE_VALIDATION_ONLY",
+  "date": "2026-08-26",
+  "base_sha": "d89a0c598eebce488d98cfadfac00f9aa68e0348",
+  "overall_verdict": "PASS_STRONG_PUBLIC_SOURCE_FOUND",
+  "per_source_gate": {
+    "C1": "A_STRONG_SAME_DATASET_BOTH_CLASS",
+    "C2": "B_USABLE_WITH_LIMITATIONS",
+    "C3": "C_RESEARCH_ONLY",
+    "C4": "D_REJECT"
+  },
+  "m_pv38_unchanged": true,
+  "m_pv38_status": "RESOURCE_BLOCKED_CLOSED",
+  "authorizations": {
+    "pubabs_a2": false,
+    "pubabs_a3": false,
+    "absent_creation": false,
+    "membership_construction": false,
+    "m_pv38_reopen": false,
+    "m_pv38_membership": false,
+    "m_pv38_evaluation": false,
+    "m_pv4": false,
+    "payload_commit": false
+  },
+  "leakage": {
+    "C1": "UNSEEN",
+    "C2": "UNSEEN",
+    "C3": "UNSEEN",
+    "C4": "UNSEEN"
+  },
+  "report": "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A0A1_Public_Source_Validation_01.md",
+  "manifest_dir": "datasets/mmwave/manifests/PUBABS_A0A1_public_source_validation/",
+  "downstream_recommendation": "Recommend PUBABS-A2 then A3 for C1 (optional parallel A2 on C2). This package does NOT authorize those phases.",
+  "explicit_non_actions": [
+    "No M-PV3.8 lifecycle/membership modification",
+    "No ABSENT creation or membership construction",
+    "No model evaluation / M-PV4",
+    "No commit of /tmp/pubabs-a0a1-payload binaries",
+    "No PR merge"
+  ]
+}

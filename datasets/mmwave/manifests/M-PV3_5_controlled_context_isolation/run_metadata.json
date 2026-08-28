@@ -1,0 +1,15 @@
+{
+  "checkpoint_parameter_counts": [
+    2297,
+    2297,
+    2297,
+    2297,
+    2297,
+    2297
+  ],
+  "common_scaler_sha256": "71c1999711711bf83efcd649e635e8e98e79a6c1726f72eb2f05c53afdcb36c1",
+  "contract_sha256": "f9ac9c31f7670809f6115e77b246c8b93387d189336c3455847ca29f4633473f",
+  "generated_payloads_are_deterministic_under_recorded_cpu_settings": true,
+  "identity": "MMWAVE_V2_M_PV35_CONTROLLED_CONTEXT_ISOLATION_V1",
+  "source_git_head": "dc25952ca12a323477f77b9c30c7b1921323491e"
+}

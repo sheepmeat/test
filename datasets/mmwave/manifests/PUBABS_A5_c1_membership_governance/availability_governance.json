@@ -1,0 +1,37 @@
+{
+  "schema_version": "PUBABS-A5-AVAILABILITY-GOVERNANCE-V1",
+  "source_population_denominator": "ALL_77_C1_SESSIONS",
+  "fail_closed_sessions": 43,
+  "valid_sessions": 34,
+  "layers": {
+    "LAYER_1_AVAILABILITY_INGRESS": {
+      "population": "ALL_77",
+      "purpose": "availability / ingress safety outcomes under frozen adapter",
+      "outcomes_retained": [
+        "VALID",
+        "FAIL_CLOSED",
+        "UNAVAILABLE"
+      ],
+      "fail_closed_handling": "RETAIN_IN_DENOMINATOR_AND_REPORT",
+      "silent_drop": "FORBIDDEN"
+    },
+    "LAYER_2_CONDITIONAL_STRUCTURAL": {
+      "population": "VALID_34_ONLY",
+      "semantics": "CONDITIONAL_ON_ADAPTER_VALID",
+      "generalization_to_all_77": "FORBIDDEN",
+      "purpose": "conditional structural/domain stress only; never corpus-wide performance"
+    }
+  },
+  "class_label_mapping": {
+    "UNAVAILABLE_NE_ABSENT": true,
+    "UNAVAILABLE_NE_NORMAL": true,
+    "UNAVAILABLE_NE_PHYSIOLOGICAL_NEGATIVE": true,
+    "adapter_status_as_class_feature": "FORBIDDEN"
+  },
+  "availability_bias_classification": "BLOCKING_FOR_FINAL_SELECTION_BUT_ALLOWED_FOR_EXTERNAL_STRESS",
+  "forbidden_metrics": [
+    "report_only_VALID_34_as_corpus_performance",
+    "convert_FAIL_CLOSED_to_ABSENT",
+    "erase_43_unavailable_from_denominator"
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "base_commit": "71475aa37b37ae5e643461d804f2ecdcbaea34cd",
+  "d1_split": {
+    "assignment": {
+      "D1_PERSON_01": "D1_DEV_TRAIN",
+      "D1_PERSON_02": "D1_DEV_TRAIN",
+      "D1_PERSON_03": "D1_DEV_VAL",
+      "D1_PERSON_04": "D1_DEV_TRAIN",
+      "D1_PERSON_05": "D1_DEV_TRAIN",
+      "D1_PERSON_06": "D1_DEV_TRAIN",
+      "D1_PERSON_07": "D1_DEV_TRAIN",
+      "D1_PERSON_08": "D1_DEV_TRAIN",
+      "D1_PERSON_09": "D1_DEV_VAL",
+      "D1_PERSON_10": "D1_DEV_TRAIN",
+      "D1_PERSON_11": "D1_DEV_VAL"
+    },
+    "path": "datasets/mmwave/manifests/M-PV1_public_multidomain_contract/d1_subject_split.json",
+    "recording_level_leakage": "NO",
+    "split_identity": "MMWAVE_V2_M_PV1_D1_DEV_SUBJECT_SPLIT_V1"
+  },
+  "d2_lock": {
+    "feature_extraction": "NO",
+    "model_inference_count": 0,
+    "path": "datasets/mmwave/manifests/M-PV1_public_multidomain_contract/d2_lock_audit.json",
+    "semantic_access": "NO",
+    "used_for_selection": null
+  },
+  "m_pv1_manifest": {
+    "duplicate_target_overlay_count": 0,
+    "model_ready_example_count": 562,
+    "path": "datasets/mmwave/manifests/M-PV1_public_multidomain_contract/m_pv2_example_manifest.json",
+    "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT",
+    "unique_model_input_contexts": 562,
+    "waveform_payloads_committed": false
+  },
+  "m_pv1_validation": {
+    "gate": "PASS_WITH_LIMITATIONS",
+    "m_pv1_ready_for_m_pv2": true,
+    "ok": true,
+    "path": "datasets/mmwave/manifests/M-PV1_public_multidomain_contract/validation_result.json",
+    "schema_version": "M-PV1.2_CORRECTIVE_ALIGNMENT"
+  },
+  "model_training_started_after_contract_freeze": true,
+  "mr60_supervised_use": false,
+  "phase": "M-PV2",
+  "role_contract": {
+    "d0_allowed_splits": [
+      "TRAIN",
+      "VAL",
+      "D0_SUBJECT_HELDOUT"
+    ],
+    "d0_val_m_pv2_use": "NOT_AUTHORIZED",
+    "d0_val_reason": "The frozen M-PV1 model-ready manifest contains D0 TRAIN only; reconstructing D0 VAL would change the frozen 562-input membership.",
+    "path": "datasets/mmwave/manifests/M-PV1_public_multidomain_contract/dataset_role_contract.json"
+  },
+  "schema_version": "M-PV2.1",
+  "source_balancing": {
+    "contract_id": "MMWAVE_V2_M_PV1_SOURCE_BALANCING_CONTRACT_V1",
+    "oversampling": "no blind D1 window oversampling until counts equal D0",
+    "quality_counting_unit": "unique clean model_input_id, never target overlay rows",
+    "rationale": "D0 is the primary 66-subject supervised domain; D1 is an 11-subject auxiliary domain. Both remain subject-balanced within source without blind window-count equalization.",
+    "repeated_window_cap": "at most 1 clean fixed context per D1 recording in an epoch; D0 has one unique model input per base context and no event-overlay input duplication",
+    "source_weights": {
+      "D0": 0.75,
+      "D1": 0.25
+    },
+    "subject_weighting": "inverse eligible-example count per subject within source and split, normalized within source",
+    "synthetic_ratio": {
+      "denominator": "unique clean model inputs per task",
+      "maximum_fraction_of_clean_examples_per_task": 0.1,
+      "profile_ids": [
+        "MMWAVE_V2_Q1_MR60_TIMING_CORRUPTION_PROFILE_V1",
+        "MMWAVE_V2_Q2_INPUT_AVAILABILITY_CONTRACT_V1"
+      ],
+      "selection_method": "fixed recipe; no VAL tuning"
+    },
+    "task_eligibility": "each task consumes only its explicit supervision mask; an RR-unavailable row is never encoded as zero",
+    "weights_tuned_by_validation": false
+  }
+}

@@ -1,0 +1,421 @@
+{
+  "authorized_primary_run_count": 9,
+  "candidates": [
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 27341,
+        "path": "models/mmwave/m_pv2/family_a/candidate_seed_11.pt",
+        "sha256": "8b90bb906b5a51af8d25e4bf51bcf520e0374973efb28efb39704275bc12c931"
+      },
+      "family": "family_a",
+      "limitations": [
+        "F2_BREATHING_HEAD_NOT_SUPPORTED"
+      ],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 11,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 9,
+        "best_validation_loss": 0.20564724504947662,
+        "canonical_parameter_sha256": "8bb69f3bb5ad99da0bd0bc73a6b5d77afdedac9d7ff33d76fa6065a84aaf6d62",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 11,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 30,
+        "family": "family_a",
+        "input_dim": 59,
+        "parameter_count": 5986,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 11
+      }
+    },
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 27341,
+        "path": "models/mmwave/m_pv2/family_a/candidate_seed_23.pt",
+        "sha256": "cf03d89d89e07814593facbd06b62fc997304bc022aa5e6d872d104150b2dad2"
+      },
+      "family": "family_a",
+      "limitations": [
+        "F2_BREATHING_HEAD_NOT_SUPPORTED"
+      ],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 23,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 8,
+        "best_validation_loss": 0.19828879833221436,
+        "canonical_parameter_sha256": "1197566b7f61d32c3348fd43b26537b912e3aa52b91ee1c2e69be373afdca40e",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 23,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 30,
+        "family": "family_a",
+        "input_dim": 59,
+        "parameter_count": 5986,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 23
+      }
+    },
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 27341,
+        "path": "models/mmwave/m_pv2/family_a/candidate_seed_47.pt",
+        "sha256": "7d7acfd2a9171e9fe4f34fe8cf1bdf24009b43d65d3f887b34205af1b51b82ef"
+      },
+      "family": "family_a",
+      "limitations": [
+        "F2_BREATHING_HEAD_NOT_SUPPORTED"
+      ],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 47,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 7,
+        "best_validation_loss": 0.20404404401779175,
+        "canonical_parameter_sha256": "634f63ab46a83d61fde7b88a319dd0c4bb49ff11c83cd68f1e1b98a971db943a",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 47,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 30,
+        "family": "family_a",
+        "input_dim": 59,
+        "parameter_count": 5986,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 47
+      }
+    },
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 76473,
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_11.pt",
+        "sha256": "5633a7eefa83544cd33a251b0016b40f37e28039f985b31c98bdcfa37aa8b1a6"
+      },
+      "family": "family_b",
+      "limitations": [],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 11,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 26,
+        "best_validation_loss": 0.46978557109832764,
+        "canonical_parameter_sha256": "84bb325bb2fa8054b39ac7c30f3aadf6acc1ed5886b79f93352d77b1fb5d4aba",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 11,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 46,
+        "family": "family_b",
+        "input_dim": 621,
+        "parameter_count": 17915,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 11
+      }
+    },
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 76473,
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+        "sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c"
+      },
+      "family": "family_b",
+      "limitations": [],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 23,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 72,
+        "best_validation_loss": 0.1633485108613968,
+        "canonical_parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 23,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 92,
+        "family": "family_b",
+        "input_dim": 621,
+        "parameter_count": 17915,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 23
+      }
+    },
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 76473,
+        "path": "models/mmwave/m_pv2/family_b/candidate_seed_47.pt",
+        "sha256": "ed3da35adb0837426065cc575b7e4ff6f41ef9a8fb295bb29f7eb8bcff4db280"
+      },
+      "family": "family_b",
+      "limitations": [],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 47,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 102,
+        "best_validation_loss": 0.2469666302204132,
+        "canonical_parameter_sha256": "1ef93f709d2f23f6c92f0ed235287f422cae2675eb06fb958d286903fd75d40e",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 47,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 122,
+        "family": "family_b",
+        "input_dim": 621,
+        "parameter_count": 17915,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 47
+      }
+    },
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 89337,
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_11.pt",
+        "sha256": "539bd6021d10a9abd35a22b49c0db728a122b60356f59609fead9280d82f7768"
+      },
+      "family": "family_c",
+      "limitations": [],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 11,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 79,
+        "best_validation_loss": 0.17614631354808807,
+        "canonical_parameter_sha256": "5e1aefa8a4affca778649814e60efed05d0b8812094013555dfac6b21e90d79b",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 11,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 99,
+        "family": "family_c",
+        "input_dim": 671,
+        "parameter_count": 21115,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 11
+      }
+    },
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 89337,
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_23.pt",
+        "sha256": "ce99a6534928138bc5e2d271123185f93aceb6386b8a24b0ecb3679c7d6d70de"
+      },
+      "family": "family_c",
+      "limitations": [],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 23,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 67,
+        "best_validation_loss": 0.19225090742111206,
+        "canonical_parameter_sha256": "de0352416c32703195c9a218bc915ef949351882304dd8668a5957527a91eaae",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 23,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 87,
+        "family": "family_c",
+        "input_dim": 671,
+        "parameter_count": 21115,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 23
+      }
+    },
+    {
+      "D2_used": false,
+      "MR60_supervised_use": false,
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "checkpoint": {
+        "bytes": 89337,
+        "path": "models/mmwave/m_pv2/family_c/candidate_seed_47.pt",
+        "sha256": "2f1b446c808cfb90d02dc6cce754311ade19cf2e3bb03b20814a1268934cb5a1"
+      },
+      "family": "family_c",
+      "limitations": [],
+      "scaler_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+      "seed": 47,
+      "selection_status": "NOT_SELECTED",
+      "status": "VIABLE",
+      "training": {
+        "best_epoch": 131,
+        "best_validation_loss": 0.11941612511873245,
+        "canonical_parameter_sha256": "e57c1fc56933f15b654697dcdae5e098c8c7154620974357795a280dff0b250d",
+        "environment": {
+          "numpy_version": "1.26.4",
+          "python_hash_seed_requested": "UNSET",
+          "seed": 47,
+          "torch_deterministic_algorithms": true,
+          "torch_num_interop_threads": 1,
+          "torch_num_threads": 1,
+          "torch_version": "2.8.0"
+        },
+        "epochs_run": 150,
+        "family": "family_c",
+        "input_dim": 671,
+        "parameter_count": 21115,
+        "schedule": {
+          "batch_size": 32,
+          "gradient_clip_norm": 1.0,
+          "learning_rate": 0.001,
+          "max_epochs": 150,
+          "min_epochs": 30,
+          "optimizer": "Adam",
+          "patience": 20,
+          "weight_decay": 0.0001
+        },
+        "seed": 47
+      }
+    }
+  ],
+  "final_selection": false,
+  "m_pv2_ready_for_m_pv3": true,
+  "phase": "M-PV2",
+  "schema_version": "M-PV2.1",
+  "selected_float_model": false
+}

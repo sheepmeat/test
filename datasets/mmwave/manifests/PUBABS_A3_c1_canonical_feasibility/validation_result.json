@@ -1,0 +1,29 @@
+{
+  "schema_version": "PUBABS-A3-VALIDATION-RESULT-V1",
+  "phase": "PUBABS-A3",
+  "date": "2026-08-26",
+  "base_sha": "eae5948f3359079dc4dc0135e6ffd11793e88910",
+  "status": "COMPLETE",
+  "a3_gate": "A3_CORRECTIVE_REQUIRED",
+  "a4_recommendation": "CORRECTIVE_BEFORE_A4",
+  "timing_verdict": "TIMING_CONTRACT_INCOMPATIBLE",
+  "range_extraction_verdict": "MULTIPLE_NONLABEL_ADAPTERS_REMAIN",
+  "m_pv38_unchanged": true,
+  "m_pv38_status": "RESOURCE_BLOCKED_CLOSED",
+  "authorizations": {
+    "pubabs_a4": false,
+    "membership_construction": false,
+    "model_inference": false,
+    "m_pv38_reopen": false,
+    "m_pv4": false,
+    "d2": false,
+    "payload_commit": false
+  },
+  "corrective_items_before_retry": [
+    "Register Sol-frozen C1 timestamp\u219210 Hz resampling / grid rule compatible with R1 fail-closed gap policy",
+    "Register unique label-independent C1 range-bin extraction (geometry table and/or PROFILE_001 search region for 0.0512 m bins)",
+    "Only then re-run A3 for canonical [300,1] feasibility"
+  ],
+  "report": "docs/mmwave/20260826_SafeNest_mmWave_PUBABS_A3_C1_Canonical_Conversion_Feasibility_01.md",
+  "manifest_dir": "datasets/mmwave/manifests/PUBABS_A3_c1_canonical_feasibility/"
+}

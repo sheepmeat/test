@@ -1,0 +1,25 @@
+{
+  "exceptions": [
+    {
+      "code": "D0_VAL_NOT_USED",
+      "reason": "The frozen M-PV1 model-ready manifest contains D0 TRAIN only; reconstructing D0 VAL would change the frozen 562-input membership.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "D1_ABSENT_CLASS_UNAVAILABLE",
+      "reason": "Frozen D1 model-ready membership contains PRESENT and AMBIGUOUS only.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "TEMPORAL_EVENT_F1_DEFERRED",
+      "reason": "M-PV2 reports context diagnostics only; event F1 belongs to M-PV3 or later.",
+      "severity": "LIMITATION"
+    },
+    {
+      "code": "MR60_NOT_SUPERVISED",
+      "reason": "MR60 is QA/reference only.",
+      "severity": "INVARIANT"
+    }
+  ],
+  "schema_version": "M-PV2.1"
+}

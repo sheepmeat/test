@@ -1,0 +1,10 @@
+{
+  "schema_version": "PUBABS-A3R-PREPROCESSING-STRUCTURAL-AUDIT-V1",
+  "historical_r1_unchanged": true,
+  "historical_r1_action_on_valid": "median_centering_only_already_at_10hz",
+  "train_zscore_refit_on_c1": false,
+  "valid_sessions_all_zscore_finite": true,
+  "valid_zscore_abs_max_max": 0.6432519049232052,
+  "scale_observation": "SCALE_RISK_REMAINS",
+  "scale_note": "Valid C1 |z| after TRAIN scaler remains << typical TRAIN domain amplitude; tensors finite. No correction fitted."
+}

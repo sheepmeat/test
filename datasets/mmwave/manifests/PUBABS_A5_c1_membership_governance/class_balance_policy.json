@@ -1,0 +1,19 @@
+{
+  "schema_version": "PUBABS-A5-CLASS-BALANCE-POLICY-V1",
+  "source_population_composition": {
+    "ABSENT": 11,
+    "PRESENT": 66,
+    "ratio_note": "natural C1 composition"
+  },
+  "valid_subset_composition": {
+    "ABSENT": 9,
+    "PRESENT": 25
+  },
+  "policy_for_selected_route": {
+    "layer1_denominator": "preserve_natural_ALL_77_composition",
+    "layer2_conditional": "preserve_natural_VALID_34_composition_with_disclosure",
+    "force_1_to_1_by_discard": "FORBIDDEN_WITHOUT_SEPARATE_SOL_AUTHORIZATION",
+    "evaluation_weighting": "NOT_EXECUTED_IN_A5; if later used must be pre-registered"
+  },
+  "justification": "Natural source counts preserve availability leakage visibility. Forced 1:1 discard would hide PRESENT failure mass and fake neutrality."
+}

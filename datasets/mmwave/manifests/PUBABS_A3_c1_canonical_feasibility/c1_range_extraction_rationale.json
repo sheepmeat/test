@@ -1,0 +1,67 @@
+{
+  "schema_version": "PUBABS-A3-C1-RANGE-EXTRACTION-V1",
+  "status": "MULTIPLE_NONLABEL_ADAPTERS_REMAIN",
+  "forbidden_methods_not_used": [
+    "bin by PRESENT/ABSENT separation",
+    "bin by respiration classification score",
+    "bin by candidate model score"
+  ],
+  "candidates_considered_label_independent": [
+    {
+      "id": "TRANSFER_PROFILE_001_DYNAMIC_ENERGY",
+      "description": "Static-reduced dynamic energy within a search region (D0 PROFILE_001 method)",
+      "unique_for_c1": false,
+      "issue": "D0 search region [0.3,2.0]m and channel model do not uniquely transfer to C1 180-bin / 0.0512m through-wall geometry; probe often selected ~0.5m bins (wall/near-field clutter risk)"
+    },
+    {
+      "id": "GEOMETRY_FROM_METADATA_1M_2M",
+      "description": "Map documented subject distance (1m/2m behind 27cm wall) to range-bin index",
+      "unique_for_c1": false,
+      "issue": "ABSENT sessions have no human distance; through-wall optical path not uniquely defined; PRESENT archive subset is 1_Meter only"
+    },
+    {
+      "id": "FIXED_BIN_INDEX",
+      "description": "Pre-declare a constant bin index",
+      "unique_for_c1": false,
+      "issue": "No frozen C1 geometry table justifies a single index without new Sol registration"
+    }
+  ],
+  "verdict": "A3_NO_DEFENSIBLE_UNIQUE_RANGE_EXTRACTION_WITHOUT_CORRECTIVE_REGISTRATION",
+  "probe_dynamic_energy_observations": [
+    {
+      "member": "Data/Empty_space/0/plot_data.csv",
+      "selected_bin": 10,
+      "selected_range_m": 0.512
+    },
+    {
+      "member": "Data/Empty_space/-5/plot_data.csv",
+      "selected_bin": 10,
+      "selected_range_m": 0.512
+    },
+    {
+      "member": "Data/Empty_space/5/plot_data.csv",
+      "selected_bin": 11,
+      "selected_range_m": 0.5632
+    },
+    {
+      "member": "Data/N1/Scenario_A/1_Meter/Face_toward_wall/0/plot_data.csv",
+      "selected_bin": 15,
+      "selected_range_m": 0.768
+    },
+    {
+      "member": "Data/N2/Scenario_A/1_Meter/Face_toward_wall/-3/plot_data.csv",
+      "selected_bin": 10,
+      "selected_range_m": 0.512
+    },
+    {
+      "member": "Data/N3/Scenario_A/1_Meter/Face_toward_wall/2/plot_data.csv",
+      "selected_bin": 34,
+      "selected_range_m": 1.7408000000000001
+    },
+    {
+      "member": "Data/N6/Scenario_A/1_Meter/Face_toward_wall/5/plot_data.csv",
+      "selected_bin": 10,
+      "selected_range_m": 0.512
+    }
+  ]
+}

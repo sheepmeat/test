@@ -1,0 +1,27 @@
+{
+  "files": {
+    "datasets/mmwave/manifests/M-PV2_candidate_training/breathing_metrics.json": "1d5ee435474fb605d402f8e3daaaf5b1537f2d24ef1b58796386efed805a0e66",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/candidate_registry.json": "6dd9bee70e5d1decfb2e60e8f3cf5afbcc28a73a6b2791057f425e129719044f",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/contract_snapshot.json": "ff497e9df7aa7819ec215fb56b02161f73dee41de81b21ab52367cd1959eec18",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/d2_lock_audit.json": "2a9b36814c00977e25ed7a6d9a5f6f8d0f865b45ce170cd5cf7c90494490e4ff",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/degeneracy_audit.json": "ffaaf8d55a02b44971f0b87a88b8d9adce648c463f1fd4479435b6b10ca4ed41",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/determinism_audit.json": "3c1f1d9697da91703877264ad149b789b78d4c404f3a375e611f96d730b1e928",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/exception_registry.json": "8fac4317f94663caf7e01e9deac4d1a3362a80b3a227e48deb0356748b2c1566",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/footprint_audit.json": "c29a00422a717e6568b0e11e6ddfd27c36e6c8aa939481f5cbbef0d75f3bed59",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/membership_audit.json": "4046482da7f02099e20695e5f30f34cacc32250f9f6b26e3fc660f4c6ee7a9fc",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/metrics_by_source.json": "1850dfb7a3a35defe013e9f3d5c05ecd4b0736a65df763c23039abc4302c71a3",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/prerequisite_audit.json": "f3d7cff3da2dc8b8bdd8966beada411605b18656b6d091481c4a81885d64924e",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/quality_metrics.json": "f25199676364ca5ddb8815bb58005c4f46588faed1fb9cccbfbc1d2adec59b7d",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/rr_metrics.json": "d5374a57467e7bb9db03d4d3c253cb9e4a9d976b3064f01a893597d37e76d624",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json": "9555c8c954078b80e26fbcd3bc5d5a70b9a2e04620946118709ec95418b2ac36",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/seed_sensitivity.json": "2646abcbb1e17004e6b5341d7e53c13735f8cec473084b12283f94de0275280c",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/synthetic_quality_registry.json": "467252ff134ce715855d5b29b8b2407e34601b6f5a764487347080d1d6d2a278",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/temporal_diagnostic.json": "158e09484645e9b99a53455be35b044f8a1270b930444d69df992bb3422c38dc",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/tensor_materialization_audit.json": "15c6daa7c546fb4c60c621154b1e7665776764b6d27f82762e1ce9e5bfff5b0b",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/training_history.json": "2eb3846a2899f35cd9febbf684158a469cbb75eaa11482ca892309d5c84b26e8",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/v1_observe_only.json": "4dc79b793aaa3d5cc22bfd83f830d9085fc8f4c077a59462fe5f80bdb680a9bf",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/validation_result.json": "3037686c799b7a6460a20ed346e6d1eea7a5a6d4936e5cb9775a2d1ee18c2cca",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/validation_result_validator.json": "d6d1bdfdcd27f6f2806292bcb60bd161c76ed92131c8ec1ee9bbdbfffea76741"
+  },
+  "schema_version": "M-PV2.1"
+}

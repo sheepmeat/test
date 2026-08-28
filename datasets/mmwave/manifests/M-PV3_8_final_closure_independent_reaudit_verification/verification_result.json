@@ -1,0 +1,59 @@
+{
+  "schema_version": "M-PV3.8-FINAL-CLOSURE-REAUDIT-VERIFICATION-V1",
+  "verification_id": "MMWAVE_V2_M_PV38_FINAL_CLOSURE_INDEPENDENT_REAUDIT_VERIFICATION_V1",
+  "phase": "M-PV3.8-FINAL-CLOSURE-INDEPENDENT-REAUDIT-VERIFICATION",
+  "mode": "VERIFICATION_ONLY",
+  "date": "2026-08-25",
+  "decision": "VERIFIED",
+  "base_commit_sha": "6eb3269b3b8f35d87c95e5622d649559d592c415",
+  "subject_reaudit": {
+    "decision": "APPROVED",
+    "report": "docs/mmwave/20260824_SafeNest_mmWave_M-PV3_8_Final_Closure_Independent_ReAudit_01.md",
+    "audit_result": "datasets/mmwave/manifests/M-PV3_8_final_closure_independent_reaudit/audit_result.json"
+  },
+  "checks": {
+    "lifecycle_checksums": {
+      "result": "PASS",
+      "matched": 7,
+      "total": 7
+    },
+    "no_live_stale_statuses": {
+      "result": "PASS"
+    },
+    "d1_final_selection_both_class_v1_absent": {
+      "result": "PASS"
+    },
+    "lifecycle_validator": {
+      "result": "PASS",
+      "script": "scripts/validate_mmwave_m_pv38_lifecycle_state_consolidation.py",
+      "exit_code": 0,
+      "ok": true,
+      "closure_status": "RESOURCE_BLOCKED_CLOSED"
+    },
+    "reaudit_decision_approved": {
+      "result": "PASS"
+    },
+    "reaudit_authorizations_all_false": {
+      "result": "PASS"
+    }
+  },
+  "freeze": {
+    "closure_status": "RESOURCE_BLOCKED_CLOSED",
+    "reason": "ACQUISITION_REQUIRES_RESOURCE_ACCESS",
+    "evaluation": "NOT_EXECUTED",
+    "membership": "BLOCKED_INVALID_FINAL_MEMBERSHIP",
+    "m_pv4": "UNAUTHORIZED",
+    "contract_version": "M-PV3.8.4_CHECKSUM_LIFECYCLE_CLARIFICATION"
+  },
+  "authorizations": {
+    "capture": false,
+    "campaign_predeclaration": false,
+    "absent_creation": false,
+    "membership_construction": false,
+    "model_evaluation": false,
+    "candidate_output_inspection": false,
+    "threshold_modification": false,
+    "m_pv4": false
+  },
+  "report": "docs/mmwave/20260825_SafeNest_mmWave_M-PV3_8_Final_Closure_Independent_ReAudit_Verification_01.md"
+}

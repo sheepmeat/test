@@ -1,0 +1,24 @@
+{
+  "schema_version": "MMWAVE-V2-D1-RESREC-OCCUPANCY-V1",
+  "status": "NOT_EVIDENCED",
+  "blocking": true,
+  "proof_method_required": [
+    "EV-01 continuous authoritative no-human occupancy over full zone",
+    "EV-02 sealed-zone/access proof (no animal/simulator/physiological source)",
+    "EV-03 resolvable time sync across sensor+occupancy+access",
+    "EV-04 immutable hashes + Stage2 SHA receipts"
+  ],
+  "not_acceptable": [
+    "radar non-detection",
+    "weak periodicity",
+    "operator statement alone",
+    "no respiration detected",
+    "breath-hold / apnea-like",
+    "visual guess alignment"
+  ],
+  "configured_live_occupancy_reference": false,
+  "sealed_zone_procedure_configured": false,
+  "evidence": "Checklist and preflight require independent occupancy reference; none configured as live preflight evidence in this audit environment.",
+  "remaining_action": "PP-04 approve occupancy mechanism; PP-01/PP-03 configure and demonstrate continuous synchronized hashable coverage (non-campaign).",
+  "capture_started": false
+}

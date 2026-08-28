@@ -1,0 +1,198 @@
+{
+  "schema_version": "M_PROT_5A_PREDEPLOYMENT_HANDOFF_V1",
+  "phase": "M-PROT-5A",
+  "primary_goal": "PROTOTYPE_SOFTWARE_INTEGRATION",
+  "test_repo": "https://github.com/sheepmeat/test.git",
+  "future_team_repo": "https://github.com/jinsu1011/safenest-embedded-competition",
+  "team_repo_modified_in_this_phase": false,
+  "pi_runtime_subtree_assumed": false,
+  "live_pi_executed": false,
+  "model": {
+    "panel_id": "B23",
+    "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+    "artifact": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+    "artifact_sha256": "8f7de6f50d6ff62ff9b0ebfaed0b1fccd8d194c7e33781bc5b93366fae251a2c",
+    "parameter_sha256": "6db949c242e25888dd20c3fc8e2305af03448aa229e3ca73e4159216a266d78e",
+    "representation": "PYTORCH_FLOAT32_STATE_DICT"
+  },
+  "scaler": {
+    "path": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+    "content_sha256": "5a2583b5b5064be5480b0cf56f2a2c12d40a4a2d005eb087dc8e12106881159c",
+    "policy": "TRAIN_FITTED_APPLY_ONCE_NO_REFIT"
+  },
+  "window": {
+    "duration_s_conceptual": 30,
+    "target_span_s": 29.9,
+    "target_rate_hz": 10,
+    "r1_samples": 300,
+    "assembled_dim": 621,
+    "readiness_basis": "CAUSAL_TIME_COVERAGE",
+    "r1_owns_resampling": true
+  },
+  "modules": {
+    "sw01": [
+      "adapters/mmwave_sw01_interface_checker.py",
+      "adapters/mmwave_sw01_source.py"
+    ],
+    "r1": [
+      "adapters/mmwave_r1_sensor_independent_trace.py"
+    ],
+    "r2": [
+      "adapters/mmwave_r2_representation_features.py"
+    ],
+    "m_prot_2": [
+      "adapters/mmwave_m_prot_2_b23_runtime.py"
+    ],
+    "m_prot_3": [
+      "adapters/mmwave_m_prot_3_integration_runtime.py"
+    ],
+    "runtime_support_script": [
+      "scripts/mmwave_m_pv2_candidate_training.py"
+    ]
+  },
+  "python_dependencies": {
+    "python": ">=3.9",
+    "numpy": "required",
+    "scipy": "required (R1 resample_poly / R2 welch)",
+    "torch": "required for frozen PYTORCH_FLOAT32_STATE_DICT B23; Pi install NOT live verified",
+    "scikit-learn": "imported by training-script module used at runtime; keep available"
+  },
+  "input_bridge_contract": {
+    "required_semantics": [
+      "phase_like_waveform_sample",
+      "monotonic_timestamp"
+    ],
+    "preferred_continuity": [
+      "sequence",
+      "session_identity",
+      "reset_indication"
+    ],
+    "source_identity": [
+      "device_identity",
+      "interface_identity",
+      "configuration_identity",
+      "observation_kind"
+    ],
+    "presence": "explicit_defensible_presence_source_if_available",
+    "forbidden_model_input": [
+      "vendor_scalar_rr_alone"
+    ],
+    "transport_field_names": "NOT_FROZEN_IN_5A; semantic requirements only"
+  },
+  "output_contract": {
+    "fields": [
+      "status_or_availability",
+      "window_ready",
+      "breathing_state_or_score",
+      "rr_bpm_or_unavailable",
+      "quality_state_or_score",
+      "fail_closed_code",
+      "model_identity",
+      "timestamp_or_update_identity"
+    ],
+    "team_ui_backend_mapping": "DEFERRED_TO_M_PROT_5B"
+  },
+  "fail_closed_states_examples": [
+    "SW01_ADMISSION_REQUIRED",
+    "SOURCE_VALIDATION_FAILED",
+    "WINDOW_NOT_READY",
+    "PRESENCE_UNAVAILABLE",
+    "R1_*",
+    "R1_SAMPLE_COUNT_MISMATCH",
+    "QUALITY_SUPPRESSED",
+    "RR_UNAVAILABLE",
+    "UNAVAILABLE_INVALID_DECODE"
+  ],
+  "file_inventory": [
+    {
+      "path": "adapters/mmwave_sw01_interface_checker.py",
+      "class": "RUNTIME_REQUIRED",
+      "role": "PI_RUNTIME_MMWAVE_MODULE"
+    },
+    {
+      "path": "adapters/mmwave_sw01_source.py",
+      "class": "RUNTIME_REQUIRED",
+      "role": "PI_RUNTIME_MMWAVE_MODULE"
+    },
+    {
+      "path": "adapters/mmwave_r1_sensor_independent_trace.py",
+      "class": "RUNTIME_REQUIRED",
+      "role": "PI_RUNTIME_MMWAVE_MODULE"
+    },
+    {
+      "path": "adapters/mmwave_r2_representation_features.py",
+      "class": "RUNTIME_REQUIRED",
+      "role": "PI_RUNTIME_MMWAVE_MODULE"
+    },
+    {
+      "path": "adapters/mmwave_m_prot_2_b23_runtime.py",
+      "class": "RUNTIME_REQUIRED",
+      "role": "PI_RUNTIME_MMWAVE_MODULE"
+    },
+    {
+      "path": "adapters/mmwave_m_prot_3_integration_runtime.py",
+      "class": "RUNTIME_REQUIRED",
+      "role": "PI_RUNTIME_MMWAVE_MODULE"
+    },
+    {
+      "path": "scripts/mmwave_m_pv2_candidate_training.py",
+      "class": "RUNTIME_REQUIRED",
+      "role": "PI_RUNTIME_MMWAVE_MODULE",
+      "note": "Imported by M-PROT-2 for TraceModel/_feature_arrays (not for training)."
+    },
+    {
+      "path": "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+      "class": "MODEL_REQUIRED",
+      "role": "PI_RUNTIME_MODEL_DIR"
+    },
+    {
+      "path": "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+      "class": "CONFIG_REQUIRED",
+      "role": "PI_RUNTIME_CONFIG_DIR"
+    },
+    {
+      "path": "adapters/mmwave_m_prot_4_system_smoke.py",
+      "class": "OPTIONAL_DEBUG_TOOL",
+      "role": "NOT_FOR_DEPLOYMENT"
+    },
+    {
+      "path": "tests/test_mmwave_m_prot_3_integration_runtime.py",
+      "class": "TEST_ONLY",
+      "role": "NOT_FOR_DEPLOYMENT"
+    },
+    {
+      "path": "tests/test_mmwave_m_prot_4_system_smoke.py",
+      "class": "TEST_ONLY",
+      "role": "NOT_FOR_DEPLOYMENT"
+    },
+    {
+      "path": "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_3_Integration_Runtime_Wiring_01.md",
+      "class": "DOC_ONLY",
+      "role": "NOT_FOR_DEPLOYMENT"
+    },
+    {
+      "path": "docs/mmwave/20260827_SafeNest_mmWave_V2_M_PROT_4_System_Smoke_01.md",
+      "class": "DOC_ONLY",
+      "role": "NOT_FOR_DEPLOYMENT"
+    }
+  ],
+  "must_not_replace": [
+    "models/mmwave/m_pv2/family_b/candidate_seed_23.pt",
+    "datasets/mmwave/manifests/M-PV2_candidate_training/scaler_statistics.json",
+    "adapters/mmwave_m_prot_2_b23_runtime.py",
+    "adapters/mmwave_m_prot_3_integration_runtime.py",
+    "adapters/mmwave_r1_sensor_independent_trace.py"
+  ],
+  "symbolic_destinations": [
+    "PI_RUNTIME_MMWAVE_MODULE",
+    "PI_RUNTIME_MODEL_DIR",
+    "PI_RUNTIME_CONFIG_DIR"
+  ],
+  "future_team_repo_handoff": {
+    "inspect_first": "https://github.com/jinsu1011/safenest-embedded-competition",
+    "locate": "CURRENT Pi-side runtime subtree (do not assume old folder names)",
+    "deploy_model": "team Pi subtree \u2192 clone/place on Pi \u2192 execute runtime inside subtree",
+    "integrate": "insert frozen mmWave prototype components from this handoff; do not copy whole sheepmeat/test",
+    "yuname_integration_repo": "HISTORICAL_EVIDENCE_ONLY_NOT_FINAL_TARGET"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "schema_version": "M-PV3.6.2_CORRECTIVE",
+  "contract_id": "MMWAVE_V2_M_PV36_ROLE_BASED_EVALUATION_CONTRACT_V1",
+  "phase": "M-PV3.6",
+  "phase_mode": "SCHEMA_ONLY_NO_EVALUATION_RUN",
+  "result_population_policy": "NO_NEW_PERFORMANCE_RESULTS_IN_THIS_PHASE",
+  "class_a_runtime_invariant": {
+    "precedence": ["PRESENCE", "QUALITY_OR_AVAILABILITY", "PHYSIOLOGY"],
+    "presence_false_or_unknown_physiology_card": "BLOCKED",
+    "input_unavailable_output": "INPUT_UNAVAILABLE_ONLY",
+    "input_unavailable_must_not_emit": ["PRESENT", "ABSENT", "NORMAL", "APNEA"],
+    "q2_synthetic_evidence": "SAFETY_EVIDENCE_ONLY"
+  },
+  "role_cards": [
+    {
+      "role_id": "ROLE_S_SHORT_CONTEXT",
+      "membership": "M_PV2_SHORT_15S_BREATHING_ONLY",
+      "context": {"seconds": 15, "shape": "[B,150,1]", "task_scope": ["BREATHING_EVIDENCE"]},
+      "cards": [
+        {"card_id": "S_BREATHING", "class": "B", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["present_recall", "absent_recall_where_governed", "precision", "f1", "brier", "ece_only_if_valid_without_calibration_fit"]},
+        {"card_id": "S_SAFETY", "class": "A", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["q2_invalid_false_acceptance", "invalid_to_physiology_transition", "fail_closed_preservation", "stale_freeze_gap_handling", "clean_false_rejection_where_defined"], "failure_effect": "BLOCK_ROLE_ELIGIBILITY", "q2_scope": "SAFETY_EVIDENCE_ONLY"},
+        {"card_id": "S_STABILITY", "class": "C", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["every_frozen_seed", "mean", "population_standard_deviation", "minimum", "maximum", "worst_seed", "best_seed", "per_subject_results"], "mean_only": "PROHIBITED"},
+        {"card_id": "S_RESPONSIVENESS", "class": "D", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["context_refill_time", "first_valid_inference_time", "usable_slot_ratio_under_frozen_q2"], "result_qualification": "SYNTHETIC_ONLY_UNTIL_LIVE_DEVICE_MEASURED"},
+        {"card_id": "S_FOOTPRINT", "class": "E", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["parameter_count", "model_bytes", "input_tensor_bytes", "macs_or_flops", "deterministic_memory_estimate"], "hardware_timing": "REQUIRES_FUTURE_GATE"},
+        {"card_id": "S_RR", "class": "B", "state": "NOT_APPLICABLE", "reason": "15S_ROLE_HAS_NO_AUTHORIZED_RR_TRAINING_OR_EVALUATION"},
+        {"card_id": "S_TEMPORAL_HOLD", "class": "B", "state": "NOT_APPLICABLE", "reason": "15S_ROLE_HAS_NO_AUTHORIZED_TEMPORAL_HOLD_TRAINING_OR_EVALUATION"}
+      ]
+    },
+    {
+      "role_id": "ROLE_L_FULL_TASK",
+      "membership": "M_PV3_FAMILY_B_AND_FAMILY_C_ONLY",
+      "context": {"seconds": 30, "shape": "[B,300,1]", "task_scope": ["BREATHING_EVIDENCE", "RR", "QUALITY"]},
+      "cards": [
+        {"card_id": "L_FULL_BREATHING", "class": "B", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["present_recall", "absent_recall_where_governed", "precision", "f1", "brier"]},
+        {"card_id": "L_FULL_RR", "class": "B", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["rr_mae_bpm", "within_2_bpm", "within_4_bpm", "within_6_bpm"], "m_pv3_guard_policy": "PRESERVE_UNCHANGED"},
+        {"card_id": "L_FULL_QUALITY_DIAGNOSTIC", "class": "B", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["quality_head_task_support", "quality_head_diagnostic_coverage"], "q2_metrics": "CLASS_A_ONLY_NON_COMPENSABLE"},
+        {"card_id": "L_FULL_SAFETY", "class": "A", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["q2_invalid_false_acceptance", "invalid_to_physiology_transition", "fail_closed_preservation", "stale_freeze_gap_handling", "clean_false_rejection_where_defined"], "failure_effect": "BLOCK_ROLE_ELIGIBILITY", "q2_scope": "SAFETY_EVIDENCE_ONLY"},
+        {"card_id": "L_FULL_STABILITY", "class": "C", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["every_frozen_seed", "mean", "population_standard_deviation", "minimum", "maximum", "worst_seed", "best_seed", "per_subject_results"], "mean_only": "PROHIBITED"},
+        {"card_id": "L_FULL_RESPONSIVENESS", "class": "D", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["context_refill_time", "first_valid_inference_time", "usable_slot_ratio_under_frozen_q2"], "result_qualification": "SYNTHETIC_ONLY_UNTIL_LIVE_DEVICE_MEASURED"},
+        {"card_id": "L_FULL_FOOTPRINT", "class": "E", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["parameter_count", "model_bytes", "input_tensor_bytes", "macs_or_flops", "deterministic_memory_estimate"], "hardware_timing": "REQUIRES_FUTURE_GATE"}
+      ]
+    },
+    {
+      "role_id": "ROLE_L_RR_QUALITY",
+      "membership": "M_PV3_FAMILY_A_ONLY",
+      "context": {"seconds": 30, "shape": "[B,59]", "task_scope": ["RR", "QUALITY"]},
+      "cards": [
+        {"card_id": "L_RQ_BREATHING", "class": "B", "state": "NOT_APPLICABLE", "reason": "FAMILY_A_HAS_NO_BREATHING_HEAD"},
+        {"card_id": "L_RQ_RR", "class": "B", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["rr_mae_bpm", "within_2_bpm", "within_4_bpm", "within_6_bpm"], "m_pv3_guard_policy": "PRESERVE_UNCHANGED"},
+        {"card_id": "L_RQ_QUALITY_DIAGNOSTIC", "class": "B", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["quality_head_task_support", "quality_head_diagnostic_coverage"], "q2_metrics": "CLASS_A_ONLY_NON_COMPENSABLE"},
+        {"card_id": "L_RQ_SAFETY", "class": "A", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["q2_invalid_false_acceptance", "invalid_to_physiology_transition", "fail_closed_preservation", "stale_freeze_gap_handling", "clean_false_rejection_where_defined"], "failure_effect": "BLOCK_ROLE_ELIGIBILITY", "q2_scope": "SAFETY_EVIDENCE_ONLY"},
+        {"card_id": "L_RQ_STABILITY", "class": "C", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["every_frozen_seed", "mean", "population_standard_deviation", "minimum", "maximum", "worst_seed", "best_seed", "per_subject_results"], "mean_only": "PROHIBITED"},
+        {"card_id": "L_RQ_RESPONSIVENESS", "class": "D", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["context_refill_time", "first_valid_inference_time", "usable_slot_ratio_under_frozen_q2"], "result_qualification": "SYNTHETIC_ONLY_UNTIL_LIVE_DEVICE_MEASURED"},
+        {"card_id": "L_RQ_FOOTPRINT", "class": "E", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["parameter_count", "model_bytes", "input_tensor_bytes", "macs_or_flops", "deterministic_memory_estimate"], "hardware_timing": "REQUIRES_FUTURE_GATE"}
+      ]
+    },
+    {
+      "role_id": "ROLE_L_ISOLATION",
+      "membership": "M_PV35_30S_PARITY_CNN_ONLY",
+      "context": {"seconds": 30, "shape": "[B,300,1]", "task_scope": ["BREATHING_EVIDENCE"]},
+      "cards": [
+        {"card_id": "L_I_BREATHING", "class": "B", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["present_recall", "absent_recall_where_governed", "precision", "f1", "brier"]},
+        {"card_id": "L_I_SAFETY", "class": "A", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["q2_invalid_false_acceptance", "invalid_to_physiology_transition", "fail_closed_preservation", "stale_freeze_gap_handling", "clean_false_rejection_where_defined"], "failure_effect": "BLOCK_ROLE_ELIGIBILITY", "q2_scope": "SAFETY_EVIDENCE_ONLY"},
+        {"card_id": "L_I_STABILITY", "class": "C", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["every_frozen_seed", "mean", "population_standard_deviation", "minimum", "maximum", "worst_seed", "best_seed", "per_subject_results"], "mean_only": "PROHIBITED"},
+        {"card_id": "L_I_RESPONSIVENESS", "class": "D", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["context_refill_time", "first_valid_inference_time", "usable_slot_ratio_under_frozen_q2"], "result_qualification": "SYNTHETIC_ONLY_UNTIL_LIVE_DEVICE_MEASURED"},
+        {"card_id": "L_I_FOOTPRINT", "class": "E", "state": "REQUIRES_FUTURE_EXECUTION", "metrics": ["parameter_count", "model_bytes", "input_tensor_bytes", "macs_or_flops", "deterministic_memory_estimate"], "hardware_timing": "REQUIRES_FUTURE_GATE"},
+        {"card_id": "L_I_RR", "class": "B", "state": "NOT_APPLICABLE", "reason": "M_PV35_PARITY_CNN_HAS_NO_RR_HEAD"},
+        {"card_id": "L_I_QUALITY", "class": "B", "state": "NOT_APPLICABLE", "reason": "M_PV35_PARITY_CNN_HAS_NO_QUALITY_HEAD"}
+      ]
+    }
+  ],
+  "cross_role_comparison_rules": {
+    "allowed": ["report_each_role_card_separately", "compare_responsiveness_as_engineering_dimension_without_winner", "compare_footprint_as_engineering_dimension_without_winner"],
+    "prohibited": ["combined_winner_score", "15s_rr_penalty", "family_a_breathing_penalty", "isolation_rr_or_quality_penalty", "latency_compensates_for_safety_failure", "safety_failure_compensated_by_accuracy", "role_inapplicable_metric_as_zero", "context_accuracy_causality_claim_without_controlled_stable_evidence"]
+  }
+}

@@ -1,0 +1,186 @@
+{
+  "acceptable_full_task_candidates": [],
+  "combined_score": null,
+  "descriptive_order": [
+    {
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "candidate_key": "family_c/seed_47",
+      "full_task": true,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": 0.0012677252259954447,
+        "breathing_present_recall": 1.0,
+        "parameter_count": 21115,
+        "rr_mae_bpm": 4.460836209748921,
+        "rr_within_4_bpm": 0.6491228070175439,
+        "rr_within_6_bpm": 0.7368421052631579
+      },
+      "pareto_front": false,
+      "rank": 1,
+      "safety_pass": true,
+      "utility_pass": false
+    },
+    {
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "candidate_key": "family_b/seed_23",
+      "full_task": true,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": 0.0064572784995837705,
+        "breathing_present_recall": 1.0,
+        "parameter_count": 17915,
+        "rr_mae_bpm": 4.1938734389188,
+        "rr_within_4_bpm": 0.6666666666666666,
+        "rr_within_6_bpm": 0.7017543859649122
+      },
+      "pareto_front": false,
+      "rank": 2,
+      "safety_pass": true,
+      "utility_pass": false
+    },
+    {
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "candidate_key": "family_b/seed_11",
+      "full_task": true,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": 0.09854056768808094,
+        "breathing_present_recall": 1.0,
+        "parameter_count": 17915,
+        "rr_mae_bpm": 4.564752260843913,
+        "rr_within_4_bpm": 0.631578947368421,
+        "rr_within_6_bpm": 0.7719298245614035
+      },
+      "pareto_front": false,
+      "rank": 3,
+      "safety_pass": true,
+      "utility_pass": false
+    },
+    {
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "candidate_key": "family_c/seed_23",
+      "full_task": true,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": 0.01791962580955174,
+        "breathing_present_recall": 0.9824561403508771,
+        "parameter_count": 21115,
+        "rr_mae_bpm": 4.541094194378769,
+        "rr_within_4_bpm": 0.631578947368421,
+        "rr_within_6_bpm": 0.8070175438596491
+      },
+      "pareto_front": false,
+      "rank": 4,
+      "safety_pass": true,
+      "utility_pass": false
+    },
+    {
+      "candidate_id": "M-PV2_FAMILY_C_HYBRID_TRACE_F2_BREATHING_RR_QUALITY",
+      "candidate_key": "family_c/seed_11",
+      "full_task": true,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": 0.02115794692809779,
+        "breathing_present_recall": 0.9824561403508771,
+        "parameter_count": 21115,
+        "rr_mae_bpm": 4.539816287525913,
+        "rr_within_4_bpm": 0.631578947368421,
+        "rr_within_6_bpm": 0.7894736842105263
+      },
+      "pareto_front": false,
+      "rank": 5,
+      "safety_pass": true,
+      "utility_pass": false
+    },
+    {
+      "candidate_id": "M-PV2_FAMILY_B_TRACE_TCN_BREATHING_RR_QUALITY",
+      "candidate_key": "family_b/seed_47",
+      "full_task": true,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": 0.025080918907178347,
+        "breathing_present_recall": 0.9824561403508771,
+        "parameter_count": 17915,
+        "rr_mae_bpm": 4.900417813083582,
+        "rr_within_4_bpm": 0.6491228070175439,
+        "rr_within_6_bpm": 0.7368421052631579
+      },
+      "pareto_front": false,
+      "rank": 6,
+      "safety_pass": true,
+      "utility_pass": false
+    },
+    {
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "candidate_key": "family_a/seed_23",
+      "full_task": false,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": null,
+        "breathing_present_recall": null,
+        "parameter_count": 5986,
+        "rr_mae_bpm": 3.9577183137860215,
+        "rr_within_4_bpm": 0.7368421052631579,
+        "rr_within_6_bpm": 0.8070175438596491
+      },
+      "pareto_front": false,
+      "rank": 7,
+      "safety_pass": true,
+      "utility_pass": false
+    },
+    {
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "candidate_key": "family_a/seed_47",
+      "full_task": false,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": null,
+        "breathing_present_recall": null,
+        "parameter_count": 5986,
+        "rr_mae_bpm": 4.038610274331612,
+        "rr_within_4_bpm": 0.7543859649122807,
+        "rr_within_6_bpm": 0.8245614035087719
+      },
+      "pareto_front": false,
+      "rank": 8,
+      "safety_pass": true,
+      "utility_pass": false
+    },
+    {
+      "candidate_id": "M-PV2_FAMILY_A_F2_MLP_RR_QUALITY",
+      "candidate_key": "family_a/seed_11",
+      "full_task": false,
+      "metrics_used_for_descriptive_order": {
+        "breathing_brier": null,
+        "breathing_present_recall": null,
+        "parameter_count": 5986,
+        "rr_mae_bpm": 4.208156334726434,
+        "rr_within_4_bpm": 0.6842105263157895,
+        "rr_within_6_bpm": 0.8245614035087719
+      },
+      "pareto_front": false,
+      "rank": 9,
+      "safety_pass": true,
+      "utility_pass": false
+    }
+  ],
+  "pareto_front_candidates": [],
+  "phase": "M-PV3",
+  "policy": {
+    "combined_score": "NOT_USED",
+    "otherwise": "MULTIPLE_ACCEPTABLE_CANDIDATES",
+    "primary": [
+      "safety_gate_pass",
+      "q2_invalid_false_acceptance",
+      "clean_false_rejection",
+      "determinism_pass"
+    ],
+    "secondary": [
+      "breathing_present_recall_desc",
+      "breathing_brier_asc",
+      "rr_mae_bpm_asc",
+      "rr_within_4_bpm_desc",
+      "rr_within_6_bpm_desc"
+    ],
+    "tertiary": [
+      "parameter_count_asc",
+      "family_complexity_asc"
+    ],
+    "unique_selection_rule": "A single candidate may be selected only if it passes all gates and strictly dominates every other acceptable full-task candidate on every secondary metric (within 1e-12 ties) with no safety disadvantage.",
+    "validation_loss_only": "FORBIDDEN"
+  },
+  "schema_version": "M-PV3.1",
+  "selection_use": "PARETO_AND_FROZEN_GATES_ONLY"
+}

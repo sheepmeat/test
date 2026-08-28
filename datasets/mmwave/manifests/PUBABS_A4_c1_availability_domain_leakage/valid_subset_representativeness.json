@@ -1,0 +1,64 @@
+{
+  "schema_version": "PUBABS-A4-VALID-REPRESENTATIVENESS-V1",
+  "population_all77": {
+    "by_class": {
+      "ABSENT": 11,
+      "PRESENT": 66
+    },
+    "present_by_subject": {
+      "N1": 11,
+      "N2": 11,
+      "N3": 11,
+      "N4": 11,
+      "N5": 11,
+      "N6": 11
+    },
+    "by_position": {
+      "-1": 7,
+      "-2": 7,
+      "-3": 7,
+      "-4": 7,
+      "-5": 7,
+      "0": 7,
+      "1": 7,
+      "2": 7,
+      "3": 7,
+      "4": 7,
+      "5": 7
+    }
+  },
+  "population_valid34": {
+    "by_class": {
+      "ABSENT": 9,
+      "PRESENT": 25
+    },
+    "present_by_subject": {
+      "N1": 1,
+      "N2": 1,
+      "N3": 9,
+      "N4": 8,
+      "N5": 6
+    },
+    "by_position": {
+      "-1": 4,
+      "-2": 3,
+      "-3": 4,
+      "-4": 3,
+      "1": 3,
+      "2": 2,
+      "3": 3,
+      "4": 3,
+      "5": 5,
+      "-5": 3,
+      "0": 1
+    }
+  },
+  "class_composition_shift": {
+    "all77_ABSENT_fraction": 0.14285714285714285,
+    "valid34_ABSENT_fraction": 0.2647058823529412,
+    "all77_PRESENT_fraction": 0.8571428571428571,
+    "valid34_PRESENT_fraction": 0.7352941176470589
+  },
+  "VALID_SUBSET_REPRESENTATIVENESS": "NOT_SUPPORTED",
+  "rationale": "VALID subset over-represents ABSENT (9/34\u224826.5% vs 11/77\u224814.3%) and under-represents high-gap PRESENT sessions; timing-quality selection bias."
+}
