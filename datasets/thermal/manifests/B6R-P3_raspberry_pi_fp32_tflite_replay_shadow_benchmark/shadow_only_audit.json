@@ -1,0 +1,50 @@
+{
+  "candidate_activation": "NOT_PERFORMED",
+  "default_activation": false,
+  "default_manifest_update": false,
+  "deployment_mode": "SHADOW_ONLY",
+  "explicit_opt_in_required": true,
+  "legacy_after": {
+    "inference/thermal_interpreter.py": {
+      "exists": true,
+      "sha256": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+      "size_bytes": 8742
+    },
+    "models/model_manifest.json": {
+      "exists": true,
+      "sha256": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+      "size_bytes": 7624
+    },
+    "models/thermal/thermal_fall_int8_v0.1.0.tflite": {
+      "exists": true,
+      "sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+      "size_bytes": 318184
+    }
+  },
+  "legacy_before": {
+    "inference/thermal_interpreter.py": {
+      "exists": true,
+      "sha256": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+      "size_bytes": 8742
+    },
+    "models/model_manifest.json": {
+      "exists": true,
+      "sha256": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+      "size_bytes": 7624
+    },
+    "models/thermal/thermal_fall_int8_v0.1.0.tflite": {
+      "exists": true,
+      "sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+      "size_bytes": 318184
+    }
+  },
+  "legacy_model_overwrite": false,
+  "legacy_unchanged_during_preparation": true,
+  "opt_in_command": "python scripts/benchmark_thermal_b6r_p3_rpi.py --shadow-only --run-fixed",
+  "production_runtime_selector_update": false,
+  "rollback": "stop the opt-in shadow runner; the legacy default manifest/model remains the rollback target",
+  "safety_authority": false,
+  "schema_version": "safenest.thermal.b6r_p3.shadow_only_audit.v1",
+  "stage_id": "B6R-P3",
+  "status": "PASS"
+}

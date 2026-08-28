@@ -1,6 +1,6 @@
 # SafeNest Thermal B6-R robust-relative FP32 병렬 개발 로드맵
 
-문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P2 실행 + B6R-RC0/RC1 실제 capture evidence·보완 계획 + 현재 환경 gate 재조정 반영**
+문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P3 실행 + B6R-RC0/RC1 실제 capture evidence·보완 계획 + 현재 환경 gate 재조정 반영**
 
 대상 후보: `B6-R robust-relative FP32`
 
@@ -8,9 +8,23 @@
 
 작성일: `2026-08-22`
 
-실행 개정일: `2026-08-27` (`B6R-P0~P2` 완료; `B6R-RC0` assessment와 `B6R-RC1` Thermal-90 remediation plan 반영)
+실행 개정일: `2026-08-28` (`B6R-P0~P2` 완료; `B6R-P3` `BLOCKED_HARDWARE`; `B6R-RC0` assessment와 `B6R-RC1` Thermal-90 remediation plan 반영)
 
 > 이 문서는 코드, 모델, 데이터, 임계값 또는 runtime을 구현하거나 변경하지 않는다. 향후 실행은 사용자가 명시적으로 승인한 **한 stage 또는 한 parallel wave**만 수행하고, 검증·증거 요약 후 반드시 멈춘다.
+
+### 2026-08-28 실행 개정 — 사용자 승인 `B6R-P3` Raspberry Pi FP32 TFLite Replay & Shadow Benchmark
+
+사용자가 `B6R-P3 — Raspberry Pi FP32 TFLite Replay & Shadow Benchmark` 한 단계의 실행을 명시적으로 승인했다. 이번 실행은 P2 candidate를 재학습·변환하거나 기본 runtime에 활성화하는 작업이 아니라, target-device 측정 tooling과 deployment-readiness evidence를 동결하는 단위였다.
+
+- P2 artifact `models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite`의 실제 SHA-256은 `f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff`이고 크기는 `70,592` bytes였다. input `[1,62,80,1]`/`float32`, output `[1,3]`/`float32`, quantization `NONE`, class order는 P2와 일치했다.
+- P0 source archive 6개는 `b6r_p0_public_sdt_contract.json` registry와 size/SHA-256이 `6/6` 일치했다. source archive는 read-only로 검사했고 압축 해제·재압축·수정은 수행하지 않았다.
+- P2에서 동결된 `DEVELOPMENT` parity fixture 48개를 그대로 상속했다. P3에서 split을 재생성·재선정하지 않았고 `LOCKED_PUBLIC_TEST` array open/sample read/metric/selection access는 `0/0/false/false`로 고정했다.
+- 기존 SSH config의 명시된 target 경로에 BatchMode public-key probe를 한 번 수행했으나 connection timeout으로 Raspberry Pi target evidence를 얻지 못했다. 주소·credential을 추측하지 않았으며 desktop을 target으로 대체하지 않았다.
+- P3 contract, Raspberry Pi runner, standalone validator, focused tests와 portable evidence manifest를 추가했다. preprocessing latency는 P0 PNG resize를 다시 측정한 값이 아니라 P2 canonical float32 replay ingress의 shape/dtype/finite/range/contiguous 준비 시간으로 명시했다.
+- target latency p50/p95/p99, RSS/CPU/temperature, prolonged replay, target determinism은 모두 `NOT_MEASURED_ON_TARGET`이다. 따라서 P3 gate는 `BLOCKED_HARDWARE`이며, P3 이후 stage는 정의·실행하지 않았다.
+- `models/model_manifest.json`, legacy thermal model, `inference/thermal_interpreter.py`, production/default selector와 safety authority는 변경하지 않았다. P3 candidate는 `SHADOW_ONLY`·explicit opt-in·rollback-preserving 경계를 유지한다.
+
+상세 contract/evidence와 실행 보고서는 `config/thermal/b6r_p3_raspberry_pi_fp32_tflite_replay_shadow_benchmark_contract.json`, `datasets/thermal/manifests/B6R-P3_raspberry_pi_fp32_tflite_replay_shadow_benchmark/`, `docs/reports/20260828_Codex_Thermal_B6R_B6R-P3_Raspberry_Pi_FP32_TFLite_Replay_Shadow_Benchmark_Report_KO_01.md`를 따른다. 이 개정은 Raspberry Pi 측정 완료나 production readiness를 의미하지 않는다.
 
 ### 2026-08-27 실행 개정 — `B6R-RC1` Thermal-90 capture remediation plan
 
@@ -210,6 +224,7 @@ P1 TRAIN-global z-score
 | `B6R-P0` Public SDT Dataset Materialization & Split Contract | `PASS_WITH_LIMITATIONS` | 공개 SDT thermal frame을 재현 가능한 학습 입력으로 만들고 source split 역할을 잠금 | archive 6개 read-only 접근, 승인된 public-data 보조 흐름 | `PUBLIC_SDT_48000_THERMAL_ONLY_V1`, split별 NPY/provenance, contract, source/determinism audit | validator 통과; test tuning 금지; public-only claim boundary 고정 |
 | `B6R-P1` Public SDT Controlled Training | `PASS_WITH_LIMITATIONS` | P0의 TRAIN/DEVELOPMENT만으로 별도 실험 모델을 학습하고 후보 identity를 생성 | 사용자의 2026-08-26 별도 승인, P0 exact contract/checksum | `thermal_public_sdt_pooled_mlp_v1` NumPy model, metadata, run/history/validation manifest | development-only 결과와 limitation 기록; test·MI48 미사용; default activation `false`; TFLite/Pi는 새 stage |
 | `B6R-P2` Public SDT FP32 TFLite Export & Offline Parity | `PASS` | P1 NumPy 후보의 identity와 parameter를 그대로 FP32 TFLite로 변환하고 DEVELOPMENT에서 NumPy↔TensorFlow↔TFLite 구현 동등성을 검증 | P1 `PASS_WITH_LIMITATIONS`, exact model/metadata hash, TensorFlow/TFLite export capability, DEVELOPMENT fixture | 별도 FP32 `.tflite`, export/tensor/parity/determinism/locked-test/legacy audit manifest, validator와 보고서 | 사전 tolerance 내 3단계 parity, argmax 100%, locked test read 0, legacy/default/runtime 불변, shadow-only 경계 확인 |
+| `B6R-P3` Raspberry Pi FP32 TFLite Replay & Shadow Benchmark | `BLOCKED_HARDWARE` | P2 exact FP32 artifact를 실제 Raspberry Pi에서 replay·latency·resource·stability·determinism 관점으로 검증하고 shadow-only opt-in 경계를 감사 | P2 exact SHA/tensor contract, P2 DEVELOPMENT fixture, authorized Raspberry Pi target | P3 contract, target runner/validator/focused test, replay/source/artifact/target prerequisite evidence | target 접근 전까지 target metrics는 `NOT_MEASURED_ON_TARGET`; desktop 대체 금지; P3 이후 stage 실행 금지 |
 
 #### `B6R-P0` — Public SDT Dataset Materialization & Split Contract
 
@@ -241,6 +256,19 @@ P1 TRAIN-global z-score
 - **Deployment Boundary:** artifact 생성은 Raspberry Pi, MI48 physical input, 실제 낙상, latency·memory·장시간 안정성, runtime integration 또는 competition readiness 검증이 아니다. legacy model, `models/model_manifest.json` default, runtime selector를 바꾸지 않는다.
 - **STOP Condition:** P1 hash/weight/contract 불일치, adaptive pooling 또는 output parity gate 실패, TensorFlow/TFLite 변환 불가, 예상치 못한 quantization, locked test 접근, legacy/default/runtime 변경. 성공하더라도 Pi benchmark·runtime integration·후속 public stage를 같은 실행에서 시작하지 않는다.
 - **2026-08-26 Result:** P1 SHA-256 `35680056...25677`, metadata·4개 FP32 weight shape·2,691 parameters를 재검증했다. 48개 DEVELOPMENT fixture에서 NumPy↔TensorFlow probability max abs `1.4901161e-7`, TensorFlow↔TFLite `2.9802322e-7`, NumPy↔TFLite `3.5762787e-7`, 최종 mean abs `3.8006313e-8`, prediction agreement `100%`, mismatch `0`이었다. FP32 artifact는 `70,592 bytes`, SHA-256 `f88d65d7...c52ff`이며 2회 export byte hash가 일치했다. locked test read `0`, legacy/default/runtime/safety authority 변경 `false`다.
+
+#### `B6R-P3` — Raspberry Pi FP32 TFLite Replay & Shadow Benchmark
+
+- **Status:** `BLOCKED_HARDWARE` — 2026-08-28 사용자 명시 승인으로 P3 tooling·identity/readiness audit을 실행했으나 authorized Raspberry Pi target connection이 timeout되어 target benchmark를 수행하지 못했다.
+- **Purpose:** P2의 exact FP32 TFLite artifact를 변경 없이 target interpreter에서 load/invoke하고, fixed DEVELOPMENT replay의 preprocessing ingress/inference/total latency와 RSS/CPU/temperature/30분 stability/repeated-load determinism을 기록할 수 있는 단일 runner를 제공한다.
+- **Required Inheritance:** P2 artifact SHA-256 `f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff`, input `[1,62,80,1]` `float32`, output `[1,3]` `float32`, quantization `NONE`, P0/P1/P2 dataset/preprocessing/label identity, P2 DEVELOPMENT fixture 48개를 그대로 사용한다.
+- **Replay Definition:** measured replay는 warm-up 20회 후 48개 fixture를 10 cycles, 총 480회 순서대로 실행하도록 고정했다. P0의 PNG resize/frame min-max는 이미 materialized된 입력 identity로 상속하며, P3 preprocessing metric은 `P2_CANONICAL_FLOAT32_REPLAY_INGRESS_V1` ingress preparation만 측정한다.
+- **Target Tooling:** `scripts/benchmark_thermal_b6r_p3_rpi.py`는 `ai_edge_litert` → `tflite_runtime` → `tensorflow.lite` 순으로 interpreter를 선택하고 thread count `1`, monotonic high-resolution timing, exact artifact/tensor checks, same-instance/repeated-load/process determinism과 optional `>=1800` second prolonged replay를 지원한다. `--shadow-only` 없이는 target run을 허용하지 않으며 `models/model_manifest.json`을 읽지 않는다.
+- **Evidence:** `datasets/thermal/manifests/B6R-P3_raspberry_pi_fp32_tflite_replay_shadow_benchmark/`에 contract snapshot, P2 artifact audit, P0 source 6/6 audit, DEVELOPMENT replay manifest, target access/environment/interpreter inventory, latency/resource/stability/determinism, locked-test, shadow-only, rollback, checksum, validation 결과를 기록했다. JSON에는 machine-local absolute path와 target address를 저장하지 않았다.
+- **Validation:** P3 standalone validator `13/13` checks PASS 후 stage status를 `BLOCKED_HARDWARE`로 기록했다. P2 artifact identity, P0 source 6/6, P0 DEVELOPMENT materialized file identity, fixture inheritance, locked-test access `0`, legacy/default/runtime 불변, shadow-only boundary가 검증됐다.
+- **Target Result:** Raspberry Pi hostname/OS/kernel/architecture/model/Python/CPU/memory/interpreter, preprocessing/inference/total p50/p95/p99, RSS/CPU/temperature, `>=30` minute stability, target determinism은 모두 `NOT_MEASURED_ON_TARGET`이다. Windows desktop은 target 수치 산출에 사용하지 않았다.
+- **Deployment Boundary:** `PUBLIC_SDT_ONLY_NOT_MI48`, `FP32_TFLITE`, `SHADOW_ONLY`, `NOT_SAFETY_AUTHORITY`, `NOT_MI48_VALIDATED` 범위만 허용한다. 실제 낙상 검출, MI48/Thermal-90 승격, physical deployment proven, production-ready 또는 competition lock을 주장하지 않는다.
+- **STOP Condition:** target이 새로 authorized되기 전에는 같은 P3 target evidence를 재측정할 수 있지만, P3 이후의 runtime/default activation·quantization·safety·holdout·본선 stage를 이 실행에서 시작하지 않는다.
 
 ### B.1 Stage별 실행 계약
 
@@ -712,9 +740,9 @@ crash, memory growth, fail-open
 
 ## G. Recommended Immediate Next Stage
 
-### 현재 결론: RC1 현장 evidence 대기, 정식 B6R stage는 조건부로만 `B6R-1`
+### 현재 결론: B6R-P3 `BLOCKED_HARDWARE`; target evidence 대기 및 P3 이후 STOP
 
-`B6R-RC1` capture remediation plan은 2026-08-27 동결·검증됐다. 현재 저장소에서 추가 stage를 실행할 근거는 없고, 현장 identity evidence와 Wave A 다인 capture가 다음 입력이다. 이 자료만으로 `B6R-2` 또는 training을 시작할 수 없다. 따라서 다음 에이전트는 아래 결정 규칙을 따른다.
+`B6R-RC1` capture remediation plan은 2026-08-27 동결·검증됐고, `B6R-P3`는 2026-08-28 사용자 승인으로 target readiness tooling과 blocker evidence를 남겼다. 현재 저장소에서 P3 이후 stage를 실행할 근거는 없으며, Raspberry Pi가 새로 authorized되면 같은 P3 target command를 재실행할 수 있을 뿐이다. 이 결과로 runtime/default activation·quantization·safety·holdout·본선 stage를 시작하지 않는다. MI48 입력이 별도로 확보되면 아래 기존 본선 결정 규칙을 따른다.
 
 | 입력 상태 | 허용되는 다음 작업 | 금지되는 작업 |
 |---|---|---|
@@ -722,8 +750,9 @@ crash, memory growth, fail-open
 | `Desktop/sessions`만 있고 RC1 plan 외 새 evidence 없음 | 저장소 변경 중단; RC1 identity evidence packet과 Wave A 다인 capture를 현장에서 준비 | 계획 중복 작성, B6R-1/2, model training, final/locked holdout, safety/physical claim |
 | RC1 evidence 또는 capture가 일부 전달됨 | `B6R-RC1 CAPTURE EVIDENCE REVIEW`로 identity/unit/orientation/FPS/subject/label/holdout accounting | 부분 evidence를 sensor approval 또는 model-use eligibility로 승격 |
 | RC1 exit criteria를 충족한 다인 capture와 owner identity decision이 확보됨 | `B6R-1` inventory 새 revision 후 조건 충족 시 B6R-2 | 한 subject frame-random split, 조기 holdout 개방 |
+| Raspberry Pi target이 별도 승인·접근 가능해짐 | 동일 `B6R-P3` runner로 target latency/resource/stability/determinism evidence 보완 | desktop 수치를 Pi 수치로 대체하거나 P3 이후 stage를 자동 시작 |
 
-즉, **권위 MI48 payload가 있으면 정확히 하나의 권고는 `B6R-1`**이고, 현재 Desktop 폴더만으로는 RC1 계획에 따른 evidence·capture 실행이 다음 행동이다. B6R-0은 기술적으로 병렬 가능하지만, 사용자가 별도로 `Wave F`를 승인할 때만 허용한다.
+즉, **권위 MI48 payload가 있으면 정확히 하나의 본선 권고는 `B6R-1`**이고, 현재 Desktop 폴더만으로는 RC1 계획에 따른 evidence·capture 실행이 다음 행동이다. public 보조는 `B6R-P3` target evidence가 현재 blocker이며, 별도 승인 없는 P3 이후 단계는 없다. B6R-0은 기술적으로 병렬 가능하지만, 사용자가 별도로 `Wave F`를 승인할 때만 허용한다.
 
 이 stage가 반드시 밝혀야 하는 항목은 다음과 같다.
 
@@ -793,6 +822,6 @@ crash, memory growth, fail-open
 
 우선순위는 data reliability → split integrity → preprocessing clarity → real MI48 domain performance → reproducibility → FP32 runtime stability → temporal stabilization → sensor-fusion safety → optimization 순서다.
 
-**권고 다음 작업:** 권위 MI48 payload가 확보된 경우에만 `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`; 현재 `Desktop/sessions`만으로는 동결된 RC1에 따른 identity evidence packet과 Wave A 다인 capture 준비.
+**권고 다음 작업:** 현재 public 보조의 다음 실행은 `B6R-P3` target이 실제로 authorized된 경우에만 동일 runner를 target에서 재실행하는 것이다. MI48 본선은 권위 payload가 확보된 경우에만 `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`로 시작한다. 현재 `Desktop/sessions`만으로는 동결된 RC1의 identity evidence packet과 Wave A 다인 capture를 준비한다.
 
-**사용자가 별도의 실행 지시를 제공하기 전에는 저장소를 더 변경하거나 B6R-1을 구현하지 않는다.**
+**B6R-P3 이후에는 새 사용자 지시 없이 추가 stage를 실행하지 않는다.**

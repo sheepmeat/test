@@ -1,0 +1,38 @@
+{
+  "actual_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+  "actual_size_bytes": 70592,
+  "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+  "checks": {
+    "exists": true,
+    "p2_class_order": true,
+    "p2_default_activation_false": true,
+    "p2_export_manifest_sha": true,
+    "p2_export_tensor_contract": true,
+    "p2_fp32_no_quantization": true,
+    "p2_live_tensor_metadata_contract": true,
+    "p2_safety_authority_false": true,
+    "p2_shadow_only": true,
+    "sha256": true,
+    "size_bytes": true
+  },
+  "expected_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+  "expected_size_bytes": 70592,
+  "expected_tensor_contract": {
+    "input_dtype": "float32",
+    "input_shape": [
+      1,
+      62,
+      80,
+      1
+    ],
+    "output_dtype": "float32",
+    "output_shape": [
+      1,
+      3
+    ],
+    "quantization": "NONE"
+  },
+  "schema_version": "safenest.thermal.b6r_p3.artifact_identity_audit.v1",
+  "stage_id": "B6R-P3",
+  "status": "PASS"
+}

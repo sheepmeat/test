@@ -1,0 +1,16 @@
+{
+  "mismatch_sample_ids": [],
+  "predefined_tolerances": {
+    "definition_timing": "defined_before_B6R-P3_target_measurement",
+    "mismatch_count_max": 0,
+    "output_max_abs": 1e-06,
+    "output_mean_abs": 1e-07,
+    "prediction_agreement_min": 1.0
+  },
+  "process_reexecution": "NOT_MEASURED_ON_TARGET",
+  "repeated_model_loads": "NOT_MEASURED_ON_TARGET",
+  "same_interpreter_instance": "NOT_MEASURED_ON_TARGET",
+  "schema_version": "safenest.thermal.b6r_p3.determinism_metrics.v1",
+  "target_measurement_status": "NOT_MEASURED_ON_TARGET",
+  "target_status": "BLOCKED_HARDWARE"
+}

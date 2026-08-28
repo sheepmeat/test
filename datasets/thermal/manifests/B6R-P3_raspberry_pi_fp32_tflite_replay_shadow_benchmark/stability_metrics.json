@@ -1,0 +1,18 @@
+{
+  "cpu_statistics": "NOT_MEASURED_ON_TARGET",
+  "duration_seconds": "NOT_MEASURED_ON_TARGET",
+  "exception_count": "NOT_MEASURED_ON_TARGET",
+  "failed_inference_count": "NOT_MEASURED_ON_TARGET",
+  "latency_drift": "NOT_MEASURED_ON_TARGET",
+  "minimum_duration_seconds": 1800,
+  "nan_inf_output_count": "NOT_MEASURED_ON_TARGET",
+  "restarted_after_first_failure": false,
+  "rss_start_end_peak": "NOT_MEASURED_ON_TARGET",
+  "schema_version": "safenest.thermal.b6r_p3.stability_metrics.v1",
+  "shape_dtype_violation_count": "NOT_MEASURED_ON_TARGET",
+  "target_measurement_status": "NOT_MEASURED_ON_TARGET",
+  "target_status": "BLOCKED_HARDWARE",
+  "temperature_start_end_peak": "NOT_MEASURED_ON_TARGET",
+  "total_inference_count": "NOT_MEASURED_ON_TARGET",
+  "unexpected_process_termination": "NOT_MEASURED_ON_TARGET"
+}

@@ -26,6 +26,17 @@
 - Conclusion: current `.venv` has TensorFlow `2.20.0`, so public P2 desktop parity is revalidated; this does not resolve B5 exact assets, LiteRT/Pi evidence, authoritative MI48 provenance, B6R-2 group/label evidence, or independent holdout.
 - No formal next stage is authorized. Wait for new MI48/owner evidence or user instruction; do not define or execute `B6R-P3`.
 
+## Latest Public Auxiliary Execution
+
+- Report: `docs/reports/20260828_Codex_Thermal_B6R_B6R-P3_Raspberry_Pi_FP32_TFLite_Replay_Shadow_Benchmark_Report_KO_01.md`
+- Date: `2026-08-28`
+- Unit: `B6R-P3 — Raspberry Pi FP32 TFLite Replay & Shadow Benchmark`
+- Status: `BLOCKED_HARDWARE`
+- Contract: `config/thermal/b6r_p3_raspberry_pi_fp32_tflite_replay_shadow_benchmark_contract.json`
+- Evidence: `datasets/thermal/manifests/B6R-P3_raspberry_pi_fp32_tflite_replay_shadow_benchmark/`
+- Conclusion: P2 exact FP32 artifact SHA/tensor contract, P0 source archive `6/6`, P2 DEVELOPMENT fixture inheritance, locked-test `0`, legacy/default/runtime immutability, and shadow-only boundary passed. Authorized Raspberry Pi target access timed out, so target latency/resource/stability/determinism remain `NOT_MEASURED_ON_TARGET`; desktop values were not substituted.
+- Historical current-state report above is preserved as written. Its prior “do not define or execute B6R-P3” instruction was superseded only for this explicit 2026-08-28 user-approved execution revision.
+
 ## Latest Gate-Remediation Package
 
 - Plan: `docs/thermal/20260827_SafeNest_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Plan_KO_01.md`
@@ -88,6 +99,7 @@
 | B6R-P0 | `PASS_WITH_LIMITATIONS` | `docs/reports/20260826_Codex_Thermal_B6R_B6R-P0_Public_SDT_Materialization_Report_KO_01.md` | `datasets/thermal/manifests/B6R-P0_public_sdt_materialization/`; local payload `datasets/thermal/materialized/B6R-P0_public_sdt_v1/` | delivery commit은 `git log` 참조 | public SDT 48,000개를 원본 split 그대로 materialize하고 전수 provenance·결정론·원본 불변 검증을 통과했다. MI48/physical/safety 근거는 아니다. |
 | B6R-P1 | `PASS_WITH_LIMITATIONS` | `docs/reports/20260826_Codex_Thermal_B6R_B6R-P1_Public_SDT_Training_Report_KO_01.md` | `models/thermal/public_sdt/`; `datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/` | delivery commit은 `git log` 참조 | P0 exact identity의 TRAIN/DEVELOPMENT만 사용해 NumPy pooled-MLP 실험 모델을 생성했다. test read 0, legacy manifest 불변. TFLite/Pi/safety 권한은 별도 단계다. |
 | B6R-P2 | `PASS` | `docs/reports/20260826_Codex_Thermal_B6R_P2_FP32_TFLite_Export_Offline_Parity_Report_KO_01.md` | `models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite`; `datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/` | delivery commit은 `git log` 참조 | P1 parameter를 그대로 TensorFlow graph와 70,592-byte FP32 TFLite로 옮겼다. 48 DEVELOPMENT fixture 3단계 parity·2회 export byte determinism 통과, mismatch 0, locked test read 0, default/runtime 불변. |
+| B6R-P3 | `BLOCKED_HARDWARE` | `docs/reports/20260828_Codex_Thermal_B6R_B6R-P3_Raspberry_Pi_FP32_TFLite_Replay_Shadow_Benchmark_Report_KO_01.md` | `config/thermal/b6r_p3_raspberry_pi_fp32_tflite_replay_shadow_benchmark_contract.json`; `datasets/thermal/manifests/B6R-P3_raspberry_pi_fp32_tflite_replay_shadow_benchmark/` | delivery commit은 `git log` 참조 | P2 exact SHA `f88d65d7...c52ff`, P0 source `6/6`, DEVELOPMENT fixture 48개 상속, validator `13/13`; Raspberry Pi target 미접근으로 latency/resource/30분/determinism은 측정하지 않았다. |
 
 ## Historical Source Branches
 
@@ -113,6 +125,7 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 - B6R-2: session/label/split/holdout 계약을 만들 data gate가 충족되지 않았고 independent holdout이 없다. Desktop sessions도 `NOT_LOCKED_TEST`, `split_frozen_at=null`, `model_use_eligibility=NOT_AUTHORIZED_BY_CAPTURE_VALIDATOR`다.
 - B6R-RC1: 보완 절차는 동결됐지만 Thermal-90 vendor/part/revision/raw mapping·owner decision, unit/orientation/FPS gate, 독립 subject·dual-reviewed label, 새 holdout subject·seal은 아직 evidence가 없다.
 - B6R-P0의 성공은 public-data 경로만 개방하며 위 MI48 blocker를 해소하지 않는다.
+- B6R-P3는 2026-08-28 사용자 명시 승인으로 tooling/readiness audit을 실행했으나 `BLOCKED_HARDWARE`로 종료됐다. target 수치를 desktop으로 대체하지 않았고, P3 이후 stage는 실행하지 않았다.
 - 2026-08-26 current-state reconciliation에서 위 환경 capability drift를 기록했지만 본선 stage 판정과 public claim boundary는 변경하지 않았다.
 
 ## Next Authorized Stage
@@ -125,8 +138,8 @@ PR #124와 #125는 통합 브랜치로 대체되는 기존 개발 경로다. 감
 - External capture: `B6R-RC1` plan/contract는 사용자 승인으로 완료됐다. 다음 현장 입력은 identity evidence packet과 Wave A 다인 capture이며, 저장소 작업은 새 evidence가 전달된 뒤 `B6R-RC1 CAPTURE EVIDENCE REVIEW`로만 재개한다.
 - Public 보조: `B6R-P2`는 2026-08-26 사용자 승인으로 완료됐다. P0/P1의 split 역할, preprocessing, label mapping, architecture, trained parameter를 그대로 상속했다.
 - B6R-P2 결과도 legacy 기본 모델·manifest를 덮어쓰거나 safety authority를 부여하지 않는다. locked public test read count는 `0`이다.
-- 다음 public 작업 후보는 Raspberry Pi FP32 replay/shadow benchmark 성격이지만 아직 stage로 정의·승인·실행하지 않았다.
-- RC1 exit criteria가 충족되기 전에는 B6R-1 재실행, training, holdout 평가, `B6R-P3` 정의·실행을 시작하지 않는다. 충족 후에도 먼저 B6R-1 새 revision으로 inventory를 재판정한다.
+- B6R-P3는 `BLOCKED_HARDWARE`로 종료됐다. target이 새로 authorized될 경우 동일 P3 runner 재실행이 필요하지만, 별도 stage·default activation·quantization·safety·holdout 평가로 확장하지 않는다.
+- RC1 exit criteria가 충족되기 전에는 B6R-1 재실행, training, holdout 평가를 시작하지 않는다. 충족 후에도 먼저 B6R-1 새 revision으로 inventory를 재판정한다.
 
 ## Required Reading Order for Future Agents
 
@@ -154,3 +167,4 @@ Public 보조 흐름을 수행하는 agent는 위 순서에 더해 `B6R-P0` 보�
 9. `B6R-P2` artifact는 shadow-only deployment-format 후보다. Raspberry Pi·MI48·physical·latency·runtime integration 또는 safety 검증으로 승격하지 않는다.
 10. `B6R-RC0` Desktop sessions evidence는 non-gating capture pilot이다. `Thermal-90`을 MI48로 재명명하지 않고, 단일 subject·invalid capture·미검증 unit/orientation·정적 posture proxy를 final training/holdout/낙상 성능 근거로 사용하지 않는다.
 11. `B6R-RC1`은 보완 계획과 validator의 완료만 뜻한다. identity evidence와 owner decision 없이 sensor approval을 주장하지 않고, 기존 `S000`을 locked holdout으로 승격하지 않으며, 실제 capture 전후에 같은 contract identity를 검증한다.
+12. `B6R-P3`는 P2 exact artifact의 target measurement/readiness evidence만 다룬다. target metric이 없으면 `BLOCKED_HARDWARE`와 `NOT_MEASURED_ON_TARGET`을 기록하고 desktop 수치를 Pi claim으로 바꾸지 않는다.

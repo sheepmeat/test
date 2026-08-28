@@ -1,0 +1,12 @@
+{
+  "configured_target_count": 2,
+  "explicit_user_target_count": 1,
+  "probe_method": "pre-existing SSH config; BatchMode public-key probe; no password or credential guessing",
+  "probe_status": "SSH_CONNECT_TIMEOUT",
+  "schema_version": "safenest.thermal.b6r_p3.target_access_audit.v1",
+  "stage_id": "B6R-P3",
+  "status": "BLOCKED_HARDWARE",
+  "target_address_persisted": false,
+  "target_identity": "NOT_AVAILABLE",
+  "target_measurement_available": false
+}

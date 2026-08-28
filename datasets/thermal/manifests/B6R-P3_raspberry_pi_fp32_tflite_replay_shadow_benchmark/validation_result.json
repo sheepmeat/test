@@ -1,0 +1,260 @@
+{
+  "checks": [
+    {
+      "check": "contract_snapshot_matches_live_contract",
+      "detail": {
+        "snapshot_matches": true
+      },
+      "passed": true
+    },
+    {
+      "check": "p2_exact_artifact_identity",
+      "detail": {
+        "actual_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+        "actual_size_bytes": 70592,
+        "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+        "checks": {
+          "exists": true,
+          "p2_class_order": true,
+          "p2_default_activation_false": true,
+          "p2_export_manifest_sha": true,
+          "p2_export_tensor_contract": true,
+          "p2_fp32_no_quantization": true,
+          "p2_live_tensor_metadata_contract": true,
+          "p2_safety_authority_false": true,
+          "p2_shadow_only": true,
+          "sha256": true,
+          "size_bytes": true
+        },
+        "expected_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+        "expected_size_bytes": 70592,
+        "expected_tensor_contract": {
+          "input_dtype": "float32",
+          "input_shape": [
+            1,
+            62,
+            80,
+            1
+          ],
+          "output_dtype": "float32",
+          "output_shape": [
+            1,
+            3
+          ],
+          "quantization": "NONE"
+        },
+        "schema_version": "safenest.thermal.b6r_p3.artifact_identity_audit.v1",
+        "stage_id": "B6R-P3",
+        "status": "PASS"
+      },
+      "passed": true
+    },
+    {
+      "check": "p2_contract_identity",
+      "detail": {
+        "class_order": [
+          "NOT_HUMAN",
+          "HUMAN_NORMAL",
+          "HUMAN_FALL_PROXY"
+        ],
+        "format": "TFLITE_FP32",
+        "input_dtype": "float32",
+        "input_shape": [
+          1,
+          62,
+          80,
+          1
+        ],
+        "output_dtype": "float32",
+        "output_shape": [
+          1,
+          3
+        ],
+        "p2_export_manifest_path": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/export_manifest.json",
+        "p2_tensor_metadata_path": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/tensor_metadata.json",
+        "path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+        "quantization": "NONE",
+        "sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+        "size_bytes": 70592
+      },
+      "passed": true
+    },
+    {
+      "check": "development_fixture_inherited_without_reselection",
+      "detail": {
+        "dataset_id": true,
+        "label_mapping_id": true,
+        "locked_public_test_access_zero": true,
+        "only_development_path": true,
+        "parent_p2_sha256": true,
+        "preprocessing_id": true,
+        "role": true,
+        "sample_count": true,
+        "sample_records_inherited_exactly": true,
+        "stage_id": true
+      },
+      "passed": true
+    },
+    {
+      "check": "development_fixture_files_and_labels",
+      "detail": {
+        "canonical_fixture_sha256": "b2fbac76e115042899b93a4ca29f0f23612e2703bb5730714b768454e7aa0b34",
+        "labels_match_replay_manifest": true,
+        "sample_count": 48
+      },
+      "passed": true
+    },
+    {
+      "check": "p0_development_file_identity",
+      "detail": {
+        "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+        "files": [
+          {
+            "actual_sha256": "18c8da80b28f908701aaacd24bbcb7bc71cfdb5a6474245f1d44f897799cf1f4",
+            "actual_size_bytes": 158720128,
+            "exists": true,
+            "expected_sha256": "18c8da80b28f908701aaacd24bbcb7bc71cfdb5a6474245f1d44f897799cf1f4",
+            "expected_size_bytes": 158720128,
+            "matches_registry": true,
+            "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/images.npy"
+          },
+          {
+            "actual_sha256": "22f50fbbfcbac9fcc11c8815cff74fd43a37f6dab19100d87e934b61aa8586ae",
+            "actual_size_bytes": 8128,
+            "exists": true,
+            "expected_sha256": "22f50fbbfcbac9fcc11c8815cff74fd43a37f6dab19100d87e934b61aa8586ae",
+            "expected_size_bytes": 8128,
+            "matches_registry": true,
+            "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/labels.npy"
+          },
+          {
+            "actual_sha256": "f1da406ad1a248f191ad9796ac61b7cc507e16ebefd23aeb19c4ecd281511dde",
+            "actual_size_bytes": 7133656,
+            "exists": true,
+            "expected_sha256": "f1da406ad1a248f191ad9796ac61b7cc507e16ebefd23aeb19c4ecd281511dde",
+            "expected_size_bytes": 7133656,
+            "matches_registry": true,
+            "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/sample_index.jsonl"
+          }
+        ],
+        "locked_public_test_files_opened": 0,
+        "parent_p2_parity_manifest_path": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/parity_manifest.json",
+        "parent_p2_parity_manifest_sha256": "5534054955a12e5853ecb013e54da203c8c4e14cf2a66d0e3cd383dd6c00193b",
+        "role": "DEVELOPMENT",
+        "schema_version": "safenest.thermal.b6r_p3.replay_fixture_audit.v1",
+        "stage_id": "B6R-P3",
+        "status": "PASS"
+      },
+      "passed": true
+    },
+    {
+      "check": "p0_source_archive_identity_six_of_six",
+      "detail": {
+        "all_match": true,
+        "expected_six": true,
+        "found_six": true,
+        "p0_immutability_pass": true,
+        "source_not_modified": true,
+        "source_root_not_persisted": true,
+        "status_pass": true
+      },
+      "passed": true
+    },
+    {
+      "check": "hardware_blocker_is_explicit",
+      "detail": {
+        "determinism_not_measured_on_target": true,
+        "interpreter_unavailable_without_target_claim": true,
+        "latency_not_measured_on_target": true,
+        "resources_not_measured_on_target": true,
+        "run_summary_hardware_blocked": true,
+        "stability_not_measured_on_target": true,
+        "target_access_blocked": true,
+        "target_environment_unavailable_without_desktop_substitution": true
+      },
+      "passed": true
+    },
+    {
+      "check": "locked_public_test_access_zero",
+      "detail": {
+        "array_open_count": 0,
+        "metrics_computed": false,
+        "path_configured": false,
+        "role": "LOCKED_PUBLIC_TEST",
+        "sample_read_count": 0,
+        "schema_version": "safenest.thermal.b6r_p3.locked_test_access_audit.v1",
+        "status": "PASS",
+        "used_for_selection_or_tuning": false
+      },
+      "passed": true
+    },
+    {
+      "check": "legacy_default_runtime_unchanged_and_rollback_preserved",
+      "detail": {
+        "inference/thermal_interpreter.py": {
+          "exists": true,
+          "sha256": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+          "size_bytes": 8742
+        },
+        "models/model_manifest.json": {
+          "exists": true,
+          "sha256": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+          "size_bytes": 7624
+        },
+        "models/thermal/thermal_fall_int8_v0.1.0.tflite": {
+          "exists": true,
+          "sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+          "size_bytes": 318184
+        }
+      },
+      "passed": true
+    },
+    {
+      "check": "shadow_only_deployment_boundary",
+      "detail": {
+        "competition_lock_claim": false,
+        "default_activation": false,
+        "deployment_mode": "SHADOW_ONLY",
+        "explicit_opt_in_required": true,
+        "legacy_model_overwrite": false,
+        "mi48_claim": false,
+        "model_manifest_default_update": false,
+        "physical_validation_claim": false,
+        "production_ready_claim": false,
+        "production_runtime_selector_update": false,
+        "real_fall_detection_claim": false,
+        "rollback_target": "models/thermal/thermal_fall_int8_v0.1.0.tflite",
+        "safety_authority": false
+      },
+      "passed": true
+    },
+    {
+      "check": "evidence_checksums",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "no_absolute_path_persistence",
+      "detail": [],
+      "passed": true
+    }
+  ],
+  "checks_failed": 0,
+  "checks_passed": 13,
+  "default_activation": false,
+  "limitations": [
+    "The replay fixture is public SDT DEVELOPMENT data and is not MI48 or physical sensor evidence.",
+    "P0 preprocessing is inherited; P3 preprocessing latency measures canonical float32 ingress only, not PNG resize.",
+    "No target metric is substituted with desktop measurements.",
+    "HUMAN_FALL_PROXY is a posture proxy, not a real-fall or safety decision."
+  ],
+  "locked_public_test_access_count": 0,
+  "next_stage_executed": false,
+  "p2_artifact_identity_status": "PASS",
+  "p2_artifact_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+  "safety_authority": false,
+  "schema_version": "safenest.thermal.b6r_p3.validation_result.v1",
+  "stage_id": "B6R-P3",
+  "status": "BLOCKED_HARDWARE",
+  "target_measurement_status": "NOT_MEASURED_ON_TARGET"
+}
