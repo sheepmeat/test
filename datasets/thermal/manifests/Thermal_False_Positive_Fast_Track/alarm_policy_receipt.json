@@ -2,9 +2,11 @@
   "schema_version": "safenest.thermal.false_positive_fast_track.alarm_policy_receipt.v1",
   "roadmap_step": "P0",
   "status": "BLOCKED",
-  "verdict": "ACTIVE_ALARM_PATH_NOT_IDENTIFIED_AND_LEGACY_CLASS_INDEX_DIRECT_ALARM_PATH_REQUIRES_RUNTIME_ISOLATION_EVIDENCE",
+  "verdict": "TEAM_SOURCE_CONFIRMS_PUBLIC_SDT_ACTIVE_LIMITED_RISK_NOT_SHADOW_ONLY; DEPLOYED_ALARM_PATH_AND_EXTERNAL_EFFECTS_REMAIN_UNVERIFIED",
   "scope": {
     "repository_role": "standalone evidence repository",
+    "team_integration_source_reviewed": true,
+    "team_integration_source_commit": "d69ce19b7d0d6cd7c5a7b288a52800f6f1e8e44c",
     "actual_raspberry_pi_runtime_available": false,
     "actual_collector_runtime_available": false,
     "raw_sensor_or_participant_data_committed": false,
@@ -12,6 +14,13 @@
     "threshold_changed": false,
     "firmware_changed": false,
     "safety_authority_changed": false
+  },
+  "external_source_evidence": {
+    "repository": "https://github.com/jinsu1011/safenest-embedded-competition.git",
+    "ref": "main",
+    "commit": "d69ce19b7d0d6cd7c5a7b288a52800f6f1e8e44c",
+    "inspection_method": "read-only Git object inspection; no team-repository modification",
+    "deployment_limitation": "A source commit is not evidence that the same commit and configuration are running on the Raspberry Pi."
   },
   "observations": [
     {
@@ -43,6 +52,28 @@
       "limitation": "The active model selector, active alarm route, actuator route, and external-alert route cannot be identified from this repository."
     },
     {
+      "id": "TEAM_PUBLIC_SDT_ACTIVE_LIMITED_RISK_SOURCE_POLICY",
+      "kind": "OBSERVED_EXTERNAL_SOURCE_AT_PINNED_COMMIT",
+      "status": "NOT_SHADOW_ONLY_AND_NOT_DEPLOYMENT_VERIFIED",
+      "evidence_paths": [
+        "jinsu1011/safenest-embedded-competition@d69ce19b7d0d6cd7c5a7b288a52800f6f1e8e44c:RaspberryPi/Ondevice_AI/config/models.yaml",
+        "jinsu1011/safenest-embedded-competition@d69ce19b7d0d6cd7c5a7b288a52800f6f1e8e44c:RaspberryPi/Ondevice_AI/docs/reports/20260828_SafeNest_Thermal_B6R_Public_SDT_FP32_Active_Runtime_Handoff_KO_01.md"
+      ],
+      "finding": "The team source selects the public-SDT FP32 model as the active thermal runtime model, sets safety_authority false and risk_authority LIMITED_POSTURE_PROXY, but assigns HUMAN_FALL_PROXY a proxy_risk_score of 0.4 for runtime risk fusion. The handoff explicitly states that this is not observation-only shadow execution.",
+      "limitation": "This fails the P0 public-SDT telemetry/shadow-only requirement at source-policy level and still does not identify the configuration actually running on the Pi."
+    },
+    {
+      "id": "TEAM_PROXY_NO_EMERGENCY_SOURCE_GUARD",
+      "kind": "OBSERVED_EXTERNAL_SOURCE_AT_PINNED_COMMIT",
+      "status": "SOURCE_LEVEL_GUARD_ONLY",
+      "evidence_paths": [
+        "jinsu1011/safenest-embedded-competition@d69ce19b7d0d6cd7c5a7b288a52800f6f1e8e44c:RaspberryPi/Ondevice_AI/inference/infer_pi_thermal.py",
+        "jinsu1011/safenest-embedded-competition@d69ce19b7d0d6cd7c5a7b288a52800f6f1e8e44c:RaspberryPi/Ondevice_AI/integrated_node/safenest_risk_engine.py"
+      ],
+      "finding": "The reviewed source distinguishes HUMAN_FALL_PROXY from HUMAN_FALL: the proxy maps to risk score 0.4, while emergency_override and alarm_sink dispatch require HUMAN_FALL. The integrated node emits THERMAL_FALL_PROXY_LIMITED_RISK_NO_EMERGENCY with CAUTION and emergency_override false for the proxy.",
+      "limitation": "No deployed-runtime trace verifies that this commit and these code paths are the ones serving the Pi, nor does it prove the absence of downstream actuator or external-alert effects."
+    },
+    {
       "id": "LEGACY_CLASS_INDEX_DIRECT_ALARM_PATH",
       "kind": "OBSERVED_STATIC_CODE",
       "status": "SAFETY_RISK_REQUIRES_RUNTIME_ISOLATION",
@@ -63,8 +94,8 @@
     }
   ],
   "required_p0_conditions": {
-    "public_sdt_telemetry_or_shadow_only": "NOT_RUNTIME_VERIFIED",
-    "single_human_fall_proxy_frame_cannot_trigger_emergency": "NOT_RUNTIME_VERIFIED",
+    "public_sdt_telemetry_or_shadow_only": "FAILED_SOURCE_POLICY_AND_NOT_RUNTIME_VERIFIED",
+    "single_human_fall_proxy_frame_cannot_trigger_emergency": "SOURCE_LEVEL_GUARD_VERIFIED_NOT_DEPLOYMENT_VERIFIED",
     "single_human_fall_proxy_frame_cannot_trigger_actuator": "NOT_RUNTIME_VERIFIED",
     "single_human_fall_proxy_frame_cannot_trigger_external_alert": "NOT_RUNTIME_VERIFIED",
     "legacy_class_index_2_direct_emergency_investigated": "STATIC_RISK_FOUND",
@@ -78,12 +109,17 @@
     {
       "code": "CLASS_INDEX_2_DIRECT_ALARM_ISOLATION_UNVERIFIED",
       "reason": "A repository legacy wrapper directly turns class_index == 2 into emergency_override and an alarm_sink call, but its deployed use and isolation are not verified."
+    },
+    {
+      "code": "PUBLIC_SDT_ACTIVE_LIMITED_RISK_NOT_SHADOW_ONLY",
+      "reason": "The reviewed team main source routes HUMAN_FALL_PROXY into runtime risk fusion at 0.4, contrary to P0's telemetry/shadow-only requirement."
     }
   ],
   "required_to_unblock": [
-    "From the actual deployed runtime, preserve the runtime and collector commit SHAs, active model selector/config source, and active alarm-mode configuration.",
+    "Authorize and apply the minimum actual-runtime configuration/code isolation that makes public SDT telemetry/shadow only; the reviewed team main source currently uses it as a limited-risk contributor.",
+    "From the actual deployed runtime, preserve the runtime and collector commit SHAs, active model selector/config source, and active alarm-mode configuration after that isolation.",
     "Provide a reproducible runtime-level trace or test proving that one HUMAN_FALL_PROXY output cannot directly invoke emergency, an actuator, or an external alert.",
-    "If the legacy class_index == 2 wrapper is active, apply and verify the minimum shadow/telemetry isolation in the actual runtime before any inference experiment; record the exact deployed commit and configuration evidence.",
+    "If the legacy class_index == 2 wrapper is active in the deployed runtime, isolate or remove that direct path before any inference experiment and record the exact deployed commit and configuration evidence.",
     "Provide a runtime log/configuration demonstrating that diagnostic output remains probability/telemetry only."
   ],
   "next_action": "STOP_P0_ONLY; do not start TFP-0 until every required P0 condition is runtime-verified."
