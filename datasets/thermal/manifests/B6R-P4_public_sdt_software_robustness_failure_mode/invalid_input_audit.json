@@ -1,0 +1,264 @@
+{
+  "accepted_count": 4,
+  "case_count": 12,
+  "cases": [
+    {
+      "case_id": "NAN",
+      "error": "input contains NaN or infinity",
+      "error_type": "ValueError",
+      "helper_action": "FAIL_CLOSED_IN_ISOLATED_P4_HELPER",
+      "helper_status": "REJECTED",
+      "model_status": "NOT_INVOKED",
+      "original_dtype": "float32",
+      "original_shape": [
+        62,
+        80,
+        1
+      ]
+    },
+    {
+      "case_id": "+INF",
+      "error": "input contains NaN or infinity",
+      "error_type": "ValueError",
+      "helper_action": "FAIL_CLOSED_IN_ISOLATED_P4_HELPER",
+      "helper_status": "REJECTED",
+      "model_status": "NOT_INVOKED",
+      "original_dtype": "float32",
+      "original_shape": [
+        62,
+        80,
+        1
+      ]
+    },
+    {
+      "case_id": "-INF",
+      "error": "input contains NaN or infinity",
+      "error_type": "ValueError",
+      "helper_action": "FAIL_CLOSED_IN_ISOLATED_P4_HELPER",
+      "helper_status": "REJECTED",
+      "model_status": "NOT_INVOKED",
+      "original_dtype": "float32",
+      "original_shape": [
+        62,
+        80,
+        1
+      ]
+    },
+    {
+      "case_id": "WRONG_SHAPE",
+      "error": "shape/rank contract violation: (61, 80, 1)",
+      "error_type": "ValueError",
+      "helper_action": "FAIL_CLOSED_IN_ISOLATED_P4_HELPER",
+      "helper_status": "REJECTED",
+      "model_status": "NOT_INVOKED",
+      "original_dtype": "float32",
+      "original_shape": [
+        61,
+        80,
+        1
+      ]
+    },
+    {
+      "case_id": "EMPTY_ARRAY",
+      "error": "shape/rank contract violation: (0,)",
+      "error_type": "ValueError",
+      "helper_action": "FAIL_CLOSED_IN_ISOLATED_P4_HELPER",
+      "helper_status": "REJECTED",
+      "model_status": "NOT_INVOKED",
+      "original_dtype": "float32",
+      "original_shape": [
+        0
+      ]
+    },
+    {
+      "case_id": "WRONG_RANK",
+      "error": "shape/rank contract violation: (1, 1, 62, 80, 1)",
+      "error_type": "ValueError",
+      "helper_action": "FAIL_CLOSED_IN_ISOLATED_P4_HELPER",
+      "helper_status": "REJECTED",
+      "model_status": "NOT_INVOKED",
+      "original_dtype": "float32",
+      "original_shape": [
+        1,
+        1,
+        62,
+        80,
+        1
+      ]
+    },
+    {
+      "case_id": "CONSTANT_ZERO",
+      "helper_action": "PRESERVE_FLOAT32",
+      "helper_status": "ACCEPTED",
+      "model_status": "ACCEPTED",
+      "numerical_integrity": {
+        "invalid_probability_count": 0,
+        "non_finite_output_count": 0,
+        "output_dtype": "float32",
+        "output_shape": [
+          1,
+          3
+        ],
+        "probability_sum_max_abs_error": 0.0,
+        "status": "PASS",
+        "valid_argmax_count": 1
+      },
+      "original_dtype": "float32",
+      "original_shape": [
+        62,
+        80,
+        1
+      ],
+      "prepared_dtype": "float32",
+      "prepared_shape": [
+        62,
+        80,
+        1
+      ],
+      "probabilities": [
+        0.36993345618247986,
+        0.3812248408794403,
+        0.24884173274040222
+      ]
+    },
+    {
+      "case_id": "CONSTANT_ONE",
+      "helper_action": "PRESERVE_FLOAT32",
+      "helper_status": "ACCEPTED",
+      "model_status": "ACCEPTED",
+      "numerical_integrity": {
+        "invalid_probability_count": 0,
+        "non_finite_output_count": 0,
+        "output_dtype": "float32",
+        "output_shape": [
+          1,
+          3
+        ],
+        "probability_sum_max_abs_error": 5.960464477539063e-08,
+        "status": "PASS",
+        "valid_argmax_count": 1
+      },
+      "original_dtype": "float32",
+      "original_shape": [
+        62,
+        80,
+        1
+      ],
+      "prepared_dtype": "float32",
+      "prepared_shape": [
+        62,
+        80,
+        1
+      ],
+      "probabilities": [
+        0.6683851480484009,
+        1.6196456675832138e-10,
+        0.33161479234695435
+      ]
+    },
+    {
+      "case_id": "OUT_OF_RANGE_NEGATIVE",
+      "error": "input outside canonical [0,1] range",
+      "error_type": "ValueError",
+      "helper_action": "FAIL_CLOSED_IN_ISOLATED_P4_HELPER",
+      "helper_status": "REJECTED",
+      "model_status": "NOT_INVOKED",
+      "original_dtype": "float32",
+      "original_shape": [
+        62,
+        80,
+        1
+      ]
+    },
+    {
+      "case_id": "OUT_OF_RANGE_ABOVE_ONE",
+      "error": "input outside canonical [0,1] range",
+      "error_type": "ValueError",
+      "helper_action": "FAIL_CLOSED_IN_ISOLATED_P4_HELPER",
+      "helper_status": "REJECTED",
+      "model_status": "NOT_INVOKED",
+      "original_dtype": "float32",
+      "original_shape": [
+        62,
+        80,
+        1
+      ]
+    },
+    {
+      "case_id": "FLOAT64",
+      "helper_action": "CAST_TO_FLOAT32",
+      "helper_status": "ACCEPTED",
+      "model_status": "ACCEPTED",
+      "numerical_integrity": {
+        "invalid_probability_count": 0,
+        "non_finite_output_count": 0,
+        "output_dtype": "float32",
+        "output_shape": [
+          1,
+          3
+        ],
+        "probability_sum_max_abs_error": 0.0,
+        "status": "PASS",
+        "valid_argmax_count": 1
+      },
+      "original_dtype": "float64",
+      "original_shape": [
+        62,
+        80,
+        1
+      ],
+      "prepared_dtype": "float32",
+      "prepared_shape": [
+        62,
+        80,
+        1
+      ],
+      "probabilities": [
+        0.6454651951789856,
+        8.076908670773264e-06,
+        0.3545267581939697
+      ]
+    },
+    {
+      "case_id": "INTEGER",
+      "helper_action": "CAST_TO_FLOAT32",
+      "helper_status": "ACCEPTED",
+      "model_status": "ACCEPTED",
+      "numerical_integrity": {
+        "invalid_probability_count": 0,
+        "non_finite_output_count": 0,
+        "output_dtype": "float32",
+        "output_shape": [
+          1,
+          3
+        ],
+        "probability_sum_max_abs_error": 5.960464477539063e-08,
+        "status": "PASS",
+        "valid_argmax_count": 1
+      },
+      "original_dtype": "uint8",
+      "original_shape": [
+        62,
+        80,
+        1
+      ],
+      "prepared_dtype": "float32",
+      "prepared_shape": [
+        62,
+        80,
+        1
+      ],
+      "probabilities": [
+        0.6683851480484009,
+        1.6196456675832138e-10,
+        0.33161479234695435
+      ]
+    }
+  ],
+  "production_validator_modified": false,
+  "rejected_count": 8,
+  "schema_version": "safenest.thermal.b6r_p4.invalid_input_audit.v1",
+  "scope": "ISOLATED_P4_HELPER_AND_FP32_TFLITE_NOT_PRODUCTION_RUNTIME",
+  "stage_id": "B6R-P4",
+  "status": "PASS"
+}

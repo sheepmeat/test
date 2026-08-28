@@ -1,0 +1,19 @@
+{
+  "default_runtime_modified": false,
+  "development_sample_count": 8000,
+  "locked_public_test_access_count": 0,
+  "model_modified": false,
+  "next_stage_executed": false,
+  "numpy": "2.5.2",
+  "p3_status": "BLOCKED_HARDWARE_UNCHANGED",
+  "perturbation_condition_count": 16,
+  "perturbed_inference_count": 128000,
+  "platform": "Windows",
+  "python": "3.12.13",
+  "raspberry_pi_connection_attempt_count": 0,
+  "real_sensor_access_count": 0,
+  "schema_version": "safenest.thermal.b6r_p4.run_summary.v1",
+  "stage_id": "B6R-P4",
+  "status": "PASS_WITH_LIMITATIONS",
+  "status_qualifier": "PUBLIC_DATA_SOFTWARE_ONLY_NON_GATING"
+}

@@ -1,0 +1,57 @@
+{
+  "p1": {
+    "actual_parameter_count": 2691,
+    "actual_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+    "expected_parameter_count": 2691,
+    "expected_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+    "path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz"
+  },
+  "p2": {
+    "actual_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+    "actual_size_bytes": 70592,
+    "class_order": [
+      "NOT_HUMAN",
+      "HUMAN_NORMAL",
+      "HUMAN_FALL_PROXY"
+    ],
+    "expected_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+    "expected_size_bytes": 70592,
+    "path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+    "tensor_metadata": {
+      "backend": "tensorflow.lite.Interpreter",
+      "input": {
+        "dtype": "float32",
+        "quantization_scale": 0.0,
+        "quantization_zero_point": 0,
+        "shape": [
+          1,
+          62,
+          80,
+          1
+        ],
+        "shape_signature": [
+          -1,
+          62,
+          80,
+          1
+        ]
+      },
+      "output": {
+        "dtype": "float32",
+        "quantization_scale": 0.0,
+        "quantization_zero_point": 0,
+        "shape": [
+          1,
+          3
+        ],
+        "shape_signature": [
+          -1,
+          3
+        ]
+      }
+    }
+  },
+  "schema_version": "safenest.thermal.b6r_p4.model_identity_audit.v1",
+  "stage_id": "B6R-P4",
+  "status": "PASS"
+}

@@ -1,0 +1,40 @@
+{
+  "clean_child_process_rerun": {
+    "comparison_count": 816,
+    "perturbation_tensor_hash": "cf989c3d0efb906068dac9256a6161b3278980bfd159b801d2707c774c45deb4",
+    "prediction_hash": "68ff42fd390b6aedfc38b3441beb48c9ca2938db1355694bfed5c42753fb88da",
+    "probability_hash": "73c76cebd4acd46c703bab56069561965531bebbef3e4ab292d8327c2d08a898",
+    "summary_metrics_hash": "f88389dc2783b394f1d0934ae5b6db7ffba2b4c4488824c58a3e16305e7d7035"
+  },
+  "comparisons": {
+    "clean_child_process_rerun": true,
+    "interpreter_reload": true,
+    "metrics_regeneration": true,
+    "perturbation_regeneration": true,
+    "same_process_repeat": true
+  },
+  "interpreter_reload": {
+    "comparison_count": 816,
+    "perturbation_tensor_hash": "cf989c3d0efb906068dac9256a6161b3278980bfd159b801d2707c774c45deb4",
+    "prediction_hash": "68ff42fd390b6aedfc38b3441beb48c9ca2938db1355694bfed5c42753fb88da",
+    "probability_hash": "73c76cebd4acd46c703bab56069561965531bebbef3e4ab292d8327c2d08a898",
+    "summary_metrics_hash": "f88389dc2783b394f1d0934ae5b6db7ffba2b4c4488824c58a3e16305e7d7035"
+  },
+  "reference": {
+    "comparison_count": 816,
+    "perturbation_tensor_hash": "cf989c3d0efb906068dac9256a6161b3278980bfd159b801d2707c774c45deb4",
+    "prediction_hash": "68ff42fd390b6aedfc38b3441beb48c9ca2938db1355694bfed5c42753fb88da",
+    "probability_hash": "73c76cebd4acd46c703bab56069561965531bebbef3e4ab292d8327c2d08a898",
+    "summary_metrics_hash": "f88389dc2783b394f1d0934ae5b6db7ffba2b4c4488824c58a3e16305e7d7035"
+  },
+  "same_process_repeat": {
+    "comparison_count": 816,
+    "perturbation_tensor_hash": "cf989c3d0efb906068dac9256a6161b3278980bfd159b801d2707c774c45deb4",
+    "prediction_hash": "68ff42fd390b6aedfc38b3441beb48c9ca2938db1355694bfed5c42753fb88da",
+    "probability_hash": "73c76cebd4acd46c703bab56069561965531bebbef3e4ab292d8327c2d08a898",
+    "summary_metrics_hash": "f88389dc2783b394f1d0934ae5b6db7ffba2b4c4488824c58a3e16305e7d7035"
+  },
+  "schema_version": "safenest.thermal.b6r_p4.determinism_audit.v1",
+  "stage_id": "B6R-P4",
+  "status": "PASS"
+}

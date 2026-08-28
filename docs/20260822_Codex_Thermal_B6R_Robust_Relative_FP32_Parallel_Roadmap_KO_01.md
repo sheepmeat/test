@@ -1,6 +1,6 @@
 # SafeNest Thermal B6-R robust-relative FP32 병렬 개발 로드맵
 
-문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P3 실행 + B6R-RC0/RC1 실제 capture evidence·보완 계획 + 현재 환경 gate 재조정 반영**
+문서 상태: **B6R-0~14 설계·승인용 로드맵 + B6R-P4 실행 + B6R-RC0/RC1 실제 capture evidence·보완 계획 + 현재 환경 gate 재조정 반영**
 
 대상 후보: `B6-R robust-relative FP32`
 
@@ -8,9 +8,22 @@
 
 작성일: `2026-08-22`
 
-실행 개정일: `2026-08-28` (`B6R-P0~P2` 완료; `B6R-P3` `BLOCKED_HARDWARE`; `B6R-RC0` assessment와 `B6R-RC1` Thermal-90 remediation plan 반영)
+실행 개정일: `2026-08-28` (`B6R-P0~P2` 완료; `B6R-P3` `BLOCKED_HARDWARE`; `B6R-P4` `PASS_WITH_LIMITATIONS`; `B6R-RC0` assessment와 `B6R-RC1` Thermal-90 remediation plan 반영)
 
 > 이 문서는 코드, 모델, 데이터, 임계값 또는 runtime을 구현하거나 변경하지 않는다. 향후 실행은 사용자가 명시적으로 승인한 **한 stage 또는 한 parallel wave**만 수행하고, 검증·증거 요약 후 반드시 멈춘다.
+
+### 2026-08-28 실행 개정 — 사용자 승인 `B6R-P4` Public SDT FP32 TFLite Offline Robustness & Failure-Mode Audit
+
+사용자는 기존 roadmap에 없던 `B6R-P4` 한 단계를 `PUBLIC_AUXILIARY`, `SOFTWARE_ONLY`, `NON_GATING`, `DEVELOPMENT_ONLY`, `SHADOW_ONLY`로 명시 승인했다. P4는 P3 hardware gate를 우회하지 않고 P2 exact artifact의 software-only diagnostic evidence만 추가했다.
+
+- P0 DEVELOPMENT 8,000개 전체에 사전 고정된 16개 deterministic perturbation을 적용해 128,000 inference를 수행했다. noise, sparse hot/cold pixel, row/column dropout, rectangle occlusion, small spatial shift를 포함하며 실제 sensor/physical robustness를 주장하지 않는다.
+- clean DEVELOPMENT diagnostic은 accuracy `0.9070`, macro-F1 `0.9013267`이었다. 최대 flip은 약 10% rectangle occlusion의 `931/8000`(`11.6375%`)였고 2-pixel shift는 `7.8125~8.2375%`였다. 이 수치로 gating threshold를 만들지 않았다.
+- P2 48개 DEVELOPMENT fixture의 clean+16 조건, 총 816 pair에서 NumPy↔TFLite max abs `5.0663948e-7`, mean abs `3.6375546e-8`, argmax mismatch `0`으로 P2 tolerance를 통과했다.
+- normal perturbation output의 non-finite/invalid probability는 `0`; malformed input 12개는 isolated P4 helper에서 8 reject, 4 accept/cast로 분류했다. production validator/runtime은 수정하지 않았다.
+- same-process, interpreter reload, child-process, perturbation/metric regeneration hash가 모두 일치했다. source archive `6/6`, LOCKED_PUBLIC_TEST read `0`, real sensor access `0`, Raspberry Pi attempt `0`, P1/P2/legacy/default/runtime bytes 불변을 확인했다.
+- P4 상태는 `PASS_WITH_LIMITATIONS — PUBLIC_DATA_SOFTWARE_ONLY_NON_GATING`다. P3는 `BLOCKED_HARDWARE`이며 본선 `B6R-0 FAIL`, `B6R-1 INCONCLUSIVE`, `B6R-2 BLOCKED`, `B6R-3~14 NOT_STARTED`도 그대로다.
+
+상세 contract/evidence/report는 `config/thermal/b6r_p4_public_sdt_software_robustness_failure_mode_contract.json`, `datasets/thermal/manifests/B6R-P4_public_sdt_software_robustness_failure_mode/`, `docs/reports/20260828_Codex_Thermal_B6R_B6R-P4_Public_SDT_Software_Only_Robustness_Failure_Mode_Audit_Report_KO_01.md`를 따른다. P5는 정의·실행하지 않았다.
 
 ### 2026-08-28 실행 개정 — 사용자 승인 `B6R-P3` Raspberry Pi FP32 TFLite Replay & Shadow Benchmark
 
@@ -225,6 +238,7 @@ P1 TRAIN-global z-score
 | `B6R-P1` Public SDT Controlled Training | `PASS_WITH_LIMITATIONS` | P0의 TRAIN/DEVELOPMENT만으로 별도 실험 모델을 학습하고 후보 identity를 생성 | 사용자의 2026-08-26 별도 승인, P0 exact contract/checksum | `thermal_public_sdt_pooled_mlp_v1` NumPy model, metadata, run/history/validation manifest | development-only 결과와 limitation 기록; test·MI48 미사용; default activation `false`; TFLite/Pi는 새 stage |
 | `B6R-P2` Public SDT FP32 TFLite Export & Offline Parity | `PASS` | P1 NumPy 후보의 identity와 parameter를 그대로 FP32 TFLite로 변환하고 DEVELOPMENT에서 NumPy↔TensorFlow↔TFLite 구현 동등성을 검증 | P1 `PASS_WITH_LIMITATIONS`, exact model/metadata hash, TensorFlow/TFLite export capability, DEVELOPMENT fixture | 별도 FP32 `.tflite`, export/tensor/parity/determinism/locked-test/legacy audit manifest, validator와 보고서 | 사전 tolerance 내 3단계 parity, argmax 100%, locked test read 0, legacy/default/runtime 불변, shadow-only 경계 확인 |
 | `B6R-P3` Raspberry Pi FP32 TFLite Replay & Shadow Benchmark | `BLOCKED_HARDWARE` | P2 exact FP32 artifact를 실제 Raspberry Pi에서 replay·latency·resource·stability·determinism 관점으로 검증하고 shadow-only opt-in 경계를 감사 | P2 exact SHA/tensor contract, P2 DEVELOPMENT fixture, authorized Raspberry Pi target | P3 contract, target runner/validator/focused test, replay/source/artifact/target prerequisite evidence | target 접근 전까지 target metrics는 `NOT_MEASURED_ON_TARGET`; desktop 대체 금지; P3 이후 stage 실행 금지 |
+| `B6R-P4` Public SDT FP32 TFLite Offline Robustness & Failure-Mode Audit | `PASS_WITH_LIMITATIONS` | P2 exact artifact를 DEVELOPMENT-only deterministic synthetic stress, failure-mode, parity, numerical integrity, reproducibility 관점에서 software-only 감사 | 사용자 2026-08-28 명시 승인, P0/P1/P2 exact identity | P4 contract/evaluator/validator/test, clean·perturbation·parity·invalid-input·determinism·boundary evidence | non-gating software evidence 완료; P3/본선/physical/runtime gate로 전파 금지; P5 실행 금지 |
 
 #### `B6R-P0` — Public SDT Dataset Materialization & Split Contract
 
@@ -740,9 +754,9 @@ crash, memory growth, fail-open
 
 ## G. Recommended Immediate Next Stage
 
-### 현재 결론: B6R-P3 `BLOCKED_HARDWARE`; target evidence 대기 및 P3 이후 STOP
+### 현재 결론: B6R-P4 `PASS_WITH_LIMITATIONS`; P3 `BLOCKED_HARDWARE` 유지 및 P4 이후 STOP
 
-`B6R-RC1` capture remediation plan은 2026-08-27 동결·검증됐고, `B6R-P3`는 2026-08-28 사용자 승인으로 target readiness tooling과 blocker evidence를 남겼다. 현재 저장소에서 P3 이후 stage를 실행할 근거는 없으며, Raspberry Pi가 새로 authorized되면 같은 P3 target command를 재실행할 수 있을 뿐이다. 이 결과로 runtime/default activation·quantization·safety·holdout·본선 stage를 시작하지 않는다. MI48 입력이 별도로 확보되면 아래 기존 본선 결정 규칙을 따른다.
+`B6R-RC1` capture remediation plan은 2026-08-27 동결·검증됐고, `B6R-P3`는 target 미접근으로 `BLOCKED_HARDWARE`다. 2026-08-28 사용자 승인 P4는 public SDT DEVELOPMENT-only software stress/failure-mode evidence를 완료했지만 P3 또는 본선 gate를 해소하지 않는다. Raspberry Pi가 새로 authorized되면 기존 P3 contract/runner를 별도로 재실행할 수 있을 뿐이며, P5·runtime/default activation·quantization·safety·holdout·본선 stage를 시작하지 않는다. MI48 입력이 별도로 확보되면 아래 기존 본선 결정 규칙을 따른다.
 
 | 입력 상태 | 허용되는 다음 작업 | 금지되는 작업 |
 |---|---|---|
@@ -822,6 +836,6 @@ crash, memory growth, fail-open
 
 우선순위는 data reliability → split integrity → preprocessing clarity → real MI48 domain performance → reproducibility → FP32 runtime stability → temporal stabilization → sensor-fusion safety → optimization 순서다.
 
-**권고 다음 작업:** 현재 public 보조의 다음 실행은 `B6R-P3` target이 실제로 authorized된 경우에만 동일 runner를 target에서 재실행하는 것이다. MI48 본선은 권위 payload가 확보된 경우에만 `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`로 시작한다. 현재 `Desktop/sessions`만으로는 동결된 RC1의 identity evidence packet과 Wave A 다인 capture를 준비한다.
+**권고 다음 작업:** P4 후속 public stage를 정의하지 않는다. `B6R-P3` target이 실제로 authorized된 경우에만 기존 runner를 target에서 별도로 재실행한다. MI48 본선은 권위 payload가 확보된 경우에만 `B6R-1 — MI48 Snapshot Inventory & Abnormal-Pixel Profiler`로 시작한다. 현재 `Desktop/sessions`만으로는 동결된 RC1의 identity evidence packet과 Wave A 다인 capture를 준비한다.
 
-**B6R-P3 이후에는 새 사용자 지시 없이 추가 stage를 실행하지 않는다.**
+**B6R-P4 이후에는 새 사용자 지시 없이 추가 stage를 실행하지 않는다.**
