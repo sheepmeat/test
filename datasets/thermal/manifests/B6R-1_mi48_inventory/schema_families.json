@@ -1,0 +1,76 @@
+{
+  "array_schema_records": [],
+  "families": [
+    {
+      "array_count": 0,
+      "examples": [
+        {
+          "array_key": null,
+          "dtype": null,
+          "relative_path": "test.zip",
+          "shape": {
+            "bit_depth": 16,
+            "color_type": 0,
+            "compression": 0,
+            "filter_method": 0,
+            "height": 480,
+            "interlace": 0,
+            "width": 640
+          }
+        },
+        {
+          "array_key": null,
+          "dtype": null,
+          "relative_path": "validation.zip",
+          "shape": {
+            "bit_depth": 16,
+            "color_type": 0,
+            "compression": 0,
+            "filter_method": 0,
+            "height": 480,
+            "interlace": 0,
+            "width": 640
+          }
+        }
+      ],
+      "file_count": 2,
+      "schema_family": "ARCHIVE_MEMBER_SEMANTICS_NOT_MI48_VERIFIED",
+      "schema_status": "UNKNOWN",
+      "thermal_frame_count": 0
+    },
+    {
+      "array_count": 0,
+      "examples": [
+        {
+          "array_key": null,
+          "dtype": null,
+          "relative_path": "train.zip.001",
+          "shape": null
+        },
+        {
+          "array_key": null,
+          "dtype": null,
+          "relative_path": "train.zip.002",
+          "shape": null
+        },
+        {
+          "array_key": null,
+          "dtype": null,
+          "relative_path": "train.zip.003",
+          "shape": null
+        },
+        {
+          "array_key": null,
+          "dtype": null,
+          "relative_path": "train.zip.004",
+          "shape": null
+        }
+      ],
+      "file_count": 4,
+      "schema_family": "MULTI_VOLUME_ARCHIVE_COMPONENT",
+      "schema_status": "UNKNOWN",
+      "thermal_frame_count": 0
+    }
+  ],
+  "schema_version": "safenest.thermal.b6r1.schema_families.v1"
+}

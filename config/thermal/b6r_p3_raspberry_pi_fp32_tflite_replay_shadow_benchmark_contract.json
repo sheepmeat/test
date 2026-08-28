@@ -1,0 +1,213 @@
+{
+  "schema_version": "safenest.thermal.b6r_p3.raspberry_pi_fp32_tflite_replay_shadow_benchmark_contract.v1",
+  "stage_id": "B6R-P3",
+  "stage_name": "Raspberry Pi FP32 TFLite Replay & Shadow Benchmark",
+  "execution_date": "2026-08-28",
+  "source_stage": "B6R-P2",
+  "manifest_dir": "datasets/thermal/manifests/B6R-P3_raspberry_pi_fp32_tflite_replay_shadow_benchmark",
+  "purpose": "Measure the frozen public-SDT FP32 TFLite candidate on an actual Raspberry Pi when an authorized target is available; otherwise preserve an explicit hardware blocker without substituting desktop measurements.",
+  "authorized_scope": [
+    "P2 exact artifact identity and tensor-contract audit",
+    "DEVELOPMENT-only fixed replay benchmark tooling",
+    "preprocessing ingress, inference, and total latency distribution",
+    "RSS, CPU, temperature, and prolonged replay stability evidence",
+    "repeated-load and repeated-inference determinism evidence",
+    "shadow-only opt-in and rollback-readiness audit"
+  ],
+  "p2_artifact": {
+    "path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+    "sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+    "size_bytes": 70592,
+    "format": "TFLITE_FP32",
+    "input_shape": [
+      1,
+      62,
+      80,
+      1
+    ],
+    "input_dtype": "float32",
+    "output_shape": [
+      1,
+      3
+    ],
+    "output_dtype": "float32",
+    "quantization": "NONE",
+    "class_order": [
+      "NOT_HUMAN",
+      "HUMAN_NORMAL",
+      "HUMAN_FALL_PROXY"
+    ],
+    "p2_export_manifest_path": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/export_manifest.json",
+    "p2_tensor_metadata_path": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/tensor_metadata.json"
+  },
+  "required_inheritance": {
+    "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+    "dataset_authority": "PUBLIC_SDT_ONLY_NOT_MI48",
+    "preprocessing_id": "PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1",
+    "label_mapping_id": "SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1",
+    "development_role": "DEVELOPMENT",
+    "locked_public_test_role": "LOCKED_PUBLIC_TEST",
+    "locked_public_test_access_required": 0
+  },
+  "replay_fixture": {
+    "role": "DEVELOPMENT",
+    "parent_p2_parity_manifest_path": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/parity_manifest.json",
+    "images_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/images.npy",
+    "labels_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/labels.npy",
+    "sample_index_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/sample_index.jsonl",
+    "p0_artifact_registry_path": "datasets/thermal/manifests/B6R-P0_public_sdt_materialization/artifact_registry.json",
+    "selection_policy": "INHERITED_P2_DEVELOPMENT_PARITY_FIXTURE_WITHOUT_RESELECTION",
+    "sample_count": 48,
+    "cycles": 10,
+    "measured_sample_count": 480,
+    "warmup_runs": 20,
+    "input_tensor_semantics": "P0 canonical preprocessed float32 tensor; no P3 resize or re-normalization",
+    "preprocessing_measurement": {
+      "stage_id": "P2_CANONICAL_FLOAT32_REPLAY_INGRESS_V1",
+      "measured_operations": [
+        "shape normalization to [1,62,80,1]",
+        "float32 dtype materialization",
+        "finite-value and [0,1] range validation",
+        "C-contiguous input preparation"
+      ],
+      "source_png_resize_measured": false,
+      "source_png_resize_note": "P0 bilinear resize and frame min-max normalization are inherited artifacts, not re-run on the target benchmark path."
+    }
+  },
+  "latency": {
+    "timer": "time.perf_counter_ns",
+    "warmup_excluded": true,
+    "required_statistics": [
+      "count",
+      "mean",
+      "median",
+      "p50",
+      "p95",
+      "p99",
+      "min",
+      "max"
+    ],
+    "stages": [
+      "preprocessing_ingress_ms",
+      "inference_ms",
+      "total_ms"
+    ],
+    "no_arbitrary_pass_threshold": true
+  },
+  "resources": {
+    "required": [
+      "rss_memory",
+      "cpu_utilization",
+      "cpu_temperature"
+    ],
+    "optional": [
+      "system_load",
+      "available_memory",
+      "thermal_throttling_status"
+    ],
+    "sample_interval_seconds": 1.0,
+    "unavailable_value": "NOT_AVAILABLE"
+  },
+  "prolonged_replay": {
+    "minimum_duration_seconds": 1800,
+    "required_fields": [
+      "total_inference_count",
+      "failed_inference_count",
+      "exception_count",
+      "nan_inf_output_count",
+      "shape_dtype_violation_count",
+      "rss_start_end_peak",
+      "temperature_start_end_peak",
+      "cpu_statistics",
+      "latency_drift",
+      "unexpected_process_termination"
+    ],
+    "restart_after_first_failure": false
+  },
+  "determinism": {
+    "same_interpreter_repeats": 3,
+    "repeated_loads": 3,
+    "process_reexecution": "one clean child-process replay when target execution is available",
+    "predefined_tolerances": {
+      "definition_timing": "defined_before_B6R-P3_target_measurement",
+      "output_max_abs": 1e-06,
+      "output_mean_abs": 1e-07,
+      "prediction_agreement_min": 1.0,
+      "mismatch_count_max": 0
+    },
+    "tolerance_rationale": "The FP32 target contract is expected to be deterministic for identical CPU interpreter inputs; the fixed tolerance is recorded before any P3 target result and is not relaxed after observation."
+  },
+  "interpreter": {
+    "selection_priority": [
+      "ai_edge_litert.interpreter",
+      "tflite_runtime.interpreter",
+      "tensorflow.lite.Interpreter"
+    ],
+    "thread_count": 1,
+    "required_tensor_contract": {
+      "input_shape": [
+        1,
+        62,
+        80,
+        1
+      ],
+      "input_dtype": "float32",
+      "output_shape": [
+        1,
+        3
+      ],
+      "output_dtype": "float32",
+      "quantization": "NONE"
+    }
+  },
+  "target_requirements": {
+    "target_device": "Raspberry Pi",
+    "actual_target_required_for_stage_pass": true,
+    "desktop_substitution_allowed": false,
+    "target_environment_fields": [
+      "hostname",
+      "os_distribution",
+      "kernel",
+      "architecture",
+      "raspberry_pi_model",
+      "python_version",
+      "cpu_information",
+      "available_memory_bytes"
+    ],
+    "unavailable_status": "BLOCKED_HARDWARE"
+  },
+  "locked_test_policy": {
+    "role": "LOCKED_PUBLIC_TEST",
+    "array_open_count_required": 0,
+    "sample_read_count_required": 0,
+    "metrics_computed": false,
+    "selection_or_tuning_use": false,
+    "path_configured": false
+  },
+  "deployment_boundary": {
+    "deployment_mode": "SHADOW_ONLY",
+    "explicit_opt_in_required": true,
+    "default_activation": false,
+    "safety_authority": false,
+    "legacy_model_overwrite": false,
+    "model_manifest_default_update": false,
+    "production_runtime_selector_update": false,
+    "rollback_target": "models/thermal/thermal_fall_int8_v0.1.0.tflite",
+    "mi48_claim": false,
+    "physical_validation_claim": false,
+    "real_fall_detection_claim": false,
+    "production_ready_claim": false,
+    "competition_lock_claim": false
+  },
+  "gate_policy": {
+    "allowed_statuses": [
+      "PASS",
+      "PASS_WITH_LIMITATIONS",
+      "FAIL",
+      "BLOCKED_HARDWARE"
+    ],
+    "latency_threshold": "NOT_DEFINED_BY_THIS_STAGE",
+    "hardware_blocker_rule": "If an actual Raspberry Pi target cannot be reached without guessing credentials or target identity, record BLOCKED_HARDWARE and NOT_MEASURED_ON_TARGET for all target metrics.",
+    "desktop_metrics_may_not_be_promoted_to_target": true
+  }
+}

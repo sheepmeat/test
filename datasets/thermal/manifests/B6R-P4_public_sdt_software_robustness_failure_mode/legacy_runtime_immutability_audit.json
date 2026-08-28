@@ -1,0 +1,35 @@
+{
+  "default_activation": false,
+  "files": {
+    "inference/thermal_interpreter.py": {
+      "actual_sha256": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+      "expected_sha256": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+      "unchanged": true
+    },
+    "models/model_manifest.json": {
+      "actual_sha256": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+      "expected_sha256": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+      "unchanged": true
+    },
+    "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite": {
+      "actual_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+      "expected_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+      "unchanged": true
+    },
+    "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz": {
+      "actual_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+      "expected_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+      "unchanged": true
+    },
+    "models/thermal/thermal_fall_int8_v0.1.0.tflite": {
+      "actual_sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+      "expected_sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+      "unchanged": true
+    }
+  },
+  "production_runtime_modified": false,
+  "safety_authority": false,
+  "schema_version": "safenest.thermal.b6r_p4.legacy_runtime_immutability_audit.v1",
+  "stage_id": "B6R-P4",
+  "status": "PASS"
+}

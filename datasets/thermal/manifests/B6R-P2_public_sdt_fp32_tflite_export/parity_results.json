@@ -1,0 +1,1174 @@
+{
+  "numpy_vs_tensorflow": {
+    "hidden": {
+      "max_abs_difference": 3.5762786865234375e-07,
+      "max_abs_tolerance": 1e-05,
+      "mean_abs_difference": 1.1276871880738781e-08,
+      "mean_abs_tolerance": null,
+      "mismatch_count": 0,
+      "mismatch_fixture_positions": [],
+      "passed": true,
+      "prediction_agreement": 1.0
+    },
+    "logits": {
+      "max_abs_difference": 1.430511474609375e-06,
+      "max_abs_tolerance": 1e-05,
+      "mean_abs_difference": 2.3634896706425934e-07,
+      "mean_abs_tolerance": null,
+      "mismatch_count": 0,
+      "mismatch_fixture_positions": [],
+      "passed": true,
+      "prediction_agreement": 1.0
+    },
+    "pooled": {
+      "max_abs_difference": 1.1920928955078125e-07,
+      "max_abs_tolerance": 1e-05,
+      "mean_abs_difference": 4.340714898631859e-09,
+      "mean_abs_tolerance": null,
+      "mismatch_count": 0,
+      "mismatch_fixture_positions": [],
+      "passed": true,
+      "prediction_agreement": 1.0
+    },
+    "probabilities": {
+      "max_abs_difference": 1.4901161193847656e-07,
+      "max_abs_tolerance": 1e-05,
+      "mean_abs_difference": 2.6310114975558463e-08,
+      "mean_abs_tolerance": 1e-06,
+      "mismatch_count": 0,
+      "mismatch_fixture_positions": [],
+      "passed": true,
+      "prediction_agreement": 1.0
+    }
+  },
+  "numpy_vs_tflite": {
+    "max_abs_difference": 3.5762786865234375e-07,
+    "max_abs_tolerance": 1e-05,
+    "mean_abs_difference": 3.800631276362765e-08,
+    "mean_abs_tolerance": 1e-06,
+    "mismatch_count": 0,
+    "mismatch_fixture_positions": [],
+    "mismatch_sample_ids": [],
+    "passed": true,
+    "prediction_agreement": 1.0
+  },
+  "per_sample": [
+    {
+      "development_index": 6704,
+      "fixture_position": 0,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.9973171353340149,
+        2.5955307137337513e-05,
+        0.0026569098699837923
+      ],
+      "sample_id": "sdt:validation:06704",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.9973171353340149,
+        2.5955308956326917e-05,
+        0.0026569124311208725
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.9973171353340149,
+        2.5955354431062005e-05,
+        0.0026569112669676542
+      ]
+    },
+    {
+      "development_index": 6563,
+      "fixture_position": 1,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.997273325920105,
+        1.60552062880015e-05,
+        0.0027105931658297777
+      ],
+      "sample_id": "sdt:validation:06563",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.9972733855247498,
+        1.6055208106990904e-05,
+        0.002710595726966858
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.9972733855247498,
+        1.605523721082136e-05,
+        0.00271059712395072
+      ]
+    },
+    {
+      "development_index": 6555,
+      "fixture_position": 2,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.9969731569290161,
+        2.454397144902032e-05,
+        0.0030022747814655304
+      ],
+      "sample_id": "sdt:validation:06555",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.9969731569290161,
+        2.454401874274481e-05,
+        0.003002280369400978
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.9969731569290161,
+        2.454399327689316e-05,
+        0.003002284560352564
+      ]
+    },
+    {
+      "development_index": 6664,
+      "fixture_position": 3,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.9968261122703552,
+        2.1653066141880117e-05,
+        0.003152229357510805
+      ],
+      "sample_id": "sdt:validation:06664",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.996826171875,
+        2.1653027943102643e-05,
+        0.003152228193357587
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.996826171875,
+        2.165304613299668e-05,
+        0.003152229590341449
+      ]
+    },
+    {
+      "development_index": 6751,
+      "fixture_position": 4,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.9967926144599915,
+        4.791055289388169e-06,
+        0.0032026097178459167
+      ],
+      "sample_id": "sdt:validation:06751",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.9967926144599915,
+        4.7910598368616775e-06,
+        0.0032026127446442842
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.9967926144599915,
+        4.7910598368616775e-06,
+        0.0032026139087975025
+      ]
+    },
+    {
+      "development_index": 6708,
+      "fixture_position": 5,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.9966995716094971,
+        8.975420314527582e-06,
+        0.003291464876383543
+      ],
+      "sample_id": "sdt:validation:06708",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.9966995120048523,
+        8.975428499979898e-06,
+        0.0032914646435528994
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.9966995120048523,
+        8.975427590485197e-06,
+        0.003291469067335129
+      ]
+    },
+    {
+      "development_index": 6987,
+      "fixture_position": 6,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.9965248107910156,
+        1.9317940314067528e-05,
+        0.0034558961633592844
+      ],
+      "sample_id": "sdt:validation:06987",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.9965247511863708,
+        1.9317960322950967e-05,
+        0.003455894533544779
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.9965247511863708,
+        1.9317922124173492e-05,
+        0.003455887548625469
+      ]
+    },
+    {
+      "development_index": 6654,
+      "fixture_position": 7,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.9964945316314697,
+        1.0265427590638865e-05,
+        0.003495230106636882
+      ],
+      "sample_id": "sdt:validation:06654",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.9964945912361145,
+        1.0265427590638865e-05,
+        0.0034952270798385143
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.9964945912361145,
+        1.0265428500133567e-05,
+        0.003495230106636882
+      ]
+    },
+    {
+      "development_index": 7468,
+      "fixture_position": 8,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.3707451820373535,
+        0.3702804446220398,
+        0.2589743733406067
+      ],
+      "sample_id": "sdt:validation:07468",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.37074512243270874,
+        0.3702804744243622,
+        0.2589744031429291
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.37074512243270874,
+        0.3702804148197174,
+        0.25897443294525146
+      ]
+    },
+    {
+      "development_index": 7543,
+      "fixture_position": 9,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.42841610312461853,
+        0.42896953225135803,
+        0.14261436462402344
+      ],
+      "sample_id": "sdt:validation:07543",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.42841610312461853,
+        0.42896953225135803,
+        0.14261437952518463
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.42841610312461853,
+        0.42896944284439087,
+        0.1426144391298294
+      ]
+    },
+    {
+      "development_index": 6647,
+      "fixture_position": 10,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.4322710633277893,
+        0.43686920404434204,
+        0.13085971772670746
+      ],
+      "sample_id": "sdt:validation:06647",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.4322710931301117,
+        0.43686917424201965,
+        0.13085973262786865
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.43227115273475647,
+        0.43686917424201965,
+        0.13085974752902985
+      ]
+    },
+    {
+      "development_index": 6739,
+      "fixture_position": 11,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.4303443431854248,
+        0.43746450543403625,
+        0.13219116628170013
+      ],
+      "sample_id": "sdt:validation:06739",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.43034419417381287,
+        0.43746456503868103,
+        0.13219118118286133
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.43034425377845764,
+        0.4374646246433258,
+        0.13219112157821655
+      ]
+    },
+    {
+      "development_index": 7018,
+      "fixture_position": 12,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.3653484880924225,
+        0.3726183772087097,
+        0.2620331048965454
+      ],
+      "sample_id": "sdt:validation:07018",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.3653484880924225,
+        0.3726184368133545,
+        0.2620331346988678
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.3653484880924225,
+        0.37261849641799927,
+        0.262033075094223
+      ]
+    },
+    {
+      "development_index": 6612,
+      "fixture_position": 13,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.4385169744491577,
+        0.43081390857696533,
+        0.13066910207271576
+      ],
+      "sample_id": "sdt:validation:06612",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.4385170638561249,
+        0.43081387877464294,
+        0.13066905736923218
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.4385169446468353,
+        0.43081390857696533,
+        0.13066911697387695
+      ]
+    },
+    {
+      "development_index": 6911,
+      "fixture_position": 14,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.4914267063140869,
+        0.5002184510231018,
+        0.008354857563972473
+      ],
+      "sample_id": "sdt:validation:06911",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.49142661690711975,
+        0.5002185106277466,
+        0.008354855701327324
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.49142634868621826,
+        0.5002188086509705,
+        0.008354843594133854
+      ]
+    },
+    {
+      "development_index": 7108,
+      "fixture_position": 15,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.39423272013664246,
+        0.38489463925361633,
+        0.2208726555109024
+      ],
+      "sample_id": "sdt:validation:07108",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.39423277974128723,
+        0.38489463925361633,
+        0.2208726406097412
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.39423277974128723,
+        0.38489454984664917,
+        0.2208726704120636
+      ]
+    },
+    {
+      "development_index": 5198,
+      "fixture_position": 16,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        2.9259914299473166e-05,
+        0.9998425245285034,
+        0.00012819071707781404
+      ],
+      "sample_id": "sdt:validation:05198",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        2.9259914299473166e-05,
+        0.9998425245285034,
+        0.00012819073162972927
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        2.9259830625960603e-05,
+        0.9998425245285034,
+        0.00012819060066249222
+      ]
+    },
+    {
+      "development_index": 5200,
+      "fixture_position": 17,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        3.107780503341928e-05,
+        0.9998018741607666,
+        0.0001670626807026565
+      ],
+      "sample_id": "sdt:validation:05200",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        3.107780503341928e-05,
+        0.9998018145561218,
+        0.00016706300084479153
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        3.107789598288946e-05,
+        0.9998019337654114,
+        0.0001670631900196895
+      ]
+    },
+    {
+      "development_index": 3440,
+      "fixture_position": 18,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        9.955585119314492e-05,
+        0.9997888207435608,
+        0.00011160301073687151
+      ],
+      "sample_id": "sdt:validation:03440",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        9.955586574506015e-05,
+        0.9997889399528503,
+        0.00011160292342538014
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        9.95558439171873e-05,
+        0.9997888207435608,
+        0.0001116030034609139
+      ]
+    },
+    {
+      "development_index": 5182,
+      "fixture_position": 19,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        1.2607971257239114e-05,
+        0.9997768402099609,
+        0.0002105252060573548
+      ],
+      "sample_id": "sdt:validation:05182",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        1.260798399016494e-05,
+        0.9997768998146057,
+        0.00021052542433608323
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        1.2607983080670238e-05,
+        0.9997768998146057,
+        0.00021052519150543958
+      ]
+    },
+    {
+      "development_index": 3939,
+      "fixture_position": 20,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.00010345430200686678,
+        0.9997707605361938,
+        0.00012580875772982836
+      ],
+      "sample_id": "sdt:validation:03939",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.00010345430200686678,
+        0.9997707009315491,
+        0.00012580887414515018
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.00010345428745495155,
+        0.9997707009315491,
+        0.00012580874317791313
+      ]
+    },
+    {
+      "development_index": 5025,
+      "fixture_position": 21,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        7.476696919184178e-05,
+        0.9997240304946899,
+        0.0002012273034779355
+      ],
+      "sample_id": "sdt:validation:05025",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        7.47669764677994e-05,
+        0.9997240900993347,
+        0.00020122733258176595
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        7.476696919184178e-05,
+        0.9997239708900452,
+        0.0002012268960243091
+      ]
+    },
+    {
+      "development_index": 3679,
+      "fixture_position": 22,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        5.2730018069269136e-05,
+        0.9996575713157654,
+        0.0002896742953453213
+      ],
+      "sample_id": "sdt:validation:03679",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        5.273007263895124e-05,
+        0.9996576309204102,
+        0.00028967458638362586
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        5.273006536299363e-05,
+        0.9996576309204102,
+        0.0002896745572797954
+      ]
+    },
+    {
+      "development_index": 3411,
+      "fixture_position": 23,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.00020371675782371312,
+        0.999656081199646,
+        0.00014019940863363445
+      ],
+      "sample_id": "sdt:validation:03411",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.00020371717982925475,
+        0.9996562004089355,
+        0.00014019956870470196
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.0002037167432717979,
+        0.999656081199646,
+        0.00014019911759532988
+      ]
+    },
+    {
+      "development_index": 2939,
+      "fixture_position": 24,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.48024019598960876,
+        0.48084521293640137,
+        0.038914602249860764
+      ],
+      "sample_id": "sdt:validation:02939",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.480240136384964,
+        0.48084530234336853,
+        0.03891460597515106
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.4802401065826416,
+        0.48084530234336853,
+        0.03891458362340927
+      ]
+    },
+    {
+      "development_index": 2426,
+      "fixture_position": 25,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.015349644236266613,
+        0.49193334579467773,
+        0.49271702766418457
+      ],
+      "sample_id": "sdt:validation:02426",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.015349640510976315,
+        0.49193328619003296,
+        0.49271702766418457
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.015349631197750568,
+        0.4919332265853882,
+        0.49271708726882935
+      ]
+    },
+    {
+      "development_index": 5181,
+      "fixture_position": 26,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.3629972040653229,
+        0.36410707235336304,
+        0.2728957235813141
+      ],
+      "sample_id": "sdt:validation:05181",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.3629972040653229,
+        0.36410707235336304,
+        0.2728957533836365
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.36299723386764526,
+        0.3641071021556854,
+        0.2728956937789917
+      ]
+    },
+    {
+      "development_index": 2159,
+      "fixture_position": 27,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.4114285409450531,
+        0.17858858406543732,
+        0.4099828898906708
+      ],
+      "sample_id": "sdt:validation:02159",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.4114285409450531,
+        0.17858856916427612,
+        0.40998294949531555
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.4114285707473755,
+        0.17858856916427612,
+        0.4099828898906708
+      ]
+    },
+    {
+      "development_index": 2692,
+      "fixture_position": 28,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.004582964349538088,
+        0.49685803055763245,
+        0.49855899810791016
+      ],
+      "sample_id": "sdt:validation:02692",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.0045829652808606625,
+        0.49685797095298767,
+        0.49855905771255493
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.004582968074828386,
+        0.49685779213905334,
+        0.49855923652648926
+      ]
+    },
+    {
+      "development_index": 5652,
+      "fixture_position": 29,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.4871602952480316,
+        0.48432889580726624,
+        0.028510820120573044
+      ],
+      "sample_id": "sdt:validation:05652",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.48716041445732117,
+        0.4843287467956543,
+        0.028510821983218193
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.4871605932712555,
+        0.48432856798171997,
+        0.02851082570850849
+      ]
+    },
+    {
+      "development_index": 5751,
+      "fixture_position": 30,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.43906423449516296,
+        0.4344593584537506,
+        0.12647642195224762
+      ],
+      "sample_id": "sdt:validation:05751",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.43906426429748535,
+        0.4344593286514282,
+        0.1264764368534088
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.4390641748905182,
+        0.43445947766304016,
+        0.12647639214992523
+      ]
+    },
+    {
+      "development_index": 3589,
+      "fixture_position": 31,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.08656314760446548,
+        0.4602316617965698,
+        0.4532051980495453
+      ],
+      "sample_id": "sdt:validation:03589",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.08656308054924011,
+        0.460231751203537,
+        0.4532052278518677
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.08656308799982071,
+        0.46023163199424744,
+        0.4532052278518677
+      ]
+    },
+    {
+      "development_index": 1451,
+      "fixture_position": 32,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.0007460745982825756,
+        0.0001703754678601399,
+        0.9990835785865784
+      ],
+      "sample_id": "sdt:validation:01451",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.0007460749475285411,
+        0.00017037564248312265,
+        0.9990835189819336
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.0007460749475285411,
+        0.00017037562793120742,
+        0.9990835189819336
+      ]
+    },
+    {
+      "development_index": 1353,
+      "fixture_position": 33,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.0012374271173030138,
+        0.00029559145332314074,
+        0.998466968536377
+      ],
+      "sample_id": "sdt:validation:01353",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.0012374275829643011,
+        0.0002955914242193103,
+        0.9984669089317322
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.001237428397871554,
+        0.00029559145332314074,
+        0.9984670281410217
+      ]
+    },
+    {
+      "development_index": 1317,
+      "fixture_position": 34,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.002064111176878214,
+        0.0001698719133855775,
+        0.9977660179138184
+      ],
+      "sample_id": "sdt:validation:01317",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.0020641114097088575,
+        0.00016987208800856024,
+        0.9977660179138184
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.0020641102455556393,
+        0.0001698719133855775,
+        0.9977660179138184
+      ]
+    },
+    {
+      "development_index": 859,
+      "fixture_position": 35,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.001726442133076489,
+        0.0006550554535351694,
+        0.9976184964179993
+      ],
+      "sample_id": "sdt:validation:00859",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.001726442133076489,
+        0.0006550551624968648,
+        0.9976184964179993
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.0017264420166611671,
+        0.0006550555117428303,
+        0.9976184964179993
+      ]
+    },
+    {
+      "development_index": 1077,
+      "fixture_position": 36,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.0018403015565127134,
+        0.0007826705696061254,
+        0.9973770380020142
+      ],
+      "sample_id": "sdt:validation:01077",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.0018403034191578627,
+        0.0007826705696061254,
+        0.9973770380020142
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.001840302487835288,
+        0.0007826705113984644,
+        0.9973770380020142
+      ]
+    },
+    {
+      "development_index": 915,
+      "fixture_position": 37,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.0018442081054672599,
+        0.0008924103458411992,
+        0.9972633719444275
+      ],
+      "sample_id": "sdt:validation:00915",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.0018442099681124091,
+        0.0008924108115024865,
+        0.9972634315490723
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.0018442088039591908,
+        0.0008924102294258773,
+        0.9972633123397827
+      ]
+    },
+    {
+      "development_index": 1235,
+      "fixture_position": 38,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.00228370213881135,
+        0.0004801237373612821,
+        0.9972361922264099
+      ],
+      "sample_id": "sdt:validation:01235",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.0022837009746581316,
+        0.0004801237373612821,
+        0.9972361922264099
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.002283700741827488,
+        0.00048012350453063846,
+        0.9972361922264099
+      ]
+    },
+    {
+      "development_index": 1308,
+      "fixture_position": 39,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.002149935346096754,
+        0.0007975221378728747,
+        0.9970525503158569
+      ],
+      "sample_id": "sdt:validation:01308",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.0021499386057257652,
+        0.0007975237094797194,
+        0.9970525503158569
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.0021499362774193287,
+        0.0007975228363648057,
+        0.9970525503158569
+      ]
+    },
+    {
+      "development_index": 309,
+      "fixture_position": 40,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.48262009024620056,
+        0.03438547998666763,
+        0.48299440741539
+      ],
+      "sample_id": "sdt:validation:00309",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.4826199412345886,
+        0.03438547998666763,
+        0.4829944968223572
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.4826200008392334,
+        0.03438548371195793,
+        0.4829944968223572
+      ]
+    },
+    {
+      "development_index": 1783,
+      "fixture_position": 41,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.42997127771377563,
+        0.13711245357990265,
+        0.4329162836074829
+      ],
+      "sample_id": "sdt:validation:01783",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.42997124791145325,
+        0.13711248338222504,
+        0.4329163134098053
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.42997124791145325,
+        0.13711252808570862,
+        0.4329162538051605
+      ]
+    },
+    {
+      "development_index": 1991,
+      "fixture_position": 42,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.36518555879592896,
+        0.264952689409256,
+        0.36986175179481506
+      ],
+      "sample_id": "sdt:validation:01991",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.36518552899360657,
+        0.264952689409256,
+        0.36986178159713745
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.36518558859825134,
+        0.2649526298046112,
+        0.36986175179481506
+      ]
+    },
+    {
+      "development_index": 271,
+      "fixture_position": 43,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.014591436833143234,
+        0.4951241910457611,
+        0.49028435349464417
+      ],
+      "sample_id": "sdt:validation:00271",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.014591436833143234,
+        0.49512431025505066,
+        0.4902842938899994
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.014591447077691555,
+        0.4951241910457611,
+        0.49028441309928894
+      ]
+    },
+    {
+      "development_index": 156,
+      "fixture_position": 44,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.11962436139583588,
+        0.43759652972221375,
+        0.4427790939807892
+      ],
+      "sample_id": "sdt:validation:00156",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.11962435394525528,
+        0.43759649991989136,
+        0.4427791237831116
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.11962435394525528,
+        0.43759655952453613,
+        0.4427791237831116
+      ]
+    },
+    {
+      "development_index": 1022,
+      "fixture_position": 45,
+      "numpy_prediction": 1,
+      "numpy_probabilities": [
+        0.18339583277702332,
+        0.41126739978790283,
+        0.40533676743507385
+      ],
+      "sample_id": "sdt:validation:01022",
+      "tensorflow_prediction": 1,
+      "tensorflow_probabilities": [
+        0.18339578807353973,
+        0.41126739978790283,
+        0.40533679723739624
+      ],
+      "tflite_prediction": 1,
+      "tflite_probabilities": [
+        0.18339575827121735,
+        0.41126731038093567,
+        0.405336856842041
+      ]
+    },
+    {
+      "development_index": 151,
+      "fixture_position": 46,
+      "numpy_prediction": 0,
+      "numpy_probabilities": [
+        0.49612826108932495,
+        0.013859801925718784,
+        0.49001196026802063
+      ],
+      "sample_id": "sdt:validation:00151",
+      "tensorflow_prediction": 0,
+      "tensorflow_probabilities": [
+        0.4961282014846802,
+        0.01385980099439621,
+        0.49001196026802063
+      ],
+      "tflite_prediction": 0,
+      "tflite_probabilities": [
+        0.49612826108932495,
+        0.01385980099439621,
+        0.49001193046569824
+      ]
+    },
+    {
+      "development_index": 1835,
+      "fixture_position": 47,
+      "numpy_prediction": 2,
+      "numpy_probabilities": [
+        0.48321449756622314,
+        0.025898491963744164,
+        0.49088701605796814
+      ],
+      "sample_id": "sdt:validation:01835",
+      "tensorflow_prediction": 2,
+      "tensorflow_probabilities": [
+        0.48321452736854553,
+        0.025898490101099014,
+        0.4908870756626129
+      ],
+      "tflite_prediction": 2,
+      "tflite_probabilities": [
+        0.48321449756622314,
+        0.025898488238453865,
+        0.4908870756626129
+      ]
+    }
+  ],
+  "schema_version": "safenest.thermal.b6r_p2.parity_results.v1",
+  "stage_id": "B6R-P2",
+  "status": "PASS",
+  "tensorflow_vs_tflite": {
+    "max_abs_difference": 2.980232238769531e-07,
+    "max_abs_tolerance": 1e-05,
+    "mean_abs_difference": 3.2731595211998865e-08,
+    "mean_abs_tolerance": 1e-06,
+    "mismatch_count": 0,
+    "mismatch_fixture_positions": [],
+    "passed": true,
+    "prediction_agreement": 1.0
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "competition_lock_claim": false,
+  "default_activation": false,
+  "deployment_mode": "SHADOW_ONLY",
+  "legacy_model_overwrite": false,
+  "mi48_claim": false,
+  "model_manifest_default_update": false,
+  "physical_validation_claim": false,
+  "safety_authority": false,
+  "semantic_limit": "HUMAN_FALL_PROXY is a public posture proxy, not a real-fall or safety decision."
+}

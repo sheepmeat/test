@@ -1,0 +1,17 @@
+{
+  "packages": {
+    "ai_edge_litert": "NOT_AVAILABLE",
+    "tensorflow": "NOT_AVAILABLE",
+    "tflite_runtime": "NOT_AVAILABLE"
+  },
+  "schema_version": "safenest.thermal.b6r_p3.interpreter_inventory.v1",
+  "selected_backend": "NOT_MEASURED_ON_TARGET",
+  "selected_backend_version": "NOT_MEASURED_ON_TARGET",
+  "selection_priority": [
+    "ai_edge_litert.interpreter",
+    "tflite_runtime.interpreter",
+    "tensorflow.lite.Interpreter"
+  ],
+  "target_status": "BLOCKED_HARDWARE",
+  "thread_count": "NOT_MEASURED_ON_TARGET"
+}

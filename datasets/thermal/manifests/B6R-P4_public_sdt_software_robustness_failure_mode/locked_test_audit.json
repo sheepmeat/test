@@ -1,0 +1,11 @@
+{
+  "array_open_count": 0,
+  "metrics_computed": false,
+  "path_configured": false,
+  "role": "LOCKED_PUBLIC_TEST",
+  "sample_read_count": 0,
+  "schema_version": "safenest.thermal.b6r_p4.locked_test_audit.v1",
+  "selection_or_tuning_use": false,
+  "stage_id": "B6R-P4",
+  "status": "PASS"
+}

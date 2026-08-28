@@ -1,0 +1,41 @@
+{
+  "latency_threshold": "NOT_DEFINED_BY_THIS_STAGE",
+  "measured_sample_count_configured": 480,
+  "sample_values_persisted": false,
+  "schema_version": "safenest.thermal.b6r_p3.latency_metrics.v1",
+  "statistics": {
+    "inference_ms": {
+      "count": "NOT_MEASURED_ON_TARGET",
+      "max": "NOT_MEASURED_ON_TARGET",
+      "mean": "NOT_MEASURED_ON_TARGET",
+      "median": "NOT_MEASURED_ON_TARGET",
+      "min": "NOT_MEASURED_ON_TARGET",
+      "p50": "NOT_MEASURED_ON_TARGET",
+      "p95": "NOT_MEASURED_ON_TARGET",
+      "p99": "NOT_MEASURED_ON_TARGET"
+    },
+    "preprocessing_ingress_ms": {
+      "count": "NOT_MEASURED_ON_TARGET",
+      "max": "NOT_MEASURED_ON_TARGET",
+      "mean": "NOT_MEASURED_ON_TARGET",
+      "median": "NOT_MEASURED_ON_TARGET",
+      "min": "NOT_MEASURED_ON_TARGET",
+      "p50": "NOT_MEASURED_ON_TARGET",
+      "p95": "NOT_MEASURED_ON_TARGET",
+      "p99": "NOT_MEASURED_ON_TARGET"
+    },
+    "total_ms": {
+      "count": "NOT_MEASURED_ON_TARGET",
+      "max": "NOT_MEASURED_ON_TARGET",
+      "mean": "NOT_MEASURED_ON_TARGET",
+      "median": "NOT_MEASURED_ON_TARGET",
+      "min": "NOT_MEASURED_ON_TARGET",
+      "p50": "NOT_MEASURED_ON_TARGET",
+      "p95": "NOT_MEASURED_ON_TARGET",
+      "p99": "NOT_MEASURED_ON_TARGET"
+    }
+  },
+  "target_measurement_status": "NOT_MEASURED_ON_TARGET",
+  "target_status": "BLOCKED_HARDWARE",
+  "warmup_runs_configured": 20
+}

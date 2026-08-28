@@ -1,0 +1,13 @@
+{
+  "export_byte_level_determinism": true,
+  "first_export_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+  "inference_determinism": true,
+  "inference_repeat_outputs_sha256": [
+    "481a6cc9b3b770a0da454fd4568ea9eff7c58982b2d2b579cc4a66848530dd07",
+    "481a6cc9b3b770a0da454fd4568ea9eff7c58982b2d2b579cc4a66848530dd07"
+  ],
+  "schema_version": "safenest.thermal.b6r_p2.determinism_audit.v1",
+  "second_export_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+  "status": "PASS",
+  "weight_determinism": true
+}

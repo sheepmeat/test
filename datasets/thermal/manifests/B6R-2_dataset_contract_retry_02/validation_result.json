@@ -1,0 +1,43 @@
+{
+  "artifact_id": "B6R-2_dataset_contract_retry_02",
+  "schema_version": "safenest.thermal.b6r2.validation_result.v1",
+  "stage_id": "B6R-2",
+  "status": "BLOCKED",
+  "entry_gate": "FAIL",
+  "json_parse": "PASS",
+  "source_sha256_recheck": "PASS_6_OF_6",
+  "archive_metadata_recheck": "PASS",
+  "python_compile": "PASS",
+  "focused_synthetic_harness": {
+    "status": "PASS",
+    "passed": 4,
+    "failed": 0,
+    "physical_mi48_evidence": false
+  },
+  "pytest_runner": "NOT_TESTED_MODULE_UNAVAILABLE",
+  "b6r1_standalone_validator": {
+    "status": "FAIL",
+    "error_count": 10,
+    "raw_checksum_matches": "0/10",
+    "lf_normalized_checksum_matches": "10/10",
+    "root_cause": "WINDOWS_CRLF_CHECKOUT_CONVERSION"
+  },
+  "group_isolation": "NOT_TESTED_BLOCKED_NO_GROUP_IDENTITY",
+  "cross_role_contamination": "NOT_TESTED_BLOCKED_NO_SPLIT_OR_SAMPLE_LEDGER",
+  "independent_holdout_seal": "NOT_TESTED_BLOCKED_NO_PRISTINE_HOLDOUT",
+  "holdout_access_count": 0,
+  "raw_source_modification_count": 0,
+  "historical_artifact_modification_count": 0,
+  "next_stage_authorized": false,
+  "claims_allowed": [
+    "The six workspace archive files are byte-identical to the B6R-1 source registry.",
+    "The observed archives do not establish native MI48 geometry or trustworthy subject/session grouping.",
+    "B6R-2 entry conditions remain unsatisfied."
+  ],
+  "claims_not_allowed": [
+    "The workspace archives are authoritative MI48 data.",
+    "A group-isolated split or independent holdout exists.",
+    "B6R-3 preprocessing work is authorized.",
+    "Any MI48 model performance or physical-runtime claim."
+  ]
+}

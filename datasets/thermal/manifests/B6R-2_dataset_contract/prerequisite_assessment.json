@@ -1,0 +1,84 @@
+{
+  "artifact_id": "B6R-2_dataset_contract_prerequisite_blocker",
+  "schema_version": "safenest.thermal.b6r2.prerequisite_assessment.v1",
+  "stage_id": "B6R-2",
+  "stage_contract": {
+    "purpose": "Freeze a leakage-resistant session, label, split, and independent-holdout contract for authoritative MI48 data.",
+    "core_question": "Can subject, session, recording, and label provenance be trusted sufficiently to create group-isolated roles and seal an independent holdout?",
+    "required_predecessor": "B6R-1 full accounting with an identified MI48 schema family and usable frame/metadata evidence.",
+    "allowed_inputs": [
+      "B6R-1 machine-readable evidence",
+      "read-only historical T-A5 split and holdout evidence",
+      "read-only current source availability and file-stat checks"
+    ],
+    "forbidden_inputs": [
+      "unresolved archives promoted to MI48 by filename or geometry guess",
+      "synthetic examples represented as physical MI48 data",
+      "independent holdout contents",
+      "historical REAL_EVAL_DEVELOPMENT relabeled as an independent holdout"
+    ],
+    "required_outputs_if_entry_passes": [
+      "dataset contract",
+      "provenance table",
+      "group split manifest",
+      "contamination report",
+      "holdout seal and access policy"
+    ],
+    "required_validation_if_entry_passes": [
+      "one group in exactly one role",
+      "exact-hash and near-duplicate cross-role audit",
+      "complete sample-role accounting",
+      "holdout seal audit"
+    ],
+    "next_stage_condition": "B6R-2 group isolation and holdout-seal gate PASS before B6R-3."
+  },
+  "current_evidence": {
+    "authoritative_snapshot_available": false,
+    "candidate_source_identity": "UNRESOLVED",
+    "b6r1_dataset_status": "INCONCLUSIVE",
+    "b6r1_total_discovered_files": 6,
+    "b6r1_mi48_readable_files": 0,
+    "b6r1_explicitly_excluded_files": 6,
+    "b6r1_identified_mi48_frames": 0,
+    "subject_id_status": "ABSENT",
+    "session_id_status": "ABSENT",
+    "recording_id_status": "ABSENT",
+    "source_label_status": "DIRECTLY_OBSERVED_FIELD_NAME_ONLY_WITHOUT_VALUE_PROVENANCE",
+    "split_role_status": "AMBIGUOUS",
+    "historical_pristine_locked_test_available": false,
+    "current_filesystem_drives": [
+      "C",
+      "Temp"
+    ],
+    "external_safenestssd_mounted": false,
+    "workspace_candidate_file_count": 6,
+    "workspace_candidate_size_and_mtime_match_b6r1_registry": true,
+    "workspace_candidate_new_files_detected": false
+  },
+  "entry_gate": {
+    "status": "FAIL",
+    "failed_conditions": [
+      "Authoritative MI48 source identity is unresolved and the documented external snapshot is not mounted.",
+      "No eligible MI48 frame or supported schema family is available for B6R-2.",
+      "Subject/session/recording identities and trustworthy label provenance are absent.",
+      "No pristine independent holdout exists; REAL_EVAL_DEVELOPMENT was previously accessed for development.",
+      "The B6R-1 standalone validator currently reports 10 generated-artifact checksum mismatches in this checkout."
+    ]
+  },
+  "execution_decision": {
+    "status": "BLOCKED",
+    "dataset_contract_created": false,
+    "provenance_map_created": false,
+    "split_manifest_created": false,
+    "contamination_report_created": false,
+    "holdout_created_or_opened": false,
+    "reason": "Creating any split or holdout contract would require guessing MI48 identity, grouping, or labels and would violate the B6R-2 entry gate."
+  },
+  "unblock_requirements": [
+    "Materialize the owner-authorized RP-X0_O2.6_MI48_FIELD_SNAPSHOT or an explicitly approved replacement as read-only input.",
+    "Rerun B6R-1 to obtain supported schema, full file/frame accounting, pixel statistics, and metadata provenance.",
+    "Resolve the current B6R-1 checksum-validation mismatch without rewriting historical evidence in this B6R-2 stage.",
+    "Provide trustworthy subject/session/recording and label provenance or approve a new acquisition plan.",
+    "Provide an independent holdout that has not been used for preprocessing, selection, thresholding, or temporal tuning."
+  ]
+}

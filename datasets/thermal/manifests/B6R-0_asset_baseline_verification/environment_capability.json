@@ -1,0 +1,114 @@
+{
+  "schema_version": "1.0",
+  "stage_id": "B6R-0",
+  "artifact_identity": "B6R-0_environment_capability",
+  "generated_at": "2026-08-22T22:19:02+09:00",
+  "execution_environment": {
+    "role": "developer_workstation",
+    "python_source": "Codex workspace dependency runtime",
+    "python_executable_logical_identity": "codex_app_workspace_dependencies/python.exe",
+    "python_version": "3.12.13",
+    "implementation": "CPython",
+    "platform": {
+      "system": "Windows",
+      "release": "11",
+      "machine": "AMD64",
+      "architecture": "64bit",
+      "processor_family": "Intel64 Family 6 Model 189 Stepping 1"
+    },
+    "raspberry_pi_present": false,
+    "raspberry_pi_evidence": "no C:/proc/device-tree/model was present; platform is Windows AMD64",
+    "pi_latency_measured": false,
+    "pi_sensor_backend_present": false
+  },
+  "python_package_capability": {
+    "numpy": {
+      "available": true,
+      "version": "2.3.5"
+    },
+    "tensorflow": {
+      "available": false,
+      "version": null,
+      "error": "ModuleNotFoundError: No module named 'tensorflow'"
+    },
+    "tflite_runtime": {
+      "available": false,
+      "version": null,
+      "error": "ModuleNotFoundError: No module named 'tflite_runtime'"
+    },
+    "ai_edge_litert": {
+      "available": false,
+      "version": null,
+      "error": "ModuleNotFoundError: No module named 'ai_edge_litert'"
+    },
+    "pyyaml": {
+      "available": false,
+      "version": null,
+      "error": "ModuleNotFoundError: No module named 'yaml'"
+    },
+    "pytest": {
+      "available": false,
+      "version": null,
+      "error": "ModuleNotFoundError: No module named 'pytest'"
+    },
+    "unittest": {
+      "available": true,
+      "version": "stdlib"
+    }
+  },
+  "repository_capability": {
+    "thermal_model_file_present": true,
+    "thermal_model_manifest_present": true,
+    "b5_float_checkpoint_present": false,
+    "b5_fp32_tflite_present": false,
+    "b5_full_int8_tflite_present": false,
+    "canonical_train_tensor_present": false,
+    "canonical_train_provenance_present": false,
+    "legacy_training_dataset_path_present": false,
+    "fresh_architecture_source_present": true,
+    "fresh_architecture_source": "thermal_train.py",
+    "requirements_mac_declares_tensorflow": "tensorflow==2.20.0",
+    "requirements_pi_declares_litert": "ai-edge-litert>=2.1,<2.2"
+  },
+  "model_load_capability": {
+    "manifest_identity_hash_verified": true,
+    "thermal_binary_hash_verified_against_current_manifest": true,
+    "tflite_interpreter_available": false,
+    "runtime_import_attempt": {
+      "command": "workspace dependency Python -c import inference.thermal_interpreter",
+      "exit_code": 1,
+      "result": "ModuleNotFoundError: No module named 'tensorflow' after ai_edge_litert and tflite_runtime fallbacks",
+      "model_loaded": false
+    },
+    "tensor_contract_runtime_verified": false,
+    "reason": "No TensorFlow, ai_edge_litert, or tflite_runtime is installed; no broad dependency installation was attempted."
+  },
+  "fresh_path_capability": {
+    "architecture_identity_available": true,
+    "architecture_input_shape": [
+      62,
+      80,
+      1
+    ],
+    "architecture_parameter_count": 312131,
+    "training_entrypoint_present": true,
+    "training_entrypoint": "thermal_train.py",
+    "training_data_entrypoint_present": false,
+    "controlled_b6r_training_ready": false,
+    "readiness_decision": "NOT_READY",
+    "limitations": [
+      "TensorFlow 2.20.0 is unavailable",
+      "canonical TRAIN tensor and provenance are not materialized",
+      "thermal_train.py uses a legacy random 80/20 frame split and writes the legacy runtime model path; it is not itself a frozen B6-R training contract",
+      "no model export or parity load can be verified in this environment"
+    ]
+  },
+  "scope_boundaries": {
+    "b6r1_executed": false,
+    "b6r2_executed": false,
+    "training_executed": false,
+    "runtime_integration_executed": false,
+    "pi_benchmark_executed": false,
+    "broad_dependency_installation": false
+  }
+}

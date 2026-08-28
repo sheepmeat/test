@@ -1,0 +1,56 @@
+{
+  "best_epoch": 40,
+  "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+  "deployment_boundary": {
+    "competition_lock_claim": false,
+    "default_activation": false,
+    "deployment_mode": "SHADOW_ONLY",
+    "legacy_model_overwrite": false,
+    "mi48_claim": false,
+    "model_manifest_default_update": false,
+    "physical_validation_claim": false,
+    "safety_authority": false,
+    "semantic_limit": "HUMAN_FALL_PROXY is a public posture proxy, not a real-fall or safety decision."
+  },
+  "development_metrics": {
+    "accuracy": 0.907,
+    "loss": 0.3495067358016968,
+    "macro_f1": 0.901326741104394,
+    "predictions_sha256": "65efe9df3da592c9c01a4da0d1ab2709815009fe803a8b1f319d97fc1c3d7223",
+    "probabilities_sha256": "3b00401e800513bdc9b93f4e8eb5123060dfcc5ee380bb0d24f62ec46f7aab7f"
+  },
+  "development_sample_count": 8000,
+  "history_sha256": "fbb6bb5242a9c0383093f826349c88812786fc2880447b59aa81b071c2ccaf07",
+  "legacy_model_manifest_sha256_after": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+  "legacy_model_manifest_sha256_before": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+  "legacy_model_manifest_unchanged": true,
+  "model_artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz",
+  "model_artifact_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+  "model_id": "thermal_public_sdt_pooled_mlp_v1",
+  "model_metadata_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.json",
+  "parameter_count": 2691,
+  "repeat_audit": {
+    "best_epoch_equal": true,
+    "executed": true,
+    "history_equal": true,
+    "weights_equal": true
+  },
+  "schema_version": "safenest.thermal.b6r_p1.training_result.v1",
+  "stage_id": "B6R-P1",
+  "status": "PASS_WITH_LIMITATIONS",
+  "test_metrics_computed": false,
+  "test_sample_count_read": 0,
+  "train_metrics": {
+    "accuracy": 0.9051875,
+    "loss": 0.341361939907074,
+    "macro_f1": 0.8992181110338578,
+    "predictions_sha256": "ff7f08891334d0abbe68aa91718048bb7cdeb9dcea321ce25ac410bcff0a3e8f",
+    "probabilities_sha256": "11c5b189aa6a50d6da2c5e02d4fc8e99d4824fce6b57f60e943c940888912cc0"
+  },
+  "train_sample_count": 32000,
+  "training_runtime": {
+    "numpy": "2.3.5",
+    "platform": "Windows",
+    "python": "3.12.13"
+  }
+}

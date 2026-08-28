@@ -1,0 +1,180 @@
+{
+  "argmax_agreement": 1.0,
+  "comparison_count": 816,
+  "condition_count": 17,
+  "conditions": [
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "CLEAN",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 3.8743019104003906e-07,
+      "probability_mean_abs_difference": 3.5567129685887267e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "additive_noise_sigma_0p01",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 2.980232238769531e-07,
+      "probability_mean_abs_difference": 3.9375784410822234e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "additive_noise_sigma_0p03",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 5.066394805908203e-07,
+      "probability_mean_abs_difference": 3.637037693238199e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "additive_noise_sigma_0p05",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 4.172325134277344e-07,
+      "probability_mean_abs_difference": 4.425013599984595e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "sparse_hot_cold_ratio_0p001",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 4.76837158203125e-07,
+      "probability_mean_abs_difference": 3.390444192064024e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "sparse_hot_cold_ratio_0p005",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 3.5762786865234375e-07,
+      "probability_mean_abs_difference": 3.592416675246568e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "sparse_hot_cold_ratio_0p010",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 3.8743019104003906e-07,
+      "probability_mean_abs_difference": 4.591342062099102e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "line_dropout_1",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 3.2782554626464844e-07,
+      "probability_mean_abs_difference": 3.8068819208092464e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "line_dropout_2",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 3.5762786865234375e-07,
+      "probability_mean_abs_difference": 3.413444460420578e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "line_dropout_4",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 2.384185791015625e-07,
+      "probability_mean_abs_difference": 3.3522820075404525e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "occlusion_10x10",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 3.8743019104003906e-07,
+      "probability_mean_abs_difference": 4.3076799016716905e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "occlusion_16x16",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 2.384185791015625e-07,
+      "probability_mean_abs_difference": 3.42442270095944e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "occlusion_22x23",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 3.2782554626464844e-07,
+      "probability_mean_abs_difference": 2.988743119658466e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "spatial_shift_p1_p1",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 2.682209014892578e-07,
+      "probability_mean_abs_difference": 3.2925179027643026e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "spatial_shift_m1_m1",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 2.682209014892578e-07,
+      "probability_mean_abs_difference": 3.803583936701216e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "spatial_shift_p2_m2",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 1.7881393432617188e-07,
+      "probability_mean_abs_difference": 2.7594360574312304e-08,
+      "sample_count": 48
+    },
+    {
+      "argmax_agreement": 1.0,
+      "condition_id": "spatial_shift_m2_p2",
+      "mismatch_count": 0,
+      "mismatch_sample_ids": [],
+      "probability_max_abs_difference": 2.682209014892578e-07,
+      "probability_mean_abs_difference": 3.558891137345199e-08,
+      "sample_count": 48
+    }
+  ],
+  "fixture_count": 48,
+  "fixture_role": "DEVELOPMENT",
+  "mismatch_count": 0,
+  "mismatch_sample_ids": [],
+  "probability_max_abs_difference": 5.066394805908203e-07,
+  "probability_mean_abs_difference": 3.637554613078464e-08,
+  "schema_version": "safenest.thermal.b6r_p4.parity_under_stress.v1",
+  "stage_id": "B6R-P4",
+  "status": "PASS",
+  "tolerance": {
+    "conditions": "CLEAN_PLUS_ALL_P4_PERTURBATIONS",
+    "fixture_count": 48,
+    "fixture_manifest_path": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/parity_manifest.json",
+    "fixture_role": "DEVELOPMENT",
+    "mismatch_count_max": 0,
+    "prediction_agreement_min": 1.0,
+    "probabilities_max_abs": 1e-05,
+    "probabilities_mean_abs": 1e-06,
+    "tolerance_source": "INHERITED_UNCHANGED_FROM_B6R_P2"
+  }
+}

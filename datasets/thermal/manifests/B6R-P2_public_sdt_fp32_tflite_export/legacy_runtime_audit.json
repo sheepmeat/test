@@ -1,0 +1,43 @@
+{
+  "after": {
+    "inference/thermal_interpreter.py": {
+      "exists": true,
+      "sha256": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+      "size_bytes": 8742
+    },
+    "models/model_manifest.json": {
+      "exists": true,
+      "sha256": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+      "size_bytes": 7624
+    },
+    "models/thermal/thermal_fall_int8_v0.1.0.tflite": {
+      "exists": true,
+      "sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+      "size_bytes": 318184
+    }
+  },
+  "before": {
+    "inference/thermal_interpreter.py": {
+      "exists": true,
+      "sha256": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+      "size_bytes": 8742
+    },
+    "models/model_manifest.json": {
+      "exists": true,
+      "sha256": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+      "size_bytes": 7624
+    },
+    "models/thermal/thermal_fall_int8_v0.1.0.tflite": {
+      "exists": true,
+      "sha256": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+      "size_bytes": 318184
+    }
+  },
+  "default_activation": false,
+  "model_manifest_default_update": false,
+  "runtime_selector_update": false,
+  "safety_authority": false,
+  "schema_version": "safenest.thermal.b6r_p2.legacy_runtime_audit.v1",
+  "status": "PASS",
+  "unchanged": true
+}

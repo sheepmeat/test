@@ -1,0 +1,11 @@
+{
+  "available_memory": "NOT_AVAILABLE",
+  "cpu_temperature": "NOT_MEASURED_ON_TARGET",
+  "cpu_utilization": "NOT_MEASURED_ON_TARGET",
+  "rss_memory": "NOT_MEASURED_ON_TARGET",
+  "schema_version": "safenest.thermal.b6r_p3.resource_metrics.v1",
+  "system_load": "NOT_AVAILABLE",
+  "target_measurement_status": "NOT_MEASURED_ON_TARGET",
+  "target_status": "BLOCKED_HARDWARE",
+  "thermal_throttling_status": "NOT_AVAILABLE"
+}

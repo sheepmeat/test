@@ -1,0 +1,87 @@
+{
+  "artifact_count": 16,
+  "artifacts": [
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/dataset_manifest.json",
+      "sha256": "93ce29c2b08e6136cd56f071964b8da014e8b1cf7a17910d09b4af054e8bf14e",
+      "size_bytes": 7974
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/test/images.npy",
+      "sha256": "ce0f8bca6ae9c462f0cedff2c56a3c1983b7283df3e89467e989bfa5dca3a2aa",
+      "size_bytes": 158720128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/test/labels.npy",
+      "sha256": "22f50fbbfcbac9fcc11c8815cff74fd43a37f6dab19100d87e934b61aa8586ae",
+      "size_bytes": 8128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/test/sample_index.jsonl",
+      "sha256": "d16778d32f65f2842cb37bb13002decc53f8286a29e49b7aa4b8335125f8c774",
+      "size_bytes": 6951373
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/test/source_labels.npy",
+      "sha256": "8d50d8c73cf3f5d79a7157338c507c7a4d9b9ff7a8cd4ebdca6d2ac244b4a297",
+      "size_bytes": 8128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/test/split_manifest.json",
+      "sha256": "32e009f7eb9e694be3ac563f1ee774d1c29a4e7a01b5ec3a3905d913fbd827f6",
+      "size_bytes": 1759
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/train/images.npy",
+      "sha256": "393993a019bc3c980efb2ba9b676cc0b55a5fb88e387d68242b10661849a492d",
+      "size_bytes": 634880128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/train/labels.npy",
+      "sha256": "718a94cd4dc0ac0e3abeb457d2b4e0ac95bff5dd7bbdf02ba9c717e3d5381ded",
+      "size_bytes": 32128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/train/sample_index.jsonl",
+      "sha256": "39df45a02909e9003ca5ec7d3285182185d228a620d62af4ab1c7b7aca3b4251",
+      "size_bytes": 29090947
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/train/source_labels.npy",
+      "sha256": "45b6ca742ae12a23c870334ced0c341494363fa0837e206f3711253b88cd1071",
+      "size_bytes": 32128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/train/split_manifest.json",
+      "sha256": "dbed5919caf9217cfa52ecf6aa78c79122233525c8720caec92fae4aff23edbc",
+      "size_bytes": 1828
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/images.npy",
+      "sha256": "18c8da80b28f908701aaacd24bbcb7bc71cfdb5a6474245f1d44f897799cf1f4",
+      "size_bytes": 158720128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/labels.npy",
+      "sha256": "22f50fbbfcbac9fcc11c8815cff74fd43a37f6dab19100d87e934b61aa8586ae",
+      "size_bytes": 8128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/sample_index.jsonl",
+      "sha256": "f1da406ad1a248f191ad9796ac61b7cc507e16ebefd23aeb19c4ecd281511dde",
+      "size_bytes": 7133656
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/source_labels.npy",
+      "sha256": "8d50d8c73cf3f5d79a7157338c507c7a4d9b9ff7a8cd4ebdca6d2ac244b4a297",
+      "size_bytes": 8128
+    },
+    {
+      "path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/split_manifest.json",
+      "sha256": "deebc5526f912f93cd6fca766ac7e2f53b3f6ab76de2c4649c44f6ff1b4b039b",
+      "size_bytes": 1794
+    }
+  ],
+  "materialized_payload_git_tracked": false,
+  "schema_version": "safenest.thermal.b6r_p0.artifact_registry.v1"
+}

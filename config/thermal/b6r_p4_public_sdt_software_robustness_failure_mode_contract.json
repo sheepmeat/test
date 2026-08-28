@@ -1,0 +1,141 @@
+{
+  "schema_version": "safenest.thermal.b6r_p4.software_robustness_failure_mode_contract.v1",
+  "stage_id": "B6R-P4",
+  "stage_name": "Public SDT FP32 TFLite Offline Robustness & Failure-Mode Audit",
+  "execution_date": "2026-08-28",
+  "stage_character": [
+    "PUBLIC_AUXILIARY",
+    "SOFTWARE_ONLY",
+    "NON_GATING",
+    "DEVELOPMENT_ONLY",
+    "SHADOW_ONLY"
+  ],
+  "manifest_dir": "datasets/thermal/manifests/B6R-P4_public_sdt_software_robustness_failure_mode",
+  "source_stage": "B6R-P2",
+  "p2_artifact": {
+    "path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+    "sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+    "size_bytes": 70592,
+    "input_shape": [1, 62, 80, 1],
+    "input_dtype": "float32",
+    "output_shape": [1, 3],
+    "output_dtype": "float32",
+    "quantization": "NONE",
+    "class_order": ["NOT_HUMAN", "HUMAN_NORMAL", "HUMAN_FALL_PROXY"]
+  },
+  "p1_parent": {
+    "model_id": "thermal_public_sdt_pooled_mlp_v1",
+    "architecture_id": "PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1",
+    "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz",
+    "artifact_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+    "parameter_count": 2691
+  },
+  "development_input": {
+    "role": "DEVELOPMENT",
+    "images_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/images.npy",
+    "labels_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/labels.npy",
+    "sample_index_path": "datasets/thermal/materialized/B6R-P0_public_sdt_v1/validation/sample_index.jsonl",
+    "sample_count": 8000,
+    "selection_policy": "FULL_FROZEN_P0_DEVELOPMENT_SPLIT",
+    "batch_size": 256,
+    "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+    "preprocessing_id": "PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1",
+    "label_mapping_id": "SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1"
+  },
+  "perturbation_seed": 20260828,
+  "perturbations": [
+    {"id": "additive_noise_sigma_0p01", "family": "ADDITIVE_BOUNDED_GAUSSIAN_NOISE", "severity": {"sigma": 0.01, "noise_clip_sigma": 3.0}, "postprocess": "clip_[0,1]"},
+    {"id": "additive_noise_sigma_0p03", "family": "ADDITIVE_BOUNDED_GAUSSIAN_NOISE", "severity": {"sigma": 0.03, "noise_clip_sigma": 3.0}, "postprocess": "clip_[0,1]"},
+    {"id": "additive_noise_sigma_0p05", "family": "ADDITIVE_BOUNDED_GAUSSIAN_NOISE", "severity": {"sigma": 0.05, "noise_clip_sigma": 3.0}, "postprocess": "clip_[0,1]"},
+    {"id": "sparse_hot_cold_ratio_0p001", "family": "SPARSE_HOT_COLD_PIXEL_CORRUPTION", "severity": {"ratio": 0.001}, "replacement": "deterministic_alternating_0_or_1"},
+    {"id": "sparse_hot_cold_ratio_0p005", "family": "SPARSE_HOT_COLD_PIXEL_CORRUPTION", "severity": {"ratio": 0.005}, "replacement": "deterministic_alternating_0_or_1"},
+    {"id": "sparse_hot_cold_ratio_0p010", "family": "SPARSE_HOT_COLD_PIXEL_CORRUPTION", "severity": {"ratio": 0.01}, "replacement": "deterministic_alternating_0_or_1"},
+    {"id": "line_dropout_1", "family": "ROW_COLUMN_DROPOUT", "severity": {"line_count": 1}, "replacement": 0.0},
+    {"id": "line_dropout_2", "family": "ROW_COLUMN_DROPOUT", "severity": {"line_count": 2}, "replacement": 0.0},
+    {"id": "line_dropout_4", "family": "ROW_COLUMN_DROPOUT", "severity": {"line_count": 4}, "replacement": 0.0},
+    {"id": "occlusion_10x10", "family": "RECTANGULAR_OCCLUSION", "severity": {"height": 10, "width": 10, "pixel_ratio": 0.020161290322580645}, "replacement": 0.0},
+    {"id": "occlusion_16x16", "family": "RECTANGULAR_OCCLUSION", "severity": {"height": 16, "width": 16, "pixel_ratio": 0.05161290322580645}, "replacement": 0.0},
+    {"id": "occlusion_22x23", "family": "RECTANGULAR_OCCLUSION", "severity": {"height": 22, "width": 23, "pixel_ratio": 0.10201612903225807}, "replacement": 0.0},
+    {"id": "spatial_shift_p1_p1", "family": "SMALL_SPATIAL_SHIFT", "severity": {"dy": 1, "dx": 1}, "padding": 0.0},
+    {"id": "spatial_shift_m1_m1", "family": "SMALL_SPATIAL_SHIFT", "severity": {"dy": -1, "dx": -1}, "padding": 0.0},
+    {"id": "spatial_shift_p2_m2", "family": "SMALL_SPATIAL_SHIFT", "severity": {"dy": 2, "dx": -2}, "padding": 0.0},
+    {"id": "spatial_shift_m2_p2", "family": "SMALL_SPATIAL_SHIFT", "severity": {"dy": -2, "dx": 2}, "padding": 0.0}
+  ],
+  "perturbation_hash_contract": "sha256 over ordered records: UTF-8 sample_id, NUL byte, canonical little-endian float32 tensor bytes",
+  "parity": {
+    "fixture_manifest_path": "datasets/thermal/manifests/B6R-P2_public_sdt_fp32_tflite_export/parity_manifest.json",
+    "fixture_role": "DEVELOPMENT",
+    "fixture_count": 48,
+    "conditions": "CLEAN_PLUS_ALL_P4_PERTURBATIONS",
+    "probabilities_max_abs": 0.00001,
+    "probabilities_mean_abs": 0.000001,
+    "prediction_agreement_min": 1.0,
+    "mismatch_count_max": 0,
+    "tolerance_source": "INHERITED_UNCHANGED_FROM_B6R_P2"
+  },
+  "numerical_integrity": {
+    "required_output_shape": [3],
+    "required_output_dtype": "float32",
+    "probability_sum_abs_tolerance": 0.00001,
+    "require_finite": true,
+    "require_non_negative": true,
+    "require_at_most_one": true
+  },
+  "invalid_input_cases": [
+    "NAN", "+INF", "-INF", "WRONG_SHAPE", "EMPTY_ARRAY", "WRONG_RANK",
+    "CONSTANT_ZERO", "CONSTANT_ONE", "OUT_OF_RANGE_NEGATIVE", "OUT_OF_RANGE_ABOVE_ONE",
+    "FLOAT64", "INTEGER"
+  ],
+  "determinism": {
+    "fixture_count": 48,
+    "conditions": "CLEAN_PLUS_ALL_P4_PERTURBATIONS",
+    "same_process_repeats": 2,
+    "interpreter_reloads": 2,
+    "clean_child_process_reruns": 1,
+    "require_prediction_hash_equal": true,
+    "require_probability_hash_equal": true,
+    "require_perturbation_tensor_hash_equal": true,
+    "require_summary_metrics_hash_equal": true
+  },
+  "locked_test_policy": {
+    "role": "LOCKED_PUBLIC_TEST",
+    "path_configured": false,
+    "array_open_count_required": 0,
+    "sample_read_count_required": 0,
+    "metrics_computed": false,
+    "selection_or_tuning_use": false
+  },
+  "protected_files": {
+    "models/model_manifest.json": "d55a1bce18107f85f86b48748b48e9bb25873572b849d69c3ab42fddb0a6a97b",
+    "inference/thermal_interpreter.py": "8ed4093051f31be0fc2b1cd8b1b8e2d72501af63eb2dd4462c9e8520b240a087",
+    "models/thermal/thermal_fall_int8_v0.1.0.tflite": "5b56da8d127ccef85f30b6459cc0cfe2d86490e41f3caa5bd2a7b70bbc46ae84",
+    "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+    "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff"
+  },
+  "claim_boundary": {
+    "public_sdt_only": true,
+    "software_only": true,
+    "offline_only": true,
+    "synthetic_stress_test_only": true,
+    "development_only": true,
+    "fp32_tflite": true,
+    "non_gating": true,
+    "shadow_only": true,
+    "mi48_validated": false,
+    "thermal90_validated": false,
+    "physical_validation": false,
+    "real_fall_validation": false,
+    "raspberry_pi_validated": false,
+    "safety_authority": false,
+    "production_ready": false,
+    "default_activation": false
+  },
+  "raspberry_pi_scope": "OUT_OF_SCOPE",
+  "real_sensor_access_allowed": false,
+  "gate_policy": {
+    "non_gating": true,
+    "robustness_metric_threshold": "NOT_DEFINED",
+    "maximum_success_status": "PASS_WITH_LIMITATIONS",
+    "success_qualifier": "PUBLIC_DATA_SOFTWARE_ONLY_NON_GATING"
+  }
+}

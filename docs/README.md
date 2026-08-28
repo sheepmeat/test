@@ -11,7 +11,17 @@
 - The 2026-08-22 public multidomain roadmap remains an active child for V2 structure; current Track P/F execution authority is the reconciliation report + `AGENTS.md`.
 - The 2026-08-17 MR60 roadmap and M-N/A–B entries below are historical / `OBSERVE_ONLY` V1 lineage, not current V2 execution authority.
 
-- [Thermal B6-R robust-relative FP32 병렬 개발 로드맵 (2026-08-22, EXECUTION PENDING)](20260822_Codex_Thermal_B6R_Robust_Relative_FP32_Parallel_Roadmap_KO_01.md)
+- [Thermal B6-R RC1 Thermal-90 identity·capture 보완 계획 (2026-08-27, PLAN FROZEN)](thermal/20260827_SafeNest_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Plan_KO_01.md)
+- [Thermal B6-R RC1 보완 계획 실행 보고서 (2026-08-27, PASS_WITH_LIMITATIONS)](reports/20260827_Codex_Thermal_B6R_RC1_Thermal90_Capture_Remediation_Report_KO_01.md)
+- [Thermal B6-R 현재 상태 및 Gate 재조정 보고서 (2026-08-26, BLOCKED)](reports/20260826_Codex_Thermal_B6R_CURRENT_STATE_AND_GATE_RECONCILIATION_Report_KO_01.md)
+- [Thermal B6-R robust-relative FP32 로드맵 (B6R-2 BLOCKED, P3 BLOCKED_HARDWARE, P4 PASS_WITH_LIMITATIONS / NON-GATING)](20260822_Codex_Thermal_B6R_Robust_Relative_FP32_Parallel_Roadmap_KO_01.md)
+- [B6R-P4 Public SDT software-only robustness/failure-mode audit 보고서 (2026-08-28, PASS_WITH_LIMITATIONS / NON-GATING)](reports/20260828_Codex_Thermal_B6R_B6R-P4_Public_SDT_Software_Only_Robustness_Failure_Mode_Audit_Report_KO_01.md)
+- [Thermal B6-R 개발 인덱스 (본선·public 보조 흐름 상태)](thermal/B6R_DEVELOPMENT_INDEX.md)
+- [B6R-P0 Public SDT materialization 실행 보고서 (2026-08-26)](reports/20260826_Codex_Thermal_B6R_B6R-P0_Public_SDT_Materialization_Report_KO_01.md)
+- [B6R-P1 Public SDT controlled training 실행 보고서 (2026-08-26)](reports/20260826_Codex_Thermal_B6R_B6R-P1_Public_SDT_Training_Report_KO_01.md)
+- [B6R-P2 Public SDT FP32 TFLite export·offline parity 실행 보고서 (2026-08-26)](reports/20260826_Codex_Thermal_B6R_P2_FP32_TFLite_Export_Offline_Parity_Report_KO_01.md)
+- [B6R-P3 Raspberry Pi FP32 TFLite replay·shadow benchmark 실행 보고서 (2026-08-28, BLOCKED_HARDWARE)](reports/20260828_Codex_Thermal_B6R_B6R-P3_Raspberry_Pi_FP32_TFLite_Replay_Shadow_Benchmark_Report_KO_01.md)
+- [Desktop sessions 실제 센서 파일럿 감사·B6R gate 영향 보고서 (2026-08-26)](reports/20260826_Codex_Thermal_B6R_Desktop_Sessions_Real_Capture_Pilot_Gate_Assessment_Report_KO_01.md)
 - [mmWave MR60 호환 모델 개발 로드맵 (2026-08-17, HISTORY / OBSERVE_ONLY V1 lineage)](20260817_SafeNest_mmWave_MR60_Compatible_Model_Development_Roadmap_01.md)
 - [mmWave 공개 멀티도메인 V2 개발 로드맵 (2026-08-22, ACTIVE CHILD)](20260822_SafeNest_mmWave_Public_Multidomain_V2_Development_Roadmap_01.md)
 - [M-PV0 공개 멀티도메인 범위·V1 기준선·source 역할 동결 (CURRENT)](mmwave/20260822_SafeNest_mmWave_M-PV0_Public_Multidomain_Scope_Baseline_Source_Role_Freeze_01.md)

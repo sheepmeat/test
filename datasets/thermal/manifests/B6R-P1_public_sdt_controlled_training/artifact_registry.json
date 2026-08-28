@@ -1,0 +1,52 @@
+{
+  "artifacts": [
+    {
+      "path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.npz",
+      "sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+      "size_bytes": 10879
+    },
+    {
+      "path": "models/thermal/public_sdt/public_sdt_pooled_mlp_v1.json",
+      "sha256": "e510fa234b95c3cad5fc080e89adf316bff95e0535581fbc2ce063900d4e6fbc",
+      "size_bytes": 2607
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/deployment_boundary.json",
+      "sha256": "b98189aeff137ca8b50a7d7b17351f7692288ad4c0bc7d7ae28a9a5e92fee6c9",
+      "size_bytes": 375
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/determinism_audit.json",
+      "sha256": "1296edc839832f201a4279be7eb9740f29ed80da9088246ac5f6553b459912c4",
+      "size_bytes": 271
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/test_access_audit.json",
+      "sha256": "e11d8b411cf7470fa4b9827ee6bad52841a90f6588f2586d9e6a56dee4ccd008",
+      "size_bytes": 265
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/training_contract_snapshot.json",
+      "sha256": "19adfbc79160714c13857f00b7a7b710d2d13f53356809b24bfbf59e60552cf4",
+      "size_bytes": 2873
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/training_history.json",
+      "sha256": "8a8c934735296ff35422531a81aceeffda3a6f8b2a4f5627cca8f8c2b6d9d42e",
+      "size_bytes": 9705
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/training_result.json",
+      "sha256": "7c9e84efda70c77263f60f22b2ef1db22cc867415af921901477729c7aee146f",
+      "size_bytes": 2294
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-P1_public_sdt_controlled_training/validation_result.json",
+      "sha256": "1aee45138ab6b241ee964f80c649890e7ce5a9561c3f3629f37c4586e217adb1",
+      "size_bytes": 6380
+    }
+  ],
+  "model_payload_git_tracked": true,
+  "schema_version": "safenest.thermal.b6r_p1.artifact_registry.v1",
+  "test_payload_included": false
+}

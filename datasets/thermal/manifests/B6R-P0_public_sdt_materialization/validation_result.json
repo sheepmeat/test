@@ -1,0 +1,258 @@
+{
+  "checks": [
+    {
+      "check": "dataset_identity",
+      "detail": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+      "passed": true
+    },
+    {
+      "check": "public_not_mi48",
+      "detail": "PUBLIC_SDT_ONLY_NOT_MI48",
+      "passed": true
+    },
+    {
+      "check": "total_accounting",
+      "detail": 48000,
+      "passed": true
+    },
+    {
+      "check": "source_immutability",
+      "detail": "PASS",
+      "passed": true
+    },
+    {
+      "check": "deterministic_repeat",
+      "detail": "PASS",
+      "passed": true
+    },
+    {
+      "check": "test_role_lock",
+      "detail": "MATERIALIZATION_INTEGRITY_PROVENANCE_ONLY",
+      "passed": true
+    },
+    {
+      "check": "split_train",
+      "detail": {
+        "errors": [],
+        "expected_count": 32000,
+        "images_dtype": "float32",
+        "images_max": 1.0,
+        "images_min": 0.0,
+        "images_shape": [
+          32000,
+          62,
+          80,
+          1
+        ],
+        "provenance_count": 32000,
+        "role": "TRAIN",
+        "source_class_counts": {
+          "0": 8000,
+          "1": 8000,
+          "2": 8000,
+          "3": 8000
+        },
+        "split": "train",
+        "status": "PASS",
+        "target_class_counts": {
+          "0": 8000,
+          "1": 16000,
+          "2": 8000
+        },
+        "tensor_provenance_hash_match_count": 32000,
+        "unique_sample_id_count": 32000
+      },
+      "passed": true
+    },
+    {
+      "check": "split_validation",
+      "detail": {
+        "errors": [],
+        "expected_count": 8000,
+        "images_dtype": "float32",
+        "images_max": 1.0,
+        "images_min": 0.0,
+        "images_shape": [
+          8000,
+          62,
+          80,
+          1
+        ],
+        "provenance_count": 8000,
+        "role": "DEVELOPMENT",
+        "source_class_counts": {
+          "0": 2000,
+          "1": 2000,
+          "2": 2000,
+          "3": 2000
+        },
+        "split": "validation",
+        "status": "PASS",
+        "target_class_counts": {
+          "0": 2000,
+          "1": 4000,
+          "2": 2000
+        },
+        "tensor_provenance_hash_match_count": 8000,
+        "unique_sample_id_count": 8000
+      },
+      "passed": true
+    },
+    {
+      "check": "split_test",
+      "detail": {
+        "errors": [],
+        "expected_count": 8000,
+        "images_dtype": "float32",
+        "images_max": 1.0,
+        "images_min": 0.0,
+        "images_shape": [
+          8000,
+          62,
+          80,
+          1
+        ],
+        "provenance_count": 8000,
+        "role": "LOCKED_PUBLIC_TEST",
+        "source_class_counts": {
+          "0": 2000,
+          "1": 2000,
+          "2": 2000,
+          "3": 2000
+        },
+        "split": "test",
+        "status": "PASS",
+        "target_class_counts": {
+          "0": 2000,
+          "1": 4000,
+          "2": 2000
+        },
+        "tensor_provenance_hash_match_count": 8000,
+        "unique_sample_id_count": 8000
+      },
+      "passed": true
+    },
+    {
+      "check": "sample_id_role_isolation",
+      "detail": {
+        "train_test": 0,
+        "train_validation": 0,
+        "validation_test": 0
+      },
+      "passed": true
+    },
+    {
+      "check": "artifact_registry",
+      "detail": [],
+      "passed": true
+    },
+    {
+      "check": "no_absolute_path_persistence",
+      "detail": [],
+      "passed": true
+    }
+  ],
+  "limitations": [
+    "PUBLIC_SDT_ONLY; no MI48 sensor identity or physical validation.",
+    "No subject/session/recording identity; source archive partition is preserved but group isolation is not claimed.",
+    "HUMAN_FALL_PROXY is a posture proxy, not a measured real fall event.",
+    "B6R-1 and B6R-2 remain blocked; B6R-11/13/14 physical and competition locks remain unavailable.",
+    "Materialized payload is local and intentionally not Git-tracked."
+  ],
+  "next_stage": "B6R-P1_PUBLIC_SDT_CONTROLLED_TRAINING_ONLY_REQUIRES_USER_APPROVAL",
+  "schema_version": "safenest.thermal.b6r_p0.validation_result.v1",
+  "split_results": {
+    "test": {
+      "errors": [],
+      "expected_count": 8000,
+      "images_dtype": "float32",
+      "images_max": 1.0,
+      "images_min": 0.0,
+      "images_shape": [
+        8000,
+        62,
+        80,
+        1
+      ],
+      "provenance_count": 8000,
+      "role": "LOCKED_PUBLIC_TEST",
+      "source_class_counts": {
+        "0": 2000,
+        "1": 2000,
+        "2": 2000,
+        "3": 2000
+      },
+      "split": "test",
+      "status": "PASS",
+      "target_class_counts": {
+        "0": 2000,
+        "1": 4000,
+        "2": 2000
+      },
+      "tensor_provenance_hash_match_count": 8000,
+      "unique_sample_id_count": 8000
+    },
+    "train": {
+      "errors": [],
+      "expected_count": 32000,
+      "images_dtype": "float32",
+      "images_max": 1.0,
+      "images_min": 0.0,
+      "images_shape": [
+        32000,
+        62,
+        80,
+        1
+      ],
+      "provenance_count": 32000,
+      "role": "TRAIN",
+      "source_class_counts": {
+        "0": 8000,
+        "1": 8000,
+        "2": 8000,
+        "3": 8000
+      },
+      "split": "train",
+      "status": "PASS",
+      "target_class_counts": {
+        "0": 8000,
+        "1": 16000,
+        "2": 8000
+      },
+      "tensor_provenance_hash_match_count": 32000,
+      "unique_sample_id_count": 32000
+    },
+    "validation": {
+      "errors": [],
+      "expected_count": 8000,
+      "images_dtype": "float32",
+      "images_max": 1.0,
+      "images_min": 0.0,
+      "images_shape": [
+        8000,
+        62,
+        80,
+        1
+      ],
+      "provenance_count": 8000,
+      "role": "DEVELOPMENT",
+      "source_class_counts": {
+        "0": 2000,
+        "1": 2000,
+        "2": 2000,
+        "3": 2000
+      },
+      "split": "validation",
+      "status": "PASS",
+      "target_class_counts": {
+        "0": 2000,
+        "1": 4000,
+        "2": 2000
+      },
+      "tensor_provenance_hash_match_count": 8000,
+      "unique_sample_id_count": 8000
+    }
+  },
+  "stage_id": "B6R-P0",
+  "status": "PASS_WITH_LIMITATIONS"
+}

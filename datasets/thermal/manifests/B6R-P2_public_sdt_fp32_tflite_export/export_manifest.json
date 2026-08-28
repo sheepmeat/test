@@ -1,0 +1,71 @@
+{
+  "architecture_id": "PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1",
+  "artifact_path": "models/thermal/public_sdt/public_sdt_pooled_mlp_fp32_tflite_v1.tflite",
+  "artifact_sha256": "f88d65d76dbb21862e1f3cdff17cefb038a432047ded6ac8d5563bc8bc8c52ff",
+  "artifact_size_bytes": 70592,
+  "class_order": [
+    "NOT_HUMAN",
+    "HUMAN_NORMAL",
+    "HUMAN_FALL_PROXY"
+  ],
+  "conversion_settings": {
+    "inference_input_type": "float32",
+    "inference_output_type": "float32",
+    "optimizations": [],
+    "quantization": "NONE",
+    "supported_ops": [
+      "TFLITE_BUILTINS"
+    ]
+  },
+  "dataset_id": "PUBLIC_SDT_48000_THERMAL_ONLY_V1",
+  "default_activation": false,
+  "deployment_mode": "SHADOW_ONLY",
+  "export_timestamp_utc": "2026-08-26T10:55:22.335332+00:00",
+  "input_dtype": "float32",
+  "input_shape": [
+    1,
+    62,
+    80,
+    1
+  ],
+  "label_mapping_id": "SDT_POSTURE_TO_SAFENEST_3CLASS_PROXY_V1",
+  "model_id": "thermal_public_sdt_pooled_mlp_fp32_tflite_v1",
+  "output_dtype": "float32",
+  "output_shape": [
+    1,
+    3
+  ],
+  "parameter_count": 2691,
+  "preprocessing_id": "PUBLIC_SDT_BILINEAR_62X80_FRAME_MINMAX_V1",
+  "safety_authority": false,
+  "schema_version": "safenest.thermal.b6r_p2.export_manifest.v1",
+  "source_p1_metadata_sha256": "e510fa234b95c3cad5fc080e89adf316bff95e0535581fbc2ce063900d4e6fbc",
+  "source_p1_model_id": "thermal_public_sdt_pooled_mlp_v1",
+  "source_p1_model_sha256": "35680056a841913c50e3d3e5fc7988e209e80ba5e62fd179fb135d35acf25677",
+  "stage_id": "B6R-P2",
+  "status": "PASS",
+  "tensorflow_version": "2.20.0",
+  "training_seed": 42,
+  "weight_sha256": {
+    "bias_1": "d2e40650b26bbd085ec51b4f8463b66b28309f83e2130b9f00da662dbbb53f23",
+    "bias_2": "04d83e0d133cf4792a39e47e1f94b41c9aa2f62b0ec4c1b1660e451bcfbecbb4",
+    "weights_1": "22bcf139213db349c867baca380919a820745fd9c00ec3981272b254b21001d0",
+    "weights_2": "7db0cde1959f26806f90984f9daa49e528e7402ecf675ccfb81e8a21dcd8f589"
+  },
+  "weight_shapes": {
+    "bias_1": [
+      32
+    ],
+    "bias_2": [
+      3
+    ],
+    "weights_1": [
+      80,
+      32
+    ],
+    "weights_2": [
+      32,
+      3
+    ]
+  }
+}

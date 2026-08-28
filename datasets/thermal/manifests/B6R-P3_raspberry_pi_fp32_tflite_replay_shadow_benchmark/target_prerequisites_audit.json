@@ -1,0 +1,12 @@
+{
+  "desktop_substitution": false,
+  "development_fixture_identity": "PASS",
+  "locked_public_test_access": 0,
+  "p2_artifact_identity": "PASS",
+  "schema_version": "safenest.thermal.b6r_p3.target_prerequisites_audit.v1",
+  "source_archive_identity": "PASS",
+  "stage_id": "B6R-P3",
+  "status": "PASS",
+  "target_environment": "BLOCKED_HARDWARE",
+  "target_interpreter": "NOT_MEASURED_ON_TARGET"
+}

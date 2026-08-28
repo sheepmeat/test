@@ -1,0 +1,43 @@
+{
+  "schema_version": "safenest.thermal.b6r1.source_resolution.v1",
+  "artifact_id": "B6R-1_mi48_inventory",
+  "authoritative_mi48_identity": "RP-X0_O2.6_MI48_FIELD_SNAPSHOT",
+  "candidate_checks": [
+    {
+      "logical_location": "repository:data/thermal",
+      "status": "NOT_FOUND",
+      "provenance": "Explicit project-local path check"
+    },
+    {
+      "logical_location": "workspace:data/thermal",
+      "status": "NOT_FOUND",
+      "provenance": "Explicit workspace-sibling path check"
+    },
+    {
+      "logical_location": "repository:datasets/thermal/processed_thermal_80x62.npz",
+      "status": "NOT_FOUND",
+      "provenance": "Existing T-A6 historical path check"
+    },
+    {
+      "logical_location": "repository:archive thermal-like files",
+      "status": "NO_RAW_THERMAL_FILES_FOUND",
+      "provenance": "Explicit archive file-name and extension check"
+    },
+    {
+      "logical_location": "T-C0 external:SafeNestssd/RP-X0_O2.6_MI48_FIELD_SNAPSHOT",
+      "status": "NOT_MOUNTED",
+      "provenance": "T-B5 access_status.json and T-C0 contract"
+    },
+    {
+      "logical_location": "workspace:열화상_dataset",
+      "status": "FOUND_BUT_MI48_IDENTITY_UNRESOLVED",
+      "provenance": "B6R-1 read-only profiler run",
+      "observed_file_count": 6,
+      "observed_container_summary": "Two ZIP archives contain 640x480 16-bit grayscale PNG members and label-like text members; four train ZIP volume parts are not standalone containers.",
+      "promotion_to_mi48": false
+    }
+  ],
+  "authoritative_snapshot_available_for_new_b6r1_measurements": false,
+  "identity_resolution_decision": "INCONCLUSIVE",
+  "reason": "The documented MI48 source is external and not mounted; the only workspace archive candidate lacks an authoritative MI48 contract and does not expose native 62x80 arrays."
+}

@@ -1,0 +1,11 @@
+{
+  "desktop_sessions_access_count": 0,
+  "mi48_access_count": 0,
+  "raspberry_pi_connection_attempt_count": 0,
+  "raspberry_pi_scope": "OUT_OF_SCOPE",
+  "real_sensor_data_access_count": 0,
+  "schema_version": "safenest.thermal.b6r_p4.real_sensor_access_audit.v1",
+  "stage_id": "B6R-P4",
+  "status": "PASS",
+  "thermal90_access_count": 0
+}

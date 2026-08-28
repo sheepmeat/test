@@ -1,0 +1,51 @@
+{
+  "artifact_id": "B6R-2_dataset_contract_prerequisite_blocker",
+  "schema_version": "safenest.thermal.b6r2.input_evidence_registry.v1",
+  "stage_id": "B6R-2",
+  "start_head": "8acf7dac6a353fc9830e220747c8cdb88748c323",
+  "inputs": [
+    {
+      "path": "datasets/thermal/manifests/B6R-1_mi48_inventory/summary.json",
+      "role": "DIRECT_PREDECESSOR_SUMMARY",
+      "sha256_worktree_bytes": "5accc1c2f9e62a373c02095737168268ac0655fd912956c4f4d5fcf0b24539b4",
+      "size_bytes": 2977
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-1_mi48_inventory/source_resolution.json",
+      "role": "DIRECT_PREDECESSOR_SOURCE_IDENTITY",
+      "sha256_worktree_bytes": "e69a68fe989afe66cfd6283eb72f37a8a3e7de02471219531c5dbeb37ceed448",
+      "size_bytes": 1864
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-1_mi48_inventory/metadata_discovery.json",
+      "role": "DIRECT_PREDECESSOR_METADATA",
+      "sha256_worktree_bytes": "e0236abf5d8e0e72d1c80cebaa80bbdf5e421ce022d9d9e491041a361d09fbbb",
+      "size_bytes": 3692
+    },
+    {
+      "path": "datasets/thermal/manifests/B6R-1_mi48_inventory/validation_result.json",
+      "role": "DIRECT_PREDECESSOR_RECORDED_VALIDATION",
+      "sha256_worktree_bytes": "ad0be92237982fa5f25cd9d8e1ee6ddd65b8ce198f2acd5ceb67e1bcabe86d9a",
+      "size_bytes": 279
+    },
+    {
+      "path": "datasets/thermal/manifests/T-A5_grouping_immutable_split/selected_split_policy.json",
+      "role": "READ_ONLY_HISTORICAL_SPLIT_EVIDENCE",
+      "sha256_worktree_bytes": "3a82494ee804a429045104cafddce5b40da90e519c6bb8ccede0e8f8e00ffb8c",
+      "size_bytes": 2568
+    },
+    {
+      "path": "datasets/thermal/manifests/T-A5_grouping_immutable_split/locked_test_eligibility.json",
+      "role": "READ_ONLY_HISTORICAL_HOLDOUT_EVIDENCE",
+      "sha256_worktree_bytes": "a43b35e2ba202394f5c7721fc263692332d49286cc3973dda9db88b2bdab1ce2",
+      "size_bytes": 1001
+    }
+  ],
+  "access_policy": {
+    "independent_holdout_opened": false,
+    "raw_candidate_archives_modified": false,
+    "historical_b1_b5_artifacts_modified": false,
+    "unresolved_archive_promoted_to_mi48": false,
+    "synthetic_examples_used_as_physical_evidence": false
+  }
+}

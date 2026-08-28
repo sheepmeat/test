@@ -1,0 +1,12 @@
+{
+  "determinism": "NOT_MEASURED_ON_TARGET",
+  "latency": "NOT_MEASURED_ON_TARGET",
+  "next_stage_executed": false,
+  "prolonged_replay": "NOT_MEASURED_ON_TARGET",
+  "resource_metrics": "NOT_MEASURED_ON_TARGET",
+  "schema_version": "safenest.thermal.b6r_p3.run_summary.v1",
+  "stage_id": "B6R-P3",
+  "status": "BLOCKED_HARDWARE",
+  "target_benchmark_executed": false,
+  "target_evidence": "NOT_AVAILABLE"
+}

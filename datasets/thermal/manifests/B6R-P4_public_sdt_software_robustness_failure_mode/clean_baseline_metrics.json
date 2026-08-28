@@ -1,0 +1,68 @@
+{
+  "accuracy": 0.907,
+  "confusion_matrix": [
+    [
+      1907,
+      93,
+      0
+    ],
+    [
+      129,
+      3697,
+      174
+    ],
+    [
+      115,
+      233,
+      1652
+    ]
+  ],
+  "macro_f1": 0.901326741104394,
+  "macro_precision": 0.9034133608504215,
+  "macro_recall": 0.90125,
+  "mean_confidence": 0.8150156140327454,
+  "metric_interpretation": "DEVELOPMENT_DIAGNOSTIC_NOT_INDEPENDENT_TEST_PERFORMANCE",
+  "numerical_integrity": {
+    "invalid_probability_count": 0,
+    "non_finite_output_count": 0,
+    "output_dtype": "float32",
+    "output_shape": [
+      8000,
+      3
+    ],
+    "probability_sum_max_abs_error": 1.1920928955078125e-07,
+    "status": "PASS",
+    "valid_argmax_count": 8000
+  },
+  "per_class": {
+    "HUMAN_FALL_PROXY": {
+      "f1": 0.8635650810245687,
+      "precision": 0.904709748083242,
+      "recall": 0.826,
+      "support": 2000
+    },
+    "HUMAN_NORMAL": {
+      "f1": 0.9216003988532967,
+      "precision": 0.9189659458115834,
+      "recall": 0.92425,
+      "support": 4000
+    },
+    "NOT_HUMAN": {
+      "f1": 0.9188147434353168,
+      "precision": 0.8865643886564388,
+      "recall": 0.9535,
+      "support": 2000
+    }
+  },
+  "prediction_distribution": {
+    "HUMAN_FALL_PROXY": 1826,
+    "HUMAN_NORMAL": 4023,
+    "NOT_HUMAN": 2151
+  },
+  "predictions_sha256": "77994a40bcf19d505e9b56005c09a769783401aa85e448a73e7f987750cf76fa",
+  "probabilities_sha256": "13d38940f49e16a99eea2339318e6b6d5c7a19b9d2ed4ca1f27778253c1bac88",
+  "role": "DEVELOPMENT",
+  "sample_count": 8000,
+  "schema_version": "safenest.thermal.b6r_p4.clean_baseline_metrics.v1",
+  "stage_id": "B6R-P4"
+}

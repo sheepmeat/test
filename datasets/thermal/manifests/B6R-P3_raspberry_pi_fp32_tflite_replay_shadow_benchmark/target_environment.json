@@ -1,0 +1,14 @@
+{
+  "architecture": "NOT_AVAILABLE",
+  "available_memory_bytes": "NOT_AVAILABLE",
+  "cpu_information": "NOT_AVAILABLE",
+  "desktop_substitution_used": false,
+  "hostname": "NOT_AVAILABLE",
+  "kernel": "NOT_AVAILABLE",
+  "os_distribution": "NOT_AVAILABLE",
+  "python_version": "NOT_AVAILABLE",
+  "raspberry_pi_model": "NOT_AVAILABLE",
+  "schema_version": "safenest.thermal.b6r_p3.target_environment.v1",
+  "target_measurement_status": "NOT_MEASURED_ON_TARGET",
+  "target_status": "BLOCKED_HARDWARE"
+}
