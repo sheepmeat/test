@@ -5,7 +5,7 @@
 - Authority: Thermal Control Tower living execution map
 - Scope: documentation-only status synchronization; no training, binary,
   manifest, or runtime changes
-- Last map sync: post PR `#184` / `#186` / `#187` / `#188` on `origin/main`
+- Last map sync: post PR `#184` / `#186` / `#187` / `#188` / `#189` on `origin/main`
 
 ## 1. Purpose
 
@@ -55,8 +55,8 @@ Node labels also carry status text for color-independent reading.
 Development repo: sheepmeat/test
 Team repo: reference now, application target later
 Integration repo: DEFERRED
-Candidate A: REQUIRED — family A_RECOMMEND_REVISED_SMALL_CNN
-Candidate B: CONDITIONAL — TV2-A0 evidence supports B_JUSTIFIED; formal G3 pending
+Candidate A: REQUIRED — REVISED COMPACT CONVENTIONAL CNN (exact head NOT FROZEN; G2)
+Candidate B: CONDITIONAL — TV2-A0 evidence supports B_JUSTIFIED; G3 NOT PASSED; B training NOT AUTHORIZED
 Device-domain validation: DEFERRED
 Scientific final selection: NOT PERMITTED
 LOCKED_PUBLIC_TEST: CLOSED DURING DEVELOPMENT (access = 0)
@@ -91,13 +91,13 @@ D3/GEO/PRE/LABEL/TRAIN-DEVELOPMENT/aug/optimizer/seed contract with A/B.
 | LABEL | `READY_WITH_LIMITATIONS` / DONE | 3-class proxy; standing/sitting/walking/crouch/bend/kneel → `HUMAN_NORMAL`+subtype; static lying vs temporal fall remain separate FALL_PROXY evidence slices |
 | PRE | `PROVISIONAL_READY_WITH_LIMITATIONS` | Leading hypothesis `P1_TRAIN_FITTED_GLOBAL_ZSCORE` **not frozen**; heterogeneous D0 representations (calibrated °C vs rendered intensity) → waits D1/D2/D3 |
 
-### 4.4 Architecture review (not yet green)
+### 4.4 Architecture review
 
 | ID | Status | Notes |
 |---|---|---|
-| TV2-A0 | ACTIVE — `CONTROL_TOWER_ACCEPTED_WITH_CORRECTIONS` / `DELIVERY_PENDING` | Remote `thermal-v2/tv2-a0-architecture-hypothesis-review` (initial `ebe2d6a`, corrective tip present). No merged A0 PR verified at this sync. |
-| Candidate A family | Direction accepted | `A_RECOMMEND_REVISED_SMALL_CNN` — revised compact conventional CNN; historical exact 312,131 Flatten model **not** frozen; head `A_HEAD_GAP` vs `A_HEAD_SPATIAL_RETAIN` deferred to G2 |
-| Candidate B family | Evidence supports `B_JUSTIFIED` | Preferred `CAPACITY_MATCHED_DEPTHWISE_SEPARABLE_CNN`; historical exact 347-param depthwise is **not** B; formal **G3 still pending** |
+| TV2-A0 | `PASS_WITH_LIMITATIONS` / DONE | Merged PR `#189`; Control-Tower architecture hypothesis review complete |
+| Candidate A family | Direction accepted | `A_RECOMMEND_REVISED_SMALL_CNN` — **REVISED COMPACT CONVENTIONAL CNN**; historical exact 312,131 Flatten model **not** frozen; exact head **NOT FROZEN** — G2 decides `A_HEAD_GAP` vs `A_HEAD_SPATIAL_RETAIN` |
+| Candidate B family | Evidence supports `B_JUSTIFIED` | Preferred `CAPACITY_MATCHED_DEPTHWISE_SEPARABLE_CNN`; historical exact 347-param depthwise is **not** B; formal **G3 NOT PASSED**; Candidate B training **NOT AUTHORIZED** |
 
 ### 4.5 Primary failure metric
 
@@ -153,13 +153,11 @@ flowchart TD
     G0 --> PRE
 
     subgraph S3["ARCHITECTURE REVIEW"]
-        A0["ACTIVE: TV2-A0 Architecture Review<br/>CT accepted with corrections<br/>DELIVERY_PENDING"]
-        A0FIX["ACTIVE: A0 corrective delivery<br/>PR/merge pending"]
-        A0 --> A0FIX
+        A0["DONE: TV2-A0 Architecture Review<br/>PASS_WITH_LIMITATIONS"]
     end
 
     G0 --> A0
-    A0FIX --> G1
+    A0 --> G1
 
     subgraph S4["CANDIDATE A — REQUIRED"]
         G2["PLANNED: G2 Candidate A Exact Spec<br/>REVISED compact CNN; head GAP vs spatial"]
@@ -224,8 +222,8 @@ flowchart TD
     classDef blocked fill:#F4CCCC,stroke:#990000,stroke-width:2px;
     classDef deferred fill:#D9D9D9,stroke:#777777,stroke-width:1.5px;
 
-    class BASE,HIST,GAP,G0,D0,H0,GEO,SPLIT,LABEL done;
-    class D1,PRE,A0,A0FIX active;
+    class BASE,HIST,GAP,G0,D0,H0,GEO,SPLIT,LABEL,A0 done;
+    class D1,PRE active;
     class D2,D3,G1,G2,A_TRAIN,C0N,C1,MET,FP,HNE,CMP,G4,DEC,EXPORT,G5,IMPORT,TEAMG planned;
     class G3,B_SPEC,B_SKIP,B_TRAIN conditional;
     class INT,DEV,FINAL deferred;
@@ -241,10 +239,10 @@ flowchart TD
 | GEO / SPLIT / LABEL foundation | Contract foundation (PR `#186`) | each `READY_WITH_LIMITATIONS` / DONE |
 | PRE foundation | Shared preprocess proposal | `PROVISIONAL_READY_WITH_LIMITATIONS` / ACTIVE |
 | TV2-D1 Source Verification | Access, license, representation, grouping for 5 candidates | `UNBLOCKED` / `NEXT` / ACTIVE |
-| TV2-A0 Architecture Review | Family hypotheses | CT accepted with corrections; `DELIVERY_PENDING` / ACTIVE |
+| TV2-A0 Architecture Review | Family hypotheses | `PASS_WITH_LIMITATIONS` / DONE (PR `#189`) |
 | G1 Model Contract Freeze | Final GEO/PRE/SPLIT/LABEL + D3 membership freeze | `PLANNED` / `WAITING_FOR_D1_D2_D3` — **not PASS** |
-| G2 Candidate A Ready | Exact revised-CNN + head decision | `NOT_STARTED` |
-| G3 Candidate B Justified | Formal second-hypothesis decision | `CONDITIONAL` / `WAITING_FOR_G1` (A0 supports `B_JUSTIFIED`) |
+| G2 Candidate A Ready | Exact revised compact CNN + head decision (`A_HEAD_GAP` vs `A_HEAD_SPATIAL_RETAIN`) | `NOT_STARTED` |
+| G3 Candidate B Justified | Formal second-hypothesis decision | `CONDITIONAL` / `WAITING_FOR_G1` (A0 supports `B_JUSTIFIED`; G3 **NOT PASSED**; B training **NOT AUTHORIZED**) |
 | G4 Offline Evaluation Complete | C0/C1/A/(B) DEVELOPMENT comparison | `NOT_STARTED` |
 | G5 Standalone Prototype Ready | Prototype artifact; no production overwrite | `NOT_STARTED` |
 | Team Application Gate | Team import/verification | `NOT_STARTED` |
@@ -255,13 +253,18 @@ Do not mark any closed gate without Control-Tower evidence.
 ## 7. Current Active Frontier
 
 ```text
-DONE: G0, D0, H0, GEO, SPLIT, LABEL
+DONE: G0, D0, H0, GEO, SPLIT, LABEL, TV2-A0
 ACTIVE:
   TV2-D1  (five-source verification; former D0-merge blocker CLOSED)
   PRE     (provisional; waits D1/D2/D3)
-  TV2-A0  (corrective delivery pending)
 PLANNED after that: D2 → D3 → G1 → G2 / G3 → training → fair comparison → G4/G5
 ```
+
+TV2-A0 is DONE (`PASS_WITH_LIMITATIONS`, PR `#189`). Candidate A family direction
+remains **REVISED COMPACT CONVENTIONAL CNN** with exact head deferred to G2.
+Candidate B evidence remains `B_JUSTIFIED` /
+`CAPACITY_MATCHED_DEPTHWISE_SEPARABLE_CNN`, but **G3 is NOT PASSED** and
+Candidate B training is **NOT AUTHORIZED**.
 
 TV2-D1 five-source scope (no premature selection):
 
