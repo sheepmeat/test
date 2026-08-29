@@ -42,7 +42,7 @@ These DEVELOPMENT numbers are **diagnostics**, not scientific final performance.
 | ID | Regime | Params | Role |
 |---|---|---:|---|
 | `SMALL_CNN_BASELINE_V1` | T-B1/T-B2 (T-A6 + P1 z-score) | 312,131 | Controlled spatial-CNN winner vs depthwise |
-| `DEPTHWISE_SEPARABLE_CNN_V1` | T-B2 (same protocol as SMALL_CNN) | 347 | Lost; extreme under-capacity + GAP-only head |
+| `DEPTHWISE_SEPARABLE_CNN_V1` | T-B2 (same protocol as SMALL_CNN) | 347 | Lost; tiny instance (extreme param reduction + GAP-only head) |
 | `PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1` | B6R-P0–P4 public SDT | 2,691 | Current Team baseline identity for V2 comparison |
 
 **Comparability finding:** T-B metrics and B6R-P metrics are
@@ -56,18 +56,23 @@ coarse regional averages for an MLP.
 
 **Candidate A recommendation:** `A_RECOMMEND_REVISED_SMALL_CNN`
 
-Keep the historically evidenced two-stage conventional Conv→Pool stack that won
-T-B2, but **do not freeze the exact 312,131-parameter Flatten head**. Replace
-Flatten with a compact spatial-summary head (GAP or light adaptive spatial
-retain) so Candidate A tests spatial inductive bias on the **current public-SDT
-regime** without inheriting an oversized absolute-layout head.
+Candidate A **family** accepted for Control-Tower direction: **REVISED COMPACT
+CONVENTIONAL CNN** (historically evidenced Conv→Pool→Conv→Pool stack; not the
+exact 312,131-parameter Flatten head). The exact Candidate A **head is not
+frozen** here — it remains G2-controlled (`A_HEAD_GAP` vs
+`A_HEAD_SPATIAL_RETAIN`; see §11). TV2-A0 nominates the family so future work
+can test spatial inductive bias on the current public-SDT regime without
+inheriting the oversized absolute-layout Flatten head.
 
 **Candidate B recommendation:** `B_JUSTIFIED`
 
 Most scientifically distinct family: **capacity-matched depthwise-separable CNN**.
-Do **not** rerun the historical 347-parameter depthwise model. That loss is best
-read as under-capacity / representation-bottleneck evidence, not a closed
-negative result against the depthwise family.
+Do **not** rerun the historical 347-parameter depthwise model. That specific
+tiny implementation failed under T-B2; plausible contributing factors include
+extreme parameter reduction and a 16-D GAP bottleneck, but
+**under-capacity is not a proven causal explanation**. The loss is evidence
+against that tiny instance, not a closed negative result against the depthwise
+family.
 
 **TV2-A0 gate:** `PASS_WITH_LIMITATIONS`
 
@@ -205,16 +210,23 @@ Input 62×80×1
 | REAL / INT8 | not evaluated for loser |
 | Outcome | lost to SMALL_CNN under `THERMAL_T_B0_WINNER_RULE_001` |
 
-**Why it likely failed (evidence-tied, not generic):**
+**Why this specific tiny instance failed (evidence-tied hypothesis language):**
 
-1. **Extreme under-capacity:** 347 vs 312,131 parameters (~99.9% reduction).
-2. **Representation bottleneck:** GAP collapses to **16** scalars before the
-   classifier — far less than SMALL_CNN’s 9600 flattened units or even the
+The T-B2 result shows that this **exact 347-parameter depthwise implementation
+lost** to SMALL_CNN under a matched protocol. Observed structural differences
+relative to the winner include:
+
+1. **Extreme parameter reduction:** 347 vs 312,131 (~99.9% fewer parameters) —
+   a plausible under-capacity factor, **not proven causal**.
+2. **Narrow post-GAP representation:** GAP collapses to **16** scalars before
+   the classifier — far less than SMALL_CNN’s 9600 flattened units or even the
    pooled MLP’s 80 regional means.
 3. **No intermediate Dense capacity** after GAP.
 4. **Not a fair test of “depthwise as a family”** — only of this tiny instance.
 5. Protocol/dataset/preprocess were matched to SMALL_CNN, so the loss is
-   architectural/capacity within T-B, not a preprocessing confound.
+   attributable to the architecture/capacity **instance** within T-B, not a
+   preprocessing confound — without isolating which instance property was
+   decisive.
 
 ### 3.3 `PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1` (B6R-P1/P2)
 
@@ -530,7 +542,7 @@ Limited to four options.
 
 | Option | Rating | Why |
 |---|---|---|
-| Rerun exact 347-param depthwise | **REJECT** | Already lost; under-capacity confound unresolved if repeated |
+| Rerun exact 347-param depthwise | **REJECT** | Specific tiny implementation already lost; does not fair-test the family |
 | Transformer / large backbone | **REJECT** | No SafeNest evidence; edge/TFLite mismatch |
 | “MLP but 2× wider” as Candidate B | **REJECT** | Not a distinct spatial hypothesis |
 | Architecture+loss+data mega-bundle | **REJECT** | Non-identifiable |
@@ -565,35 +577,54 @@ Revision preserves that inductive-bias lineage while correcting the head.
 Architecture direction can be recommended now. Final freeze of exact tensors /
 preprocess still waits on G1, but TV2-A0 can nominate the family.
 
-### Provisional Candidate A specification (design proposal only)
+### Accepted family / unresolved head (Control-Tower correction)
 
 ```text
-TV2_CANDIDATE_A_REVISED_SMALL_CNN_GAP_V1  (provisional name)
+Candidate A FAMILY = REVISED COMPACT CONVENTIONAL CNN
+Candidate A exact head = NOT FROZEN (G2-controlled)
+```
 
+Shared provisional Conv stack (design proposal only; not a training authorization):
+
+```text
 Input 62×80×1
 → Conv2D 16, 3×3, ReLU, same
 → MaxPool 2×2
 → Conv2D 32, 3×3, ReLU, same
 → MaxPool 2×2
-→ GlobalAveragePooling2D          → 32
-→ Dense 32, ReLU                  → 32
+→ [HEAD — G2 decision]
 → Dense 3, softmax
 
-Approx trainable parameters: ~5,955
-Major activations: 62×80×16, 31×40×16, 31×40×32, 15×20×32, then vectors
-Approx MAC regime: low 10^6–10^7 per frame order (coarse); exact UNKNOWN_UNTIL_MEASURED
-Ops: Conv2D, MaxPool, GAP, Dense, ReLU, Softmax
+Ops (stack): Conv2D, MaxPool, ReLU
 TFLite: LIKELY_SAFE
 INT8: LIKELY_SAFE_WITH_VERIFICATION
 ```
 
-**Optional A ablation (same family, still architecture-identifiable):** replace GAP
-with adaptive average pool to 4×5 then Dense(32) (~25k params) if G1 review wants
-more retained spatial layout than GAP. Treat as A-ablation, not Candidate B.
+Bounded future head options for G2 (do **not** run this ablation in TV2-A0):
 
-**Rationale tied to this task:** the Conv stack supplies the local structure the
-8×10 mean pool erases; GAP prevents Flatten from turning Candidate A into a
-layout memorizer while keeping parameters in a compact edge-plausible band.
+```text
+A_HEAD_GAP
+  Conv stack → GlobalAveragePooling2D → Dense 32, ReLU → Dense 3
+  Approx trainable parameters: ~5,955
+  Tradeoff: reduces absolute-layout memorization risk relative to Flatten,
+  but discards explicit spatial location after convolution.
+
+A_HEAD_SPATIAL_RETAIN
+  Conv stack → deterministic/adaptive average pool to 4×5
+  → Flatten → Dense 32, ReLU → Dense 3
+  Approx trainable parameters: ~25k
+  Tradeoff: may better preserve coarse posture/location information that GAP
+  throws away; retains more absolute-layout capacity than GAP.
+```
+
+GAP is a **provisional illustration**, not a frozen Candidate A head. Control
+Tower freezes the head at G2. Do not treat either head option as executed or
+selected by TV2-A0.
+
+**Rationale tied to this task:** the Conv stack supplies local structure the
+8×10 mean pool erases; the head choice then decides how much coarse spatial
+location survives into the classifier. That head decision is intentionally left
+open.
 
 ---
 
@@ -615,15 +646,17 @@ CAPACITY_MATCHED_DEPTHWISE_SEPARABLE_CNN
 
 1. Tests a **different inductive bias** from revised conventional CNN
    (factorized spatial/channel mixing).
-2. Directly resolves the SafeNest-specific ambiguity left by T-B2: was depthwise
-   weak, or was **347 params + 16-D GAP** weak?
+2. Directly resolves the SafeNest-specific ambiguity left by T-B2: the exact
+   **347-param + 16-D GAP** depthwise instance lost — leaving open whether the
+   depthwise **family** remains viable at matched capacity.
 3. Remains compact and TFLite-oriented.
 4. Is not “Candidate A + extra Dense” or “Candidate A + seed 43”.
 
 ### Why not the historical depthwise
 
-Repeating `DEPTHWISE_SEPARABLE_CNN_V1` would reconfirm under-capacity, not the
-family hypothesis.
+Repeating `DEPTHWISE_SEPARABLE_CNN_V1` would only reconfirm that the **specific
+tiny implementation failed**. It would not isolate under-capacity as a proven
+causal mechanism, nor fairly test a capacity-matched depthwise family member.
 
 ### Provisional Candidate B specification (design proposal only)
 
@@ -633,14 +666,17 @@ TV2_CANDIDATE_B_CAP_DEPTHWISE_V1  (provisional name)
 Input 62×80×1
 → Conv2D 16, 3×3, ReLU, same
 → MaxPool 2×2
-→ SeparableConv2D 32, 3×3, ReLU, same, depth_multiplier=1
+→ SeparableConv2D 32, 3×3, ReLU, same, depth_multiplier=1, use_bias=True
 → MaxPool 2×2
-→ SeparableConv2D 48, 3×3, ReLU, same, depth_multiplier=1
+→ SeparableConv2D 48, 3×3, ReLU, same, depth_multiplier=1, use_bias=True
 → GlobalAveragePooling2D          → 48
 → Dense 32, ReLU
 → Dense 3, softmax
 
-Approx trainable parameters: ~4,435
+Approx trainable parameters: ~4,387
+Bias convention: standard Keras SeparableConv2D(use_bias=True) — pointwise
+bias only (no separate depthwise bias term). Earlier ~4435 figures that assumed
+depthwise+pointwise biases are superseded by this convention.
 Ops: Conv2D, SeparableConv2D, MaxPool, GAP, Dense, ReLU, Softmax
 TFLite: LIKELY_SAFE_WITH_VERIFICATION
 INT8: LIKELY_SAFE_WITH_VERIFICATION
@@ -653,21 +689,45 @@ magnitude), not near 347.
 
 ## 13. Proposed Future Architecture Specs
 
-### 13.1 Baseline (reference, already trained — do not retrain for A0)
+### 13.1 C0 — Frozen operational baseline (do not retrain for A0)
 
 ```text
-PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1
+PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1  /  B6R-P2 FP32 TFLite
 62×80×1 → AdaptiveAvgPool 8×10 → Flatten 80 → Dense32 ReLU → Dense3
 params ≈ 2691
+Role: operational historical reference under its native historical contract.
+NOT architecture-factor-only comparable to future A/B if PRE/data contracts differ.
 ```
 
-### 13.2 Candidate A provisional
+### 13.2 Candidate A provisional family (head NOT frozen)
 
-See §11 (`TV2_CANDIDATE_A_REVISED_SMALL_CNN_GAP_V1`, ~5955 params).
+See §11 — REVISED COMPACT CONVENTIONAL CNN; G2 chooses `A_HEAD_GAP` (~5955) or
+`A_HEAD_SPATIAL_RETAIN` (~25k).
 
 ### 13.3 Candidate B provisional
 
-See §12 (`TV2_CANDIDATE_B_CAP_DEPTHWISE_V1`, ~4435 params).
+See §12 (`TV2_CANDIDATE_B_CAP_DEPTHWISE_V1`, ~4387 params under standard Keras
+`SeparableConv2D(use_bias=True)` pointwise-bias-only convention).
+
+### 13.3b C1 — MATCHED_POOLED_MLP_CONTROL (future only; NOT trained in TV2-A0)
+
+```text
+MATCHED_POOLED_MLP_CONTROL
+Same pooled-MLP architecture as C0 / PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1
+Retrain later under the exact frozen A/B contract:
+  same D3 dataset membership
+  same GEO
+  same PRE
+  same LABEL
+  same TRAIN / DEVELOPMENT roles
+  same augmentation
+  same optimizer / learning-rate policy
+  same early stopping
+  same seed set
+Purpose: clean architecture-factor comparison
+  MATCHED_POOLED_MLP_CONTROL vs Candidate A
+Do NOT train this control in TV2-A0.
+```
 
 ### 13.4 Continuity ablation (optional, not B)
 
@@ -689,18 +749,28 @@ results fail to explain NORMAL→FALL_PROXY.
 
 Draft policy for post-G1 offline comparison (not executed here):
 
+#### Comparator roles (required distinction)
+
+| ID | Role | Comparability |
+|---|---|---|
+| **C0** | Frozen operational baseline: current B6R-P2 pooled MLP under its **native historical contract** | Operational / historical reference. **Not** architecture-factor-only comparable to future A/B if PRE/data contracts differ |
+| **C1** | `MATCHED_POOLED_MLP_CONTROL`: retrain the pooled-MLP architecture under the **exact same future frozen contract** as A/B | Clean architecture-factor control. Only C1 vs Candidate A tests the spatial-CNN hypothesis fairly |
+| **A / B** | Candidate architectures under the shared frozen contract | Compared to each other and to C1 under matched conditions |
+
+Do **not** train C1 in TV2-A0.
+
+#### Shared contract for A / B / C1
+
 1. **Shared data:** same canonical TRAIN and DEVELOPMENT membership after G1/D3.
-2. **Shared preprocess:** one frozen PRE contract for A and B unless a pre-registered
-   preprocess factor experiment says otherwise.
+2. **Shared GEO / PRE:** one frozen geometry + preprocessing contract for A, B, and C1.
 3. **Shared labels:** same 3-class proxy map and class order.
 4. **Shared augmentation:** default none for architecture bake-off.
-5. **Shared optimization policy:** one optimizer/schedule/early-stop rule for A and B
+5. **Shared optimization policy:** one optimizer/schedule/early-stop rule for A, B, and C1
    (do not reuse T-B Adam vs B6R SGD casually without freezing one).
 6. **Shared seeds:** fixed seed set (recommend ≥3 for confirmation after first float).
-7. **Single factor:** architecture ID differs.
-8. **Baseline compare:** evaluate the frozen B6R-P2 FP32 TFLite or equivalent
-   pooled-MLP under the same DEVELOPMENT protocol as a reference comparator,
-   documenting any unavoidable trainer mismatch as a limitation.
+7. **Single factor among A/B/C1:** architecture ID differs; data/PRE/LABEL/optimizer held fixed.
+8. **C0 reporting:** still evaluate/report the frozen B6R-P2 operational baseline for continuity,
+   but label any contract mismatch explicitly — C0 does not replace C1.
 9. **Data-corrective stage later:** freeze architecture, vary hard-negatives.
 10. **LOCKED_PUBLIC_TEST:** remains closed through architecture selection.
 
@@ -774,9 +844,10 @@ TV2-A0 = PASS_WITH_LIMITATIONS
 - Comparability matrix explicit.
 - Representation hypothesis for 8×10 pooling stated as hypothesis, not fact.
 - Serious shortlist reduced to actionable options.
-- Candidate A: `A_RECOMMEND_REVISED_SMALL_CNN` with provisional spec.
-- Candidate B: `B_JUSTIFIED` as capacity-matched depthwise-separable CNN.
-- Fair-comparison and false-fall metric rules drafted.
+- Candidate A: `A_RECOMMEND_REVISED_SMALL_CNN` — family REVISED COMPACT CONVENTIONAL CNN; exact head NOT FROZEN.
+- Candidate B: `B_JUSTIFIED` as capacity-matched depthwise-separable CNN (~4387 params under Keras SeparableConv2D pointwise-bias convention).
+- Fair-comparison protocol distinguishes C0 operational baseline vs C1 matched pooled-MLP control.
+- False-fall metric rules drafted.
 - Enough for Control Tower to freeze Candidate A direction and decide B after
   G1 evidence review.
 
