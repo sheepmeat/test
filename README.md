@@ -12,7 +12,7 @@
 > - **Pi 5 실배포**: NOT_READY / BLOCKED_HARDWARE
 > - **전체 릴리스 상태**: **NOT_READY**
 
-`embed2/` 최상위가 유일한 활성 개발본이다. 과거 V4/V5/구 V6 전체 폴더는 `archive/version_snapshots/`에 읽기 전용으로 보존한다. 현재 모델 계보와 상태는 폴더명이 아니라 `models/model_manifest.json`과 phase 보고서로 관리한다.
+이 Git 저장소 루트(`AGENTS.md`가 있는 디렉터리; `git rev-parse --show-toplevel`)가 유일한 활성 개발본이다. 물리 디렉터리 이름(`embed2`, `standalone` 등), 상위 폴더, OS, 절대경로는 저장소 정체성이 아니다. 과거 V4/V5/구 V6 전체 폴더는 `archive/version_snapshots/`에 읽기 전용으로 보존한다. 현재 모델 계보와 상태는 폴더명이 아니라 `models/model_manifest.json`과 phase 보고서로 관리한다.
 
 현재 상세 검증 상태:
 

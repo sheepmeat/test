@@ -5,9 +5,9 @@
 ## 0. 모든 팀원·에이전트 공통 준수사항
 
 1. 작업 시작 전 최상위 `AGENTS.md`를 읽습니다.
-2. `embed2/` 최상위만 활성 project root로 사용합니다.
+2. 활성 project root는 `git rev-parse --show-toplevel`로 확인한 Git 저장소 루트입니다. 디렉터리 이름이 `embed2`일 필요는 없으며, macOS / Linux / WSL2의 임의 POSIX 경로 checkout을 허용합니다.
 3. `archive/` 안의 code, model, manifest는 수정·import·runtime 선택하지 않습니다.
-4. 새 JSON/YAML/metadata에는 저장소 상대경로만 기록하고 `/Users/...`나 `file://` 경로를 남기지 않습니다.
+4. 새 JSON/YAML/metadata에는 저장소 상대경로만 기록하고 `/Users/...`, `/home/...`, `C:\...`, `file://` 같은 절대경로를 남기지 않습니다.
 5. 실센서 provider는 `connect() -> bool`, `read() -> InferenceResult`, `close() -> None`가 기존 계약과 일치해야 합니다.
 6. `real` mode는 실센서 연동·fail-closed 개발 검사용이며, 실배포 승격은 별도 `production` gate와 MR60/Pi 실측 후에만 합니다.
 
@@ -114,7 +114,7 @@ $$R = 100 \times (0.35 S_1 + 0.35 S_2 + 0.15 S_3 + 0.15 S_4)$$
    sudo apt-get update && sudo apt-get install -y python3-pip python3-venv i2c-tools
 2. raspi-config에서 I2C, SPI, Serial UART(/dev/ttyAMA0) 인터페이스 활성화.
 3. 가상환경 구축 및 패키지 설치:
-   cd "<path-to-embed2>"
+   cd "$(git rev-parse --show-toplevel)"
    python3 -m venv .venv && source .venv/bin/activate
    pip install -r requirements-pi.txt
 4. 테스트 검증:

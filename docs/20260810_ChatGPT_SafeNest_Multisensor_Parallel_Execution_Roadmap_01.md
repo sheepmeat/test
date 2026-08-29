@@ -23,6 +23,7 @@
 3. 아래에 이관된 mmWave 문서는 mmWave 세부 실행 기준이다. 2026-08-14 이후 Phase C는 두 문서에서 동일한 세분 구조를 따른다.
 4. 각 센서 phase 보고서와 machine-readable manifest가 완료 수치의 근거다.
 5. 문서와 artifact가 충돌하면 validator가 통과한 machine-readable evidence를 우선하고 문서 불일치를 별도 수정한다.
+6. 물리 디렉터리 이름(`embed2` 등), 상위 폴더, OS, 절대경로는 저장소 정체성이 아니다. 이 문서 후반(Part II 이관본 포함)에 `embed2/`가 유일한 활성 루트로 적혀 있어도, 활성 루트는 이 `AGENTS.md`를 포함한 Git 저장소 루트이며 `git rev-parse --show-toplevel`로 확인한다. macOS, native Linux, WSL2의 임의 POSIX 경로 checkout을 허용한다.
 
 `A/B/C/D/E`라는 문자만 단독으로 쓰면 센서가 불명확하므로 신규 branch, report, manifest, issue에서는 다음 접두어를 사용한다.
 
