@@ -12,12 +12,12 @@
 
 ~~~text
 CURRENT_PHASE: TV2-D1
-CURRENT_STEP: TV2-D1.1
+CURRENT_STEP: TV2-D1.2
 CURRENT_STATUS: NEXT
-NEXT_STEP: TV2-D1.1
+NEXT_STEP: TV2-D1.2
 TRAINING_AUTHORIZED: NO
-LAST_COMPLETED_REPORT: docs/thermal/20260830_SafeNest_Thermal_V2_TV2-H0_SDT_Hard_Negative_Audit_01.md
-LAST_COMMIT: 25863118c06b8c065f4aa2e8d3c85cc9b4799a6a
+LAST_COMPLETED_REPORT: docs/reports/20260830_Codex_Thermal_V2_TV2-D1.1_Execution_Report_KO_01.md
+LAST_COMMIT: dd945c07e61e7235a80e86d681fb8f7038496b56
 ~~~
 
 LAST_COMMIT is the clean origin/main base immediately before this stepwise
@@ -173,6 +173,29 @@ UNRESOLVED, REFERENCE_ONLY, LOW_VALUE, 또는 REJECT로 구분되었다.
 새로운 후보를 추가할 때는 D1.1 inventory에 먼저 추가하고 동일한 evidence
 field를 채운다.
 
+### 2.6.1 TV2-D1.1 ledger freeze delivery
+
+TV2-D1.1은 `PASS_WITH_LIMITATIONS`로 완료되었다. canonical ledger는
+`docs/reports/20260830_Codex_Thermal_V2_TV2-D1.1_Execution_Report_KO_01.md`
+section 6이며, D0의 모든 독립 source와 grouped rejection class를 17개 stable
+record로 보존한다. IPHPDT derivative와 underlying IPHD는 permission boundary가
+달라 별도 `source_id`로 분리했다. raw payload, training, model/data/runtime
+mutation, `LOCKED_PUBLIC_TEST` 접근은 없었다.
+
+Serious source verification order는 다음과 같이 고정되며 다음 실행은 하나뿐이다.
+
+~~~text
+TV2-D1.2 = TF_66
+TV2-D1.3 = IPHPDT + IPHD
+TV2-D1.4 = THERMAL_IM
+TV2-D1.5 = QUIDA
+TV2-D1.6 = EHOME_SENIORS
+~~~
+
+Dataset/asset license와 access metadata가 unresolved인 source는 성공으로
+상향하지 않았다. D1.1의 limitation은 후속 source-specific 검증으로 전달되며,
+Parent TV2-D1 또는 G1 PASS를 의미하지 않는다.
+
 ### 2.7 Parallel B6R evidence is context, not V2 authority
 
 B6R-P0/P1/P2/P4 public-SDT auxiliary lineage는 source/model/locked-test
@@ -316,8 +339,8 @@ sample/metadata 범위만 사용한다.
 
 | Step ID | Parent Task | Status | Objective | Inputs | Actions | Outputs | Pass Criteria | Fail / Blocked Criteria | Forbidden Actions | Report | Next Step |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| TV2-D1.1 | TV2-D1 | NEXT | D0 후보 inventory와 source-by-source D1 evidence ledger freeze | D0 report, Master Map, official links, report template | stable source_id, official identity, paper/project/archive URL, access route, license/provenance/payload/group/label field를 만들고 순서를 고정 | D1 inventory/ledger, no raw payload | TF-66, IPHPDT/IPHD, Thermal-IM, QUIDA, eHomeSeniors와 D0 rejected/reference entries가 모두 보존되고 각 field가 PENDING 또는 링크 근거를 가짐 | candidate 누락, official identity 불명, status 추측 | raw download, account/approval bypass, training, model/data mutation | docs/reports/YYYYMMDD_Codex_Thermal_V2_TV2-D1.1_Execution_Report_KO_01.md | TV2-D1.2 |
-| TV2-D1.2 | TV2-D1 | PLANNED | Thermal Fall 66 access/license/provenance 계약 검증 | D0 TF-66 entry, official paper/project/access page | public vs request wording, owner/publisher, release/version, license, payload route, participant/session/video grouping, fall/non-fall semantics 확인 | TF-66 evidence row | direct access 또는 정확한 blocker와 license state가 기록되고 LICENSE_UNRESOLVED가 숨겨지지 않음 | payload·terms·grouping 확인 불가 시 BLOCKED_ACCESS 또는 LICENSE_UNRESOLVED | data 임의 수신, frame을 training pool에 추가 | docs/reports/..._TV2-D1.2_Execution_Report_KO_01.md | TV2-D1.3 |
+| TV2-D1.1 | TV2-D1 | DONE_WITH_LIMITATIONS / PASS_WITH_LIMITATIONS | D0 후보 inventory와 source-by-source D1 evidence ledger freeze | D0 report, Master Map, official links, report template | stable source_id, official identity, paper/project/archive URL, access route, license/provenance/payload/group/label field를 만들고 순서를 고정 | D1 inventory/ledger, no raw payload | TF-66, IPHPDT/IPHD, Thermal-IM, QUIDA, eHomeSeniors와 D0 rejected/reference entries가 모두 보존되고 각 field가 PENDING 또는 링크 근거를 가짐 | candidate 누락, official identity 불명, status 추측 | raw download, account/approval bypass, training, model/data mutation | docs/reports/20260830_Codex_Thermal_V2_TV2-D1.1_Execution_Report_KO_01.md | TV2-D1.2 |
+| TV2-D1.2 | TV2-D1 | NEXT | Thermal Fall 66 access/license/provenance 계약 검증 | D0 TF-66 entry, official paper/project/access page | public vs request wording, owner/publisher, release/version, license, payload route, participant/session/video grouping, fall/non-fall semantics 확인 | TF-66 evidence row | direct access 또는 정확한 blocker와 license state가 기록되고 LICENSE_UNRESOLVED가 숨겨지지 않음 | payload·terms·grouping 확인 불가 시 BLOCKED_ACCESS 또는 LICENSE_UNRESOLVED | data 임의 수신, frame을 training pool에 추가 | docs/reports/..._TV2-D1.2_Execution_Report_KO_01.md | TV2-D1.3 |
 | TV2-D1.3 | TV2-D1 | PLANNED | IPHPDT/IPHD labeled derivative와 underlying dataset 경계 검증 | D0 IPHPDT/IPHD entry, Sensors paper, ChaLearn page | paper license와 dataset terms 분리, derivative access, Kelvin×100 representation, boxes/masks, version, subject/session, standing/sitting/lying/bending 확인 | IPHPDT/IPHD evidence row | dataset license/redistribution/derived-artifact status와 grouping limitation 명시 | request-only/derivative scope 불명 시 BLOCKED_LICENSE 또는 ACCESS_NOT_VERIFIABLE | paper open-access를 dataset permission으로 취급, processed data 복제 | docs/reports/..._TV2-D1.3_Execution_Report_KO_01.md | TV2-D1.4 |
 | TV2-D1.4 | TV2-D1 | PLANNED | Thermal-IM normal-motion hard-negative source 검증 | D0 Thermal-IM entry, official repo/paper/download | BSD-3 scope, release identity, permitted archive members, annotation.json vocabulary, RGBT_T.mp4 representation, actor/room/scene/split, walking/sitting/kneeling 확인 | Thermal-IM evidence row | asset-level terms, rendered-vs-radiometric status, actor/scene grouping, action labels가 evidence 또는 explicit unresolved로 남음 | linked asset terms/annotations/split 확인 불가 시 BLOCKED_ACCESS 또는 LICENSE_UNRESOLVED | full archive download, redistribution assumption, fall-positive relabel | docs/reports/..._TV2-D1.4_Execution_Report_KO_01.md | TV2-D1.5 |
 | TV2-D1.5 | TV2-D1 | PLANNED | QUIDA temperature/event reference contract 검증 | D0 QUIDA entry, PeerJ paper, OSF record | asset license, CSV schema, MLX90640 32×24 values/units, timestamps, subject folders, Falls.csv, simulated-fall/no-fall semantics, missing-sample and split evidence 확인 | QUIDA evidence row | OSF asset terms와 subject-level event provenance가 확인되거나 explicit unresolved | license/schema/access 불명 시 BLOCKED_LICENSE 또는 ACCESS_NOT_VERIFIABLE | simulated fall을 clinical truth로 승격, random window split | docs/reports/..._TV2-D1.5_Execution_Report_KO_01.md | TV2-D1.6 |
