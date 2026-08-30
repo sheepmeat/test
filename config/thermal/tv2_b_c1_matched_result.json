@@ -1,0 +1,703 @@
+{
+  "C1": {
+    "architecture_contract": {
+      "architecture_family": "MATCHED_POOLED_MLP_CONTROL",
+      "architecture_id": "C1_MATCHED_POOLED_MLP",
+      "attention_or_transformer": "NONE",
+      "batch_norm": "NONE",
+      "canonical_input_shape": [
+        1,
+        62,
+        80,
+        1
+      ],
+      "dropout": "NONE",
+      "hidden_units": 32,
+      "num_classes": 3,
+      "parameter_count": 2691,
+      "pooling": {
+        "edge_policy": "numpy_linspace_integer_boundaries",
+        "feature_count": 80,
+        "height_edges": [
+          0,
+          7,
+          15,
+          23,
+          31,
+          38,
+          46,
+          54,
+          62
+        ],
+        "operation": "adaptive_mean_pool",
+        "output_hw": [
+          8,
+          10
+        ],
+        "source_family": "B6R_PUBLIC_SDT_POOLED_MLP",
+        "width_edges": [
+          0,
+          8,
+          16,
+          24,
+          32,
+          40,
+          48,
+          56,
+          64,
+          72,
+          80
+        ]
+      },
+      "role": "MATCHED_CONTROL_NOT_PROTOTYPE_WINNER"
+    },
+    "class_counts": {
+      "HUMAN_FALL_PROXY": 8000,
+      "HUMAN_NORMAL": 16000,
+      "NOT_HUMAN": 8000
+    },
+    "fall_proxy_recall": {
+      "max": 0.949,
+      "mean": 0.9471666666666666,
+      "min": 0.945,
+      "population_sd": 0.001649915822768616,
+      "values": [
+        0.9475,
+        0.945,
+        0.949
+      ]
+    },
+    "macro_f1": {
+      "max": 0.9695996898390491,
+      "mean": 0.9686948248475177,
+      "min": 0.9675652977788252,
+      "population_sd": 0.0008455934998020912,
+      "values": [
+        0.9695996898390491,
+        0.9675652977788252,
+        0.9689194869246789
+      ]
+    },
+    "membership_frames": 32000,
+    "normal_to_fall_count": {
+      "max": 111,
+      "mean": 107.66666666666667,
+      "min": 103,
+      "population_sd": 3.39934634239519,
+      "values": [
+        103,
+        111,
+        109
+      ]
+    },
+    "parameter_count": 2691,
+    "per_seed": [
+      {
+        "artifact": {
+          "filename": "C1_MATCHED_POOLED_MLP_seed42.keras",
+          "sha256": "5091a52d74432cc529d1d1c1ebf22ab3a279ef454a30f20bcbf3a0503663e040",
+          "size_bytes": 58150
+        },
+        "best_val_loss": 0.08763416111469269,
+        "confusion_matrix": [
+          [
+            2000,
+            0,
+            0
+          ],
+          [
+            35,
+            3862,
+            103
+          ],
+          [
+            0,
+            105,
+            1895
+          ]
+        ],
+        "epochs_run": 30,
+        "fall_proxy_recall": 0.9475,
+        "fall_to_normal_count": 105,
+        "macro_f1": 0.9695996898390491,
+        "normal_to_fall_count": 103,
+        "normal_to_fall_rate": 0.02575,
+        "not_human_to_fall_count": 0,
+        "per_class": {
+          "HUMAN_FALL_PROXY": {
+            "f1": 0.9479739869934969,
+            "precision": 0.9484484484484484,
+            "predicted": 1998,
+            "recall": 0.9475,
+            "support": 2000,
+            "true_positive": 1895
+          },
+          "HUMAN_NORMAL": {
+            "f1": 0.969499184134555,
+            "precision": 0.973531635996975,
+            "predicted": 3967,
+            "recall": 0.9655,
+            "support": 4000,
+            "true_positive": 3862
+          },
+          "NOT_HUMAN": {
+            "f1": 0.9913258983890954,
+            "precision": 0.9828009828009828,
+            "predicted": 2035,
+            "recall": 1.0,
+            "support": 2000,
+            "true_positive": 2000
+          }
+        },
+        "run_id": "C1_MATCHED_POOLED_MLP_seed42",
+        "sample_count": 8000,
+        "seed": 42
+      },
+      {
+        "artifact": {
+          "filename": "C1_MATCHED_POOLED_MLP_seed7.keras",
+          "sha256": "22da6115db83b2e9c232e221e4a1c360f84091d68f9b6bcfeeaf6bfb958a05c3",
+          "size_bytes": 58150
+        },
+        "best_val_loss": 0.08956293761730194,
+        "confusion_matrix": [
+          [
+            2000,
+            0,
+            0
+          ],
+          [
+            38,
+            3851,
+            111
+          ],
+          [
+            1,
+            109,
+            1890
+          ]
+        ],
+        "epochs_run": 30,
+        "fall_proxy_recall": 0.945,
+        "fall_to_normal_count": 109,
+        "macro_f1": 0.9675652977788252,
+        "normal_to_fall_count": 111,
+        "normal_to_fall_rate": 0.02775,
+        "not_human_to_fall_count": 0,
+        "per_class": {
+          "HUMAN_FALL_PROXY": {
+            "f1": 0.944763809047738,
+            "precision": 0.9445277361319341,
+            "predicted": 2001,
+            "recall": 0.945,
+            "support": 2000,
+            "true_positive": 1890
+          },
+          "HUMAN_NORMAL": {
+            "f1": 0.9675879396984924,
+            "precision": 0.9724747474747475,
+            "predicted": 3960,
+            "recall": 0.96275,
+            "support": 4000,
+            "true_positive": 3851
+          },
+          "NOT_HUMAN": {
+            "f1": 0.9903441445902451,
+            "precision": 0.980872976949485,
+            "predicted": 2039,
+            "recall": 1.0,
+            "support": 2000,
+            "true_positive": 2000
+          }
+        },
+        "run_id": "C1_MATCHED_POOLED_MLP_seed7",
+        "sample_count": 8000,
+        "seed": 7
+      },
+      {
+        "artifact": {
+          "filename": "C1_MATCHED_POOLED_MLP_seed1337.keras",
+          "sha256": "f95e972bd2558f56ebea13515f093bdfa4d1e6ea91fa50bea2aea7ffe3a14ef7",
+          "size_bytes": 58156
+        },
+        "best_val_loss": 0.09080632776021957,
+        "confusion_matrix": [
+          [
+            2000,
+            0,
+            0
+          ],
+          [
+            37,
+            3854,
+            109
+          ],
+          [
+            2,
+            100,
+            1898
+          ]
+        ],
+        "epochs_run": 30,
+        "fall_proxy_recall": 0.949,
+        "fall_to_normal_count": 100,
+        "macro_f1": 0.9689194869246789,
+        "normal_to_fall_count": 109,
+        "normal_to_fall_rate": 0.02725,
+        "not_human_to_fall_count": 0,
+        "per_class": {
+          "HUMAN_FALL_PROXY": {
+            "f1": 0.947342151235338,
+            "precision": 0.9456900847035377,
+            "predicted": 2007,
+            "recall": 0.949,
+            "support": 2000,
+            "true_positive": 1898
+          },
+          "HUMAN_NORMAL": {
+            "f1": 0.9690721649484536,
+            "precision": 0.9747091552857865,
+            "predicted": 3954,
+            "recall": 0.9635,
+            "support": 4000,
+            "true_positive": 3854
+          },
+          "NOT_HUMAN": {
+            "f1": 0.9903441445902451,
+            "precision": 0.980872976949485,
+            "predicted": 2039,
+            "recall": 1.0,
+            "support": 2000,
+            "true_positive": 2000
+          }
+        },
+        "run_id": "C1_MATCHED_POOLED_MLP_seed1337",
+        "sample_count": 8000,
+        "seed": 1337
+      }
+    ]
+  },
+  "Candidate_B": {
+    "architecture_contract": {
+      "architecture_family": "CAPACITY_MATCHED_DEPTHWISE_SEPARABLE_CNN",
+      "architecture_id": "B_DEPTHWISE_SEPARABLE",
+      "attention_or_transformer": "NONE",
+      "batch_norm": "NONE",
+      "canonical_input_shape": [
+        1,
+        62,
+        80,
+        1
+      ],
+      "dropout": "NONE",
+      "historical_347_param_depthwise_recreated": false,
+      "num_classes": 3,
+      "parameter_count": 4387,
+      "parameter_parity_with_candidate_a": "NOT_REQUIRED",
+      "permitted_ops_only": [
+        "Conv2D",
+        "SeparableConv2D",
+        "ReLU",
+        "MaxPool2D",
+        "GlobalAveragePooling2D",
+        "Dense",
+        "Softmax"
+      ]
+    },
+    "class_counts": {
+      "HUMAN_FALL_PROXY": 8000,
+      "HUMAN_NORMAL": 16000,
+      "NOT_HUMAN": 8000
+    },
+    "fall_proxy_recall": {
+      "max": 0.9505,
+      "mean": 0.9253333333333332,
+      "min": 0.909,
+      "population_sd": 0.01805700848854969,
+      "values": [
+        0.9505,
+        0.909,
+        0.9165
+      ]
+    },
+    "macro_f1": {
+      "max": 0.9655230590866476,
+      "mean": 0.9592814502582573,
+      "min": 0.9537854473118789,
+      "population_sd": 0.004820776468735112,
+      "values": [
+        0.9655230590866476,
+        0.9585358443762456,
+        0.9537854473118789
+      ]
+    },
+    "membership_frames": 32000,
+    "normal_to_fall_count": {
+      "max": 145,
+      "mean": 120.33333333333333,
+      "min": 102,
+      "population_sd": 18.116904322268255,
+      "values": [
+        145,
+        102,
+        114
+      ]
+    },
+    "parameter_count": 4387,
+    "per_seed": [
+      {
+        "artifact": {
+          "filename": "B_DEPTHWISE_SEPARABLE_seed42.keras",
+          "sha256": "42563c3316e9e8511ab897aaa4dfd9a154887f3a0270d5dfb77a7a344cd3ff35",
+          "size_bytes": 98408
+        },
+        "best_val_loss": 0.09649152308702469,
+        "confusion_matrix": [
+          [
+            1994,
+            6,
+            0
+          ],
+          [
+            27,
+            3828,
+            145
+          ],
+          [
+            0,
+            99,
+            1901
+          ]
+        ],
+        "epochs_run": 30,
+        "fall_proxy_recall": 0.9505,
+        "fall_to_normal_count": 99,
+        "macro_f1": 0.9655230590866476,
+        "normal_to_fall_count": 145,
+        "normal_to_fall_rate": 0.03625,
+        "not_human_to_fall_count": 0,
+        "per_class": {
+          "HUMAN_FALL_PROXY": {
+            "f1": 0.939693524468611,
+            "precision": 0.929130009775171,
+            "predicted": 2046,
+            "recall": 0.9505,
+            "support": 2000,
+            "true_positive": 1901
+          },
+          "HUMAN_NORMAL": {
+            "f1": 0.9650825664943905,
+            "precision": 0.973302822273074,
+            "predicted": 3933,
+            "recall": 0.957,
+            "support": 4000,
+            "true_positive": 3828
+          },
+          "NOT_HUMAN": {
+            "f1": 0.9917930862969411,
+            "precision": 0.9866402770905492,
+            "predicted": 2021,
+            "recall": 0.997,
+            "support": 2000,
+            "true_positive": 1994
+          }
+        },
+        "run_id": "B_DEPTHWISE_SEPARABLE_seed42",
+        "sample_count": 8000,
+        "seed": 42
+      },
+      {
+        "artifact": {
+          "filename": "B_DEPTHWISE_SEPARABLE_seed7.keras",
+          "sha256": "cb8e70ae4e155f7ee551d692fadbaabf8d4b37eaede0922fe84456b1b8454fe1",
+          "size_bytes": 98401
+        },
+        "best_val_loss": 0.11256085336208344,
+        "confusion_matrix": [
+          [
+            1972,
+            28,
+            0
+          ],
+          [
+            17,
+            3881,
+            102
+          ],
+          [
+            0,
+            182,
+            1818
+          ]
+        ],
+        "epochs_run": 30,
+        "fall_proxy_recall": 0.909,
+        "fall_to_normal_count": 182,
+        "macro_f1": 0.9585358443762456,
+        "normal_to_fall_count": 102,
+        "normal_to_fall_rate": 0.0255,
+        "not_human_to_fall_count": 0,
+        "per_class": {
+          "HUMAN_FALL_PROXY": {
+            "f1": 0.9275510204081632,
+            "precision": 0.946875,
+            "predicted": 1920,
+            "recall": 0.909,
+            "support": 2000,
+            "true_positive": 1818
+          },
+          "HUMAN_NORMAL": {
+            "f1": 0.9593375355333086,
+            "precision": 0.9486678073820581,
+            "predicted": 4091,
+            "recall": 0.97025,
+            "support": 4000,
+            "true_positive": 3881
+          },
+          "NOT_HUMAN": {
+            "f1": 0.988718977187265,
+            "precision": 0.9914529914529915,
+            "predicted": 1989,
+            "recall": 0.986,
+            "support": 2000,
+            "true_positive": 1972
+          }
+        },
+        "run_id": "B_DEPTHWISE_SEPARABLE_seed7",
+        "sample_count": 8000,
+        "seed": 7
+      },
+      {
+        "artifact": {
+          "filename": "B_DEPTHWISE_SEPARABLE_seed1337.keras",
+          "sha256": "e7c4c8cb43fa2b47147516374db26b5c818de0f725aa323717710927d225aa11",
+          "size_bytes": 98422
+        },
+        "best_val_loss": 0.12365728616714478,
+        "confusion_matrix": [
+          [
+            1953,
+            47,
+            0
+          ],
+          [
+            39,
+            3847,
+            114
+          ],
+          [
+            3,
+            164,
+            1833
+          ]
+        ],
+        "epochs_run": 30,
+        "fall_proxy_recall": 0.9165,
+        "fall_to_normal_count": 164,
+        "macro_f1": 0.9537854473118789,
+        "normal_to_fall_count": 114,
+        "normal_to_fall_rate": 0.0285,
+        "not_human_to_fall_count": 0,
+        "per_class": {
+          "HUMAN_FALL_PROXY": {
+            "f1": 0.9288066886242715,
+            "precision": 0.9414483821263482,
+            "predicted": 1947,
+            "recall": 0.9165,
+            "support": 2000,
+            "true_positive": 1833
+          },
+          "HUMAN_NORMAL": {
+            "f1": 0.9548275006205014,
+            "precision": 0.9480039428289798,
+            "predicted": 4058,
+            "recall": 0.96175,
+            "support": 4000,
+            "true_positive": 3847
+          },
+          "NOT_HUMAN": {
+            "f1": 0.9777221526908636,
+            "precision": 0.9789473684210527,
+            "predicted": 1995,
+            "recall": 0.9765,
+            "support": 2000,
+            "true_positive": 1953
+          }
+        },
+        "run_id": "B_DEPTHWISE_SEPARABLE_seed1337",
+        "sample_count": 8000,
+        "seed": 1337
+      }
+    ]
+  },
+  "LOCKED_PUBLIC_TEST_ACCESS": 0,
+  "artifacts": {
+    "c1_fp32_tflite": {
+      "converted_from_keras": "models/thermal/controls/tv2_c1/C1_MATCHED_POOLED_MLP_seed42.keras",
+      "input": {
+        "dtype": "float32",
+        "shape": [
+          1,
+          62,
+          80,
+          1
+        ]
+      },
+      "invoke_smoke": {
+        "finite": true,
+        "max_abs_diff_vs_keras": 2.7939677238464355e-08,
+        "shape_ok": true,
+        "source": "PUBLIC_SDT_DEVELOPMENT_index_0_FRAME_ROBUST_P2_P98_V1",
+        "status": "PASS"
+      },
+      "output": {
+        "dtype": "float32",
+        "shape": [
+          1,
+          3
+        ]
+      },
+      "repository_relative_path": "models/thermal/controls/tv2_c1/C1_MATCHED_POOLED_MLP_seed42_fp32.tflite",
+      "sha256": "b7380a52813b80e6f0892d5135a0f1b687976a350ed2bb715e638a8965f609e8",
+      "size_bytes": 70460,
+      "status": "EXPORTED"
+    },
+    "c1_primary_seed42_keras": {
+      "artifact_seed": 42,
+      "exact_family_jsonl_instance": true,
+      "repository_relative_path": "models/thermal/controls/tv2_c1/C1_MATCHED_POOLED_MLP_seed42.keras",
+      "sha256": "5091a52d74432cc529d1d1c1ebf22ab3a279ef454a30f20bcbf3a0503663e040",
+      "size_bytes": 58150
+    },
+    "candidate_b_fp32_tflite": {
+      "reason": "B_NOT_COMPETITIVE; TFLite export required only for B_VIABLE or B_VIABLE_COMPACT_ALTERNATIVE",
+      "status": "SKIPPED"
+    },
+    "candidate_b_primary_seed42_keras": {
+      "artifact_seed": 42,
+      "exact_family_jsonl_instance": true,
+      "repository_relative_path": "models/thermal/candidates/tv2_candidate_b/B_DEPTHWISE_SEPARABLE_seed42.keras",
+      "sha256": "42563c3316e9e8511ab897aaa4dfd9a154887f3a0270d5dfb77a7a344cd3ff35",
+      "size_bytes": 98408
+    },
+    "work_root_result_jsonl_outside_git": {
+      "filename": "candidate_b_c1_results.jsonl",
+      "row_count": 6,
+      "sha256": "d3a78ec5c07513ae4255ad1e83db363f6ebcce650d910293c652b98e702fef75"
+    }
+  },
+  "candidate_a_merged": {
+    "architecture": "COARSE_SPATIAL_RETAIN_FLATTEN_V1",
+    "comparison_uses_family_json_not_reexport_artifact": true,
+    "fall_proxy_recall": {
+      "max": 0.994,
+      "mean": 0.992,
+      "min": 0.9905,
+      "population_sd": 0.0014719601443879506,
+      "values": [
+        0.9905,
+        0.9915,
+        0.994
+      ]
+    },
+    "macro_f1": {
+      "max": 0.9950039800859437,
+      "mean": 0.9949168739673863,
+      "min": 0.9947487275458261,
+      "population_sd": 0.00011892326052874669,
+      "values": [
+        0.9949979142703888,
+        0.9947487275458261,
+        0.9950039800859437
+      ]
+    },
+    "nominated_prototype": "A0",
+    "normal_to_fall_count": {
+      "max": 21,
+      "mean": 17.0,
+      "min": 14,
+      "population_sd": 2.943920288775949,
+      "values": [
+        16,
+        14,
+        21
+      ]
+    },
+    "parameter_count": 64387,
+    "source": "config/thermal/tv2_candidate_a_phase2_result.json"
+  },
+  "class_mapping": [
+    "NOT_HUMAN",
+    "HUMAN_NORMAL",
+    "HUMAN_FALL_PROXY"
+  ],
+  "comparison": {
+    "a_vs_b": "Candidate B is much smaller (4387 vs 64387 params) but materially worse and less stable (N->F mean 120.33, FALL recall mean 0.925 with seed 7 at 0.909). Not competitive against A0.",
+    "a_vs_c1": "C1 mean DEVELOPMENT NORMAL->FALL is 107.67/4000 vs Candidate A 17.0/4000. FALL recall 0.947 vs 0.992. The spatial CNN provides useful benefit beyond the matched relative-appearance representation in this offline experiment.",
+    "b_status": "B_NOT_COMPETITIVE",
+    "c1_status": "CONTROL_COMPLETE",
+    "offline_provisional_preference": "A_PREFERRED",
+    "preference_scope": "OFFLINE_PROVISIONAL_PROTOTYPE_PREFERENCE_NOT_PRODUCTION"
+  },
+  "dataset_membership": {
+    "DEVELOPMENT": {
+      "HUMAN_FALL_PROXY": 2000,
+      "HUMAN_NORMAL": 4000,
+      "NOT_HUMAN": 2000,
+      "rows": 8000
+    },
+    "TRAIN": {
+      "HUMAN_FALL_PROXY": 8000,
+      "HUMAN_NORMAL": 16000,
+      "NOT_HUMAN": 8000,
+      "rows": 32000
+    },
+    "source": "PUBLIC_SDT_ONLY",
+    "thermal_im_used": false
+  },
+  "environment": {
+    "compute_device": "GPU",
+    "gpu_name": "NVIDIA GeForce RTX 2060 SUPER",
+    "gpu_visible": true,
+    "numpy": "2.5.2",
+    "python": "3.12.3",
+    "tensorflow": "2.21.0"
+  },
+  "input_shape": [
+    1,
+    62,
+    80,
+    1
+  ],
+  "limitations": [
+    "PUBLIC_SDT DEVELOPMENT offline prototype comparison only",
+    "not a production, device-domain, Pi, or clinical claim",
+    "LOCKED_PUBLIC_TEST unused",
+    "Thermal-IM not used in this comparison",
+    "Candidate A numbers are the merged 3-seed family JSON, not the A0 re-export artifact score",
+    "INT8 not performed",
+    "no architecture search or post-hoc tuning"
+  ],
+  "normalization": "FRAME_ROBUST_P2_P98_V1",
+  "repository_base_sha": "625b4a6e4e0e0eef01afa24b3245ecf6416dae5a",
+  "representation": "RELATIVE_THERMAL_APPEARANCE_V1",
+  "schema_version": "safenest.thermal.tv2_b_c1_matched_result.v1",
+  "seeds": [
+    42,
+    7,
+    1337
+  ],
+  "status": "COMPLETE",
+  "training_policy": {
+    "augmentation": "NONE",
+    "batch_size": 256,
+    "class_weighting": "NONE",
+    "early_stopping_monitor": "val_loss",
+    "early_stopping_patience": 5,
+    "learning_rate": 0.001,
+    "loss": "sparse_categorical_crossentropy",
+    "max_epochs": 30,
+    "optimizer": "adam",
+    "restore_best_weights": true
+  }
+}
