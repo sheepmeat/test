@@ -1,0 +1,211 @@
+{
+  "schema_version": "safenest.thermal.tv2_d2.source_compatibility.v1",
+  "phase": "TV2-D2",
+  "document": "docs/thermal/20260830_SafeNest_Thermal_V2_TV2-D2_Representation_Label_Compatibility_01.md",
+  "d1_input_document": "docs/thermal/20260830_SafeNest_Thermal_V2_TV2-D1_Source_Access_License_Payload_Verification_01.md",
+  "startup_base_commit": "5fd4b0d42160198ce48c86cdc2b9d89a10d24a0d",
+  "d1_gate": "PASS_WITH_LIMITATIONS",
+  "d2_gate": "PASS_WITH_LIMITATIONS",
+  "training_authorization": "NONE",
+  "dataset_merge_authorization": "NONE",
+  "g1_status": "NOT_CLOSED",
+  "p1_status": "P1_NOT_READY",
+  "canonical_model_input": [1, 62, 80, 1],
+  "label_contract_classes": {
+    "0": "NOT_HUMAN",
+    "1": "HUMAN_NORMAL",
+    "2": "HUMAN_FALL_PROXY"
+  },
+  "representation_lanes": {
+    "P_PHYSICAL_TEMP_LANE": {
+      "coherent": true,
+      "limitations": [
+        "same_sensor_family_not_identical_distribution",
+        "orientation_not_verifiable",
+        "quality_policy_not_frozen",
+        "frame_supervision_unresolved"
+      ],
+      "members": ["QUIDA", "eHomeSeniors_calibrated_mlx90640"],
+      "reference_only": ["IPHD_base"],
+      "excluded": [
+        "eHomeSeniors_raw_mlx",
+        "eHomeSeniors_omron",
+        "Thermal-IM"
+      ]
+    },
+    "I_INTENSITY_LANE": {
+      "coherent": true,
+      "members": ["Thermal-IM"],
+      "role": "separate_future_training_or_hard_negative_supplemental",
+      "celsius_fabrication": "FORBIDDEN"
+    }
+  },
+  "preprocessing": {
+    "quida_plus_calibrated_ehomeseniors_physical_pre_pre_lane": "YES_WITH_LIMITATIONS",
+    "thermal_im_join_physical_lane": "NO",
+    "p1_train_fitted_global_zscore": "P1_NOT_READY"
+  },
+  "sdt_geometry_adapter_reuse": "FORBIDDEN",
+  "sources": [
+    {
+      "source_id": "QUIDA",
+      "d1_decision": "ADMIT_TO_D2_WITH_LIMITATIONS",
+      "representation_lane": "P_PHYSICAL_TEMP_LANE",
+      "physical_units": "Celsius_per_paper_no_embedded_unit_metadata",
+      "native_geometry": "32x24_sensor_grid_768_values",
+      "candidate_array_shape_hw": [24, 32],
+      "orientation_status": "ORIENTATION_NOT_VERIFIABLE",
+      "packing_order_diagnostic": "reshape_24x32_spatially_coherent_candidate_not_source_verified",
+      "geometry_adapter_status": "GEOMETRY_NOT_FROZEN",
+      "label_mapping_status": "TEMPORAL_FALL_TIMESTAMPS_ONLY",
+      "frame_supervision_status": "FRAME_SUPERVISION_UNRESOLVED",
+      "grouping_key": "subject",
+      "subject_disjoint_split_later": "YES",
+      "quality_status": "QUALITY_POLICY_NOT_FROZEN",
+      "hard_negative_semantics": "limited_walking_non_fall_context_not_rich_adl",
+      "preprocessing_compatibility": "YES_WITH_LIMITATIONS_physical_lane_only",
+      "license_terms": "DATASET_LICENSE_NOT_VERIFIABLE",
+      "d2_recommendation": "ADVANCE_TO_D3_WITH_UNRESOLVED_LABEL_LIMIT",
+      "limitations": [
+        "no_authoritative_fall_interval",
+        "paper_plus_minus_2s_is_example_parameter_not_contract",
+        "rare_extreme_values_unhandled",
+        "asset_terms_unverified",
+        "one_lab_geometry_ten_young_subjects"
+      ]
+    },
+    {
+      "source_id": "eHomeSeniors_calibrated_mlx90640",
+      "d1_decision": "ADMIT_TO_D2_WITH_LIMITATIONS",
+      "representation_lane": "P_PHYSICAL_TEMP_LANE",
+      "physical_units": "Celsius_IR_n_C_fields",
+      "native_geometry": "32x24_sensor_grid_768_calibrated_fields",
+      "candidate_array_shape_hw": [24, 32],
+      "orientation_status": "ORIENTATION_NOT_VERIFIABLE",
+      "geometry_adapter_status": "GEOMETRY_NOT_FROZEN",
+      "label_mapping_status": "FILE_LEVEL_FALL_TYPE_ONLY",
+      "frame_supervision_status": "FRAME_SUPERVISION_UNRESOLVED",
+      "grouping_key": "volunteer_GX-Y",
+      "subject_disjoint_split_later": "YES",
+      "quality_status": "QUALITY_POLICY_NOT_FROZEN",
+      "hard_negative_semantics": "preceding_adl_not_independently_labeled",
+      "preprocessing_compatibility": "YES_WITH_LIMITATIONS_physical_lane_only",
+      "license_terms": "DATASET_LICENSE_VERIFIED_CC_BY_4_0_with_raw_field_scope_limitation",
+      "extraction_contract": {
+        "delimiter": "|",
+        "skip_rows": 2,
+        "timestamp_col": 0,
+        "sensor_model_col": 1,
+        "calibrated_temp_cols_half_open": [2, 770],
+        "calibrated_count": 768,
+        "timestamp_resolution": "HH:MM:SS_shared_across_frames"
+      },
+      "d2_recommendation": "ADVANCE_TO_D3_WITH_UNRESOLVED_LABEL_LIMIT",
+      "limitations": [
+        "no_framewise_onset_end",
+        "do_not_label_all_frames_FALL_PROXY",
+        "header_1604_vs_data_1668_width_mismatch",
+        "six_volunteers_staged_falls"
+      ]
+    },
+    {
+      "source_id": "eHomeSeniors_raw_mlx",
+      "representation_lane": "NONE",
+      "physical_units": "raw_sensor_words_not_celsius",
+      "native_geometry": "not_a_second_temperature_image",
+      "orientation_status": "NOT_APPLICABLE",
+      "geometry_adapter_status": "GEOMETRY_INCOMPATIBLE",
+      "label_mapping_status": "NOT_APPLICABLE",
+      "frame_supervision_status": "NOT_APPLICABLE",
+      "grouping_key": "volunteer_GX-Y",
+      "quality_status": "NOT_DECODED",
+      "hard_negative_semantics": "none_as_model_input",
+      "preprocessing_compatibility": "NO",
+      "d2_recommendation": "REFERENCE_ONLY",
+      "classification": "EXCLUDED_FROM_FRAME_MODEL_INPUT",
+      "limitations": [
+        "no_executable_physical_decoding_in_this_repository",
+        "raw_words_must_not_be_assumed_celsius"
+      ]
+    },
+    {
+      "source_id": "eHomeSeniors_omron",
+      "representation_lane": "NONE",
+      "physical_units": "Celsius_32_linear_array_values",
+      "native_geometry": "four_1x8_arrays_recorded_as_32_values",
+      "orientation_status": "NOT_A_2D_POSTURE_IMAGE",
+      "geometry_adapter_status": "GEOMETRY_INCOMPATIBLE",
+      "label_mapping_status": "FILE_LEVEL_FALL_TYPE_ONLY",
+      "frame_supervision_status": "FRAME_SUPERVISION_UNRESOLVED",
+      "grouping_key": "volunteer_GX-Y",
+      "quality_status": "QUALITY_POLICY_NOT_FROZEN",
+      "hard_negative_semantics": "none_as_62x80_spatial_input",
+      "preprocessing_compatibility": "NO",
+      "d2_recommendation": "REFERENCE_ONLY",
+      "classification": "EXCLUDED",
+      "limitations": [
+        "interpolating_32_linear_pixels_into_62x80_would_fabricate_spatial_structure"
+      ]
+    },
+    {
+      "source_id": "Thermal-IM",
+      "d1_decision": "ADMIT_TO_D2_WITH_LIMITATIONS",
+      "representation_lane": "I_INTENSITY_LANE",
+      "physical_units": "NON_RADIOMETRIC_UINT8_INTENSITY",
+      "native_geometry": "288x384_decoded_hw",
+      "orientation_status": "DECODED_TOP_LEFT_ORIGIN_NO_FLIP_METADATA",
+      "geometry_adapter_status": "GEOMETRY_COMPATIBLE_WITH_LIMITATIONS",
+      "label_mapping_status": "ACTION_INTERVALS_PRESERVE_SOURCE_TOKENS",
+      "frame_supervision_status": "FRAME_SUPERVISION_DERIVABLE_WITH_VERIFIED_RULE",
+      "grouping_key": "actor_room_scene_clip_partial",
+      "subject_disjoint_split_later": "POSSIBLY",
+      "grouping_compatibility": "PARTIAL",
+      "quality_status": "COMPRESSION_VISUAL_STREAM",
+      "hard_negative_semantics": "sitting_object_interaction_motion_contains_relevant_semantics",
+      "preprocessing_compatibility": "NO_physical_lane",
+      "license_terms": "DATASET_LICENSE_VERIFIED_BSD_3_CLAUSE",
+      "d2_recommendation": "ADVANCE_TO_D3_SUPPLEMENTAL",
+      "limitations": [
+        "not_celsius",
+        "no_temporal_fall_labels",
+        "empty_annotation_json_is_not_NOT_HUMAN",
+        "lie_sofa_not_HUMAN_NORMAL",
+        "meta_csv_not_inspected_in_clip_archives",
+        "downsample_loss_to_62x80"
+      ]
+    },
+    {
+      "source_id": "IPHD_base",
+      "d1_decision": "REFERENCE_ONLY",
+      "representation_lane": "P_PHYSICAL_TEMP_LANE",
+      "physical_units": "Kelvin_times_100_documented",
+      "native_geometry": "160x120_original_or_213x120_registered",
+      "orientation_status": "NOT_REINSPECTED_IN_D2",
+      "geometry_adapter_status": "GEOMETRY_NOT_FROZEN",
+      "label_mapping_status": "HUMAN_BOX_ONLY",
+      "frame_supervision_status": "FRAME_SUPERVISION_NOT_DEFENSIBLE",
+      "grouping_key": "video_id_frame_id_subject_not_verified",
+      "quality_status": "zero_registration_errors_documented",
+      "hard_negative_semantics": "scripted_posture_context_reference_only",
+      "preprocessing_compatibility": "NOT_YET_VERIFIABLE_as_shared_mlx_lane",
+      "d2_recommendation": "REFERENCE_ONLY",
+      "limitations": [
+        "different_sensor_family",
+        "asset_license_not_verifiable",
+        "not_a_serious_D2_training_candidate"
+      ]
+    },
+    {
+      "source_id": "TF-66",
+      "d1_decision": "HOLD_PENDING_ACCESS",
+      "d2_recommendation": "HOLD_FOR_ADDITIONAL_METADATA",
+      "limitations": ["not_a_D2_payload_candidate"]
+    },
+    {
+      "source_id": "IPHPDT",
+      "d1_decision": "HOLD_PENDING_ACCESS",
+      "d2_recommendation": "HOLD_FOR_ADDITIONAL_METADATA",
+      "limitations": ["not_a_D2_payload_candidate"]
+    }
+  ]
+}
