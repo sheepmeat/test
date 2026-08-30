@@ -1,0 +1,50 @@
+{
+  "LOCKED_PUBLIC_TEST_ACCESS": 0,
+  "artifact_development_metrics": {
+    "fall_proxy_recall": 0.9915,
+    "macro_f1": 0.9956,
+    "normal_to_fall_count": 14
+  },
+  "artifact_origin": "SAME_POLICY_SEED42_REEXPORT_AFTER_NOMINATION",
+  "artifact_seed": 42,
+  "class_mapping": [
+    "NOT_HUMAN",
+    "HUMAN_NORMAL",
+    "HUMAN_FALL_PROXY"
+  ],
+  "exact_final_9run_weight_instance": false,
+  "fp32_tflite": {
+    "converted_from": "SAME_POLICY_SEED42_REEXPORT_KERAS",
+    "repository_relative_path": "models/thermal/candidates/tv2_candidate_a/A0_hn000_FRAME_ROBUST_P2_P98_V1_COARSE_SPATIAL_RETAIN_FLATTEN_V1_seed42_fp32.tflite",
+    "sha256": "a158a70c4735e28eec70b5a996f82c91f452b94bcc24c040838143f4a55b1985",
+    "size_bytes": 264704,
+    "source_keras_repository_relative_path": "models/thermal/candidates/tv2_candidate_a/A0_hn000_FRAME_ROBUST_P2_P98_V1_COARSE_SPATIAL_RETAIN_FLATTEN_V1_seed42.keras",
+    "source_keras_sha256": "6a8fd53c815bb29ac42b25fd45c0fe5e0cdad86e4caf359ae37a752d2e2e20ee",
+    "status": "EXPORTED"
+  },
+  "head": "COARSE_SPATIAL_RETAIN_FLATTEN_V1",
+  "input_shape": [
+    1,
+    62,
+    80,
+    1
+  ],
+  "keras": {
+    "repository_relative_path": "models/thermal/candidates/tv2_candidate_a/A0_hn000_FRAME_ROBUST_P2_P98_V1_COARSE_SPATIAL_RETAIN_FLATTEN_V1_seed42.keras",
+    "sha256": "6a8fd53c815bb29ac42b25fd45c0fe5e0cdad86e4caf359ae37a752d2e2e20ee",
+    "size_bytes": 820623
+  },
+  "model_id": "tv2_candidate_a_A0_robust_spatial_seed42",
+  "nomination_basis": "A0 three-seed family metrics from candidate_a_results_final.jsonl",
+  "nominated_prototype": "A0",
+  "normalization": "FRAME_ROBUST_P2_P98_V1",
+  "output_shape": [
+    1,
+    3
+  ],
+  "parameter_count": 64387,
+  "production_selector_changed": false,
+  "representation": "RELATIVE_THERMAL_APPEARANCE_V1",
+  "schema_version": "safenest.thermal.tv2_candidate_a.nominated_artifact_identity.v1",
+  "serialization_note": "The final 9-run did not serialize A0 weights. This artifact was retrained/re-exported using the frozen A0 policy and predefined seed 42 after A0 family nomination."
+}
