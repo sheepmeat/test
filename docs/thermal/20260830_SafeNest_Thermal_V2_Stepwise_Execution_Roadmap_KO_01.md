@@ -12,12 +12,12 @@
 
 ~~~text
 CURRENT_PHASE: TV2-D1
-CURRENT_STEP: TV2-D1.2
+CURRENT_STEP: TV2-D1.3
 CURRENT_STATUS: NEXT
-NEXT_STEP: TV2-D1.2
+NEXT_STEP: TV2-D1.3
 TRAINING_AUTHORIZED: NO
-LAST_COMPLETED_REPORT: docs/reports/20260830_Codex_Thermal_V2_TV2-D1.1_Execution_Report_KO_01.md
-LAST_COMMIT: dd945c07e61e7235a80e86d681fb8f7038496b56
+LAST_COMPLETED_REPORT: docs/reports/20260830_Codex_Thermal_V2_TV2-D1.2_Execution_Report_KO_01.md
+LAST_COMMIT: a1a3fcb239f65b82ebb5e952a2968bee32d0dd21
 ~~~
 
 LAST_COMMIT is the clean origin/main base immediately before this stepwise
@@ -182,7 +182,7 @@ record로 보존한다. IPHPDT derivative와 underlying IPHD는 permission bound
 달라 별도 `source_id`로 분리했다. raw payload, training, model/data/runtime
 mutation, `LOCKED_PUBLIC_TEST` 접근은 없었다.
 
-Serious source verification order는 다음과 같이 고정되며 다음 실행은 하나뿐이다.
+Serious source verification order는 다음과 같이 고정되었다.
 
 ~~~text
 TV2-D1.2 = TF_66
@@ -195,6 +195,27 @@ TV2-D1.6 = EHOME_SENIORS
 Dataset/asset license와 access metadata가 unresolved인 source는 성공으로
 상향하지 않았다. D1.1의 limitation은 후속 source-specific 검증으로 전달되며,
 Parent TV2-D1 또는 G1 PASS를 의미하지 않는다.
+
+### 2.6.2 TV2-D1.2 TF-66 contract verification delivery
+
+TV2-D1.2는 `PASS_WITH_LIMITATIONS`로 완료되었다. Lakehead thesis PDF의
+embedded hyperlink로 official repository `Christopher-Silver/TF-66`를 복구했고,
+현재 access는 public direct download가 아니라 `crsilver@lakeheadu.ca`를 통한
+`REQUEST_ONLY / NON_COMMERCIAL_ONLY`임을 확인했다. helper repository의
+`License.txt`는 CC BY-NC 4.0을 명시하지만 request-delivered dataset payload에
+대한 적용 범위, redistribution, derived-artifact terms는 명시하지 않으므로
+dataset asset는 `LICENSE_UNRESOLVED`로 유지한다.
+
+Official metadata는 JPG frame tree, participant/video/room keys와 staged
+Fall/NonFall semantics를 확인한다. 기존 red-row validation markings는 58명의
+participant가 training과 겹치며, spreadsheet summary의 113 fall-validation과
+실제 red style 112개 사이에도 1개 차이가 있어 subject-disjoint split으로
+승격할 수 없다. raw dataset request/download, cache 생성, training,
+model/data/runtime mutation, `LOCKED_PUBLIC_TEST` 접근은 없었다.
+
+Canonical TF-66 evidence row는
+`docs/reports/20260830_Codex_Thermal_V2_TV2-D1.2_Execution_Report_KO_01.md`
+section 5다. 다음 실행은 `TV2-D1.3` 하나뿐이다.
 
 ### 2.7 Parallel B6R evidence is context, not V2 authority
 
@@ -340,8 +361,8 @@ sample/metadata 범위만 사용한다.
 | Step ID | Parent Task | Status | Objective | Inputs | Actions | Outputs | Pass Criteria | Fail / Blocked Criteria | Forbidden Actions | Report | Next Step |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | TV2-D1.1 | TV2-D1 | DONE_WITH_LIMITATIONS / PASS_WITH_LIMITATIONS | D0 후보 inventory와 source-by-source D1 evidence ledger freeze | D0 report, Master Map, official links, report template | stable source_id, official identity, paper/project/archive URL, access route, license/provenance/payload/group/label field를 만들고 순서를 고정 | D1 inventory/ledger, no raw payload | TF-66, IPHPDT/IPHD, Thermal-IM, QUIDA, eHomeSeniors와 D0 rejected/reference entries가 모두 보존되고 각 field가 PENDING 또는 링크 근거를 가짐 | candidate 누락, official identity 불명, status 추측 | raw download, account/approval bypass, training, model/data mutation | docs/reports/20260830_Codex_Thermal_V2_TV2-D1.1_Execution_Report_KO_01.md | TV2-D1.2 |
-| TV2-D1.2 | TV2-D1 | NEXT | Thermal Fall 66 access/license/provenance 계약 검증 | D0 TF-66 entry, official paper/project/access page | public vs request wording, owner/publisher, release/version, license, payload route, participant/session/video grouping, fall/non-fall semantics 확인 | TF-66 evidence row | direct access 또는 정확한 blocker와 license state가 기록되고 LICENSE_UNRESOLVED가 숨겨지지 않음 | payload·terms·grouping 확인 불가 시 BLOCKED_ACCESS 또는 LICENSE_UNRESOLVED | data 임의 수신, frame을 training pool에 추가 | docs/reports/..._TV2-D1.2_Execution_Report_KO_01.md | TV2-D1.3 |
-| TV2-D1.3 | TV2-D1 | PLANNED | IPHPDT/IPHD labeled derivative와 underlying dataset 경계 검증 | D0 IPHPDT/IPHD entry, Sensors paper, ChaLearn page | paper license와 dataset terms 분리, derivative access, Kelvin×100 representation, boxes/masks, version, subject/session, standing/sitting/lying/bending 확인 | IPHPDT/IPHD evidence row | dataset license/redistribution/derived-artifact status와 grouping limitation 명시 | request-only/derivative scope 불명 시 BLOCKED_LICENSE 또는 ACCESS_NOT_VERIFIABLE | paper open-access를 dataset permission으로 취급, processed data 복제 | docs/reports/..._TV2-D1.3_Execution_Report_KO_01.md | TV2-D1.4 |
+| TV2-D1.2 | TV2-D1 | DONE_WITH_LIMITATIONS / PASS_WITH_LIMITATIONS | Thermal Fall 66 access/license/provenance 계약 검증 | D0 TF-66 entry, official paper/project/access page | public vs request wording, owner/publisher, release/version, license, payload route, participant/session/video grouping, fall/non-fall semantics 확인 | TF-66 evidence row | direct access 또는 정확한 blocker와 license state가 기록되고 LICENSE_UNRESOLVED가 숨겨지지 않음 | payload·terms·grouping 확인 불가 시 BLOCKED_ACCESS 또는 LICENSE_UNRESOLVED | data 임의 수신, frame을 training pool에 추가 | docs/reports/20260830_Codex_Thermal_V2_TV2-D1.2_Execution_Report_KO_01.md | TV2-D1.3 |
+| TV2-D1.3 | TV2-D1 | NEXT | IPHPDT/IPHD labeled derivative와 underlying dataset 경계 검증 | D0 IPHPDT/IPHD entry, Sensors paper, ChaLearn page | paper license와 dataset terms 분리, derivative access, Kelvin×100 representation, boxes/masks, version, subject/session, standing/sitting/lying/bending 확인 | IPHPDT/IPHD evidence row | dataset license/redistribution/derived-artifact status와 grouping limitation 명시 | request-only/derivative scope 불명 시 BLOCKED_LICENSE 또는 ACCESS_NOT_VERIFIABLE | paper open-access를 dataset permission으로 취급, processed data 복제 | docs/reports/..._TV2-D1.3_Execution_Report_KO_01.md | TV2-D1.4 |
 | TV2-D1.4 | TV2-D1 | PLANNED | Thermal-IM normal-motion hard-negative source 검증 | D0 Thermal-IM entry, official repo/paper/download | BSD-3 scope, release identity, permitted archive members, annotation.json vocabulary, RGBT_T.mp4 representation, actor/room/scene/split, walking/sitting/kneeling 확인 | Thermal-IM evidence row | asset-level terms, rendered-vs-radiometric status, actor/scene grouping, action labels가 evidence 또는 explicit unresolved로 남음 | linked asset terms/annotations/split 확인 불가 시 BLOCKED_ACCESS 또는 LICENSE_UNRESOLVED | full archive download, redistribution assumption, fall-positive relabel | docs/reports/..._TV2-D1.4_Execution_Report_KO_01.md | TV2-D1.5 |
 | TV2-D1.5 | TV2-D1 | PLANNED | QUIDA temperature/event reference contract 검증 | D0 QUIDA entry, PeerJ paper, OSF record | asset license, CSV schema, MLX90640 32×24 values/units, timestamps, subject folders, Falls.csv, simulated-fall/no-fall semantics, missing-sample and split evidence 확인 | QUIDA evidence row | OSF asset terms와 subject-level event provenance가 확인되거나 explicit unresolved | license/schema/access 불명 시 BLOCKED_LICENSE 또는 ACCESS_NOT_VERIFIABLE | simulated fall을 clinical truth로 승격, random window split | docs/reports/..._TV2-D1.5_Execution_Report_KO_01.md | TV2-D1.6 |
 | TV2-D1.6 | TV2-D1 | PLANNED | eHomeSeniors supplement sensor/payload/provenance 검증 | D0 eHomeSeniors entry, paper, supplement/Figshare route | MLX90640/Omron fields, serialization/units, file identity, six-subject/fall-type grouping, ordinary context, release terms, official split 확인 | eHomeSeniors evidence row | payload와 terms를 source-specific evidence로 기록하고 normal-label weakness 보존 | supplement unavailable 또는 license unclear이면 REFERENCE_ONLY, BLOCKED_ACCESS, LICENSE_UNRESOLVED | full download, six subjects를 generalization proof로 해석 | docs/reports/..._TV2-D1.6_Execution_Report_KO_01.md | TV2-D1.7 |
