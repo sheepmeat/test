@@ -1,0 +1,22 @@
+{
+  "LOCKED_PUBLIC_TEST_ACCESS": 0,
+  "architecture_id": "C1_MATCHED_POOLED_MLP",
+  "artifact_seed": 42,
+  "exact_final_run_weight_instance": true,
+  "fp32_tflite": {
+    "converted_from": "C1_MATCHED_POOLED_MLP_seed42.keras",
+    "repository_relative_path": "models/thermal/controls/tv2_c1/C1_MATCHED_POOLED_MLP_seed42_fp32.tflite",
+    "sha256": "b7380a52813b80e6f0892d5135a0f1b687976a350ed2bb715e638a8965f609e8",
+    "size_bytes": 70460,
+    "status": "EXPORTED"
+  },
+  "keras": {
+    "repository_relative_path": "models/thermal/controls/tv2_c1/C1_MATCHED_POOLED_MLP_seed42.keras",
+    "sha256": "5091a52d74432cc529d1d1c1ebf22ab3a279ef454a30f20bcbf3a0503663e040",
+    "size_bytes": 58150
+  },
+  "nomination_basis": "C1 three-seed family metrics; control only",
+  "parameter_count": 2691,
+  "role": "MATCHED_CONTROL_NOT_PROTOTYPE_WINNER",
+  "schema_version": "safenest.thermal.tv2_c1.artifact_identity.v1"
+}

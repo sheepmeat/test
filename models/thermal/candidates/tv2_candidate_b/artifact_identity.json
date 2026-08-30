@@ -1,0 +1,20 @@
+{
+  "LOCKED_PUBLIC_TEST_ACCESS": 0,
+  "architecture_id": "B_DEPTHWISE_SEPARABLE",
+  "artifact_seed": 42,
+  "exact_final_run_weight_instance": true,
+  "fp32_tflite": {
+    "reason": "B_NOT_COMPETITIVE",
+    "status": "SKIPPED"
+  },
+  "keras": {
+    "repository_relative_path": "models/thermal/candidates/tv2_candidate_b/B_DEPTHWISE_SEPARABLE_seed42.keras",
+    "sha256": "42563c3316e9e8511ab897aaa4dfd9a154887f3a0270d5dfb77a7a344cd3ff35",
+    "size_bytes": 98408
+  },
+  "nomination_basis": "B three-seed family metrics from candidate_b_c1_results.jsonl",
+  "parameter_count": 4387,
+  "role": "CANDIDATE_B_DEPTHWISE_SEPARABLE",
+  "schema_version": "safenest.thermal.tv2_candidate_b.artifact_identity.v1",
+  "viability_status": "B_NOT_COMPETITIVE"
+}
