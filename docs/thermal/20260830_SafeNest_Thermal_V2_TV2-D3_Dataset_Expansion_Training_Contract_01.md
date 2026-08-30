@@ -295,27 +295,38 @@ AND exact_current_model_prediction == HUMAN_FALL_PROXY
 
 ### Taxonomy
 
-Statuses mean: `verified` = payload-verified source token; `unverified` = paper/D0 claim not payload-verified here; `absent` = no evidence the category exists as a label or verified token; `unlabeled` = protocol/context may contain it without independent labels. Unavailable categories are not pretended to exist.
+Statuses are applied strictly. `unlabeled` is used only when source protocol or context provides evidence that the family may occur, without independent labels. A raw image or video that could theoretically contain a condition is not `unlabeled`. TV2-H0 concluded that several SDT families cannot currently be identified, counted, or validated; those remain `unverified`, not `unlabeled`.
+
+| Status | Meaning |
+|---|---|
+| `verified` | source/payload verified semantic token |
+| `unlabeled` | source protocol/context provides evidence that the semantic family may occur, but it is not independently labeled |
+| `unverified` | current evidence cannot establish whether that semantic family actually occurs |
+| `absent` | no evidence of that category as a source token/declared semantic class |
+
+Unavailable categories are not pretended to exist.
 
 | Family | PUBLIC_SDT | QUIDA | eHome calibrated MLX | Thermal-IM |
 |---|---|---|---|---|
-| `NORMAL_SEATED` | verified (`SITTING`) | absent | unlabeled | verified (`sit *`) |
-| `NORMAL_UPRIGHT` | verified (`STANDING`) | unlabeled | unlabeled | absent |
-| `WALKING` | absent | unlabeled (protocol) | unlabeled | absent (D0 walking/kneeling overridden by D1/D2 vocabulary) |
+| `NORMAL_SEATED` | verified (`SITTING`) | absent | unlabeled (paper pre-fall sitting) | verified (`sit *`) |
+| `NORMAL_UPRIGHT` | verified (`STANDING`) | unlabeled (consequence of documented walking protocol) | unlabeled (paper pre-fall standing) | absent |
+| `WALKING` | absent | unlabeled (protocol walking without falling) | unlabeled (paper pre-fall walking) | absent (D0 walking/kneeling overridden by D1/D2 vocabulary) |
 | `BENDING` | absent | absent | absent | absent |
 | `CROUCHING` | absent | absent | absent | absent |
 | `KNEELING` | absent | absent | absent | absent |
-| `RECLINING` | unlabeled | absent | unlabeled (pre-fall lying possible) | verified (`lie sofa`) — `EXCLUDE` from TRAIN |
-| `NEAR_FLOOR_NORMAL` | unlabeled | unlabeled | unlabeled | unlabeled |
-| `PARTIAL_HUMAN` | unlabeled | unlabeled | unlabeled | unlabeled |
-| `OCCLUSION` | unlabeled (P4 synthetic only) | unlabeled | unlabeled | unlabeled |
+| `RECLINING` | unverified | absent | unlabeled (paper pre-fall lying) | verified (`lie sofa`) — `EXCLUDE` from TRAIN |
+| `NEAR_FLOOR_NORMAL` | unverified | unverified | unverified | unverified |
+| `PARTIAL_HUMAN` | unverified | unverified | unverified | unverified |
+| `OCCLUSION` | unverified (P4 synthetic masking is not SDT occlusion evidence) | unverified | unverified | unverified |
 | `EXERCISE` | absent | absent | absent | verified — `EXCLUDE` |
-| `TRANSITION` | absent | unlabeled (instants only) | unlabeled (no onset/end) | unlabeled |
-| `OTHER` | unlabeled | unlabeled | unlabeled | verified (`touch`, garment) |
+| `TRANSITION` | absent | unlabeled (fall instants exist; no interval labels) | unlabeled (staged falls; onset/end unresolved) | unverified |
+| `OTHER` | unverified | unverified | unverified | verified (`touch`, garment) |
 
 TF-66 metadata and IPHPDT paper posture names (including bending) remain `HOLD` / unverified as payload and are **not** entered as coverage.
 
-Future DEVELOPMENT analysis should report these slices where `verified`, and must not infer `absent` categories from collapsed `HUMAN_NORMAL`. SDT `SITTING` versus `STANDING` source-token breakdown is required whenever row-level predictions exist (H0).
+Do not infer QUIDA `NEAR_FLOOR_NORMAL` / `PARTIAL_HUMAN` / `OCCLUSION` / `OTHER` from staged falls alone. Do not treat theoretical presence in uncompressed pixels as `unlabeled`.
+
+Future DEVELOPMENT analysis should report these slices where `verified`, and must not infer `absent` or `unverified` categories from collapsed `HUMAN_NORMAL`. SDT `SITTING` versus `STANDING` source-token breakdown is required whenever row-level predictions exist (H0).
 
 ## 10. Label Membership Policy
 
@@ -552,7 +563,7 @@ EXCLUDED_OR_HELD
 9. Whether any I-lane intensity statistic should ever exist; not designed as a G1-core track.
 10. G1 GEO/PRE numeric freeze, optimizer/seed freeze, and G1 PASS — owned by Control Tower.
 11. SDT subject identity remains absent; near-duplicates remain disclosed.
-12. Crouch/bend/kneel/near-floor/partial-human coverage remains absent from core TRAIN.
+12. Crouch/bend/kneel remain `absent` SDT source tokens; SDT reclining, near-floor, partial-human, occlusion, and OTHER remain `unverified` (H0: cannot currently be identified, counted, or validated).
 
 These limitations keep supplemental sources out of TRAIN. They do not prevent defining a bounded SDT-core A/C1/B data contract.
 

@@ -142,6 +142,14 @@
     "TRANSITION",
     "OTHER"
   ],
+  "hard_negative_status_definitions": {
+    "verified": "source/payload verified semantic token",
+    "unlabeled": "source protocol/context provides evidence that the semantic family may occur, but it is not independently labeled",
+    "unverified": "current evidence cannot establish whether that semantic family actually occurs",
+    "absent": "no evidence of that category as a source token/declared semantic class",
+    "unlabeled_not_theoretical_presence": true,
+    "p4_synthetic_occlusion_is_not_sdt_occlusion_evidence": true
+  },
   "hard_negative_coverage": {
     "PUBLIC_SDT": {
       "NORMAL_SEATED": "verified",
@@ -150,13 +158,13 @@
       "BENDING": "absent",
       "CROUCHING": "absent",
       "KNEELING": "absent",
-      "RECLINING": "unlabeled",
-      "NEAR_FLOOR_NORMAL": "unlabeled",
-      "PARTIAL_HUMAN": "unlabeled",
-      "OCCLUSION": "unlabeled",
+      "RECLINING": "unverified",
+      "NEAR_FLOOR_NORMAL": "unverified",
+      "PARTIAL_HUMAN": "unverified",
+      "OCCLUSION": "unverified",
       "EXERCISE": "absent",
       "TRANSITION": "absent",
-      "OTHER": "unlabeled"
+      "OTHER": "unverified"
     },
     "QUIDA": {
       "NORMAL_SEATED": "absent",
@@ -166,12 +174,12 @@
       "CROUCHING": "absent",
       "KNEELING": "absent",
       "RECLINING": "absent",
-      "NEAR_FLOOR_NORMAL": "unlabeled",
-      "PARTIAL_HUMAN": "unlabeled",
-      "OCCLUSION": "unlabeled",
+      "NEAR_FLOOR_NORMAL": "unverified",
+      "PARTIAL_HUMAN": "unverified",
+      "OCCLUSION": "unverified",
       "EXERCISE": "absent",
       "TRANSITION": "unlabeled",
-      "OTHER": "unlabeled"
+      "OTHER": "unverified"
     },
     "eHomeSeniors_calibrated_mlx90640": {
       "NORMAL_SEATED": "unlabeled",
@@ -181,12 +189,12 @@
       "CROUCHING": "absent",
       "KNEELING": "absent",
       "RECLINING": "unlabeled",
-      "NEAR_FLOOR_NORMAL": "unlabeled",
-      "PARTIAL_HUMAN": "unlabeled",
-      "OCCLUSION": "unlabeled",
+      "NEAR_FLOOR_NORMAL": "unverified",
+      "PARTIAL_HUMAN": "unverified",
+      "OCCLUSION": "unverified",
       "EXERCISE": "absent",
       "TRANSITION": "unlabeled",
-      "OTHER": "unlabeled"
+      "OTHER": "unverified"
     },
     "Thermal-IM": {
       "NORMAL_SEATED": "verified",
@@ -196,11 +204,11 @@
       "CROUCHING": "absent",
       "KNEELING": "absent",
       "RECLINING": "verified",
-      "NEAR_FLOOR_NORMAL": "unlabeled",
-      "PARTIAL_HUMAN": "unlabeled",
-      "OCCLUSION": "unlabeled",
+      "NEAR_FLOOR_NORMAL": "unverified",
+      "PARTIAL_HUMAN": "unverified",
+      "OCCLUSION": "unverified",
       "EXERCISE": "verified",
-      "TRANSITION": "unlabeled",
+      "TRANSITION": "unverified",
       "OTHER": "verified"
     }
   },
