@@ -5,7 +5,7 @@
 - Authority: Thermal Control Tower living execution map
 - Scope: documentation-only status synchronization; no training, binary,
   manifest, or runtime changes
-- Last map sync: post PR `#184` / `#186` / `#187` / `#188` / `#189` on `origin/main`
+- Last map sync: post PR `#184` / `#186` / `#187` / `#188` / `#189` / `#191` on `origin/main`
 
 ## 1. Purpose
 
@@ -89,7 +89,8 @@ D3/GEO/PRE/LABEL/TRAIN-DEVELOPMENT/aug/optimizer/seed contract with A/B.
 | GEO | `READY_WITH_LIMITATIONS` / DONE | PR `#186`; future input `[1,62,80,1]`; SDT software geometry `G1_FIXED_ASPECT_CROP_BILINEAR`; **source-specific adapters required** (SDT crop is not universal) |
 | SPLIT | `READY_WITH_LIMITATIONS` / DONE | strongest available key: subject→session→sequence/video→scene; no random correlated-frame split |
 | LABEL | `READY_WITH_LIMITATIONS` / DONE | 3-class proxy; standing/sitting/walking/crouch/bend/kneel → `HUMAN_NORMAL`+subtype; static lying vs temporal fall remain separate FALL_PROXY evidence slices |
-| PRE | `PROVISIONAL_READY_WITH_LIMITATIONS` | Leading hypothesis `P1_TRAIN_FITTED_GLOBAL_ZSCORE` **not frozen**; heterogeneous D0 representations (calibrated °C vs rendered intensity) → waits D1/D2/D3 |
+| PRE | `PROVISIONAL_READY_WITH_LIMITATIONS` / NOT FROZEN | Leading hypothesis `P1_TRAIN_FITTED_GLOBAL_ZSCORE` **not frozen**; D1 confirmed physical-temperature vs non-radiometric intensity split → waits D2/D3 → G1 freeze |
+| TV2-D1 | `PASS_WITH_LIMITATIONS` / DONE | PR `#191`; see §4.6 source outcomes; **no training approval** |
 
 ### 4.4 Architecture review
 
@@ -99,7 +100,34 @@ D3/GEO/PRE/LABEL/TRAIN-DEVELOPMENT/aug/optimizer/seed contract with A/B.
 | Candidate A family | Direction accepted | `A_RECOMMEND_REVISED_SMALL_CNN` — **REVISED COMPACT CONVENTIONAL CNN**; historical exact 312,131 Flatten model **not** frozen; exact head **NOT FROZEN** — G2 decides `A_HEAD_GAP` vs `A_HEAD_SPATIAL_RETAIN` |
 | Candidate B family | Evidence supports `B_JUSTIFIED` | Preferred `CAPACITY_MATCHED_DEPTHWISE_SEPARABLE_CNN`; historical exact 347-param depthwise is **not** B; formal **G3 NOT PASSED**; Candidate B training **NOT AUTHORIZED** |
 
-### 4.5 Primary failure metric
+### 4.5 TV2-D1 source outcomes (no training membership)
+
+| Source | D1 outcome |
+|---|---|
+| TF-66 | `HOLD_PENDING_ACCESS` |
+| IPHD | `REFERENCE_ONLY` |
+| IPHPDT | `HOLD_PENDING_ACCESS` |
+| Thermal-IM | `ADMIT_TO_D2_WITH_LIMITATIONS` |
+| QUIDA | `ADMIT_TO_D2_WITH_LIMITATIONS` |
+| eHomeSeniors | `ADMIT_TO_D2_WITH_LIMITATIONS` |
+
+Representation boundary (D1):
+
+```text
+PHYSICAL-TEMPERATURE LANE
+  QUIDA — calibrated MLX90640 numeric temperature
+  eHomeSeniors — calibrated MLX90640 temperature fields (raw MLX fields separate)
+
+INTENSITY LANE
+  Thermal-IM — NON_RADIOMETRIC_THERMAL_INTENSITY
+  (no intensity → Celsius conversion allowed)
+
+HOLD / REFERENCE
+  TF-66 / IPHPDT — HOLD_PENDING_ACCESS
+  IPHD — REFERENCE_ONLY
+```
+
+### 4.6 Primary failure metric
 
 Retain **NORMAL → FALL_PROXY** as the primary target failure mode (anchor 174/4000),
 while still reporting macro F1, per-class P/R/F1, full confusion matrix,
@@ -123,8 +151,8 @@ flowchart TD
     subgraph S1["EVIDENCE AND DATA — standalone/test"]
         D0["DONE: TV2-D0 Dataset Discovery<br/>PASS_WITH_LIMITATIONS"]
         H0["DONE: TV2-H0 SDT Hard-Negative Audit<br/>PASS_WITH_LIMITATIONS"]
-        D1["ACTIVE: TV2-D1 Source Verification<br/>UNBLOCKED / NEXT — five candidates"]
-        D2["PLANNED: TV2-D2 Representation + Label Compatibility"]
+        D1["DONE: TV2-D1 Source Verification<br/>PASS_WITH_LIMITATIONS"]
+        D2["ACTIVE: TV2-D2 Representation / Label Compatibility<br/>NEXT — physical-temp vs intensity lanes"]
         D3["PLANNED: TV2-D3 Dataset Expansion Membership"]
 
         D0 --> D1 --> D2 --> D3
@@ -135,8 +163,8 @@ flowchart TD
         GEO["DONE: GEO READY_WITH_LIMITATIONS<br/>62x80 + source adapters"]
         SPLIT["DONE: SPLIT READY_WITH_LIMITATIONS<br/>subject/session/sequence"]
         LABEL["DONE: LABEL READY_WITH_LIMITATIONS<br/>3-class proxy + subtypes"]
-        PRE["ACTIVE: PRE PROVISIONAL<br/>P1 lead — wait D1/D2/D3"]
-        G1["PLANNED: G1 MODEL CONTRACT FREEZE<br/>WAITING_FOR_D1_D2_D3"]
+        PRE["ACTIVE: PRE PROVISIONAL_READY_WITH_LIMITATIONS<br/>NOT FROZEN — wait D2/D3"]
+        G1["PLANNED: G1 MODEL CONTRACT FREEZE<br/>WAITING_FOR_D2_D3 — not PASS"]
 
         GEO --> G1
         SPLIT --> G1
@@ -222,9 +250,9 @@ flowchart TD
     classDef blocked fill:#F4CCCC,stroke:#990000,stroke-width:2px;
     classDef deferred fill:#D9D9D9,stroke:#777777,stroke-width:1.5px;
 
-    class BASE,HIST,GAP,G0,D0,H0,GEO,SPLIT,LABEL,A0 done;
-    class D1,PRE active;
-    class D2,D3,G1,G2,A_TRAIN,C0N,C1,MET,FP,HNE,CMP,G4,DEC,EXPORT,G5,IMPORT,TEAMG planned;
+    class BASE,HIST,GAP,G0,D0,H0,GEO,SPLIT,LABEL,A0,D1 done;
+    class D2,PRE active;
+    class D3,G1,G2,A_TRAIN,C0N,C1,MET,FP,HNE,CMP,G4,DEC,EXPORT,G5,IMPORT,TEAMG planned;
     class G3,B_SPEC,B_SKIP,B_TRAIN conditional;
     class INT,DEV,FINAL deferred;
 ```
@@ -237,10 +265,12 @@ flowchart TD
 | TV2-D0 Dataset Discovery | Additional thermal candidate triage | `PASS_WITH_LIMITATIONS` / DONE |
 | TV2-H0 Hard-Negative Audit | SDT NORMAL→FALL_PROXY analysis | `PASS_WITH_LIMITATIONS` / DONE |
 | GEO / SPLIT / LABEL foundation | Contract foundation (PR `#186`) | each `READY_WITH_LIMITATIONS` / DONE |
-| PRE foundation | Shared preprocess proposal | `PROVISIONAL_READY_WITH_LIMITATIONS` / ACTIVE |
-| TV2-D1 Source Verification | Access, license, representation, grouping for 5 candidates | `UNBLOCKED` / `NEXT` / ACTIVE |
+| PRE foundation | Shared preprocess proposal | `PROVISIONAL_READY_WITH_LIMITATIONS` / ACTIVE / NOT FROZEN |
+| TV2-D1 Source Verification | Access, license, representation, grouping | `PASS_WITH_LIMITATIONS` / DONE (PR `#191`) |
+| TV2-D2 Representation / Label Compatibility | Physical-temp vs intensity lanes; D3 admission prep | `NEXT` / `READY` / ACTIVE |
+| TV2-D3 Dataset Expansion Membership | Actual expansion membership decision | `PLANNED` / waits D2 |
 | TV2-A0 Architecture Review | Family hypotheses | `PASS_WITH_LIMITATIONS` / DONE (PR `#189`) |
-| G1 Model Contract Freeze | Final GEO/PRE/SPLIT/LABEL + D3 membership freeze | `PLANNED` / `WAITING_FOR_D1_D2_D3` — **not PASS** |
+| G1 Model Contract Freeze | Final GEO/PRE/SPLIT/LABEL + D3 membership freeze | `PLANNED` / `WAITING_FOR_D2_D3` — **not PASS** |
 | G2 Candidate A Ready | Exact revised compact CNN + head decision (`A_HEAD_GAP` vs `A_HEAD_SPATIAL_RETAIN`) | `NOT_STARTED` |
 | G3 Candidate B Justified | Formal second-hypothesis decision | `CONDITIONAL` / `WAITING_FOR_G1` (A0 supports `B_JUSTIFIED`; G3 **NOT PASSED**; B training **NOT AUTHORIZED**) |
 | G4 Offline Evaluation Complete | C0/C1/A/(B) DEVELOPMENT comparison | `NOT_STARTED` |
@@ -253,32 +283,33 @@ Do not mark any closed gate without Control-Tower evidence.
 ## 7. Current Active Frontier
 
 ```text
-DONE: G0, D0, H0, GEO, SPLIT, LABEL, TV2-A0
-ACTIVE:
-  TV2-D1  (five-source verification; former D0-merge blocker CLOSED)
-  PRE     (provisional; waits D1/D2/D3)
-PLANNED after that: D2 → D3 → G1 → G2 / G3 → training → fair comparison → G4/G5
+DONE: G0, D0, H0, D1, GEO, SPLIT, LABEL, TV2-A0
+ACTIVE / NEXT:
+  TV2-D2  (representation / label compatibility; physical-temp vs intensity)
+  PRE     (provisional; NOT FROZEN; waits D2/D3 → G1)
+PLANNED: D3 → G1 → G2 / G3 → training → fair comparison → G4/G5
 ```
-
-TV2-A0 is DONE (`PASS_WITH_LIMITATIONS`, PR `#189`). Candidate A family direction
-remains **REVISED COMPACT CONVENTIONAL CNN** with exact head deferred to G2.
-Candidate B evidence remains `B_JUSTIFIED` /
-`CAPACITY_MATCHED_DEPTHWISE_SEPARABLE_CNN`, but **G3 is NOT PASSED** and
-Candidate B training is **NOT AUTHORIZED**.
-
-TV2-D1 five-source scope (no premature selection):
 
 ```text
-TF-66 | IPHPDT/IPHD | Thermal-IM | QUIDA | eHomeSeniors
+D1 DONE
+  ↓
+D2 NEXT
+  ↓
+D3 PLANNED
+  ↓
+G1 MODEL CONTRACT FREEZE  (NOT CLOSED)
 ```
 
-D1 mission: source access, license/terms, payload representation,
-radiometric vs intensity, label inventory, subject/session/sequence grouping,
-leakage feasibility, D2 admission decision.
+TV2-D1 is DONE (`PASS_WITH_LIMITATIONS`, PR `#191`). D2 admits only
+Thermal-IM / QUIDA / eHomeSeniors with limitations; TF-66 and IPHPDT remain
+hold; IPHD is reference-only. **No source is training-approved.**
 
-No training is authorized by this map sync. Local branch name
-`thermal-v2/tv2-d1-source-verification` may exist for worker prep; **no D1 result
-commit/PR was verified on remote at this sync**, so D1 remains NEXT / READY.
+TV2-A0 remains DONE. Candidate A family remains **REVISED COMPACT CONVENTIONAL
+CNN** (exact head NOT FROZEN; G2). Candidate B remains `B_JUSTIFIED` /
+`CAPACITY_MATCHED_DEPTHWISE_SEPARABLE_CNN` with **G3 NOT PASSED** and B
+training **NOT AUTHORIZED**.
+
+No training is authorized by this map sync.
 
 ## 8. Deferred Scope
 
@@ -294,7 +325,7 @@ GRAY / not prerequisites for offline prototypes:
 
 1. Preserve stable IDs (`G0`–`G5`, `TV2-D*`, `TV2-H0`, `TV2-A0`, C0/C1, Candidate A/B).
 2. Change status text and Mermaid classes as work progresses; avoid full DAG rewrites for minor status moves.
-3. Keep G1 open until D1→D2→D3 and Control-Tower freeze.
+3. Keep G1 open until D2→D3 and Control-Tower freeze (`WAITING_FOR_D2_D3`).
 4. Keep Candidate A exact head and Candidate B formal G3 unfrozen until their gates.
 5. Distinguish C0 historical reference from C1 matched pooled-MLP control.
 6. Keep Integration / Pi / device validation visually separate and deferred.
