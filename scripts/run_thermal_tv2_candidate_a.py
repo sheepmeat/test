@@ -48,6 +48,21 @@ def emit(record: dict, results_path: Path) -> None:
         handle.write(json.dumps(record, sort_keys=True) + "\n")
 
 
+def existing_run_ids(results_path: Path) -> set[str]:
+    if not results_path.is_file():
+        return set()
+    ids: set[str] = set()
+    for line in results_path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            ids.add(json.loads(line)["run_id"])
+    return ids
+
+
+def make_run_id(step: dict) -> str:
+    return (f"{step['arm']}_hn{int(round(step['ratio'] * 100)):03d}"
+            f"_{step['normalization']}_{step['head']}_seed{step['seed']}")
+
+
 def summarize(record: dict) -> str:
     dev = record["result"]["sdt_development"]
     primary = dev["primary_metric"]
@@ -77,6 +92,11 @@ def main() -> int:
     parser.add_argument("--seeds", default=",".join(str(seed) for seed in DEFAULT_SEEDS))
     parser.add_argument("--verify-checksums", action="store_true")
     parser.add_argument("--export-arm", default="", help="Arm whose per-seed checkpoints are exported")
+    parser.add_argument(
+        "--arms",
+        default="",
+        help="Optional comma-separated arm filter (A0,A1,A0R). Empty = all planned arms.",
+    )
     args = parser.parse_args()
 
     canonical_root = Path(args.canonical_root)
@@ -105,6 +125,11 @@ def main() -> int:
             plan.append({"arm": runner.ARM_A0R, "ratio": args.final_ratio,
                          "normalization": args.normalization, "head": args.head_variant, "seed": seed})
 
+    if args.arms.strip():
+        allowed = {item.strip() for item in args.arms.split(",") if item.strip()}
+        plan = [step for step in plan if step["arm"] in allowed]
+
+    completed_ids = existing_run_ids(results_path)
     caches: dict[str, dict] = {}
 
     def get_cache(normalization: str) -> dict:
@@ -122,7 +147,19 @@ def main() -> int:
             caches[normalization] = {"train": train, "dev": dev, "pool": pool, "hn_eval": hn_eval}
         return caches[normalization]
 
+    executed = 0
+    skipped = 0
+    exported = 0
     for step in plan:
+        run_id = make_run_id(step)
+        checkpoint = artifact_dir / f"{run_id}.keras"
+        want_export = bool(args.export_arm) and step["arm"] == args.export_arm
+        already = run_id in completed_ids
+        if already and not (want_export and not checkpoint.is_file()):
+            print(f"[skip] {run_id} already recorded", flush=True)
+            skipped += 1
+            continue
+
         normalization = step["normalization"]
         cache = get_cache(normalization)
         arm_data = runner.build_arm(cache["train"], cache["pool"], step["arm"],
@@ -138,8 +175,6 @@ def main() -> int:
             step["head"],
             step["seed"],
         )
-        run_id = (f"{step['arm']}_hn{int(round(step['ratio'] * 100)):03d}"
-                  f"_{normalization}_{step['head']}_seed{step['seed']}")
         record = {
             "run_id": run_id,
             "stage": args.stage,
@@ -160,8 +195,7 @@ def main() -> int:
             },
             "result": result,
         }
-        if args.export_arm and step["arm"] == args.export_arm:
-            checkpoint = artifact_dir / f"{run_id}.keras"
+        if want_export:
             model.save(checkpoint)
             record["artifact"] = {
                 "path": checkpoint.name,
@@ -169,19 +203,29 @@ def main() -> int:
                 "size_bytes": checkpoint.stat().st_size,
                 "format": "keras_v3_float32",
             }
-        emit(record, results_path)
+            exported += 1
+        if already:
+            record["jsonl_append"] = "SKIPPED_EXISTING_RUN_ID"
+            print(f"[export-only] {run_id} artifact={checkpoint.name}", flush=True)
+        else:
+            emit(record, results_path)
+            completed_ids.add(run_id)
+        executed += 1
         print(summarize(record), flush=True)
 
-    environment = {
-        "python": sys.version.split()[0],
-        "platform": platform.platform(),
-        "machine": platform.machine(),
-        "numpy": np.__version__,
-    }
-    (work_root / f"candidate_a_environment_{args.stage}.json").write_text(
-        json.dumps(environment, indent=2, sort_keys=True) + "\n", encoding="utf-8"
-    )
-    print(json.dumps({"status": "OK", "stage": args.stage, "runs": len(plan),
+    environment_path = work_root / f"candidate_a_environment_{args.stage}.json"
+    if not environment_path.is_file():
+        environment = {
+            "python": sys.version.split()[0],
+            "platform": platform.platform(),
+            "machine": platform.machine(),
+            "numpy": np.__version__,
+        }
+        environment_path.write_text(
+            json.dumps(environment, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        )
+    print(json.dumps({"status": "OK", "stage": args.stage, "planned": len(plan),
+                      "executed": executed, "skipped": skipped, "exported": exported,
                       "results": str(results_path)}, indent=2))
     return 0
 

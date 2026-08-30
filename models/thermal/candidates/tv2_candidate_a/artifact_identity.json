@@ -1,0 +1,38 @@
+{
+  "LOCKED_PUBLIC_TEST_ACCESS": 0,
+  "artifact_seed": 42,
+  "class_mapping": [
+    "NOT_HUMAN",
+    "HUMAN_NORMAL",
+    "HUMAN_FALL_PROXY"
+  ],
+  "fp32_tflite": {
+    "repository_relative_path": "models/thermal/candidates/tv2_candidate_a/A0_hn000_FRAME_ROBUST_P2_P98_V1_COARSE_SPATIAL_RETAIN_FLATTEN_V1_seed42_fp32.tflite",
+    "sha256": "a158a70c4735e28eec70b5a996f82c91f452b94bcc24c040838143f4a55b1985",
+    "size_bytes": 264704,
+    "status": "EXPORTED"
+  },
+  "head": "COARSE_SPATIAL_RETAIN_FLATTEN_V1",
+  "input_shape": [
+    1,
+    62,
+    80,
+    1
+  ],
+  "keras": {
+    "repository_relative_path": "models/thermal/candidates/tv2_candidate_a/A0_hn000_FRAME_ROBUST_P2_P98_V1_COARSE_SPATIAL_RETAIN_FLATTEN_V1_seed42.keras",
+    "sha256": "6a8fd53c815bb29ac42b25fd45c0fe5e0cdad86e4caf359ae37a752d2e2e20ee",
+    "size_bytes": 820623
+  },
+  "model_id": "tv2_candidate_a_A0_robust_spatial_seed42",
+  "nominated_prototype": "A0",
+  "normalization": "FRAME_ROBUST_P2_P98_V1",
+  "output_shape": [
+    1,
+    3
+  ],
+  "parameter_count": 64387,
+  "production_selector_changed": false,
+  "representation": "RELATIVE_THERMAL_APPEARANCE_V1",
+  "schema_version": "safenest.thermal.tv2_candidate_a.nominated_artifact_identity.v1"
+}
