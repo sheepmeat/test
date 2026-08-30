@@ -1,0 +1,47 @@
+{
+  "schema_version": "safenest.thermal.tv2_a0.relative_appearance_preprocessing.v1",
+  "representation": "RELATIVE_THERMAL_APPEARANCE_V1",
+  "normalization": "FRAME_ROBUST_P2_P98_V1",
+  "implementation": "datasets.thermal.tv2_ca_representation.relative_appearance",
+  "adapter": "inference.thermal_tv2_a0.preprocess_canonical_frame",
+  "input": {
+    "rank": 2,
+    "shape": [62, 80],
+    "accepted_alias": [62, 80, 1],
+    "dtype_after_cast": "float32",
+    "requirement": "canonical finite scalar thermal/intensity frame; geometry already applied upstream",
+    "source_profiles_accepted": [
+      "CANONICAL_62X80_ALREADY_APPLIED",
+      "PUBLIC_SDT_T_A6_G1_CANONICAL"
+    ]
+  },
+  "output": {
+    "shape": [1, 62, 80, 1],
+    "dtype": "float32",
+    "range": [0.0, 1.0],
+    "unit": "RELATIVE_DIMENSIONLESS_NOT_CELSIUS"
+  },
+  "percentile_definitions": {
+    "low": "numpy.percentile(flat_frame, 2.0)",
+    "high": "numpy.percentile(flat_frame, 98.0)",
+    "scope": "PER_FRAME_WITHIN_FRAME_ONLY",
+    "fitted_statistics": "NONE_NO_CROSS_FRAME_OR_CROSS_SPLIT_STATISTIC",
+    "numpy_percentile_default_linear_interpolation": true
+  },
+  "formula": "y = clip((x - p2_frame(x)) / max(p98_frame(x) - p2_frame(x), 1e-6), 0, 1)",
+  "clipping_behavior": "clip to [0, 1] after scale",
+  "degenerate_frame_behavior": "if p98-p2 < 1e-6, divide by 1e-6 then clip to [0, 1]",
+  "nonfinite_behavior": "reject; fail-closed",
+  "empty_or_non_numeric_behavior": "reject; fail-closed",
+  "wrong_geometry_behavior": "reject; do not resize at the model adapter",
+  "orientation_geometry": "canonicalized upstream; G1_FIXED_ASPECT_CROP_BILINEAR already applied for PUBLIC_SDT T-A6",
+  "celsius_claim": "FORBIDDEN_NOT_CELSIUS",
+  "unsupported_at_this_adapter": [
+    "arbitrary MI48 raw uint16 bytes",
+    "arbitrary sensor orientation",
+    "arbitrary camera geometry",
+    "arbitrary radiometric conversion",
+    "raw SafeNest UDP packet",
+    "Team runtime Thermal-44 preprocessing"
+  ]
+}
