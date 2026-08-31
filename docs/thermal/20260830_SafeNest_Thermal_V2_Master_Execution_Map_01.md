@@ -1,237 +1,240 @@
 # SafeNest Thermal V2 — Master Execution Map
 
 - Document ID: `THERMAL_V2_MASTER_EXECUTION_MAP_01`
-- Date: `2026-08-30`
+- Date: `2026-08-30` (status sync `2026-08-31`)
 - Authority: Thermal Control Tower living execution map
-- Scope: documentation-only; no training, binary, manifest, or runtime changes
-- G0 status: `PASS` (`T-V2-G0 CURRENT STATE VERIFIED`)
+- Scope: documentation-only status synchronization
+- Synced to `origin/main`: `4dccd25205af8994d29d03d75ebd0d7a7d6263e2`
+  (through merged `#186`–`#197`; G4/G5 standalone closure)
 
 ## 1. Purpose
 
-This document is the canonical Control-Tower execution map for Thermal V2
-prototype development.
-
-Objective:
+Living Control-Tower map for Thermal V2.
 
 ```text
-current evidence
-→ technically defensible prototype candidate(s)
-→ offline comparison
-→ standalone prototype gate
-→ Team repository import/application later
-→ Integration / Pi / device-domain validation later
+standalone R-lane prototype CLOSED (G4/G5 DONE)
+→ Team multi-model controlled staging (CURRENT FRONTIER)
+→ integrated baseline/A/B comparison
+→ later device observation / conditional default choice
 ```
 
-Not permitted by this map:
+Evidence labeling:
 
-- scientific final model selection
-- production replacement of the Team active Thermal baseline
-- treating device-domain validation as a prerequisite for Candidate A/B float work
+| Label | Meaning |
+|---|---|
+| `REPO-MERGED` | Supported by current standalone `origin/main` |
+| `TEAM-PENDING` | Authorized Team-repo work; not yet evidenced as complete |
 
 ## 2. Repository Boundary
 
 | Role | Repository | Current use |
 |---|---|---|
-| Primary development | `https://github.com/sheepmeat/test.git` | Data, contracts, Candidate A/B, offline eval, prototype artifacts |
-| Team reference / later application | `https://github.com/jinsu1011/safenest-embedded-competition` | Active baseline identity now; prototype import destination later |
-| Integration | `https://github.com/yuname121/integration.git` | Deferred; not a Thermal V2 development prerequisite |
-
-Lifecycle:
-
-```text
-sheepmeat/test
-  → data / model development
-  → offline comparison
-  → prototype artifact ready
-  → Team repository import/application
-  → future Integration / Pi validation
-```
-
-Do **not** develop Candidate A/B inside the Team repository.
-Do **not** invert the standalone → Team relationship.
+| Standalone development | `https://github.com/sheepmeat/test.git` | R-lane G4/G5 **COMPLETE**; P-lane G1/P1 remains separate |
+| Team application | `https://github.com/jinsu1011/safenest-embedded-competition` | **CURRENT FRONTIER:** baseline / A / B controlled multi-model staging |
+| Integration | `https://github.com/yuname121/integration.git` | Later runtime/device integration; not current staging repo |
 
 ## 3. Status Legend
 
 | Status | Meaning | Mermaid class | Color |
 |---|---|---|---|
-| DONE / PASS | Completed and Control-Tower verified | `done` | green `#D9EAD3` / `#38761D` |
-| ACTIVE / NEXT | Immediate executable frontier | `active` | amber `#FFF2CC` / `#BF9000` |
-| PLANNED | Authorized later work, not started | `planned` | blue `#D9EAF7` / `#3D85C6` |
-| CONDITIONAL | Decision-dependent path | `conditional` | neutral `#F3F3F3` / `#666666` |
-| BLOCKED | Failed or cannot proceed | `blocked` | red `#F4CCCC` / `#990000` |
-| DEFERRED | Out of current Thermal V2 prototype scope | `deferred` | gray `#D9D9D9` / `#777777` |
-
-Node labels also carry status text so the map remains readable without color.
+| DONE / PASS | Merged / Control-Tower-accepted | `done` | green `#D9EAD3` / `#38761D` |
+| ACTIVE / NEXT | Current authorized frontier | `active` | amber `#FFF2CC` / `#BF9000` |
+| PLANNED | Authorized later work | `planned` | blue `#D9EAF7` / `#3D85C6` |
+| CONDITIONAL | Decision-dependent | `conditional` | neutral `#F3F3F3` / `#666666` |
+| BLOCKED | Cannot proceed | `blocked` | red `#F4CCCC` / `#990000` |
+| DEFERRED | Out of current prototype scope | `deferred` | gray `#D9D9D9` / `#777777` |
 
 ## 4. Current Authoritative State
 
 ### 4.1 Control-Tower policy
 
 ```text
-Development repo: sheepmeat/test
-Team repo: reference now, application target later
-Integration repo: DEFERRED
-Candidate A: REQUIRED
-Candidate B: CONDITIONAL / OPTIONAL_BUT_PREFERRED
+LOCKED_PUBLIC_TEST_ACCESS = 0
+Scientific final selection: NOT CLAIMED
 Device-domain validation: DEFERRED
-Scientific final selection: NOT PERMITTED
+Standalone R-lane current prototype: CLOSED / COMPLETE
+G4 / G5: PASS_WITH_LIMITATIONS / DONE (#197)
+STANDALONE_PROTOTYPE_READY = YES
+READY_FOR_CONTROLLED_TEAM_APPLICATION = YES
+Team Multi-Model Staging: AUTHORIZED / NEXT
+Team default replacement: NOT AUTHORIZED / CONDITIONAL
+Team active baseline: thermal_public_sdt_fp32_active (B6R-P2) — UNCHANGED
 ```
 
-### 4.2 Current Team active baseline (existing evidence, not new work)
+### 4.2 REPO-MERGED milestones
+
+| ID | Status | Evidence |
+|---|---|---|
+| G0 | `PASS` / DONE | Current-state reconstruction |
+| TV2-H0 | `PASS_WITH_LIMITATIONS` / DONE | PR `#187`; C0 diag N→F **174/4000** |
+| TV2-D0 | `PASS_WITH_LIMITATIONS` / DONE | PR `#188` |
+| G1 foundation GEO/SPLIT/LABEL | READY_WITH_LIMITATIONS / DONE | PR `#186` — **G1 gate itself OPEN** |
+| TV2-A0 architecture | `PASS_WITH_LIMITATIONS` / DONE | PR `#189` |
+| TV2-D1 / D2 / D3 | each `PASS_WITH_LIMITATIONS` / DONE | `#191` / `#192` / `#193` |
+| Candidate A implementation | DONE | PR `#194` |
+| Candidate A Phase 2 | `PASS_WITH_LIMITATIONS` / DONE | PR `#195` — A0 nominated + FLOAT |
+| C1 + Candidate B matched long-run | DONE | PR `#196` |
+| Offline provisional preference | `A_PREFERRED` / DONE | PR `#196` |
+| G4 / G5 standalone closure | `PASS_WITH_LIMITATIONS` / DONE | PR `#197` |
+
+### 4.3 Candidate A — A_PREFERRED (standalone closed)
 
 ```text
-B6R-P2 Public SDT pooled MLP FP32
-model_id: thermal_public_sdt_pooled_mlp_fp32_tflite_v1
-architecture: PUBLIC_SDT_ADAPTIVE_POOL_MLP_V1
-input: [1, 62, 80, 1] float32
-classes: NOT_HUMAN / HUMAN_NORMAL / HUMAN_FALL_PROXY
-dataset: PUBLIC_SDT_48000_THERMAL_ONLY_V1
-preprocessing: 480x640 → bilinear 62x80 → per-frame min-max
-              → adaptive pool 8x10 → MLP
+status: OFFLINE PROVISIONAL PREFERENCE / A_PREFERRED
+standalone prototype: READY
+representation: RELATIVE_THERMAL_APPEARANCE_V1
+normalization:  FRAME_ROBUST_P2_P98_V1
+architecture:   COARSE_SPATIAL_RETAIN_FLATTEN_V1
+params:         64,387
+
+Family 3-seed DEVELOPMENT (nomination basis):
+  NORMAL→FALL_PROXY: 16 / 14 / 21 → mean 17/4000 = 0.425%
+  FALL recall mean: 0.9920
+  macro F1 mean: ≈ 0.9949
+
+Exact committed FP32 TFLite (#197 characterization — NOT a substitute for family mean):
+  SHA-256: a158a70c4735e28eec70b5a996f82c91f452b94bcc24c040838143f4a55b1985
+  size: 264704 bytes
+  input [1,62,80,1] float32 → output [1,3] float32
+  DEVELOPMENT n=8000 confusion [[2000,0,0],[4,3982,14],[0,17,1983]]
+  NORMAL→FALL: 14/4000 = 0.35%
+  FALL recall: 0.9915
+  macro F1: 0.995623
+  nonfinite 0 / inference failures 0
+
+Keras ↔ TFLite parity: 8000/8000 argmax = 100% PASS
+  max abs diff 6.258e-06 / mean abs diff 1.202e-08
+
+Standalone contract (#197): preprocess JSON + manifest + inference + runner + 10 tests PASS
 ```
 
-Development diagnostic evidence (not locked-test performance):
+**Not** Team-active default. Team default remains B6R-P2 baseline.
+
+### 4.4 C1 / Candidate B — matched experiment DONE (`#196`)
+
+| Model | Role | Params | N→F mean | FALL recall | macro F1 | Decision |
+|---|---|---:|---:|---:|---:|---|
+| C1 | `MATCHED_POOLED_MLP_CONTROL` | 2,691 | 107.67 | 0.9472 | 0.9687 | `CONTROL_COMPLETE` |
+| Candidate A | conventional spatial | 64,387 | 17.00 | 0.9920 | 0.9949 | `A_PREFERRED` |
+| Candidate B | DS-CNN | 4,387 | 120.33 | 0.9253 | 0.9593 | `B_NOT_COMPETITIVE` |
+
+C1 architecture: adaptive mean pool `[8,10]` → Flatten 80 → Dense32 → Dense3.
+
+Bounded interpretation: matched pooled-MLP result supports that Candidate A’s spatial-retaining architecture contributes useful benefit beyond the matched relative-appearance representation **in this offline experiment** — not a universal architecture claim.
+
+Candidate B:
 
 ```text
-DEVELOPMENT accuracy ≈ 0.907
-DEVELOPMENT macro F1 ≈ 0.901
-NORMAL → FALL_PROXY = 174 / 4000 ≈ 4.35%
-LOCKED_PUBLIC_TEST access = 0
+offline decision: B_NOT_COMPETITIVE
+Team test role:   CONTROLLED_COMPARISON_ONLY (authorized later packaging)
+standalone B seed42 Keras SHA-256:
+  42563c3316e9e8511ab897aaa4dfd9a154887f3a0270d5dfb77a7a344cd3ff35
+standalone FP32 TFLite: SKIPPED (B_NOT_COMPETITIVE)
+Team may convert frozen seed42 Keras → ordinary FP32 TFLite for comparison only
+  (packaging — not retraining / renomination)
+C1 is NOT a Team user-facing selector option
 ```
 
-Historical `SMALL_CNN_BASELINE_V1` / T-B FULL_INT8 remains useful reference
-evidence. It is **not** the currently active Team baseline and is **not** yet a
-frozen Candidate A architecture.
+### 4.5 Dual lanes
 
-### 4.3 Contract notes
+**R-LANE current prototype development = CLOSED / DONE**
 
-- Geometry compatibility should normally remain `62 × 80` for SafeNest Thermal
-  runtime alignment.
-- Active-baseline per-frame min-max does **not** automatically freeze every
-  future candidate to min-max. Each candidate needs an explicit preprocessing
-  contract.
-- Prefer shared preprocessing for Candidate A and Candidate B unless a
-  scientific reason requires separate contracts.
-- Candidate A concept: **DATA-CORRECTIVE COMPACT SPATIAL CNN**.
-  Historical `SMALL_CNN_BASELINE_V1` is a leading reference architecture, not a
-  mandatory freeze until G1/G2 review.
+```text
+PUBLIC_SDT → RELATIVE_THERMAL_APPEARANCE_V1 → FRAME_ROBUST_P2_P98_V1
+→ A0 / C1 / B matched experiment → A_PREFERRED → G4 → G5 → READY
+```
+
+**P-LANE physical temperature — OPEN, not blocking Team staging**
+
+```text
+PUBLIC_SDT Celsius → G1 GEO → P1 TRAIN-fitted global z-score [PENDING / NOT MERGED]
+G1: OPEN / PARTIALLY READY — NOT PASS
+blocker: WAITING_FOR_FINAL_P1_NUMERIC_FREEZE
+```
+
+### 4.6 Team baseline vs standalone preference (both true)
+
+```text
+Standalone preferred: Candidate A A0 (A_PREFERRED)
+Team current default: thermal_public_sdt_fp32_active (B6R-P2 pooled MLP FP32) — UNCHANGED
+A_PREFERRED ≠ A Team-active
+```
+
+### 4.7 Limitations (remain after G4/G5)
+
+```text
+LOCKED_PUBLIC_TEST_ACCESS = 0
+DEVICE_DOMAIN_VALIDATION = DEFERRED
+MI48 physical-source validation = NOT COMPLETE
+Pi live comparison = NOT COMPLETE
+scientific final selection = NOT CLAIMED
+production model replacement = NOT AUTHORIZED
+G5 = standalone reproducible prototype ready for controlled downstream application
+     — NOT production-ready
+```
 
 ## 5. Master Execution Map
 
 ```mermaid
 flowchart TD
 
-    subgraph S0["CURRENT STATE — VERIFIED"]
-        BASE["DONE: Current Team Baseline<br/>B6R-P2 Pooled MLP FP32"]
-        HIST["DONE: Historical Evidence<br/>T-B SMALL_CNN / INT8"]
-        GAP["DONE: Known Evidence Gap<br/>NORMAL hard-negatives + device validation"]
-        G0["DONE: G0 CURRENT STATE VERIFIED<br/>PASS"]
-        BASE --> G0
-        HIST --> G0
-        GAP --> G0
+    subgraph MERGED["STANDALONE REPO-MERGED EVIDENCE"]
+        G0["DONE: G0 PASS"]
+        D0["DONE: TV2-D0"]
+        H0["DONE: TV2-H0"]
+        D1["DONE: TV2-D1"]
+        D2["DONE: TV2-D2"]
+        D3["DONE: TV2-D3"]
+        A0R["DONE: TV2-A0 Architecture Review"]
+        G1F["DONE: G1 Foundation GEO/SPLIT/LABEL"]
+        CAIMP["DONE: Candidate A Impl PR #194"]
+        CAP2["DONE: Candidate A Phase 2 PR #195"]
+        C1["DONE: C1 CONTROL_COMPLETE<br/>PR #196 · 2691 params · N→F 107.67"]
+        CB["DONE: Candidate B B_NOT_COMPETITIVE<br/>PR #196 · 4387 params · N→F 120.33"]
+        CMP["DONE: A vs B vs C1 Comparison"]
+        PREF["DONE: A_PREFERRED<br/>OFFLINE PROVISIONAL PREFERENCE"]
+        CAART["DONE: A0 FLOAT + FP32 READY"]
+        G4["DONE: G4 PASS_WITH_LIMITATIONS PR #197"]
+        G5["DONE: G5 PASS_WITH_LIMITATIONS PR #197"]
+        SA["DONE: Standalone A0 Contract<br/>preprocess + manifest + inference + tests"]
+        G0 --> D0 --> D1 --> D2 --> D3
+        G0 --> H0
+        G0 --> A0R
+        G0 --> G1F
+        A0R --> CAIMP --> CAP2 --> CAART
+        CAP2 --> C1
+        CAP2 --> CB
+        C1 --> CMP
+        CB --> CMP
+        CAART --> CMP
+        CMP --> PREF --> G4 --> G5 --> SA
     end
 
-    subgraph S1["EVIDENCE AND DATA — standalone/test"]
-        DS["ACTIVE: TV2-D0<br/>Additional Thermal Dataset Search"]
-        LIC["PLANNED: TV2-D1<br/>License / Provenance / Access"]
-        COMP["PLANNED: TV2-D2<br/>Representation + Label Compatibility"]
-        HN["ACTIVE: TV2-H0<br/>Current SDT Hard-Negative Audit"]
-        EXP["PLANNED: TV2-D3<br/>Dataset Expansion Decision"]
-
-        DS --> LIC --> COMP --> EXP
-        HN --> EXP
+    subgraph PLANE["P-LANE physical temperature — not blocking Team"]
+        G1["ACTIVE: G1 OPEN / P1 numeric PENDING"]
+        G1F --> G1
+        D3 --> G1
     end
 
-    subgraph S2["MODEL CONTRACT — standalone/test"]
-        GEO["ACTIVE: 62x80 Geometry Contract"]
-        PRE["ACTIVE: Candidate Preprocessing Contract"]
-        SPLIT["ACTIVE: Split / Leakage Governance"]
-        LABEL["ACTIVE: 3-Class Proxy Label Contract"]
-        G1["PLANNED: G1 DATA / MODEL CONTRACT READY"]
-
-        GEO --> G1
-        PRE --> G1
-        SPLIT --> G1
-        LABEL --> G1
+    subgraph TEAM["TEAM REPOSITORY — CURRENT FRONTIER"]
+        TBASE["DONE context: Team baseline<br/>thermal_public_sdt_fp32_active UNCHANGED"]
+        T0["ACTIVE: TEAM-T0 Multi-Model Staging<br/>AUTHORIZED / NEXT<br/>baseline + A + B · run_safenest_thermal_test.sh"]
+        T1["PLANNED: TEAM-T1 Integrated Thermal Comparison"]
+        TSEL["CONDITIONAL: Team Thermal Default Selection<br/>NOT AUTHORIZED"]
+        SA --> T0
+        PREF --> T0
+        TBASE --> T0
+        T0 --> T1 --> TSEL
     end
 
-    G0 --> DS
-    G0 --> HN
-    G0 --> GEO
-    G0 --> PRE
-    G0 --> SPLIT
-    G0 --> LABEL
-
-    EXP --> G1
-
-    subgraph S3["CANDIDATE A — REQUIRED"]
-        A_SPEC["PLANNED: A Spec<br/>Data-corrective Compact Spatial CNN"]
-        G2["PLANNED: G2 CANDIDATE A READY"]
-        A_TRAIN["PLANNED: A Float Training"]
-
-        A_SPEC --> G2 --> A_TRAIN
+    subgraph DEF["DEFERRED"]
+        INT["DEFERRED: Integration Runtime"]
+        DEV["DEFERRED: Device-Domain Validation"]
+        FINAL["DEFERRED: Scientific Final Selection"]
     end
 
-    subgraph S4["CANDIDATE B — CONDITIONAL"]
-        B_DEC{"CONDITIONAL: G3 Distinct 2nd<br/>Hypothesis Justified?"}
-        B_SPEC["CONDITIONAL: B Spec<br/>Alternative Compact Spatial Family"]
-        B_SKIP["CONDITIONAL: Candidate B<br/>SKIPPED_NOT_JUSTIFIED"]
-        B_TRAIN["CONDITIONAL: B Float Training"]
-
-        B_DEC -->|YES| B_SPEC --> B_TRAIN
-        B_DEC -->|NO| B_SKIP
-    end
-
-    G1 --> A_SPEC
-    G1 --> B_DEC
-
-    subgraph S5["OFFLINE COMPARISON — standalone/test"]
-        MET["PLANNED: Common Evaluation<br/>Macro F1 / Per-Class / Confusion"]
-        FP["PLANNED: Primary Failure Metric<br/>NORMAL to FALL_PROXY"]
-        HNE["PLANNED: Development Hard-Negative Evaluation"]
-        CMP["PLANNED: Compare Against<br/>Current Pooled-MLP Baseline"]
-        G4["PLANNED: G4 OFFLINE EVALUATION COMPLETE"]
-
-        MET --> FP --> HNE --> CMP --> G4
-    end
-
-    A_TRAIN --> MET
-    B_TRAIN --> MET
-    B_SKIP --> MET
-
-    subgraph S6["PROTOTYPE ARTIFACT — standalone/test"]
-        DEC{"PLANNED: Prototype Decision"}
-        AOK["PLANNED: A"]
-        BOK["PLANNED: B"]
-        BOTH["PLANNED: BOTH"]
-        NONE["PLANNED: NONE"]
-        EXPORT["PLANNED: Optional TFLite / INT8 Export"]
-        G5["PLANNED: G5 STANDALONE PROTOTYPE READY"]
-
-        G4 --> DEC
-        DEC --> AOK --> EXPORT
-        DEC --> BOK --> EXPORT
-        DEC --> BOTH --> EXPORT
-        DEC --> NONE
-        EXPORT --> G5
-    end
-
-    subgraph S7["TEAM APPLICATION — later"]
-        IMPORT["PLANNED: Import Selected Prototype<br/>into Team Repo"]
-        TEAMVAL["PLANNED: Manifest / Runtime Contract<br/>Team-side Verification"]
-        TEAMG["PLANNED: TEAM APPLICATION GATE"]
-
-        G5 --> IMPORT --> TEAMVAL --> TEAMG
-    end
-
-    subgraph S8["DEFERRED"]
-        INT["DEFERRED: Integration Repo / Pi Runtime"]
-        DEV["DEFERRED: Controlled SafeNest<br/>Device-Domain Validation"]
-        FINAL["DEFERRED: Scientific Final Model Selection"]
-    end
-
-    TEAMG -.-> INT
-    INT -.-> DEV
+    T1 -.-> DEV
+    TSEL -.-> INT
     DEV -.-> FINAL
 
     classDef done fill:#D9EAD3,stroke:#38761D,stroke-width:2px;
@@ -241,92 +244,110 @@ flowchart TD
     classDef blocked fill:#F4CCCC,stroke:#990000,stroke-width:2px;
     classDef deferred fill:#D9D9D9,stroke:#777777,stroke-width:1.5px;
 
-    class BASE,HIST,GAP,G0 done;
-    class DS,HN,GEO,PRE,SPLIT,LABEL active;
-    class LIC,COMP,EXP,G1,A_SPEC,G2,A_TRAIN,MET,FP,HNE,CMP,G4,DEC,AOK,BOK,BOTH,NONE,EXPORT,G5,IMPORT,TEAMVAL,TEAMG planned;
-    class B_DEC,B_SPEC,B_SKIP,B_TRAIN conditional;
+    class G0,D0,H0,D1,D2,D3,A0R,G1F,CAIMP,CAP2,C1,CB,CMP,PREF,CAART,G4,G5,SA,TBASE done;
+    class G1,T0 active;
+    class T1 planned;
+    class TSEL conditional;
     class INT,DEV,FINAL deferred;
 ```
 
 ## 6. Gate Ledger
 
-| Gate | Meaning | Current Status |
-|---|---|---|
-| G0 Current State Verified | Baseline, historical evidence, and evidence-gap reconstruction accepted | `PASS` |
-| G1 Data / Model Contract Ready | Geometry, preprocessing, split/leakage, label, and expansion plan ready | `NOT_STARTED` / `NEXT` |
-| G2 Candidate A Ready | Required data-corrective compact spatial CNN specified and train-ready | `NOT_STARTED` |
-| G3 Candidate B Justified | Distinct second hypothesis approved, or explicitly skipped | `NOT_EVALUATED` |
-| G4 Offline Evaluation Complete | Macro F1, per-class, confusion, NORMAL→FALL_PROXY, hard-negative eval | `NOT_STARTED` |
-| G5 Standalone Prototype Ready | Standalone prototype artifact ready; no production overwrite | `NOT_STARTED` |
-| Team Application Gate | Selected prototype imported and verified in Team repo | `NOT_STARTED` |
-| Device-Domain Scientific Validation | Controlled SafeNest measurement / scientific final selection | `DEFERRED` |
-
-Do not mark any gate complete without corresponding repository evidence.
+| Gate / item | Current Status |
+|---|---|
+| G0 | `PASS` / DONE |
+| TV2-H0 / D0 / D1 / D2 / D3 | each `PASS_WITH_LIMITATIONS` / DONE |
+| TV2-A0 architecture review | `PASS_WITH_LIMITATIONS` / DONE |
+| Candidate A implementation (`#194`) | DONE |
+| Candidate A Phase 2 (`#195`) | `PASS_WITH_LIMITATIONS` / DONE |
+| C1 matched control (`#196`) | `CONTROL_COMPLETE` / DONE |
+| Candidate B matched experiment (`#196`) | `B_NOT_COMPETITIVE` / DONE |
+| A vs B vs C1 | DONE |
+| Offline provisional preference | `A_PREFERRED` / DONE |
+| Exact A FP32 characterization + parity (`#197`) | DONE |
+| Standalone A0 contract (`#197`) | DONE |
+| G4 | `PASS_WITH_LIMITATIONS` / DONE (`#197`) |
+| G5 | `PASS_WITH_LIMITATIONS` / DONE (`#197`) |
+| Standalone Prototype Ready | **YES** |
+| Ready For Controlled Team Application | **YES** |
+| Standalone R-lane current prototype | **CLOSED / COMPLETE** |
+| G1 physical P-lane | **OPEN** — P1 numeric pending |
+| TEAM-T0 Multi-Model Staging | **AUTHORIZED / NEXT** |
+| TEAM-T1 Integrated Comparison | PLANNED |
+| Team Thermal Default Selection | CONDITIONAL / **NOT AUTHORIZED** |
+| Device-domain validation | DEFERRED |
+| Scientific final selection | NOT CLAIMED |
+| `LOCKED_PUBLIC_TEST_ACCESS` | **0** |
 
 ## 7. Current Active Frontier
 
 ```text
-G0 PASS
-  ↓
-parallel evidence / contract work  (NO TRAINING AUTHORIZED)
+DONE — STANDALONE R-LANE:
+  Candidate A A0 nominated + FLOAT
+  C1 CONTROL_COMPLETE
+  Candidate B B_NOT_COMPETITIVE
+  A vs B vs C1 → A_PREFERRED
+  exact Candidate A FP32 characterization + Keras↔TFLite parity
+  G4 / G5 PASS_WITH_LIMITATIONS
+  standalone A0 contract package
+  STANDALONE_PROTOTYPE_READY = YES
+
+NOW — AUTHORIZED / NEXT:
+  TEAM-T0 MULTI-MODEL CONTROLLED STAGING
+    sync Team repo
+    import exact A FP32 TFLite
+    convert/import B FP32 test artifact (comparison-only)
+    register baseline / A / B
+    controlled-test allowlist
+    model-specific preprocessing dispatch
+      baseline → existing Team preprocessing
+      A/B → RELATIVE_THERMAL_APPEARANCE_V1 + FRAME_ROBUST_P2_P98_V1
+    new launcher:
+      ./run_safenest_thermal_test.sh baseline
+      ./run_safenest_thermal_test.sh a
+      ./run_safenest_thermal_test.sh b
+    ordinary ./run_safenest.sh remains unchanged baseline
+    software tests → Team PR
+
+  Team model roles:
+    baseline → thermal_public_sdt_fp32_active     CURRENT DEFAULT
+    Candidate A → thermal_tv2_candidate_a_a0_fp32_v1   CONTROLLED_TEAM_TEST
+    Candidate B → thermal_tv2_candidate_b_seed42_fp32_test_v1
+                  CONTROLLED_COMPARISON_ONLY
+    C1 not user-facing
+
+THEN:
+  TEAM-T1 integrated full-SafeNest baseline/A/B comparison
+  → real runtime observations
+  → later CONDITIONAL Team default decision
+
+SEPARATE OPEN LANE:
+  G1/P1 physical-temperature (not blocking Team R-lane staging)
+
+DEFERRED:
+  formal device-domain validation
+  scientific final selection
+  production replacement
 ```
-
-Immediate parallel frontier after G0:
-
-| Task ID | Work | Status |
-|---|---|---|
-| TV2-D0 | Additional Thermal dataset discovery | ACTIVE |
-| TV2-H0 | Current SDT hard-negative analysis | ACTIVE |
-| GEO | 62×80 geometry contract review | ACTIVE |
-| PRE | Candidate preprocessing contract design | ACTIVE |
-| SPLIT | Split / leakage governance | ACTIVE |
-| LABEL | 3-class proxy label contract review | ACTIVE |
-
-Downstream planned after that frontier:
-
-```text
-TV2-D1 → TV2-D2 → TV2-D3 → G1
-→ Candidate A (required)
-→ Candidate B (conditional)
-→ G4 offline comparison
-→ G5 standalone prototype
-→ Team application
-```
-
-This documentation update does **not** authorize training, dataset mutation,
-manifest changes, or runtime selector changes.
 
 ## 8. Deferred Scope
 
-Explicitly deferred / out of current Thermal V2 prototype prerequisites:
-
-- Integration repository audit or wiring
-- Raspberry Pi runtime / deployment
-- New controlled SafeNest device-domain measurement campaign
+- Formal device-domain / MI48 / Pi scientific validation
 - Scientific final model selection
-- Production replacement of the Team active Thermal baseline
-- B6R MI48 mainline unblocking as a Candidate A/B training gate
-
-These remain visible as gray deferred nodes after Team application.
+- Production/default replacement of Team baseline
+- Integration-repo runtime ownership (separate from Team staging)
 
 ## 9. Update Rules
 
-This is a living map. Future updates should:
-
-1. Preserve stable task/gate IDs (`G0`–`G5`, `TV2-D*`, `TV2-H0`, Candidate A/B).
-2. Change node status text and Mermaid class colors as work progresses.
-3. Add nodes only when genuinely needed.
-4. Avoid rewriting the entire DAG for minor status changes.
-5. Preserve historical completed nodes.
-6. Mark rejected paths as `BLOCKED` / `SKIPPED` rather than deleting evidence.
-7. Keep Integration, Pi, and device-domain validation visually separate from
-   current standalone development.
-8. Keep Candidate A architecture unfrozen until G1/G2 evidence review; treat
-   `SMALL_CNN_BASELINE_V1` as a leading reference, not an automatic freeze.
-9. Keep geometry (`62×80`) and preprocessing contracts separate.
-10. End standalone development at G5 before Team application; do not jump from
-    prototype readiness to Integration.
+1. Prefer status/color updates; preserve stable IDs when practical.
+2. Standalone R-lane current prototype is closed at G4/G5; do not reopen as ACTIVE without new Control-Tower authorization.
+3. Keep G1/P1 open and visually separate; it does not block Team R-lane staging.
+4. Do not equate `A_PREFERRED` with Team-active default.
+5. Do not mark TEAM-T0 DONE until Team-repo PR evidence exists.
+6. Do not treat software staging as device-domain validation.
+7. `LOCKED_PUBLIC_TEST_ACCESS` stays 0.
 
 ---
 
-End of document. No Thermal development worker is authorized by this file alone.
+End of document. Map sync does not train models, does not modify Team/Integration,
+does not claim Team staging complete, and does not authorize production replacement.
